@@ -74,6 +74,8 @@ QDir QmlUtilities::qmlDir()
 //    dir.cd("Resources");
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     dir.cdUp();
+#elseif defined(Q_OS_MAC)
+    dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
 #endif
     dir.cd("share");
     dir.cd("moviemator");

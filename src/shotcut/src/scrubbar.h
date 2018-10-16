@@ -59,7 +59,7 @@ public slots:
 
 protected:
 //    virtual void paintEvent(QPaintEvent *e);
-//    virtual void resizeEvent(QResizeEvent *);
+    virtual void resizeEvent(QResizeEvent *);
 //    virtual bool event(QEvent *event);
 
 private:

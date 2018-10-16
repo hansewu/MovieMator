@@ -205,10 +205,10 @@ bool ScrubBar::onSeek(int value)
 
 
 
-//void ScrubBar::resizeEvent(QResizeEvent *)
-//{
-//    setScale(m_max);
-//}
+void ScrubBar::resizeEvent(QResizeEvent *)
+{
+    setScale(m_max);
+}
 
 //bool ScrubBar::event(QEvent *event)
 //{

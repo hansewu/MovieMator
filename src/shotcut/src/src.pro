@@ -434,8 +434,8 @@ mac {
 win32 {
     CONFIG += windows rtti
     isEmpty(MLT_PATH) {
-        message("MLT_PATH not set; using ..\\..\\... You can change this with 'qmake MLT_PATH=...'")
-        MLT_PATH = ..\\..\\..
+        message("MLT_PATH not set; using C:\\Projects\\MovieMator. You can change this with 'qmake MLT_PATH=...'")
+        MLT_PATH = C:\\Projects\\MovieMator
     }
     INCLUDEPATH += $$MLT_PATH\\include\\mlt++ $$MLT_PATH\\include\\mlt
     LIBS += -L$$MLT_PATH\\lib -lmlt++ -lmlt -lopengl32
