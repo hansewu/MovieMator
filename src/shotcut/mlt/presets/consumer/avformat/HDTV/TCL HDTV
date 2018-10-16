@@ -1,0 +1,27 @@
+width=1280
+height=720
+
+progressive=1
+
+f=mp4
+r=24
+acodec=aac
+ar=32000
+ab=128k
+
+vcodec=libx264
+threads=0
+vpre=veryfast
+preset=veryfast
+flags2=-dct8x8
+refs=1
+bf=1
+x264opts=ref=1:bframes=1
+
+meta.preset.extension=mp4
+meta.preset.note=for TCL HDTV
+
+meta.preset.name=TCL HDTV
+
+meta.preset.category=2
+meta.preset.index=9

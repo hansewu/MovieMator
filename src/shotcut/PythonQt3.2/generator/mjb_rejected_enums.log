@@ -1,0 +1,33 @@
+************************************************************************
+Not in type system
+<enum-type name="enum_2"/>
+<enum-type name="enum_3"/>
+<enum-type name="enum_4"/>
+<enum-type name="enum_5"/>
+************************************************************************
+
+************************************************************************
+Generation disabled by type system
+<enum-type name="QFont::ResolveProperties"/>
+<enum-type name="QGradient::InterpolationMode"/>
+<enum-type name="QSysInfo::MacVersion"/>
+<enum-type name="QSysInfo::WinVersion"/>
+<enum-type name="QWheelEvent::enum_1"/>
+<enum-type name="QXmlNodeModelIndex::Axis"/>
+<enum-type name="Qt::Initialization"/>
+<enum-type name="Qt::Modifier"/>
+<enum-type name="enum_1"/>
+************************************************************************
+
+************************************************************************
+Type redefined to not be a class
+************************************************************************
+
+************************************************************************
+Unmatched argument type
+************************************************************************
+
+************************************************************************
+Unmatched return type
+************************************************************************
+

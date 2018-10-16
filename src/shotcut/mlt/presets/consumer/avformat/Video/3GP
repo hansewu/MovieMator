@@ -1,0 +1,16 @@
+
+progressive=1
+
+f=3gp
+r=24
+acodec=aac
+ar=32000
+ab=64k
+
+
+meta.preset.extension=3gp
+
+meta.preset.name=3gp
+
+meta.preset.category=5
+meta.preset.index=1

@@ -1,0 +1,16 @@
+f=avi
+r=24
+acodec=libmp3lame
+ab=128k
+ar=44100
+
+vcodec=mpeg4
+vtag=xvid
+
+
+meta.preset.extension=avi
+
+meta.preset.name=AVI (Xvid)
+
+meta.preset.category=5
+meta.preset.index=11

@@ -1,0 +1,8 @@
+schema_version: 0.1
+type: filter
+identifier: motion_est
+title: Motion Estimation
+version: 1
+language: en
+tags:
+  - Video

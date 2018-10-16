@@ -1,0 +1,27 @@
+width=1280
+height=720
+aspect=@16/9
+progressive=1
+
+f=mp4
+r=24
+acodec=aac
+ar=32000
+ab=128k
+
+vcodec=libx264
+threads=0
+vpre=veryfast
+preset=veryfast
+flags2=-dct8x8
+refs=1
+bf=1
+x264opts=ref=1:bframes=1
+
+meta.preset.extension=mp4
+meta.preset.note=for Apple TV
+meta.preset.name=iPad Air
+
+
+meta.preset.category=1
+meta.preset.index=6

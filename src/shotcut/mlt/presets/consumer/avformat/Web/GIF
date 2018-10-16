@@ -1,0 +1,15 @@
+width=640
+height=480
+
+progressive=1
+f=gif
+vcodec=gif
+an=1
+g=1
+bf=0
+
+meta.preset.extension=gif
+meta.preset.name=GIF Animation
+
+meta.preset.category=4
+meta.preset.index=9

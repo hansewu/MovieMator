@@ -1,0 +1,8 @@
+schema_version: 0.1
+type: producer
+identifier: slowmotion
+title: Slow Motion
+version: 1
+language: en
+tags:
+  - Video

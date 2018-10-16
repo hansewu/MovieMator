@@ -1,0 +1,13 @@
+progressive=1
+f=avi
+acodec=pcm_s16le
+vcodec=mjpeg
+qscale=1
+
+meta.preset.extension=avi
+meta.preset.note=not lossless, but still high quality
+
+meta.preset.name=MJPEG
+
+meta.preset.category=6
+meta.preset.index=1

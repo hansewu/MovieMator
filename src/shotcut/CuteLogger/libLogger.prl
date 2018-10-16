@@ -1,0 +1,6 @@
+QMAKE_PRL_BUILD_DIR = /Users/gdb/work/MacVideoEditor/trunk/shotcut/CuteLogger/
+QMAKE_PRO_INPUT = CuteLogger.pro
+QMAKE_PRL_TARGET = libLogger.a
+QMAKE_PRL_CONFIG = lex yacc exceptions depend_includepath testcase_targets import_plugins import_qpa_plugin sdk rez qt warn_on release link_prl app_bundle incremental global_init_link_order lib_version_first plugin_no_soname clang_pch_style qpa no_mocdepend release qt_framework macx-xcode osx macx mac darwin unix posix gcc clang llvm staticlib create_prl have_target static staticlib xcode_dynamic_library_suffix objective_c thread moc resources
+QMAKE_PRL_VERSION = 1.0.0
+QMAKE_PRL_LIBS = -F/Users/gdb/Qt5.5.1/5.5/clang_64/lib -framework QtCore -framework DiskArbitration -framework IOKit

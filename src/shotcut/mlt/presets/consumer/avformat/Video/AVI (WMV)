@@ -1,0 +1,15 @@
+f=avi
+r=24
+vcodec=wmv1
+threads=0
+
+acodec=libmp3lame
+ab=256k
+
+meta.preset.extension=avi
+meta.preset.note=for Apple TV
+
+meta.preset.name=AVI(WMV)
+
+meta.preset.category=5
+meta.preset.index=10

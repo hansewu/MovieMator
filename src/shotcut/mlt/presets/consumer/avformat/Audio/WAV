@@ -1,0 +1,11 @@
+f=wav
+acodec=pcm_s16le
+vn=1
+video_off=1
+
+meta.preset.extension=wav
+meta.preset.note=audio only
+meta.preset.name=WAV
+
+meta.preset.category=7
+meta.preset.index=1

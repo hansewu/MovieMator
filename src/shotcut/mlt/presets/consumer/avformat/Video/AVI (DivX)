@@ -1,0 +1,18 @@
+
+
+f=avi
+r=24
+acodec=libmp3lame
+ab=256k
+
+vcodec=mpeg4
+vtag=DIVX
+threads=0
+
+
+meta.preset.extension=avi
+
+meta.preset.name=AVI (DivX)
+
+meta.preset.category=5
+meta.preset.index=4

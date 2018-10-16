@@ -1,0 +1,16 @@
+f=asf
+r=24
+acodec=wmav2
+ab=160k
+vcodec=wmv2
+g=100
+
+bf=0
+
+meta.preset.extension=wmv
+meta.preset.note=Xbox One
+
+meta.preset.name=Xbox One
+
+meta.preset.category=1
+meta.preset.index=21

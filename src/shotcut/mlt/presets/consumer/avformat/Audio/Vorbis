@@ -1,0 +1,11 @@
+f=ogg
+acodec=vorbis
+ab=256k
+vn=1
+video_off=1
+
+meta.preset.name=Ogg Vorbis
+meta.preset.extension=ogg
+meta.preset.note=audio only
+meta.preset.category=7
+meta.preset.index=1

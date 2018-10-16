@@ -1,0 +1,56 @@
+************************************************************************
+Not in type system
+************************************************************************
+
+************************************************************************
+Generation disabled by type system
+QAbstractVideoBuffer::d_ptr
+QAbstractXmlNodeModel::d_ptr
+QAbstractXmlReceiver::d_ptr
+QCameraImageCapture::d_ptr
+QCollatorSortKey::d
+QDir::d_ptr
+QDomNode::impl
+QEvent::d
+QFileInfo::d_ptr
+QFuture::d
+QGraphicsItem::d_ptr
+QGraphicsLayoutItem::d_ptr
+QGraphicsSceneEvent::d_ptr
+QGraphicsVideoItem::d_ptr
+QHostAddress::d
+QImageIOHandler::d_ptr
+QLockFile::d_ptr
+QMediaControl::d_ptr
+QMediaObject::d_ptr
+QMediaPlaylist::d_ptr
+QMediaRecorder::d_ptr
+QMediaService::d_ptr
+QMimeType::d
+QObject::d_ptr
+QOpenGLPaintDevice::d_ptr
+QPagedPaintDevice::d
+QPaintEngine::d_ptr
+QRadioData::d_ptr
+QResource::d_ptr
+QSGNode::d_ptr
+QScrollerProperties::d
+QSqlResult::d_ptr
+QStandardItem::d_ptr
+QTabletEvent::mExtra
+QVideoWidget::d_ptr
+QWidgetItem::wid
+************************************************************************
+
+************************************************************************
+Type redefined to not be a class
+************************************************************************
+
+************************************************************************
+Unmatched argument type
+************************************************************************
+
+************************************************************************
+Unmatched return type
+************************************************************************
+

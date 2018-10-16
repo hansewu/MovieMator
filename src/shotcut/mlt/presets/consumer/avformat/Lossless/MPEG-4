@@ -1,0 +1,16 @@
+f=avi
+acodec=pcm_s16le
+vcodec=mpeg4
+qscale=1
+intra=1
+g=1
+vb=0
+bf=0
+
+meta.preset.extension=avi
+meta.preset.note=somewhat lossy, intra-frame only MPEG-4, with uncompressed audio
+
+meta.preset.name=MPEG-4
+
+meta.preset.category=6
+meta.preset.index=1

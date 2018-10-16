@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ResourceButtonDockWidget</class>
+ <widget class="QDockWidget" name="ResourceButtonDockWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>520</width>
+    <height>38</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>DockWidget</string>
+  </property>
+  <widget class="QWidget" name="dockWidgetContents">
+   <widget class="QPushButton" name="m_showPlaylistDock">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>91</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Media</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="m_showRecentDock">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>0</y>
+      <width>92</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Recent</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="m_showFilterDock">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>0</y>
+      <width>91</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Filter</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

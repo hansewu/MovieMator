@@ -1,0 +1,13 @@
+f=avi
+r=24
+vcodec=mjpeg
+qscale=4
+acodec=libmp3lame
+ab=256k
+
+meta.preset.extension=avi
+
+meta.preset.name=MJPEG
+
+meta.preset.category=5
+meta.preset.index=16

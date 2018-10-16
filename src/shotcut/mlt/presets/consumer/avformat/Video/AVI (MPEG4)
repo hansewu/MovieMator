@@ -1,0 +1,19 @@
+
+f=avi
+r=24
+acodec=aac
+ar=32000
+ab=128k
+
+vcodec=msmpeg4
+threads=0
+
+acodec=libmp3lame
+ab=256k
+
+meta.preset.extension=avi
+
+meta.preset.name=AVI (MPEG4)
+
+meta.preset.category=5
+meta.preset.index=8

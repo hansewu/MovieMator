@@ -1,0 +1,24 @@
+width=480
+height=360
+
+aspect=@4/3
+
+progressive=1
+
+f=mp4
+r=24
+acodec=aac
+ar=22050
+ab=64k
+
+vcodec=mpeg4
+threads=0
+
+vb=600k
+
+meta.preset.extension=mp4
+meta.preset.note=for iPhone 3/3GS
+meta.preset.name=iPhone 3G/3GS
+
+meta.preset.category=1
+meta.preset.index=3

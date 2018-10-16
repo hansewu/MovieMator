@@ -1,0 +1,18 @@
+
+f=avi
+r=24
+
+vcodec=rawvideo
+threads=0
+
+acodec=libmp3lame
+ab=256k
+vtag=I420
+pix_fmt=yuv420p
+
+meta.preset.extension=avi
+
+meta.preset.name=AVI (RAW)
+
+meta.preset.category=5
+meta.preset.index=9

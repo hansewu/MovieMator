@@ -1,0 +1,17 @@
+f=mpeg
+acodec=ac3
+ab=512k
+vcodec=mpeg2video
+intra=1
+vb=0
+g=1
+bf=0
+qscale=1
+
+meta.preset.extension=mpg
+meta.preset.note=a little lossy, but intra-frame only with AC-3 audio
+
+meta.preset.name=MPEG-2
+
+meta.preset.category=6
+meta.preset.index=1

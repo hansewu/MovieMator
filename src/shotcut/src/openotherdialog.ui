@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OpenOtherDialog</class>
+ <widget class="QDialog" name="OpenOtherDialog">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>730</width>
+    <height>478</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Open Other</string>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QTreeWidget" name="treeWidget">
+      <property name="rootIsDecorated">
+       <bool>false</bool>
+      </property>
+      <property name="itemsExpandable">
+       <bool>false</bool>
+      </property>
+      <property name="expandsOnDoubleClick">
+       <bool>false</bool>
+      </property>
+      <attribute name="headerVisible">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>1</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QStackedWidget" name="methodTabWidget">
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
+      <widget class="QWidget" name="networkTab">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="NetworkProducerWidget" name="networkWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="decklinkTab">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="DecklinkProducerWidget" name="decklinkWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="dshowVideoTab">
+       <layout class="QVBoxLayout" name="verticalLayout_14">
+        <item>
+         <widget class="DirectShowVideoWidget" name="dshowVideoWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="avfoundationTab">
+       <layout class="QVBoxLayout" name="verticalLayout_15">
+        <item>
+         <widget class="AvfoundationProducerWidget" name="avfoundationWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="colorTab">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="ColorProducerWidget" name="colorWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="noiseTab">
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <widget class="NoiseWidget" name="noiseWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="isingTab">
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="IsingWidget" name="isingWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="lissajousTab">
+       <layout class="QVBoxLayout" name="verticalLayout_12">
+        <item>
+         <widget class="LissajousWidget" name="lissajousWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="plasmaTab">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>10</horstretch>
+         <verstretch>10</verstretch>
+        </sizepolicy>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_13">
+        <item>
+         <widget class="PlasmaWidget" name="plasmaWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="v4lTab">
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="Video4LinuxWidget" name="v4lWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="colorbarsTab">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="ColorBarsWidget" name="colorbarsWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="pulseTab">
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <item>
+         <widget class="PulseAudioWidget" name="pulseWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="jackTab">
+       <layout class="QVBoxLayout" name="verticalLayout_9">
+        <item>
+         <widget class="JackProducerWidget" name="jackWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="alsaTab">
+       <layout class="QVBoxLayout" name="verticalLayout_10">
+        <item>
+         <widget class="AlsaWidget" name="alsaWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="x11grabTab">
+       <layout class="QVBoxLayout" name="verticalLayout_11">
+        <item>
+         <widget class="X11grabWidget" name="x11grabWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="gdigrabTab">
+       <layout class="QVBoxLayout" name="verticalLayout_16">
+        <item>
+         <widget class="GDIgrabWidget" name="gdigrabWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="toneTab">
+       <layout class="QVBoxLayout" name="verticalLayout_17">
+        <item>
+         <widget class="ToneProducerWidget" name="toneWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlasmaWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/plasmawidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LissajousWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/lissajouswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IsingWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/isingwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Video4LinuxWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/video4linuxwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ColorProducerWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/colorproducerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DecklinkProducerWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/decklinkproducerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NetworkProducerWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/networkproducerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ColorBarsWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/colorbarswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NoiseWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/noisewidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PulseAudioWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/pulseaudiowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>JackProducerWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/jackproducerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AlsaWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/alsawidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>X11grabWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/x11grabwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GDIgrabWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/gdigrabwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DirectShowVideoWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/directshowvideowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AvfoundationProducerWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/avfoundationproducerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ToneProducerWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/toneproducerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>OpenOtherDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>497</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>OpenOtherDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>497</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

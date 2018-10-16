@@ -1,0 +1,760 @@
+************************************************************************
+Not in type system
+************************************************************************
+
+************************************************************************
+Generation disabled by type system
+QAbstractAnimation::d_func
+QAbstractButton::d_func
+QAbstractGraphicsShapeItem::d_func
+QAbstractItemDelegate::d_func
+QAbstractItemDelegate::operator=
+QAbstractItemModel::d_func
+QAbstractItemView::d_func
+QAbstractMessageHandler::d_func
+QAbstractNetworkCache::d_func
+QAbstractPrintDialog::d_func
+QAbstractProxyModel::d_func
+QAbstractScrollArea::d_func
+QAbstractSlider::d_func
+QAbstractSocket::d_func
+QAbstractSpinBox::d_func
+QAbstractState::d_func
+QAbstractTextDocumentLayout::d_func
+QAbstractTextDocumentLayout::handlerForObject
+QAbstractTransition::d_func
+QAbstractUriResolver::d_func
+QAbstractVideoBuffer::d_func
+QAbstractVideoBuffer::mapPlanes
+QAbstractVideoSurface::d_func
+QAbstractXmlNodeModel::copyNodeTo
+QAbstractXmlNodeModel::iterate
+QAbstractXmlNodeModel::mapToSequence
+QAbstractXmlNodeModel::sendNamespaces
+QAbstractXmlNodeModel::sequencedTypedValue
+QAbstractXmlNodeModel::type
+QAbstractXmlReceiver::item
+QAbstractXmlReceiver::sendAsNode
+QAction::d_func
+QActionGroup::d_func
+QAnimationGroup::d_func
+QApplication::compressEvent
+QApplication::d_func
+QAudioDecoder::d_func
+QAudioRecorder::d_func
+QAuthenticator::detach
+QBitArray::data_ptr
+QBitArray::detach
+QBitArray::isDetached
+QBitmap::
+QBoxLayout::d_func
+QBrush::
+QBrush::cleanUp
+QBrush::data_ptr
+QBrush::detach
+QBrush::isDetached
+QBuffer::d_func
+QButtonGroup::d_func
+QByteArray::
+QByteArray::data_ptr
+QByteArray::detach
+QByteArray::isDetached
+QCalendarWidget::d_func
+QCamera::d_func
+QCameraExposure::d_func
+QCameraFocus::d_func
+QCameraImageCapture::d_func
+QCameraImageProcessing::d_func
+QCameraViewfinder::d_func
+QCheckBox::d_func
+QCollator::detach
+QColor::
+QColorDialog::d_func
+QColumnView::d_func
+QComboBox::d_func
+QCommandLinkButton::d_func
+QCommonStyle::d_func
+QCompleter::d_func
+QCoreApplication::compressEvent
+QCoreApplication::d_func
+QCursor::
+QDataWidgetMapper::d_func
+QDateTimeEdit::d_func
+QDesktopWidget::d_func
+QDial::d_func
+QDialog::d_func
+QDialogButtonBox::d_func
+QDir::d_func
+QDirModel::d_func
+QDnsLookup::d_func
+QDockWidget::d_func
+QDoubleSpinBox::d_func
+QDoubleValidator::d_func
+QDrag::d_func
+QErrorMessage::d_func
+QEventLoop::d_func
+QEventTransition::d_func
+QFile::d_func
+QFileDevice::d_func
+QFileDialog::d_func
+QFileIconProvider::d_func
+QFileInfo::d_func
+QFileSelector::d_func
+QFileSystemModel::d_func
+QFileSystemWatcher::d_func
+QFinalState::d_func
+QFocusFrame::d_func
+QFont::
+QFont::detach
+QFontComboBox::d_func
+QFontDialog::d_func
+QFormLayout::d_func
+QFrame::d_func
+QGLBuffer::d_func
+QGLColormap::detach
+QGLContext::d_func
+QGLFormat::detach
+QGLFramebufferObject::d_func
+QGLFramebufferObjectFormat::detach
+QGLFunctions::glBufferData
+QGLFunctions::glBufferSubData
+QGLPixelBuffer::d_func
+QGLShader::d_func
+QGLShaderProgram::d_func
+QGLWidget::d_func
+QGesture::d_func
+QGlyphRun::detach
+QGradient::interpolationMode
+QGradient::setInterpolationMode
+QGraphicsAnchor::d_func
+QGraphicsAnchorLayout::d_func
+QGraphicsBlurEffect::d_func
+QGraphicsColorizeEffect::d_func
+QGraphicsDropShadowEffect::d_func
+QGraphicsEffect::d_func
+QGraphicsEllipseItem::d_func
+QGraphicsGridLayout::d_func
+QGraphicsItem::d_func
+QGraphicsItemGroup::d_func
+QGraphicsLayout::d_func
+QGraphicsLayoutItem::d_func
+QGraphicsLineItem::d_func
+QGraphicsLinearLayout::d_func
+QGraphicsOpacityEffect::d_func
+QGraphicsPathItem::d_func
+QGraphicsPixmapItem::d_func
+QGraphicsPolygonItem::d_func
+QGraphicsProxyWidget::d_func
+QGraphicsRectItem::d_func
+QGraphicsRotation::d_func
+QGraphicsScale::d_func
+QGraphicsScene::d_func
+QGraphicsSceneContextMenuEvent::d_func
+QGraphicsSceneDragDropEvent::d_func
+QGraphicsSceneEvent::d_func
+QGraphicsSceneHelpEvent::d_func
+QGraphicsSceneHoverEvent::d_func
+QGraphicsSceneMouseEvent::d_func
+QGraphicsSceneMoveEvent::d_func
+QGraphicsSceneResizeEvent::d_func
+QGraphicsSceneWheelEvent::d_func
+QGraphicsSimpleTextItem::d_func
+QGraphicsSvgItem::d_func
+QGraphicsTransform::d_func
+QGraphicsVideoItem::d_func
+QGraphicsView::d_func
+QGraphicsWidget::d_func
+QGridLayout::d_func
+QGroupBox::d_func
+QGuiApplication::d_func
+QHeaderView::d_func
+QHistoryState::d_func
+QHttpMultiPart::d_func
+QIODevice::d_func
+QIcon::
+QIcon::data_ptr
+QIcon::detach
+QIcon::isDetached
+QIdentityProxyModel::d_func
+QImage::
+QImage::data_ptr
+QImage::detach
+QImage::isDetached
+QImageIOHandler::d_func
+QInputDialog::d_func
+QInputMethod::d_func
+QItemDelegate::d_func
+QItemSelectionModel::d_func
+QJSEngine::d_func
+QJsonArray::detach
+QJsonObject::detach
+QJsonValue::detach
+QKeyEventTransition::d_func
+QKeySequence::
+QKeySequence::data_ptr
+QKeySequence::isDetached
+QKeySequenceEdit::d_func
+QLCDNumber::d_func
+QLabel::d_func
+QLayout::d_func
+QLineEdit::d_func
+QList::begin
+QList::constBegin
+QList::constEnd
+QList::detach
+QList::end
+QList::erase
+QList::fromSet
+QList::insert
+QList::isDetached
+QList::node_construct
+QList::node_copy
+QList::node_destruct
+QList::toSet
+QListView::d_func
+QListWidget::d_func
+QLocalServer::d_func
+QLocalSocket::d_func
+QLockFile::d_func
+QMainWindow::d_func
+QMatrix4x4::
+QMatrix::
+QMdiArea::d_func
+QMdiSubWindow::d_func
+QMediaControl::d_func
+QMediaObject::d_func
+QMediaPlayer::d_func
+QMediaPlaylist::d_func
+QMediaRecorder::d_func
+QMediaService::d_func
+QMenu::d_func
+QMenuBar::d_func
+QMessageBox::d_func
+QMessageLogContext::copy
+QMimeData::d_func
+QMouseEventTransition::d_func
+QMovie::d_func
+QNetworkAccessManager::d_func
+QNetworkCookieJar::d_func
+QNetworkDiskCache::d_func
+QNetworkReply::d_func
+QObject::connect
+QObject::connectNotify
+QObject::d_func
+QObject::destroyed
+QObject::disconnect
+QObject::disconnectNotify
+QObject::findChild
+QObject::findChildren
+QObject::receivers
+QObject::registerUserData
+QObject::setUserData
+QObject::userData
+QOffscreenSurface::d_func
+QOpenGLBuffer::d_func
+QOpenGLContext::d_func
+QOpenGLContextGroup::d_func
+QOpenGLFramebufferObject::d_func
+QOpenGLFramebufferObjectFormat::detach
+QOpenGLPaintDevice::d_func
+QOpenGLShader::d_func
+QOpenGLShaderProgram::d_func
+QOpenGLTexture::d_func
+QOpenGLTimeMonitor::d_func
+QOpenGLTimerQuery::d_func
+QOpenGLVertexArrayObject::d_func
+QOpenGLWidget::d_func
+QOpenGLWindow::d_func
+QPageSetupDialog::d_func
+QPaintDeviceWindow::d_func
+QPaintEngine::d_func
+QPaintEngine::fix_neg_rect
+QPainter::d_func
+QPainterPath::d_func
+QPainterPath::detach
+QPainterPathStroker::d_func
+QPalette::
+QPalette::detach
+QPanGesture::d_func
+QParallelAnimationGroup::d_func
+QPauseAnimation::d_func
+QPdfWriter::d_func
+QPen::
+QPen::data_ptr
+QPen::detach
+QPen::isDetached
+QPicture::d_func
+QPicture::data_ptr
+QPicture::detach
+QPicture::isDetached
+QPictureIO::defineIOHandler
+QPinchGesture::d_func
+QPixmap::
+QPixmap::data_ptr
+QPixmap::detach
+QPixmap::fromImageInPlace
+QPixmap::isDetached
+QPlainTextDocumentLayout::d_func
+QPlainTextEdit::d_func
+QPolygon::
+QPolygon::point
+QPolygon::putPoints
+QPolygon::setPoint
+QPolygon::setPoints
+QPolygonF::
+QPrintDialog::d_func
+QPrintPreviewDialog::d_func
+QPrintPreviewWidget::d_func
+QPrinter::d_func
+QPrinter::printerSelectionOption
+QPrinter::setPrinterSelectionOption
+QPrinterInfo::d_func
+QProcess::d_func
+QProcess::pid
+QProgressBar::d_func
+QProgressDialog::d_func
+QPropertyAnimation::d_func
+QProxyStyle::d_func
+QPushButton::d_func
+QQmlApplicationEngine::d_func
+QQmlComponent::d_func
+QQmlContext::d_func
+QQmlEngine::d_func
+QQmlExpression::d_func
+QQmlExtensionPlugin::d_func
+QQmlFileSelector::d_func
+QQmlPropertyMap::d_func
+QQuaternion::
+QQuickFramebufferObject::d_func
+QQuickItem::d_func
+QQuickItem::transform
+QQuickItemGrabResult::d_func
+QQuickPaintedItem::d_func
+QQuickRenderControl::d_func
+QQuickTextDocument::d_func
+QQuickTransform::d_func
+QQuickView::d_func
+QQuickWidget::d_func
+QQuickWindow::d_func
+QRadioButton::d_func
+QRadioData::d_func
+QRadioTuner::d_func
+QRasterWindow::d_func
+QRegion::
+QRegion::cleanUp
+QRegion::detach
+QRegularExpressionValidator::d_func
+QResource::d_func
+QRubberBand::d_func
+QSGAbstractRenderer::d_func
+QSGEngine::d_func
+QSGTexture::d_func
+QSaveFile::d_func
+QScreen::d_func
+QScrollArea::d_func
+QScrollBar::d_func
+QScroller::d_func
+QSequentialAnimationGroup::d_func
+QSessionManager::d_func
+QSettings::d_func
+QSettings::registerFormat
+QSharedMemory::d_func
+QSharedMemory::detach
+QShortcut::d_func
+QSignalMapper::d_func
+QSignalTransition::d_func
+QSimpleXmlNodeModel::d_func
+QSizeGrip::d_func
+QSizePolicy::
+QSlider::d_func
+QSocketNotifier::d_func
+QSortFilterProxyModel::d_func
+QSpinBox::d_func
+QSplashScreen::d_func
+QSplitter::d_func
+QSplitterHandle::d_func
+QSqlDriver::d_func
+QSqlField::detach
+QSqlQueryModel::d_func
+QSqlRecord::detach
+QSqlRelationalTableModel::d_func
+QSqlResult::d_func
+QSqlTableModel::d_func
+QSslSocket::d_func
+QStackedLayout::d_func
+QStackedWidget::d_func
+QStandardItem::d_func
+QStandardItemModel::d_func
+QState::d_func
+QStateMachine::d_func
+QStaticText::detach
+QStatusBar::d_func
+QStyle::d_func
+QStyleHints::d_func
+QStyledItemDelegate::d_func
+QSurfaceFormat::detach
+QSvgGenerator::d_func
+QSvgRenderer::d_func
+QSvgWidget::d_func
+QSwipeGesture::d_func
+QSyntaxHighlighter::d_func
+QSystemTrayIcon::d_func
+QTabBar::d_func
+QTabWidget::d_func
+QTableView::d_func
+QTableWidget::d_func
+QTapAndHoldGesture::d_func
+QTapGesture::d_func
+QTcpServer::d_func
+QTcpSocket::d_func
+QTemporaryFile::d_func
+QTextBlockGroup::d_func
+QTextBrowser::d_func
+QTextDocument::d_func
+QTextEdit::d_func
+QTextFormat::
+QTextFrame::d_func
+QTextLength::
+QTextList::d_func
+QTextObject::d_func
+QTextStream::d_func
+QTextTable::d_func
+QThreadPool::d_func
+QTimeLine::d_func
+QToolBar::d_func
+QToolBox::d_func
+QToolButton::d_func
+QTransform::
+QTranslator::d_func
+QTreeView::d_func
+QTreeWidget::d_func
+QUdpSocket::d_func
+QUiLoader::d_func
+QUndoGroup::d_func
+QUndoStack::d_func
+QUndoView::d_func
+QUrl::data_ptr
+QUrl::detach
+QUrl::isDetached
+QUrlQuery::data_ptr
+QUrlQuery::isDetached
+QValidator::d_func
+QVariantAnimation::d_func
+QVector2D::
+QVector3D::
+QVector4D::
+QVector::back
+QVector::begin
+QVector::constBegin
+QVector::constEnd
+QVector::detach
+QVector::end
+QVector::erase
+QVector::front
+QVector::insert
+QVector::isDetached
+QVector::operator+=
+QVideoWidget::d_func
+QWidget::create
+QWidget::d_func
+QWidget::find
+QWidget::internalWinId
+QWidgetAction::d_func
+QWindow::d_func
+QWizard::d_func
+QWizardPage::d_func
+QXmlFormatter::d_func
+QXmlFormatter::item
+QXmlNodeModelIndex::iterate
+QXmlNodeModelIndex::sendNamespaces
+QXmlNodeModelIndex::sequencedTypedValue
+QXmlNodeModelIndex::type
+QXmlResultItems::d_func
+QXmlSchemaValidator::schema
+QXmlSerializer::d_func
+QXmlSerializer::item
+QXmlSimpleReader::d_func
+QXmlStreamReader::d_func
+QXmlStreamWriter::d_func
+Qt::qt_getEnumMetaObject
+Qt::qt_getEnumName
+************************************************************************
+
+************************************************************************
+Type redefined to not be a class
+************************************************************************
+
+************************************************************************
+Unmatched argument type
+QAbstractSocket::setSocketDescriptor qintptr
+QAccessibleEvent::QAccessibleEvent QAccessibleInterface*
+QAudioBuffer::QAudioBuffer QAbstractAudioBuffer*
+QBasicMutex::fastTryLock QMutexData*&
+QBasicMutex::fastTryUnlock QMutexData*&
+QByteArray::QByteArray QByteArrayDataPtr
+QByteArray::QByteArray Qt::Initialization
+QByteArray::fromStdString std::string const&
+QByteArray::reallocData Data::AllocationOptions
+QCoreApplication::installNativeEventFilter QAbstractNativeEventFilter*
+QCoreApplication::removeNativeEventFilter QAbstractNativeEventFilter*
+QFile::open FILE*
+QFileDialog::QFileDialog QFileDialogArgs const&
+QFuture::QFuture QFutureInterface<T>*
+QFuture::QFuture QFutureInterfaceBase*
+QGLColormap::cleanup QGLColormap::QGLColormapData*
+QGLShaderProgram::setUniformValue QMatrix2x2 const&
+QGLShaderProgram::setUniformValue QMatrix2x3 const&
+QGLShaderProgram::setUniformValue QMatrix2x4 const&
+QGLShaderProgram::setUniformValue QMatrix3x2 const&
+QGLShaderProgram::setUniformValue QMatrix3x3 const&
+QGLShaderProgram::setUniformValue QMatrix3x4 const&
+QGLShaderProgram::setUniformValue QMatrix4x2 const&
+QGLShaderProgram::setUniformValue QMatrix4x3 const&
+QGLShaderProgram::setUniformValueArray QMatrix2x2 const*
+QGLShaderProgram::setUniformValueArray QMatrix2x3 const*
+QGLShaderProgram::setUniformValueArray QMatrix2x4 const*
+QGLShaderProgram::setUniformValueArray QMatrix3x2 const*
+QGLShaderProgram::setUniformValueArray QMatrix3x3 const*
+QGLShaderProgram::setUniformValueArray QMatrix3x4 const*
+QGLShaderProgram::setUniformValueArray QMatrix4x2 const*
+QGLShaderProgram::setUniformValueArray QMatrix4x3 const*
+QGuiApplication::compressEvent QPostEventList*
+QHostAddress::QHostAddress sockaddr const*
+QHostAddress::setAddress sockaddr const*
+QImage::QImage QImageCleanupFunction
+QImageWriter::setTransformation QImageIOHandler::Transformations
+QJSEngine::toScriptValue T const&
+QJSValue::QJSValue QV4::ExecutionEngine*
+QList::contains_impl QListData::ArrayCompatibleLayout
+QList::contains_impl QListData::NotArrayCompatibleLayout
+QList::count_impl QListData::ArrayCompatibleLayout
+QList::count_impl QListData::NotArrayCompatibleLayout
+QList::dealloc QListData::Data*
+QList::fromStdList std::list<T> const&
+QList::isValidIterator iterator const&
+QList::op_eq_impl QListData::ArrayCompatibleLayout
+QList::op_eq_impl QListData::NotArrayCompatibleLayout
+QLocalServer::listen qintptr
+QLocalSocket::setSocketDescriptor qintptr
+QMatrix4x4::QMatrix4x4 QGenericMatrix<N,M,float> const&
+QMatrix4x4::QMatrix4x4 Qt::Initialization
+QMatrix::QMatrix Qt::Initialization
+QMediaServiceProviderHint::QMediaServiceProviderHint QMediaServiceProviderHint::Features
+QMenu::setPlatformMenu QPlatformMenu*
+QMessageLogger::critical QLoggingCategory const&
+QMessageLogger::critical QMessageLogger::CategoryFunction
+QMessageLogger::debug QLoggingCategory const&
+QMessageLogger::debug QMessageLogger::CategoryFunction
+QMessageLogger::info QLoggingCategory const&
+QMessageLogger::info QMessageLogger::CategoryFunction
+QMessageLogger::warning QLoggingCategory const&
+QMessageLogger::warning QMessageLogger::CategoryFunction
+QMetaMethod::fromSignal Func
+QMetaMethod::invoke QGenericArgument
+QMetaMethod::invoke QGenericReturnArgument
+QMetaMethod::invokeOnGadget QGenericArgument
+QMetaMethod::invokeOnGadget QGenericReturnArgument
+QMetaType::QMetaType QMetaType::ExtensionFlag const
+QMetaType::ctor QMetaTypeInterface const*
+QMetaType::debugStream QDebug&
+QMetaType::isExtended QMetaType::ExtensionFlag const
+QMetaType::registerConverter To
+QMetaType::registerConverter UnaryFunction
+QMetaType::registerNormalizedType QMetaType::Deleter
+QMetaType::registerNormalizedType QMetaType::Destructor
+QMetaType::registerStreamOperators QMetaType::SaveOperator
+QMetaType::registerType QMetaType::Deleter
+QOpenGLBuffer::mapRange QOpenGLBuffer::RangeAccessFlags
+QOpenGLContext::insertExternalFunctions QAbstractOpenGLFunctions*
+QOpenGLContext::insertFunctionsBackend QOpenGLVersionStatus const&
+QOpenGLContext::removeExternalFunctions QAbstractOpenGLFunctions*
+QOpenGLContext::removeFunctionsBackend QOpenGLVersionStatus const&
+QOpenGLContext::setQGLContextHandle void
+QOpenGLContext::setTextureFunctions QOpenGLTextureHelper*
+QOpenGLShaderProgram::setUniformValue QMatrix2x2 const&
+QOpenGLShaderProgram::setUniformValue QMatrix2x3 const&
+QOpenGLShaderProgram::setUniformValue QMatrix2x4 const&
+QOpenGLShaderProgram::setUniformValue QMatrix3x2 const&
+QOpenGLShaderProgram::setUniformValue QMatrix3x3 const&
+QOpenGLShaderProgram::setUniformValue QMatrix3x4 const&
+QOpenGLShaderProgram::setUniformValue QMatrix4x2 const&
+QOpenGLShaderProgram::setUniformValue QMatrix4x3 const&
+QOpenGLShaderProgram::setUniformValueArray QMatrix2x2 const*
+QOpenGLShaderProgram::setUniformValueArray QMatrix2x3 const*
+QOpenGLShaderProgram::setUniformValueArray QMatrix2x4 const*
+QOpenGLShaderProgram::setUniformValueArray QMatrix3x2 const*
+QOpenGLShaderProgram::setUniformValueArray QMatrix3x3 const*
+QOpenGLShaderProgram::setUniformValueArray QMatrix3x4 const*
+QOpenGLShaderProgram::setUniformValueArray QMatrix4x2 const*
+QOpenGLShaderProgram::setUniformValueArray QMatrix4x3 const*
+QOpenGLTexture::setCompressedData QOpenGLPixelTransferOptions const*
+QOpenGLTexture::setData QOpenGLPixelTransferOptions const*
+QPair::QPair QPair<TT1,TT2> const&
+QPair::operator_assign QPair<TT1,TT2> const&
+QPixelFormat::get QPixelFormat::Field
+QPixelFormat::set QPixelFormat::Field
+QPixmap::QPixmap QPlatformPixmap*
+QQmlComponent::QQmlComponent QQmlCompiledData*
+QQmlComponent::createObject QQmlV4Function*
+QQmlComponent::incubateObject QQmlV4Function*
+QQmlContext::QQmlContext QQmlContextData*
+QQmlEngine::addImageProvider QQmlImageProviderBase*
+QQmlExpression::QQmlExpression QQmlContextData*
+QQmlIncubationController::incubateWhile bool volatile*
+QQmlInfo::__lshift__ QTextStreamFunction
+QQmlInfo::__lshift__ QTextStreamManipulator
+QQmlPropertyMap::QQmlPropertyMap DerivedType*
+QQuaternion::QQuaternion Qt::Initialization
+QQuaternion::fromRotationMatrix QMatrix3x3 const&
+QQuickImageProvider::QQuickImageProvider QQmlImageProviderBase::ImageType
+QQuickItem::itemChange QQuickItem::ItemChangeData const&
+QQuickItem::mapFromItem QQmlV4Function*
+QQuickItem::mapToItem QQmlV4Function*
+QQuickItem::setFlags QQuickItem::Flags
+QQuickPaintedItem::setPerformanceHints QQuickPaintedItem::PerformanceHints
+QQuickWindow::closing QQuickCloseEvent*
+QQuickWindow::createTextureFromId QQuickWindow::CreateTextureOptions
+QQuickWindow::createTextureFromImage QQuickWindow::CreateTextureOptions
+QSGAbstractRenderer::setClearMode QSGAbstractRenderer::ClearMode
+QSGEngine::createTextureFromId QSGEngine::CreateTextureOptions
+QSGEngine::createTextureFromImage QSGEngine::CreateTextureOptions
+QSGFlatColorMaterial::compare QSGMaterial const*
+QSGGeometryNode::setMaterial QSGMaterial*
+QSGGeometryNode::setOpaqueMaterial QSGMaterial*
+QSGNode::setFlags QSGNode::Flags
+QScreen::QScreen QPlatformScreen*
+QSocketNotifier::QSocketNotifier qintptr
+QSslSocket::setSocketDescriptor qintptr
+QTcpServer::incomingConnection qintptr
+QTcpServer::setSocketDescriptor qintptr
+QTextDocument::appendUndoItem QAbstractUndoItem*
+QTextFrame::setLayoutData QTextFrameLayoutData*
+QTextInlineObject::QTextInlineObject QTextEngine*
+QTextLayout::QTextLayout QTextEngine*
+QTextLine::QTextLine QTextEngine*
+QTextStream::QTextStream FILE*
+QTimer::singleShot Func1
+QTransform::QTransform Qt::Initialization
+QUrl::fromUserInput QUrl::UserInputResolutionOptions
+QVariantAnimation::registerInterpolator QVariantAnimation::Interpolator
+QVector2D::QVector2D Qt::Initialization
+QVector3D::QVector3D Qt::Initialization
+QVector4D::QVector4D Qt::Initialization
+QVector::freeData Data*
+QVector::freeData QVector<T>::Data*
+QVector::fromStdVector std::vector<T> const&
+QVector::isValidIterator QVector<T>::iterator const&
+QVector::reallocData QArrayData::AllocationOptions
+QXmlItem::QXmlItem QPatternist::Item const&
+QXmlNamePool::QXmlNamePool QPatternist::NamePool*
+QXmlNodeModelIndex::QXmlNodeModelIndex QPatternist::NodeIndexStorage const&
+************************************************************************
+
+************************************************************************
+Unmatched return type
+QAbstractSocket::socketDescriptor qintptr
+QAccessibleEvent::accessibleInterface QAccessibleInterface*
+QAccessibleEvent::uniqueId QAccessible::Id
+QBackingStore::handle QPlatformBackingStore*
+QBasicMutex::dummyLocked QMutexData*
+QByteArray::toStdString std::string
+QFontDatabase::findFont QFontEngine*
+QFuture::begin const_iterator
+QFuture::constBegin const_iterator
+QFuture::constEnd const_iterator
+QFuture::end const_iterator
+QFutureWatcher::futureInterface QFutureInterfaceBase const&
+QFutureWatcher::futureInterface QFutureInterfaceBase&
+QGLContext::getProcAddress QFunctionPointer
+QGraphicsEffect::source QGraphicsEffectSource*
+QGuiApplication::platformFunction QFunctionPointer
+QGuiApplication::platformNativeInterface QPlatformNativeInterface*
+QImageReader::transformation QImageIOHandler::Transformations
+QImageWriter::transformation QImageIOHandler::Transformations
+QJSEngine::fromScriptValue T
+QJSEngine::handle QV8Engine*
+QJsonArray::begin QJsonArray::const_iterator
+QJsonArray::begin QJsonArray::iterator
+QJsonArray::constBegin QJsonArray::const_iterator
+QJsonArray::constEnd QJsonArray::const_iterator
+QJsonArray::end QJsonArray::const_iterator
+QJsonArray::end QJsonArray::iterator
+QJsonArray::erase QJsonArray::iterator
+QJsonArray::insert QJsonArray::iterator
+QJsonArray::operator_subscript QJsonValueRef
+QJsonObject::begin QJsonObject::const_iterator
+QJsonObject::begin QJsonObject::iterator
+QJsonObject::constBegin QJsonObject::const_iterator
+QJsonObject::constEnd QJsonObject::const_iterator
+QJsonObject::constFind QJsonObject::const_iterator
+QJsonObject::end QJsonObject::const_iterator
+QJsonObject::end QJsonObject::iterator
+QJsonObject::erase QJsonObject::iterator
+QJsonObject::find QJsonObject::const_iterator
+QJsonObject::find QJsonObject::iterator
+QJsonObject::insert QJsonObject::iterator
+QJsonObject::operator_subscript QJsonValueRef
+QLibrary::resolve QFunctionPointer
+QList::cbegin const_iterator
+QList::cend const_iterator
+QList::detach_helper_grow Node*
+QList::toStdList std::list<T>
+QLocalSocket::socketDescriptor qintptr
+QMatrix4x4::normalMatrix QMatrix3x3
+QMatrix4x4::toGenericMatrix QGenericMatrix<N,M,float>
+QMediaService::requestControl T
+QMediaServiceProviderHint::features QMediaServiceProviderHint::Features
+QMenu::platformMenu QPlatformMenu*
+QMenuBar::platformMenuBar QPlatformMenuBar*
+QMessageLogger::critical QDebug
+QMessageLogger::debug QDebug
+QMessageLogger::info QDebug
+QMessageLogger::noDebug QNoDebug
+QMessageLogger::warning QDebug
+QObject::connectImpl QMetaObject::Connection
+QObject::connect_functor QMetaObject::Connection
+QOffscreenSurface::handle QPlatformOffscreenSurface*
+QOpenGLContext::functionsBackend QOpenGLVersionFunctionsBackend*
+QOpenGLContext::getProcAddress QFunctionPointer
+QOpenGLContext::handle QPlatformOpenGLContext*
+QOpenGLContext::shareHandle QPlatformOpenGLContext*
+QOpenGLContext::textureFunctions QOpenGLTextureHelper*
+QOpenGLContext::versionFunctions QAbstractOpenGLFunctions*
+QOpenGLContext::versionFunctions TYPE*
+QPixmap::handle QPlatformPixmap*
+QQmlComponent::qmlAttachedProperties QQmlComponentAttached*
+QQmlEngine::imageProvider QQmlImageProviderBase*
+QQuaternion::toRotationMatrix QMatrix3x3
+QQuickImageProvider::flags QQmlImageProviderBase::Flags
+QQuickImageProvider::imageType QQmlImageProviderBase::ImageType
+QQuickImageProvider::requestTexture QQuickTextureFactory*
+QQuickItem::flags QQuickItem::Flags
+QQuickItem::grabToImage QSharedPointer<QQuickItemGrabResult>
+QQuickPaintedItem::performanceHints QQuickPaintedItem::PerformanceHints
+QQuickWindow::accessibleRoot QAccessibleInterface*
+QSGAbstractRenderer::clearMode QSGAbstractRenderer::ClearMode
+QSGFlatColorMaterial::createShader QSGMaterialShader*
+QSGGeometryNode::activeMaterial QSGMaterial*
+QSGGeometryNode::material QSGMaterial*
+QSGGeometryNode::opaqueMaterial QSGMaterial*
+QSGNode::flags QSGNode::Flags
+QSGTextureMaterial::createShader QSGMaterialShader*
+QScreen::handle QPlatformScreen*
+QSocketNotifier::socket qintptr
+QSysInfo::macVersion QSysInfo::MacVersion
+QSysInfo::windowsVersion QSysInfo::WinVersion
+QTcpServer::socketDescriptor qintptr
+QTextFrame::layoutData QTextFrameLayoutData*
+QTextLayout::engine QTextEngine*
+QTimeZone::nextTransition QTimeZone::OffsetData
+QTimeZone::offsetData QTimeZone::OffsetData
+QTimeZone::previousTransition QTimeZone::OffsetData
+QTimeZone::transitions QTimeZone::OffsetDataList
+QVector::c2m iterator
+QVector::cbegin const_iterator
+QVector::cend const_iterator
+QVector::toStdVector std::vector<T>
+QWindow::accessibleRoot QAccessibleInterface*
+QWindow::handle QPlatformWindow*
+************************************************************************
+

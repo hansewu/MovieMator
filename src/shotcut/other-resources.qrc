@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>scripts/new.html</file>
+        <file>scripts/rangy-core.js</file>
+        <file>scripts/rangy-cssclassapplier.js</file>
+        <file>scripts/jquery.js</file>
+        <file>scripts/htmleditor.js</file>
+        <file>src/qml/vui_droparea.qml</file>
+        <file>src/qss/mainstylesheet.qss</file>
+        <file>fonts/DigifaceWide.ttf</file>
+        <file>translations/mm_en.qm</file>
+        <file>translations/mm_zh.qm</file>
+    </qresource>
+</RCC>

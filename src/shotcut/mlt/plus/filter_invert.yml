@@ -1,0 +1,8 @@
+schema_version: 0.1
+type: filter
+identifier: invert
+title: Invert
+version: 1
+language: en
+tags:
+  - Video

@@ -1,0 +1,12 @@
+f=dv
+pix_fmt=yuv422p
+vcodec=dvvideo
+acodec=pcm_s16le
+
+meta.preset.extension=dv
+meta.preset.note=Double the amount of chroma as normal DV
+
+meta.preset.name=DVCPRO50 (dv_ntsc_wide)
+
+meta.preset.category=3
+meta.preset.index=10

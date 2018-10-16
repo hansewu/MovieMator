@@ -1,0 +1,19 @@
+width=480
+height=320
+
+f=asf
+r=24
+acodec=wmav2
+ab=160k
+vcodec=wmv2
+g=100
+vb=400k
+bf=0
+
+meta.preset.extension=wmv
+meta.preset.note=Windows Media Video
+
+meta.preset.name=Windows Phone
+
+meta.preset.category=1
+meta.preset.index=23

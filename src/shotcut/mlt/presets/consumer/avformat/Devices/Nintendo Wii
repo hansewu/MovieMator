@@ -1,0 +1,16 @@
+width=720
+height=480
+
+f=avi
+r=24
+vcodec=mjpeg
+qscale=4
+acodec=libmp3lame
+ab=256k
+
+meta.preset.extension=avi
+
+meta.preset.name=Nintendo Wii
+
+meta.preset.category=1
+meta.preset.index=19

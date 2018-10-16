@@ -1,0 +1,8 @@
+schema_version: 0.1
+type: filter
+identifier: shape
+title: Shape Alpha
+version: 1
+language: en
+tags:
+  - Video

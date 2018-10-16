@@ -1,0 +1,27 @@
+QMainWindow#MainWindow {
+    background-color: rgb(29, 30, 31)
+}
+
+QScrollBar::vertical{background-color:rgb(82,82,82);width:14px;border: 3px solid rgb(82,82,82);}
+
+QScrollBar::handle:vertical{background:#787878;border-radius:4px}
+
+QScrollBar::add-page:vertical{background:none;}
+
+QScrollBar::sub-page:vertical{background:none;}
+
+QScrollBar::add-line:vertical{height:0px; background:none;}
+
+QScrollBar::sub-line:vertical{height:0px; background:none;}
+
+QScrollBar::horizontal{background-color:rgb(82,82,82); height:14px; border: 3px solid rgb(82,82,82);}
+
+QScrollBar::handle:horizontal{background:#787878;border-radius:4px}
+
+QScrollBar::add-page:horizontal{background:none;}
+
+QScrollBar::sub-page:horizontal{background:none;}
+
+QScrollBar::add-line:horizontal{width:0px; background:none;}
+
+QScrollBar::sub-line:horizontal{width:0px; background:none;}

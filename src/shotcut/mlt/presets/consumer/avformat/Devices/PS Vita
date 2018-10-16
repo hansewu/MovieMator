@@ -1,0 +1,21 @@
+width=960
+height=544
+aspect=@16/9
+progressive=1
+
+f=psp
+r=24
+acodec=libmp3lame
+ar=32000
+ab=96k
+
+vcodec=libxvid
+threads=0
+
+
+meta.preset.extension=mp4
+meta.preset.note=for Sony PlayStation Portable
+meta.preset.name=PS Vita
+
+meta.preset.category=1
+meta.preset.index=17

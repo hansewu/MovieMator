@@ -1,0 +1,27 @@
+width=1334
+height=750
+
+progressive=1
+
+f=mov
+r=24
+acodec=aac
+ar=32000
+ab=128k
+
+vcodec=libx264
+threads=0
+vpre=veryfast
+preset=veryfast
+flags2=-dct8x8
+refs=1
+bf=1
+x264opts=ref=1:bframes=1
+
+meta.preset.extension=mov
+meta.preset.note=for App Store Preview video
+
+meta.preset.name=App Store (1334x750)
+
+meta.preset.category=4
+meta.preset.index=10

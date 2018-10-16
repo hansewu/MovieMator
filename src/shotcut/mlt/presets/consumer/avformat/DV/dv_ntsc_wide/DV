@@ -1,0 +1,12 @@
+f=dv
+pix_fmt=yuv411p
+vcodec=dvvideo
+acodec=pcm_s16le
+
+meta.preset.extension=dv
+meta.preset.note=The popular standard definition camcorder digital video format
+
+meta.preset.name=DV (dv_ntsc_wide)
+
+meta.preset.category=3
+meta.preset.index=6

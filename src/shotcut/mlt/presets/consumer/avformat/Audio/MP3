@@ -1,0 +1,13 @@
+f=mp3
+acodec=libmp3lame
+ab=256k
+vn=1
+video_off=1
+
+meta.preset.extension=mp3
+meta.preset.note=audio only
+
+meta.preset.name=MP3
+
+meta.preset.category=7
+meta.preset.index=1

@@ -1,0 +1,25 @@
+f=mp4
+r=24
+acodec=libmp3lame
+ab=128k
+ar=44100
+
+vcodec=mpeg4
+minrate=0
+vb=2M
+mbd=rd
+trellis=1
+cmp=satd
+subcmp=satd
+bf=2
+flags=+mv4+aic+qpel
+
+movflags=+faststart
+
+meta.preset.extension=mp4
+meta.preset.note=Part 2 Advanced Simple Profile
+
+meta.preset.name=MPEG-4-ASP
+
+meta.preset.category=5
+meta.preset.index=22

@@ -1,0 +1,8 @@
+schema_version: 0.1
+type: producer
+identifier: pgm
+title: PGM Image
+version: 1
+language: en
+tags:
+  - Video

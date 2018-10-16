@@ -1,0 +1,13 @@
+
+f=avi
+r=24
+acodec=flac
+
+vcodec=huffyuv
+
+meta.preset.extension=avi
+
+meta.preset.name=AVI (HUFFYUV)
+
+meta.preset.category=5
+meta.preset.index=6

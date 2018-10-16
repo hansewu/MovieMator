@@ -1,0 +1,16 @@
+f=asf
+r=24
+acodec=wmav2
+ab=160k
+vcodec=wmv2
+g=100
+
+bf=0
+
+meta.preset.extension=wmv
+meta.preset.note=Xbox 360
+
+meta.preset.name=Xbox 360
+
+meta.preset.category=1
+meta.preset.index=20

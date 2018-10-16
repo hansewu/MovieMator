@@ -1,0 +1,12 @@
+
+progressive=1
+
+f=swf
+r=24
+
+meta.preset.extension=swf
+
+meta.preset.name=SWF
+
+meta.preset.category=5
+meta.preset.index=23
