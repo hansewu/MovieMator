@@ -37,7 +37,9 @@
 #include <registrationchecker.h>
 
 #include "maincontroller.h"
+#include "dialogs/mmsplashscreen.h"
 
+#include <time.h>
 
 #ifdef Q_OS_WIN
 extern "C"
@@ -48,9 +50,12 @@ extern "C"
 }
 #endif
 
+
+static MMSplashScreen *g_splash = NULL;
+
 static void mlt_log_handler(void *service, int mlt_level, const char *format, va_list args)
 {
-    if (mlt_level > mlt_log_get_level())
+    if (mlt_level > mlt_log_get_level() && mlt_level != 65536)
         return;
 
     enum Logger::LogLevel cuteLoggerLevel = Logger::Fatal;
@@ -72,6 +77,12 @@ static void mlt_log_handler(void *service, int mlt_level, const char *format, va
     case MLT_LOG_WARNING:
         cuteLoggerLevel = Logger::Warning;
         break;
+    case 65536:
+        QString msg = QString().vsprintf(format, args);
+        msg.replace('\n', "");
+        g_splash->showMessage(msg, Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
+        qApp->processEvents();
+        return;
     }
     QString message;
     mlt_properties properties = service? MLT_SERVICE_PROPERTIES((mlt_service) service) : NULL;
@@ -267,10 +278,22 @@ int main(int argc, char **argv)
     setenv("QT_SCALE_FACTOR", "2", 1);
     Application a(argc, argv);
 
+//   MMSplashScreen splash(QPixmap(":/splash.png"));
+//    splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
+//    splash.show();
+    g_splash = new MMSplashScreen(QPixmap(":/splash.png"));
+    g_splash->showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
+    g_splash->show();
 
-    //copy qml files
+
+    clock_t begin, duration;
+    begin = clock();
+
+#if defined(Q_OS_MAC)
+//    //copy qml files
     QDir dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
     QmlUtilities::sharedEngine()->addImportPath(dir.path());
+
     QDir appDir(qApp->applicationDirPath());
     appDir.cdUp();
     appDir.cd("Resources");
@@ -293,15 +316,16 @@ int main(int argc, char **argv)
     unzip.start(unzip_path, args);
 
     unzip.waitForFinished();
+#endif
 
+    duration = clock() - begin;
+    printf("copy qml --- %ld\n", duration);
+
+
+    QDir appDir(qApp->applicationDirPath());
     appDir.cd("share");
     appDir.cd("mlt");
     setenv("MLT_DATA", appDir.path().toUtf8().constData(), 1);
-
-
-    QSplashScreen splash(QPixmap(""));
-    splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
-    splash.show();
 
   //  resolve_security_bookmark();
     Registration.readAndCheckRegistrationInfo();
@@ -317,16 +341,21 @@ int main(int argc, char **argv)
 
     MainWindow::changeTheme("dark");//Settings.theme());
 
+
+
+    begin = clock();
+
     a.mainWindow = &MAIN;
     a.mainWindow->show();
     a.mainWindow->move ((QApplication::desktop()->width() - a.mainWindow->width())/2,(QApplication::desktop()->height() - a.mainWindow->height())/2);
     a.mainWindow->setFullScreen(a.isFullScreen);
 
+    duration = clock() - begin;
+    printf("show main --- %ld\n", duration);
 
-    splash.finish(a.mainWindow);
-
-
-  //  QMessageBox::information(NULL, "Title", a.resourceArg, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    g_splash->finish(a.mainWindow);
+    delete g_splash;
+    g_splash = NULL;
 
     if (!a.resourceArg.isEmpty())
         a.mainWindow->open(a.resourceArg);
@@ -335,7 +364,6 @@ int main(int argc, char **argv)
 
 
     a.mainWindow->createMultitrackModelIfNeeded();
-
 
 
 #ifdef MOVIEMATOR_FREE

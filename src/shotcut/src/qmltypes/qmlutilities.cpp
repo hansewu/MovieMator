@@ -68,10 +68,11 @@ void QmlUtilities::setCommonProperties(QQmlContext* context)
 QDir QmlUtilities::qmlDir()
 {
 //    QDir dir(qApp->applicationDirPath());
-    QDir dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
-//    QDir dir(qApp->applicationDirPath());
 //    dir.cdUp();
 //    dir.cd("Resources");
+
+    QDir dir(qApp->applicationDirPath());
+
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     dir.cdUp();
 #elseif defined(Q_OS_MAC)
@@ -89,7 +90,7 @@ QQmlEngine * QmlUtilities::sharedEngine()
     if (!s_engine)
     {
         s_engine = new QQmlEngine;
-        s_engine->setImportPathList(QStringList());
+//        s_engine->setImportPathList(QStringList());
     }
     return s_engine;
 }

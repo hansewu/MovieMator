@@ -313,7 +313,8 @@ Rectangle {
         onPositionChanged: {
             if (!isTransition)
             {
-                originalClipIndex = timeline.removeTransitionOnClipWithUndo(trackIndex, index)
+                if (originalTrackIndex == trackIndex && originalClipIndex == index)
+                    originalClipIndex = timeline.removeTransitionOnClipWithUndo(trackIndex, index)
                 //console.log("clip onPositionChanged")
                 if (mouse.y < 0 && trackIndex > 0)
                     parent.draggedToTrack(clipRoot, -1)

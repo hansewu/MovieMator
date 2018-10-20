@@ -179,5 +179,6 @@
         <file>timeline/timeline-toolbar-size-p.png</file>
         <file>timeline/timeline-toolbar-text-n.png</file>
         <file>timeline/timeline-toolbar-text-p.png</file>
+        <file>splash.png</file>
     </qresource>
 </RCC>

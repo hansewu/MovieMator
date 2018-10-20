@@ -131,7 +131,8 @@ SOURCES += main.cpp\
     melt/melt_main.c \
     melt/io.c \
     jobs/abstracttask.cpp \
-    jobs/melttask.cpp
+    jobs/melttask.cpp \
+    dialogs/mmsplashscreen.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -260,7 +261,8 @@ HEADERS  += mainwindow.h \
     melt/io.h \
     jobs/abstracttask.h \
     jobs/melttask.h \
-    melt/melt.h
+    melt/melt.h \
+    dialogs/mmsplashscreen.h
 
 
 #OBJECTIVE_SOURCES+= \
