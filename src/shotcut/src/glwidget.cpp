@@ -823,7 +823,7 @@ FrameRenderer::~FrameRenderer()
 
 void FrameRenderer::showFrame(Mlt::Frame frame)
 {
-    LOG_DEBUG()<<"showFrame begins";
+  //  LOG_DEBUG()<<"showFrame begins";
     int width = 0;
     int height = 0;
 
@@ -906,7 +906,7 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
     }
 
     m_semaphore.release();
-    LOG_DEBUG()<<"showFrame ends";
+  //  LOG_DEBUG()<<"showFrame ends";
 }
 
 SharedFrame FrameRenderer::getDisplayFrame()

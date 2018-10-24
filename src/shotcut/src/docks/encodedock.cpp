@@ -1125,20 +1125,20 @@ void EncodeDock::on_encodeButton_clicked()
                 m_outputFilename += m_extension;
             }
         }
-//        if (seekable) {
-//            // Batch encode
-//            JOBS.setShowFirst(true);
-//            int threadCount = QThread::idealThreadCount();
-//            if (threadCount > 2 && ui->parallelCheckbox->isChecked())
-//                threadCount = qMin(threadCount - 1, 4);
-//            else
-//                threadCount = 1;
-//            enqueueMelt(m_outputFilename, Settings.playerGPU()? -1 : -threadCount);
+        if (seekable) {
+            // Batch encode
+            JOBS.setShowFirst(true);
+            int threadCount = QThread::idealThreadCount();
+            if (threadCount > 2 && ui->parallelCheckbox->isChecked())
+                threadCount = qMin(threadCount - 1, 4);
+            else
+                threadCount = 1;
+            enqueueMelt(m_outputFilename, Settings.playerGPU()? -1 : -threadCount);
 
-//            this->hide();
+            this->hide();
 
-//          //  MAIN.onJobsDockTriggered(true);
-//        }
+          //  MAIN.onJobsDockTriggered(true);
+        }
    /*/    else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {
             // Capture MovieMator screencast
             MLT.stop();
@@ -1158,7 +1158,7 @@ void EncodeDock::on_encodeButton_clicked()
             ui->streamButton->setDisabled(true);
         }*/
 
-
+/*
         Mlt::Properties *preset = collectProperties(-1);
         if (seekable) {
             EncodeTask *task = new EncodeTask(MLT.producer(), &MLT.profile(), preset, m_outputFilename);
@@ -1168,6 +1168,7 @@ void EncodeDock::on_encodeButton_clicked()
         }
 
 //        encode(m_outputFilename);
+  */
     }
 }
 

@@ -88,6 +88,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
 #endif
     LOG_DEBUG() << "end";
 
+    setFocusPolicy(Qt::ClickFocus);//wzq
 }
 
 TimelineDock::~TimelineDock()
@@ -255,6 +256,45 @@ void TimelineDock::resetZoom()
     QMetaObject::invokeMethod(m_quickView.rootObject(), "resetZoom");
 }
 
+
+//wzq
+void TimelineDock::wheelEvent(QWheelEvent * event)
+{
+    if(event->delta() > 0)
+    {
+        if (isVisible()) {
+            if (event->modifiers() & Qt::ControlModifier)
+                ;//m_timelineDock->makeTracksShorter();
+            else
+                zoomIn();
+        }
+
+    }
+    else
+    {
+        if (isVisible()) {
+            if (event->modifiers() & Qt::ControlModifier)
+                ;//m_timelineDock->makeTracksShorter();
+            else
+                zoomOut();
+        }
+    }
+
+    event->accept();
+}
+/*
+bool eventFilter( QObject * o, QEvent * e ) {
+   if (e->type() == QEvent::Wheel
+       && qobject_cast<ProjectTreeView*>( o ) ) {
+        // Then do what you want, per example: ignore it.
+        e->ignore();
+        return true;
+   }
+   return QWidget::eventFilter( o, e );
+}
+
+setFocusPolicy(Qt::ClickFocus);
+*/
 void TimelineDock::makeTracksShorter()
 {
     QMetaObject::invokeMethod(m_quickView.rootObject(), "makeTracksShorter");

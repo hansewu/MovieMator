@@ -65,6 +65,8 @@ public:
     void zoomIn();
     void zoomOut();
     void resetZoom();
+    void wheelEvent(QWheelEvent * event);
+
     void makeTracksShorter();
     void makeTracksTaller();
     void setSelection(QList<int> selection = QList<int>(), int trackIndex = -1, bool isMultitrack = false);
