@@ -133,8 +133,7 @@ SOURCES += main.cpp\
     jobs/abstracttask.cpp \
     jobs/melttask.cpp \
     dialogs/mmsplashscreen.cpp \
-    securitybookmark/SecurityBookmark.mm
-
+#    securitybookmark/SecurityBookmark.mm
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -264,8 +263,12 @@ HEADERS  += mainwindow.h \
     jobs/melttask.h \
     melt/melt.h \
     dialogs/mmsplashscreen.h \
-    securitybookmark/SecurityBookmark.h
+#    securitybookmark/SecurityBookmark.h
 
+mac {
+    SOURCES += securitybookmark/SecurityBookmark.mm
+    HEADERS += securitybookmark/SecurityBookmark.h
+}
 
 #OBJECTIVE_SOURCES+= \
 #    ../iRate/iRate.mm \
@@ -415,7 +418,7 @@ mac {
     # QMake from Qt 5.1.0 on OSX is messing with the environment in which it runs
     # pkg-config such that the PKG_CONFIG_PATH env var is not set.
     isEmpty(MLT_PREFIX) {
-#        MLT_PREFIX = $$PWD/../../../../MovieMator
+#        MLT_PREFIX = $$PWD/../../../../mlt_lib
         MLT_PREFIX = $$PWD/../../../../MovieMator_gdb/MacVideoEditor/trunk/shotcut/mlt_build
     }
 
