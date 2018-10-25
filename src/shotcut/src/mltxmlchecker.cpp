@@ -26,7 +26,11 @@
 #include <QUrl>
 #include <QRegExp>
 #include <Logger.h>
-//#include "../securitybookmark/transport_security_bookmark.h"
+
+#if defined (Q_OS_MAC)
+    #include "securitybookmark/transport_security_bookmark.h"
+#endif
+
 
 
 static int alignWidth(int width)

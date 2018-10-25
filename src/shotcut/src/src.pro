@@ -132,7 +132,8 @@ SOURCES += main.cpp\
     melt/io.c \
     jobs/abstracttask.cpp \
     jobs/melttask.cpp \
-    dialogs/mmsplashscreen.cpp
+    dialogs/mmsplashscreen.cpp \
+    securitybookmark/SecurityBookmark.mm
 
 
 HEADERS  += mainwindow.h \
@@ -262,7 +263,8 @@ HEADERS  += mainwindow.h \
     jobs/abstracttask.h \
     jobs/melttask.h \
     melt/melt.h \
-    dialogs/mmsplashscreen.h
+    dialogs/mmsplashscreen.h \
+    securitybookmark/SecurityBookmark.h
 
 
 #OBJECTIVE_SOURCES+= \
@@ -413,21 +415,23 @@ mac {
     # QMake from Qt 5.1.0 on OSX is messing with the environment in which it runs
     # pkg-config such that the PKG_CONFIG_PATH env var is not set.
     isEmpty(MLT_PREFIX) {
-        MLT_PREFIX = /Users/gdb/shotcut_build_v1606_release/build
+#        MLT_PREFIX = $$PWD/../../../../MovieMator
+        MLT_PREFIX = $$PWD/../../../../MovieMator_gdb/MacVideoEditor/trunk/shotcut/mlt_build
     }
 
     INCLUDEPATH += $$MLT_PREFIX/include/mlt++
     INCLUDEPATH += $$MLT_PREFIX/include/mlt
-    INCLUDEPATH += ./mltmodules
+#    INCLUDEPATH += ./mltmodules
 
-    INCLUDEPATH += $$MLT_PREFIX/include/SDL
+#    INCLUDEPATH += $$MLT_PREFIX/include/SDL
 
-    LIBS += -L$$MLT_PREFIX/lib -lmlt++ -lmlt -lSDL
-    LIBS += -lexif -lmltqt
+    LIBS += -L$$MLT_PREFIX/lib -lmlt++ -lmlt
+#    LIBS += -L$$MLT_PREFIX/lib -lmlt++ -lmlt -lSDL
+#    LIBS += -lexif -lmltqt
     LIBS += "-framework Cocoa"
 
-    INCLUDEPATH += /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7
-    LIBS += -F/System/Library/Frameworks -framework Python
+#    INCLUDEPATH += /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7
+#    LIBS += -F/System/Library/Frameworks -framework Python
 }
 
 #LIBS += -L/usr/lib -lcrypto

@@ -75,7 +75,7 @@ QDir QmlUtilities::qmlDir()
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     dir.cdUp();
-#elseif defined(Q_OS_MAC)
+#elif defined(Q_OS_MAC)
     dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
 #endif
     dir.cd("share");

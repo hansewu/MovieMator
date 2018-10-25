@@ -36,6 +36,8 @@
 #include <Logger.h>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QMessageBox>
+#include <QAction>
+
 
 #include "../maincontroller.h"
 
