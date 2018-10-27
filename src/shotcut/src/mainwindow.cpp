@@ -2258,15 +2258,27 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event)
 
 bool MainWindow::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == QEvent::DragEnter && target == MLT.videoWidget()) {
+    if (event->type() == QEvent::Wheel)
+    {
+    //    const QMetaObject *mobj = target->metaObject();
+    //    qDebug()<<"class name is "<<mobj->className()<<"obj name is "<<target->objectName();
+    }
+
+    if (event->type() == QEvent::DragEnter && target == MLT.videoWidget())
+    {
         dragEnterEvent(static_cast<QDragEnterEvent*>(event));
         return true;
-    } else if (event->type() == QEvent::Drop && target == MLT.videoWidget()) {
+    }
+    else if (event->type() == QEvent::Drop && target == MLT.videoWidget())
+    {
         dropEvent(static_cast<QDropEvent*>(event));
         return true;
-    } else if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
+    }
+    else if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease)
+    {
         QQuickWidget * focusedQuickWidget = qobject_cast<QQuickWidget*>(qApp->focusWidget());
-        if (focusedQuickWidget) {
+        if (focusedQuickWidget)
+        {
             event->accept();
             focusedQuickWidget->quickWindow()->sendEvent(focusedQuickWidget->quickWindow()->activeFocusItem(), event);
             QWidget * w = focusedQuickWidget->parentWidget();
@@ -2274,8 +2286,10 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
                 qApp->sendEvent(w, event);
             return true;
         }
-    } else if (event->type() == QEvent::NonClientAreaMouseButtonDblClick
-               && (target == m_encodeDock || target == m_jobsDock || target == m_propertiesDock || target == m_tasksDock)) {
+    }
+    else if (event->type() == QEvent::NonClientAreaMouseButtonDblClick
+               && (target == m_encodeDock || target == m_jobsDock || target == m_propertiesDock || target == m_tasksDock))
+    {
         return true;
     }
 

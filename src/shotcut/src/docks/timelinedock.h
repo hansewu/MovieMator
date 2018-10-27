@@ -67,6 +67,7 @@ public:
     void resetZoom();
     void wheelEvent(QWheelEvent * event);
 
+
     void makeTracksShorter();
     void makeTracksTaller();
     void setSelection(QList<int> selection = QList<int>(), int trackIndex = -1, bool isMultitrack = false);
@@ -212,6 +213,9 @@ protected:
     void dragLeaveEvent(QDragLeaveEvent* event);
     void dropEvent(QDropEvent* event);
     bool event(QEvent *event);
+
+    bool eventFilter( QObject * o, QEvent * e );
+    void filterScrollChild(QObject* parent);
 
 private:
     bool isBlank(int trackIndex, int clipIndex);
