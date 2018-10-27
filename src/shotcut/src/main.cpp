@@ -275,7 +275,7 @@ int main(int argc, char **argv)
 #endif
 
     setenv("QT_DEVICE_PIXEL_RATIO", "auto", 1);
-    setenv("QT_SCALE_FACTOR", "2", 1);
+//    setenv("QT_SCALE_FACTOR", "2", 1);
     Application a(argc, argv);
 
 //   MMSplashScreen splash(QPixmap(":/splash.png"));
@@ -292,17 +292,17 @@ int main(int argc, char **argv)
 #if defined(Q_OS_MAC)
 //    //copy qml files
     QDir dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
-    QmlUtilities::sharedEngine()->addImportPath(dir.path());
+//    QmlUtilities::sharedEngine()->addImportPath(dir.path());
 
-    QDir appDir(qApp->applicationDirPath());
-    appDir.cdUp();
-    appDir.cd("Resources");
+    QDir appDir0(qApp->applicationDirPath());
+    appDir0.cdUp();
+    appDir0.cd("Resources");
     //QmlUtilities::sharedEngine()->addImportPath(appDir.path());
 
     QString dstArchivePath = dir.path().append("/resource.zip");
     QFile::remove(dstArchivePath);
    // QFile::copy(appDir.path().append("/resource"), dstArchivePath);
-    QFile::copy(appDir.path().append("/resource.zip"), dstArchivePath);
+    QFile::copy(appDir0.path().append("/resource.zip"), dstArchivePath);
     QStringList args;
     args << "-o";
     args << dstArchivePath;
@@ -311,9 +311,8 @@ int main(int argc, char **argv)
     QProcess unzip;
 
     QDir appDir1(qApp->applicationDirPath());
-    QString unzip_path = appDir1.path().append("/unzip.exe");
-    //unzip.start("/usr/bin/unzip", args);
-    unzip.start(unzip_path, args);
+
+    unzip.start("/usr/bin/unzip", args);
 
     unzip.waitForFinished();
 #endif
@@ -323,6 +322,8 @@ int main(int argc, char **argv)
 
 
     QDir appDir(qApp->applicationDirPath());
+    appDir.cdUp();
+    appDir.cd("Resources");
     appDir.cd("share");
     appDir.cd("mlt");
     setenv("MLT_DATA", appDir.path().toUtf8().constData(), 1);

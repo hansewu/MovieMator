@@ -68,7 +68,7 @@ RowLayout {
                         margins: 1
                     }
                     radius: parent.radius
-                    width: (parent.width-50)
+                    width: parent.width       //(parent.width-50)
                            * (value - minimumValue) / (maximumValue - minimumValue)
                            - parent.border.width
                            - (label.visible? parent.border.width : 3)
