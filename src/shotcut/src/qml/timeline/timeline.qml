@@ -367,7 +367,8 @@ Rectangle {
                     id: scrollView
                     width: root.width - headerWidth - 2
                     height: root.height - ruler.height - toolbar.height - 1 - 1//下留白 与ruler的space
-                    //flickableItem.contentY: headerScrollView.flickableItem.contentY
+                    //flickableItem.interactive: false  //wzq
+
 
                     style: ScrollViewStyle {
                         handle:
@@ -420,6 +421,31 @@ Rectangle {
                     Item {
                         width: ((tracksContainer.width + headerWidth) < width) ? width : (tracksContainer.width + headerWidth)
                         height: trackHeaders.height + 30 // 30 is padding
+
+                        MouseArea
+                        {
+                                                   anchors.fill: parent
+                                                   propagateComposedEvents: true
+                                                   onPressed: mouse.accepted = false
+                                                   onReleased: mouse.accepted = false
+                                                   onClicked: mouse.accepted = false
+                                                   onDoubleClicked: mouse.accepted = false;
+                                                   onPressAndHold: mouse.accepted = false;
+                                                   onWheel:
+                                                   {
+                                                       if (wheel.angleDelta.y < 0)
+                                                       {
+                                                            root.zoomIn();
+                                                       }
+                                                       else if(wheel.angleDelta.y > 0)
+                                                       {
+                                                           root.zoomOut();
+                                                        }
+
+                                                   }
+
+                        }
+
                         Column {
                             // These make the striped background for the tracks.
                             // It is important that these are not part of the track visual hierarchy;

@@ -41,6 +41,31 @@
 
 #include "../maincontroller.h"
 
+void TimelineDock::filterScrollChild(QObject* parent)
+{
+    QObjectList children = parent->children();
+ //   if(children.size() == 0)
+    {
+        const QMetaObject *mobj = parent->metaObject();
+        qDebug()<<"class name is "<<mobj->className()<<"obj name is "<<parent->objectName();
+
+        //if(QString(mobj->className()) == QString("QScrollArea"))
+        //            ((QScrollArea *)parent)->viewport()->installEventFilter(this);
+        //if(QString(parent->objectName()).contains(QString("qt_scrollarea_viewport")))
+          //  ((QWidget *)parent)->installEventFilter(this);
+        if(QString(mobj->className()) == QString("QScrollBar"))
+                    ((QObject *)parent)->installEventFilter(this);
+
+    }
+ //   else
+    {
+           for(int i=0;i<children.size();++i)
+        {
+            filterScrollChild(children[i]);
+        }
+    }
+}
+
 
 TimelineDock::TimelineDock(QWidget *parent) :
     QDockWidget(parent),
@@ -90,7 +115,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
 #endif
     LOG_DEBUG() << "end";
 
-    setFocusPolicy(Qt::ClickFocus);//wzq
+    //filterScrollChild(this);//wzq
+    //installEventFilter(this);//wzq
 }
 
 TimelineDock::~TimelineDock()
@@ -264,13 +290,13 @@ void TimelineDock::resetZoom()
 //wzq
 void TimelineDock::wheelEvent(QWheelEvent * event)
 {
-    if(event->delta() > 0)
+/*    if(event->delta() > 0)
     {
         if (isVisible()) {
             if (event->modifiers() & Qt::ControlModifier)
                 ;//m_timelineDock->makeTracksShorter();
             else
-                zoomIn();
+                zoomOut();
         }
 
     }
@@ -280,25 +306,30 @@ void TimelineDock::wheelEvent(QWheelEvent * event)
             if (event->modifiers() & Qt::ControlModifier)
                 ;//m_timelineDock->makeTracksShorter();
             else
-                zoomOut();
+                zoomIn();
         }
     }
 
-    event->accept();
+   // event->ignore();
+   event->accept();
+   */
 }
-/*
-bool eventFilter( QObject * o, QEvent * e ) {
-   if (e->type() == QEvent::Wheel
-       && qobject_cast<ProjectTreeView*>( o ) ) {
+
+bool TimelineDock::eventFilter( QObject * o, QEvent * e ) {
+   if (e->type() == QEvent::Wheel)
+   {
+       const QMetaObject *mobj = o->metaObject();
+       qDebug()<<"class name is "<<mobj->className()<<"obj name is "<<o->objectName();
+
+       //&& qobject_cast<ProjectTreeView*>( o ) ) {
         // Then do what you want, per example: ignore it.
-        e->ignore();
+        //e->ignore();
         return true;
    }
    return QWidget::eventFilter( o, e );
 }
 
-setFocusPolicy(Qt::ClickFocus);
-*/
+
 void TimelineDock::makeTracksShorter()
 {
     QMetaObject::invokeMethod(m_quickView.rootObject(), "makeTracksShorter");
@@ -1045,6 +1076,14 @@ bool TimelineDock::event(QEvent *event)
     bool result = QDockWidget::event(event);
     if (event->type() == QEvent::PaletteChange || event->type() == QEvent::StyleChange)
         load(true);
+    if (event->type() == QEvent::Wheel)
+    {
+        //&& qobject_cast<ProjectTreeView*>( o ) ) {
+         // Then do what you want, per example: ignore it.
+         event->ignore();
+         return true;
+    }
+
     return result;
 }
 

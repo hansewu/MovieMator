@@ -105,10 +105,11 @@ Rectangle {
         visible: settings.timelineShowThumbnails
         anchors.right: parent.right
         anchors.top: parent.top
-        anchors.topMargin: parent.border.width
-        anchors.rightMargin: parent.border.width
+        //anchors.topMargin: parent.border.width
+        //anchors.rightMargin: parent.border.width
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: parent.border.width
+        //anchors.bottomMargin: parent.border.width
+        anchors.margins: 6
         width: height * 16.0/9.0
         fillMode: Image.PreserveAspectFit
         source: isText ? textThumbnail : imagePath(outPoint)
@@ -119,10 +120,11 @@ Rectangle {
         visible: settings.timelineShowThumbnails
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width
+        //anchors.topMargin: parent.border.width
+        //anchors.leftMargin: parent.border.width
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: parent.border.width
+        //anchors.bottomMargin: parent.border.width
+        anchors.margins: 6
         width: height * 16.0/9.0
         fillMode: Image.PreserveAspectFit
         source: isText ? textThumbnail : imagePath(inPoint)
@@ -133,11 +135,12 @@ Rectangle {
         visible: settings.timelineShowThumbnails
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.width/2 - width / 2
+        //anchors.topMargin: parent.border.width
+        //anchors.leftMargin: parent.width/2 - width / 2
 
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: parent.border.width
+        //anchors.bottomMargin: parent.border.width
+        anchors.margins: 6
         width: height * 16.0/9.0
         fillMode: Image.PreserveAspectFit
         source: isText ? textThumbnail : imagePath((outPoint+inPoint)/2)
