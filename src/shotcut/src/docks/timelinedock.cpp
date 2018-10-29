@@ -162,6 +162,8 @@ int TimelineDock::clipIndexAtPosition(int trackIndex, int position)
         if (track) {
             Mlt::Playlist playlist(*track);
             result = playlist.get_clip_index_at(position);
+            if (result > playlist.count() - 1)
+                result = -1;
         }
     }
     return result;
