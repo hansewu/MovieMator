@@ -38,3 +38,11 @@ void Util::setColorsToHighlight(QWidget* widget, QPalette::ColorRole role)
     widget->setPalette(palette);
     widget->setAutoFillBackground(true);
 }
+
+QString Util::removeFileScheme(QUrl& url)
+{
+    QString path = url.url();
+    if (url.scheme() == "file")
+        path = url.url(QUrl::PreferLocalFile);
+    return path;
+}

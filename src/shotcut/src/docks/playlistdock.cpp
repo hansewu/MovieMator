@@ -26,6 +26,7 @@
 #include <QMenu>
 #include <Logger.h>
 #include <QScrollBar>
+#include "util.h"
 
 PlaylistDock::PlaylistDock(QWidget *parent) :
     QDockWidget(parent),
@@ -445,7 +446,12 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
 {
     if (data && data->hasUrls()) {
 
-        QStringList filelist = QUrl::toStringList(data->urls(), QUrl::RemoveScheme);
+        QStringList filelist;
+        foreach (QUrl url, data->urls())
+        {
+            filelist.append(Util::removeFileScheme(url));
+        }
+
         MAIN.openFiles(filelist);
     }
     else if (data && data->hasFormat(Mlt::XmlMimeType)) {

@@ -21,6 +21,7 @@
 
 #include <QString>
 #include <QPalette>
+#include <QUrl>
 
 class QWidget;
 
@@ -31,6 +32,7 @@ private:
 public:
     static QString baseName(const QString &filePath);
     static void setColorsToHighlight(QWidget* widget, QPalette::ColorRole role = QPalette::Window);
+    static QString removeFileScheme(QUrl& url);
 };
 
 #endif // UTIL_H
