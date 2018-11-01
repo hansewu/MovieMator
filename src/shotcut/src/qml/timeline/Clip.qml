@@ -36,7 +36,7 @@ Rectangle {
     signal clicked(var clip)
     signal moved(var clip)
     signal dragged(var clip, var mouse)
-    signal dropped(var clip)
+    signal clipdropped(var clip)
     signal draggedToTrack(var clip, int direction)
     signal trimmingIn(var clip, real delta, var mouse)
     signal trimmedIn(var clip)
@@ -76,6 +76,7 @@ Rectangle {
     }
 
     function reparent(track) {
+        Drag.active = false
         parent = track
         isAudio = track.isAudio
         height = track.height
@@ -337,9 +338,10 @@ Rectangle {
                     originalX = parent.x
                     originalTrackIndex = trackIndex
                 } else {
-                    parent.dropped(clipRoot)
+                    parent.clipdropped(clipRoot)
                 }
             }
+
         }
         onDoubleClicked: timeline.position = clipRoot.x / multitrack.scaleFactor
 

@@ -11,7 +11,6 @@ import QtQuick.Controls.Styles 1.4
 Rectangle {
     id: root
 
-
     SystemPalette { id: activePalette }
     //color: activePalette.window
     color: backgroundColor
@@ -72,14 +71,6 @@ Rectangle {
 
     onCurrentTrackChanged: timeline.selection = []
 
-//    onSelectionChanged: {
-//        if (selection.length) {
-//            cornerstone.selected = false
-//            for (var i = 0; i < trackHeaderRepeater.count; i++)
-//                trackHeaderRepeater.itemAt(i).selected = false
-//        }
-//    }
-
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
@@ -88,33 +79,44 @@ Rectangle {
 
     DropArea {
         id: dropArea
-        property bool hasUrls;
-        property bool hasAbstractItem;
+        property bool hasUrls
+        property bool hasAbstractItem
+        property string teststring: 'dropArea'
         anchors.fill: parent
+
+        function endDrop()
+        {
+            Drag.cancel()
+        }
         onEntered: {
+            console.log("onEntered --- --- --- --- --- ---")
             if (drag.formats.indexOf('application/mlt+xml') >= 0 || drag.hasUrls || drag.formats.indexOf('application/x-qabstractitemmodeldatalist') >= 0)
             {
                 drag.acceptProposedAction()
-                hasUrls = false;
-                hasAbstractItem = false;
+                hasUrls = false
+                hasAbstractItem = false
             }
             if (drag.formats.indexOf('application/x-qabstractitemmodeldatalist') >= 0)
             {
-                 hasAbstractItem =  true;
+                 hasAbstractItem =  true
             }
             if (drag.hasUrls)
-               hasUrls = true;
+               hasUrls = true
         }
-        onExited: Logic.dropped()
+        onExited: {
+            console.log("onExited --- --- --- --- --- ---")
+            Logic.dropped()
+        }
         onPositionChanged: {
+            console.log("onPositionChanged --- --- --- --- --- ---")
             if (drag.formats.indexOf('application/mlt+xml') >= 0 || drag.hasUrls || drag.formats.indexOf('application/x-qabstractitemmodeldatalist') >= 0)
             {
 
-                  Logic.dragging(drag, drag.text);
+                  Logic.dragging(drag, drag.text)
             }
         }
         onDropped: {
-
+            console.log("onDropped --- --- --- --- --- ---")
             if (drop.formats.indexOf('application/mlt+xml') >= 0) //数据来自于media窗口
             {
                 if (currentTrack >= 0)
@@ -128,56 +130,28 @@ Rectangle {
             else if (drop.hasUrls) {
 
                 if (currentTrack >= 0 ) {
-                    Logic.acceptDropUrls(drop.urls);
-                    drop.acceptProposedAction();
+                    Logic.acceptDropUrls(drop.urls)
+                    drop.acceptProposedAction()
                     toolbar.hasClipOrTrackSelected = true
                 }
             }
             else if (drop.formats.indexOf('application/x-qabstractitemmodeldatalist') >= 0) //数据来自于recent窗口
             {
-
-
                    if (currentTrack >= 0 )
                    {
+                       console.log(drop.source.objectName)
 
-//                       console.log(drop.getDataAsArrayBuffer('application/x-qabstractitemmodeldatalist'));
-//                       Logic.acceptDropListItem(drop.getDataAsArrayBuffer('application/x-qabstractitemmodeldatalist'));
-//                       drop.acceptProposedAction();
-
-                       console.log(drop.source.objectName);
-//                       if(drop.source.objectName.match("listWidget"))
-//                       {
-//                           console.log("listWidget");
-//                           if(currentTrack != 2)
-//                           {
-//                                 console.log(drop.getDataAsArrayBuffer('application/x-qabstractitemmodeldatalist'));
-//                                 Logic.acceptDropListItem(drop.getDataAsArrayBuffer('application/x-qabstractitemmodeldatalist'));
-//                                 drop.acceptProposedAction();
-//                           }
-//                       }
-//                       else
-                       {
-//                           if(multitrack.video)
-                           {
-                                 Logic.acceptDropListItem(drop.getDataAsArrayBuffer('application/x-qabstractitemmodeldatalist'));
-                                 drop.acceptProposedAction();
-                                 toolbar.hasClipOrTrackSelected = true
-                           }
-                       }
-
+                       Logic.acceptDropListItem(drop.getDataAsArrayBuffer('application/x-qabstractitemmodeldatalist'))
+                       drop.acceptProposedAction()
+                       toolbar.hasClipOrTrackSelected = true
                     }
             }
             Logic.dropped()
+        }
+
     }
 
-//    Rectangle {
-//        z: 1
-//        anchors.fill: parent
-//        anchors.topMargin: 4
-//        border.width: 2
-//        border.color: 'lightgray'
-//        color:'transparent'
-//    }
+
 
     TimelineToolbar {
         id: toolbar
@@ -193,7 +167,7 @@ Rectangle {
             leftMargin: 1
             rightMargin: 1
         }
-        z: 1
+        z: 0
     }
 
     Row {
@@ -207,7 +181,7 @@ Rectangle {
         width: root.width
 
         Column {
-            z: 1
+            z: 0
             spacing: 1
             Rectangle {
                 id: cornerstone
@@ -218,24 +192,8 @@ Rectangle {
 
                 border.color: selected? 'red' : 'transparent'
                 border.width: selected? 1 : 0
-//                MouseArea {
-//                    anchors.fill: parent
-//                    acceptedButtons: Qt.LeftButton
-//                    onClicked: timeline.selectMultitrack()
-//                }
                 color: selected? moviematorBlue : normalColor//activePalette.window
-                z: 1
-//                MouseArea {
-//                    anchors.fill: parent
-//                    acceptedButtons: Qt.LeftButton
-//                    onClicked: {
-//                        selection = []
-//                        for (var i = 0; i < trackHeaderRepeater.count; i++)
-//                            trackHeaderRepeater.itemAt(i).selected = false
-//                        parent.selected = true
-//                        timeline.selectMultitrack()
-//                    }
-//                }
+                z: 0
             }
 
 
@@ -330,6 +288,7 @@ Rectangle {
                 else
                     scim = false
             }
+
             Timer {
                 id: scrubTimer
                 interval: 25
@@ -429,17 +388,17 @@ Rectangle {
                                                    onPressed: mouse.accepted = false
                                                    onReleased: mouse.accepted = false
                                                    onClicked: mouse.accepted = false
-                                                   onDoubleClicked: mouse.accepted = false;
-                                                   onPressAndHold: mouse.accepted = false;
+                                                   onDoubleClicked: mouse.accepted = false
+                                                   onPressAndHold: mouse.accepted = false
                                                    onWheel:
                                                    {
                                                        if (wheel.angleDelta.y < 0)
                                                        {
-                                                            root.zoomIn();
+                                                            root.zoomIn()
                                                        }
                                                        else if(wheel.angleDelta.y > 0)
                                                        {
-                                                           root.zoomOut();
+                                                           root.zoomOut()
                                                         }
 
                                                    }
@@ -504,6 +463,7 @@ Rectangle {
             }
         }
     }
+
 
     Rectangle {
         id: dropTarget
@@ -580,12 +540,12 @@ Rectangle {
         MenuItem {
             text: qsTr('Add Audio Track')
             shortcut: 'Ctrl+U'
-            onTriggered: timeline.addAudioTrack();
+            onTriggered: timeline.addAudioTrack()
         }
         MenuItem {
             text: qsTr('Add Video Track')
             shortcut: 'Ctrl+Y'
-            onTriggered: timeline.addVideoTrack();
+            onTriggered: timeline.addVideoTrack()
         }
         MenuItem {
             text: qsTr('Insert Track')
@@ -596,65 +556,9 @@ Rectangle {
             text: qsTr('Remove Track')
             onTriggered: timeline.removeTrack()
         }
-//        MenuSeparator {}
-//        MenuItem {
-//            text: qsTr("Ripple All Tracks")
-//            checkable: true
-//            checked: settings.timelineRippleAllTracks
-//            onTriggered: settings.timelineRippleAllTracks = checked
-//        }
-//        MenuSeparator {}
-//        MenuItem {
-//            enabled: multitrack.trackHeight >= 50
-//            text: qsTr('Make Tracks Shorter')
-//            shortcut: 'Ctrl+-'
-//            onTriggered: makeTracksShorter()
-//        }
-//        MenuItem {
-//            text: qsTr('Make Tracks Taller')
-//            shortcut: 'Ctrl+='
-//            onTriggered: makeTracksTaller()
-//        }
 
-   /*     MenuSeparator {}
-        MenuItem {
-            text: qsTr("Ripple All Tracks")
-            checkable: true
-            checked: settings.timelineRippleAllTracks
-            onTriggered: settings.timelineRippleAllTracks = checked
-        }
-        MenuItem {
-            text: qsTr('Show Audio Waveforms')
-            checkable: true
-            checked: settings.timelineShowWaveforms
-            onTriggered: {
-                settings.timelineShowWaveforms = checked
-                if (checked) {
-                    for (var i = 0; i < tracksRepeater.count; i++)
-                        tracksRepeater.itemAt(i).redrawWaveforms()
-                }
-            }
-        }
-        MenuItem {
-            text: qsTr('Show Video Thumbnails')
-            checkable: true
-            checked: settings.timelineShowThumbnails
-            onTriggered: settings.timelineShowThumbnails = checked
-        }
-        MenuItem {
-            text: qsTr('Reload')
-            onTriggered: {
-                multitrack.reload()
-            }
-        }
-        onPopupVisibleChanged: {
-            if (visible && application.OS === 'Windows' && __popupGeometry.height > 0) {
-                // Try to fix menu running off screen. This only works intermittently.
-                menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
-                menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
-            }
-        }*/
     }
+
 
     DelegateModel {
         id: trackDelegateModel
@@ -669,7 +573,7 @@ Rectangle {
             selection: timeline.selection
             onClipClicked: {
                 currentTrack = track.DelegateModel.itemsIndex
-                timeline.selection = [ clip.DelegateModel.itemsIndex ];
+                timeline.selection = [ clip.DelegateModel.itemsIndex ]
                 root.clipClicked()
                 toolbar.hasClipOrTrackSelected = true
 
@@ -682,7 +586,7 @@ Rectangle {
                     scrollTimer.backwards = false
                     scrollTimer.start()
                 } else if (x < 50) {
-                    scrollView.flickableItem.contentX = 0;
+                    scrollView.flickableItem.contentX = 0
                     scrollTimer.stop()
                 } else if (x < scrollView.flickableItem.contentX + 50) {
                     scrollTimer.item = clip
@@ -727,14 +631,14 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onPressed: {
-                        mouse.accepted = true;
+                        mouse.accepted = true
                         trackHeaderRepeater.itemAt(index).pulseLockButton()
                     }
                 }
             }
         }
     }
-    
+
     Connections {
         target: timeline
         onPositionChanged: if (!stopScrolling) Logic.scrollIfNeeded()
@@ -791,5 +695,5 @@ Rectangle {
                 stop()
         }
     }
-}
+
 }

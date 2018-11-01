@@ -172,11 +172,11 @@ Rectangle {
                     })
                 }
             }
-            onDropped: placeHolderAdded = false
+            onClipdropped: placeHolderAdded = false
 
             Component.onCompleted: {
                 moved.connect(trackRoot.clipDropped)
-                dropped.connect(trackRoot.clipDropped)
+                clipdropped.connect(trackRoot.clipDropped)
                 draggedToTrack.connect(trackRoot.clipDraggedToTrack)
             }
         }
