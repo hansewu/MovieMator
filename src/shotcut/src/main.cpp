@@ -80,6 +80,9 @@ static void mlt_log_handler(void *service, int mlt_level, const char *format, va
     case 65536:
         QString msg = QString().vsprintf(format, args);
         msg.replace('\n', "");
+#if defined(Q_OS_WIN)
+        msg.replace('/', "\\");
+#endif
         g_splash->showMessage(msg, Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
         qApp->processEvents();
         return;
