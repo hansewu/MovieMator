@@ -203,7 +203,18 @@ Rectangle {
             }
         }
     }
-        
+
+    KeyFrameAnimation {
+        id: keyFrameAnimation
+        anchors {
+            top: attachedContainer.bottom
+            left: parent.left
+            leftMargin: 10
+            topMargin: 0
+        }
+    }
+
+
     states: [
         State {
             name: "landscape"  // 左右结构
@@ -211,7 +222,7 @@ Rectangle {
                 target: filterConfigScrollView
                 anchors {
                     top: titleBackground.bottom
-                    bottom: root.bottom
+                    bottom: attachedContainer.bottom //root.bottom
                     left: attachedContainer.right
                     right: root.right
                 }

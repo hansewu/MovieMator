@@ -9,4 +9,20 @@ Metadata {
     isFavorite: true
     gpuAlt: "movit.opacity"
     allowMultiple: false
+    keyframes {
+            allowAnimateIn: true
+            allowAnimateOut: true
+            simpleProperties: ['level']
+            parameters: [
+                Parameter {
+                    name: qsTr('Level')
+                    property: 'level'
+                    isSimple: true
+                    isCurve: true
+                    minimum: 0
+                    maximum: 2
+                }
+            ]
+        }
+
 }
