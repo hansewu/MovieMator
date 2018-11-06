@@ -936,7 +936,15 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
         chooseClipAtPosition(m_position, &trackIndex, &clipIndex);
     if (trackIndex < 0 || clipIndex < 0)
         return;
+
     setCurrentTrack(trackIndex);
+
+    if (isTrackLocked(trackIndex))
+    {
+        pulseLockButtonOnTrack(trackIndex);
+        return;
+    }
+
     if (clipIndex >= 0 && trackIndex >= 0) {
         int i = m_model.trackList().at(trackIndex).mlt_index;
         QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
