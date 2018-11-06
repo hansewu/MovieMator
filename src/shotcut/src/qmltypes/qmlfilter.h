@@ -80,6 +80,7 @@ public:
 
     //function to set or get key frame para value
 #ifdef MOVIEMATOR_PRO
+
     Q_INVOKABLE void setKeyFrameParaValue(double frame, QString key, QString value);
     Q_INVOKABLE void removeKeyFrameParaValue(double frame);
     Q_INVOKABLE QString getKeyFrameParaValue(double frame, QString key);
@@ -92,6 +93,7 @@ public:
     Q_INVOKABLE bool bHasNextKeyFrame(double frame);
     Q_INVOKABLE int  getKeyFrameNumber();
     Q_INVOKABLE int  getKeyFrame(int index);
+    Mlt::Animation getAnimation(const QString& name);
     Q_INVOKABLE int getKeyFrameCountOnProject(QString name);
     Q_INVOKABLE QString getStringKeyValueOnProjectOnIndex(int index, QString name);
     Q_INVOKABLE int getKeyFrameOnProjectOnIndex(int index, QString name);

@@ -33,5 +33,8 @@ function calcMenuRect(triggerItem, pad) {
     // Calculate the x position
     result.x = mainWinRect.x+50//triggerPos.x
     
+    result.y = mainWinRect.y + triggerItem.y - 50
+  	result.x = mainWinRect.x + triggerItem.x + 50
+
     return result
 }

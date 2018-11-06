@@ -55,12 +55,24 @@ QmlFilter::~QmlFilter()
 }
 
 #ifdef MOVIEMATOR_PRO
+Mlt::Animation QmlFilter::getAnimation(const QString& name)
+{
+    if (m_filter) {
+        const char* propertyName = name.toUtf8().constData();
+        if (!m_filter->get_animation(propertyName)) {
+            // Cause a string property to be interpreted as animated value.
+            m_filter->anim_get_double(propertyName, 0, 0);
+        }
+        return m_filter->get_animation(propertyName);
+    }
+    return Mlt::Animation();
+}
+
 int QmlFilter::getKeyFrameCountOnProject(QString name)
 {
     if (m_filter)
     {
-        QString str = QString::fromUtf8(m_filter->get(name.toUtf8().constData()));
-        int count = str.count(QRegExp(";"));
+        int count = getAnimation(name).key_count();
         return count;
     }
     else
@@ -71,18 +83,9 @@ int QmlFilter::getKeyFrameOnProjectOnIndex(int index, QString name)
 {
     if (m_filter)
     {
-        QString str = QString::fromUtf8(m_filter->get(name.toUtf8().constData()));
+        int nKeyFrame = getAnimation(name).key_get_frame(index);
 
-        if(str.count())
-        {
-             QStringList subList = str.split(";", QString::SkipEmptyParts);
-             QString str1 = subList.at(index);
-             QStringList strKeyFrameList = str1.split("=", QString::SkipEmptyParts);
-             int nKeyFrame = strKeyFrameList.at(0).toInt();
-             qDebug()<<"2...."<<"index:"<<index<<"name:"<<name<<"nKeyFrame:"<<nKeyFrame;
-             return MAIN.timelineDock()->getPositionOnClip(nKeyFrame);
-        }
-
+        return MAIN.timelineDock()->getPositionOnClip(nKeyFrame);
     }
 
     return -1;
@@ -92,13 +95,10 @@ float QmlFilter::getKeyValueOnProjectOnIndex(int index, QString name)
 {
     if (m_filter)
     {
-        QString str = QString::fromUtf8(m_filter->get(name.toUtf8().constData()));
-        if(str.count())
+        int nKeyFrame = getAnimation(name).key_get_frame(index);
+        if (nKeyFrame >= 0)
         {
-            QStringList subList = str.split(";", QString::SkipEmptyParts);
-            QString str1 = subList.at(index);
-            QStringList strKeyFrameList = str1.split("=", QString::SkipEmptyParts);
-            float fKeyFrameValue = strKeyFrameList.at(1).toFloat();
+            float fKeyFrameValue = m_filter->anim_get_double(name.toUtf8().constData(), nKeyFrame, 0);
             return fKeyFrameValue;
         }
         else
@@ -623,6 +623,16 @@ void QmlFilter::removeKeyFrameParaValue(double frame)
 //        if(result)
 //            emit removeKeyFrame();
 //    }
+    int paramCount = m_metadata->keyframes()->parameterCount();
+    for (int i = 0; i < paramCount; i++)
+    {
+         QString name = m_metadata->keyframes()->parameter(i)->property();
+
+         Mlt::Animation animation = getAnimation(name);
+         if (animation.is_valid())
+             animation.remove(frame);
+    }
+
 
     int keyFrameCount = m_keyFrameList.count();
     if(keyFrameCount==0)
@@ -661,37 +671,33 @@ void QmlFilter::combineAllKeyFramePara()
         {
             key_frame_item para1 = m_keyFrameList.at(0);
             int paraCount = para1.paraMap.keys().count();
-           // QVector<QString> keyValue;
 
-           QVector<QString> str(paraCount);
+//           QVector<QString> str(paraCount);
            for(int index=0; index<keyFrameCount; index++)
           {
                key_frame_item para = m_keyFrameList.at(index);
               // paraCount = para.paraMap.keys().count();
               for(int keyIndex=0; keyIndex<paraCount; keyIndex++)
               {
-                QString keyValue;
-                keyValue.append(QString::number(MAIN.timelineDock()->getPositionOnParentProducer(para.keyFrame)));//
-                keyValue.append("=");
-                keyValue.append(para.paraMap.values().at(keyIndex));//,para.paraMap.values().at(keyIndex));
-                keyValue.append(";");
-                str[keyIndex] = str[keyIndex].append(keyValue);
+
+               int out = producerOut();
+               int in = producerIn();
+
+                QString key = para1.paraMap.keys().at(keyIndex);
+                QString value = para.paraMap.values().at(keyIndex);
+
+
+                    // Only set an animation keyframe if it does not already exist with the same value.
+                    Mlt::Animation animation(m_filter->get_animation(key.toUtf8().constData()));
+                    if (!animation.is_valid() || !animation.is_key(para.keyFrame)
+                            || value.toDouble() != m_filter->anim_get_double(key.toUtf8().constData(), para.keyFrame, out - in + 1)) {
+                        m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), para.keyFrame, out - in + 1, mlt_keyframe_smooth);
+                        MLT.refreshConsumer();
+                        emit changed();
+                    }
+
+
              }
-          }
-
-
-          for(int keyIndex=0; keyIndex<paraCount; keyIndex++)
-          {
-              QString key = para1.paraMap.keys().at(keyIndex);
-          //  str[keyIndex] = str[keyIndex].append(para.paraMap.values().at(keyIndex));
-
-
-              anim_set(key, str[keyIndex]);
-//            m_filter->set(key.toUtf8().constData(), str[keyIndex].toUtf8().constData());
-//            MLT.refreshConsumer();
-//            emit changed();
-
-
           }
         }
 
@@ -757,6 +763,13 @@ bool QmlFilter::bHasNextKeyFrame(double frame)
 
 double QmlFilter::getKeyFrameParaDoubleValue(double frame, QString key)
 {
+//    if(m_filter)
+//    {
+//        return m_filter->anim_get_double(key.toUtf8().constData(), frame);
+//    }
+
+//    return -1.0;
+
 //    if(m_metadata)
 //        return m_metadata->getKeyFrameParaDoubleValue(frame, key);
 //    return -1.0;
@@ -810,8 +823,18 @@ QString QmlFilter::getKeyFrameParaValue(double frame, QString key)
 
 int QmlFilter::getKeyFrameNumber()
 {
-    return m_keyFrameList.count();
+//    int paramCount = m_metadata->keyframes()->parameterCount();
+//    if (paramCount > 0)
+//    {
+//         QString name = m_metadata->keyframes()->parameter(0)->property();
 
+//         int nCount = getAnimation(name).key_count();
+//         return nCount;
+//    }
+
+//    return 0;
+
+    return m_keyFrameList.count();
 }
 
 int QmlFilter::getKeyFrame(int index)

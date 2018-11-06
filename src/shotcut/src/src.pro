@@ -132,7 +132,7 @@ SOURCES += main.cpp\
     melt/io.c \
     jobs/abstracttask.cpp \
     jobs/melttask.cpp \
-    dialogs/mmsplashscreen.cpp \
+    dialogs/mmsplashscreen.cpp
 #    securitybookmark/SecurityBookmark.mm
 
 HEADERS  += mainwindow.h \
@@ -262,7 +262,7 @@ HEADERS  += mainwindow.h \
     jobs/abstracttask.h \
     jobs/melttask.h \
     melt/melt.h \
-    dialogs/mmsplashscreen.h \
+    dialogs/mmsplashscreen.h
 #    securitybookmark/SecurityBookmark.h
 
 mac {

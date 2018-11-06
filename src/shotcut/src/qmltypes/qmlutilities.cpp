@@ -48,6 +48,9 @@ void QmlUtilities::registerCommonTypes()
     qmlRegisterType<QmlHtmlEditor>("com.moviemator.qml", 1, 0, "HtmlEditor");
     qmlRegisterType<QmlMetadata>("com.moviemator.qml", 1, 0, "Metadata");
     qmlRegisterType<QmlTextMetaData>("com.moviemator.qml",1,0,"TextMetadata");
+    qmlRegisterType<QmlKeyframesMetadata>();
+    qmlRegisterType<QmlKeyframesParameter>("com.moviemator.qml", 1,0, "Parameter");
+
     qmlRegisterType<QmlUtilities>("com.moviemator.qml", 1, 0, "Utilities");
     qmlRegisterType<FileSaveDialog>("com.moviemator.qml",1, 0, "FileSaveDialog");
     // MetadataModel is registered to access its MetadataFilter enum.
@@ -57,6 +60,8 @@ void QmlUtilities::registerCommonTypes()
     qmlRegisterType<ColorWheelItem>("MovieMator.Controls", 1, 0, "ColorWheelItem");
     registerTimelineItems();
 }
+
+
 
 void QmlUtilities::setCommonProperties(QQmlContext* context)
 {

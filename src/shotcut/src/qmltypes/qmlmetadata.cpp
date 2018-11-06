@@ -33,6 +33,7 @@ QmlMetadata::QmlMetadata(QObject *parent)
     , m_isClipOnly(false)
     , m_needsProVersion(false)
     , m_freeVersion(false)
+    , m_isGpuCompatible(true)
 {
 }
 
@@ -165,4 +166,46 @@ void QmlMetadata::setNeedsProVersion(bool needsProVersion)
 void QmlMetadata::setFreeVersion(bool freeVersion)
 {
     m_freeVersion = freeVersion;
+}
+
+
+QmlKeyframesMetadata::QmlKeyframesMetadata(QObject* parent)
+    : QObject(parent)
+    , m_allowTrim(true)
+    , m_allowAnimateIn(false)
+    , m_allowAnimateOut(false)
+    , m_enabled(true)
+
+{
+}
+
+void QmlKeyframesMetadata::checkVersion(const QString& version)
+{
+    if (!m_minimumVersion.isEmpty()) {
+        // m_enabled = version >= m_minimumVersion, but we need to compare each field of the version separately.
+//        LOG_DEBUG() << "MLT version:" << version << "Shotcut minimumVersion:" << m_minimumVersion;
+        QStringList versionParts = version.split('.');
+        QStringList minimumVersionParts = m_minimumVersion.split('.');
+        int i = 0;
+        foreach (QString field, versionParts) {
+            if (field.toUInt() < minimumVersionParts[i++].toUInt()) {
+                setDisabled();
+                break;
+            }
+        }
+    }
+}
+
+void QmlKeyframesMetadata::setDisabled()
+{
+    m_enabled = m_allowAnimateIn = m_allowAnimateOut = false;
+}
+
+QmlKeyframesParameter::QmlKeyframesParameter(QObject* parent)
+    : QObject(parent)
+    , m_isSimple(false)
+    , m_isCurve(false)
+    , m_minimum(0.0)
+    , m_maximum(0.0)
+{
 }
