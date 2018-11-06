@@ -148,11 +148,18 @@ double QmlFilter::getDouble(QString name)
         return 0;
 }
 
-QRectF QmlFilter::getRect(QString name)
+QRectF QmlFilter::getRect(QString name, int position)
 {
+    if (!m_filter->is_valid()) return QRectF();
     const char* s = m_filter->get(name.toUtf8().constData());
     if (s) {
-        mlt_rect rect = m_filter->get_rect(name.toUtf8().constData());
+        const char* propertyName = name.toUtf8().constData();
+        mlt_rect rect;
+        if (position < 0) {
+            rect = m_filter->get_rect(propertyName);
+        } else {
+//            rect = m_filter->anim_get_rect(propertyName, position, duration());
+        }
         if (::strchr(s, '%')) {
             return QRectF(qRound(rect.x * MLT.profile().width()),
                           qRound(rect.y * MLT.profile().height()),
@@ -199,7 +206,8 @@ void QmlFilter::set(QString name, int value)
     }
 }
 
-void QmlFilter::set(QString name, double x, double y, double width, double height, double opacity)
+void QmlFilter::set(QString name, double x, double y, double width, double height, double opacity,
+                    int position, mlt_keyframe_type keyframeType)
 {
     if (!m_filter) return;
     mlt_rect rect = m_filter->get_rect(name.toUtf8().constData());
@@ -209,6 +217,11 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
         MLT.refreshConsumer();
         emit changed();
     }
+}
+
+void QmlFilter::set(QString name, const QRectF& rect, double opacity, int position, mlt_keyframe_type keyframeType)
+{
+    set(name, rect.x(), rect.y(), rect.width(), rect.height(), opacity, position, keyframeType);
 }
 
 
