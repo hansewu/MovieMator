@@ -92,6 +92,7 @@ Flickable {
                            .arg((filterRect.y / profile.height * 100).toLocaleString(_locale))
                            .arg((filterRect.width / profile.width * 100).toLocaleString(_locale))
                            .arg((filterRect.height / profile.height * 100).toLocaleString(_locale)))
+                filter.set(rectProperty, filter.getRect(rectProperty))
                 filter.set('size', filterRect.height)
             }
         }
@@ -115,6 +116,7 @@ Flickable {
                            .arg((Math.round(rect.y / rectangle.heightScale) / profile.height * 100).toLocaleString(_locale))
                            .arg((Math.round(rect.width / rectangle.widthScale) / profile.width * 100).toLocaleString(_locale))
                            .arg((Math.round(rect.height / rectangle.heightScale) / profile.height * 100).toLocaleString(_locale)))
+                filter.set(rectProperty, filter.getRect(rectProperty))
             }
         }
     }
