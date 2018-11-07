@@ -304,8 +304,8 @@ int main(int argc, char **argv)
 
     QString dstArchivePath = dir.path().append("/resource.zip");
     QFile::remove(dstArchivePath);
-   // QFile::copy(appDir.path().append("/resource"), dstArchivePath);
-    QFile::copy(appDir0.path().append("/resource.zip"), dstArchivePath);
+    QFile::copy(appDir0.path().append("/resource"), dstArchivePath);
+//    QFile::copy(appDir0.path().append("/resource.zip"), dstArchivePath);
     QStringList args;
     args << "-o";
     args << dstArchivePath;
@@ -314,6 +314,8 @@ int main(int argc, char **argv)
     QProcess unzip;
 
     QDir appDir1(qApp->applicationDirPath());
+    QmlUtilities::sharedEngine()->addImportPath(appDir1.path().append("/qt_lib/qml"));
+//    QmlUtilities::sharedEngine()->addPluginPath(appDir1.path().append("/qt_lib/plugins"));
 
     unzip.start("/usr/bin/unzip", args);
 
@@ -325,10 +327,8 @@ int main(int argc, char **argv)
 
 
     QDir appDir(qApp->applicationDirPath());
-#if defined (Q_OS_MAC)
     appDir.cdUp();
     appDir.cd("Resources");
-#endif
     appDir.cd("share");
     appDir.cd("mlt");
     setenv("MLT_DATA", appDir.path().toUtf8().constData(), 1);

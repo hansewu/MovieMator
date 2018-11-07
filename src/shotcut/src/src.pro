@@ -435,6 +435,9 @@ mac {
 
 #    INCLUDEPATH += /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7
 #    LIBS += -F/System/Library/Frameworks -framework Python
+    QMAKE_RPATHDIR += @executable_path/qt_lib/lib
+#    QT_PLUGIN_PATH += @executable_path/qt_lib/plugins/
+#    QT_QPA_PLATFORM_PLUGIN_PATH = @executable_path/qt_lib/plugins/platforms/
 }
 
 #LIBS += -L/usr/lib -lcrypto
