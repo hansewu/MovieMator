@@ -83,6 +83,10 @@ Rectangle {
      //   generateWaveform()
     }
 
+    function cancelDrag() {
+        Drag.active = false
+    }
+
     function generateWaveform() {
         // This is needed to make the model have the correct count.
         // Model as a property expression is not working in all cases.
@@ -328,6 +332,7 @@ Rectangle {
             }
         }
         onReleased: {
+            clipRoot.cancelDrag()
             root.stopScrolling = false
             if (!isTransition /*&& !isText*/)
             {
