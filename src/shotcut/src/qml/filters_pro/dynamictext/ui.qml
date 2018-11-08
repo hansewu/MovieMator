@@ -57,6 +57,8 @@ Item {
             filter.set(halignProperty, 'center')
             filter.set('size', filterRect.height)
             filter.savePreset(preset.parameters)
+
+            filter.set(rectProperty, filter.getRect(rectProperty))
         }
 
         var keyFrameCount = filter.getKeyFrameCountOnProject("anim-argument");
@@ -152,11 +154,14 @@ Item {
                            .arg((h / profile.height * 100).toLocaleString(_locale)))
             }
             else
+            {
                 filter.set(rectProperty, '%1%/%2%:%3%x%4%'
                        .arg((x / profile.width * 100).toLocaleString(_locale))
                        .arg((y / profile.height * 100).toLocaleString(_locale))
                        .arg((w / profile.width * 100).toLocaleString(_locale))
                        .arg((h / profile.height * 100).toLocaleString(_locale)))
+                filter.set(rectProperty, filter.getRect(rectProperty))
+            }
         }
     }
 
@@ -389,7 +394,10 @@ Item {
             parameters: [rectProperty, halignProperty, valignProperty, 'argument', 'size',
             'fgcolour', 'family', 'weight', 'olcolour', 'outline', 'bgcolour', 'pad']
             Layout.columnSpan: 4
-            onPresetSelected: setControls()
+            onPresetSelected: {
+                setControls()
+                filter.set(rectProperty, filter.getRect(rectProperty))
+            }
         }
 
         Label {
