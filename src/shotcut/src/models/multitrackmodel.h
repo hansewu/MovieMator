@@ -112,7 +112,7 @@ public:
     int addTextTrack();
     void removeTrack(int trackIndex);
     void load();
-    Q_INVOKABLE void reload();
+    Q_INVOKABLE void reload(bool asynchronous = false);
     void close();
     int clipIndex(int trackIndex, int position);
     bool trimClipInValid(int trackIndex, int clipIndex, int delta, bool ripple);
@@ -144,6 +144,7 @@ signals:
     void showStatusMessage(QString);
     void durationChanged();
     void producerChanged(Mlt::Producer*);
+    void reloadRequested();
 
 public slots:
     void refreshTrackList();
