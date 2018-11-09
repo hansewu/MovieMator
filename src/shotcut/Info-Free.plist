@@ -7,7 +7,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Movie Video Editor MovieMator, Copyright 2016-2017 etinysoft inc</string>
+        <string>Movie Video Editor MovieMator, Copyright 2016-2018 etinysoft inc</string>
 	<key>CFBundleSignature</key>
 	<string>mmve</string>
 	<key>CFBundleExecutable</key>
