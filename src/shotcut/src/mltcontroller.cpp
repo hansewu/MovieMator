@@ -438,12 +438,28 @@ void Controller::saveXML(const QString& filename, Service* service, bool withRel
         c.set("time_format", "clock");
 
         c.set("no_meta", 1);
+
         c.set("store", "moviemator");
+
+        //wzq remove the bug in libmltxml consumer_xml.c
+        //if ( resource != NULL && mlt_properties_get( properties, "root" ) == NULL )
+        //{
+            // Get the current working directory
+            //char *cwd = getcwd( NULL, 0 );
+            //mlt_properties_set( MLT_SERVICE_PROPERTIES( service ), "root", cwd );
+            //free( cwd );
+        //}
+        // getcwd 在WINDOWS上getcwd得到的中文路径是ANSI编码，导致存储的XML和UTF-8冲突，导致LIBXML解析错误
+        c.set( "root", "MovieMator" );
+
         if (withRelativePaths) {
             c.set("root", QFileInfo(filename).absolutePath().toUtf8().constData());
             c.set("no_root", 1);
         }
         c.set("title", QString("MovieMator version ").append(SHOTCUT_VERSION).toUtf8().constData());
+
+
+
         c.connect(s);
         c.start();
         if (ignore)
@@ -465,6 +481,19 @@ QString Controller::XML(Service* service)
         s.set("ignore_points", 0);
     c.set("no_meta", 1);
     c.set("store", "moviemator");
+
+
+    //wzq remove the bug in libmltxml consumer_xml.c
+    //if ( resource != NULL && mlt_properties_get( properties, "root" ) == NULL )
+    //{
+        // Get the current working directory
+        //char *cwd = getcwd( NULL, 0 );
+        //mlt_properties_set( MLT_SERVICE_PROPERTIES( service ), "root", cwd );
+        //free( cwd );
+    //}
+    // getcwd 在WINDOWS上getcwd得到的中文路径是ANSI编码，导致存储的XML和UTF-8冲突，导致LIBXML解析错误
+    c.set( "root", "MovieMator" );
+
     c.connect(s);
     c.start();
     if (ignore)
