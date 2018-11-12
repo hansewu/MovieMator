@@ -639,6 +639,7 @@ void Controller::fastForward()
 
 void Controller::previous(int currentPosition)
 {
+    if (!m_producer) return;
     if (isMultitrack()) return;
     if (currentPosition > m_producer->get_out())
         seek(MLT.producer()->get_out());
@@ -650,6 +651,7 @@ void Controller::previous(int currentPosition)
 
 void Controller::next(int currentPosition)
 {
+    if (!m_producer) return;
     if (isMultitrack()) return;
     if (currentPosition < m_producer->get_in())
         seek(m_producer->get_in());
