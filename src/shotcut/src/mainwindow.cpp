@@ -190,6 +190,13 @@ MainWindow::MainWindow()
     // OS X has a standard Full Screen shortcut we should use.
     ui->actionEnter_Full_Screen->setShortcut(QKeySequence((Qt::CTRL + Qt::META + Qt::Key_F)));
 #endif
+#ifdef Q_OS_WIN
+    // Fullscreen on Windows is not allowing popups and other app windows to appear.
+    delete ui->actionFullscreen;
+    ui->actionFullscreen = 0;
+    delete ui->actionEnter_Full_Screen;
+    ui->actionEnter_Full_Screen = 0;
+#endif
     setDockNestingEnabled(true);
     ui->statusBar->hide();
     setDockNestingEnabled(false);
@@ -204,8 +211,8 @@ MainWindow::MainWindow()
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
     connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(removeVideo()));
 
-
-    connect(ui->actionFullscreen, SIGNAL(triggered()), this, SLOT(on_actionEnter_Full_Screen_triggered()));
+    if (ui->actionFullscreen)
+        connect(ui->actionFullscreen, SIGNAL(triggered()), this, SLOT(on_actionEnter_Full_Screen_triggered()));
 //    connect(ui->mainToolBar, SIGNAL(visibilityChanged(bool)), SLOT(onToolbarVisibilityChanged(bool)));
 //    connect(ui->actionETinySoftForum, SIGNAL(triggered()), this, SLOT(onETinySoftForum_triggered()));
     connect(ui->actionEmail, SIGNAL(triggered()), this, SLOT(onEmail_triggered()));
@@ -650,14 +657,14 @@ MainWindow::MainWindow()
 #endif
 #endif
 
-    QDesktopWidget *desktop = QApplication::desktop();
-    QRect screen = desktop->screenGeometry();
-    int screenWidth = screen.width();
-    int screenHeight = screen.height();
+//    QDesktopWidget *desktop = QApplication::desktop();
+//    QRect screen = desktop->screenGeometry();
+//    int screenWidth = screen.width();
+//    int screenHeight = screen.height();
 
-    int left = (screenWidth-1147)/2;
-    int top = (screenHeight - 654)/2;
-    setGeometry(left,0,1147,654);
+//    int left = (screenWidth-1147)/2;
+//    int top = (screenHeight - 654)/2;
+//    setGeometry(left,0,1147,654);
 
 
     LOG_DEBUG() << "setWindowTitle";
@@ -1239,9 +1246,11 @@ void MainWindow::doAutosave()
 void MainWindow::setFullScreen(bool isFullScreen)
 {
     if (isFullScreen) {
+#ifndef Q_OS_WIN
         showFullScreen();
         ui->actionEnter_Full_Screen->setVisible(false);
         ui->actionFullscreen->setVisible(false);
+#endif
     }
 }
 
@@ -1728,10 +1737,8 @@ void MainWindow::readWindowSettings()
     Settings.setWindowStateDefault(saveState());
     Settings.sync();
     restoreGeometry(Settings.windowGeometry());
-    restoreState(Settings.windowState());
+    restoreState(Settings.windowState()); //不读取上一次的toolbar及dockwidget状态
     LOG_DEBUG() << "end";
- //   restoreState(Settings.windowState()); //不读取上一次的toolbar及dockwidget状态
-    qDebug() << "end";
 }
 
 void MainWindow::writeSettings()
@@ -1741,7 +1748,7 @@ void MainWindow::writeSettings()
         showNormal();
 #endif
     Settings.setWindowGeometry(saveGeometry());
- //   Settings.setWindowState(saveState());//不保存关闭时的toolbar及dockwidget状态，使窗口始终处于初始状态
+    Settings.setWindowState(saveState());//不保存关闭时的toolbar及dockwidget状态，使窗口始终处于初始状态
     Settings.sync();
 }
 

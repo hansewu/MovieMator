@@ -224,9 +224,11 @@ public:
         QCommandLineParser parser;
         parser.addHelpOption();
         parser.addVersionOption();
+#ifndef Q_OS_WIN
         QCommandLineOption fullscreenOption("fullscreen",
             QCoreApplication::translate("main", "Fill the screen with the MovieMator window."));
         parser.addOption(fullscreenOption);
+#endif
         QCommandLineOption gpuOption("gpu",
             QCoreApplication::translate("main", "Use GPU processing."));
         parser.addOption(gpuOption);
@@ -240,7 +242,11 @@ public:
         parser.addOption(pythonFileOption);
 
         parser.process(arguments());
+#ifdef Q_OS_WIN
+        isFullScreen = false;
+#else
         isFullScreen = parser.isSet(fullscreenOption);
+#endif
         if (parser.isSet(gpuOption))
             Settings.setPlayerGPU(true);
 
