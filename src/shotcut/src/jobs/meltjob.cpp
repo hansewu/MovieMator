@@ -67,7 +67,8 @@ void MeltJob::start()
 #ifdef Q_OS_WIN
     QFileInfo meltPath(shotcutPath, "qmelt.exe");
 #else
-    QFileInfo meltPath(shotcutPath, "moviemator");
+//    QFileInfo meltPath(shotcutPath, "moviemator");  //modify by wyl
+    QFileInfo meltPath(shotcutPath, "qmelt");
 #endif
     setReadChannel(QProcess::StandardError);
     QStringList args;
