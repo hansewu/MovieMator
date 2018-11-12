@@ -450,7 +450,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="710"/>
         <source>Split At Playhead (S)</source>
-        <translation type="unfinished">在播放头出切割</translation>
+        <translation type="unfinished">在播放头处切割</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="726"/>
@@ -1667,13 +1667,13 @@ with the framebuffer object extension.</source>
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;This is not a project created with Video Editor MovieMator Pro.  Video Editor MovieMator Pro can not access this &lt;/span&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;mmp file because of the limitation of Apple sandbox. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;This is not a project created with Video Editor MovieMator Pro.  Video Editor MovieMator Pro can not access this &lt;/span&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;mmp file because of the limitation of Apple sandbox. &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;PingFang SC&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;If you would like to open this mmp file,  please go to following official url and download the MovieMator Pro without limitation of Apple sandbox: &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;If you would like to open this mmp file,  please go to following official url and download the MovieMator Pro without limitation of Apple sandbox: &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;PingFang SC&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;http://www.macvideostudio.com/download/video-editor-moviemator-pro.dmg&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;After installation, send email to us (market@effectmatrix.com) to get a free license. &lt;/span&gt; &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;After installation, send email to us (market@effectmatrix.com) to get a free license. &lt;/span&gt; &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3722,13 +3722,13 @@ Invalid Time Code!</source>
         <location filename="../src/player.cpp" line="248"/>
         <location filename="../src/player.cpp" line="464"/>
         <source>Skip Previous</source>
-        <translation type="unfinished">上一帧</translation>
+        <translation type="unfinished">上一段</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="261"/>
         <location filename="../src/player.cpp" line="459"/>
         <source>Skip Next</source>
-        <translation type="unfinished">下一帧</translation>
+        <translation type="unfinished">下一段</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="271"/>
@@ -5055,7 +5055,7 @@ shifting following clips to the right (V)</source>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="430"/>
         <source>Split At Playhead (S)</source>
-        <translation type="unfinished">在播放头出切割</translation>
+        <translation type="unfinished">在播放头处切割</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="438"/>
