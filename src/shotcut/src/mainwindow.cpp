@@ -684,9 +684,9 @@ MainWindow::MainWindow()
 
 #else
 #if MOVIEMATOR_PRO
-    setWindowTitle(tr("Video Editor MovieMator Pro"));
+    setWindowTitle(tr("MovieMator Video Editor Pro"));
 #else
-    setWindowTitle(tr("Movie Video Editor MovieMator"));
+    setWindowTitle(tr("MovieMator Video Editor"));
 #endif
 #endif
 
@@ -1810,9 +1810,9 @@ void MainWindow::setCurrentFile(const QString &filename)
 
 #else
 #if MOVIEMATOR_PRO
-    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("Video Editor MovieMator Pro"));
+    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro"));
 #else
-    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("Movie Video Editor MovieMator"));
+    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor"));
 #endif
 #endif
 }
@@ -1868,17 +1868,17 @@ void MainWindow::on_actionAbout_TVE_triggered()
 
 #else
 #if MOVIEMATOR_PRO
-    QMessageBox::about(this, tr("About Video Editor MovieMator Pro"),
-             tr("<h1>Video Editor MovieMator Pro %1</h1>"
-                "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/video-editor-moviemator-appstore.html\">Video Editor MovieMator Pro</a></p>"
+    QMessageBox::about(this, tr("About MovieMator Video Editor Pro"),
+             tr("<h1>MovieMator Video Editor Pro %1</h1>"
+                "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/video-editor-moviemator-appstore.html\">MovieMator Video Editor Pro</a></p>"
                 "<p />"
                 "<p>Copyright &copy; 2016-2018 etinysoft, Inc</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()));
 #else
-    QMessageBox::about(this, tr("About Movie Video Editor MovieMator"),
-             tr("<h1>Movie Video Editor MovieMator %1</h1>"
-                "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/video-editor-moviemator-appstore.html\">Movie Video Editor MovieMator</a></p>"
+    QMessageBox::about(this, tr("About MovieMator Video Editor"),
+             tr("<h1>MovieMator Video Editor %1</h1>"
+                "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/video-editor-moviemator-appstore.html\">MovieMator Video Editor</a></p>"
                 "<p />"
                 "<p>Copyright &copy; 2016 - 2018 etinysoft, Inc</p>"
                 "</small>"

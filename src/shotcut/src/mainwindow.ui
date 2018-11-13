@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Video Editor MovieMator</string>
+   <string>MovieMator Video Editor</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../icons/resources.qrc">
@@ -224,10 +224,13 @@
   </action>
   <action name="actionAbout_TVE">
    <property name="text">
-    <string>&amp;About Video Editor MovieMator Pro</string>
+    <string>&amp;About MovieMator Video Editor Pro</string>
+   </property>
+   <property name="iconText">
+    <string>About MovieMator Video Editor Pro</string>
    </property>
    <property name="toolTip">
-    <string>About Video Editor MovieMator Pro</string>
+    <string>About MovieMator Video Editor Pro</string>
    </property>
    <property name="visible">
     <bool>true</bool>

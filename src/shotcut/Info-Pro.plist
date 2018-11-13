@@ -7,11 +7,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleGetInfoString</key>
-        <string>Video Editor MovieMator Pro, Copyright 2016-2018 etinysoft inc</string>
+        <string>MovieMator Video Editor Pro, Copyright 2016-2018 etinysoft inc</string>
 	<key>CFBundleSignature</key>
 	<string>mmve</string>
 	<key>CFBundleExecutable</key>
-	<string>Video Editor MovieMator Pro</string>
+        <string>MovieMator Video Editor Pro</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.etinysoft.moviemator-pro</string>
 	<key>NSPrincipalClass</key>
@@ -21,9 +21,9 @@
 	<key>CFBundleVersion</key>
 	<string>2.0.4</string>
 	<key>CFBundleName</key>
-	<string>Video Editor MovieMator Pro</string>
+        <string>MovieMator Video Editor Pro</string>
 	<key>CFBundleDisplayName</key>
-	<string>Video Editor MovieMator Pro</string>
+        <string>MovieMator Video Editor Pro</string>
 	<key>CFBundleShortVersionString</key>
 	<string>2.0.4</string>
 	<key>CFBundleDocumentTypes</key>
