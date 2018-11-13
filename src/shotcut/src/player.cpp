@@ -286,7 +286,7 @@ Player::Player(QFrame *parent)
     m_btnFastForword->setIconSize(QSize(32,32));
     connect(m_btnFastForword, SIGNAL(clicked()), this, SLOT(fastForward()));
     m_btnFastForword->setContentsMargins(0,0,0,0);
-    m_btnFastForword->setToolTip("Play quickly forwards (L)");
+    m_btnFastForword->setToolTip(tr("Play quickly forwards (L)"));
     m_btnFastForword->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-skip-forward.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-skip-forward-pressed.png)}");
 
 
