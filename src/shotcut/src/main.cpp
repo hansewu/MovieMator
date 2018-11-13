@@ -358,8 +358,18 @@ int main(int argc, char **argv)
     begin = clock();
 
     a.mainWindow = &MAIN;
+
+    int screen_width    = QApplication::desktop()->screenGeometry().width();
+    int screen_height   = QApplication::desktop()->screenGeometry().height();
+    int appWindowWidth  = a.mainWindow->width();
+    int appWindowHeight = a.mainWindow->height();
+    int origin_x        = screen_width/2    - appWindowWidth/2;
+    int origin_y        = screen_height/2   - appWindowHeight/2;
+
+    a.mainWindow->setGeometry(origin_x, origin_y, appWindowWidth, appWindowHeight);
     a.mainWindow->show();
-    a.mainWindow->move ((QApplication::desktop()->width() - a.mainWindow->width())/2,(QApplication::desktop()->height() - a.mainWindow->height())/2);
+//    a.mainWindow->move ((QApplication::desktop()->width() - a.mainWindow->width())/2,(QApplication::desktop()->height() - a.mainWindow->height())/2);
+
     a.mainWindow->setFullScreen(a.isFullScreen);
 
     duration = clock() - begin;
