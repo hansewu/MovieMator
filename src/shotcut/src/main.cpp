@@ -301,7 +301,6 @@ int main(int argc, char **argv)
 #if defined(Q_OS_MAC)
 //    //copy qml files
     QDir dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
-//    QmlUtilities::sharedEngine()->addImportPath(dir.path());
 
     QDir appDir0(qApp->applicationDirPath());
     appDir0.cdUp();
@@ -320,12 +319,15 @@ int main(int argc, char **argv)
     QProcess unzip;
 
     QDir appDir1(qApp->applicationDirPath());
-    QmlUtilities::sharedEngine()->addImportPath(appDir1.path().append("/qt_lib/qml"));
+//    QmlUtilities::sharedEngine()->addImportPath(appDir1.path().append("/qt_lib/qt_qml"));
 //    QmlUtilities::sharedEngine()->addPluginPath(appDir1.path().append("/qt_lib/plugins"));
 
     unzip.start("/usr/bin/unzip", args);
 
     unzip.waitForFinished();
+
+    QmlUtilities::sharedEngine()->addImportPath(dir.path().append("/qt_qml"));
+
 #endif
 
     duration = clock() - begin;
@@ -339,7 +341,10 @@ int main(int argc, char **argv)
     appDir.cd("mlt");
     setenv("MLT_DATA", appDir.path().toUtf8().constData(), 1);
 
-  //  resolve_security_bookmark();
+#if defined(Q_OS_MAC)
+    resolve_security_bookmark();
+#endif
+
     Registration.readAndCheckRegistrationInfo();
 
     a.setProperty("system-style", a.style()->objectName());
