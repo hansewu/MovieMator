@@ -76,6 +76,8 @@ void UnlinkedFilesDialog::on_tableView_doubleClicked(const QModelIndex& index)
         model->setData(secondColIndex, filenames[0], Qt::ToolTipRole);
         model->setData(secondColIndex, hash, MltXmlChecker::ShotcutHashRole);
 
-    //    create_security_bookmark(filenames[0].toUtf8().constData());
+#if defined(Q_OS_MAC)
+    create_security_bookmark(filenames[0].toUtf8().constData());
+#endif
     }
 }
