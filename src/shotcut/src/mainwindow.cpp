@@ -1457,9 +1457,11 @@ void MainWindow::open1(QString url, const Mlt::Properties *properties)
      //   MAIN.undoStack()->push(new Playlist::AppendCommand(*(m_playlistDock->model()), MLT.XML()));
     //    MLT.producer()->set(kPlaylistIndexProperty, m_playlistDock->model()->playlist()->count());
     }
-    else if (url != untitledFileName()) {
+    else {
 //        showStatusMessage(tr("Failed to open ") + url);
-        emit openFailed(url);
+        MLT.setProducer(new Mlt::Producer(*multitrack()));//设置producer，打开文件失败后，还可以获取时间值
+        if (url != untitledFileName())
+            emit openFailed(url);
     }
 }
 
@@ -3770,6 +3772,7 @@ void MainWindow::createMultitrackModelIfNeeded()
 //        m_timelineDock->model()->addTextTrack();
         m_timelineDock->setCurrentTrack(1);  // 2视频轨时，V1轨道的索引为1
         setWindowModified(false);
+        MLT.setProducer(new Mlt::Producer(*multitrack()));
     }
     LOG_DEBUG() << "end";
 }

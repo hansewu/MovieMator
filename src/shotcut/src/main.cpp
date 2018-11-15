@@ -358,6 +358,9 @@ int main(int argc, char **argv)
     begin = clock();
 
     a.mainWindow = &MAIN;
+
+    a.mainWindow->createMultitrackModelIfNeeded();
+
     a.mainWindow->show();
     a.mainWindow->move ((QApplication::desktop()->width() - a.mainWindow->width())/2,(QApplication::desktop()->height() - a.mainWindow->height())/2);
     a.mainWindow->setFullScreen(a.isFullScreen);
@@ -375,7 +378,6 @@ int main(int argc, char **argv)
         a.mainWindow->open(a.mainWindow->untitledFileName());
 
 
-    a.mainWindow->createMultitrackModelIfNeeded();
 
 
 #ifdef MOVIEMATOR_FREE

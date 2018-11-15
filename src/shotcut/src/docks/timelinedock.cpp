@@ -144,7 +144,9 @@ void TimelineDock::setPosition(int position)
 
 QString TimelineDock::timecode(int frames)
 {
-    return MLT.producer()->frames_to_time(frames, mlt_time_smpte);
+    if (MLT.producer())
+        return MLT.producer()->frames_to_time(frames, mlt_time_smpte);
+    return QString("");
 }
 
 Mlt::ClipInfo *TimelineDock::getClipInfo(int trackIndex, int clipIndex)
