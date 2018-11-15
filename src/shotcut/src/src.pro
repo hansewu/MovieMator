@@ -4,7 +4,7 @@ QT       += widgets opengl xml qml quick sql svg
 QT       += multimedia quickwidgets
 QT       += qml-private core-private quick-private gui-private
 #QMAKE_LFLAGS +=MovieMator_Pro=1
-TARGET = "MovieMator Video Editor"
+TARGET = "MovieMator"
 TEMPLATE = app
 #CONFIG   += static
 
