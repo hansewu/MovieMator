@@ -4,7 +4,7 @@ QT       += widgets opengl xml qml quick sql svg
 QT       += multimedia quickwidgets
 QT       += qml-private core-private quick-private gui-private
 #QMAKE_LFLAGS +=MovieMator_Pro=1
-TARGET = "MovieMator"
+TARGET = "MovieMator Video Editor"
 TEMPLATE = app
 #CONFIG   += static
 
@@ -396,7 +396,7 @@ mac {
 
     #free appstore
 #    DEFINES += MOVIEMATOR_FREE=1
-#    TARGET = "Movie Video Editor MovieMator"
+#    TARGET = "MovieMator Video Editor"
 #    QMAKE_INFO_PLIST = ../Info-Free.plist
 #    ICON = ../icons/moviemator.icns
 
@@ -409,7 +409,7 @@ mac {
 
     #pro appstore
     DEFINES += MOVIEMATOR_PRO=1
-    TARGET = "Video Editor MovieMator Pro"
+    TARGET = "MovieMator Video Editor Pro"
     QMAKE_INFO_PLIST = ../Info.plist
     ICON = ../icons/moviemator-pro.icns
 
@@ -487,7 +487,7 @@ INSTALLS += qmlfiles
 DISTFILES += \
     qss/mainstylesheet.qss \
     ../Info_share.plist \
-    ../translations/shotcut_zh.qm \
+#    ../translations/shotcut_zh.qm \
     ../translations/mm_en.qm \
     ../translations/mm_zh.qm
 

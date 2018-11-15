@@ -7,11 +7,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleGetInfoString</key>
-        <string>Movie Video Editor MovieMator, Copyright 2016-2018 etinysoft inc</string>
+        <string>MovieMator Video Editor, Copyright 2016-2018 etinysoft inc</string>
 	<key>CFBundleSignature</key>
 	<string>mmve</string>
 	<key>CFBundleExecutable</key>
-	<string>Movie Video Editor MovieMator</string>
+        <string>MovieMator Video Editor</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.macvideostudio.moviemator-free</string>
 	<key>NSPrincipalClass</key>
@@ -21,9 +21,9 @@
 	<key>CFBundleVersion</key>
 	<string>2400</string>
 	<key>CFBundleName</key>
-	<string>Movie Video Editor MovieMator</string>
+        <string>MovieMator Video Editor</string>
 	<key>CFBundleDisplayName</key>
-	<string>Movie Video Editor MovieMator</string>
+        <string>MovieMator Video Editor</string>
 	<key>CFBundleShortVersionString</key>
 	<string>2.4.0</string>
 	<key>CFBundleDocumentTypes</key>

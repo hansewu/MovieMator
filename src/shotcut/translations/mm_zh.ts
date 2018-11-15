@@ -1773,7 +1773,7 @@ with the framebuffer object extension.</source>
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;This is not a project created with Video Editor MovieMator Pro.  Video Editor MovieMator Pro can not access this &lt;/span&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;mmp file because of the limitation of Apple sandbox. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;This is not a project created with MovieMator Video Editor Pro.  MovieMator Video Editor Pro can not access this &lt;/span&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;mmp file because of the limitation of Apple sandbox. &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;PingFang SC&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;If you would like to open this mmp file,  please go to following official url and download the MovieMator Pro without limitation of Apple sandbox: &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;PingFang SC&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
@@ -1797,7 +1797,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;This is not a project created with Video Editor MovieMator Pro.  Video Editor MovieMator Pro can not access this &lt;/span&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;mmp file because of the limitation of Apple sandbox. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;This is not a project created with MovieMator Video Editor Pro.  MovieMator Video Editor Pro can not access this &lt;/span&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;mmp file because of the limitation of Apple sandbox. &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;PingFang SC&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;If you would like to open this mmp file,  please go to following official url and download the MovieMator Pro without limitation of Apple sandbox: &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;PingFang SC&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
@@ -2274,8 +2274,8 @@ duration of the transition.</source>
     <name>MainWindow</name>
     <message>
         <location filename="../src/mainwindow.ui" line="26"/>
-        <source>Video Editor MovieMator</source>
-        <translation type="unfinished">Video Editor MovieMator</translation>
+        <source>MovieMator Video Editor</source>
+        <translation type="unfinished">MovieMator Video Editor</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="74"/>
@@ -2372,8 +2372,8 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="227"/>
-        <source>&amp;About Video Editor MovieMator Pro</source>
-        <translation type="unfinished">关于Video Editor MovieMator Pro</translation>
+        <source>&amp;About MovieMator Video Editor Pro</source>
+        <translation type="unfinished">关于MovieMator Video Editor Pro</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="244"/>
@@ -2851,12 +2851,12 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="677"/>
-        <source>Video Editor MovieMator Pro</source>
+        <source>MovieMator Video Editor Pro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="679"/>
-        <source>Movie Video Editor MovieMator</source>
+        <source>MovieMator Video Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2984,32 +2984,32 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1866"/>
-        <source>About Movie Video Editor MovieMator</source>
+        <source>About MovieMator Video Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1867"/>
-        <source>&lt;h1&gt;Movie Video Editor MovieMator %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;Movie Video Editor MovieMator&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016 - 2017 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</source>
+        <source>&lt;h1&gt;MovieMator Video Editor %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;MovieMator Video Editor&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016 - 2017 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="230"/>
         <location filename="../src/mainwindow.cpp" line="1858"/>
-        <source>About Video Editor MovieMator Pro</source>
-        <translation type="unfinished">关于Video Editor MovieMator Pro</translation>
+        <source>About MovieMator Video Editor Pro</source>
+        <translation type="unfinished">关于MovieMator Video Editor Pro</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1859"/>
-        <source>&lt;h1&gt;Video Editor MovieMator Pro %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;Video Editor MovieMator Pro&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2017 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</source>
-        <translation type="unfinished">&lt;h1&gt;Video Editor MovieMator Pro %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;产品主页: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;Video Editor MovieMator Pro&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2017 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</translation>
+        <source>&lt;h1&gt;MovieMator Video Editor Pro %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;MovieMator Video Editor Pro&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2017 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</source>
+        <translation type="unfinished">&lt;h1&gt;MovieMator Video Editor Pro %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;产品主页: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;MovieMator Video Editor Pro&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2017 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</translation>
     </message>
     <message>
-        <source>About Video Editor MovieMator</source>
-        <translation type="obsolete">关于Video Editor MovieMator</translation>
+        <source>About MovieMator Video Editor</source>
+        <translation type="obsolete">关于MovieMator Video Editor</translation>
     </message>
     <message>
-        <source>&lt;h1&gt;Video Editor MovieMator %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;Video Editor MovieMator&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016 - 2017 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</source>
-        <translation type="obsolete">&lt;h1&gt;Video Editor MovieMator %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;产品主页: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;Video Editor MovieMator&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016 - 2017 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</translation>
+        <source>&lt;h1&gt;MovieMator Video Editor %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;MovieMator Video Editor&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016 - 2017 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</source>
+        <translation type="obsolete">&lt;h1&gt;MovieMator Video Editor %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;产品主页: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;MovieMator Video Editor&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016 - 2017 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2443"/>
@@ -4223,16 +4223,16 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.Helvetica Neue DeskInterface&apos;; font-size:xx-large; font-weight:600;&quot;&gt;Upgrade to Video Editor MovieMator Pro&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.Helvetica Neue DeskInterface&apos;;&quot;&gt;Before you start using this advanced feature, please upgrade to Video Editor MovieMator Pro.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.Helvetica Neue DeskInterface&apos;; font-size:xx-large; font-weight:600;&quot;&gt;Upgrade to MovieMator Video Editor Pro&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.Helvetica Neue DeskInterface&apos;;&quot;&gt;Before you start using this advanced feature, please upgrade to MovieMator Video Editor Pro.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.Helvetica Neue DeskInterface&apos;;&quot;&gt;Key Features of MovieMator Pro:&lt;br /&gt;1. 40+ built-in filter effects supported by KeyFrame animation technique.&lt;br /&gt;2. 20+ stunning transitions.&lt;br /&gt;3. Export videos of any length.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;.Helvetica Neue DeskInterface&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:xx-large; font-weight:600;&quot;&gt;Tips&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Video Editor MovieMator是专门用于制作短视频的，时间长度最大为5分钟.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;如果想输出任意长度视频，请升级到专业版Video Editor MovieMator Pro.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;MovieMator Video Editor是专门用于制作短视频的，时间长度最大为5分钟.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;如果想输出任意长度视频，请升级到专业版MovieMator Video Editor Pro.&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;专业版主要功能:&lt;br /&gt;1. 40款用关键帧技术实现的动态滤镜.&lt;br /&gt;2.20款炫酷的转场.&lt;br /&gt;3.导出任意长度的视频.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5434,16 +5434,16 @@ shifting following clips to the right (V)</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;.Helvetica Neue DeskInterface&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:xx-large; font-weight:600;&quot;&gt;Tips&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Video Editor MovieMator is designed to create short videos quickly. Users can export videos up to 5 minutes. &lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If you want to export videos of any length, please upgrade to Video Editor MovieMator Pro.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;MovieMator Video Editor is designed to create short videos quickly. Users can export videos up to 5 minutes. &lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If you want to export videos of any length, please upgrade to MovieMator Video Editor Pro.&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Key features of MovieMator Pro:&lt;br /&gt;1. 40+ built-in filter effects supported by KeyFrame animation technique.&lt;br /&gt;2. 20+ stunning transitions.&lt;br /&gt;3. Export videos of any length.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;.Helvetica Neue DeskInterface&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:xx-large; font-weight:600;&quot;&gt;Tips&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Video Editor MovieMator是专门用于制作短视频的，时间长度最大为5分钟.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;如果想输出任意长度视频，请升级到专业版Video Editor MovieMator Pro.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;MovieMator Video Editor是专门用于制作短视频的，时间长度最大为5分钟.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;如果想输出任意长度视频，请升级到专业版MovieMator Video Editor Pro.&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;专业版主要功能:&lt;br /&gt;1. 40款用关键帧技术实现的动态滤镜.&lt;br /&gt;2.20款炫酷的转场.&lt;br /&gt;3.导出任意长度的视频.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5453,8 +5453,8 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.Helvetica Neue DeskInterface&apos;; font-size:xx-large; font-weight:600;&quot;&gt;Tips&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.Helvetica Neue DeskInterface&apos;;&quot;&gt;Movie Video Editor MovieMator is designed to create short videos quickly. Users can export videos up to 5 minutes. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.Helvetica Neue DeskInterface&apos;;&quot;&gt;If you want to export videos of any length, please upgrade to Video Editor MovieMator Pro.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.Helvetica Neue DeskInterface&apos;;&quot;&gt;MovieMator Video Editor is designed to create short videos quickly. Users can export videos up to 5 minutes. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.Helvetica Neue DeskInterface&apos;;&quot;&gt;If you want to export videos of any length, please upgrade to MovieMator Video Editor Pro.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.Helvetica Neue DeskInterface&apos;;&quot;&gt;Key features of MovieMator Pro:&lt;br /&gt;1. 40+ built-in filter effects supported by KeyFrame animation technique.&lt;br /&gt;2. 20+ stunning transitions.&lt;br /&gt;3. Export videos of any length.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>

@@ -73,8 +73,9 @@ void RecentDock::add(const QString &s)
     item->setToolTip(s);
     m_model.insertRow(0, item);
 
-    //int ret = create_security_bookmark(s.toUtf8().constData());
-
+#if defined(Q_OS_MAC)
+    int ret = create_security_bookmark(s.toUtf8().constData());
+#endif
 
     m_recent.prepend(s);
     while (m_recent.count() > MaxItems)
