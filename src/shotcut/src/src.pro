@@ -465,7 +465,7 @@ isEmpty(SHOTCUT_VERSION) {
      win32:SHOTCUT_VERSION = adhoc
 }
 #DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
-DEFINES += SHOTCUT_VERSION=\\\"2.4.6\\\"
+DEFINES += SHOTCUT_VERSION=\\\"2.4.8\\\"
 
 
 unix:!mac:isEmpty(PREFIX) {
@@ -483,6 +483,12 @@ INSTALLS += target
 qmlfiles.files = $$PWD/qml
 qmlfiles.path = $$PREFIX/share/MovieMator
 INSTALLS += qmlfiles
+
+mac {
+    qmlfiles.files = $$PWD/../../../../shotcut/moviemator_qml/moviemator/qml
+    qmlfiles.path = $$PREFIX/share/MovieMator
+    INSTALLS += qmlfiles
+}
 
 DISTFILES += \
     qss/mainstylesheet.qss \
