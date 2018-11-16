@@ -19,13 +19,13 @@
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>CFBundleVersion</key>
-	<string>2401</string>
+        <string>2480</string>
 	<key>CFBundleName</key>
         <string>MovieMator Video Editor Pro</string>
 	<key>CFBundleDisplayName</key>
         <string>MovieMator Video Editor Pro</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.4.0</string>
+        <string>2.4.8</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>

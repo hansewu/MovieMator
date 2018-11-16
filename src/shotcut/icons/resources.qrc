@@ -180,5 +180,6 @@
         <file>timeline/timeline-toolbar-text-n.png</file>
         <file>timeline/timeline-toolbar-text-p.png</file>
         <file>splash.png</file>
+        <file>light/32x32/bg.png</file>
     </qresource>
 </RCC>
