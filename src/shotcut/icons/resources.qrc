@@ -180,5 +180,9 @@
         <file>timeline/timeline-toolbar-text-n.png</file>
         <file>timeline/timeline-toolbar-text-p.png</file>
         <file>splash.png</file>
+        <file>timeline/timeline-toolbar-filter-n.png</file>
+        <file>timeline/timeline-toolbar-transition-n.png</file>
+        <file>timeline/timeline-toolbar-transition-p.png</file>
+        <file>timeline/timeline-toolbar-filter-p.png</file>
     </qresource>
 </RCC>
