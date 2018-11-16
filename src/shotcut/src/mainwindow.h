@@ -257,7 +257,7 @@ public slots:
     void onShuttle(float x);
     void createMultitrackModelIfNeeded();
 
-    void filterAddedFromTimelineToolbar();
+    void showFilterDock();
 
     void onJobsDockTriggered(bool);
     void onPropertiesDockTriggered(bool checked = true);
@@ -271,7 +271,7 @@ public slots:
 
     void showPlaylistDock();
     void showRecentDock();
-    void showFilterDock();
+    void onShowFilterDock();
 
     void setCurrentTrack(int trackIndex);
 

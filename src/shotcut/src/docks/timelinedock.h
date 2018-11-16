@@ -90,6 +90,7 @@ public:
     int getPositionOnClip(int position);
 
     Q_INVOKABLE int timeToFrames(QString timecode);
+    Q_INVOKABLE void emitShowFilterDock();
 
 signals:
     void currentTrackChanged();
@@ -118,6 +119,7 @@ signals:
     void addVolume();
     void filterAdded();
     void addText();
+    void showFilterDock();
 
 
     //MovieMator Pro

@@ -466,10 +466,10 @@ MainWindow::MainWindow()
 
     connect(m_timelineDock, SIGNAL(addVolume()), m_filterController, SLOT(addVolumeFilter()));
     connect(m_timelineDock, SIGNAL(addText()), m_filterController, SLOT(addTextFilter()));
-    connect(m_timelineDock, SIGNAL(filterAdded()), this, SLOT(filterAddedFromTimelineToolbar()));
+    connect(m_timelineDock, SIGNAL(filterAdded()), this, SLOT(onShowFilterDock()));
+    connect(m_timelineDock, SIGNAL(showFilterDock()), this, SLOT(onShowFilterDock()));
 
 #ifdef MOVIEMATOR_PRO
-
     connect(m_filtersDock, SIGNAL(changePosition(int)), m_timelineDock, SLOT(changePostionFromFilter(int)));
 
     connect(m_timelineDock,SIGNAL(positionChangedForKeyFrame(int)), m_filtersDock,SLOT(setCurrentClipFrameFromTimeline(int)));
@@ -3805,7 +3805,7 @@ void MainWindow::onHelpButtonTriggered()
 
 }
 
-void MainWindow::filterAddedFromTimelineToolbar()
+void MainWindow::onShowFilterDock()
 {
     m_resourceBtnDock->on_showFilterDock_clicked();
 }
@@ -4153,6 +4153,7 @@ void MainWindow::showRecentDock()
     m_recentDock->show();
     m_filtersDock->hide();
 }
+
 void MainWindow::showFilterDock()
 {
     m_playlistDock->hide();

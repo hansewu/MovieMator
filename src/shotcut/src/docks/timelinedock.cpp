@@ -1742,3 +1742,8 @@ int TimelineDock::timeToFrames(QString timecode)
 #endif
     return 0;
 }
+
+void TimelineDock::emitShowFilterDock()
+{
+    emit showFilterDock();
+}
