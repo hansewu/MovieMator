@@ -294,7 +294,7 @@ MainWindow::MainWindow()
 
      ui->centralWidget->setMinimumWidth(500);
      ui->centralWidget->setMinimumHeight(320);
-
+     ui->centralWidget->setFixedWidth(600);
      //     ui->centralWidget->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 
 
