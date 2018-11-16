@@ -71,7 +71,7 @@ Item {
             filter.set('size', filterRect.height)
             filter.savePreset(preset.parameters)
 
-            filter.set(rectProperty, filter.getRect(rectProperty))
+//            filter.set(rectProperty, filter.getRect(rectProperty))
         }
         setControls()
     }
@@ -94,7 +94,7 @@ Item {
                        .arg((y / profile.height * 100).toLocaleString(_locale))
                        .arg((w / profile.width * 100).toLocaleString(_locale))
                        .arg((h / profile.height * 100).toLocaleString(_locale)))
-            filter.set(rectProperty, filter.getRect(rectProperty))
+//            filter.set(rectProperty, filter.getRect(rectProperty))
         }
     }
 
@@ -145,7 +145,7 @@ Item {
             Layout.columnSpan: 4
             onPresetSelected: {
                 setControls()
-                filter.set(rectProperty, filter.getRect(rectProperty))
+//                filter.set(rectProperty, filter.getRect(rectProperty))
             }
         }
 
