@@ -119,6 +119,7 @@
         <file>light/32x32/list-remove-disable.png</file>
         <file>light/32x32/toolbar-tvcpro.png</file>
         <file>light/32x32/toolbar-tvcpro-pressed.png</file>
+        <file>light/32x32/bg.png</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>
@@ -180,7 +181,7 @@
         <file>timeline/timeline-toolbar-text-n.png</file>
         <file>timeline/timeline-toolbar-text-p.png</file>
         <file>splash.png</file>
-        <file>light/32x32/bg.png</file>
+        <file>moviemator-pro.icns</file>
         <file>timeline/timeline-toolbar-transition-p.png</file>
         <file>timeline/timeline-toolbar-filter-p.png</file>
         <file>timeline/timeline-toolbar-filter-n.png</file>
