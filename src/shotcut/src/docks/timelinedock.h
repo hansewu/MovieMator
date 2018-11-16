@@ -39,6 +39,7 @@ class TimelineDock : public QDockWidget
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
     Q_PROPERTY(int currentTrack READ currentTrack WRITE setCurrentTrack NOTIFY currentTrackChanged)
     Q_PROPERTY(QList<int> selection READ selection WRITE setSelection NOTIFY selectionChanged)
+    Q_PROPERTY(QRect dockPosition READ dockPosition NOTIFY dockPositionChanged)
 
 public:
     explicit TimelineDock(QWidget *parent = 0);
@@ -92,6 +93,8 @@ public:
     Q_INVOKABLE int timeToFrames(QString timecode);
     Q_INVOKABLE void emitShowFilterDock();
 
+    QRect dockPosition();
+
 signals:
     void currentTrackChanged();
     void selectionChanged();
@@ -120,7 +123,7 @@ signals:
     void filterAdded();
     void addText();
     void showFilterDock();
-
+    void dockPositionChanged();
 
     //MovieMator Pro
 #ifdef MOVIEMATOR_PRO

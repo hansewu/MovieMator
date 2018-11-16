@@ -1747,3 +1747,8 @@ void TimelineDock::emitShowFilterDock()
 {
     emit showFilterDock();
 }
+
+QRect TimelineDock::dockPosition()
+{
+    return this->geometry();
+}
