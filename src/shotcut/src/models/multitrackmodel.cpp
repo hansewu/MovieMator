@@ -1413,53 +1413,52 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         int out = clip->get_out();
         int duration = position - playlist.clip_start(clipIndex);
 
-        // clip时清除后一个clip的所有滤镜
-        int nFilterCount = producer.filter_count();
+//        // clip时清除后一个clip的所有滤镜
+//        int nFilterCount = producer.filter_count();
 
-        for (int i = nFilterCount -1; i >=0 ; i--)
-        {
-             Mlt::Filter* filter = producer.filter(i);
-             if (filter && filter->is_valid() && !filter->get_int("_loader"))
-             {
-                   producer.detach(*filter);
-             }
+//        for (int i = nFilterCount -1; i >=0 ; i--)
+//        {
+//             Mlt::Filter* filter = producer.filter(i);
+//             if (filter && filter->is_valid() && !filter->get_int("_loader"))
+//             {
+//                   producer.detach(*filter);
+//             }
 
-        }
-        //end
+//        }
+//        //end
 
-        nFilterCount = clip->parent().filter_count();
+//        nFilterCount = clip->parent().filter_count();
 
-               for (int i = nFilterCount -1; i >=0 ; i--)
-               {
-                    Mlt::Filter* filter = clip->parent().filter(i);
-                    if (filter && filter->is_valid() && !filter->get_int("_loader"))
-                    {
-                          clip->parent().detach(*filter);
-                    }
+//               for (int i = nFilterCount -1; i >=0 ; i--)
+//               {
+//                    Mlt::Filter* filter = clip->parent().filter(i);
+//                    if (filter && filter->is_valid() && !filter->get_int("_loader"))
+//                    {
+//                          clip->parent().detach(*filter);
+//                    }
 
-               }
+//               }
         // Remove fades that are usually not desired after split.
        // Q_ASSERT(getFilter("fadeOutVolume", &clip->parent()));
-/*
-        QScopedPointer<Mlt::Filter> filter(getFilter("fadeOutVolume", &clip->parent()));
-        if (filter && filter->is_valid())
-            clip->parent().detach(*filter);
-        filter.reset(getFilter("fadeOutBrightness", &clip->parent()));
-        if (filter && filter->is_valid())
-            clip->parent().detach(*filter);
-        filter.reset(getFilter("fadeOutMovit", &clip->parent()));
-        if (filter && filter->is_valid())
-            clip->parent().detach(*filter);
-        filter.reset(getFilter("fadeInVolume", &producer));
-        if (filter && filter->is_valid())
-            producer.detach(*filter);
-        filter.reset(getFilter("fadeInBrightness", &producer));
-        if (filter && filter->is_valid())
-            producer.detach(*filter);
-        filter.reset(getFilter("fadeInMovit", &producer));
-        if (filter && filter->is_valid())
-            producer.detach(*filter);
-*/
+
+//        QScopedPointer<Mlt::Filter> filter(getFilter("fadeOutVolume", &clip->parent()));
+//        if (filter && filter->is_valid())
+//            clip->parent().detach(*filter);
+//        filter.reset(getFilter("fadeOutBrightness", &clip->parent()));
+//        if (filter && filter->is_valid())
+//            clip->parent().detach(*filter);
+//        filter.reset(getFilter("fadeOutMovit", &clip->parent()));
+//        if (filter && filter->is_valid())
+//            clip->parent().detach(*filter);
+//        filter.reset(getFilter("fadeInVolume", &producer));
+//        if (filter && filter->is_valid())
+//            producer.detach(*filter);
+//        filter.reset(getFilter("fadeInBrightness", &producer));
+//        if (filter && filter->is_valid())
+//            producer.detach(*filter);
+//        filter.reset(getFilter("fadeInMovit", &producer));
+//        if (filter && filter->is_valid())
+//            producer.detach(*filter);
 
 
         playlist.resize_clip(clipIndex, in, in + duration - 1);
@@ -2840,10 +2839,12 @@ int MultitrackModel::addVideoTrack()
     playlist.set(kTrackNameProperty, trackName.toUtf8().constData());
     beginInsertRows(QModelIndex(), 0, 0);
     m_trackList.prepend(t);
-    endInsertRows();
-    emit modified();
 
+
+    emit modified();
     MAIN.setCurrentTrack(0);
+    endInsertRows();
+
     return 0;
 }
 
