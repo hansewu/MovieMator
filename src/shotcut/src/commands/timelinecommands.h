@@ -207,6 +207,7 @@ private:
     MultitrackModel& m_model;
     int m_trackIndex;
     int m_clipIndex;
+    int m_originalClipIndex;
     int m_delta;
     bool m_ripple;
     UndoHelper m_undoHelper;

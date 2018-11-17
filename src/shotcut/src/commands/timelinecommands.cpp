@@ -307,6 +307,7 @@ TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, int trackIndex, int
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
+    , m_originalClipIndex(clipIndex)
     , m_delta(delta)
     , m_ripple(ripple)
     , m_undoHelper(m_model)
@@ -319,7 +320,7 @@ TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, int trackIndex, int
 void TrimClipInCommand::redo()
 {
     m_undoHelper.recordBeforeState();
-    m_clipIndex = m_model.trimClipIn(m_trackIndex, m_clipIndex, m_delta, m_ripple);
+    m_clipIndex = m_model.trimClipIn(m_trackIndex, m_originalClipIndex, m_delta, m_ripple);
     m_undoHelper.recordAfterState();
 }
 
@@ -332,7 +333,7 @@ void TrimClipInCommand::undo()
 bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
 {
     const TrimClipInCommand* that = static_cast<const TrimClipInCommand*>(other);
-    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex || (that->m_clipIndex != m_clipIndex && that->m_clipIndex != m_originalClipIndex))
         return false;
     m_undoHelper.recordAfterState();
     m_delta += static_cast<const TrimClipInCommand*>(other)->m_delta;
