@@ -1427,9 +1427,20 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         }
         //end
 
+        nFilterCount = clip->parent().filter_count();
+
+               for (int i = nFilterCount -1; i >=0 ; i--)
+               {
+                    Mlt::Filter* filter = clip->parent().filter(i);
+                    if (filter && filter->is_valid() && !filter->get_int("_loader"))
+                    {
+                          clip->parent().detach(*filter);
+                    }
+
+               }
         // Remove fades that are usually not desired after split.
        // Q_ASSERT(getFilter("fadeOutVolume", &clip->parent()));
-
+/*
         QScopedPointer<Mlt::Filter> filter(getFilter("fadeOutVolume", &clip->parent()));
         if (filter && filter->is_valid())
             clip->parent().detach(*filter);
@@ -1448,7 +1459,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         filter.reset(getFilter("fadeInMovit", &producer));
         if (filter && filter->is_valid())
             producer.detach(*filter);
-
+*/
 
 
         playlist.resize_clip(clipIndex, in, in + duration - 1);
