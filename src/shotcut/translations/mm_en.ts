@@ -438,7 +438,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="815"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="855"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="856"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -453,7 +453,17 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="862"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="848"/>
+        <source>Transition Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="848"/>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="863"/>
         <source>Text Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1960,27 +1970,27 @@ the list. This does not stop a currently running job. Right-
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="106"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="107"/>
         <source>Remove keyframe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="130"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="131"/>
         <source>Prev key frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="132"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="134"/>
         <source>Pre keyframe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="156"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="158"/>
         <source>Next key frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="158"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="161"/>
         <source>Next keyframe</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2970,7 +2980,7 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1882"/>
-        <source>&lt;h1&gt;MovieMator Video Editor %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;MovieMator Video Editor&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016 - 2018 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</source>
+        <source>&lt;h1&gt;MovieMator Video Editor %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;MovieMator Video Editor&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2018 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3184,12 +3194,12 @@ Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4200"/>
+        <location filename="../src/mainwindow.cpp" line="4201"/>
         <source>Execute Python File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4200"/>
+        <location filename="../src/mainwindow.cpp" line="4201"/>
         <source>Python File (*.py)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3527,7 +3537,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MultitrackModel</name>
     <message>
-        <location filename="../src/models/multitrackmodel.cpp" line="3671"/>
+        <location filename="../src/models/multitrackmodel.cpp" line="3683"/>
         <source>Failed to Add Clip
 Invalid Time Code!</source>
         <translation type="unfinished"></translation>
@@ -4366,104 +4376,104 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="287"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="915"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="916"/>
         <source>Move clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="314"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="315"/>
         <source>Trim clip in point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="351"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="352"/>
         <source>Trim clip out point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="387"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="388"/>
         <source>Split clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="411"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="412"/>
         <source>Adjust fade in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="443"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="444"/>
         <source>Adjust fade out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="475"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="592"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="629"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="476"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="593"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="630"/>
         <source>Add transition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="516"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="517"/>
         <source>Trim transition in point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="554"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="555"/>
         <source>Trim transition out point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="663"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="664"/>
         <source>Add video track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="665"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="666"/>
         <source>Add audio track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="667"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="668"/>
         <source>Add filter track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="669"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="670"/>
         <source>Add text track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="700"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="701"/>
         <source>Insert audio track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="702"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="703"/>
         <source>Insert video track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="724"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="725"/>
         <source>Remove audio track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="726"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="727"/>
         <source>Remove video track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="773"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="774"/>
         <source>Change track blend mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="807"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="808"/>
         <source>Change clip properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="841"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="842"/>
         <source>Remove transition</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6770,6 +6780,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/grain/ui.qml" line="85"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="95"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sepia/ui.qml" line="57"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/ui.qml" line="154"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/wave/ui.qml" line="107"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="45"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="54"/>
@@ -6958,6 +6969,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/smartblur/ui.qml" line="94"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="130"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/ui.qml" line="116"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/ui.qml" line="226"/>
         <source>Threshold</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7808,30 +7820,35 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/smartblur/ui.qml" line="129"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/smartblur/ui.qml" line="52"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/ui.qml" line="165"/>
         <source>Blur Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/smartblur/ui.qml" line="131"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/smartblur/ui.qml" line="54"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/ui.qml" line="167"/>
         <source>The radius of the gaussian blur.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/smartblur/ui.qml" line="162"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/smartblur/ui.qml" line="73"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/ui.qml" line="195"/>
         <source>Blur Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/smartblur/ui.qml" line="164"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/smartblur/ui.qml" line="75"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/ui.qml" line="197"/>
         <source>The strength of the gaussian blur.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/smartblur/ui.qml" line="196"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/smartblur/ui.qml" line="97"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/ui.qml" line="229"/>
         <source>If the difference between the original pixel and the blurred pixel is less than threshold, the pixel will be replaced with the blurred pixel.</source>
         <translation type="unfinished"></translation>
     </message>

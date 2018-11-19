@@ -1882,7 +1882,7 @@ void MainWindow::on_actionAbout_TVE_triggered()
              tr("<h1>MovieMator Video Editor %1</h1>"
                 "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/video-editor-moviemator-appstore.html\">MovieMator Video Editor</a></p>"
                 "<p />"
-                "<p>Copyright &copy; 2016 - 2018 etinysoft, Inc</p>"
+                "<p>Copyright &copy; 2016-2018 etinysoft, Inc</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()));
 #endif
