@@ -2849,7 +2849,7 @@ void MainWindow::on_actionHomePage_triggered()
 #else
 
 #if MOVIEMATOR_PRO
-    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/video-editor-moviemator-pro-appstore.html"));
+    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/video-editor-moviemator-appstore.html"));
 #else
     QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/video-editor-moviemator-appstore.html"));
 #endif
@@ -3800,8 +3800,9 @@ void MainWindow::onHelpButtonTriggered()
 //    dir.cd("Resources");
 //    QString pdfPath = dir.path().append("/MovieMator-Free-Mac-Video-Editor-User-Guide.pdf");
 //    QDesktopServices::openUrl(QUrl::fromLocalFile(pdfPath));
+    QDesktopServices::openUrl(QUrl(tr("http://www.macvideostudio.com/mac-movie-video-editor-MovieMator-guide.html")));
 
-    QUrl url("http://www.macvideostudio.com/tutorial/MovieMator-Free-Mac-Video-Editor-User-Guide.pdf");
+//    QUrl url("http://www.macvideostudio.com/tutorial/MovieMator-Free-Mac-Video-Editor-User-Guide.pdf");
 
 }
 
@@ -4284,5 +4285,5 @@ void MainWindow::on_actionGet_Total_Video_Player_triggered()
 
 void MainWindow::on_actionTutorial_triggered()
 {
-    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/tutorial/mac-video-editor-moviemator-pro.html"));
+    QDesktopServices::openUrl(QUrl(tr("http://www.macvideostudio.com/mac-movie-video-editor-MovieMator-guide.html")));
 }
