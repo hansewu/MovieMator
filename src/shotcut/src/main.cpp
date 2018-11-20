@@ -276,6 +276,29 @@ protected:
     }
 };
 
+bool removeDir(const QString & dirName)
+{
+    bool result = true;
+    QDir dir(dirName);
+
+    if (dir.exists()) {
+        Q_FOREACH(QFileInfo info, dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
+            if (info.isDir()) {
+                result = removeDir(info.absoluteFilePath());
+            }
+            else {
+                result = QFile::remove(info.absoluteFilePath());
+            }
+
+            if (!result) {
+                return result;
+            }
+        }
+        result = QDir().rmdir(dirName);
+    }
+    return result;
+}
+
 int main(int argc, char **argv)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
@@ -309,6 +332,10 @@ int main(int argc, char **argv)
 
     QString dstArchivePath = dir.path().append("/resource.zip");
     QFile::remove(dstArchivePath);
+
+    QString sharePath = dir.path().append("/share");
+    removeDir(sharePath);
+
     QFile::copy(appDir0.path().append("/resource"), dstArchivePath);
 //    QFile::copy(appDir0.path().append("/resource.zip"), dstArchivePath);
     QStringList args;
