@@ -19,9 +19,17 @@
 #include "playlisttable.h"
 
 #include <QKeyEvent>
+#include <QApplication>
+#include <QDrag>
+#include <QMimeData>
+#include <QDebug>
+#include "mltcontroller.h"
+#include "mainwindow.h"
+#include "docks/playlistdock.h"
 
 PlaylistTable::PlaylistTable(QWidget *parent)
     : QTableView(parent)
+    , m_canStartDrag(false)
 {
 
 }
@@ -40,3 +48,47 @@ void PlaylistTable::keyPressEvent(QKeyEvent* event)
     QTableView::keyPressEvent(event);
 }
 
+void PlaylistTable::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton
+            && indexAt(event->pos()).isValid())
+    {
+        m_dragStart = event->pos();
+        m_canStartDrag = true;
+    }
+    else
+        m_canStartDrag = false;
+    QTableView::mousePressEvent(event);
+}
+
+void PlaylistTable::mouseMoveEvent(QMouseEvent* event)
+{
+    if (!(event->buttons() & Qt::LeftButton))
+        return;
+    if ((event->pos() - m_dragStart).manhattanLength() < QApplication::startDragDistance())
+        return;
+    if (!m_canStartDrag)
+        return;
+
+    QDrag drag(this);
+
+    QMimeData *mimeData = MAIN.playlistDock()->model()->mimeData(selectedIndexes());
+    drag.setMimeData(mimeData);
+
+    QImage thumbnail = MAIN.playlistDock()->model()->thumbnail(selectedIndexes().first().row());
+    drag.setPixmap(QPixmap::fromImage(thumbnail));
+    drag.setHotSpot(QPoint(0, 0));
+    drag.exec(Qt::MoveAction);
+//    QTableView::mouseMoveEvent(event);
+}
+
+
+//void PlaylistTable::dragEnterEvent(QDragEnterEvent *event)
+//{
+//    event->ignore();
+//}
+
+//void PlaylistTable::dragMoveEvent(QDragMoveEvent *event)
+//{
+//    event->ignore();
+//}

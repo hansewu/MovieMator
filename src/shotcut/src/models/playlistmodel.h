@@ -73,6 +73,7 @@ public:
     void refreshThumbnails();
     Mlt::Playlist* playlist() { return m_playlist; }
     void setPlaylist(Mlt::Playlist& playlist);
+    QImage thumbnail(int row);
 
 signals:
     void created();

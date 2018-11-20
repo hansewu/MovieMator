@@ -21,11 +21,23 @@
 
 #include <QTableView>
 
+
+
 class PlaylistTable : public QTableView
 {
 public:
     PlaylistTable(QWidget *parent = 0);
     void keyPressEvent(QKeyEvent*);
+
+protected:
+    void mousePressEvent(QMouseEvent *);
+    void mouseMoveEvent(QMouseEvent *);
+//    void dragEnterEvent(QDragEnterEvent *event);
+//    void dragMoveEvent(QDragMoveEvent *event);
+
+private:
+    QPoint m_dragStart;
+    bool m_canStartDrag;
 };
 
 #endif

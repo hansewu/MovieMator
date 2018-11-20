@@ -635,3 +635,12 @@ void PlaylistModel::setPlaylist(Mlt::Playlist& playlist)
         emit loaded();
     }
 }
+
+QImage PlaylistModel::thumbnail(int row)
+{
+    Q_ASSERT(row >= 0 && row < m_playlist->count());
+    QModelIndex index = createIndex(row, COLUMN_THUMBNAIL);
+    QVariant ret = data(index, Qt::DecorationRole);
+    return ret.value<QImage>();
+}
+
