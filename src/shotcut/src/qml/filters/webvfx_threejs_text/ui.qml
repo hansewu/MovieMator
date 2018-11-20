@@ -79,11 +79,15 @@ Item {
 
         Label {
             text: qsTr('Font')
+            Layout.row: 2
+            Layout.column: 0
             Layout.alignment: Qt.AlignRight
             color: '#ffffff'
         }
         ComboBox {
             id: fontCombo
+            Layout.row: 2
+            Layout.column: 1
             model: ['Droid Sans', 'Droid Serif', 'Gentilis', 'Helvetiker', 'Optimer']
             property var values: ['droid sans', 'droid serif', 'gentilis', 'helvetiker', 'optimer']
             function valueToIndex() {
@@ -97,6 +101,8 @@ Item {
             onActivated: filter.set('font', values[index])
         }
         CheckBox {
+            Layout.row: 2
+            Layout.column: 2
             id: boldCheckBox
             checked: filter.get('weight') === 'bold'
           //  text: qsTr('Bold')
@@ -110,7 +116,9 @@ Item {
         }
         CheckBox {
             id: bevelCheckBox
-            Layout.columnSpan: 2
+//            Layout.columnSpan: 2
+            Layout.row: 2
+            Layout.column: 3
             checked: filter.getDouble('bevel')
           //  text: qsTr('Beveled')
             onCheckedChanged: filter.set('bevel', checked)
@@ -124,12 +132,16 @@ Item {
 
         Label {
             text: qsTr('Color')
+            Layout.row: 3
+            Layout.column: 0
             Layout.alignment: Qt.AlignRight
             color: '#ffffff'
         }
         ColorPicker {
             id: colorSwatch
-            Layout.columnSpan: 4
+//            Layout.columnSpan: 4
+            Layout.row: 3
+            Layout.column: 1
             value: filter.get('color')
             property bool isReady: false
             Component.onCompleted: isReady = true
@@ -146,29 +158,39 @@ Item {
 
         Label {
             text: qsTr('Size')
+            Layout.row: 4
+            Layout.column: 0
             Layout.alignment: Qt.AlignRight
             color: '#ffffff'
         }
         SliderSpinner {
             id: sizeSlider
-            Layout.columnSpan: 3
+//            Layout.columnSpan: 3
+            Layout.row: 4
+            Layout.column: 1
             minimumValue: 0
             maximumValue: 200
             value: filter.getDouble('size')
             onValueChanged: filter.set('size', value)
         }
         UndoButton {
+            Layout.row: 4
+            Layout.column: 2
             onClicked: sizeSlider.value = 70
         }
 
         Label {
             text: qsTr('Depth')
+            Layout.row: 5
+            Layout.column: 0
             Layout.alignment: Qt.AlignRight
             color: '#ffffff'
         }
         SliderSpinner {
             id: depthSlider
-            Layout.columnSpan: 3
+//            Layout.columnSpan: 3
+            Layout.row: 5
+            Layout.column: 1
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
@@ -176,17 +198,23 @@ Item {
             onValueChanged: filter.set('depth', value * 0.5)
         }
         UndoButton {
+            Layout.row: 5
+            Layout.column: 2
             onClicked: depthSlider.value = 40
         }
 
         Label {
             text: qsTr('Tilt')
+            Layout.row: 6
+            Layout.column: 0
             Layout.alignment: Qt.AlignRight
             color: '#ffffff'
         }
         SliderSpinner {
             id: tiltSlider
-            Layout.columnSpan: 3
+//            Layout.columnSpan: 3
+            Layout.row: 6
+            Layout.column: 1
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
@@ -194,17 +222,23 @@ Item {
             onValueChanged: filter.set('x_rotation', value / maximumValue)
         }
         UndoButton {
+            Layout.row: 6
+            Layout.column: 2
             onClicked: tiltSlider.value = 50
         }
 
         Label {
             text: qsTr('Horizontal')
+            Layout.row: 7
+            Layout.column: 0
             Layout.alignment: Qt.AlignRight
             color: '#ffffff'
         }
         SliderSpinner {
             id: horizontalSlider
-            Layout.columnSpan: 3
+//            Layout.columnSpan: 3
+            Layout.row: 7
+            Layout.column: 1
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
@@ -212,17 +246,23 @@ Item {
             onValueChanged: filter.set('horizontal', value / maximumValue)
         }
         UndoButton {
+            Layout.row: 7
+            Layout.column: 2
             onClicked: horizontalSlider.value = 50
         }
 
         Label {
             text: qsTr('Vertical')
+            Layout.row: 8
+            Layout.column: 0
             Layout.alignment: Qt.AlignRight
             color: '#ffffff'
         }
         SliderSpinner {
             id: verticalSlider
-            Layout.columnSpan: 3
+//            Layout.columnSpan: 3
+            Layout.row: 8
+            Layout.column: 1
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
@@ -230,11 +270,13 @@ Item {
             onValueChanged: filter.set('vertical', value / maximumValue)
         }
         UndoButton {
+            Layout.row: 8
+            Layout.column: 2
             onClicked: verticalSlider.value = 50
         }
 
-        Item {
-            Layout.fillHeight: true
-        }
+//        Item {
+//            Layout.fillHeight: true
+//        }
     }
 }
