@@ -2838,6 +2838,11 @@ void MainWindow::on_actionFacebook_triggered()
 
 void MainWindow::on_actionHomePage_triggered()
 {
+
+#if defined(Q_OS_WIN)
+    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/video-editor-free-editing-software.html"));
+#else
+
 #if SHARE_VERSION
 
 #if MOVIEMATOR_PRO
@@ -2852,6 +2857,8 @@ void MainWindow::on_actionHomePage_triggered()
     QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/video-editor-moviemator-appstore.html"));
 #else
     QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/video-editor-moviemator-appstore.html"));
+#endif
+
 #endif
 
 #endif
