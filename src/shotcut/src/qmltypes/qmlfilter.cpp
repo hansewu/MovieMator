@@ -819,6 +819,46 @@ QString QmlFilter::getKeyFrameParaValue(double frame, QString key)
 
 }
 
+QString QmlFilter::getAnimStringValue(double frame, QString key)
+{
+    if(m_filter)
+    {
+        QString str = QString::fromUtf8(m_filter->anim_get(key.toUtf8().constData(), frame));
+        return str;
+    }
+
+    return QString();
+}
+
+int QmlFilter::getAnimIntValue(double frame, QString key)
+{
+    if(m_filter)
+    {
+        return m_filter->anim_get_int(key.toUtf8().constData(), frame);
+    }
+
+    return -1;
+}
+
+double QmlFilter::getAnimDoubleValue(double frame, QString key)
+{
+    if(m_filter)
+    {
+        return m_filter->anim_get_double(key.toUtf8().constData(), frame);
+    }
+
+    return -1.0;
+}
+
+mlt_rect QmlFilter::getAnimRectValue(double frame, QString key)
+{
+    if(m_filter)
+    {
+        return m_filter->anim_get_rect(key.toUtf8().constData(), frame);
+    }
+
+    return {0.0,0.0,0.0,0.0,0.0};
+}
 
 
 int QmlFilter::getKeyFrameNumber()
