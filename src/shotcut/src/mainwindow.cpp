@@ -1814,7 +1814,7 @@ void MainWindow::setCurrentFile(const QString &filename)
 #if MOVIEMATOR_PRO
     setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro"));
 #else
-    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor"));
+    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg(tr("MovieMator Video Editor")));
 #endif
 #endif
 }

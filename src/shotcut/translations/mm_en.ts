@@ -2269,7 +2269,8 @@ duration of the transition.</source>
     <name>MainWindow</name>
     <message>
         <location filename="../src/mainwindow.ui" line="26"/>
-        <location filename="../src/mainwindow.cpp" line="690"/>
+        <location filename="../src/mainwindow.cpp" line="689"/>
+        <location filename="../src/mainwindow.cpp" line="1817"/>
         <source>MovieMator Video Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2385,7 +2386,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="274"/>
-        <location filename="../src/mainwindow.cpp" line="3931"/>
+        <location filename="../src/mainwindow.cpp" line="3937"/>
         <source>Save project</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2441,7 +2442,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="368"/>
-        <location filename="../src/mainwindow.cpp" line="3056"/>
+        <location filename="../src/mainwindow.cpp" line="3062"/>
         <source>Enter Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2462,7 +2463,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="395"/>
-        <location filename="../src/mainwindow.cpp" line="332"/>
+        <location filename="../src/mainwindow.cpp" line="331"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2478,7 +2479,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="431"/>
-        <location filename="../src/mainwindow.cpp" line="481"/>
+        <location filename="../src/mainwindow.cpp" line="480"/>
         <source>History</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2722,7 +2723,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="869"/>
-        <location filename="../src/mainwindow.cpp" line="3895"/>
+        <location filename="../src/mainwindow.cpp" line="3901"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2733,7 +2734,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="881"/>
-        <location filename="../src/mainwindow.cpp" line="3970"/>
+        <location filename="../src/mainwindow.cpp" line="3976"/>
         <source>Feedback</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2754,7 +2755,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="902"/>
-        <location filename="../src/mainwindow.cpp" line="4004"/>
+        <location filename="../src/mainwindow.cpp" line="4010"/>
         <source>Buy a License Code</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2813,100 +2814,100 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="580"/>
+        <location filename="../src/mainwindow.cpp" line="579"/>
         <source>123</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="677"/>
+        <location filename="../src/mainwindow.cpp" line="676"/>
         <source>MovieMator Video Editor Pro (Unregistered)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="679"/>
+        <location filename="../src/mainwindow.cpp" line="678"/>
         <source>MovieMator Video Editor Pro (Personal)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="681"/>
+        <location filename="../src/mainwindow.cpp" line="680"/>
         <source>MovieMator Video Editor Pro (Family)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="683"/>
+        <location filename="../src/mainwindow.cpp" line="682"/>
         <source>MovieMator Free Mac Video Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="688"/>
+        <location filename="../src/mainwindow.cpp" line="687"/>
         <source>MovieMator Video Editor Pro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="809"/>
+        <location filename="../src/mainwindow.cpp" line="808"/>
         <source>Non-Broadcast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="820"/>
+        <location filename="../src/mainwindow.cpp" line="819"/>
         <source>DVD Widescreen NTSC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="821"/>
+        <location filename="../src/mainwindow.cpp" line="820"/>
         <source>DVD Widescreen PAL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="826"/>
+        <location filename="../src/mainwindow.cpp" line="825"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="845"/>
+        <location filename="../src/mainwindow.cpp" line="844"/>
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="876"/>
+        <location filename="../src/mainwindow.cpp" line="875"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="879"/>
+        <location filename="../src/mainwindow.cpp" line="878"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="882"/>
+        <location filename="../src/mainwindow.cpp" line="881"/>
         <source>External</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="896"/>
+        <location filename="../src/mainwindow.cpp" line="895"/>
         <source>DeckLink Keyer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1061"/>
-        <location filename="../src/mainwindow.cpp" line="1063"/>
-        <location filename="../src/mainwindow.cpp" line="3540"/>
+        <location filename="../src/mainwindow.cpp" line="1060"/>
+        <location filename="../src/mainwindow.cpp" line="1062"/>
+        <location filename="../src/mainwindow.cpp" line="3546"/>
         <source>Failed to open </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1089"/>
+        <location filename="../src/mainwindow.cpp" line="1088"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1142"/>
+        <location filename="../src/mainwindow.cpp" line="1141"/>
         <source>Repairing the project failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1154"/>
+        <location filename="../src/mainwindow.cpp" line="1153"/>
         <source>MovieMator noticed some problems in your project.
 Do you want MovieMator to try to repair it?
 
@@ -2915,297 +2916,297 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1195"/>
+        <location filename="../src/mainwindow.cpp" line="1194"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1362"/>
+        <location filename="../src/mainwindow.cpp" line="1361"/>
         <source>For reasons of copyright protection, you can not import vob or m4p files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1538"/>
-        <location filename="../src/mainwindow.cpp" line="3520"/>
+        <location filename="../src/mainwindow.cpp" line="1537"/>
+        <location filename="../src/mainwindow.cpp" line="3526"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1805"/>
-        <location filename="../src/mainwindow.cpp" line="1807"/>
-        <location filename="../src/mainwindow.cpp" line="1809"/>
-        <location filename="../src/mainwindow.cpp" line="1811"/>
-        <location filename="../src/mainwindow.cpp" line="1816"/>
-        <location filename="../src/mainwindow.cpp" line="1818"/>
+        <location filename="../src/mainwindow.cpp" line="1804"/>
+        <location filename="../src/mainwindow.cpp" line="1806"/>
+        <location filename="../src/mainwindow.cpp" line="1808"/>
+        <location filename="../src/mainwindow.cpp" line="1810"/>
+        <location filename="../src/mainwindow.cpp" line="1815"/>
+        <location filename="../src/mainwindow.cpp" line="1817"/>
         <source>%1[*] - %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="230"/>
         <location filename="../src/mainwindow.ui" line="233"/>
-        <location filename="../src/mainwindow.cpp" line="1855"/>
-        <location filename="../src/mainwindow.cpp" line="1874"/>
+        <location filename="../src/mainwindow.cpp" line="1854"/>
+        <location filename="../src/mainwindow.cpp" line="1873"/>
         <source>About MovieMator Video Editor Pro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1863"/>
+        <location filename="../src/mainwindow.cpp" line="1862"/>
         <source>About MovieMator Free Mac Video Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1882"/>
+        <location filename="../src/mainwindow.cpp" line="1881"/>
         <source>About MovieMator Video Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1537"/>
+        <location filename="../src/mainwindow.cpp" line="1536"/>
         <source>All supported files(*.mmp *.png *.jpeg *.gif *.jpg *.3gp *.3gp2 *.3g2 *.3gpp *.a52  *.avi *.asf  *.ac3 *.aac *.au *.aiff *.aif *.ape *.amr *.caf *.cda *.dat *.divx *.dsm *.dv *.dts *.dvr-ms *.flac  *.fli  *.flc *.flv *.f4v *.gif *.ifo *.m4r *.mp2 *.mp3 *.mmf *.mp4 *.mov *.mpg *.mpeg *.m1v *.mpeg1 *.mpeg2 *.m2a *.mp1  *.m2p *.m2v *.mpv *.mpa *.mpeg4*.mod *.m2ts *.mts *.m4v *.m4a *.mxf *.mkv *.mka *.ogg *.ogv*.ogm *.oga *.qt *.rmvb *.rm *.ra *.ram *.tod  *.ts *.vob *.wma *.wav *.wmv *.webm *.wtv)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1856"/>
+        <location filename="../src/mainwindow.cpp" line="1855"/>
         <source>&lt;h1&gt;MovieMator Video Editor Pro %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=&quot;http://www.macvideostudio.com/mac-video-editor-moviemator-pro.html&quot;&gt;MovieMator Video Editor Pro&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2018 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1864"/>
+        <location filename="../src/mainwindow.cpp" line="1863"/>
         <source>&lt;h1&gt;MovieMator Free Mac Video Editor %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=&quot;http://www.macvideostudio.com/moviemator-free-mac-video-editor.html&quot;&gt;MovieMator Free Mac Video Editor&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2018 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1875"/>
+        <location filename="../src/mainwindow.cpp" line="1874"/>
         <source>&lt;h1&gt;MovieMator Video Editor Pro %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;MovieMator Video Editor Pro&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2018 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1883"/>
+        <location filename="../src/mainwindow.cpp" line="1882"/>
         <source>&lt;h1&gt;MovieMator Video Editor %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;MovieMator Video Editor&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2018 etinysoft, Inc&lt;/p&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2473"/>
-        <location filename="../src/mainwindow.cpp" line="2506"/>
+        <location filename="../src/mainwindow.cpp" line="2472"/>
+        <location filename="../src/mainwindow.cpp" line="2505"/>
         <source>Saved %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2483"/>
+        <location filename="../src/mainwindow.cpp" line="2482"/>
         <source>Save MMP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2483"/>
+        <location filename="../src/mainwindow.cpp" line="2482"/>
         <source>MMP (*.mmp)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2498"/>
+        <location filename="../src/mainwindow.cpp" line="2497"/>
         <source>Unable to save empty file, but saved its name for future.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2518"/>
+        <location filename="../src/mainwindow.cpp" line="2517"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2550"/>
+        <location filename="../src/mainwindow.cpp" line="2549"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2605"/>
+        <location filename="../src/mainwindow.cpp" line="2604"/>
         <source>To export video, you must add one or more files to timeline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3059"/>
+        <location filename="../src/mainwindow.cpp" line="3065"/>
         <source>Exit Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3072"/>
+        <location filename="../src/mainwindow.cpp" line="3078"/>
         <source>GPU Processing is not supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3243"/>
+        <location filename="../src/mainwindow.cpp" line="3249"/>
         <source>You must restart MovieMator to switch to the new language.
 Do you want to change language now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3313"/>
+        <location filename="../src/mainwindow.cpp" line="3319"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3322"/>
+        <location filename="../src/mainwindow.cpp" line="3328"/>
         <source>You must restart MovieMator to switch using GPU processing.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3521"/>
+        <location filename="../src/mainwindow.cpp" line="3527"/>
         <source>MMP (*.mmp);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3581"/>
+        <location filename="../src/mainwindow.cpp" line="3587"/>
         <source>You must restart MovieMator to change the display method.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3603"/>
+        <location filename="../src/mainwindow.cpp" line="3609"/>
         <source>Application Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3638"/>
+        <location filename="../src/mainwindow.cpp" line="3644"/>
         <source>MovieMator version %1 is available! Click here to get it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3642"/>
+        <location filename="../src/mainwindow.cpp" line="3648"/>
         <source>You are running the latest version of MovieMator.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3652"/>
+        <location filename="../src/mainwindow.cpp" line="3658"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3702"/>
+        <location filename="../src/mainwindow.cpp" line="3708"/>
         <source>Export EDL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3702"/>
+        <location filename="../src/mainwindow.cpp" line="3708"/>
         <source>EDL (*.edl)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3743"/>
+        <location filename="../src/mainwindow.cpp" line="3749"/>
         <source>A JavaScript error occurred during export.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3746"/>
+        <location filename="../src/mainwindow.cpp" line="3752"/>
         <source>Failed to open export-edl.js</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3804"/>
-        <location filename="../src/mainwindow.cpp" line="4289"/>
+        <location filename="../src/mainwindow.cpp" line="3810"/>
+        <location filename="../src/mainwindow.cpp" line="4295"/>
         <source>http://www.macvideostudio.com/mac-movie-video-editor-MovieMator-guide.html</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3882"/>
+        <location filename="../src/mainwindow.cpp" line="3888"/>
         <source>Open a video, audio or image file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3883"/>
+        <location filename="../src/mainwindow.cpp" line="3889"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3893"/>
+        <location filename="../src/mainwindow.cpp" line="3899"/>
         <source>Remove media files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3906"/>
-        <location filename="../src/mainwindow.cpp" line="3908"/>
+        <location filename="../src/mainwindow.cpp" line="3912"/>
+        <location filename="../src/mainwindow.cpp" line="3914"/>
         <source>Undo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3918"/>
-        <location filename="../src/mainwindow.cpp" line="3920"/>
+        <location filename="../src/mainwindow.cpp" line="3924"/>
+        <location filename="../src/mainwindow.cpp" line="3926"/>
         <source>Redo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3933"/>
+        <location filename="../src/mainwindow.cpp" line="3939"/>
         <source>Save Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3943"/>
+        <location filename="../src/mainwindow.cpp" line="3949"/>
         <source>Export video, audio or image file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3945"/>
+        <location filename="../src/mainwindow.cpp" line="3951"/>
         <source>Export Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3956"/>
+        <location filename="../src/mainwindow.cpp" line="3962"/>
         <source>Tutorials</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="940"/>
-        <location filename="../src/mainwindow.cpp" line="3958"/>
+        <location filename="../src/mainwindow.cpp" line="3964"/>
         <source>Tutorial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3968"/>
+        <location filename="../src/mainwindow.cpp" line="3974"/>
         <source>Send us your suggestions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3994"/>
+        <location filename="../src/mainwindow.cpp" line="4000"/>
         <source>Enter Licensse Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3995"/>
+        <location filename="../src/mainwindow.cpp" line="4001"/>
         <source>Register</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4005"/>
+        <location filename="../src/mainwindow.cpp" line="4011"/>
         <source>Buy Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4018"/>
+        <location filename="../src/mainwindow.cpp" line="4024"/>
         <source>Upgrade to Pro version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4019"/>
+        <location filename="../src/mainwindow.cpp" line="4025"/>
         <source>Upgrade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4028"/>
+        <location filename="../src/mainwindow.cpp" line="4034"/>
         <source>Get Total Video Converter Pro - a great video converter and dvd burner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4029"/>
+        <location filename="../src/mainwindow.cpp" line="4035"/>
         <source>Great Converter &amp; DVD Burner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4203"/>
+        <location filename="../src/mainwindow.cpp" line="4209"/>
         <source>Execute Python File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4203"/>
+        <location filename="../src/mainwindow.cpp" line="4209"/>
         <source>Python File (*.py)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5018,171 +5019,171 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TimelineToolbar</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="58"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="67"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="77"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="86"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="87"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="96"/>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="97"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="106"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="108"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="117"/>
         <source>Split</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="136"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="145"/>
         <source>Toggle snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="146"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="155"/>
         <source>Scrub while dragging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="157"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="166"/>
         <source>Ripple trim and drop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="158"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="167"/>
         <source>Ripple</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="169"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="178"/>
         <source>Change the position and size of the clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="170"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="179"/>
         <source>Resize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="186"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="195"/>
         <source>Rotate clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="187"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="196"/>
         <source>Rotate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="203"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="212"/>
         <source>Crop clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="204"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="213"/>
         <source>Crop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="256"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="257"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="265"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="266"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="272"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="281"/>
         <source>Add Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="288"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="297"/>
         <source>Add Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="315"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="324"/>
         <source>Transition Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="411"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="427"/>
         <source>Display a menu of additional actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="419"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="435"/>
         <source>Cut - Copy the current clip to the Source
 player and ripple delete it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="428"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="444"/>
         <source>Copy - Copy the current clip to the Source player (C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="437"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="453"/>
         <source>Paste - Insert clip into the current track
 shifting following clips to the right (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="445"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="461"/>
         <source>Append to the current track (A)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="458"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="474"/>
         <source>Remove current clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="474"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="490"/>
         <source>Insert clip into the current track
 shifting following clips to the right (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="490"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="506"/>
         <source>Split At Playhead (S)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="498"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="514"/>
         <source>Change clip&apos;s position and size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="562"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="578"/>
         <source>Zoom out timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="570"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="589"/>
         <source>Zoom in timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="578"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="600"/>
         <source>Add text to video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="586"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="608"/>
         <source>Add filter to video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="598"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="620"/>
         <source>Set the transition property</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5842,7 +5843,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="294"/>
+        <location filename="../src/main.cpp" line="317"/>
         <source>Loading plugins...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6651,32 +6652,32 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="477"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="486"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="477"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="486"/>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="541"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="550"/>
         <source>Add Audio Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="546"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="555"/>
         <source>Add Video Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="551"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="560"/>
         <source>Insert Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="556"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="565"/>
         <source>Remove Track</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7650,9 +7651,9 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="480"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/webvfx_threejs_text/ui.qml" line="107"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/dynamictext/ui.qml" line="247"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="107"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="113"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="447"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="107"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="113"/>
         <source>Bold</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7706,9 +7707,9 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="617"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/webvfx_threejs_text/ui.qml" line="148"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/dynamictext/ui.qml" line="338"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="148"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="160"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="584"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="148"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="160"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8051,9 +8052,9 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/webvfx_circular_frame/ui.qml" line="46"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/webvfx_threejs_text/ui.qml" line="126"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_circular_frame/ui.qml" line="46"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="126"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="134"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_circular_frame/ui.qml" line="46"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="126"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="134"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8068,9 +8069,9 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/webvfx_ruttetraizer/ui.qml" line="111"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/webvfx_threejs_text/ui.qml" line="165"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_ruttetraizer/ui.qml" line="111"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="165"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="183"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="111"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="165"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="183"/>
         <source>Depth</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8097,29 +8098,29 @@ the screen capture to SDI/HDMI in this mode.</source>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/webvfx_threejs_text/ui.qml" line="120"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="120"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="120"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="128"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="128"/>
         <source>Beveled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/webvfx_threejs_text/ui.qml" line="183"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="183"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="183"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="207"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="207"/>
         <source>Tilt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/webvfx_threejs_text/ui.qml" line="201"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="201"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="201"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="231"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="231"/>
         <source>Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/webvfx_threejs_text/ui.qml" line="219"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="219"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="219"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/webvfx_threejs_text/ui.qml" line="255"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="255"/>
         <source>Vertical</source>
         <translation type="unfinished"></translation>
     </message>
