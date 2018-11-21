@@ -1426,8 +1426,13 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         progressDialog.reset();
         connect(this, SIGNAL(hideProgressDialog()), &progressDialog, SLOT(cancel()));
 
-        QtConcurrent::run(openFileTask, this, url, properties);
-        progressDialog.exec();
+        //progressDialog.exec();
+        progressDialog.setModal(false);                        // 指定进度条的模态:true(模态),false(非模态)
+        progressDialog.show();
+        qApp->processEvents();
+        openFileTask(this, url, properties);
+        //QFuture<void> fut1 = QtConcurrent::run(openFileTask, this, url, properties);
+        //fut1.waitForFinished();
         //showLoadProgress();
     }
     else
