@@ -313,7 +313,11 @@ int main(int argc, char **argv)
 //   MMSplashScreen splash(QPixmap(":/splash.png"));
 //    splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
 //    splash.show();
+#if MOVIEMATOR_FREE
+    g_splash = new MMSplashScreen(QPixmap(":/splash-free.png"));
+#else
     g_splash = new MMSplashScreen(QPixmap(":/splash.png"));
+#endif
     g_splash->showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
     g_splash->show();
 
