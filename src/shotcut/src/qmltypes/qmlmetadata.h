@@ -38,6 +38,13 @@ class QmlKeyframesParameter : public QObject
     Q_PROPERTY(double minimum MEMBER m_minimum NOTIFY changed)
     Q_PROPERTY(double maximum MEMBER m_maximum NOTIFY changed)
 
+    Q_PROPERTY(QString objectName MEMBER m_objectName NOTIFY changed)
+    Q_PROPERTY(QString controlType MEMBER m_controlType NOTIFY changed)
+    Q_PROPERTY(QString paraType MEMBER m_paraType NOTIFY changed)
+    Q_PROPERTY(QString defaultValue MEMBER m_defaultValue NOTIFY changed)
+    Q_PROPERTY(QString value MEMBER m_value NOTIFY changed)
+    Q_PROPERTY(QList<QString> factorFunc MEMBER m_factorFunc NOTIFY changed)
+
 public:
     explicit QmlKeyframesParameter(QObject* parent = 0);
 
@@ -47,6 +54,14 @@ public:
     bool isCurve() const { return m_isCurve; }
     double minimum() const { return m_minimum; }
     double maximum() const { return m_maximum; }
+
+
+    QString objectName() const { return m_objectName; }
+    QString controlType() const { return m_controlType; }
+    QString paraType() const { return m_paraType; }
+    QString defaultValue() const { return m_defaultValue; }
+    QString value() const { return m_value; }
+    QList<QString> factorFunc() const { return m_factorFunc; }
 
 signals:
     void changed();
@@ -58,6 +73,13 @@ private:
     bool m_isCurve;
     double m_minimum;
     double m_maximum;
+
+    QString m_objectName;
+    QString m_controlType;
+    QString m_paraType;
+    QString m_defaultValue;
+    QString m_value;
+    QList<QString> m_factorFunc;
 };
 
 class QmlKeyframesMetadata : public QObject

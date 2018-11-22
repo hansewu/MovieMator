@@ -207,5 +207,6 @@ QmlKeyframesParameter::QmlKeyframesParameter(QObject* parent)
     , m_isCurve(false)
     , m_minimum(0.0)
     , m_maximum(0.0)
+    , m_paraType("string")
 {
 }

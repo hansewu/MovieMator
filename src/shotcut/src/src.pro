@@ -395,10 +395,10 @@ mac {
 
 
     #free appstore
-#    DEFINES += MOVIEMATOR_FREE=1
-#    TARGET = "MovieMator Video Editor"
-#    QMAKE_INFO_PLIST = ../Info-Free.plist
-#    ICON = ../icons/moviemator.icns
+    DEFINES += MOVIEMATOR_FREE=1
+    TARGET = "MovieMator Video Editor"
+    QMAKE_INFO_PLIST = ../Info-Free.plist
+    ICON = ../icons/moviemator.icns
 
     #free share
 #    DEFINES += SHARE_VERSION=1
@@ -407,11 +407,11 @@ mac {
 #    QMAKE_INFO_PLIST = ../Info-Free-share.plist
 #    ICON = ../icons/moviemator.icns
 
-    #pro appstore
-    DEFINES += MOVIEMATOR_PRO=1
-    TARGET = "MovieMator Video Editor Pro"
-    QMAKE_INFO_PLIST = ../Info.plist
-    ICON = ../icons/moviemator-pro.icns
+#    #pro appstore
+#    DEFINES += MOVIEMATOR_PRO=1
+#    TARGET = "MovieMator Video Editor Pro"
+#    QMAKE_INFO_PLIST = ../Info.plist
+#    ICON = ../icons/moviemator-pro.icns
 
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.8
 
@@ -465,7 +465,7 @@ isEmpty(SHOTCUT_VERSION) {
      win32:SHOTCUT_VERSION = adhoc
 }
 #DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
-DEFINES += SHOTCUT_VERSION=\\\"2.5.0\\\"
+DEFINES += SHOTCUT_VERSION=\\\"2.5.1\\\"
 
 
 unix:!mac:isEmpty(PREFIX) {

@@ -687,16 +687,43 @@ void QmlFilter::combineAllKeyFramePara()
                 QString value = para.paraMap.values().at(keyIndex);
 
 
-                    // Only set an animation keyframe if it does not already exist with the same value.
-                    Mlt::Animation animation(m_filter->get_animation(key.toUtf8().constData()));
+                QString paraType = "string";
+                int paramCount = m_metadata->keyframes()->parameterCount();
+                for (int i = 0; i < paramCount; i++)
+                {
+                     QString name = m_metadata->keyframes()->parameter(i)->property();
+                     if (name == key) { paraType = m_metadata->keyframes()->parameter(i)->paraType(); break; }
+                }
+
+                // Only set an animation keyframe if it does not already exist with the same value.
+                Mlt::Animation animation(m_filter->get_animation(key.toUtf8().constData()));
+                if (paraType == "double")
+                {
                     if (!animation.is_valid() || !animation.is_key(para.keyFrame)
                             || value.toDouble() != m_filter->anim_get_double(key.toUtf8().constData(), para.keyFrame, out - in + 1)) {
                         m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), para.keyFrame, out - in + 1, mlt_keyframe_smooth);
                         MLT.refreshConsumer();
                         emit changed();
                     }
-
-
+                }
+                else if(paraType == "int")
+                {
+                    if (!animation.is_valid() || !animation.is_key(para.keyFrame)
+                            || value.toInt() != m_filter->anim_get_int(key.toUtf8().constData(), para.keyFrame, out - in + 1)) {
+                        m_filter->anim_set(key.toUtf8().constData(), value.toInt(), para.keyFrame, out - in + 1, mlt_keyframe_smooth);
+                        MLT.refreshConsumer();
+                        emit changed();
+                    }
+                }
+                else
+                {
+                    if (!animation.is_valid() || !animation.is_key(para.keyFrame) || value != m_filter.anim_get(key.toUtf8().constData(), para.keyFrame, out - in + 1))
+                    {
+                        m_filter.anim_set(key.toUtf8().constData(), value.toUtf8().constData(), para.keyFrame, out - in + 1, mlt_keyframe_smooth);
+                        MLT.refreshConsumer();
+                        emit changed();
+                    }
+                }
              }
           }
         }
