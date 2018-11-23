@@ -516,6 +516,11 @@ double QmlFilter::getNextKeyFrameNum(double currentKeyFrame)
     return -1;
 }
 
+void QmlFilter::setKeyFrameParaRectValue(double frame, QString key, const QRectF& rect, double opacity)
+{
+    QString sValue = QString("%1,%2,%3,%4,%5").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height()).arg(opacity);
+    setKeyFrameParaValue(frame, key, sValue);
+}
 
 void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
 {
@@ -715,6 +720,38 @@ void QmlFilter::combineAllKeyFramePara()
                         emit changed();
                     }
                 }
+                else if(paraType == "string")
+                {
+                    if (!animation.is_valid() || !animation.is_key(para.keyFrame) || value != m_filter->anim_get(key.toUtf8().constData(), para.keyFrame, out - in + 1))
+                    {
+                        m_filter->anim_set(key.toUtf8().constData(), value.toUtf8().constData(), para.keyFrame, out - in + 1);
+                        MLT.refreshConsumer();
+                        emit changed();
+                    }
+                }
+                else if(paraType == "rect")
+                {
+                    QStringList listValue = value.split(",", QString::SkipEmptyParts);
+                    double x = listValue[0].toDouble();
+                    double y = listValue[1].toDouble();
+                    double width = listValue[2].toDouble();
+                    double height = listValue[3].toDouble();
+                    double opacity = listValue[4].toDouble();
+
+                    mlt_rect rect = m_filter->anim_get_rect(key.toUtf8().constData(), para.keyFrame, out - in + 1);
+                    if (!animation.is_valid() || !animation.is_key(para.keyFrame)
+                        || x != rect.x || y != rect.y || width != rect.w || height != rect.h || opacity != rect.o)
+                    {
+                        rect.x = x;
+                        rect.y = y;
+                        rect.w = width;
+                        rect.h = height;
+                        rect.o = opacity;
+                        m_filter.anim_set(key.toUtf8().constData(), rect, para.keyFrame, out - in + 1, mlt_keyframe_smooth);
+                        MLT.refreshConsumer();
+                        emit changed(name);
+                    }
+                }
                 else
                 {
                     if (!animation.is_valid() || !animation.is_key(para.keyFrame) || value != m_filter->anim_get(key.toUtf8().constData(), para.keyFrame, out - in + 1))
@@ -877,14 +914,30 @@ double QmlFilter::getAnimDoubleValue(double frame, QString key)
     return -1.0;
 }
 
-mlt_rect QmlFilter::getAnimRectValue(double frame, QString key)
+QRectF QmlFilter::getAnimRectValue(double frame, QString key)
 {
-    if(m_filter)
-    {
-        return m_filter->anim_get_rect(key.toUtf8().constData(), frame);
-    }
+    if (!m_filter) return QRectF();
 
-    return {0.0,0.0,0.0,0.0,0.0};
+    const char* s = m_filter->get(key.toUtf8().constData());
+    if (s) {
+        const char* propertyName = key.toUtf8().constData();
+        mlt_rect rect;
+//        if (frame < 0) {
+//            rect = m_filter->get_rect(propertyName);
+//        } else {
+            rect = m_filter->anim_get_rect(propertyName, frame);
+//        }
+        if (::strchr(s, '%')) {
+            return QRectF(qRound(rect.x * MLT.profile().width()),
+                          qRound(rect.y * MLT.profile().height()),
+                          qRound(rect.w * MLT.profile().width()),
+                          qRound(rect.h * MLT.profile().height()));
+        } else {
+            return QRectF(rect.x, rect.y, rect.w, rect.h);
+        }
+    } else {
+        return QRectF(0.0, 0.0, 0.0, 0.0);
+    }
 }
 
 

@@ -82,6 +82,7 @@ public:
 #ifdef MOVIEMATOR_PRO
 
     Q_INVOKABLE void setKeyFrameParaValue(double frame, QString key, QString value);
+    Q_INVOKABLE void setKeyFrameParaRectValue(double frame, QString key, const QRectF& rect, double opacity = 1.0);
     Q_INVOKABLE void removeKeyFrameParaValue(double frame);
     Q_INVOKABLE QString getKeyFrameParaValue(double frame, QString key);
     Q_INVOKABLE double getKeyFrameParaDoubleValue(double frame, QString key);
@@ -102,7 +103,7 @@ public:
     Q_INVOKABLE QString getAnimStringValue(double frame, QString key);
     Q_INVOKABLE int getAnimIntValue(double frame, QString key);
     Q_INVOKABLE double getAnimDoubleValue(double frame, QString key);
-    Q_INVOKABLE mlt_rect getAnimRectValue(double frame, QString key);
+    Q_INVOKABLE QRectF getAnimRectValue(double frame, QString key);
 
 #endif
 
