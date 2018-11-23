@@ -102,6 +102,32 @@
 #include <QQmlEngine>
 
 
+#if defined(Q_OS_WIN)
+
+const QString g_homePage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
+
+#else
+
+#if SHARE_VERSION
+
+#if MOVIEMATOR_PRO
+const QString g_homePage = "http://www.macvideostudio.com/mac-video-editor-moviemator-pro.html";
+#else
+const QString g_homePage = "http://www.macvideostudio.com/moviemator-free-mac-video-editor.html";
+#endif
+
+#else
+
+#if MOVIEMATOR_PRO
+const QString g_homePage = "http://www.macvideostudio.com/video-editor-moviemator-appstore.html";
+#else
+const QString g_homePage = "http://www.macvideostudio.com/video-editor-moviemator-appstore.html";
+#endif
+
+#endif
+
+#endif
+
 static bool eventDebugCallback(void **data)
 {
     QEvent *event = reinterpret_cast<QEvent*>(data[1]);
@@ -181,22 +207,9 @@ MainWindow::MainWindow()
     // Create the UI.
     ui->setupUi(this);
     LOG_DEBUG() << "setup ui end";
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
- //   ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-#endif
-#ifdef Q_OS_MAC
-    // Qt 5 on OS X supports the standard Full Screen window widget.
-//    ui->mainToolBar->removeAction(ui->actionFullscreen);
-    // OS X has a standard Full Screen shortcut we should use.
-    ui->actionEnter_Full_Screen->setShortcut(QKeySequence((Qt::CTRL + Qt::META + Qt::Key_F)));
-#endif
-#ifdef Q_OS_WIN
-    // Fullscreen on Windows is not allowing popups and other app windows to appear.
-    delete ui->actionFullscreen;
-    ui->actionFullscreen = 0;
-    delete ui->actionEnter_Full_Screen;
-    ui->actionEnter_Full_Screen = 0;
-#endif
+
+    configureUI();
+
     setDockNestingEnabled(true);
     ui->statusBar->hide();
     setDockNestingEnabled(false);
@@ -239,16 +252,6 @@ MainWindow::MainWindow()
 
     connect(m_undoStack, SIGNAL(canUndoChanged(bool)), ui->actionUndo, SLOT(setEnabled(bool)));
     connect(m_undoStack, SIGNAL(canRedoChanged(bool)), ui->actionRedo, SLOT(setEnabled(bool)));
-
-
-#ifndef SHARE_VERSION
-    ui->actionBuy_a_License_Code->setVisible(false);
-    ui->actionEnter_License_Code->setVisible(false);
-#endif
-#ifndef MOVIEMATOR_PRO
-    ui->actionBuy_a_License_Code->setVisible(false);
-    ui->actionEnter_License_Code->setVisible(false);
-#endif
 
 
     LOG_DEBUG() << "setStyleSheet(\"QMainWindow::separator {width: 6px; background: '#1D1E1F'}\");";
@@ -679,7 +682,7 @@ MainWindow::MainWindow()
     else if (Registration.registrationType() == Registration_Family)
         setWindowTitle(tr("MovieMator Video Editor Pro (Family)"));
 #else
-    setWindowTitle(tr("MovieMator Free Mac Video Editor"));
+    setWindowTitle(tr("MovieMator Video Editor"));
 #endif
 
 #else
@@ -693,8 +696,50 @@ MainWindow::MainWindow()
 //    LOG_DEBUG() << "init pythonqt";
 //    m_mainController.initPythonQt();
 
-
     LOG_DEBUG() << "end";
+}
+
+void MainWindow::configureUI()
+{
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+ //   ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+#endif
+#ifdef Q_OS_MAC
+    // Qt 5 on OS X supports the standard Full Screen window widget.
+//    ui->mainToolBar->removeAction(ui->actionFullscreen);
+    // OS X has a standard Full Screen shortcut we should use.
+    ui->actionEnter_Full_Screen->setShortcut(QKeySequence((Qt::CTRL + Qt::META + Qt::Key_F)));
+#endif
+#ifdef Q_OS_WIN
+    // Fullscreen on Windows is not allowing popups and other app windows to appear.
+    delete ui->actionFullscreen;
+    ui->actionFullscreen = 0;
+    delete ui->actionEnter_Full_Screen;
+    ui->actionEnter_Full_Screen = 0;
+#endif
+
+
+#ifndef SHARE_VERSION
+    ui->actionBuy_a_License_Code->setVisible(false);
+    ui->actionEnter_License_Code->setVisible(false);
+#endif
+
+#ifndef MOVIEMATOR_PRO
+    ui->actionBuy_a_License_Code->setVisible(false);
+    ui->actionEnter_License_Code->setVisible(false);
+#endif
+
+#if MOVIEMATOR_PRO
+    ui->actionAbout_TVE->setText(tr("About MovieMator Video Editor Pro"));
+#else
+    ui->actionAbout_TVE->setText(tr("About MovieMator Video Editor"));
+#endif
+
+#if defined(Q_OS_WIN)
+    ui->actionGet_Total_Video_Converter_Pro->setVisible(false);
+    ui->actionGet_Total_Video_Player->setVisible(false);
+#endif
+
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const
@@ -1812,7 +1857,7 @@ void MainWindow::setCurrentFile(const QString &filename)
     else if (Registration.registrationType() == Registration_Family)
         setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro (Family)"));
 #else
-    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Free Mac Video Editor"));
+    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor"));
 #endif
 
 #else
@@ -1858,38 +1903,38 @@ void MainWindow::on_actionAbout_TVE_triggered()
 #if MOVIEMATOR_PRO
     QMessageBox::about(this, tr("About MovieMator Video Editor Pro"),
              tr("<h1>MovieMator Video Editor Pro %1</h1>"
-                "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/mac-video-editor-moviemator-pro.html\">MovieMator Video Editor Pro</a></p>"
+                "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor Pro</a></p>"
                 "<p />"
                 "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
                 "</small>"
-                ).arg(qApp->applicationVersion()));
+                ).arg(qApp->applicationVersion()).arg(g_homePage));
 #else
-    QMessageBox::about(this, tr("About MovieMator Free Mac Video Editor"),
-             tr("<h1>MovieMator Free Mac Video Editor %1</h1>"
-                "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/moviemator-free-mac-video-editor.html\">MovieMator Free Mac Video Editor</a></p>"
+    QMessageBox::about(this, tr("About MovieMator Video Editor"),
+             tr("<h1>MovieMator Video Editor %1</h1>"
+                "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor</a></p>"
                 "<p />"
                 "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
                 "</small>"
-                ).arg(qApp->applicationVersion()));
+                ).arg(qApp->applicationVersion()).arg(g_homePage));
 #endif
 
 #else
 #if MOVIEMATOR_PRO
     QMessageBox::about(this, tr("About MovieMator Video Editor Pro"),
              tr("<h1>MovieMator Video Editor Pro %1</h1>"
-                "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/video-editor-moviemator-appstore.html\">MovieMator Video Editor Pro</a></p>"
+                "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor Pro</a></p>"
                 "<p />"
                 "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
                 "</small>"
-                ).arg(qApp->applicationVersion()));
+                ).arg(qApp->applicationVersion()).arg(g_homePage));
 #else
     QMessageBox::about(this, tr("About MovieMator Video Editor"),
              tr("<h1>MovieMator Video Editor %1</h1>"
-                "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/video-editor-moviemator-appstore.html\">MovieMator Video Editor</a></p>"
+                "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor</a></p>"
                 "<p />"
                 "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
                 "</small>"
-                ).arg(qApp->applicationVersion()));
+                ).arg(qApp->applicationVersion()).arg(g_homePage));
 #endif
 
 #endif
@@ -2843,30 +2888,7 @@ void MainWindow::on_actionFacebook_triggered()
 
 void MainWindow::on_actionHomePage_triggered()
 {
-
-#if defined(Q_OS_WIN)
-    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/video-editor-free-editing-software.html"));
-#else
-
-#if SHARE_VERSION
-
-#if MOVIEMATOR_PRO
-    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/mac-video-editor-moviemator-pro.html"));
-#else
-    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/moviemator-free-mac-video-editor.html"));
-#endif
-
-#else
-
-#if MOVIEMATOR_PRO
-    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/video-editor-moviemator-appstore.html"));
-#else
-    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/video-editor-moviemator-appstore.html"));
-#endif
-
-#endif
-
-#endif
+    QDesktopServices::openUrl(QUrl(g_homePage));
 }
 
 
@@ -4021,6 +4043,7 @@ void MainWindow::customizeToolbar()
 #endif
 
 #if MOVIEMATOR_FREE
+#if defined(Q_OS_MAC)
     m_upgradeButton = new QPushButton("");
     m_upgradeButton->setFlat(true);
     m_upgradeButton->setFixedSize(40,40);
@@ -4040,7 +4063,7 @@ void MainWindow::customizeToolbar()
     tvcProLabel = new QLabel(tr("Great Converter & DVD Burner"));
     tvcProLabel->setAlignment(Qt::AlignHCenter);
     connect(m_tvcProButton, SIGNAL(clicked()), this, SLOT(on_actionGet_Total_Video_Converter_Pro_triggered()));
-
+#endif
 #endif
 
     int buttonIndex = 0;
@@ -4097,8 +4120,10 @@ void MainWindow::customizeToolbar()
 #endif
 #endif
 
-#if MOVIEMATOR_FREE
 
+
+#if MOVIEMATOR_FREE
+#if defined(Q_OS_MAC)
     gridLayout->addWidget(m_tvcProButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
     gridLayout->addWidget(tvcProLabel, 1, buttonIndex++, 1, 1);
     QSpacerItem *spacer4 = new QSpacerItem(50,20);
@@ -4113,8 +4138,7 @@ void MainWindow::customizeToolbar()
     QSpacerItem *spacer55 = new QSpacerItem(50,20);
     gridLayout->addItem(spacer5, 0, buttonIndex, 1, 1);
     gridLayout->addItem(spacer55, 1, buttonIndex++, 1, 1);
-
-
+#endif
 #endif
 
     gridLayout->addWidget(m_helpButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
@@ -4256,6 +4280,7 @@ void MainWindow::upgradeToProVersion()
         QDesktopServices::openUrl(QUrl("https://itunes.apple.com/app/id1178887999"));
     }
 #endif
+
 }
 
 #ifdef MOVIEMATOR_PRO

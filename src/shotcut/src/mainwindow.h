@@ -389,6 +389,8 @@ private slots:
     void on_actionScrubAudio_triggered(bool checked);
     void customizeToolbar();
 
+    void configureUI();
+
 
 #ifdef Q_OS_WIN
     void onDrawingMethodTriggered(QAction*);

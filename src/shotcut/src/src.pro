@@ -444,6 +444,13 @@ mac {
 #QMAKE_LFLAGS += -Wl,/usr/lib/libcrypto.0.9.8.dylib
 
 win32 {
+    #free share
+    DEFINES += SHARE_VERSION=1
+    DEFINES += MOVIEMATOR_FREE=1
+
+}
+
+win32 {
     CONFIG += windows rtti
     isEmpty(MLT_PATH) {
         message("MLT_PATH not set; using C:\\Projects\\MovieMator. You can change this with 'qmake MLT_PATH=...'")
@@ -453,6 +460,7 @@ win32 {
     LIBS += -L$$MLT_PATH\\lib -lmlt++ -lmlt -lopengl32
     RC_FILE = shotcut.rc
 }
+
 unix:!mac {
     QT += x11extras
     CONFIG += link_pkgconfig
@@ -480,9 +488,11 @@ unix:target.path = $$PREFIX/bin
 win32:target.path = $$PREFIX
 INSTALLS += target
 
-qmlfiles.files = $$PWD/qml
-qmlfiles.path = $$PREFIX/share/MovieMator
-INSTALLS += qmlfiles
+win32 {
+    qmlfiles.files = $$PWD/moviemator_qml/moviemator/qml
+    qmlfiles.path = $$PREFIX/share/MovieMator
+    INSTALLS += qmlfiles
+}
 
 mac {
     qmlfiles.files = $$PWD/../../../../shotcut/moviemator_qml/moviemator/qml
