@@ -129,8 +129,8 @@ public:
         addLibraryPath(dir.absolutePath());
 
 
-        setOrganizationName("etinysoft");
-        setOrganizationDomain("etinysoft.com");
+        setOrganizationName("effectmatrix");
+        setOrganizationDomain("effectmatrix.com");
 #if MOVIEMATOR_PRO
         setApplicationName("MovieMator Pro");
 #else
