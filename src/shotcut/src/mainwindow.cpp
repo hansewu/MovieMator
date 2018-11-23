@@ -102,6 +102,32 @@
 #include <QQmlEngine>
 
 
+#if defined(Q_OS_WIN)
+
+const QString g_homePage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
+
+#else
+
+#if SHARE_VERSION
+
+#if MOVIEMATOR_PRO
+const QString g_homePage = "http://www.macvideostudio.com/mac-video-editor-moviemator-pro.html";
+#else
+const QString g_homePage = "http://www.macvideostudio.com/moviemator-free-mac-video-editor.html";
+#endif
+
+#else
+
+#if MOVIEMATOR_PRO
+const QString g_homePage = "http://www.macvideostudio.com/video-editor-moviemator-appstore.html";
+#else
+const QString g_homePage = "http://www.macvideostudio.com/video-editor-moviemator-appstore.html";
+#endif
+
+#endif
+
+#endif
+
 static bool eventDebugCallback(void **data)
 {
     QEvent *event = reinterpret_cast<QEvent*>(data[1]);
@@ -250,6 +276,11 @@ MainWindow::MainWindow()
     ui->actionEnter_License_Code->setVisible(false);
 #endif
 
+#if MOVIEMATOR_PRO
+    ui->actionAbout_TVE->setText(tr("About MovieMator Video Editor Pro"));
+#else
+    ui->actionAbout_TVE->setText(tr("About MovieMator Video Editor"));
+#endif
 
     LOG_DEBUG() << "setStyleSheet(\"QMainWindow::separator {width: 6px; background: '#1D1E1F'}\");";
     setStyleSheet("QMainWindow::separator {width: 6px; background: '#1D1E1F'}");
@@ -679,7 +710,7 @@ MainWindow::MainWindow()
     else if (Registration.registrationType() == Registration_Family)
         setWindowTitle(tr("MovieMator Video Editor Pro (Family)"));
 #else
-    setWindowTitle(tr("MovieMator Free Mac Video Editor"));
+    setWindowTitle(tr("MovieMator Video Editor"));
 #endif
 
 #else
@@ -1812,7 +1843,7 @@ void MainWindow::setCurrentFile(const QString &filename)
     else if (Registration.registrationType() == Registration_Family)
         setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro (Family)"));
 #else
-    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Free Mac Video Editor"));
+    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor"));
 #endif
 
 #else
@@ -1864,9 +1895,9 @@ void MainWindow::on_actionAbout_TVE_triggered()
                 "</small>"
                 ).arg(qApp->applicationVersion()));
 #else
-    QMessageBox::about(this, tr("About MovieMator Free Mac Video Editor"),
-             tr("<h1>MovieMator Free Mac Video Editor %1</h1>"
-                "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/moviemator-free-mac-video-editor.html\">MovieMator Free Mac Video Editor</a></p>"
+    QMessageBox::about(this, tr("About MovieMator Video Editor"),
+             tr("<h1>MovieMator Video Editor %1</h1>"
+                "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/moviemator-free-mac-video-editor.html\">MovieMator Video Editor</a></p>"
                 "<p />"
                 "<p>Copyright &copy; 2016-2018 etinysoft, Inc</p>"
                 "</small>"
@@ -4255,6 +4286,8 @@ void MainWindow::upgradeToProVersion()
     {
         QDesktopServices::openUrl(QUrl("https://itunes.apple.com/app/id1178887999"));
     }
+#endif
+
 #endif
 }
 

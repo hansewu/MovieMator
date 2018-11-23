@@ -7,6 +7,11 @@ UpgradeToProPromptDialog::UpgradeToProPromptDialog(QWidget *parent) :
     ui(new Ui::UpgradeToProPromptDialog)
 {
     ui->setupUi(this);
+//#if defined(Q_OS_WIN)
+//    ui->textEdit->setText(tr(""));
+//    ui->getButton->setHidden(true);
+//    ui->laterButton->setText("OK");
+//#endif
 }
 
 UpgradeToProPromptDialog::~UpgradeToProPromptDialog()
