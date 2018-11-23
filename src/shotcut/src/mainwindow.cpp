@@ -4288,7 +4288,6 @@ void MainWindow::upgradeToProVersion()
     }
 #endif
 
-#endif
 }
 
 #ifdef MOVIEMATOR_PRO
