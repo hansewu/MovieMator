@@ -1860,7 +1860,7 @@ void MainWindow::on_actionAbout_TVE_triggered()
              tr("<h1>MovieMator Video Editor Pro %1</h1>"
                 "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/mac-video-editor-moviemator-pro.html\">MovieMator Video Editor Pro</a></p>"
                 "<p />"
-                "<p>Copyright &copy; 2016-2018 etinysoft, Inc</p>"
+                "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()));
 #else
@@ -1868,7 +1868,7 @@ void MainWindow::on_actionAbout_TVE_triggered()
              tr("<h1>MovieMator Free Mac Video Editor %1</h1>"
                 "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/moviemator-free-mac-video-editor.html\">MovieMator Free Mac Video Editor</a></p>"
                 "<p />"
-                "<p>Copyright &copy; 2016-2018 etinysoft, Inc</p>"
+                "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()));
 #endif
@@ -1879,7 +1879,7 @@ void MainWindow::on_actionAbout_TVE_triggered()
              tr("<h1>MovieMator Video Editor Pro %1</h1>"
                 "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/video-editor-moviemator-appstore.html\">MovieMator Video Editor Pro</a></p>"
                 "<p />"
-                "<p>Copyright &copy; 2016-2018 etinysoft, Inc</p>"
+                "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()));
 #else
@@ -1887,7 +1887,7 @@ void MainWindow::on_actionAbout_TVE_triggered()
              tr("<h1>MovieMator Video Editor %1</h1>"
                 "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/video-editor-moviemator-appstore.html\">MovieMator Video Editor</a></p>"
                 "<p />"
-                "<p>Copyright &copy; 2016-2018 etinysoft, Inc</p>"
+                "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()));
 #endif
