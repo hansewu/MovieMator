@@ -1903,38 +1903,38 @@ void MainWindow::on_actionAbout_TVE_triggered()
 #if MOVIEMATOR_PRO
     QMessageBox::about(this, tr("About MovieMator Video Editor Pro"),
              tr("<h1>MovieMator Video Editor Pro %1</h1>"
-                "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/mac-video-editor-moviemator-pro.html\">MovieMator Video Editor Pro</a></p>"
+                "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor Pro</a></p>"
                 "<p />"
                 "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
                 "</small>"
-                ).arg(qApp->applicationVersion()));
+                ).arg(qApp->applicationVersion()).arg(g_homePage));
 #else
     QMessageBox::about(this, tr("About MovieMator Video Editor"),
              tr("<h1>MovieMator Video Editor %1</h1>"
-                "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/moviemator-free-mac-video-editor.html\">MovieMator Video Editor</a></p>"
+                "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor</a></p>"
                 "<p />"
                 "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
                 "</small>"
-                ).arg(qApp->applicationVersion()));
+                ).arg(qApp->applicationVersion()).arg(g_homePage));
 #endif
 
 #else
 #if MOVIEMATOR_PRO
     QMessageBox::about(this, tr("About MovieMator Video Editor Pro"),
              tr("<h1>MovieMator Video Editor Pro %1</h1>"
-                "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/video-editor-moviemator-appstore.html\">MovieMator Video Editor Pro</a></p>"
+                "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor Pro</a></p>"
                 "<p />"
                 "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
                 "</small>"
-                ).arg(qApp->applicationVersion()));
+                ).arg(qApp->applicationVersion()).arg(g_homePage));
 #else
     QMessageBox::about(this, tr("About MovieMator Video Editor"),
              tr("<h1>MovieMator Video Editor %1</h1>"
-                "<small><p>Product Home Page: <a href=\"http://www.macvideostudio.com/video-editor-moviemator-appstore.html\">MovieMator Video Editor</a></p>"
+                "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor</a></p>"
                 "<p />"
                 "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
                 "</small>"
-                ).arg(qApp->applicationVersion()));
+                ).arg(qApp->applicationVersion()).arg(g_homePage));
 #endif
 
 #endif
@@ -2888,30 +2888,7 @@ void MainWindow::on_actionFacebook_triggered()
 
 void MainWindow::on_actionHomePage_triggered()
 {
-
-#if defined(Q_OS_WIN)
-    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/video-editor-free-editing-software.html"));
-#else
-
-#if SHARE_VERSION
-
-#if MOVIEMATOR_PRO
-    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/mac-video-editor-moviemator-pro.html"));
-#else
-    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/moviemator-free-mac-video-editor.html"));
-#endif
-
-#else
-
-#if MOVIEMATOR_PRO
-    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/video-editor-moviemator-appstore.html"));
-#else
-    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/video-editor-moviemator-appstore.html"));
-#endif
-
-#endif
-
-#endif
+    QDesktopServices::openUrl(QUrl(g_homePage));
 }
 
 
