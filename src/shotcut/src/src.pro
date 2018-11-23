@@ -395,10 +395,10 @@ mac {
 
 
     #free appstore
-    DEFINES += MOVIEMATOR_FREE=1
-    TARGET = "MovieMator Video Editor"
-    QMAKE_INFO_PLIST = ../Info-Free.plist
-    ICON = ../icons/moviemator.icns
+#    DEFINES += MOVIEMATOR_FREE=1
+#    TARGET = "MovieMator Video Editor"
+#    QMAKE_INFO_PLIST = ../Info-Free.plist
+#    ICON = ../icons/moviemator.icns
 
     #free share
 #    DEFINES += SHARE_VERSION=1
@@ -408,10 +408,10 @@ mac {
 #    ICON = ../icons/moviemator.icns
 
 #    #pro appstore
-#    DEFINES += MOVIEMATOR_PRO=1
-#    TARGET = "MovieMator Video Editor Pro"
-#    QMAKE_INFO_PLIST = ../Info.plist
-#    ICON = ../icons/moviemator-pro.icns
+    DEFINES += MOVIEMATOR_PRO=1
+    TARGET = "MovieMator Video Editor Pro"
+    QMAKE_INFO_PLIST = ../Info.plist
+    ICON = ../icons/moviemator-pro.icns
 
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.8
 

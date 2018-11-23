@@ -749,7 +749,7 @@ void QmlFilter::combineAllKeyFramePara()
                         rect.o = opacity;
                         m_filter->anim_set(key.toUtf8().constData(), rect, para.keyFrame, out - in + 1, mlt_keyframe_smooth);
                         MLT.refreshConsumer();
-                        emit changed(name);
+                        emit changed();
                     }
                 }
                 else
