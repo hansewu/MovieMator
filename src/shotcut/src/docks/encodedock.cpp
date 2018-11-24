@@ -1125,7 +1125,8 @@ void EncodeDock::on_encodeButton_clicked()
                 m_outputFilename += m_extension;
             }
         }
-        if (seekable) {
+    // wzq 使用qmelt
+      if (seekable) {
             // Batch encode
             JOBS.setShowFirst(true);
             int threadCount = QThread::idealThreadCount();
@@ -1158,7 +1159,7 @@ void EncodeDock::on_encodeButton_clicked()
             ui->streamButton->setDisabled(true);
         }*/
 
-/*
+/* 使用EncodeTask 压缩
         Mlt::Properties *preset = collectProperties(-1);
         if (seekable) {
             EncodeTask *task = new EncodeTask(MLT.producer(), &MLT.profile(), preset, m_outputFilename);
@@ -1166,9 +1167,9 @@ void EncodeDock::on_encodeButton_clicked()
             ENCODETASKS.addTask(task);
             this->hide();
         }
-
+*/
 //        encode(m_outputFilename);
-  */
+
     }
 }
 
