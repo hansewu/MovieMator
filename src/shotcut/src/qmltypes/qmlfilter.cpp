@@ -518,7 +518,7 @@ double QmlFilter::getNextKeyFrameNum(double currentKeyFrame)
 
 void QmlFilter::setKeyFrameParaRectValue(double frame, QString key, const QRectF& rect, double opacity)
 {
-    QString sValue = QString("%1,%2,%3,%4,%5").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height()).arg(opacity);
+    QString sValue = QString("%1 %2 %3 %4 %5").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height()).arg(opacity);
     setKeyFrameParaValue(frame, key, sValue);
 }
 
@@ -731,7 +731,7 @@ void QmlFilter::combineAllKeyFramePara()
                 }
                 else if(paraType == "rect")
                 {
-                    QStringList listValue = value.split(",", QString::SkipEmptyParts);
+                    QStringList listValue = value.split(" ", QString::SkipEmptyParts);
                     double x = listValue[0].toDouble();
                     double y = listValue[1].toDouble();
                     double width = listValue[2].toDouble();
