@@ -17,7 +17,8 @@
         NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
         if ([paths count] > 0) {
-            applicationDataPlist = [[NSString alloc] initWithFormat:@"%@/%@", [paths objectAtIndex:0], @"etinysoft/bookmarks.plist"];
+//            applicationDataPlist = [[NSString alloc] initWithFormat:@"%@/%@", [paths objectAtIndex:0], @"etinysoft/bookmarks.plist"];
+            applicationDataPlist = [[NSString alloc] initWithFormat:@"%@/%@", [paths objectAtIndex:0], @"effectmatrix/bookmarks.plist"];
             NSMutableDictionary * prefs;
             prefs = [NSMutableDictionary dictionaryWithContentsOfFile: [applicationDataPlist stringByExpandingTildeInPath]];
             if (prefs == nil)
