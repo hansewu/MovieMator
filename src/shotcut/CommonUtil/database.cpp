@@ -17,8 +17,8 @@
  */
 
 #include "database.h"
-#include "models/playlistmodel.h"
-#include "mainwindow.h"
+//#include "models/playlistmodel.h"
+//#include "mainwindow.h"
 #include <QtSql>
 #include <QStandardPaths>
 #include <QDir>
@@ -171,8 +171,8 @@ void Database::deleteOldThumbnails()
 
 void Database::run()
 {
-    connect(&MAIN, SIGNAL(aboutToShutDown()),
-            this, SLOT(shutdown()), Qt::DirectConnection);
+//    connect(&MAIN, SIGNAL(aboutToShutDown()),
+//            this, SLOT(shutdown()), Qt::DirectConnection);
 
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
     if (!dir.exists())

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += widgets
+QT       += widgets sql
 
 TARGET = CommonUtil
 TEMPLATE = lib
@@ -32,6 +32,19 @@ HEADERS += \
     settings.h \
     util.h \
     database.h
+
+INCLUDEPATH = ../CuteLogger/include
+
+debug_and_release {
+    build_pass:CONFIG(debug, debug|release) {
+        LIBS += -L../CuteLogger/debug
+    } else {
+        LIBS += -L../CuteLogger/release
+    }
+} else {
+    LIBS += -L../CuteLogger
+}
+LIBS += -lLogger
 
 unix {
     target.path = /usr/lib
