@@ -266,8 +266,12 @@ HEADERS  += mainwindow.h \
 #    securitybookmark/SecurityBookmark.h
 
 mac {
-    SOURCES += securitybookmark/SecurityBookmark.mm
-    HEADERS += securitybookmark/SecurityBookmark.h
+    SOURCES += securitybookmark/SecurityBookmark.mm \
+                ../iRate/iRate.mm \
+                eccregister/EccRegister.mm
+    HEADERS += securitybookmark/SecurityBookmark.h \
+                ../iRate/iRate.h \
+                eccregister/EccRegister.h
 }
 
 #OBJECTIVE_SOURCES+= \
@@ -436,8 +440,8 @@ mac {
 #    LIBS += -L$$MLT_PREFIX/lib -lmlt++ -lmlt -lSDL
 #    LIBS += -lexif -lmltqt
     LIBS += "-framework Cocoa"
-#    LIBS += -L/usr/lib -lcrypto
-#    QMAKE_LFLAGS += -Wl,/usr/lib/libcrypto.0.9.8.dylib
+
+    QMAKE_LFLAGS += -Wl,/usr/lib/libcrypto.0.9.8.dylib
 #    INCLUDEPATH += /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7
 #    LIBS += -F/System/Library/Frameworks -framework Python
     QMAKE_RPATHDIR += @executable_path/qt_lib/lib

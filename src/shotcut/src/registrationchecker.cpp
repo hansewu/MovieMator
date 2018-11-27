@@ -28,7 +28,12 @@ RegistrationChecker& RegistrationChecker::singleton()
 
 RegistrationType RegistrationChecker::registerWithLicense(QString &email, QString &licenseCode)
 {
-    RegistrationType type = Registration_Commercial; //ecc_verify_register_info((char *)licenseCode.toUtf8().constData());
+//    RegistrationType type = Registration_Commercial; //ecc_verify_register_info((char *)licenseCode.toUtf8().constData());
+#if defined(Q_OS_MAC) && defined(SHARE_VERSION)
+         RegistrationType type = ecc_verify_register_info((char *)licenseCode.toUtf8().constData());
+#else
+    RegistrationType type = Registration_Commercial;
+#endif
 
     if (type != Registration_None)
     {
