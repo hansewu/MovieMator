@@ -2,7 +2,8 @@ TEMPLATE = subdirs
 
 SUBDIRS = CuteLogger mvcp src \
     RecentDock \
-    PlaylistDock
+    PlaylistDock \
+    CommonUtil
 cache()
 src.depends = CuteLogger mvcp RecentDock PlaylistDock
 RecentDock.depends = CuteLogger

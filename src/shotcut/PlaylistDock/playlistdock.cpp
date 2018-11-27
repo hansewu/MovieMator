@@ -417,7 +417,7 @@ void PlaylistDock::on_actionGoto_triggered()
 
 void PlaylistDock::on_actionRemoveAll_triggered()
 {
-//    MAIN.undoStack()->push(new Playlist::ClearCommand(m_model));
+    MAIN.undoStack()->push(new Playlist::ClearCommand(m_model));
 }
 
 void PlaylistDock::onPlaylistCreated()

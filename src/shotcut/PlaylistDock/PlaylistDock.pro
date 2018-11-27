@@ -33,18 +33,18 @@ HEADERS += \
     models/playlistmodel.h \
     models/playlistmodel.h
 
-INCLUDEPATH = ../CuteLogger/include
+INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
-        LIBS += -L../CuteLogger/debug
+        LIBS += -L../CuteLogger/debug -L../CommonUtil/debug
     } else {
-        LIBS += -L../CuteLogger/release
+        LIBS += -L../CuteLogger/release -L../CommonUtil/release
     }
 } else {
-    LIBS += -L../CuteLogger
+    LIBS += -L../CuteLogger -L../CommonUtil
 }
-LIBS += -lLogger
+LIBS += -lLogger -lCommonUtil
 
 
 win32 {

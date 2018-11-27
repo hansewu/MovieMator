@@ -30,7 +30,7 @@
 #include <QCryptographicHash>
 #include <QScopedPointer>
 
-#include "settings.h"
+#include <settings.h>
 #include "database.h"
 #include "mainwindow.h"
 
