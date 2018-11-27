@@ -19,6 +19,8 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
+#include "commonutil_global.h"
+
 #include <QThread>
 #include <QImage>
 #include <QMutex>
@@ -26,7 +28,7 @@
 
 struct DatabaseJob;
 class QTimer;
-class Database : public QThread
+class COMMONUTILSHARED_EXPORT Database : public QThread
 {
     Q_OBJECT
     explicit Database(QObject *parent = 0);

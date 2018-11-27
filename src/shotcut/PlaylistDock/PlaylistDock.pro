@@ -25,13 +25,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         playlistdock.cpp \
     models/playlistmodel.cpp \
-    models/playlistmodel.cpp
+    models/playlistmodel.cpp \
+    commands/playlistcommands.cpp
 
 HEADERS += \
         playlistdock.h \
         playlistdock_global.h \ 
     models/playlistmodel.h \
-    models/playlistmodel.h
+    models/playlistmodel.h \
+    commands/playlistcommands.h
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 

@@ -31,7 +31,8 @@ HEADERS += \
         commonutil_global.h \ 
     settings.h \
     util.h \
-    database.h
+    database.h \
+    shotcut_mlt_properties.h
 
 INCLUDEPATH = ../CuteLogger/include
 
