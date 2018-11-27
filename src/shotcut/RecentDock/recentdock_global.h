@@ -1,0 +1,12 @@
+#ifndef RECENTDOCK_GLOBAL_H
+#define RECENTDOCK_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(RECENTDOCK_LIBRARY)
+#  define RECENTDOCKSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define RECENTDOCKSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // RECENTDOCK_GLOBAL_H

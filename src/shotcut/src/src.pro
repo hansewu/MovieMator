@@ -38,7 +38,6 @@ SOURCES += main.cpp\
     widgets/imageproducerwidget.cpp \
     widgets/timespinbox.cpp \
     widgets/audiometerwidget.cpp \
-    docks/recentdock.cpp \
     docks/encodedock.cpp \
     dialogs/addencodepresetdialog.cpp \
     jobqueue.cpp \
@@ -163,7 +162,6 @@ HEADERS  += mainwindow.h \
     widgets/timespinbox.h \
     widgets/iecscale.h \
     widgets/audiometerwidget.h \
-    docks/recentdock.h \
     docks/encodedock.h \
     dialogs/addencodepresetdialog.h \
     jobqueue.h \
@@ -300,7 +298,6 @@ FORMS    += mainwindow.ui \
     widgets/servicepresetwidget.ui \
     widgets/avformatproducerwidget.ui \
     widgets/imageproducerwidget.ui \
-    docks/recentdock.ui \
     dialogs/addencodepresetdialog.ui \
     docks/jobsdock.ui \
     dialogs/textviewerdialog.ui \
@@ -363,20 +360,20 @@ TRANSLATIONS += \
 #    ../translations/shotcut_uk.ts \
 
 
-INCLUDEPATH = ../CuteLogger/include ../mvcp #../mm
+INCLUDEPATH = ../CuteLogger/include ../mvcp ../RecentDock
 
 INCLUDEPATH += ../include
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
-        LIBS += -L../CuteLogger/debug -L../mvcp/debug #-L../mm/debug
+        LIBS += -L../CuteLogger/debug -L../mvcp/debug -L../RecentDock/debug
     } else {
-        LIBS += -L../CuteLogger/release -L../mvcp/release #-L../mm/release
+        LIBS += -L../CuteLogger/release -L../mvcp/release -L../RecentDock/release
     }
 } else {
-    LIBS += -L../CuteLogger -L../mvcp #-L../mm
+    LIBS += -L../CuteLogger -L../mvcp -L../RecentDock
 }
-LIBS += -lLogger -lmvcp -lpthread  #-lmm
+LIBS += -lLogger -lmvcp -lpthread  -lRecentDock
 
 
 #INCLUDEPATH += ../PythonQt3.2/src

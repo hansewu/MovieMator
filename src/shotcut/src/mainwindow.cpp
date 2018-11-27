@@ -41,7 +41,8 @@
 #include "widgets/avformatproducerwidget.h"
 #include "widgets/imageproducerwidget.h"
 #include "widgets/webvfxproducer.h"
-#include "docks/recentdock.h"
+//#include "docks/recentdock.h"
+#include <recentdock.h>
 #include "docks/encodedock.h"
 #include "docks/jobsdock.h"
 #include "jobqueue.h"

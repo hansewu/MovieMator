@@ -1,9 +1,10 @@
 TEMPLATE = subdirs
 
-SUBDIRS = CuteLogger mvcp src#mm
+SUBDIRS = CuteLogger mvcp src \
+    RecentDock \
+    PlaylistDock
 cache()
-#mm.depends = CuteLogger mvcp
-src.depends = CuteLogger mvcp #mm
-
+src.depends = CuteLogger mvcp RecentDock PlaylistDock
+RecentDock.depends = CuteLogger
 
 
