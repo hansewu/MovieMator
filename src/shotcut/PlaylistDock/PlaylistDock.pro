@@ -26,14 +26,16 @@ SOURCES += \
         playlistdock.cpp \
     models/playlistmodel.cpp \
     models/playlistmodel.cpp \
-    commands/playlistcommands.cpp
+    commands/playlistcommands.cpp \
+    widgets/playlisttable.cpp
 
 HEADERS += \
         playlistdock.h \
         playlistdock_global.h \ 
     models/playlistmodel.h \
     models/playlistmodel.h \
-    commands/playlistcommands.h
+    commands/playlistcommands.h \
+    widgets/playlisttable.h
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 

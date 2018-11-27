@@ -22,11 +22,11 @@
 #include <QAbstractTableModel>
 #include <qmimedata.h>
 #include <QStringList>
-#include "mltcontroller.h"
+//#include "mltcontroller.h"
 #include "MltPlaylist.h"
 #include <QStandardItemModel>
-#include "../dialogs/unlinkedfilesdialog.h"
-#include "../qmltypes/qmlapplication.h"
+//#include "../dialogs/unlinkedfilesdialog.h"
+//#include "../qmltypes/qmlapplication.h"
 
 class PlaylistModel : public QAbstractTableModel
 {

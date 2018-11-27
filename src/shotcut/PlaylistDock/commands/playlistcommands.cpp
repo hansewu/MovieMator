@@ -17,8 +17,8 @@
  */
 
 #include "playlistcommands.h"
-#include "mltcontroller.h"
-#include "mainwindow.h"
+//#include "mltcontroller.h"
+//#include "mainwindow.h"
 #include <Logger.h>
 
 namespace Playlist
@@ -142,9 +142,9 @@ void ClearCommand::undo()
     Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     if (producer->is_valid()) {
         producer->set("resource", "<playlist>");
-        MAIN.open(producer);
-        MLT.pause();
-        MAIN.seekPlaylist(0);
+//        MAIN.open(producer);
+//        MLT.pause();
+//        MAIN.seekPlaylist(0);
     }
 }
 

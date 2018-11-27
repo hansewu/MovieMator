@@ -32,7 +32,7 @@
 
 #include <settings.h>
 #include "database.h"
-#include "mainwindow.h"
+//#include "mainwindow.h"
 
 static void deleteQImage(QImage* image)
 {

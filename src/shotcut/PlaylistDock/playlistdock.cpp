@@ -18,8 +18,8 @@
 
 #include "playlistdock.h"
 #include "ui_playlistdock.h"
-#include "dialogs/durationdialog.h"
-#include "mainwindow.h"
+//#include "dialogs/durationdialog.h"
+//#include "mainwindow.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include <commands/playlistcommands.h>
