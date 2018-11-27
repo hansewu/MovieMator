@@ -2,6 +2,7 @@
 #include <QDebug>
 #include "registrationchecker.h"
 #include "mltcontroller.h"
+#include "mainwindow.h"
 
 
 EncodeTask::EncodeTask(Mlt::Producer *producer, Mlt::Profile *profile, Mlt::Properties *presets, QString target) : AbstractTask(target)
@@ -12,7 +13,8 @@ EncodeTask::EncodeTask(Mlt::Producer *producer, Mlt::Profile *profile, Mlt::Prop
     , m_outputName(target)
     , m_textFilter(NULL)
 {
-    m_producer = new Mlt::Producer(producer);
+    //m_producer = new Mlt::Producer(producer);
+    m_producer = new Mlt::Producer(*(MAIN.multitrack()));
     m_consumer = createConsumer(profile, presets, target);
     m_consumer->connect(*m_producer);
     m_duration = m_producer->get_length();

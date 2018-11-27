@@ -1162,7 +1162,7 @@ void EncodeDock::on_encodeButton_clicked()
 // 使用EncodeTask 压缩
         Mlt::Properties *preset = collectProperties(-1);
         if (seekable) {
-            EncodeTask *task = new EncodeTask(MLT.producer(), &MLT.profile(), preset, m_outputFilename);
+            EncodeTask *task = new EncodeTask(NULL, &MLT.profile(), preset, m_outputFilename);
 //            task->start();
             ENCODETASKS.addTask(task);
             this->hide();
