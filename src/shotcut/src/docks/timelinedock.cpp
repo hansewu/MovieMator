@@ -548,12 +548,15 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
             }
         }
     }
+    QList <int> originSelection = selection();
     QString xmlAfter = MLT.XML(after);
     m_updateCommand->setXmlAfter(xmlAfter);
     setSelection(); // clearing selection prevents a crash
     Timeline::UpdateCommand* command = m_updateCommand;
     m_updateCommand = 0;
     MAIN.undoStack()->push(command);
+
+    setSelection(originSelection);
 }
 
 void TimelineDock::addAudioTrack()

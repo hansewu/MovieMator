@@ -276,6 +276,9 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
 
 void AttachedFiltersModel::add(QmlMetadata* meta)
 {
+    if (!m_producer->is_valid())
+        return;
+
     if (!meta->allowMultiple()) {
         for (int i = 0; i < m_metaList.count(); i++) {
             const QmlMetadata* attachedMeta = m_metaList[i];

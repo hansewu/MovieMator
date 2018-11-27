@@ -82,6 +82,7 @@ public:
     bool isRipple() const;
     Q_INVOKABLE bool isMultitrackSelected() const { return m_selection.isMultitrackSelected; }
     Q_INVOKABLE int selectedTrack() const { return m_selection.selectedTrack; }
+    Q_INVOKABLE bool selectedAClip() const {return !m_selection.selectedClips.isEmpty();}
     void selectClipAtPosition(int trackIndex, int position);
 
     Q_INVOKABLE int getPositionInCurrentClip();
