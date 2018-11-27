@@ -35,8 +35,8 @@ AppendCommand::AppendCommand(PlaylistModel& model, const QString& xml, QUndoComm
 void AppendCommand::redo()
 {
     LOG_DEBUG() << "";
-    Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    m_model.append(producer);
+//    Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+//    m_model.append(producer);
 }
 
 void AppendCommand::undo()
@@ -57,8 +57,8 @@ InsertCommand::InsertCommand(PlaylistModel& model, const QString& xml, int row, 
 void InsertCommand::redo()
 {
     LOG_DEBUG() << "row" << m_row;
-    Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    m_model.insert(producer, m_row);
+//    Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+//    m_model.insert(producer, m_row);
 }
 
 void InsertCommand::undo()
@@ -74,21 +74,21 @@ UpdateCommand::UpdateCommand(PlaylistModel& model, const QString& xml, int row, 
     , m_row(row)
 {
     setText(QObject::tr("Update playlist item %1").arg(row + 1));
-    m_oldXml = MLT.XML(m_model.playlist()->get_clip(m_row));
+//    m_oldXml = MLT.XML(m_model.playlist()->get_clip(m_row));
 }
 
 void UpdateCommand::redo()
 {
     LOG_DEBUG() << "row" << m_row;
-    Mlt::Producer producer(MLT.profile(), "xml-string", m_newXml.toUtf8().constData());
-    m_model.update(m_row, producer);
+//    Mlt::Producer producer(MLT.profile(), "xml-string", m_newXml.toUtf8().constData());
+//    m_model.update(m_row, producer);
 }
 
 void UpdateCommand::undo()
 {
     LOG_DEBUG() << "row" << m_row;
-    Mlt::Producer producer(MLT.profile(), "xml-string", m_oldXml.toUtf8().constData());
-    m_model.update(m_row, producer);
+//    Mlt::Producer producer(MLT.profile(), "xml-string", m_oldXml.toUtf8().constData());
+//    m_model.update(m_row, producer);
 }
 
 RemoveCommand::RemoveCommand(PlaylistModel& model, int row, QUndoCommand *parent)
@@ -99,8 +99,8 @@ RemoveCommand::RemoveCommand(PlaylistModel& model, int row, QUndoCommand *parent
     int clipCount = m_model.playlist()->count();
     Q_ASSERT(m_row<clipCount);
 
-    m_xml = MLT.XML(m_model.playlist()->get_clip(m_row));
-    setText(QObject::tr("Remove playlist item %1").arg(row + 1));
+//    m_xml = MLT.XML(m_model.playlist()->get_clip(m_row));
+//    setText(QObject::tr("Remove playlist item %1").arg(row + 1));
 }
 
 void RemoveCommand::redo()
@@ -116,8 +116,8 @@ void RemoveCommand::redo()
 void RemoveCommand::undo()
 {
     LOG_DEBUG() << "row" << m_row;
-    Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    m_model.insert(producer, m_row);
+//    Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+//    m_model.insert(producer, m_row);
 }
 
 ClearCommand::ClearCommand(PlaylistModel& model, QUndoCommand *parent)
@@ -125,8 +125,8 @@ ClearCommand::ClearCommand(PlaylistModel& model, QUndoCommand *parent)
     , m_model(model)
 {
     Q_ASSERT(m_model.playlist());
-    m_xml = MLT.XML(m_model.playlist());
-    setText(QObject::tr("Clear playlist"));
+//    m_xml = MLT.XML(m_model.playlist());
+//    setText(QObject::tr("Clear playlist"));
 }
 
 void ClearCommand::redo()
@@ -139,13 +139,13 @@ void ClearCommand::undo()
 {
     LOG_DEBUG() << "";
     m_model.close();
-    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    if (producer->is_valid()) {
-        producer->set("resource", "<playlist>");
+//    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+//    if (producer->is_valid()) {
+//        producer->set("resource", "<playlist>");
 //        MAIN.open(producer);
 //        MLT.pause();
 //        MAIN.seekPlaylist(0);
-    }
+//    }
 }
 
 MoveCommand::MoveCommand(PlaylistModel &model, int from, int to, QUndoCommand *parent)

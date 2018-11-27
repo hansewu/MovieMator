@@ -70,15 +70,15 @@ void PlaylistTable::mouseMoveEvent(QMouseEvent* event)
     if (!m_canStartDrag)
         return;
 
-    QDrag drag(this);
+//    QDrag drag(this);
 
-    QMimeData *mimeData = MAIN.playlistDock()->model()->mimeData(selectedIndexes());
-    drag.setMimeData(mimeData);
+//    QMimeData *mimeData = MAIN.playlistDock()->model()->mimeData(selectedIndexes());
+//    drag.setMimeData(mimeData);
 
-    QImage thumbnail = MAIN.playlistDock()->model()->thumbnail(selectedIndexes().first().row());
-    drag.setPixmap(QPixmap::fromImage(thumbnail));
-    drag.setHotSpot(QPoint(0, 0));
-    drag.exec(Qt::MoveAction);
+//    QImage thumbnail = MAIN.playlistDock()->model()->thumbnail(selectedIndexes().first().row());
+//    drag.setPixmap(QPixmap::fromImage(thumbnail));
+//    drag.setHotSpot(QPoint(0, 0));
+//    drag.exec(Qt::MoveAction);
 //    QTableView::mouseMoveEvent(event);
 }
 

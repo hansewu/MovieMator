@@ -33,6 +33,7 @@
 #include <settings.h>
 #include "database.h"
 //#include "mainwindow.h"
+#include <Mlt.h>
 
 static void deleteQImage(QImage* image)
 {
@@ -116,8 +117,8 @@ public:
             return;
 
         // Scale the in and out point frame numbers to this member profile's fps.
-        int inPoint = qRound(m_in / MLT.profile().fps() * m_profile.fps());
-        int outPoint = qRound(m_out / MLT.profile().fps() * m_profile.fps());
+        int inPoint = 0;//qRound(m_in / MLT.profile().fps() * m_profile.fps());
+        int outPoint = 1;//qRound(m_out / MLT.profile().fps() * m_profile.fps());
 
         QImage image = DB.getThumbnail(cacheKey(inPoint));
         if (image.isNull()) {
@@ -145,9 +146,10 @@ public:
 
     QImage makeThumbnail(int frameNumber)
     {
-        int height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
-        int width = PlaylistModel::THUMBNAIL_WIDTH * 2;
-        return MLT.image(*tempProducer(), frameNumber, width, height);
+//        int height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
+//        int width = PlaylistModel::THUMBNAIL_WIDTH * 2;
+//        return MLT.image(*tempProducer(), frameNumber, width, height);
+        return QImage();
     }
 
 signals:
@@ -213,8 +215,8 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                 if (result.isNull() && info->producer && info->producer->is_valid())
                     result = QString::fromUtf8(info->producer->get("mlt_service"));
             }
-            if (!info->producer->get(kShotcutHashProperty))
-                MAIN.getHash(*info->producer);
+//            if (!info->producer->get(kShotcutHashProperty))
+//                MAIN.getHash(*info->producer);
             return result;
         }
         case COLUMN_IN:
@@ -350,7 +352,7 @@ bool PlaylistModel::removeRows(int row, int count, const QModelIndex& parent)
 QStringList PlaylistModel::mimeTypes() const
 {
     QStringList ls = QAbstractTableModel::mimeTypes();
-    ls.append(Mlt::XmlMimeType);
+//    ls.append(Mlt::XmlMimeType);
     ls.append("text/uri-list");
     return ls;
 }
@@ -364,7 +366,7 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
     if (info) {
         Mlt::Producer* producer = info->producer;
         producer->set_in_and_out(info->frame_in, info->frame_out);
-        mimeData->setData(Mlt::XmlMimeType, MLT.XML(producer).toUtf8());
+//        mimeData->setData(Mlt::XmlMimeType, MLT.XML(producer).toUtf8());
         mimeData->setText(QString::number(producer->get_playtime()));
         producer->set_in_and_out(0, -1);
         delete info;
@@ -382,10 +384,10 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
         return true;
     }
     // Dragged from player or file manager
-    else if (data->hasFormat(Mlt::XmlMimeType) || data->hasUrls()) {
-        emit dropped(data, row);
-        return true;
-    }
+//    else if (data->hasFormat(Mlt::XmlMimeType) || data->hasUrls()) {
+//        emit dropped(data, row);
+//        return true;
+//    }
     // Dragged from Recent dock
     else if (data->hasFormat("application/x-qabstractitemmodeldatalist")) {
         QByteArray encoded = data->data("application/x-qabstractitemmodeldatalist");
@@ -463,25 +465,25 @@ void PlaylistModel::load()
     // but the Mlt::Playlist(Service&) constructor will fail unless it detects
     // the type as playlist, and mlt_service_identify() needs the resource
     // property to say "<playlist>" to identify it as playlist type.
-    QString xmlTemp = MLT.XML();
+//    QString xmlTemp = MLT.XML();
 
-    MLT.producer()->set("mlt_type", "mlt_producer");
-    MLT.producer()->set("resource", "<playlist>");
-    xmlTemp = MLT.XML();
+//    MLT.producer()->set("mlt_type", "mlt_producer");
+//    MLT.producer()->set("resource", "<playlist>");
+//    xmlTemp = MLT.XML();
 
-    m_playlist = new Mlt::Playlist(*MLT.producer());
-    if (!m_playlist->is_valid()) {
-        delete m_playlist;
-        m_playlist = 0;
-        return;
-    }
-    if (m_playlist->count() > 0) {
-        beginInsertRows(QModelIndex(), 0, m_playlist->count() - 1);
-        endInsertRows();
-    }
-    // do not let opening a clip change the profile!
-    MLT.profile().set_explicit(true);
-    emit loaded();
+//    m_playlist = new Mlt::Playlist(*MLT.producer());
+//    if (!m_playlist->is_valid()) {
+//        delete m_playlist;
+//        m_playlist = 0;
+//        return;
+//    }
+//    if (m_playlist->count() > 0) {
+//        beginInsertRows(QModelIndex(), 0, m_playlist->count() - 1);
+//        endInsertRows();
+//    }
+//    // do not let opening a clip change the profile!
+//    MLT.profile().set_explicit(true);
+//    emit loaded();
 }
 
 void PlaylistModel::append(Mlt::Producer& producer)
@@ -579,10 +581,10 @@ void PlaylistModel::move(int from, int to)
 void PlaylistModel::createIfNeeded()
 {
     if (!m_playlist) {
-        m_playlist = new Mlt::Playlist(MLT.profile());
-        // do not let opening a clip change the profile!
-        MLT.profile().set_explicit(true);
-        emit created();
+//        m_playlist = new Mlt::Playlist(MLT.profile());
+//        // do not let opening a clip change the profile!
+//        MLT.profile().set_explicit(true);
+//        emit created();
     }
 }
 
@@ -629,7 +631,7 @@ void PlaylistModel::setPlaylist(Mlt::Playlist& playlist)
             endInsertRows();
         }
         // do not let opening a clip change the profile!
-        MLT.profile().set_explicit(true);
+//        MLT.profile().set_explicit(true);
         if (Settings.playerGPU() && Settings.playlistThumbnails() != "hidden")
             refreshThumbnails();
         emit loaded();
