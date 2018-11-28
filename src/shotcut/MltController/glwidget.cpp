@@ -32,6 +32,7 @@
 //#include "qmltypes/qmlfilter.h"
 //#include "mainwindow.h"
 #include "qmltypes/qmlprofile.h"
+#include <QQmlContext>
 
 #define USE_GL_SYNC // Use glFinish() if not defined.
 

@@ -29,14 +29,14 @@
 class QQmlContext;
 class QQmlEngine;
 
-class QmlUtilities : public QObject
+class QMLUTILITIESSHARED_EXPORT QmlUtilities : public QObject
 {
     Q_OBJECT
 
 public:
     explicit QmlUtilities(QObject *parent = 0);
 
-    static void registerCommonTypes();
+//    static void registerCommonTypes();
     static void setCommonProperties(QQmlContext* context);
     static QDir qmlDir();
     static QUrl blankVui();

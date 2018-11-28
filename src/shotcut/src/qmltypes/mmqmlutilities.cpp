@@ -16,18 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qmltypes/qmlapplication.h"
 #include "qmltypes/colorpickeritem.h"
 #include "qmltypes/colorwheelitem.h"
-#include "qmltypes/qmlprofile.h"
-#include "qmltypes/qmlutilities.h"
+#include "qmltypes/mmqmlutilities.h"
 #include "qmltypes/qmlview.h"
 #include "qmltypes/qmlfile.h"
 #include "qmltypes/qmlhtmleditor.h"
 #include "qmltypes/qmlmetadata.h"
 #include "qmltypes/timelineitems.h"
 #include "qmltypes/filesavedialog.h"
-#include "settings.h"
 #include "models/metadatamodel.h"
 #include <QCoreApplication>
 #include <QSysInfo>
@@ -37,12 +34,12 @@
 #include <QQmlContext>
 #include "qmltypes/qmltextmetadata.h"
 
-QmlUtilities::QmlUtilities(QObject *parent) :
-    QObject(parent)
+MMQmlUtilities::MMQmlUtilities(QmlUtilities *parent) :
+    QmlUtilities(parent)
 {
 }
 
-void QmlUtilities::registerCommonTypes()
+void MMQmlUtilities::registerCommonTypes()
 {
     qmlRegisterType<QmlFile>("com.moviemator.qml", 1, 0, "File");
     qmlRegisterType<QmlHtmlEditor>("com.moviemator.qml", 1, 0, "HtmlEditor");
@@ -51,7 +48,7 @@ void QmlUtilities::registerCommonTypes()
     qmlRegisterType<QmlKeyframesMetadata>();
     qmlRegisterType<QmlKeyframesParameter>("com.moviemator.qml", 1,0, "Parameter");
 
-    qmlRegisterType<QmlUtilities>("com.moviemator.qml", 1, 0, "Utilities");
+    qmlRegisterType<MMQmlUtilities>("com.moviemator.qml", 1, 0, "Utilities");
     qmlRegisterType<FileSaveDialog>("com.moviemator.qml",1, 0, "FileSaveDialog");
     // MetadataModel is registered to access its MetadataFilter enum.
     qmlRegisterUncreatableType<MetadataModel>("com.moviemator.qml", 1, 0, "MetadataModel",
@@ -63,44 +60,44 @@ void QmlUtilities::registerCommonTypes()
 
 
 
-void QmlUtilities::setCommonProperties(QQmlContext* context)
-{
-    context->setContextProperty("settings", &ShotcutSettings::singleton());
-    context->setContextProperty("application", &QmlApplication::singleton());
-    context->setContextProperty("profile", &QmlProfile::singleton());
-}
+// void QmlUtilities::setCommonProperties(QQmlContext* context)
+// {
+//     context->setContextProperty("settings", &ShotcutSettings::singleton());
+//     context->setContextProperty("application", &QmlApplication::singleton());
+//     context->setContextProperty("profile", &QmlProfile::singleton());
+// }
 
-QDir QmlUtilities::qmlDir()
-{
-//    QDir dir(qApp->applicationDirPath());
-//    dir.cdUp();
-//    dir.cd("Resources");
+// QDir QmlUtilities::qmlDir()
+// {
+// //    QDir dir(qApp->applicationDirPath());
+// //    dir.cdUp();
+// //    dir.cd("Resources");
 
-    QDir dir(qApp->applicationDirPath());
+//     QDir dir(qApp->applicationDirPath());
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    dir.cdUp();
-#elif defined(Q_OS_MAC)
-    dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
-#endif
-    dir.cd("share");
-    dir.cd("moviemator");
-    dir.cd("qml");
-    return dir;
-}
+// #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+//     dir.cdUp();
+// #elif defined(Q_OS_MAC)
+//     dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+// #endif
+//     dir.cd("share");
+//     dir.cd("moviemator");
+//     dir.cd("qml");
+//     return dir;
+// }
 
-QQmlEngine * QmlUtilities::sharedEngine()
-{
-    static QQmlEngine * s_engine = 0;
-    if (!s_engine)
-    {
-        s_engine = new QQmlEngine;
-//        s_engine->setImportPathList(QStringList());
-    }
-    return s_engine;
-}
+// QQmlEngine * QmlUtilities::sharedEngine()
+// {
+//     static QQmlEngine * s_engine = 0;
+//     if (!s_engine)
+//     {
+//         s_engine = new QQmlEngine;
+// //        s_engine->setImportPathList(QStringList());
+//     }
+//     return s_engine;
+// }
 
-QUrl QmlUtilities::blankVui()
-{
-    return QUrl("qrc:/src/qml/vui_droparea.qml");
-}
+// QUrl QmlUtilities::blankVui()
+// {
+//     return QUrl("qrc:/src/qml/vui_droparea.qml");
+// }

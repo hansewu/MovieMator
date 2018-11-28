@@ -27,10 +27,10 @@
 #include <QScopedPointer>
 #include <Mlt.h>
 #include "transportcontrol.h"
-#include <QQmlContext>
 
 // forward declarations
 class QQuickView;
+class QQmlContext;
 
 namespace Mlt {
 

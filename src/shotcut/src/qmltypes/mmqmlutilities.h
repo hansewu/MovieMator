@@ -16,29 +16,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QMLUTILITIES_H
-#define QMLUTILITIES_H
+#ifndef MMQMLUTILITIES_H
+#define MMQMLUTILITIES_H
 
 #include <QObject>
 #include <QDir>
 #include <QPoint>
 #include <QUrl>
+#include "qmlutilities.h"
 
 class QQmlContext;
 class QQmlEngine;
 
-class QmlUtilities : public QObject
+class MMQmlUtilities : public QmlUtilities
 {
     Q_OBJECT
 
 public:
-    explicit QmlUtilities(QObject *parent = 0);
+    explicit MMQmlUtilities(QmlUtilities *parent = 0);
 
     static void registerCommonTypes();
-    static void setCommonProperties(QQmlContext* context);
-    static QDir qmlDir();
-    static QUrl blankVui();
-    static QQmlEngine * sharedEngine();
+    // static void setCommonProperties(QQmlContext* context);
+    // static QDir qmlDir();
+    // static QUrl blankVui();
+    // static QQmlEngine * sharedEngine();
 };
 
 #endif // QMLUTILITIES_H

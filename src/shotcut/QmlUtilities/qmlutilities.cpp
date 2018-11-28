@@ -43,8 +43,8 @@ QmlUtilities::QmlUtilities(QObject *parent) :
 {
 }
 
-void QmlUtilities::registerCommonTypes()
-{
+//void QmlUtilities::registerCommonTypes()
+//{
 //    qmlRegisterType<QmlFile>("com.moviemator.qml", 1, 0, "File");
 //    qmlRegisterType<QmlHtmlEditor>("com.moviemator.qml", 1, 0, "HtmlEditor");
 //    qmlRegisterType<QmlMetadata>("com.moviemator.qml", 1, 0, "Metadata");
@@ -60,7 +60,7 @@ void QmlUtilities::registerCommonTypes()
 //    qmlRegisterType<ColorPickerItem>("MovieMator.Controls", 1, 0, "ColorPickerItem");
 //    qmlRegisterType<ColorWheelItem>("MovieMator.Controls", 1, 0, "ColorWheelItem");
 //    registerTimelineItems();
-}
+//}
 
 
 

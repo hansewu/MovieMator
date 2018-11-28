@@ -12,7 +12,6 @@ win32:DEFINES += QT_STATIC
 
 SOURCES += main.cpp\
     mainwindow.cpp \
-    mltcontroller.cpp \
     scrubbar.cpp \
     openotherdialog.cpp \
     controllers/filtercontroller.cpp \
@@ -31,7 +30,6 @@ SOURCES += main.cpp\
     widgets/alsawidget.cpp \
     widgets/x11grabwidget.cpp \
     player.cpp \
-    glwidget.cpp \
     widgets/servicepresetwidget.cpp \
     abstractproducerwidget.cpp \
     widgets/avformatproducerwidget.cpp \
@@ -61,19 +59,16 @@ SOURCES += main.cpp\
     dialogs/customprofiledialog.cpp \
     qmltypes/colorpickeritem.cpp \
     qmltypes/colorwheelitem.cpp \
-    qmltypes/qmlapplication.cpp \
     qmltypes/qmlfile.cpp \
     qmltypes/qmlfilter.cpp \
     qmltypes/qmlhtmleditor.cpp \
     qmltypes/qmlmetadata.cpp \
     qmltypes/timelineitems.cpp \
-    qmltypes/qmlprofile.cpp \
     widgets/lineeditclear.cpp \
     widgets/webvfxproducer.cpp \
     widgets/gltestwidget.cpp \
     models/multitrackmodel.cpp \
     docks/timelinedock.cpp \
-    qmltypes/qmlutilities.cpp \
     qmltypes/qmlview.cpp \
     qmltypes/thumbnailprovider.cpp \
     commands/timelinecommands.cpp \
@@ -93,7 +88,6 @@ SOURCES += main.cpp\
     widgets/scopes/audiospectrumscopewidget.cpp \
     widgets/scopes/audiowaveformscopewidget.cpp \
     widgets/scopes/videowaveformscopewidget.cpp \
-    sharedframe.cpp \
     widgets/audioscale.cpp \
     widgets/playlisttable.cpp \
     commands/undohelper.cpp \
@@ -128,11 +122,11 @@ SOURCES += main.cpp\
     melt/io.c \
     jobs/abstracttask.cpp \
     jobs/melttask.cpp \
-    dialogs/mmsplashscreen.cpp
+    dialogs/mmsplashscreen.cpp \
+    qmltypes/mmqmlutilities.cpp
 #    securitybookmark/SecurityBookmark.mm
 
 HEADERS  += mainwindow.h \
-    mltcontroller.h \
     scrubbar.h \
     openotherdialog.h \
     controllers/filtercontroller.h \
@@ -152,7 +146,6 @@ HEADERS  += mainwindow.h \
     widgets/alsawidget.h \
     widgets/x11grabwidget.h \
     player.h \
-    glwidget.h \
     widgets/servicepresetwidget.h \
     widgets/avformatproducerwidget.h \
     widgets/imageproducerwidget.h \
@@ -182,19 +175,16 @@ HEADERS  += mainwindow.h \
     dialogs/customprofiledialog.h \
     qmltypes/colorpickeritem.h \
     qmltypes/colorwheelitem.h \
-    qmltypes/qmlapplication.h \
     qmltypes/qmlfile.h \
     qmltypes/qmlfilter.h \
     qmltypes/qmlhtmleditor.h \
     qmltypes/qmlmetadata.h \
     qmltypes/timelineitems.h \
-    qmltypes/qmlprofile.h \
     widgets/lineeditclear.h \
     widgets/webvfxproducer.h \
     widgets/gltestwidget.h \
     models/multitrackmodel.h \
     docks/timelinedock.h \
-    qmltypes/qmlutilities.h \
     qmltypes/qmlview.h \
     qmltypes/thumbnailprovider.h \
     commands/timelinecommands.h \
@@ -215,7 +205,6 @@ HEADERS  += mainwindow.h \
     widgets/scopes/audiowaveformscopewidget.h \
     widgets/scopes/videowaveformscopewidget.h \
     dataqueue.h \
-    sharedframe.h \
     widgets/audioscale.h \
     widgets/playlisttable.h \
     commands/undohelper.h \
@@ -254,7 +243,8 @@ HEADERS  += mainwindow.h \
     jobs/abstracttask.h \
     jobs/melttask.h \
     melt/melt.h \
-    dialogs/mmsplashscreen.h
+    dialogs/mmsplashscreen.h \
+    qmltypes/mmqmlutilities.h
 #    securitybookmark/SecurityBookmark.h
 
 mac {
@@ -354,19 +344,21 @@ TRANSLATIONS += \
 #    ../translations/shotcut_uk.ts \
 
 
-INCLUDEPATH = ../CuteLogger/include ../mvcp ../RecentDock ../CommonUtil
+INCLUDEPATH = ../CuteLogger/include ../mvcp ../RecentDock ../CommonUtil ../MltController ../QmlUtilities
 INCLUDEPATH += ../include
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
-        LIBS += -L../CuteLogger/debug -L../mvcp/debug -L../RecentDock/debug -L../CommonUtil/debug
+        LIBS += -L../CuteLogger/debug -L../mvcp/debug -L../RecentDock/debug -L../CommonUtil/debug -L../MltController/debug
+        LIBS += -L../QmlUtilities/debug
     } else {
-        LIBS += -L../CuteLogger/release -L../mvcp/release -L../RecentDock/release -L../CommonUtil/release
+        LIBS += -L../CuteLogger/release -L../mvcp/release -L../RecentDock/release -L../CommonUtil/release -L../MltController/release
+        LIBS += -L../QmlUtilities/release
     }
 } else {
-    LIBS += -L../CuteLogger -L../mvcp -L../RecentDock -L../CommonUtil
+    LIBS += -L../CuteLogger -L../mvcp -L../RecentDock -L../CommonUtil -L../MltController -L../QmlUtilities
 }
-LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lCommonUtil
+LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lCommonUtil -lMltController -lQmlUtilities
 
 
 #INCLUDEPATH += ../PythonQt3.2/src

@@ -63,7 +63,7 @@
 #include "widgets/gltestwidget.h"
 #include "docks/timelinedock.h"
 #include "widgets/lumamixtransition.h"
-#include "qmltypes/qmlutilities.h"
+#include "qmltypes/mmqmlutilities.h"
 #include "qmltypes/qmlapplication.h"
 #include "autosavefile.h"
 #include "commands/playlistcommands.h"
@@ -202,7 +202,7 @@ MainWindow::MainWindow()
     connect(&m_autosaveTimer, SIGNAL(timeout()), this, SLOT(onAutosaveTimeout()));
 
     // Initialize all QML types
-    QmlUtilities::registerCommonTypes();
+    MMQmlUtilities::registerCommonTypes();
 
     LOG_DEBUG() << "setup ui";
     // Create the UI.

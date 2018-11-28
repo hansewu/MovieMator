@@ -20,13 +20,15 @@
 #ifndef QMLAPPLICATION_H
 #define QMLAPPLICATION_H
 
+#include "qmlutilities_global.h"
+
 #include <QObject>
 #include <QDir>
 #include <QPoint>
 #include <QColor>
 #include <QRect>
 
-class QmlApplication : public QObject
+class QMLUTILITIESSHARED_EXPORT QmlApplication : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(Qt::WindowModality dialogModality READ dialogModality);

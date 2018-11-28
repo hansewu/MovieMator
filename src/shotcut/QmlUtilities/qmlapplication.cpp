@@ -17,7 +17,7 @@
  */
 
 #include "qmlapplication.h"
-#include "mainwindow.h"
+//#include "mainwindow.h"
 #include <QApplication>
 #include <QCoreApplication>
 #include <QSysInfo>
@@ -90,5 +90,5 @@ QString QmlApplication::numericLocale()
 
 QRect QmlApplication::mainWinRect()
 {
-    return MAIN.geometry();
+//    return MAIN.geometry();
 }
