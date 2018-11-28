@@ -31,7 +31,7 @@
 #include <QCommandLineParser>
 #include <framework/mlt_log.h>
 #include "securitybookmark/transport_security_bookmark.h"
-#include "qmltypes/qmlutilities.h"
+#include <qmlutilities.h>
  #include <QQmlEngine>
 #include <QProcess>
 #include <registrationchecker.h>

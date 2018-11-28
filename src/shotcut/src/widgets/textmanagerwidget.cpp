@@ -1,7 +1,7 @@
 #include <QQmlContext>
 #include <QQmlComponent>
 #include "textmanagerwidget.h"
-#include "qmltypes/qmlutilities.h"
+#include <qmlutilities.h>
 #include "qmltypes/qmlview.h"
 #include "models/metadatamodel.h"
 #include "models/attachedfiltersmodel.h"

@@ -24,7 +24,7 @@
 #include "qmltypes/qmlapplication.h"
 #include "mainwindow.h"
 #include "commands/timelinecommands.h"
-#include "qmltypes/qmlutilities.h"
+#include <qmlutilities.h>
 #include "qmltypes/qmlview.h"
 #include "shotcut_mlt_properties.h"
 #include "settings.h"

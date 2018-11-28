@@ -19,6 +19,8 @@
 #ifndef PLAYLISTCOMMANDS_H
 #define PLAYLISTCOMMANDS_H
 
+#include "playlistdock_global.h"
+
 #include "models/playlistmodel.h"
 #include <QUndoCommand>
 #include <QString>
@@ -26,7 +28,7 @@
 namespace Playlist
 {
 
-class AppendCommand : public QUndoCommand
+class PLAYLISTDOCKSHARED_EXPORT AppendCommand : public QUndoCommand
 {
 public:
     AppendCommand(PlaylistModel& model, const QString& xml, QUndoCommand * parent = 0);

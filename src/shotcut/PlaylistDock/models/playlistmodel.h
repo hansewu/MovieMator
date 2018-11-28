@@ -19,13 +19,15 @@
 #ifndef PLAYLISTMODEL_H
 #define PLAYLISTMODEL_H
 
+#include "playlistdock_global.h"
+
 #include <QAbstractTableModel>
 #include <qmimedata.h>
 #include <QStringList>
 #include "MltPlaylist.h"
 #include <QStandardItemModel>
 
-class PlaylistModel : public QAbstractTableModel
+class PLAYLISTDOCKSHARED_EXPORT PlaylistModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:

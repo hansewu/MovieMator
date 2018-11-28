@@ -60,6 +60,11 @@ win32 {
 #    RC_FILE = shotcut.rc
 }
 
+win32 {
+    target.path = C:\\Projects\\MovieMator
+    INSTALLS += target
+}
+
 unix {
     target.path = /usr/lib
     INSTALLS += target

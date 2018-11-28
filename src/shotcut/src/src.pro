@@ -42,7 +42,6 @@ SOURCES += main.cpp\
     docks/jobsdock.cpp \
     dialogs/textviewerdialog.cpp \
     models/playlistmodel.cpp \
-    docks/playlistdock.cpp \
     dialogs/durationdialog.cpp \
     mvcp/qconsole.cpp \
     mvcp/mvcp_socket.cpp \
@@ -79,7 +78,6 @@ SOURCES += main.cpp\
     jobs/meltjob.cpp \
     jobs/encodejob.cpp \
     jobs/videoqualityjob.cpp \
-    commands/playlistcommands.cpp \
     docks/scopedock.cpp \
     controllers/scopecontroller.cpp \
     widgets/scopes/scopewidget.cpp \
@@ -89,7 +87,6 @@ SOURCES += main.cpp\
     widgets/scopes/audiowaveformscopewidget.cpp \
     widgets/scopes/videowaveformscopewidget.cpp \
     widgets/audioscale.cpp \
-    widgets/playlisttable.cpp \
     commands/undohelper.cpp \
     models/audiolevelstask.cpp \
     mltxmlchecker.cpp \
@@ -157,8 +154,6 @@ HEADERS  += mainwindow.h \
     jobqueue.h \
     docks/jobsdock.h \
     dialogs/textviewerdialog.h \
-    models/playlistmodel.h \
-    docks/playlistdock.h \
     dialogs/durationdialog.h \
     mvcp/qconsole.h \
     mvcp/meltedclipsmodel.h \
@@ -195,7 +190,6 @@ HEADERS  += mainwindow.h \
     jobs/meltjob.h \
     jobs/encodejob.h \
     jobs/videoqualityjob.h \
-    commands/playlistcommands.h \
     docks/scopedock.h \
     controllers/scopecontroller.h \
     widgets/scopes/scopewidget.h \
@@ -206,7 +200,6 @@ HEADERS  += mainwindow.h \
     widgets/scopes/videowaveformscopewidget.h \
     dataqueue.h \
     widgets/audioscale.h \
-    widgets/playlisttable.h \
     commands/undohelper.h \
     models/audiolevelstask.h \
     shotcut_mlt_properties.h \
@@ -285,7 +278,6 @@ FORMS    += mainwindow.ui \
     dialogs/addencodepresetdialog.ui \
     docks/jobsdock.ui \
     dialogs/textviewerdialog.ui \
-    docks/playlistdock.ui \
     dialogs/durationdialog.ui \
     mvcp/meltedserverdock.ui \
     mvcp/meltedplaylistdock.ui \
@@ -345,20 +337,22 @@ TRANSLATIONS += \
 
 
 INCLUDEPATH = ../CuteLogger/include ../mvcp ../RecentDock ../CommonUtil ../MltController ../QmlUtilities
+INCLUDEPATH += ../PlaylistDock
 INCLUDEPATH += ../include
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
         LIBS += -L../CuteLogger/debug -L../mvcp/debug -L../RecentDock/debug -L../CommonUtil/debug -L../MltController/debug
-        LIBS += -L../QmlUtilities/debug
+        LIBS += -L../QmlUtilities/debug -L../PlaylistDock/debug
     } else {
         LIBS += -L../CuteLogger/release -L../mvcp/release -L../RecentDock/release -L../CommonUtil/release -L../MltController/release
-        LIBS += -L../QmlUtilities/release
+        LIBS += -L../QmlUtilities/release -L../PlaylistDock/release
     }
 } else {
     LIBS += -L../CuteLogger -L../mvcp -L../RecentDock -L../CommonUtil -L../MltController -L../QmlUtilities
+    LIBS += -L../PlaylistDock
 }
-LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lCommonUtil -lMltController -lQmlUtilities
+LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lCommonUtil -lMltController -lQmlUtilities -lPlaylistDock
 
 
 #INCLUDEPATH += ../PythonQt3.2/src

@@ -30,7 +30,7 @@
 #include <QTimer>
 #include <MltProfile.h>
 #include <math.h>
-#include "qmltypes/qmlutilities.h"
+#include <qmlutilities.h>
 #include "mltcontroller.h"
 #include "settings.h"
 
