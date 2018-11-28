@@ -35,6 +35,7 @@ public:
     static QString baseName(const QString &filePath);
     static void setColorsToHighlight(QWidget* widget, QPalette::ColorRole role = QPalette::Window);
     static QString removeFileScheme(QUrl& url);
+    static QString getFileHash(const QString& path);
 };
 
 #endif // UTIL_H

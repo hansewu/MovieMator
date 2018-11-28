@@ -55,7 +55,7 @@ public:
         : QRunnable()
         , m_model(model)
         , m_producer(producer)
-        , m_profile("atsc_720p_60")
+        , m_profile("atsc_720p_24")
         , m_tempProducer(0)
         , m_in(in)
         , m_out(out)

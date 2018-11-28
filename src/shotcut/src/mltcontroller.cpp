@@ -27,7 +27,6 @@
 #include "glwidget.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
-#include "mainwindow.h"
 //#include "mltqtmodule.h"
 
 namespace Mlt {
