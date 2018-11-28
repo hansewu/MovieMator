@@ -17,7 +17,7 @@
  */
 
 #include "qmlutilities.h"
-//#include "qmlapplication.h"
+#include "qmlapplication.h"
 //#include "colorpickeritem.h"
 //#include "colorwheelitem.h"
 //#include "qmlprofile.h"
@@ -27,7 +27,7 @@
 //#include "qmlmetadata.h"
 //#include "timelineitems.h"
 //#include "filesavedialog.h"
-//#include "settings.h"
+#include <settings.h>
 //#include "models/metadatamodel.h"
 //#include "qmltextmetadata.h"
 
@@ -66,8 +66,8 @@ void QmlUtilities::registerCommonTypes()
 
 void QmlUtilities::setCommonProperties(QQmlContext* context)
 {
-//    context->setContextProperty("settings", &ShotcutSettings::singleton());
-//    context->setContextProperty("application", &QmlApplication::singleton());
+    context->setContextProperty("settings", &ShotcutSettings::singleton());
+    context->setContextProperty("application", &QmlApplication::singleton());
 //    context->setContextProperty("profile", &QmlProfile::singleton());
 }
 

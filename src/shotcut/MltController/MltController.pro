@@ -25,14 +25,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         mltcontroller.cpp \
     glwidget.cpp \
-    sharedframe.cpp
+    sharedframe.cpp \
+    qmltypes/qmlprofile.cpp
 
 HEADERS += \
         mltcontroller.h \
         mltcontroller_global.h \ 
     glwidget.h \
     sharedframe.h \
-    transportcontrol.h
+    transportcontrol.h \
+    qmltypes/qmlprofile.h
 
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil ../QmlUtilities

@@ -24,11 +24,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        qmlutilities.cpp
+        qmlutilities.cpp \
+    qmlapplication.cpp
 
 HEADERS += \
         qmlutilities.h \
-        qmlutilities_global.h
+        qmlutilities_global.h \
+    qmlapplication.h
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 

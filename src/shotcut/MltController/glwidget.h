@@ -84,6 +84,8 @@ public:
     float zoom() const { return m_zoom * MLT.profile().width() / m_rect.width(); }
     QPoint offset() const;
 
+    void setCommonProperties(QQmlContext* context);
+
 public slots:
     void onFrameDisplayed(const SharedFrame& frame);
     void setZoom(float zoom);

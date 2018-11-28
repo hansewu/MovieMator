@@ -27,6 +27,7 @@
 #include <QScopedPointer>
 #include <Mlt.h>
 #include "transportcontrol.h"
+#include <QQmlContext>
 
 // forward declarations
 class QQuickView;
@@ -133,6 +134,7 @@ public:
     }
     void setSavedProducer(Mlt::Producer* producer);
 
+    virtual void setCommonProperties(QQmlContext* context) = 0;
 protected:
     Mlt::Repository* m_repo;
     Mlt::Producer* m_producer;

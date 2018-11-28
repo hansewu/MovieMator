@@ -31,6 +31,7 @@
 #include "qmlutilities.h"
 //#include "qmltypes/qmlfilter.h"
 //#include "mainwindow.h"
+#include "qmltypes/qmlprofile.h"
 
 #define USE_GL_SYNC // Use glFinish() if not defined.
 
@@ -83,7 +84,8 @@ GLWidget::GLWidget(QObject *parent)
     QDir importPath = QmlUtilities::qmlDir();
     importPath.cd("modules");
     engine()->addImportPath(importPath.path());
-    QmlUtilities::setCommonProperties(rootContext());
+    //QmlUtilities::setCommonProperties(rootContext());
+    setCommonProperties(rootContext());
 
     rootContext()->setContextProperty("video", this);
 
@@ -763,6 +765,14 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
 
 
 }
+
+void GLWidget::setCommonProperties(QQmlContext* context)
+{
+    QmlUtilities::setCommonProperties(rootContext());
+    rootContext()->setContextProperty("profile", &QmlProfile::singleton());
+}
+
+
 
 RenderThread::RenderThread(thread_function_t function, void *data, QOpenGLContext *context, QSurface* surface)
     : QThread(0)

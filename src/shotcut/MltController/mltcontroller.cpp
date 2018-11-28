@@ -28,6 +28,7 @@
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 //#include "mltqtmodule.h"
+#include "qmlutilities.h"
 
 namespace Mlt {
 
@@ -871,6 +872,7 @@ void Controller::setSavedProducer(Mlt::Producer* producer)
 {
     m_savedProducer.reset(new Mlt::Producer(producer));
 }
+
 
 void TransportControl::play(double speed)
 {
