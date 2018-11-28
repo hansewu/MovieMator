@@ -17,9 +17,10 @@
  */
 
 #include "recentdock.h"
-//#include "settings.h"
+#include "settings.h"
 #include "ui_recentdock.h"
-//#include "util.h"
+#include "util.h"
+
 //#include "../securitybookmark/transport_security_bookmark.h"
 
 #include <QDir>
@@ -36,7 +37,7 @@ RecentDock::RecentDock(QWidget *parent) :
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
-//    m_recent = Settings.recent();
+    m_recent = Settings.recent();
 
     ui->listWidget->setDragEnabled(true);
     ui->listWidget->setDragDropMode(QAbstractItemView::DragOnly);
@@ -50,8 +51,7 @@ RecentDock::RecentDock(QWidget *parent) :
     ui->lineEdit->setStyleSheets(style1, style2);
 
     foreach (QString s, m_recent) {
-//        QStandardItem* item = new QStandardItem(Util::baseName(s));
-        QStandardItem* item = new QStandardItem(s);
+        QStandardItem* item = new QStandardItem(Util::baseName(s));
         item->setToolTip(s);
         m_model.appendRow(item);
     }
@@ -81,7 +81,7 @@ void RecentDock::add(const QString &s)
     m_recent.prepend(s);
     while (m_recent.count() > MaxItems)
         m_recent.removeLast();
-//    Settings.setRecent(m_recent);
+    Settings.setRecent(m_recent);
 }
 
 void RecentDock::on_listWidget_activated(const QModelIndex& i)
@@ -93,10 +93,9 @@ void RecentDock::on_listWidget_activated(const QModelIndex& i)
 QString RecentDock::remove(const QString &s)
 {
     m_recent.removeOne(s);
-//    Settings.setRecent(m_recent);
+    Settings.setRecent(m_recent);
 
-//    QString name = Util::baseName(s);
-    QString name = s;
+    QString name = Util::baseName(s);
     QList<QStandardItem*> items = m_model.findItems(name);
     if (items.count() > 0)
         m_model.removeRow(items.first()->row());
@@ -129,7 +128,7 @@ void RecentDock::on_actionRemove_triggered()
 
         m_model.removeRow(index.row());
         m_recent.removeAt(index.row());
-//        Settings.setRecent(m_recent);
+        Settings.setRecent(m_recent);
     }
 
 
@@ -141,7 +140,7 @@ void RecentDock::on_actionRemoveAll_triggered()
 
     m_model.removeRows(0,count);
     m_recent.clear();
-//    Settings.setRecent(m_recent);
+    Settings.setRecent(m_recent);
 
 
 }
@@ -155,6 +154,5 @@ void RecentDock::on_actionPlay_triggered()
 
 void RecentDock::on_actionProperties_triggered()
 {
-
 
 }

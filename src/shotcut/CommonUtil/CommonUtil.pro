@@ -47,6 +47,12 @@ debug_and_release {
 }
 LIBS += -lLogger
 
+win32 {
+    target.path = C:\\Projects\\MovieMator
+    INSTALLS += target
+}
+
+
 unix {
     target.path = /usr/lib
     INSTALLS += target
