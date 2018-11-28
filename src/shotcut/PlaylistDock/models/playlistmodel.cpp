@@ -352,7 +352,7 @@ bool PlaylistModel::removeRows(int row, int count, const QModelIndex& parent)
 QStringList PlaylistModel::mimeTypes() const
 {
     QStringList ls = QAbstractTableModel::mimeTypes();
-//    ls.append(Mlt::XmlMimeType);
+    ls.append(Mlt::XmlMimeType);
     ls.append("text/uri-list");
     return ls;
 }
@@ -384,10 +384,10 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
         return true;
     }
     // Dragged from player or file manager
-//    else if (data->hasFormat(Mlt::XmlMimeType) || data->hasUrls()) {
-//        emit dropped(data, row);
-//        return true;
-//    }
+    else if (data->hasFormat(Mlt::XmlMimeType) || data->hasUrls()) {
+        emit dropped(data, row);
+        return true;
+    }
     // Dragged from Recent dock
     else if (data->hasFormat("application/x-qabstractitemmodeldatalist")) {
         QByteArray encoded = data->data("application/x-qabstractitemmodeldatalist");

@@ -168,8 +168,8 @@ void PlaylistDock::on_menuButton_clicked()
     QModelIndex index = ui->tableView->currentIndex();
     if (index.isValid() && m_model.playlist()) {
         menu.addAction(ui->actionGoto);
-//        if (MLT.isClip())
-//            menu.addAction(ui->actionInsertCut);
+        if (MLT.isClip())
+            menu.addAction(ui->actionInsertCut);
         menu.addAction(ui->actionOpen);
         menu.addAction(ui->actionUpdate);
         menu.addAction(ui->actionRemove);
@@ -588,6 +588,4 @@ void PlaylistDock::on_actionProperty_triggered()
 //        MAIN.loadProducerWidget(p);
 //        MAIN.onPropertiesDockTriggered();
 //    }
-
-
 }
