@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += widgets qml quick
+QT       += widgets qml quick webkitwidgets
+QT       += gui-private
 
 TARGET = QmlUtilities
 TEMPLATE = lib
@@ -23,35 +24,33 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        qmlutilities.cpp \
-    colorpickeritem.cpp \
-    colorwheelitem.cpp \
-    filesavedialog.cpp \
-    qmlapplication.cpp \
-    qmlfile.cpp \
-    qmlhtmleditor.cpp \
-    qmlmetadata.cpp \
-    qmlprofile.cpp \
-    qmltextmetadata.cpp \
-    qmlview.cpp \
-    timelineitems.cpp
+        qmlutilities.cpp
 
 HEADERS += \
         qmlutilities.h \
-        qmlutilities_global.h \ 
-    colorpickeritem.h \
-    colorwheelitem.h \
-    filesavedialog.h \
-    qmlapplication.h \
-    qmlfile.h \
-    qmlhtmleditor.h \
-    qmlmetadata.h \
-    qmlprofile.h \
-    qmltextmetadata.h \
-    qmlview.h \
-    timelineitems.h
+        qmlutilities_global.h
+
+INCLUDEPATH = ../CuteLogger/include ../CommonUtil
+
+debug_and_release {
+    build_pass:CONFIG(debug, debug|release) {
+        LIBS += -L../CuteLogger/debug -L../CommonUtil/debug
+    } else {
+        LIBS += -L../CuteLogger/release -L../CommonUtil/release
+    }
+} else {
+    LIBS += -L../CuteLogger -L../CommonUtil
+}
+LIBS += -lLogger -lCommonUtil
+
+
+win32 {
+    target.path = C:\\Projects\\MovieMator
+    INSTALLS += target
+}
 
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+

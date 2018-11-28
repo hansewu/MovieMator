@@ -90,7 +90,7 @@ public slots:
     void setOffsetX(int x);
     void setOffsetY(int y);
     void setBlankScene();
-    void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
+//    void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
 
 signals:
     void frameDisplayed(const SharedFrame& frame);

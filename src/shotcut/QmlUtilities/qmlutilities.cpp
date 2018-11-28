@@ -16,26 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qmltypes/qmlapplication.h"
-#include "qmltypes/colorpickeritem.h"
-#include "qmltypes/colorwheelitem.h"
-#include "qmltypes/qmlprofile.h"
-#include "qmltypes/qmlutilities.h"
-#include "qmltypes/qmlview.h"
-#include "qmltypes/qmlfile.h"
-#include "qmltypes/qmlhtmleditor.h"
-#include "qmltypes/qmlmetadata.h"
-#include "qmltypes/timelineitems.h"
-#include "qmltypes/filesavedialog.h"
-#include "settings.h"
-#include "models/metadatamodel.h"
+#include "qmlutilities.h"
+//#include "qmlapplication.h"
+//#include "colorpickeritem.h"
+//#include "colorwheelitem.h"
+//#include "qmlprofile.h"
+//#include "qmlview.h"
+//#include "qmlfile.h"
+//#include "qmlhtmleditor.h"
+//#include "qmlmetadata.h"
+//#include "timelineitems.h"
+//#include "filesavedialog.h"
+//#include "settings.h"
+//#include "models/metadatamodel.h"
+//#include "qmltextmetadata.h"
+
 #include <QCoreApplication>
 #include <QSysInfo>
 #include <QCursor>
 #include <QtQml>
 #include <QQmlEngine>
 #include <QQmlContext>
-#include "qmltypes/qmltextmetadata.h"
 
 QmlUtilities::QmlUtilities(QObject *parent) :
     QObject(parent)
@@ -44,30 +45,30 @@ QmlUtilities::QmlUtilities(QObject *parent) :
 
 void QmlUtilities::registerCommonTypes()
 {
-    qmlRegisterType<QmlFile>("com.moviemator.qml", 1, 0, "File");
-    qmlRegisterType<QmlHtmlEditor>("com.moviemator.qml", 1, 0, "HtmlEditor");
-    qmlRegisterType<QmlMetadata>("com.moviemator.qml", 1, 0, "Metadata");
-    qmlRegisterType<QmlTextMetaData>("com.moviemator.qml",1,0,"TextMetadata");
-    qmlRegisterType<QmlKeyframesMetadata>();
-    qmlRegisterType<QmlKeyframesParameter>("com.moviemator.qml", 1,0, "Parameter");
+//    qmlRegisterType<QmlFile>("com.moviemator.qml", 1, 0, "File");
+//    qmlRegisterType<QmlHtmlEditor>("com.moviemator.qml", 1, 0, "HtmlEditor");
+//    qmlRegisterType<QmlMetadata>("com.moviemator.qml", 1, 0, "Metadata");
+//    qmlRegisterType<QmlTextMetaData>("com.moviemator.qml",1,0,"TextMetadata");
+//    qmlRegisterType<QmlKeyframesMetadata>();
+//    qmlRegisterType<QmlKeyframesParameter>("com.moviemator.qml", 1,0, "Parameter");
 
-    qmlRegisterType<QmlUtilities>("com.moviemator.qml", 1, 0, "Utilities");
-    qmlRegisterType<FileSaveDialog>("com.moviemator.qml",1, 0, "FileSaveDialog");
-    // MetadataModel is registered to access its MetadataFilter enum.
-    qmlRegisterUncreatableType<MetadataModel>("com.moviemator.qml", 1, 0, "MetadataModel",
-                                              "You cannot create a MetadataModel from QML.");
-    qmlRegisterType<ColorPickerItem>("MovieMator.Controls", 1, 0, "ColorPickerItem");
-    qmlRegisterType<ColorWheelItem>("MovieMator.Controls", 1, 0, "ColorWheelItem");
-    registerTimelineItems();
+//    qmlRegisterType<QmlUtilities>("com.moviemator.qml", 1, 0, "Utilities");
+//    qmlRegisterType<FileSaveDialog>("com.moviemator.qml",1, 0, "FileSaveDialog");
+//    // MetadataModel is registered to access its MetadataFilter enum.
+//    qmlRegisterUncreatableType<MetadataModel>("com.moviemator.qml", 1, 0, "MetadataModel",
+//                                              "You cannot create a MetadataModel from QML.");
+//    qmlRegisterType<ColorPickerItem>("MovieMator.Controls", 1, 0, "ColorPickerItem");
+//    qmlRegisterType<ColorWheelItem>("MovieMator.Controls", 1, 0, "ColorWheelItem");
+//    registerTimelineItems();
 }
 
 
 
 void QmlUtilities::setCommonProperties(QQmlContext* context)
 {
-    context->setContextProperty("settings", &ShotcutSettings::singleton());
-    context->setContextProperty("application", &QmlApplication::singleton());
-    context->setContextProperty("profile", &QmlProfile::singleton());
+//    context->setContextProperty("settings", &ShotcutSettings::singleton());
+//    context->setContextProperty("application", &QmlApplication::singleton());
+//    context->setContextProperty("profile", &QmlProfile::singleton());
 }
 
 QDir QmlUtilities::qmlDir()

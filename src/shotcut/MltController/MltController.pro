@@ -31,21 +31,22 @@ HEADERS += \
         mltcontroller.h \
         mltcontroller_global.h \ 
     glwidget.h \
-    sharedframe.h
+    sharedframe.h \
+    transportcontrol.h
 
 
-INCLUDEPATH = ../CuteLogger/include ../CommonUtil
+INCLUDEPATH = ../CuteLogger/include ../CommonUtil ../QmlUtilities
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
-        LIBS += -L../CuteLogger/debug -L../CommonUtil/debug
+        LIBS += -L../CuteLogger/debug -L../CommonUtil/debug -L../QmlUtilities/debug
     } else {
-        LIBS += -L../CuteLogger/release -L../CommonUtil/release
+        LIBS += -L../CuteLogger/release -L../CommonUtil/release -L../QmlUtilities/release
     }
 } else {
-    LIBS += -L../CuteLogger -L../CommonUtil
+    LIBS += -L../CuteLogger -L../CommonUtil -L../QmlUtilities
 }
-LIBS += -lLogger -lCommonUtil
+LIBS += -lLogger -lCommonUtil -lQmlUtilities
 
 
 win32 {
@@ -57,6 +58,11 @@ win32 {
     INCLUDEPATH += $$MLT_PATH\\include\\mlt++ $$MLT_PATH\\include\\mlt
     LIBS += -L$$MLT_PATH\\lib -lmlt++ -lmlt -lopengl32
 #    RC_FILE = shotcut.rc
+}
+
+win32 {
+    target.path = C:\\Projects\\MovieMator
+    INSTALLS += target
 }
 
 unix {

@@ -35,18 +35,18 @@ HEADERS += \
     commands/playlistcommands.h \
     widgets/playlisttable.h
 
-INCLUDEPATH = ../CuteLogger/include ../CommonUtil
+INCLUDEPATH = ../CuteLogger/include ../CommonUtil ../MltController
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
-        LIBS += -L../CuteLogger/debug -L../CommonUtil/debug
+        LIBS += -L../CuteLogger/debug -L../CommonUtil/debug -L../MltController/debug
     } else {
-        LIBS += -L../CuteLogger/release -L../CommonUtil/release
+        LIBS += -L../CuteLogger/release -L../CommonUtil/release -L../MltController/release
     }
 } else {
-    LIBS += -L../CuteLogger -L../CommonUtil
+    LIBS += -L../CuteLogger -L../CommonUtil -L../MltController
 }
-LIBS += -lLogger -lCommonUtil
+LIBS += -lLogger -lCommonUtil -lMltController
 
 
 win32 {

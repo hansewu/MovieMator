@@ -1,13 +1,13 @@
 TEMPLATE = subdirs
 
 SUBDIRS = CuteLogger mvcp src \
+    CommonUtil \
+    QmlUtilities \
     RecentDock \
     PlaylistDock \
-    CommonUtil \
-    MltController \
-    QmlUtilities
+    MltController
 cache()
-src.depends = CuteLogger mvcp CommonUtil MltController RecentDock PlaylistDock
+src.depends = CuteLogger mvcp CommonUtil QmlUtilities MltController RecentDock PlaylistDock
 RecentDock.depends = CuteLogger CommonUtil
 
 

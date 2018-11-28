@@ -28,8 +28,8 @@
 #include <Logger.h>
 #include "glwidget.h"
 #include "settings.h"
-#include "qmltypes/qmlutilities.h"
-#include "qmltypes/qmlfilter.h"
+#include "qmlutilities.h"
+//#include "qmltypes/qmlfilter.h"
 //#include "mainwindow.h"
 
 #define USE_GL_SYNC // Use glFinish() if not defined.
@@ -84,6 +84,7 @@ GLWidget::GLWidget(QObject *parent)
     importPath.cd("modules");
     engine()->addImportPath(importPath.path());
     QmlUtilities::setCommonProperties(rootContext());
+
     rootContext()->setContextProperty("video", this);
 
 
@@ -715,15 +716,15 @@ void GLWidget::setOffsetY(int y)
     quickWindow()->update();
 }
 
-void GLWidget::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
-{
-    rootContext()->setContextProperty("filter", filter);
-    if (meta && QFile::exists(meta->vuiFilePath().toLocalFile())) {
-        setSource(meta->vuiFilePath());
-    } else {
-        setBlankScene();
-    }
-}
+//void GLWidget::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
+//{
+//    rootContext()->setContextProperty("filter", filter);
+//    if (meta && QFile::exists(meta->vuiFilePath().toLocalFile())) {
+//        setSource(meta->vuiFilePath());
+//    } else {
+//        setBlankScene();
+//    }
+//}
 
 void GLWidget::updateTexture(GLuint yName, GLuint uName, GLuint vName)
 {
