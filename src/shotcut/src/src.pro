@@ -266,8 +266,12 @@ HEADERS  += mainwindow.h \
 #    securitybookmark/SecurityBookmark.h
 
 mac {
-    SOURCES += securitybookmark/SecurityBookmark.mm
-    HEADERS += securitybookmark/SecurityBookmark.h
+    SOURCES += securitybookmark/SecurityBookmark.mm \
+                ../iRate/iRate.mm \
+                eccregister/EccRegister.mm
+    HEADERS += securitybookmark/SecurityBookmark.h \
+                ../iRate/iRate.h \
+                eccregister/EccRegister.h
 }
 
 #OBJECTIVE_SOURCES+= \
@@ -387,11 +391,11 @@ LIBS += -lLogger -lmvcp -lpthread  #-lmm
 
 mac {
     #pro share
-#    DEFINES += MOVIEMATOR_PRO=1
-#    DEFINES += SHARE_VERSION=1
-#    QMAKE_INFO_PLIST = ../Info_share.plist
-#    ICON = ../icons/moviemator-pro.icns
-#    TARGET = "MovieMator Video Editor Pro"
+    DEFINES += MOVIEMATOR_PRO=1
+    DEFINES += SHARE_VERSION=1
+    QMAKE_INFO_PLIST = ../Info_share.plist
+    ICON = ../icons/moviemator-pro.icns
+    TARGET = "MovieMator Video Editor Pro"
 
 
     #free appstore
@@ -407,11 +411,11 @@ mac {
 #    QMAKE_INFO_PLIST = ../Info-Free-share.plist
 #    ICON = ../icons/moviemator.icns
 
-#    #pro appstore
-    DEFINES += MOVIEMATOR_PRO=1
-    TARGET = "MovieMator Video Editor Pro"
-    QMAKE_INFO_PLIST = ../Info.plist
-    ICON = ../icons/moviemator-pro.icns
+    #pro appstore
+#    DEFINES += MOVIEMATOR_PRO=1
+#    TARGET = "MovieMator Video Editor Pro"
+#    QMAKE_INFO_PLIST = ../Info.plist
+#    ICON = ../icons/moviemator-pro.icns
 
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.8
 
@@ -437,6 +441,7 @@ mac {
 #    LIBS += -lexif -lmltqt
     LIBS += "-framework Cocoa"
 
+    QMAKE_LFLAGS += -Wl,/usr/lib/libcrypto.0.9.8.dylib
 #    INCLUDEPATH += /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7
 #    LIBS += -F/System/Library/Frameworks -framework Python
     QMAKE_RPATHDIR += @executable_path/qt_lib/lib
@@ -444,8 +449,6 @@ mac {
 #    QT_QPA_PLATFORM_PLUGIN_PATH = @executable_path/qt_lib/plugins/platforms/
 }
 
-#LIBS += -L/usr/lib -lcrypto
-#QMAKE_LFLAGS += -Wl,/usr/lib/libcrypto.0.9.8.dylib
 
 win32 {
     #free share
