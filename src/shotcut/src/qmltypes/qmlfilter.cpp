@@ -173,6 +173,22 @@ QRectF QmlFilter::getRect(QString name, int position)
     }
 }
 
+//FIXME: 暫時之應用與Text Filter，之後其他濾鏡獲取rect方法統一后移除
+QRectF QmlFilter::getRectOfTextFilter(QString name, int position)
+{
+    if (!m_filter->is_valid()) return QRectF();
+
+    const char* propertyName = name.toUtf8().constData();
+    mlt_rect rect;
+    if (position < 0) {
+        rect = m_filter->get_rect(propertyName);
+    } else {
+        rect = m_filter->anim_get_rect(propertyName, position);
+    }
+
+    return QRectF(rect.x, rect.y, rect.w, rect.h);
+}
+
 void QmlFilter::set(QString name, QString value)
 {
     if (!m_filter) return;
