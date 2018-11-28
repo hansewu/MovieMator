@@ -30,7 +30,7 @@
 #include "settings.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlfilter.h"
-#include "mainwindow.h"
+//#include "mainwindow.h"
 
 #define USE_GL_SYNC // Use glFinish() if not defined.
 
@@ -497,7 +497,7 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 {
     QQuickWidget::keyPressEvent(event);
     if (event->isAccepted()) return;
-    MAIN.keyPressEvent(event);
+//    MAIN.keyPressEvent(event);
 }
 
 void GLWidget::createThread(RenderThread **thread, thread_function_t function, void *data)
