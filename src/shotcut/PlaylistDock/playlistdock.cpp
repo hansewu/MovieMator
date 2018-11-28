@@ -27,6 +27,7 @@
 #include <Logger.h>
 #include <QScrollBar>
 #include "util.h"
+#include <mltcontroller.h>
 
 PlaylistDock::PlaylistDock(QWidget *parent) :
     QDockWidget(parent),
@@ -190,12 +191,12 @@ void PlaylistDock::on_menuButton_clicked()
 
 void PlaylistDock::on_actionInsertCut_triggered()
 {
-//    if (MLT.isClip() || MLT.savedProducer()) {
-//        QMimeData mimeData;
-//        mimeData.setData(Mlt::XmlMimeType, MLT.XML(
-//            MLT.isClip()? 0 : MLT.savedProducer()).toUtf8());
-//        onDropped(&mimeData, ui->tableView->currentIndex().row());
-//    }
+    if (MLT.isClip() || MLT.savedProducer()) {
+        QMimeData mimeData;
+        mimeData.setData(Mlt::XmlMimeType, MLT.XML(
+            MLT.isClip()? 0 : MLT.savedProducer()).toUtf8());
+        onDropped(&mimeData, ui->tableView->currentIndex().row());
+    }
 }
 
 void PlaylistDock::on_actionAppendCut_triggered()
@@ -308,17 +309,17 @@ void PlaylistDock::setUpdateButtonEnabled(bool modified)
 
 void PlaylistDock::on_actionOpen_triggered()
 {
-//    QModelIndex index = ui->tableView->currentIndex();
-//    if (!index.isValid() || !m_model.playlist()) return;
-//    Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
-//    if (i) {
-//        QString xml = MLT.XML(i->producer);
-//        Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
-//        p->set_in_and_out(i->frame_in, i->frame_out);
-//        p->set(kPlaylistIndexProperty, index.row() + 1);
-//        emit clipOpened(p);
-//        delete i;
-//    }
+    QModelIndex index = ui->tableView->currentIndex();
+    if (!index.isValid() || !m_model.playlist()) return;
+    Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
+    if (i) {
+        QString xml = MLT.XML(i->producer);
+        Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+        p->set_in_and_out(i->frame_in, i->frame_out);
+        p->set(kPlaylistIndexProperty, index.row() + 1);
+        emit clipOpened(p);
+        delete i;
+    }
 }
 
 void PlaylistDock::on_tableView_customContextMenuRequested(const QPoint &pos)
@@ -327,20 +328,20 @@ void PlaylistDock::on_tableView_customContextMenuRequested(const QPoint &pos)
     if (index.isValid() && m_model.playlist()) {
         QMenu menu(this);
         menu.addAction(ui->actionGoto);
-//        if (MLT.isClip())
-//            menu.addAction(ui->actionInsertCut);
-      //  menu.addAction(ui->actionOpen);
+        if (MLT.isClip())
+            menu.addAction(ui->actionInsertCut);
+        menu.addAction(ui->actionOpen);
         menu.addAction(ui->actionAddToTimeline);
 
 
 
 
 
-//        QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index.row()));
-//        if (info && MLT.producer()->get_int(kPlaylistIndexProperty) == index.row() + 1) {
-//            if (MLT.producer()->get_in() != info->frame_in || MLT.producer()->get_out() != info->frame_out)
-//                menu.addAction(ui->actionUpdate);
-//        }
+        QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index.row()));
+        if (info && MLT.producer()->get_int(kPlaylistIndexProperty) == index.row() + 1) {
+            if (MLT.producer()->get_in() != info->frame_in || MLT.producer()->get_out() != info->frame_out)
+                menu.addAction(ui->actionUpdate);
+        }
 
         menu.addAction(ui->actionRemove);
         menu.addAction(ui->actionRemoveAll);
