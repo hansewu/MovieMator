@@ -393,6 +393,7 @@ MainWindow::MainWindow()
 
     LOG_DEBUG() << "timelinedock";
     m_timelineDock = new TimelineDock(this);
+    m_timelineDock->setExtraQmlContextProperty("mainwindow", this);
 
     QWidget* titleWidget = new QWidget(this); /* where this a QMainWindow object */
     m_timelineDock->setTitleBarWidget( titleWidget );
@@ -427,7 +428,7 @@ MainWindow::MainWindow()
     LOG_DEBUG() << "FilterController";
     m_filterController = new FilterController(this);
     m_filtersDock = new FiltersDock(m_filterController->metadataModel(), m_filterController->attachedModel(), this);
-
+    m_filtersDock->setExtraQmlContextProperty("mainwindow", this);
     m_filtersDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
     m_filtersDock->setTitleBarWidget(new QWidget());
     m_filtersDock->setMinimumSize(519,272);

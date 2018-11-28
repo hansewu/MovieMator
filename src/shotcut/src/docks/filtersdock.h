@@ -49,7 +49,7 @@ public:
 
     Q_INVOKABLE void promptForUpgrade();
 
-
+    void setExtraQmlContextProperty(QString name, QObject *object);
 
 signals:
     void currentFilterRequested(int attachedIndex);

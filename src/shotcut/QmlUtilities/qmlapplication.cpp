@@ -88,7 +88,7 @@ QString QmlApplication::numericLocale()
 #endif
 }
 
-QRect QmlApplication::mainWinRect()
-{
+//QRect QmlApplication::mainWinRect()
+//{
 //    return MAIN.geometry();
-}
+//}

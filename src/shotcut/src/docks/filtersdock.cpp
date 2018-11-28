@@ -50,6 +50,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     setWidget(&m_qview);
 
     QmlUtilities::setCommonProperties(m_qview.rootContext());
+//    m_qview.rootContext()->setContextProperty("mainwindow", &MAIN);
     m_qview.rootContext()->setContextProperty("view", new QmlView(m_qview.quickWindow()));
     m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
     m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
@@ -175,6 +176,11 @@ void FiltersDock::promptForUpgrade()
 {
     //专业版功能，提示升级
     MAIN.showProFeaturePromptDialog();
+}
+
+void FiltersDock::setExtraQmlContextProperty(QString name, QObject *object)
+{
+    m_qview.rootContext()->setContextProperty(name, object);
 }
 
 

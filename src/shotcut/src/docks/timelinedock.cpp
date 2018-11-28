@@ -96,6 +96,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
 
     m_quickView.engine()->addImageProvider(QString("thumbnail"), new ThumbnailProvider);
     QmlUtilities::setCommonProperties(m_quickView.rootContext());
+//    m_quickView.rootContext()->setContextProperty("mainwindow", &MAIN);
     m_quickView.rootContext()->setContextProperty("view", new QmlView(m_quickView.quickWindow()));
     m_quickView.rootContext()->setContextProperty("timeline", this);
     m_quickView.rootContext()->setContextProperty("multitrack", &m_model);
@@ -1751,4 +1752,9 @@ void TimelineDock::emitShowFilterDock()
 QRect TimelineDock::dockPosition()
 {
     return this->geometry();
+}
+
+void TimelineDock::setExtraQmlContextProperty(QString name, QObject *object)
+{
+    m_quickView.rootContext()->setContextProperty(name, object);
 }
