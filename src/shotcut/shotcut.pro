@@ -5,7 +5,7 @@ SUBDIRS = CuteLogger mvcp src \
     PlaylistDock \
     CommonUtil
 cache()
-src.depends = CuteLogger mvcp RecentDock PlaylistDock
-RecentDock.depends = CuteLogger
+src.depends = CuteLogger mvcp RecentDock PlaylistDock CommonUtil
+RecentDock.depends = CuteLogger CommonUtil
 
 

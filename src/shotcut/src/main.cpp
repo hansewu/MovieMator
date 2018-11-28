@@ -22,7 +22,7 @@
 #include <QtWidgets>
 #include <QtGlobal>
 #include "mainwindow.h"
-#include "settings.h"
+#include <settings.h>
 #include <Logger.h>
 #include <FileAppender.h>
 #include <ConsoleAppender.h>

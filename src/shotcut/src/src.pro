@@ -68,10 +68,8 @@ SOURCES += main.cpp\
     qmltypes/qmlmetadata.cpp \
     qmltypes/timelineitems.cpp \
     qmltypes/qmlprofile.cpp \
-    settings.cpp \
     widgets/lineeditclear.cpp \
     widgets/webvfxproducer.cpp \
-    database.cpp \
     widgets/gltestwidget.cpp \
     models/multitrackmodel.cpp \
     docks/timelinedock.cpp \
@@ -79,7 +77,6 @@ SOURCES += main.cpp\
     qmltypes/qmlview.cpp \
     qmltypes/thumbnailprovider.cpp \
     commands/timelinecommands.cpp \
-    util.cpp \
     widgets/lumamixtransition.cpp \
     autosavefile.cpp \
     widgets/directshowvideowidget.cpp \
@@ -192,10 +189,8 @@ HEADERS  += mainwindow.h \
     qmltypes/qmlmetadata.h \
     qmltypes/timelineitems.h \
     qmltypes/qmlprofile.h \
-    settings.h \
     widgets/lineeditclear.h \
     widgets/webvfxproducer.h \
-    database.h \
     widgets/gltestwidget.h \
     models/multitrackmodel.h \
     docks/timelinedock.h \
@@ -203,7 +198,6 @@ HEADERS  += mainwindow.h \
     qmltypes/qmlview.h \
     qmltypes/thumbnailprovider.h \
     commands/timelinecommands.h \
-    util.h \
     widgets/lumamixtransition.h \
     autosavefile.h \
     widgets/directshowvideowidget.h \
@@ -360,20 +354,19 @@ TRANSLATIONS += \
 #    ../translations/shotcut_uk.ts \
 
 
-INCLUDEPATH = ../CuteLogger/include ../mvcp ../RecentDock
-
+INCLUDEPATH = ../CuteLogger/include ../mvcp ../RecentDock ../CommonUtil
 INCLUDEPATH += ../include
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
-        LIBS += -L../CuteLogger/debug -L../mvcp/debug -L../RecentDock/debug
+        LIBS += -L../CuteLogger/debug -L../mvcp/debug -L../RecentDock/debug -L../CommonUtil/debug
     } else {
-        LIBS += -L../CuteLogger/release -L../mvcp/release -L../RecentDock/release
+        LIBS += -L../CuteLogger/release -L../mvcp/release -L../RecentDock/release -L../CommonUtil/release
     }
 } else {
-    LIBS += -L../CuteLogger -L../mvcp -L../RecentDock
+    LIBS += -L../CuteLogger -L../mvcp -L../RecentDock -L../CommonUtil
 }
-LIBS += -lLogger -lmvcp -lpthread  -lRecentDock
+LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lCommonUtil
 
 
 #INCLUDEPATH += ../PythonQt3.2/src
