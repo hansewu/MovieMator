@@ -21,7 +21,7 @@
 #include "models/audiolevelstask.h"
 #include "models/multitrackmodel.h"
 #include "qmltypes/thumbnailprovider.h"
-#include "qmltypes/qmlapplication.h"
+#include <qmlapplication.h>
 #include "mainwindow.h"
 #include "commands/timelinecommands.h"
 #include <qmlutilities.h>

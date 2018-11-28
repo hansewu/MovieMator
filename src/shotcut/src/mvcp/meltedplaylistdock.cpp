@@ -19,7 +19,7 @@
 #include "meltedplaylistdock.h"
 #include "ui_meltedplaylistdock.h"
 #include "mainwindow.h"
-#include "qmltypes/qmlapplication.h"
+#include <qmlapplication.h>
 
 #include <QMimeData>
 #include <QFileInfo>

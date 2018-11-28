@@ -41,7 +41,6 @@ SOURCES += main.cpp\
     jobqueue.cpp \
     docks/jobsdock.cpp \
     dialogs/textviewerdialog.cpp \
-    models/playlistmodel.cpp \
     dialogs/durationdialog.cpp \
     mvcp/qconsole.cpp \
     mvcp/mvcp_socket.cpp \

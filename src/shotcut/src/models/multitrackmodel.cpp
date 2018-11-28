@@ -20,7 +20,7 @@
 #include "mltcontroller.h"
 #include "mainwindow.h"
 #include "settings.h"
-#include "docks/playlistdock.h"
+#include <playlistdock.h>
 #include "util.h"
 #include "audiolevelstask.h"
 #include "shotcut_mlt_properties.h"

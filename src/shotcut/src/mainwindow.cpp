@@ -46,7 +46,7 @@
 #include "docks/encodedock.h"
 #include "docks/jobsdock.h"
 #include "jobqueue.h"
-#include "docks/playlistdock.h"
+#include <playlistdock.h>
 #include "glwidget.h"
 #include "mvcp/meltedserverdock.h"
 #include "mvcp/meltedplaylistdock.h"
@@ -64,7 +64,7 @@
 #include "docks/timelinedock.h"
 #include "widgets/lumamixtransition.h"
 #include "qmltypes/mmqmlutilities.h"
-#include "qmltypes/qmlapplication.h"
+#include <qmlapplication.h>
 #include "autosavefile.h"
 #include "commands/playlistcommands.h"
 #include "shotcut_mlt_properties.h"

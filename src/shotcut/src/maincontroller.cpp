@@ -9,7 +9,7 @@
 #include "settings.h"
 #include "docks/encodedock.h"
 #include <QMessageBox>
-#include "qmltypes/qmlapplication.h"
+#include <qmlapplication.h>
 
 
 
