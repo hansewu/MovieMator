@@ -71,6 +71,8 @@ class UpgradeToProPromptDialog;
 class MainController;
 class InvalidProjectDialog;
 class EncodeTaskDock;
+class QmlFilter;
+class QUndoCommand;
 
 //class TextlistDock;
 
@@ -82,7 +84,6 @@ public:
     static MainWindow& singleton();
     ~MainWindow();
 
-    void open(Mlt::Producer* producer);
     bool continueModified();
     bool continueJobsRunning();
     QUndoStack* undoStack() const;
@@ -97,7 +98,6 @@ public:
     QString removeFileScheme(QUrl& url);
     QString untitledFileName() const;
     QString getFileHash(const QString& path) const;
-    QString getHash(Mlt::Properties& properties) const;
     void setProfile(const QString& profile_name);
 
     void keyPressEvent(QKeyEvent*);
@@ -232,6 +232,8 @@ private:
     EncodeTaskDock *m_tasksDock;
 
 public slots:
+    void open(Mlt::Producer* producer);
+
     bool isCompatibleWithGpuMode(MltXmlChecker& checker);
     bool isXmlRepaired(MltXmlChecker& checker, QString& fileName);
     void updateAutoSave();
@@ -307,6 +309,11 @@ public slots:
     void showInvalidProjectDialog();
 #endif
 #endif
+
+
+    void setCurrentFilterForVideoWidget(QmlFilter* filter, QmlMetadata* meta);
+    void pushCommand(QUndoCommand *command);
+
 
 private slots:
 

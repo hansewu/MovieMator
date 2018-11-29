@@ -20,7 +20,7 @@
 #include "mltcontroller.h"
 #include "mainwindow.h"
 #include "settings.h"
-#include "docks/playlistdock.h"
+#include <playlistdock.h>
 #include "util.h"
 #include "audiolevelstask.h"
 #include "shotcut_mlt_properties.h"
@@ -208,7 +208,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             case IsTransitionRole:
                 return isTransition(playlist, index.row());
             case FileHashRole:
-                return MAIN.getHash(*info->producer);
+                return MLT.getHash(*info->producer);
             case SpeedRole: {
                 double speed = 1.0;
                 if (info->producer && info->producer->is_valid()) {

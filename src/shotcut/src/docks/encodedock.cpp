@@ -23,7 +23,7 @@
 #include "mltcontroller.h"
 #include "mainwindow.h"
 #include "settings.h"
-#include "qmltypes/qmlapplication.h"
+#include <qmlapplication.h>
 #include "jobs/encodejob.h"
 #include "shotcut_mlt_properties.h"
 #include "registrationchecker.h"

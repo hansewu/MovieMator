@@ -26,7 +26,7 @@
 #include "mltcontroller.h"
 #include "settings.h"
 #include "qmltypes/qmlmetadata.h"
-#include "qmltypes/qmlutilities.h"
+#include <qmlutilities.h>
 #include "qmltypes/qmlfilter.h"
 
 FilterController::FilterController(QObject* parent) : QObject(parent),

@@ -18,7 +18,7 @@
 
 #include "servicepresetwidget.h"
 #include "ui_servicepresetwidget.h"
-#include "qmltypes/qmlapplication.h"
+#include <qmlapplication.h>
 
 #include <QStandardPaths>
 #include <QDir>

@@ -22,7 +22,7 @@
 #include <QtWidgets>
 #include <QtGlobal>
 #include "mainwindow.h"
-#include "settings.h"
+#include <settings.h>
 #include <Logger.h>
 #include <FileAppender.h>
 #include <ConsoleAppender.h>
@@ -31,7 +31,7 @@
 #include <QCommandLineParser>
 #include <framework/mlt_log.h>
 #include "securitybookmark/transport_security_bookmark.h"
-#include "qmltypes/qmlutilities.h"
+#include <qmlutilities.h>
  #include <QQmlEngine>
 #include <QProcess>
 #include <registrationchecker.h>

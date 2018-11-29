@@ -4,7 +4,7 @@
 #include <QQmlComponent>
 #include "mainwindow.h"
 #include "settings.h"
-#include "qmltypes/qmlutilities.h"
+#include <qmlutilities.h>
 #include "qmltypes/qmltextmetadata.h"
 #include "shotcut_mlt_properties.h"
 #include <commands/playlistcommands.h>

@@ -21,10 +21,10 @@
 #include "models/audiolevelstask.h"
 #include "models/multitrackmodel.h"
 #include "qmltypes/thumbnailprovider.h"
-#include "qmltypes/qmlapplication.h"
+#include <qmlapplication.h>
 #include "mainwindow.h"
 #include "commands/timelinecommands.h"
-#include "qmltypes/qmlutilities.h"
+#include <qmlutilities.h>
 #include "qmltypes/qmlview.h"
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
@@ -96,6 +96,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
 
     m_quickView.engine()->addImageProvider(QString("thumbnail"), new ThumbnailProvider);
     QmlUtilities::setCommonProperties(m_quickView.rootContext());
+//    m_quickView.rootContext()->setContextProperty("mainwindow", &MAIN);
     m_quickView.rootContext()->setContextProperty("view", new QmlView(m_quickView.quickWindow()));
     m_quickView.rootContext()->setContextProperty("timeline", this);
     m_quickView.rootContext()->setContextProperty("multitrack", &m_model);
@@ -1056,7 +1057,7 @@ void TimelineDock::seekInPoint(int clipIndex)
 
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 {
-    if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {
+    if (event->mimeData()->hasFormat(MLT.MltXMLMimeType())) {
         event->acceptProposedAction();
     }
 }
@@ -1074,10 +1075,10 @@ void TimelineDock::dragLeaveEvent(QDragLeaveEvent *event)
 
 void TimelineDock::dropEvent(QDropEvent *event)
 {
-    if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {
+    if (event->mimeData()->hasFormat(MLT.MltXMLMimeType())) {
         int trackIndex = currentTrack();
         if (trackIndex >= 0) {
-            emit dropAccepted(QString::fromUtf8(event->mimeData()->data(Mlt::XmlMimeType)));
+            emit dropAccepted(QString::fromUtf8(event->mimeData()->data(MLT.MltXMLMimeType())));
             event->acceptProposedAction();
         }
     }
@@ -1754,4 +1755,9 @@ void TimelineDock::emitShowFilterDock()
 QRect TimelineDock::dockPosition()
 {
     return this->geometry();
+}
+
+void TimelineDock::setExtraQmlContextProperty(QString name, QObject *object)
+{
+    m_quickView.rootContext()->setContextProperty(name, object);
 }

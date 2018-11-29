@@ -41,11 +41,12 @@
 #include "widgets/avformatproducerwidget.h"
 #include "widgets/imageproducerwidget.h"
 #include "widgets/webvfxproducer.h"
-#include "docks/recentdock.h"
+//#include "docks/recentdock.h"
+#include <recentdock.h>
 #include "docks/encodedock.h"
 #include "docks/jobsdock.h"
 #include "jobqueue.h"
-#include "docks/playlistdock.h"
+#include <playlistdock.h>
 #include "glwidget.h"
 #include "mvcp/meltedserverdock.h"
 #include "mvcp/meltedplaylistdock.h"
@@ -62,10 +63,10 @@
 #include "widgets/gltestwidget.h"
 #include "docks/timelinedock.h"
 #include "widgets/lumamixtransition.h"
-#include "qmltypes/qmlutilities.h"
-#include "qmltypes/qmlapplication.h"
+#include "qmltypes/mmqmlutilities.h"
+#include <qmlapplication.h>
 #include "autosavefile.h"
-#include "commands/playlistcommands.h"
+#include <commands/playlistcommands.h>
 #include "shotcut_mlt_properties.h"
 #include "widgets/avfoundationproducerwidget.h"
 #include "dialogs/textviewerdialog.h"
@@ -100,6 +101,7 @@
 #include <QJsonDocument>
 #include <QJSEngine>
 #include <QQmlEngine>
+#include <QQmlContext>
 
 
 #if defined(Q_OS_WIN)
@@ -201,7 +203,7 @@ MainWindow::MainWindow()
     connect(&m_autosaveTimer, SIGNAL(timeout()), this, SLOT(onAutosaveTimeout()));
 
     // Initialize all QML types
-    QmlUtilities::registerCommonTypes();
+    MMQmlUtilities::registerCommonTypes();
 
     LOG_DEBUG() << "setup ui";
     // Create the UI.
@@ -389,9 +391,20 @@ MainWindow::MainWindow()
     if (!Settings.playerGPU())
         connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateThumbnails()));
 
+    connect(m_playlistDock, SIGNAL(pushCommand(QUndoCommand *)), this, SLOT(pushCommand(QUndoCommand *)));
+    connect(m_playlistDock, SIGNAL(openVideo()), this, SLOT(openVideo()));
+    connect(m_playlistDock, SIGNAL(setPauseAfterOpen(bool)), this, SLOT(setPauseAfterOpen(bool)));
+    connect(m_playlistDock, SIGNAL(openFiles(const QStringList &)), this, SLOT(openFiles(const QStringList &)));
+    connect(m_playlistDock, SIGNAL(loadProducerWidget(Mlt::Producer* )), this, SLOT(loadProducerWidget(Mlt::Producer* )));
+    connect(m_playlistDock, SIGNAL(propertiesDockTriggered()), this, SLOT(onPropertiesDockTriggered()));
+    //取代Playlist::ClearCommand调用MAIN.open做的一个特殊处理
+    connect(m_playlistDock->model(), SIGNAL(openProducer(Mlt::Producer *)), this, SLOT(open(Mlt::Producer *)));
+    connect(m_playlistDock->model(), SIGNAL(seekPlaylist(int)), this, SLOT(seekPlaylist(int)));
+
 
     LOG_DEBUG() << "timelinedock";
     m_timelineDock = new TimelineDock(this);
+    m_timelineDock->setExtraQmlContextProperty("mainwindow", this);
 
     QWidget* titleWidget = new QWidget(this); /* where this a QMainWindow object */
     m_timelineDock->setTitleBarWidget( titleWidget );
@@ -426,7 +439,7 @@ MainWindow::MainWindow()
     LOG_DEBUG() << "FilterController";
     m_filterController = new FilterController(this);
     m_filtersDock = new FiltersDock(m_filterController->metadataModel(), m_filterController->attachedModel(), this);
-
+    m_filtersDock->setExtraQmlContextProperty("mainwindow", this);
     m_filtersDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
     m_filtersDock->setTitleBarWidget(new QWidget());
     m_filtersDock->setMinimumSize(519,272);
@@ -551,7 +564,9 @@ MainWindow::MainWindow()
     connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
 //    connect(videoWidget, SIGNAL(frameDisplayed(const SharedFrame&)), m_scopeController, SIGNAL(newFrame(const SharedFrame&)));
  //   connect(videoWidget, SIGNAL(frameDisplayed(const SharedFrame&)), m_scopeController, SLOT(onFrameDisplayed(const SharedFrame&)));
-    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), videoWidget, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
+
+    //connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), videoWidget, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
+    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), this, SLOT(setCurrentFilterForVideoWidget(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
     connect(m_filterController, SIGNAL(currentFilterAboutToChange()), videoWidget, SLOT(setBlankScene()));
 
     readWindowSettings();
@@ -1341,23 +1356,6 @@ QString MainWindow::getFileHash(const QString& path) const
     return QString();
 }
 
-QString MainWindow::getHash(Mlt::Properties& properties) const
-{
-    QString hash = properties.get(kShotcutHashProperty);
-    if (hash.isEmpty()) {
-        QString service = properties.get("mlt_service");
-        QString resource = QString::fromUtf8(properties.get("resource"));
-
-        if (service == "timewarp")
-            resource = QString::fromUtf8(properties.get("warp_resource"));
-        else if (service == "vidstab")
-            resource = QString::fromUtf8(properties.get("filename"));
-        QString hash = getFileHash(resource);
-        if (!hash.isEmpty())
-            properties.set(kShotcutHashProperty, hash.toLatin1().constData());
-    }
-    return hash;
-}
 
 void MainWindow::setProfile(const QString &profile_name)
 {
@@ -1562,7 +1560,7 @@ public:
                     p.set("mute_on_pause", 0);
                 }
                 MLT.setImageDurationFromDefault(&p);
-                MAIN.getHash(p);
+                MLT.getHash(p);
                 MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.XML(&p)));
             }
             }
@@ -2400,7 +2398,7 @@ void MainWindow::dropEvent(QDropEvent *event)
         open(path);
         event->acceptProposedAction();
     }
-    else if (mimeData->hasFormat(Mlt::XmlMimeType )) {
+    else if (mimeData->hasFormat(MLT.MltXMLMimeType())) {
         m_playlistDock->on_actionOpen_triggered();
         event->acceptProposedAction();
     }
@@ -2496,7 +2494,7 @@ void MainWindow::onProducerOpened()
     if (MLT.isClip()) {
         m_player->enableTab(Player::SourceTabIndex);
         m_player->switchToTab(Player::SourceTabIndex);
-        getHash(*MLT.producer());
+        MLT.getHash(*MLT.producer());
         ui->actionPaste->setEnabled(true);
     }
     if (m_autosaveFile)
@@ -2617,6 +2615,11 @@ bool MainWindow::continueJobsRunning()
 QUndoStack* MainWindow::undoStack() const
 {
     return m_undoStack;
+}
+
+void MainWindow::pushCommand(QUndoCommand *command)
+{
+    m_undoStack->push(command);
 }
 
 void MainWindow::onEncodeTriggered(bool checked)
@@ -4323,4 +4326,17 @@ void MainWindow::on_actionGet_Total_Video_Player_triggered()
 void MainWindow::on_actionTutorial_triggered()
 {
     QDesktopServices::openUrl(QUrl(tr("http://www.macvideostudio.com/mac-movie-video-editor-MovieMator-guide.html")));
+}
+
+void MainWindow::setCurrentFilterForVideoWidget(QmlFilter* filter, QmlMetadata* meta)
+{
+    Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
+    QQmlContext *context = videoWidget->rootContext();
+    context->setContextProperty("filter", filter);
+
+    if (meta && QFile::exists(meta->vuiFilePath().toLocalFile())) {
+        videoWidget->setSource(meta->vuiFilePath());
+    } else {
+        videoWidget->setBlankScene();
+    }
 }

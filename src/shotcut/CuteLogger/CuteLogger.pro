@@ -3,7 +3,7 @@ QT       -= gui
 TARGET = Logger
 TEMPLATE = lib
 
-CONFIG += staticlib
+#CONFIG += staticlib
 CONFIG += create_prl
 
 DEFINES += CUTELOGGER_LIBRARY
@@ -27,6 +27,12 @@ win32 {
     SOURCES += src/OutputDebugAppender.cpp
     HEADERS += include/OutputDebugAppender.h
 }
+
+win32 {
+    target.path = C:\\Projects\\MovieMator
+    INSTALLS += target
+}
+
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

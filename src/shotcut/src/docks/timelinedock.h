@@ -96,6 +96,8 @@ public:
 
     QRect dockPosition();
 
+    void setExtraQmlContextProperty(QString name, QObject *object);
+
 signals:
     void currentTrackChanged();
     void selectionChanged();
