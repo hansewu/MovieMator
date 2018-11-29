@@ -193,7 +193,7 @@ void PlaylistDock::on_actionInsertCut_triggered()
 {
     if (MLT.isClip() || MLT.savedProducer()) {
         QMimeData mimeData;
-        mimeData.setData(Mlt::XmlMimeType, MLT.XML(
+        mimeData.setData(MLT.MltXMLMimeType(), MLT.XML(
             MLT.isClip()? 0 : MLT.savedProducer()).toUtf8());
         onDropped(&mimeData, ui->tableView->currentIndex().row());
     }
@@ -455,16 +455,16 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
 
 //        MAIN.openFiles(filelist);
 //    }
-//    else if (data && data->hasFormat(Mlt::XmlMimeType)) {
+//    else if (data && data->hasFormat(MLT.MltXMLMimeType())) {
 //        if (MLT.producer() && MLT.producer()->is_valid()) {
 //            if (MLT.producer()->type() == playlist_type) {
 //                emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
 //            } else if (MLT.isSeekable()) {
 //                if (row == -1) {
-//                    MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, data->data(Mlt::XmlMimeType)));
+//                    MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, data->data(MLT.MltXMLMimeType())));
 //                    MLT.producer()->set(kPlaylistIndexProperty, m_model.playlist()->count());
 //                } else {
-//                    MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, data->data(Mlt::XmlMimeType), row));
+//                    MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, data->data(MLT.MltXMLMimeType()), row));
 //                    MLT.producer()->set(kPlaylistIndexProperty, row + 1);
 //                }
 //                setUpdateButtonEnabled(true);

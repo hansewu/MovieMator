@@ -52,7 +52,7 @@ public slots:
     void setOut(int);
 };
 
-class Controller
+class MLTCONTROLLERSHARED_EXPORT Controller
 {
 protected:
     Controller();
@@ -135,6 +135,9 @@ public:
     void setSavedProducer(Mlt::Producer* producer);
 
     virtual void setCommonProperties(QQmlContext* context) = 0;
+    QString getHash(Mlt::Properties& properties) const;
+
+    const QString& MltXMLMimeType();
 protected:
     Mlt::Repository* m_repo;
     Mlt::Producer* m_producer;

@@ -485,7 +485,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
         return;
     QDrag *drag = new QDrag(this);
     QMimeData *mimeData = new QMimeData;
-    mimeData->setData(Mlt::XmlMimeType, MLT.XML().toUtf8());
+    mimeData->setData(MLT.MltXMLMimeType(), MLT.XML().toUtf8());
     drag->setMimeData(mimeData);
     mimeData->setText(QString::number(MLT.producer()->get_playtime()));
     if (m_frameRenderer && !m_glslManager && m_frameRenderer->getDisplayFrame().is_valid()) {

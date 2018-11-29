@@ -19,6 +19,8 @@
 #ifndef SHAREDFRAME_H
 #define SHAREDFRAME_H
 
+#include "mltcontroller_global.h"
+
 #include <QObject>
 #include <QExplicitlySharedDataPointer>
 #include <MltFrame.h>
@@ -45,7 +47,7 @@ class FrameData;
   TODO: Consider providing a similar class in Mlt++.
 */
 
-class SharedFrame
+class MLTCONTROLLERSHARED_EXPORT SharedFrame
 {
 public:
     SharedFrame();

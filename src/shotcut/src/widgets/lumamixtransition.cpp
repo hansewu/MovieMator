@@ -234,7 +234,7 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
             activateWindow();
             if (!filename.isEmpty()) {
                 transition->set("resource", filename.toUtf8().constData());
-                MAIN.getHash(*transition);
+                MLT.getHash(*transition);
             }
         } else {
             ui->softnessLabel->setText(tr("Softness"));
@@ -285,7 +285,7 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
 //            activateWindow();
 //            if (!filename.isEmpty()) {
 //                transition->set("resource", filename.toUtf8().constData());
-//                MAIN.getHash(*transition);
+//                MLT.getHash(*transition);
 //            }
 //        } else {
 //            ui->softnessLabel->setText(tr("Softness"));

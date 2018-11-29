@@ -1346,23 +1346,6 @@ QString MainWindow::getFileHash(const QString& path) const
     return QString();
 }
 
-QString MainWindow::getHash(Mlt::Properties& properties) const
-{
-    QString hash = properties.get(kShotcutHashProperty);
-    if (hash.isEmpty()) {
-        QString service = properties.get("mlt_service");
-        QString resource = QString::fromUtf8(properties.get("resource"));
-
-        if (service == "timewarp")
-            resource = QString::fromUtf8(properties.get("warp_resource"));
-        else if (service == "vidstab")
-            resource = QString::fromUtf8(properties.get("filename"));
-        QString hash = getFileHash(resource);
-        if (!hash.isEmpty())
-            properties.set(kShotcutHashProperty, hash.toLatin1().constData());
-    }
-    return hash;
-}
 
 void MainWindow::setProfile(const QString &profile_name)
 {
@@ -1567,7 +1550,7 @@ public:
                     p.set("mute_on_pause", 0);
                 }
                 MLT.setImageDurationFromDefault(&p);
-                MAIN.getHash(p);
+                MLT.getHash(p);
                 MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.XML(&p)));
             }
             }
@@ -2405,7 +2388,7 @@ void MainWindow::dropEvent(QDropEvent *event)
         open(path);
         event->acceptProposedAction();
     }
-    else if (mimeData->hasFormat(Mlt::XmlMimeType )) {
+    else if (mimeData->hasFormat(MLT.MltXMLMimeType())) {
         m_playlistDock->on_actionOpen_triggered();
         event->acceptProposedAction();
     }
@@ -2501,7 +2484,7 @@ void MainWindow::onProducerOpened()
     if (MLT.isClip()) {
         m_player->enableTab(Player::SourceTabIndex);
         m_player->switchToTab(Player::SourceTabIndex);
-        getHash(*MLT.producer());
+        MLT.getHash(*MLT.producer());
         ui->actionPaste->setEnabled(true);
     }
     if (m_autosaveFile)

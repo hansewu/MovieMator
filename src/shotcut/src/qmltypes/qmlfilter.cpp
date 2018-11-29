@@ -387,7 +387,7 @@ QString QmlFilter::timeFromFrames(int frames)
 
 void QmlFilter::getHash()
 {
-    MAIN.getHash(*m_filter);
+    MLT.getHash(*m_filter);
 }
 
 int QmlFilter::producerIn() const

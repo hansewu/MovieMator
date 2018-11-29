@@ -29,6 +29,7 @@
 #include "shotcut_mlt_properties.h"
 //#include "mltqtmodule.h"
 #include "qmlutilities.h"
+#include <util.h>
 
 namespace Mlt {
 
@@ -873,6 +874,29 @@ void Controller::setSavedProducer(Mlt::Producer* producer)
     m_savedProducer.reset(new Mlt::Producer(producer));
 }
 
+QString Controller::getHash(Mlt::Properties& properties) const
+{
+    QString hash = properties.get(kShotcutHashProperty);
+    if (hash.isEmpty()) {
+        QString service = properties.get("mlt_service");
+        QString resource = QString::fromUtf8(properties.get("resource"));
+
+        if (service == "timewarp")
+            resource = QString::fromUtf8(properties.get("warp_resource"));
+        else if (service == "vidstab")
+            resource = QString::fromUtf8(properties.get("filename"));
+        QString hash = Util::getFileHash(resource);
+        if (!hash.isEmpty())
+            properties.set(kShotcutHashProperty, hash.toLatin1().constData());
+    }
+    return hash;
+}
+
+
+const QString& Controller::MltXMLMimeType()
+{
+    return XmlMimeType;
+}
 
 void TransportControl::play(double speed)
 {
@@ -923,5 +947,6 @@ void TransportControl::setOut(int out)
 {
     MLT.setOut(out);
 }
+
 
 } // namespace

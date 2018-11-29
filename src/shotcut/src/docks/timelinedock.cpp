@@ -1054,7 +1054,7 @@ void TimelineDock::seekInPoint(int clipIndex)
 
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 {
-    if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {
+    if (event->mimeData()->hasFormat(MLT.MltXMLMimeType())) {
         event->acceptProposedAction();
     }
 }
@@ -1072,10 +1072,10 @@ void TimelineDock::dragLeaveEvent(QDragLeaveEvent *event)
 
 void TimelineDock::dropEvent(QDropEvent *event)
 {
-    if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {
+    if (event->mimeData()->hasFormat(MLT.MltXMLMimeType())) {
         int trackIndex = currentTrack();
         if (trackIndex >= 0) {
-            emit dropAccepted(QString::fromUtf8(event->mimeData()->data(Mlt::XmlMimeType)));
+            emit dropAccepted(QString::fromUtf8(event->mimeData()->data(MLT.MltXMLMimeType())));
             event->acceptProposedAction();
         }
     }

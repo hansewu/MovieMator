@@ -19,6 +19,8 @@
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
 
+#include "mltcontroller_global.h"
+
 #include <QSemaphore>
 #include <QQuickWidget>
 #include <QOpenGLFunctions>
@@ -45,7 +47,7 @@ class FrameRenderer;
 
 typedef void* ( *thread_function_t )( void* );
 
-class GLWidget : public QQuickWidget, public Controller, protected QOpenGLFunctions
+class MLTCONTROLLERSHARED_EXPORT GLWidget : public QQuickWidget, public Controller, protected QOpenGLFunctions
 {
     Q_OBJECT
     Q_PROPERTY(QRect rect READ rect NOTIFY rectChanged)
