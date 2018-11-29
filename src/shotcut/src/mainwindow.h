@@ -71,6 +71,7 @@ class UpgradeToProPromptDialog;
 class MainController;
 class InvalidProjectDialog;
 class EncodeTaskDock;
+class QmlFilter;
 
 //class TextlistDock;
 
@@ -307,6 +308,9 @@ public slots:
     void showInvalidProjectDialog();
 #endif
 #endif
+
+
+    void setCurrentFilterForVideoWidget(QmlFilter* filter, QmlMetadata* meta);
 
 private slots:
 

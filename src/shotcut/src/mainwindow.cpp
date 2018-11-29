@@ -101,6 +101,7 @@
 #include <QJsonDocument>
 #include <QJSEngine>
 #include <QQmlEngine>
+#include <QQmlContext>
 
 
 #if defined(Q_OS_WIN)
@@ -553,7 +554,9 @@ MainWindow::MainWindow()
     connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
 //    connect(videoWidget, SIGNAL(frameDisplayed(const SharedFrame&)), m_scopeController, SIGNAL(newFrame(const SharedFrame&)));
  //   connect(videoWidget, SIGNAL(frameDisplayed(const SharedFrame&)), m_scopeController, SLOT(onFrameDisplayed(const SharedFrame&)));
-    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), videoWidget, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
+
+    //connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), videoWidget, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
+    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), this, SLOT(setCurrentFilterForVideoWidget(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
     connect(m_filterController, SIGNAL(currentFilterAboutToChange()), videoWidget, SLOT(setBlankScene()));
 
     readWindowSettings();
@@ -4325,4 +4328,17 @@ void MainWindow::on_actionGet_Total_Video_Player_triggered()
 void MainWindow::on_actionTutorial_triggered()
 {
     QDesktopServices::openUrl(QUrl(tr("http://www.macvideostudio.com/mac-movie-video-editor-MovieMator-guide.html")));
+}
+
+void MainWindow::setCurrentFilterForVideoWidget(QmlFilter* filter, QmlMetadata* meta)
+{
+    Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
+    QQmlContext *context = videoWidget->rootContext();
+    context->setContextProperty("filter", filter);
+
+    if (meta && QFile::exists(meta->vuiFilePath().toLocalFile())) {
+        videoWidget->setSource(meta->vuiFilePath());
+    } else {
+        videoWidget->setBlankScene();
+    }
 }
