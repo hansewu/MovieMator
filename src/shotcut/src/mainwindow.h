@@ -72,6 +72,7 @@ class MainController;
 class InvalidProjectDialog;
 class EncodeTaskDock;
 class QmlFilter;
+class QUndoCommand;
 
 //class TextlistDock;
 
@@ -83,7 +84,6 @@ public:
     static MainWindow& singleton();
     ~MainWindow();
 
-    void open(Mlt::Producer* producer);
     bool continueModified();
     bool continueJobsRunning();
     QUndoStack* undoStack() const;
@@ -232,6 +232,8 @@ private:
     EncodeTaskDock *m_tasksDock;
 
 public slots:
+    void open(Mlt::Producer* producer);
+
     bool isCompatibleWithGpuMode(MltXmlChecker& checker);
     bool isXmlRepaired(MltXmlChecker& checker, QString& fileName);
     void updateAutoSave();
@@ -310,6 +312,8 @@ public slots:
 
 
     void setCurrentFilterForVideoWidget(QmlFilter* filter, QmlMetadata* meta);
+    void pushCommand(QUndoCommand *command);
+
 
 private slots:
 

@@ -46,6 +46,12 @@ signals:
     void itemActivated(int start);
     void showStatusMessage(QString);
     void addAllTimeline(Mlt::Playlist*);
+    void pushCommand(QUndoCommand *command);
+    void openVideo();
+    void setPauseAfterOpen(bool);
+    void openFiles(const QStringList &);
+    void loadProducerWidget(Mlt::Producer *);
+    void propertiesDockTriggered();
 
 public slots:
     void incrementIndex();

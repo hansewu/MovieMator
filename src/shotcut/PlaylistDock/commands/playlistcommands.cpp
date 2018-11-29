@@ -139,13 +139,16 @@ void ClearCommand::undo()
 {
     LOG_DEBUG() << "";
     m_model.close();
-//    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-//    if (producer->is_valid()) {
-//        producer->set("resource", "<playlist>");
+    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    if (producer->is_valid()) {
+        producer->set("resource", "<playlist>");
 //        MAIN.open(producer);
 //        MLT.pause();
 //        MAIN.seekPlaylist(0);
-//    }
+        emit m_model.openProducer(producer);
+        MLT.pause();
+        emit m_model.seekPlaylist(0);
+    }
 }
 
 MoveCommand::MoveCommand(PlaylistModel &model, int from, int to, QUndoCommand *parent)

@@ -25,7 +25,8 @@
 #include <QDebug>
 //#include "mltcontroller.h"
 //#include "mainwindow.h"
-#include "../playlistdock.h"
+//#include "../playlistdock.h"
+#include "../models/playlistmodel.h"
 
 PlaylistTable::PlaylistTable(QWidget *parent)
     : QTableView(parent)
@@ -70,16 +71,17 @@ void PlaylistTable::mouseMoveEvent(QMouseEvent* event)
     if (!m_canStartDrag)
         return;
 
-//    QDrag drag(this);
+    QDrag drag(this);
 
-//    QMimeData *mimeData = MAIN.playlistDock()->model()->mimeData(selectedIndexes());
-//    drag.setMimeData(mimeData);
+    PlaylistModel *playlistModel = (PlaylistModel *)model();
+    QMimeData *mimeData = playlistModel->mimeData(selectedIndexes());
+    drag.setMimeData(mimeData);
 
-//    QImage thumbnail = MAIN.playlistDock()->model()->thumbnail(selectedIndexes().first().row());
-//    drag.setPixmap(QPixmap::fromImage(thumbnail));
-//    drag.setHotSpot(QPoint(0, 0));
-//    drag.exec(Qt::MoveAction);
-//    QTableView::mouseMoveEvent(event);
+    QImage thumbnail = playlistModel->thumbnail(selectedIndexes().first().row());
+    drag.setPixmap(QPixmap::fromImage(thumbnail));
+    drag.setHotSpot(QPoint(0, 0));
+    drag.exec(Qt::MoveAction);
+    QTableView::mouseMoveEvent(event);
 }
 
 

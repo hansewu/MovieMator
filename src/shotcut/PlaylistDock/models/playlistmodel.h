@@ -82,6 +82,8 @@ signals:
     void loaded();
     void dropped(const QMimeData *data, int row);
     void moveClip(int from, int to);
+    void openProducer(Mlt::Producer* producer);
+    void seekPlaylist(int);
 
 public slots:
     void clear();

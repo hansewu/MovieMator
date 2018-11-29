@@ -66,7 +66,7 @@
 #include "qmltypes/mmqmlutilities.h"
 #include <qmlapplication.h>
 #include "autosavefile.h"
-#include "commands/playlistcommands.h"
+#include <commands/playlistcommands.h>
 #include "shotcut_mlt_properties.h"
 #include "widgets/avfoundationproducerwidget.h"
 #include "dialogs/textviewerdialog.h"
@@ -390,6 +390,16 @@ MainWindow::MainWindow()
     connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(onPlaylistLoaded()));
     if (!Settings.playerGPU())
         connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateThumbnails()));
+
+    connect(m_playlistDock, SIGNAL(pushCommand(QUndoCommand *)), this, SLOT(pushCommand(QUndoCommand *)));
+    connect(m_playlistDock, SIGNAL(openVideo()), this, SLOT(openVideo()));
+    connect(m_playlistDock, SIGNAL(setPauseAfterOpen(bool)), this, SLOT(setPauseAfterOpen(bool)));
+    connect(m_playlistDock, SIGNAL(openFiles(const QStringList &)), this, SLOT(openFiles(const QStringList &)));
+    connect(m_playlistDock, SIGNAL(loadProducerWidget(Mlt::Producer* )), this, SLOT(loadProducerWidget(Mlt::Producer* )));
+    connect(m_playlistDock, SIGNAL(propertiesDockTriggered()), this, SLOT(onPropertiesDockTriggered()));
+    //取代Playlist::ClearCommand调用MAIN.open做的一个特殊处理
+    connect(m_playlistDock->model(), SIGNAL(openProducer(Mlt::Producer *)), this, SLOT(open(Mlt::Producer *)));
+    connect(m_playlistDock->model(), SIGNAL(seekPlaylist(int)), this, SLOT(seekPlaylist(int)));
 
 
     LOG_DEBUG() << "timelinedock";
@@ -2605,6 +2615,11 @@ bool MainWindow::continueJobsRunning()
 QUndoStack* MainWindow::undoStack() const
 {
     return m_undoStack;
+}
+
+void MainWindow::pushCommand(QUndoCommand *command)
+{
+    m_undoStack->push(command);
 }
 
 void MainWindow::onEncodeTriggered(bool checked)
