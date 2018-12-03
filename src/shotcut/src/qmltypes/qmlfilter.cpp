@@ -635,6 +635,14 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
 
 }
 
+void QmlFilter::removeAllKeyFrame(QString name)
+{
+    double keyFrameCount = this->getKeyFrameCountOnProject(name);
+    for (int index = 0; index < keyFrameCount; index++) {
+        double nFrame = this->getKeyFrameOnProjectOnIndex(index, name);
+        this->removeKeyFrameParaValue(nFrame);
+    }
+}
 
 void QmlFilter::removeKeyFrameParaValue(double frame)
 {
