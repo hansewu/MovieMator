@@ -78,6 +78,7 @@ public:
     int producerOut() const;
     double producerAspect() const;
     Q_INVOKABLE void anim_set(QString name, QString value);
+    Q_INVOKABLE void resetProperty(const QString& name);
 
     //function to set or get key frame para value
 #ifdef MOVIEMATOR_PRO
