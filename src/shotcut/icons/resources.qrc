@@ -120,6 +120,21 @@
         <file>light/32x32/toolbar-tvcpro.png</file>
         <file>light/32x32/toolbar-tvcpro-pressed.png</file>
         <file>light/32x32/bg.png</file>
+        <file>filters/text/shapes.gif</file>
+        <file>filters/text/bottom-left.gif</file>
+        <file>filters/text/bottom-right.gif</file>
+        <file>filters/text/default.gif</file>
+        <file>filters/text/lower-third.gif</file>
+        <file>filters/text/slide-in-from-bottom.gif</file>
+        <file>filters/text/slide-in-from-left.gif</file>
+        <file>filters/text/slide-in-from-right.gif</file>
+        <file>filters/text/slide-in-from-top.gif</file>
+        <file>filters/text/slide-out-bottom.gif</file>
+        <file>filters/text/slide-out-left.gif</file>
+        <file>filters/text/slide-out-right.gif</file>
+        <file>filters/text/slide-out-top.gif</file>
+        <file>filters/text/top-left.gif</file>
+        <file>filters/text/top-right.gif</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>
