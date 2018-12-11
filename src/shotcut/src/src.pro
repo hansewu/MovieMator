@@ -132,7 +132,8 @@ SOURCES += main.cpp\
     melt/io.c \
     jobs/abstracttask.cpp \
     jobs/melttask.cpp \
-    dialogs/mmsplashscreen.cpp
+    dialogs/mmsplashscreen.cpp \
+    eccregister/CEccRegister.cpp
 #    securitybookmark/SecurityBookmark.mm
 
 HEADERS  += mainwindow.h \
@@ -262,7 +263,8 @@ HEADERS  += mainwindow.h \
     jobs/abstracttask.h \
     jobs/melttask.h \
     melt/melt.h \
-    dialogs/mmsplashscreen.h
+    dialogs/mmsplashscreen.h \
+    eccregister/CEccRegister.h
 #    securitybookmark/SecurityBookmark.h
 
 mac {
@@ -270,8 +272,7 @@ mac {
                 ../iRate/iRate.mm \
                 eccregister/EccRegister.mm
     HEADERS += securitybookmark/SecurityBookmark.h \
-                ../iRate/iRate.h \
-                eccregister/EccRegister.h
+                ../iRate/iRate.h
 }
 
 #OBJECTIVE_SOURCES+= \
@@ -454,9 +455,12 @@ mac {
 
 win32 {
     #free share
-    DEFINES += SHARE_VERSION=1
-    DEFINES += MOVIEMATOR_FREE=1
+#    DEFINES += SHARE_VERSION=1
+#    DEFINES += MOVIEMATOR_FREE=1
 
+    #pro share
+    DEFINES += MOVIEMATOR_PRO=1
+    DEFINES += SHARE_VERSION=1
 }
 
 win32 {
@@ -468,6 +472,8 @@ win32 {
     INCLUDEPATH += $$MLT_PATH\\include\\mlt++ $$MLT_PATH\\include\\mlt
     LIBS += -L$$MLT_PATH\\lib -lmlt++ -lmlt -lopengl32
     RC_FILE = shotcut.rc
+
+    LIBS += -L$$MLT_PATH -leay32
 }
 
 unix:!mac {
