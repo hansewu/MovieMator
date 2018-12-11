@@ -269,6 +269,10 @@ void QmlFilter::anim_set(QString name, QString value)
     emit changed();
 }
 
+void QmlFilter::resetProperty(const QString& name)
+{
+    m_filter->clear(name.toUtf8().constData());
+}
 
 void QmlFilter::loadPresets()
 {
@@ -635,6 +639,14 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
 
 }
 
+void QmlFilter::removeAllKeyFrame(QString name)
+{
+    double keyFrameCount = this->getKeyFrameCountOnProject(name);
+    for (int index = 0; index < keyFrameCount; index++) {
+        double nFrame = this->getKeyFrameOnProjectOnIndex(index, name);
+        this->removeKeyFrameParaValue(nFrame);
+    }
+}
 
 void QmlFilter::removeKeyFrameParaValue(double frame)
 {
@@ -722,7 +734,7 @@ void QmlFilter::combineAllKeyFramePara()
                 {
                     if (!animation.is_valid() || !animation.is_key(para.keyFrame)
                             || value.toDouble() != m_filter->anim_get_double(key.toUtf8().constData(), para.keyFrame, out - in + 1)) {
-                        m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), para.keyFrame, out - in + 1, mlt_keyframe_smooth);
+                        m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), para.keyFrame, out - in + 1, mlt_keyframe_linear);
                         MLT.refreshConsumer();
                         emit changed();
                     }
@@ -731,7 +743,7 @@ void QmlFilter::combineAllKeyFramePara()
                 {
                     if (!animation.is_valid() || !animation.is_key(para.keyFrame)
                             || value.toInt() != m_filter->anim_get_int(key.toUtf8().constData(), para.keyFrame, out - in + 1)) {
-                        m_filter->anim_set(key.toUtf8().constData(), value.toInt(), para.keyFrame, out - in + 1, mlt_keyframe_smooth);
+                        m_filter->anim_set(key.toUtf8().constData(), value.toInt(), para.keyFrame, out - in + 1, mlt_keyframe_linear);
                         MLT.refreshConsumer();
                         emit changed();
                     }

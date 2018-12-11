@@ -64,7 +64,7 @@ public slots:
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index);
     void setFadeInDuration(int duration);
     void setFadeOutDuration(int duration);
-
+    void onChangePosition();
 
 protected:
     bool event(QEvent *event);
@@ -75,6 +75,7 @@ private slots:
 private:
     QQuickWidget m_qview;
     int m_position;
+    QmlFilter *m_qmlFilter;
 };
 
 #endif // FILTERSDOCK_H

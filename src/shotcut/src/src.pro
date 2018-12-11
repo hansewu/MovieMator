@@ -398,7 +398,7 @@ mac {
     TARGET = "MovieMator Video Editor Pro"
 
 
-    #free appstore
+#    free appstore
 #    DEFINES += MOVIEMATOR_FREE=1
 #    TARGET = "MovieMator Video Editor"
 #    QMAKE_INFO_PLIST = ../Info-Free.plist
@@ -407,7 +407,7 @@ mac {
     #free share
 #    DEFINES += SHARE_VERSION=1
 #    DEFINES += MOVIEMATOR_FREE=1
-#    TARGET = "MovieMator Free Mac Video Editor"
+#    TARGET = "MovieMator Video Editor"
 #    QMAKE_INFO_PLIST = ../Info-Free-share.plist
 #    ICON = ../icons/moviemator.icns
 
@@ -423,11 +423,13 @@ mac {
     # pkg-config such that the PKG_CONFIG_PATH env var is not set.
     isEmpty(MLT_PREFIX) {
 #        MLT_PREFIX = $$PWD/../../../../mlt_lib
-        MLT_PREFIX = $$PWD/../../../../MovieMator_gdb/MacVideoEditor/trunk/shotcut/mlt_build
-        count($$USER, wzq)
-        {
-            MLT_PREFIX = /Users/wzq/Desktop/data/project/2018/moviemator/libs/mlt_build/debug
-        }
+#        MLT_PREFIX = $$PWD/../../../../MovieMator_gdb/MacVideoEditor/trunk/shotcut/mlt_build
+
+        MLT_PREFIX = $$PWD/../../../../shotcut/mlt_build/
+#        count($$USER, wzq)
+#        {
+#            MLT_PREFIX = /Users/wzq/Desktop/data/project/2018/moviemator/libs/mlt_build/debug
+#        }
     }
 
     INCLUDEPATH += $$MLT_PREFIX/include/mlt++

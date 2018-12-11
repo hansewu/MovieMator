@@ -476,7 +476,8 @@ MainWindow::MainWindow()
     connect(m_filtersDock, SIGNAL(changePosition(int)), m_timelineDock, SLOT(changePostionFromFilter(int)));
 
     connect(m_timelineDock,SIGNAL(positionChangedForKeyFrame(int)), m_filtersDock,SLOT(setCurrentClipFrameFromTimeline(int)));
-    connect(m_timelineDock, SIGNAL(positionChanged()), m_filtersDock, SIGNAL(positionChanged()));
+    connect(m_timelineDock, SIGNAL(positionChanged()), m_filtersDock, SLOT(onChangePosition()));
+//    connect(m_timelineDock, SIGNAL(positionChanged()), m_filtersDock, SIGNAL(positionChanged()));
 #endif
 
     LOG_DEBUG() << "history dock";
@@ -680,7 +681,7 @@ MainWindow::MainWindow()
     else if (Registration.registrationType() == Registration_Personal)
         setWindowTitle(tr("MovieMator Video Editor Pro (Personal)"));
     else if (Registration.registrationType() == Registration_Family)
-        setWindowTitle(tr("MovieMator Video Editor Pro (Family)"));
+        setWindowTitle(tr("MovieMator Video Editor Pro (Business)"));
 #else
     setWindowTitle(tr("MovieMator Video Editor"));
 #endif
@@ -1855,7 +1856,7 @@ void MainWindow::setCurrentFile(const QString &filename)
     else if (Registration.registrationType() == Registration_Personal)
         setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro (Personal)"));
     else if (Registration.registrationType() == Registration_Family)
-        setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro (Family)"));
+        setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro (Business)"));
 #else
     setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor"));
 #endif

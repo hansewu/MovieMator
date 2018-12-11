@@ -556,7 +556,7 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
     m_updateCommand = 0;
     MAIN.undoStack()->push(command);
 
-    setSelection(originSelection);
+//    setSelection(originSelection);
 }
 
 void TimelineDock::addAudioTrack()
