@@ -265,7 +265,6 @@ HEADERS  += mainwindow.h \
     melt/melt.h \
     dialogs/mmsplashscreen.h \
     eccregister/CEccRegister.h
-#    securitybookmark/SecurityBookmark.h
 
 mac {
     SOURCES += securitybookmark/SecurityBookmark.mm \
@@ -274,17 +273,6 @@ mac {
     HEADERS += securitybookmark/SecurityBookmark.h \
                 ../iRate/iRate.h
 }
-
-#OBJECTIVE_SOURCES+= \
-#    ../iRate/iRate.mm \
-#    securitybookmark/SecurityBookmark.mm \
-#    eccregister/EccRegister.mm
-
-#OBJECTIVE_HEADERS+= \
-#    ../iRate/iRate.h \
-#    securitybookmark/SecurityBookmark.h \
-#    eccregister/EccRegister.h
-
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -350,22 +338,6 @@ OTHER_FILES += \
 TRANSLATIONS += \
      ../translations/mm_en.ts \
      ../translations/mm_zh.ts \
-# #   ../translations/shotcut_ca.ts \
-#    ../translations/shotcut_cs.ts \
-#    ../translations/shotcut_da.ts \
-#    ../translations/shotcut_de.ts \
-#    ../translations/shotcut_el.ts \
-
-#    ../translations/shotcut_es.ts \
-#    ../translations/shotcut_fr.ts \
-#    ../translations/shotcut_it.ts \
-#    ../translations/shotcut_nl.ts \
-#    ../translations/shotcut_pl.ts \
-#    ../translations/shotcut_pt_BR.ts \
-#    ../translations/shotcut_pt_PT.ts \
-#    ../translations/shotcut_ru.ts \
-#    ../translations/shotcut_sk.ts \
-#    ../translations/shotcut_uk.ts \
 
 
 INCLUDEPATH = ../CuteLogger/include ../mvcp #../mm

@@ -59,8 +59,6 @@
 #ifndef HEADER_RSA_H
 #define HEADER_RSA_H
 
-#include <AvailabilityMacros.h>
-
 #include <openssl/asn1.h>
 
 #ifndef OPENSSL_NO_BIO
@@ -108,22 +106,22 @@ struct rsa_meth_st
 	const char *name;
 	int (*rsa_pub_enc)(int flen,const unsigned char *from,
 			   unsigned char *to,
-			   RSA *rsa,int padding) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+			   RSA *rsa,int padding);
 	int (*rsa_pub_dec)(int flen,const unsigned char *from,
 			   unsigned char *to,
-			   RSA *rsa,int padding) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+			   RSA *rsa,int padding);
 	int (*rsa_priv_enc)(int flen,const unsigned char *from,
 			    unsigned char *to,
-			    RSA *rsa,int padding) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+			    RSA *rsa,int padding);
 	int (*rsa_priv_dec)(int flen,const unsigned char *from,
 			    unsigned char *to,
-			    RSA *rsa,int padding) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-	int (*rsa_mod_exp)(BIGNUM *r0,const BIGNUM *I,RSA *rsa,BN_CTX *ctx) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER; /* Can be null */
+			    RSA *rsa,int padding);
+	int (*rsa_mod_exp)(BIGNUM *r0,const BIGNUM *I,RSA *rsa,BN_CTX *ctx); /* Can be null */
 	int (*bn_mod_exp)(BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
 			  const BIGNUM *m, BN_CTX *ctx,
-			  BN_MONT_CTX *m_ctx) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER; /* Can be null */
-	int (*init)(RSA *rsa) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;		/* called at new */
-	int (*finish)(RSA *rsa) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;	/* called at free */
+			  BN_MONT_CTX *m_ctx); /* Can be null */
+	int (*init)(RSA *rsa);		/* called at new */
+	int (*finish)(RSA *rsa);	/* called at free */
 	int flags;			/* RSA_METHOD_FLAG_* things */
 	char *app_data;			/* may be needed! */
 /* New sign and verify functions: some libraries don't allow arbitrary data
@@ -135,15 +133,15 @@ struct rsa_meth_st
  */
 	int (*rsa_sign)(int type,
 		const unsigned char *m, unsigned int m_length,
-		unsigned char *sigret, unsigned int *siglen, const RSA *rsa) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		unsigned char *sigret, unsigned int *siglen, const RSA *rsa);
 	int (*rsa_verify)(int dtype,
 		const unsigned char *m, unsigned int m_length,
-		unsigned char *sigbuf, unsigned int siglen, const RSA *rsa) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		unsigned char *sigbuf, unsigned int siglen, const RSA *rsa);
 /* If this callback is NULL, the builtin software RSA key-gen will be used. This
  * is for behavioural compatibility whilst the code gets rewired, but one day
  * it would be nice to assume there are no such things as "builtin software"
  * implementations. */
-	int (*rsa_keygen)(RSA *rsa, int bits, BIGNUM *e, BN_GENCB *cb) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	int (*rsa_keygen)(RSA *rsa, int bits, BIGNUM *e, BN_GENCB *cb);
 	};
 
 struct rsa_st
@@ -251,154 +249,154 @@ struct rsa_st
 #define RSA_set_app_data(s,arg)         RSA_set_ex_data(s,0,arg)
 #define RSA_get_app_data(s)             RSA_get_ex_data(s,0)
 
-RSA *	RSA_new(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-RSA *	RSA_new_method(ENGINE *engine) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int	RSA_size(const RSA *) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+RSA *	RSA_new(void);
+RSA *	RSA_new_method(ENGINE *engine);
+int	RSA_size(const RSA *);
 
 /* Deprecated version */
 #ifndef OPENSSL_NO_DEPRECATED
 RSA *	RSA_generate_key(int bits, unsigned long e,void
-		(*callback)(int,int,void *),void *cb_arg) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		(*callback)(int,int,void *),void *cb_arg);
 #endif /* !defined(OPENSSL_NO_DEPRECATED) */
 
 /* New version */
-int	RSA_generate_key_ex(RSA *rsa, int bits, BIGNUM *e, BN_GENCB *cb) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int	RSA_generate_key_ex(RSA *rsa, int bits, BIGNUM *e, BN_GENCB *cb);
 int RSA_X931_derive_ex(RSA *rsa, BIGNUM *p1, BIGNUM *p2, BIGNUM *q1, BIGNUM *q2,
 			const BIGNUM *Xp1, const BIGNUM *Xp2, const BIGNUM *Xp,
 			const BIGNUM *Xq1, const BIGNUM *Xq2, const BIGNUM *Xq,
-			const BIGNUM *e, BN_GENCB *cb) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int RSA_X931_generate_key_ex(RSA *rsa, int bits, const BIGNUM *e, BN_GENCB *cb) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+			const BIGNUM *e, BN_GENCB *cb);
+int RSA_X931_generate_key_ex(RSA *rsa, int bits, const BIGNUM *e, BN_GENCB *cb);
 
-int	RSA_check_key(const RSA *) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int	RSA_check_key(const RSA *);
 	/* next 4 return -1 on error */
 int	RSA_public_encrypt(int flen, const unsigned char *from,
-		unsigned char *to, RSA *rsa,int padding) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		unsigned char *to, RSA *rsa,int padding);
 int	RSA_private_encrypt(int flen, const unsigned char *from,
-		unsigned char *to, RSA *rsa,int padding) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		unsigned char *to, RSA *rsa,int padding);
 int	RSA_public_decrypt(int flen, const unsigned char *from, 
-		unsigned char *to, RSA *rsa,int padding) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		unsigned char *to, RSA *rsa,int padding);
 int	RSA_private_decrypt(int flen, const unsigned char *from, 
-		unsigned char *to, RSA *rsa,int padding) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void	RSA_free (RSA *r) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		unsigned char *to, RSA *rsa,int padding);
+void	RSA_free (RSA *r);
 /* "up" the RSA object's reference count */
-int	RSA_up_ref(RSA *r) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int	RSA_up_ref(RSA *r);
 
-int	RSA_flags(const RSA *r) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int	RSA_flags(const RSA *r);
 
 #ifdef OPENSSL_FIPS
-RSA *FIPS_rsa_new(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void FIPS_rsa_free(RSA *r) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+RSA *FIPS_rsa_new(void);
+void FIPS_rsa_free(RSA *r);
 #endif
 
-void RSA_set_default_method(const RSA_METHOD *meth) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-const RSA_METHOD *RSA_get_default_method(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-const RSA_METHOD *RSA_get_method(const RSA *rsa) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int RSA_set_method(RSA *rsa, const RSA_METHOD *meth) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void RSA_set_default_method(const RSA_METHOD *meth);
+const RSA_METHOD *RSA_get_default_method(void);
+const RSA_METHOD *RSA_get_method(const RSA *rsa);
+int RSA_set_method(RSA *rsa, const RSA_METHOD *meth);
 
 /* This function needs the memory locking malloc callbacks to be installed */
-int RSA_memory_lock(RSA *r) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int RSA_memory_lock(RSA *r);
 
 /* these are the actual SSLeay RSA functions */
-const RSA_METHOD *RSA_PKCS1_SSLeay(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+const RSA_METHOD *RSA_PKCS1_SSLeay(void);
 
-const RSA_METHOD *RSA_null_method(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+const RSA_METHOD *RSA_null_method(void);
 
 DECLARE_ASN1_ENCODE_FUNCTIONS_const(RSA, RSAPublicKey)
 DECLARE_ASN1_ENCODE_FUNCTIONS_const(RSA, RSAPrivateKey)
 
 #ifndef OPENSSL_NO_FP_API
-int	RSA_print_fp(FILE *fp, const RSA *r,int offset) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int	RSA_print_fp(FILE *fp, const RSA *r,int offset);
 #endif
 
 #ifndef OPENSSL_NO_BIO
-int	RSA_print(BIO *bp, const RSA *r,int offset) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int	RSA_print(BIO *bp, const RSA *r,int offset);
 #endif
 
 #ifndef OPENSSL_NO_RC4
 int i2d_RSA_NET(const RSA *a, unsigned char **pp,
 		int (*cb)(char *buf, int len, const char *prompt, int verify),
-		int sgckey) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		int sgckey);
 RSA *d2i_RSA_NET(RSA **a, const unsigned char **pp, long length,
 		 int (*cb)(char *buf, int len, const char *prompt, int verify),
-		 int sgckey) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		 int sgckey);
 
 int i2d_Netscape_RSA(const RSA *a, unsigned char **pp,
 		     int (*cb)(char *buf, int len, const char *prompt,
-			       int verify)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+			       int verify));
 RSA *d2i_Netscape_RSA(RSA **a, const unsigned char **pp, long length,
 		      int (*cb)(char *buf, int len, const char *prompt,
-				int verify)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+				int verify));
 #endif
 
 /* The following 2 functions sign and verify a X509_SIG ASN1 object
  * inside PKCS#1 padded RSA encryption */
 int RSA_sign(int type, const unsigned char *m, unsigned int m_length,
-	unsigned char *sigret, unsigned int *siglen, RSA *rsa) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	unsigned char *sigret, unsigned int *siglen, RSA *rsa);
 int RSA_verify(int type, const unsigned char *m, unsigned int m_length,
-	unsigned char *sigbuf, unsigned int siglen, RSA *rsa) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	unsigned char *sigbuf, unsigned int siglen, RSA *rsa);
 
 /* The following 2 function sign and verify a ASN1_OCTET_STRING
  * object inside PKCS#1 padded RSA encryption */
 int RSA_sign_ASN1_OCTET_STRING(int type,
 	const unsigned char *m, unsigned int m_length,
-	unsigned char *sigret, unsigned int *siglen, RSA *rsa) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	unsigned char *sigret, unsigned int *siglen, RSA *rsa);
 int RSA_verify_ASN1_OCTET_STRING(int type,
 	const unsigned char *m, unsigned int m_length,
-	unsigned char *sigbuf, unsigned int siglen, RSA *rsa) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	unsigned char *sigbuf, unsigned int siglen, RSA *rsa);
 
-int RSA_blinding_on(RSA *rsa, BN_CTX *ctx) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void RSA_blinding_off(RSA *rsa) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-BN_BLINDING *RSA_setup_blinding(RSA *rsa, BN_CTX *ctx) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int RSA_blinding_on(RSA *rsa, BN_CTX *ctx);
+void RSA_blinding_off(RSA *rsa);
+BN_BLINDING *RSA_setup_blinding(RSA *rsa, BN_CTX *ctx);
 
 int RSA_padding_add_PKCS1_type_1(unsigned char *to,int tlen,
-	const unsigned char *f,int fl) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	const unsigned char *f,int fl);
 int RSA_padding_check_PKCS1_type_1(unsigned char *to,int tlen,
-	const unsigned char *f,int fl,int rsa_len) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	const unsigned char *f,int fl,int rsa_len);
 int RSA_padding_add_PKCS1_type_2(unsigned char *to,int tlen,
-	const unsigned char *f,int fl) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	const unsigned char *f,int fl);
 int RSA_padding_check_PKCS1_type_2(unsigned char *to,int tlen,
-	const unsigned char *f,int fl,int rsa_len) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	const unsigned char *f,int fl,int rsa_len);
 int PKCS1_MGF1(unsigned char *mask, long len,
-	const unsigned char *seed, long seedlen, const EVP_MD *dgst) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	const unsigned char *seed, long seedlen, const EVP_MD *dgst);
 int RSA_padding_add_PKCS1_OAEP(unsigned char *to,int tlen,
 	const unsigned char *f,int fl,
-	const unsigned char *p,int pl) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	const unsigned char *p,int pl);
 int RSA_padding_check_PKCS1_OAEP(unsigned char *to,int tlen,
 	const unsigned char *f,int fl,int rsa_len,
-	const unsigned char *p,int pl) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	const unsigned char *p,int pl);
 int RSA_padding_add_SSLv23(unsigned char *to,int tlen,
-	const unsigned char *f,int fl) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	const unsigned char *f,int fl);
 int RSA_padding_check_SSLv23(unsigned char *to,int tlen,
-	const unsigned char *f,int fl,int rsa_len) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	const unsigned char *f,int fl,int rsa_len);
 int RSA_padding_add_none(unsigned char *to,int tlen,
-	const unsigned char *f,int fl) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	const unsigned char *f,int fl);
 int RSA_padding_check_none(unsigned char *to,int tlen,
-	const unsigned char *f,int fl,int rsa_len) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	const unsigned char *f,int fl,int rsa_len);
 int RSA_padding_add_X931(unsigned char *to,int tlen,
-	const unsigned char *f,int fl) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	const unsigned char *f,int fl);
 int RSA_padding_check_X931(unsigned char *to,int tlen,
-	const unsigned char *f,int fl,int rsa_len) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int RSA_X931_hash_id(int nid) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	const unsigned char *f,int fl,int rsa_len);
+int RSA_X931_hash_id(int nid);
 
 int RSA_verify_PKCS1_PSS(RSA *rsa, const unsigned char *mHash,
-			const EVP_MD *Hash, const unsigned char *EM, int sLen) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+			const EVP_MD *Hash, const unsigned char *EM, int sLen);
 int RSA_padding_add_PKCS1_PSS(RSA *rsa, unsigned char *EM,
 			const unsigned char *mHash,
-			const EVP_MD *Hash, int sLen) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+			const EVP_MD *Hash, int sLen);
 
 int RSA_get_ex_new_index(long argl, void *argp, CRYPTO_EX_new *new_func,
-	CRYPTO_EX_dup *dup_func, CRYPTO_EX_free *free_func) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int RSA_set_ex_data(RSA *r,int idx,void *arg) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void *RSA_get_ex_data(const RSA *r, int idx) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	CRYPTO_EX_dup *dup_func, CRYPTO_EX_free *free_func);
+int RSA_set_ex_data(RSA *r,int idx,void *arg);
+void *RSA_get_ex_data(const RSA *r, int idx);
 
-RSA *RSAPublicKey_dup(RSA *rsa) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-RSA *RSAPrivateKey_dup(RSA *rsa) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+RSA *RSAPublicKey_dup(RSA *rsa);
+RSA *RSAPrivateKey_dup(RSA *rsa);
 
 /* BEGIN ERROR CODES */
 /* The following lines are auto generated by the script mkerr.pl. Any changes
  * made after this point may be overwritten when the script is next run.
  */
-void ERR_load_RSA_strings(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void ERR_load_RSA_strings(void);
 
 /* Error codes for the RSA functions. */
 

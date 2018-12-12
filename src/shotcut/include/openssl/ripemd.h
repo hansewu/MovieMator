@@ -59,8 +59,6 @@
 #ifndef HEADER_RIPEMD_H
 #define HEADER_RIPEMD_H
 
-#include <AvailabilityMacros.h>
-
 #include <openssl/e_os2.h>
 #include <stddef.h>
 
@@ -93,14 +91,14 @@ typedef struct RIPEMD160state_st
 	unsigned int   num;
 	} RIPEMD160_CTX;
 #ifdef OPENSSL_FIPS
-int private_RIPEMD160_Init(RIPEMD160_CTX *c) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int private_RIPEMD160_Init(RIPEMD160_CTX *c);
 #endif
-int RIPEMD160_Init(RIPEMD160_CTX *c) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int RIPEMD160_Update(RIPEMD160_CTX *c, const void *data, size_t len) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int RIPEMD160_Final(unsigned char *md, RIPEMD160_CTX *c) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int RIPEMD160_Init(RIPEMD160_CTX *c);
+int RIPEMD160_Update(RIPEMD160_CTX *c, const void *data, size_t len);
+int RIPEMD160_Final(unsigned char *md, RIPEMD160_CTX *c);
 unsigned char *RIPEMD160(const unsigned char *d, size_t n,
-	unsigned char *md) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void RIPEMD160_Transform(RIPEMD160_CTX *c, const unsigned char *b) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	unsigned char *md);
+void RIPEMD160_Transform(RIPEMD160_CTX *c, const unsigned char *b);
 #ifdef  __cplusplus
 }
 #endif

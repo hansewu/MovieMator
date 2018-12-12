@@ -58,8 +58,6 @@
 #ifndef HEADER_X509V3_H
 #define HEADER_X509V3_H
 
-#include <AvailabilityMacros.h>
-
 #include <openssl/bio.h>
 #include <openssl/x509.h>
 #include <openssl/conf.h>
@@ -114,10 +112,10 @@ void *usr_data;	/* Any extension specific data */
 };
 
 typedef struct X509V3_CONF_METHOD_st {
-char * (*get_string)(void *db, char *section, char *value) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-STACK_OF(CONF_VALUE) * (*get_section)(void *db, char *section) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void (*free_string)(void *db, char * string) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void (*free_section)(void *db, STACK_OF(CONF_VALUE) *section) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+char * (*get_string)(void *db, char *section, char *value);
+STACK_OF(CONF_VALUE) * (*get_section)(void *db, char *section);
+void (*free_string)(void *db, char * string);
+void (*free_section)(void *db, STACK_OF(CONF_VALUE) *section);
 } X509V3_CONF_METHOD;
 
 /* Context specific info */
@@ -412,7 +410,7 @@ typedef struct x509_purpose_st {
 	int trust;		/* Default trust ID */
 	int flags;
 	int (*check_purpose)(const struct x509_purpose_st *,
-				const X509 *, int) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+				const X509 *, int);
 	char *name;
 	char *sname;
 	void *usr_data;
@@ -460,13 +458,13 @@ DECLARE_ASN1_FUNCTIONS(BASIC_CONSTRAINTS)
 DECLARE_ASN1_FUNCTIONS(SXNET)
 DECLARE_ASN1_FUNCTIONS(SXNETID)
 
-int SXNET_add_id_asc(SXNET **psx, char *zone, char *user, int userlen) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER; 
-int SXNET_add_id_ulong(SXNET **psx, unsigned long lzone, char *user, int userlen) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER; 
-int SXNET_add_id_INTEGER(SXNET **psx, ASN1_INTEGER *izone, char *user, int userlen) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER; 
+int SXNET_add_id_asc(SXNET **psx, char *zone, char *user, int userlen); 
+int SXNET_add_id_ulong(SXNET **psx, unsigned long lzone, char *user, int userlen); 
+int SXNET_add_id_INTEGER(SXNET **psx, ASN1_INTEGER *izone, char *user, int userlen); 
 
-ASN1_OCTET_STRING *SXNET_get_id_asc(SXNET *sx, char *zone) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-ASN1_OCTET_STRING *SXNET_get_id_ulong(SXNET *sx, unsigned long lzone) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-ASN1_OCTET_STRING *SXNET_get_id_INTEGER(SXNET *sx, ASN1_INTEGER *zone) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+ASN1_OCTET_STRING *SXNET_get_id_asc(SXNET *sx, char *zone);
+ASN1_OCTET_STRING *SXNET_get_id_ulong(SXNET *sx, unsigned long lzone);
+ASN1_OCTET_STRING *SXNET_get_id_INTEGER(SXNET *sx, ASN1_INTEGER *zone);
 
 DECLARE_ASN1_FUNCTIONS(AUTHORITY_KEYID)
 
@@ -476,29 +474,29 @@ DECLARE_ASN1_FUNCTIONS(GENERAL_NAME)
 
 
 ASN1_BIT_STRING *v2i_ASN1_BIT_STRING(X509V3_EXT_METHOD *method,
-				X509V3_CTX *ctx, STACK_OF(CONF_VALUE) *nval) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+				X509V3_CTX *ctx, STACK_OF(CONF_VALUE) *nval);
 STACK_OF(CONF_VALUE) *i2v_ASN1_BIT_STRING(X509V3_EXT_METHOD *method,
 				ASN1_BIT_STRING *bits,
-				STACK_OF(CONF_VALUE) *extlist) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+				STACK_OF(CONF_VALUE) *extlist);
 
-STACK_OF(CONF_VALUE) *i2v_GENERAL_NAME(X509V3_EXT_METHOD *method, GENERAL_NAME *gen, STACK_OF(CONF_VALUE) *ret) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int GENERAL_NAME_print(BIO *out, GENERAL_NAME *gen) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+STACK_OF(CONF_VALUE) *i2v_GENERAL_NAME(X509V3_EXT_METHOD *method, GENERAL_NAME *gen, STACK_OF(CONF_VALUE) *ret);
+int GENERAL_NAME_print(BIO *out, GENERAL_NAME *gen);
 
 DECLARE_ASN1_FUNCTIONS(GENERAL_NAMES)
 
 STACK_OF(CONF_VALUE) *i2v_GENERAL_NAMES(X509V3_EXT_METHOD *method,
-		GENERAL_NAMES *gen, STACK_OF(CONF_VALUE) *extlist) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		GENERAL_NAMES *gen, STACK_OF(CONF_VALUE) *extlist);
 GENERAL_NAMES *v2i_GENERAL_NAMES(X509V3_EXT_METHOD *method,
-				X509V3_CTX *ctx, STACK_OF(CONF_VALUE) *nval) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+				X509V3_CTX *ctx, STACK_OF(CONF_VALUE) *nval);
 
 DECLARE_ASN1_FUNCTIONS(OTHERNAME)
 DECLARE_ASN1_FUNCTIONS(EDIPARTYNAME)
 
-char *i2s_ASN1_OCTET_STRING(X509V3_EXT_METHOD *method, ASN1_OCTET_STRING *ia5) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-ASN1_OCTET_STRING *s2i_ASN1_OCTET_STRING(X509V3_EXT_METHOD *method, X509V3_CTX *ctx, char *str) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+char *i2s_ASN1_OCTET_STRING(X509V3_EXT_METHOD *method, ASN1_OCTET_STRING *ia5);
+ASN1_OCTET_STRING *s2i_ASN1_OCTET_STRING(X509V3_EXT_METHOD *method, X509V3_CTX *ctx, char *str);
 
 DECLARE_ASN1_FUNCTIONS(EXTENDED_KEY_USAGE)
-int i2a_ACCESS_DESCRIPTION(BIO *bp, ACCESS_DESCRIPTION* a) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int i2a_ACCESS_DESCRIPTION(BIO *bp, ACCESS_DESCRIPTION* a);
 
 DECLARE_ASN1_FUNCTIONS(CERTIFICATEPOLICIES)
 DECLARE_ASN1_FUNCTIONS(POLICYINFO)
@@ -528,108 +526,108 @@ DECLARE_ASN1_ITEM(POLICY_CONSTRAINTS)
 
 #ifdef HEADER_CONF_H
 GENERAL_NAME *v2i_GENERAL_NAME(X509V3_EXT_METHOD *method, X509V3_CTX *ctx,
-							CONF_VALUE *cnf) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+							CONF_VALUE *cnf);
 GENERAL_NAME *v2i_GENERAL_NAME_ex(GENERAL_NAME *out, X509V3_EXT_METHOD *method,
-				X509V3_CTX *ctx, CONF_VALUE *cnf, int is_nc) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void X509V3_conf_free(CONF_VALUE *val) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+				X509V3_CTX *ctx, CONF_VALUE *cnf, int is_nc);
+void X509V3_conf_free(CONF_VALUE *val);
 
-X509_EXTENSION *X509V3_EXT_nconf_nid(CONF *conf, X509V3_CTX *ctx, int ext_nid, char *value) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-X509_EXTENSION *X509V3_EXT_nconf(CONF *conf, X509V3_CTX *ctx, char *name, char *value) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_EXT_add_nconf_sk(CONF *conf, X509V3_CTX *ctx, char *section, STACK_OF(X509_EXTENSION) **sk) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_EXT_add_nconf(CONF *conf, X509V3_CTX *ctx, char *section, X509 *cert) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_EXT_REQ_add_nconf(CONF *conf, X509V3_CTX *ctx, char *section, X509_REQ *req) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_EXT_CRL_add_nconf(CONF *conf, X509V3_CTX *ctx, char *section, X509_CRL *crl) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+X509_EXTENSION *X509V3_EXT_nconf_nid(CONF *conf, X509V3_CTX *ctx, int ext_nid, char *value);
+X509_EXTENSION *X509V3_EXT_nconf(CONF *conf, X509V3_CTX *ctx, char *name, char *value);
+int X509V3_EXT_add_nconf_sk(CONF *conf, X509V3_CTX *ctx, char *section, STACK_OF(X509_EXTENSION) **sk);
+int X509V3_EXT_add_nconf(CONF *conf, X509V3_CTX *ctx, char *section, X509 *cert);
+int X509V3_EXT_REQ_add_nconf(CONF *conf, X509V3_CTX *ctx, char *section, X509_REQ *req);
+int X509V3_EXT_CRL_add_nconf(CONF *conf, X509V3_CTX *ctx, char *section, X509_CRL *crl);
 
-X509_EXTENSION *X509V3_EXT_conf_nid(LHASH *conf, X509V3_CTX *ctx, int ext_nid, char *value) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-X509_EXTENSION *X509V3_EXT_conf(LHASH *conf, X509V3_CTX *ctx, char *name, char *value) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_EXT_add_conf(LHASH *conf, X509V3_CTX *ctx, char *section, X509 *cert) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_EXT_REQ_add_conf(LHASH *conf, X509V3_CTX *ctx, char *section, X509_REQ *req) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_EXT_CRL_add_conf(LHASH *conf, X509V3_CTX *ctx, char *section, X509_CRL *crl) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+X509_EXTENSION *X509V3_EXT_conf_nid(LHASH *conf, X509V3_CTX *ctx, int ext_nid, char *value);
+X509_EXTENSION *X509V3_EXT_conf(LHASH *conf, X509V3_CTX *ctx, char *name, char *value);
+int X509V3_EXT_add_conf(LHASH *conf, X509V3_CTX *ctx, char *section, X509 *cert);
+int X509V3_EXT_REQ_add_conf(LHASH *conf, X509V3_CTX *ctx, char *section, X509_REQ *req);
+int X509V3_EXT_CRL_add_conf(LHASH *conf, X509V3_CTX *ctx, char *section, X509_CRL *crl);
 
 int X509V3_add_value_bool_nf(char *name, int asn1_bool,
-						STACK_OF(CONF_VALUE) **extlist) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_get_value_bool(CONF_VALUE *value, int *asn1_bool) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_get_value_int(CONF_VALUE *value, ASN1_INTEGER **aint) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void X509V3_set_nconf(X509V3_CTX *ctx, CONF *conf) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void X509V3_set_conf_lhash(X509V3_CTX *ctx, LHASH *lhash) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+						STACK_OF(CONF_VALUE) **extlist);
+int X509V3_get_value_bool(CONF_VALUE *value, int *asn1_bool);
+int X509V3_get_value_int(CONF_VALUE *value, ASN1_INTEGER **aint);
+void X509V3_set_nconf(X509V3_CTX *ctx, CONF *conf);
+void X509V3_set_conf_lhash(X509V3_CTX *ctx, LHASH *lhash);
 #endif
 
-char * X509V3_get_string(X509V3_CTX *ctx, char *name, char *section) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-STACK_OF(CONF_VALUE) * X509V3_get_section(X509V3_CTX *ctx, char *section) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void X509V3_string_free(X509V3_CTX *ctx, char *str) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void X509V3_section_free( X509V3_CTX *ctx, STACK_OF(CONF_VALUE) *section) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+char * X509V3_get_string(X509V3_CTX *ctx, char *name, char *section);
+STACK_OF(CONF_VALUE) * X509V3_get_section(X509V3_CTX *ctx, char *section);
+void X509V3_string_free(X509V3_CTX *ctx, char *str);
+void X509V3_section_free( X509V3_CTX *ctx, STACK_OF(CONF_VALUE) *section);
 void X509V3_set_ctx(X509V3_CTX *ctx, X509 *issuer, X509 *subject,
-				 X509_REQ *req, X509_CRL *crl, int flags) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+				 X509_REQ *req, X509_CRL *crl, int flags);
 
 int X509V3_add_value(const char *name, const char *value,
-						STACK_OF(CONF_VALUE) **extlist) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+						STACK_OF(CONF_VALUE) **extlist);
 int X509V3_add_value_uchar(const char *name, const unsigned char *value,
-						STACK_OF(CONF_VALUE) **extlist) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+						STACK_OF(CONF_VALUE) **extlist);
 int X509V3_add_value_bool(const char *name, int asn1_bool,
-						STACK_OF(CONF_VALUE) **extlist) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+						STACK_OF(CONF_VALUE) **extlist);
 int X509V3_add_value_int(const char *name, ASN1_INTEGER *aint,
-						STACK_OF(CONF_VALUE) **extlist) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-char * i2s_ASN1_INTEGER(X509V3_EXT_METHOD *meth, ASN1_INTEGER *aint) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-ASN1_INTEGER * s2i_ASN1_INTEGER(X509V3_EXT_METHOD *meth, char *value) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-char * i2s_ASN1_ENUMERATED(X509V3_EXT_METHOD *meth, ASN1_ENUMERATED *aint) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-char * i2s_ASN1_ENUMERATED_TABLE(X509V3_EXT_METHOD *meth, ASN1_ENUMERATED *aint) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_EXT_add(X509V3_EXT_METHOD *ext) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_EXT_add_list(X509V3_EXT_METHOD *extlist) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_EXT_add_alias(int nid_to, int nid_from) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void X509V3_EXT_cleanup(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+						STACK_OF(CONF_VALUE) **extlist);
+char * i2s_ASN1_INTEGER(X509V3_EXT_METHOD *meth, ASN1_INTEGER *aint);
+ASN1_INTEGER * s2i_ASN1_INTEGER(X509V3_EXT_METHOD *meth, char *value);
+char * i2s_ASN1_ENUMERATED(X509V3_EXT_METHOD *meth, ASN1_ENUMERATED *aint);
+char * i2s_ASN1_ENUMERATED_TABLE(X509V3_EXT_METHOD *meth, ASN1_ENUMERATED *aint);
+int X509V3_EXT_add(X509V3_EXT_METHOD *ext);
+int X509V3_EXT_add_list(X509V3_EXT_METHOD *extlist);
+int X509V3_EXT_add_alias(int nid_to, int nid_from);
+void X509V3_EXT_cleanup(void);
 
-X509V3_EXT_METHOD *X509V3_EXT_get(X509_EXTENSION *ext) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-X509V3_EXT_METHOD *X509V3_EXT_get_nid(int nid) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_add_standard_extensions(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-STACK_OF(CONF_VALUE) *X509V3_parse_list(const char *line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void *X509V3_EXT_d2i(X509_EXTENSION *ext) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void *X509V3_get_d2i(STACK_OF(X509_EXTENSION) *x, int nid, int *crit, int *idx) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+X509V3_EXT_METHOD *X509V3_EXT_get(X509_EXTENSION *ext);
+X509V3_EXT_METHOD *X509V3_EXT_get_nid(int nid);
+int X509V3_add_standard_extensions(void);
+STACK_OF(CONF_VALUE) *X509V3_parse_list(const char *line);
+void *X509V3_EXT_d2i(X509_EXTENSION *ext);
+void *X509V3_get_d2i(STACK_OF(X509_EXTENSION) *x, int nid, int *crit, int *idx);
 
 
-X509_EXTENSION *X509V3_EXT_i2d(int ext_nid, int crit, void *ext_struc) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_add1_i2d(STACK_OF(X509_EXTENSION) **x, int nid, void *value, int crit, unsigned long flags) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+X509_EXTENSION *X509V3_EXT_i2d(int ext_nid, int crit, void *ext_struc);
+int X509V3_add1_i2d(STACK_OF(X509_EXTENSION) **x, int nid, void *value, int crit, unsigned long flags);
 
-char *hex_to_string(unsigned char *buffer, long len) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-unsigned char *string_to_hex(char *str, long *len) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int name_cmp(const char *name, const char *cmp) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+char *hex_to_string(unsigned char *buffer, long len);
+unsigned char *string_to_hex(char *str, long *len);
+int name_cmp(const char *name, const char *cmp);
 
 void X509V3_EXT_val_prn(BIO *out, STACK_OF(CONF_VALUE) *val, int indent,
-								 int ml) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_EXT_print(BIO *out, X509_EXTENSION *ext, unsigned long flag, int indent) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509V3_EXT_print_fp(FILE *out, X509_EXTENSION *ext, int flag, int indent) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+								 int ml);
+int X509V3_EXT_print(BIO *out, X509_EXTENSION *ext, unsigned long flag, int indent);
+int X509V3_EXT_print_fp(FILE *out, X509_EXTENSION *ext, int flag, int indent);
 
-int X509V3_extensions_print(BIO *out, char *title, STACK_OF(X509_EXTENSION) *exts, unsigned long flag, int indent) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int X509V3_extensions_print(BIO *out, char *title, STACK_OF(X509_EXTENSION) *exts, unsigned long flag, int indent);
 
-int X509_check_ca(X509 *x) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509_check_purpose(X509 *x, int id, int ca) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509_supported_extension(X509_EXTENSION *ex) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509_PURPOSE_set(int *p, int purpose) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509_check_issued(X509 *issuer, X509 *subject) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509_PURPOSE_get_count(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-X509_PURPOSE * X509_PURPOSE_get0(int idx) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509_PURPOSE_get_by_sname(char *sname) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509_PURPOSE_get_by_id(int id) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int X509_check_ca(X509 *x);
+int X509_check_purpose(X509 *x, int id, int ca);
+int X509_supported_extension(X509_EXTENSION *ex);
+int X509_PURPOSE_set(int *p, int purpose);
+int X509_check_issued(X509 *issuer, X509 *subject);
+int X509_PURPOSE_get_count(void);
+X509_PURPOSE * X509_PURPOSE_get0(int idx);
+int X509_PURPOSE_get_by_sname(char *sname);
+int X509_PURPOSE_get_by_id(int id);
 int X509_PURPOSE_add(int id, int trust, int flags,
 			int (*ck)(const X509_PURPOSE *, const X509 *, int),
-				char *name, char *sname, void *arg) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-char *X509_PURPOSE_get0_name(X509_PURPOSE *xp) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-char *X509_PURPOSE_get0_sname(X509_PURPOSE *xp) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509_PURPOSE_get_trust(X509_PURPOSE *xp) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void X509_PURPOSE_cleanup(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int X509_PURPOSE_get_id(X509_PURPOSE *) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+				char *name, char *sname, void *arg);
+char *X509_PURPOSE_get0_name(X509_PURPOSE *xp);
+char *X509_PURPOSE_get0_sname(X509_PURPOSE *xp);
+int X509_PURPOSE_get_trust(X509_PURPOSE *xp);
+void X509_PURPOSE_cleanup(void);
+int X509_PURPOSE_get_id(X509_PURPOSE *);
 
-STACK *X509_get1_email(X509 *x) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-STACK *X509_REQ_get1_email(X509_REQ *x) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void X509_email_free(STACK *sk) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-STACK *X509_get1_ocsp(X509 *x) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+STACK *X509_get1_email(X509 *x);
+STACK *X509_REQ_get1_email(X509_REQ *x);
+void X509_email_free(STACK *sk);
+STACK *X509_get1_ocsp(X509 *x);
 
-ASN1_OCTET_STRING *a2i_IPADDRESS(const char *ipasc) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-ASN1_OCTET_STRING *a2i_IPADDRESS_NC(const char *ipasc) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int a2i_ipadd(unsigned char *ipout, const char *ipasc) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+ASN1_OCTET_STRING *a2i_IPADDRESS(const char *ipasc);
+ASN1_OCTET_STRING *a2i_IPADDRESS_NC(const char *ipasc);
+int a2i_ipadd(unsigned char *ipout, const char *ipasc);
 int X509V3_NAME_from_section(X509_NAME *nm, STACK_OF(CONF_VALUE)*dn_sk,
-						unsigned long chtype) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+						unsigned long chtype);
 
-void X509_POLICY_NODE_print(BIO *out, X509_POLICY_NODE *node, int indent) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void X509_POLICY_NODE_print(BIO *out, X509_POLICY_NODE *node, int indent);
 
 #ifndef OPENSSL_NO_RFC3779
 
@@ -734,49 +732,49 @@ DECLARE_ASN1_FUNCTIONS(IPAddressFamily)
  * since some of the encodings (particularly for IP address prefixes
  * and ranges) are a bit tedious to work with directly.
  */
-int v3_asid_add_inherit(ASIdentifiers *asid, int which) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int v3_asid_add_inherit(ASIdentifiers *asid, int which);
 int v3_asid_add_id_or_range(ASIdentifiers *asid, int which,
-			    ASN1_INTEGER *min, ASN1_INTEGER *max) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+			    ASN1_INTEGER *min, ASN1_INTEGER *max);
 int v3_addr_add_inherit(IPAddrBlocks *addr,
-			const unsigned afi, const unsigned *safi) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+			const unsigned afi, const unsigned *safi);
 int v3_addr_add_prefix(IPAddrBlocks *addr,
 		       const unsigned afi, const unsigned *safi,
-		       unsigned char *a, const int prefixlen) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		       unsigned char *a, const int prefixlen);
 int v3_addr_add_range(IPAddrBlocks *addr,
 		      const unsigned afi, const unsigned *safi,
-		      unsigned char *min, unsigned char *max) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-unsigned v3_addr_get_afi(const IPAddressFamily *f) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		      unsigned char *min, unsigned char *max);
+unsigned v3_addr_get_afi(const IPAddressFamily *f);
 int v3_addr_get_range(IPAddressOrRange *aor, const unsigned afi,
 		      unsigned char *min, unsigned char *max,
-		      const int length) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		      const int length);
 
 /*
  * Canonical forms.
  */
-int v3_asid_is_canonical(ASIdentifiers *asid) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int v3_addr_is_canonical(IPAddrBlocks *addr) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int v3_asid_canonize(ASIdentifiers *asid) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int v3_addr_canonize(IPAddrBlocks *addr) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int v3_asid_is_canonical(ASIdentifiers *asid);
+int v3_addr_is_canonical(IPAddrBlocks *addr);
+int v3_asid_canonize(ASIdentifiers *asid);
+int v3_addr_canonize(IPAddrBlocks *addr);
 
 /*
  * Tests for inheritance and containment.
  */
-int v3_asid_inherits(ASIdentifiers *asid) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int v3_addr_inherits(IPAddrBlocks *addr) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int v3_asid_subset(ASIdentifiers *a, ASIdentifiers *b) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int v3_addr_subset(IPAddrBlocks *a, IPAddrBlocks *b) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int v3_asid_inherits(ASIdentifiers *asid);
+int v3_addr_inherits(IPAddrBlocks *addr);
+int v3_asid_subset(ASIdentifiers *a, ASIdentifiers *b);
+int v3_addr_subset(IPAddrBlocks *a, IPAddrBlocks *b);
 
 /*
  * Check whether RFC 3779 extensions nest properly in chains.
  */
-int v3_asid_validate_path(X509_STORE_CTX *) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int v3_addr_validate_path(X509_STORE_CTX *) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int v3_asid_validate_path(X509_STORE_CTX *);
+int v3_addr_validate_path(X509_STORE_CTX *);
 int v3_asid_validate_resource_set(STACK_OF(X509) *chain,
 				  ASIdentifiers *ext,
-				  int allow_inheritance) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+				  int allow_inheritance);
 int v3_addr_validate_resource_set(STACK_OF(X509) *chain,
 				  IPAddrBlocks *ext,
-				  int allow_inheritance) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+				  int allow_inheritance);
 
 #endif /* OPENSSL_NO_RFC3779 */
 
@@ -784,7 +782,7 @@ int v3_addr_validate_resource_set(STACK_OF(X509) *chain,
 /* The following lines are auto generated by the script mkerr.pl. Any changes
  * made after this point may be overwritten when the script is next run.
  */
-void ERR_load_X509V3_strings(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void ERR_load_X509V3_strings(void);
 
 /* Error codes for the X509V3 functions. */
 

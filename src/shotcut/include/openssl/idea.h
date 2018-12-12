@@ -1,5 +1,5 @@
-/* crypto/rc5/rc5.h */
-/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
+/* crypto/idea/idea.h */
+/* Copyright (C) 1995-1997 Eric Young (eay@cryptsoft.com)
  * All rights reserved.
  *
  * This package is an SSL implementation written
@@ -56,70 +56,46 @@
  * [including the GNU Public Licence.]
  */
 
-#ifndef HEADER_RC5_H
-#define HEADER_RC5_H
+#ifndef HEADER_IDEA_H
+#define HEADER_IDEA_H
 
-#include <AvailabilityMacros.h>
+#include <openssl/opensslconf.h> /* IDEA_INT, OPENSSL_NO_IDEA */
 
-#include <openssl/opensslconf.h> /* OPENSSL_NO_RC5 */
+#ifdef OPENSSL_NO_IDEA
+#error IDEA is disabled.
+#endif
+
+#define IDEA_ENCRYPT	1
+#define IDEA_DECRYPT	0
+
+#define IDEA_BLOCK	8
+#define IDEA_KEY_LENGTH	16
 
 #ifdef  __cplusplus
 extern "C" {
 #endif
 
-#ifdef OPENSSL_NO_RC5
-#error RC5 is disabled.
-#endif
-
-#define RC5_ENCRYPT	1
-#define RC5_DECRYPT	0
-
-/* 32 bit.  For Alpha, things may get weird */
-#ifdef __LP64__                                                                                                                                                  
-#define RC5_32_INT unsigned int                                                                                                                                  
-#else                                                                                                                                                            
-#define RC5_32_INT unsigned long
-#endif
-
-#define RC5_32_BLOCK		8
-#define RC5_32_KEY_LENGTH	16 /* This is a default, max is 255 */
-
-/* This are the only values supported.  Tweak the code if you want more
- * The most supported modes will be
- * RC5-32/12/16
- * RC5-32/16/8
- */
-#define RC5_8_ROUNDS	8
-#define RC5_12_ROUNDS	12
-#define RC5_16_ROUNDS	16
-
-typedef struct rc5_key_st
+typedef struct idea_key_st
 	{
-	/* Number of rounds */
-	int rounds;
-	RC5_32_INT data[2*(RC5_16_ROUNDS+1)];
-	} RC5_32_KEY;
+	IDEA_INT data[9][6];
+	} IDEA_KEY_SCHEDULE;
 
-#ifdef OPENSSL_FIPS 
-void private_RC5_32_set_key(RC5_32_KEY *key, int len, const unsigned char *data,
-	int rounds) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+const char *idea_options(void);
+void idea_ecb_encrypt(const unsigned char *in, unsigned char *out,
+	IDEA_KEY_SCHEDULE *ks);
+#ifdef OPENSSL_FIPS
+void private_idea_set_encrypt_key(const unsigned char *key, IDEA_KEY_SCHEDULE *ks);
 #endif
-void RC5_32_set_key(RC5_32_KEY *key, int len, const unsigned char *data,
-	int rounds) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void RC5_32_ecb_encrypt(const unsigned char *in,unsigned char *out,RC5_32_KEY *key,
-	int enc) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void RC5_32_encrypt(unsigned long *data,RC5_32_KEY *key) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void RC5_32_decrypt(unsigned long *data,RC5_32_KEY *key) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void RC5_32_cbc_encrypt(const unsigned char *in, unsigned char *out,
-			long length, RC5_32_KEY *ks, unsigned char *iv,
-			int enc) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void RC5_32_cfb64_encrypt(const unsigned char *in, unsigned char *out,
-			  long length, RC5_32_KEY *schedule,
-			  unsigned char *ivec, int *num, int enc) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void RC5_32_ofb64_encrypt(const unsigned char *in, unsigned char *out,
-			  long length, RC5_32_KEY *schedule,
-			  unsigned char *ivec, int *num) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-
+void idea_set_encrypt_key(const unsigned char *key, IDEA_KEY_SCHEDULE *ks);
+void idea_set_decrypt_key(const IDEA_KEY_SCHEDULE *ek, IDEA_KEY_SCHEDULE *dk);
+void idea_cbc_encrypt(const unsigned char *in, unsigned char *out,
+	long length, IDEA_KEY_SCHEDULE *ks, unsigned char *iv,int enc);
+void idea_cfb64_encrypt(const unsigned char *in, unsigned char *out,
+	long length, IDEA_KEY_SCHEDULE *ks, unsigned char *iv,
+	int *num,int enc);
+void idea_ofb64_encrypt(const unsigned char *in, unsigned char *out,
+	long length, IDEA_KEY_SCHEDULE *ks, unsigned char *iv, int *num);
+void idea_encrypt(unsigned long *in, IDEA_KEY_SCHEDULE *ks);
 #ifdef  __cplusplus
 }
 #endif
