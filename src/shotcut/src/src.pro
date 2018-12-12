@@ -268,8 +268,7 @@ HEADERS  += mainwindow.h \
 
 mac {
     SOURCES += securitybookmark/SecurityBookmark.mm \
-                ../iRate/iRate.mm \
-                eccregister/EccRegister.mm
+                ../iRate/iRate.mm
     HEADERS += securitybookmark/SecurityBookmark.h \
                 ../iRate/iRate.h
 }
@@ -432,6 +431,7 @@ win32 {
 #    DEFINES += MOVIEMATOR_FREE=1
 
     #pro share
+    DEFINES += STEAM=1
     DEFINES += MOVIEMATOR_PRO=1
     DEFINES += SHARE_VERSION=1
 }

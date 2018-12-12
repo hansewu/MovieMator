@@ -706,7 +706,7 @@ MainWindow::MainWindow()
     else if (Registration.registrationType() == Registration_Family)
         setWindowTitle(tr("MovieMator Video Editor Pro (Business)"));
     else if (Registration.registrationType() == Registration_Commercial)
-        setWindowTitle(tr("MovieMator Video Editor Pro (Business)"));
+        setWindowTitle(tr("MovieMator Video Editor Pro"));
     else
         setWindowTitle(tr("MovieMator Video Editor Pro"));
 #else
@@ -1890,7 +1890,7 @@ void MainWindow::setCurrentFile(const QString &filename)
     else if (Registration.registrationType() == Registration_Family)
         setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro (Business)"));
     else if (Registration.registrationType() == Registration_Commercial)
-        setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro (Business)"));
+        setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro"));
     else
         setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro"));
 #else
