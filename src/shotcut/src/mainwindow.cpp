@@ -707,6 +707,8 @@ MainWindow::MainWindow()
         setWindowTitle(tr("MovieMator Video Editor Pro (Business)"));
     else if (Registration.registrationType() == Registration_Commercial)
         setWindowTitle(tr("MovieMator Video Editor Pro (Business)"));
+    else
+        setWindowTitle(tr("MovieMator Video Editor Pro"));
 #else
     setWindowTitle(tr("MovieMator Video Editor"));
 #endif
@@ -751,6 +753,11 @@ void MainWindow::configureUI()
 #endif
 
 #ifndef MOVIEMATOR_PRO
+    ui->actionBuy_a_License_Code->setVisible(false);
+    ui->actionEnter_License_Code->setVisible(false);
+#endif
+
+#if STEAM
     ui->actionBuy_a_License_Code->setVisible(false);
     ui->actionEnter_License_Code->setVisible(false);
 #endif
@@ -1884,6 +1891,8 @@ void MainWindow::setCurrentFile(const QString &filename)
         setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro (Business)"));
     else if (Registration.registrationType() == Registration_Commercial)
         setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro (Business)"));
+    else
+        setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro"));
 #else
     setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor"));
 #endif
