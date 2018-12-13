@@ -196,6 +196,8 @@ public slots:
     void setTransitionDuration(int trackIndex, int clipIndex, int duration);
     void addMixReferences(int trackIndex, int clipIndex);
 
+    int refreshClipFromXmlForFilter(int trackIndex, int clipIndex, QString strXml);
+
     void debugPrintState();
 
 private:

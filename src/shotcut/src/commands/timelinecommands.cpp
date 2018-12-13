@@ -19,6 +19,9 @@
 #include "timelinecommands.h"
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
+#include "mainwindow.h"
+#include "controllers/filtercontroller.h"
+#include "docks/timelinedock.h"
 #include <Logger.h>
 #include <QMetaObject>
 
@@ -930,8 +933,124 @@ void MoveInsertClipCommand::undo()
     m_undoHelper.undoChanges();
 }
 
+FilterCommand::FilterCommand(Mlt::Filter* filter, QString name, double from_value, double to_value, QUndoCommand * parent)
+ : QUndoCommand(parent)
+{
+    m_filter = new Mlt::Filter(filter->get_filter());
+    m_keyName   = name;
+    m_from_value    = QVariant(from_value);
+    m_to_value      = QVariant(to_value);
+}
+
+FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  int from_value, int to_value, QUndoCommand * parent)
+: QUndoCommand(parent)
+{
+    m_filter = new Mlt::Filter(filter->get_filter());
+    m_keyName   = name;
+    m_from_value    = QVariant(from_value);
+    m_to_value      = QVariant(to_value);
+}
+
+FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QString from_value, QString to_value, QUndoCommand * parent)
+: QUndoCommand(parent)
+{
+    m_filter = new Mlt::Filter(filter->get_filter());
+    m_keyName   = name;
+    m_from_value    = QVariant(from_value);
+    m_to_value      = QVariant(to_value);
+}
+
+FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, QUndoCommand * parent)
+: QUndoCommand(parent)
+{
+    m_filter = new Mlt::Filter(filter->get_filter());
+    m_keyName   = name;
+    m_from_value    = QVariant(from_value);
+    m_to_value      = QVariant(to_value);
+}
+
+FilterCommand::~FilterCommand()
+{
+    delete m_filter;
+}
+
+void FilterCommand::notify()
+{
+    MLT.refreshConsumer();
+    emit MAIN.filterController()->attachedModel()->changed();
+    emit MAIN.timelineDock()->positionChanged();
+}
+
+void FilterCommand::set_value(QVariant value)
+{
+    QVariant::Type value_type = value.type();
+
+
+    if(value_type == QVariant::Double)
+    {
+        m_filter->set(m_keyName.toUtf8().constData(), value.toDouble());
+    }
+    else if(value_type == QVariant::Int)
+    {
+         m_filter->set(m_keyName.toUtf8().constData(), value.toInt());
+    }
+    else if(value_type == QVariant::String)
+    {
+        m_filter->set(m_keyName.toUtf8().constData(), value.toString().toUtf8().constData());
+    }
+    else if(value_type == QVariant::RectF)
+    {
+        QRectF rectF = value.toRectF();
+
+        m_filter->set(m_keyName.toUtf8().constData(), (double)rectF.left(), (double)rectF.top(), (double)rectF.width(), (double)rectF.height(), 1.0);
+    }
+
+}
+
+void FilterCommand::redo()
+{
+    set_value(m_to_value);
+    notify();
+}
+
+void FilterCommand::undo()
+{
+    set_value(m_from_value);
+    notify();
+}
+
+/*
+FilterClipCommand::FilterClipCommand(MultitrackModel& model, int trackIndex, int clipIndex, QString strFromXml, QString strToXml, QUndoCommand * parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(clipIndex)
+    , m_strFromXml(strFromXml)
+    , m_strToXml(strToXml)
+    , m_undoHelper(m_model)
+{
+
+   setText(QObject::tr("FilterClipCommand"));
+}
+
+void FilterClipCommand::redo()
+{
+    //m_undoHelper.recordBeforeState();
+    m_model.refreshClipFromXmlForFilter(m_trackIndex, m_clipIndex, m_strToXml);
+
+    //m_model.moveClip(m_fromTrackIndex, m_toTrackIndex, m_fromClipIndex, m_toStart);
+    //m_undoHelper.recordAfterState();
+    //qDebug()<<"redo ends";
+}
+
+void FilterClipCommand::undo()
+{
+   // LOG_DEBUG() << "fromTrack" << m_fromTrackIndex << "toTrack" << m_toTrackIndex;
+   // m_undoHelper.undoChanges();
+     m_model.refreshClipFromXmlForFilter(m_trackIndex, m_clipIndex, m_strFromXml);
+
+}
+*/
 } // namespace
-
-
 
 #include "moc_timelinecommands.cpp"

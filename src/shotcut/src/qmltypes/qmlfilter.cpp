@@ -31,6 +31,7 @@
 #include <QtXml>
 #include <MltProducer.h>
 #include "docks/timelinedock.h"
+#include "commands/timelinecommands.h"
 
 #include "encodetaskqueue.h"
 #include "jobs/melttask.h"
@@ -194,7 +195,11 @@ void QmlFilter::set(QString name, QString value)
     if (!m_filter) return;
     if (qstrcmp(m_filter->get(name.toUtf8().constData()), value.toUtf8().constData()))
     { //xjp add anim
+        QString from_value = m_filter->get(name.toUtf8().constData());
+
         m_filter->set(name.toUtf8().constData(), value.toUtf8().constData());
+        MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  from_value, value));
+
         MLT.refreshConsumer();
         emit changed();
     }
@@ -205,7 +210,12 @@ void QmlFilter::set(QString name, double value)
     if (!m_filter) return;
     if (!m_filter->get(name.toUtf8().constData())  //xjp add anim
         || m_filter->get_double(name.toUtf8().constData()) != value) {
+
+        double from_value = m_filter->get_double(name.toUtf8().constData());
         m_filter->set(name.toUtf8().constData(), value);
+
+        MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  from_value, value));
+
         MLT.refreshConsumer();
         emit changed();
     }
@@ -216,7 +226,11 @@ void QmlFilter::set(QString name, int value)
     if (!m_filter) return;
     if (!m_filter->get(name.toUtf8().constData())
         || m_filter->get_int(name.toUtf8().constData()) != value) {
+
+        int from_value = m_filter->get_int(name.toUtf8().constData());
         m_filter->set(name.toUtf8().constData(), value);
+        MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  from_value, value));
+
         MLT.refreshConsumer();
         emit changed();
     }
@@ -229,7 +243,13 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
     mlt_rect rect = m_filter->get_rect(name.toUtf8().constData());
     if (!m_filter->get(name.toUtf8().constData()) || x != rect.x || y != rect.y
         || width != rect.w || height != rect.h || opacity != rect.o) {
+
+        QRectF rect_from(rect.x, rect.y, rect.w, rect.h);
+        QRectF rect_to(x, y, width, height);
+
         m_filter->set(name.toUtf8().constData(), x, y, width, height, opacity);
+        MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  rect_from, rect_to));
+
         MLT.refreshConsumer();
         emit changed();
     }

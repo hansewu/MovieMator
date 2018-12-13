@@ -851,6 +851,12 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
     }
 }
 
+void TimelineDock::addFilterClipCommand(int TrackIndex, int clipIndex, QString strFromXml, QString strToXml)
+{
+ //   MAIN.undoStack()->push(new Timeline::FilterClipCommand(m_model, TrackIndex, clipIndex, strFromXml, strToXml));
+}
+
+
 bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple)
 {
     if (!ripple && m_model.addTransitionByTrimInValid(trackIndex, clipIndex, delta)) {

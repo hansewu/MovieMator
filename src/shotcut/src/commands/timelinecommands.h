@@ -482,6 +482,45 @@ private:
 };
 
 
+class FilterClipCommand : public QUndoCommand
+{
+public:
+    FilterClipCommand(MultitrackModel& model, int TrackIndex, int clipIndex, QString strFromXml, QString strToXml, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int     m_trackIndex;
+    int     m_clipIndex;
+    QString m_strFromXml;
+    QString m_strToXml;
+    UndoHelper m_undoHelper;
+};
+
+
+class FilterCommand: public QUndoCommand
+{
+
+public:
+    FilterCommand(Mlt::Filter* filter, QString name,  double from_value, double to_value, QUndoCommand * parent= 0);
+    FilterCommand(Mlt::Filter* filter, QString name,  int from_value, int to_value, QUndoCommand * parent= 0);
+    FilterCommand(Mlt::Filter* filter, QString name,  QString from_value, QString to_value, QUndoCommand * parent= 0);
+    FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, QUndoCommand * parent= 0);
+
+    ~FilterCommand();
+    void redo();
+    void undo();
+protected:
+    void notify();
+    void set_value(QVariant value);
+private:
+    Mlt::Filter* m_filter;
+    QString     m_keyName;
+
+    QVariant  m_from_value;
+    QVariant  m_to_value;
+};
+
 } // namespace Timeline
 
 #endif

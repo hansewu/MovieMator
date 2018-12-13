@@ -3896,6 +3896,22 @@ int MultitrackModel::moveInsertClip(int fromTrack, int toTrack, int clipIndex, i
     return 0;
 }
 
+
+int MultitrackModel::refreshClipFromXmlForFilter(int trackIndex, int clipIndex, QString strXml)
+{
+    Mlt::Producer *fromTrackProducer = m_tractor->track(m_trackList.at(trackIndex).mlt_index);
+    Mlt::Playlist fromPlaylist(*fromTrackProducer);
+    delete fromTrackProducer;
+    QScopedPointer<Mlt::Producer> clip(fromPlaylist.get_clip(clipIndex));
+
+    Mlt::Producer clip_xml(MLT.profile(), "xml-string", strXml.toUtf8().constData());
+
+    qDebug() << "clip_xml FILTER COUNT=" << clip_xml.filter_count();
+
+    return 0;
+}
+
+
 int MultitrackModel::getStartPositionOfClip(int trackIndex, int clipIndex)
 {
     int position = -1;

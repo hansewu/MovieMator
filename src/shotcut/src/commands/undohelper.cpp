@@ -129,6 +129,7 @@ void UndoHelper::recordAfterState()
                     Q_ASSERT(&clip->parent());
 
                     QString newXml = MLT.XML(&clip->parent());
+                    UNDOLOG << "wzq xml:" << newXml;
                     if (info.xml != newXml) {
                         UNDOLOG << "Modified xml:" << uid;
                         info.changes |= XMLModified;

@@ -215,6 +215,8 @@ public slots:
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index);
 #endif
 
+    void addFilterClipCommand(int TrackIndex, int clipIndex, QString strFromXml, QString strToXml);
+
 protected:
     void dragEnterEvent(QDragEnterEvent* event);
     void dragMoveEvent(QDragMoveEvent* event);
