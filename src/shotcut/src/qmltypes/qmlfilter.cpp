@@ -289,6 +289,10 @@ void QmlFilter::anim_set(QString name, QString value)
     emit changed();
 }
 
+void QmlFilter::resetProperty(const QString& name)
+{
+    m_filter->clear(name.toUtf8().constData());
+}
 
 void QmlFilter::loadPresets()
 {
@@ -655,6 +659,14 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
 
 }
 
+void QmlFilter::removeAllKeyFrame(QString name)
+{
+    double keyFrameCount = this->getKeyFrameCountOnProject(name);
+    for (int index = 0; index < keyFrameCount; index++) {
+        double nFrame = this->getKeyFrameOnProjectOnIndex(index, name);
+        this->removeKeyFrameParaValue(nFrame);
+    }
+}
 
 void QmlFilter::removeKeyFrameParaValue(double frame)
 {

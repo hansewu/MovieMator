@@ -1735,10 +1735,11 @@ int TimelineDock::getPositionOnClip(int position)
         {
             Mlt::Playlist playlist(*track);
             Mlt::ClipInfo *info = playlist.clip_info(clipIndex);
-            if (info->frame_in > 0)
+            if(info && info->frame_in > 0) {
                 ret = position - info->frame_in;
-            else
+            } else {
                 ret = position;
+            }
         }
     }
     return ret;
