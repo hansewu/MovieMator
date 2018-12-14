@@ -84,7 +84,7 @@ static bool Decode32Block(unsigned char* in8, unsigned char* out5)
 {
     // pack 8 bytes
 //    unsigned long buffer = 0;
-    unsigned __int64 buffer = 0;
+    unsigned long long buffer = 0;
     for(int i = 0; i < 8; i++)
     {
         // input check
