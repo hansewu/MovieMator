@@ -7271,7 +7271,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/dynamictext/ui.qml" line="72"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="137"/>
         <source>Lower Third</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">底部字幕</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="344"/>
@@ -7289,14 +7289,14 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/dynamictext/ui.qml" line="244"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="515"/>
         <source>Insert field</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">插入文字</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="387"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/dynamictext/ui.qml" line="251"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="526"/>
         <source>Timecode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">时间码</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="391"/>
@@ -7304,21 +7304,21 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="534"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">帧 #</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="407"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/dynamictext/ui.qml" line="279"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="551"/>
         <source>File date</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">文件日期</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="411"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/dynamictext/ui.qml" line="287"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="559"/>
         <source>File name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">文件名称</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="417"/>
@@ -7328,14 +7328,14 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="572"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="81"/>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">字体</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="480"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/dynamictext/ui.qml" line="345"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="627"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">普通</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="480"/>
@@ -7345,7 +7345,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="627"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="113"/>
         <source>Bold</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">粗体</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="480"/>
@@ -7353,14 +7353,14 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="627"/>
         <source>Light</source>
         <comment>thin font stroke</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">细体</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="502"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/dynamictext/ui.qml" line="359"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="643"/>
         <source>Outline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">轮廓</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="523"/>
@@ -7370,21 +7370,21 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="656"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="76"/>
         <source>Thickness</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">宽度</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="547"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/dynamictext/ui.qml" line="387"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="674"/>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">背景</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="568"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/dynamictext/ui.qml" line="398"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="688"/>
         <source>Padding</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">间距</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="593"/>
@@ -7408,12 +7408,12 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/dynamictext/ui.qml" line="478"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="771"/>
         <source>X fit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">水平适合</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="693"/>
         <source>Y fit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">垂直适合</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/dynamictext/ui.qml" line="269"/>
@@ -8300,52 +8300,52 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="150"/>
         <source>Slide In From Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">从左划入</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="156"/>
         <source>Slide In From Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">从右划入</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="162"/>
         <source>Slide In From Top</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">从顶划入</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="168"/>
         <source>Slide In From Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">从底划入</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="175"/>
         <source>Slide Out Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">从左划出</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="181"/>
         <source>Slide Out Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">从右划出</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="187"/>
         <source>Slide Out Top</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">从顶划出</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="193"/>
         <source>Slide Out Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">从底划出</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="198"/>
         <source>Slow Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">逐渐缩小</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="203"/>
         <source>Slow Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">逐渐放大</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="208"/>
