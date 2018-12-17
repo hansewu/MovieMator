@@ -48,6 +48,22 @@ debug_and_release {
 }
 LIBS += -lLogger -lCommonUtil -lMltController
 
+mac {
+    # QMake from Qt 5.1.0 on OSX is messing with the environment in which it runs
+    # pkg-config such that the PKG_CONFIG_PATH env var is not set.
+    isEmpty(MLT_PREFIX) {
+        MLT_PREFIX = $$PWD/../../../../shotcut/mlt_build/
+#        count($$USER, wzq)
+#        {
+#            MLT_PREFIX = /Users/wzq/Desktop/data/project/2018/moviemator/libs/mlt_build/debug
+#        }
+    }
+
+    INCLUDEPATH += $$MLT_PREFIX/include/mlt++
+    INCLUDEPATH += $$MLT_PREFIX/include/mlt
+
+    LIBS += -L$$MLT_PREFIX/lib -lmlt++ -lmlt
+}
 
 win32 {
 #    CONFIG += windows rtti

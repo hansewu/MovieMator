@@ -373,10 +373,10 @@ mac {
 #        MLT_PREFIX = $$PWD/../../../../mlt_lib
 #        MLT_PREFIX = $$PWD/../../../../MovieMator_gdb/MacVideoEditor/trunk/shotcut/mlt_build
         MLT_PREFIX = $$PWD/../../../../shotcut/mlt_build/
-        count($$USER, wzq)
-        {
-            MLT_PREFIX = /Users/wzq/Desktop/data/project/2018/moviemator/libs/mlt_build/debug
-        }
+#        count($$USER, wzq)
+#        {
+#            MLT_PREFIX = /Users/wzq/Desktop/data/project/2018/moviemator/libs/mlt_build/debug
+#        }
     }
 
     INCLUDEPATH += $$MLT_PREFIX/include/mlt++
