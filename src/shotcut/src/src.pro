@@ -119,8 +119,8 @@ SOURCES += main.cpp\
     jobs/abstracttask.cpp \
     jobs/melttask.cpp \
     dialogs/mmsplashscreen.cpp \
-    qmltypes/mmqmlutilities.cpp
-#    securitybookmark/SecurityBookmark.mm
+    qmltypes/mmqmlutilities.cpp \
+    eccregister/CEccRegister.cpp
 
 HEADERS  += mainwindow.h \
     scrubbar.h \
@@ -237,26 +237,14 @@ HEADERS  += mainwindow.h \
     melt/melt.h \
     dialogs/mmsplashscreen.h \
     qmltypes/mmqmlutilities.h
-#    securitybookmark/SecurityBookmark.h
+    eccregister/CEccRegister.h
 
 mac {
     SOURCES += securitybookmark/SecurityBookmark.mm \
-                ../iRate/iRate.mm \
-                eccregister/EccRegister.mm
+                ../iRate/iRate.mm
     HEADERS += securitybookmark/SecurityBookmark.h \
-                ../iRate/iRate.h \
-                eccregister/EccRegister.h
+                ../iRate/iRate.h
 }
-
-#OBJECTIVE_SOURCES+= \
-#    ../iRate/iRate.mm \
-#    securitybookmark/SecurityBookmark.mm \
-#    eccregister/EccRegister.mm
-
-#OBJECTIVE_HEADERS+= \
-#    ../iRate/iRate.h \
-#    securitybookmark/SecurityBookmark.h \
-#    eccregister/EccRegister.h
 
 
 FORMS    += mainwindow.ui \
@@ -321,22 +309,6 @@ OTHER_FILES += \
 TRANSLATIONS += \
      ../translations/mm_en.ts \
      ../translations/mm_zh.ts \
-# #   ../translations/shotcut_ca.ts \
-#    ../translations/shotcut_cs.ts \
-#    ../translations/shotcut_da.ts \
-#    ../translations/shotcut_de.ts \
-#    ../translations/shotcut_el.ts \
-
-#    ../translations/shotcut_es.ts \
-#    ../translations/shotcut_fr.ts \
-#    ../translations/shotcut_it.ts \
-#    ../translations/shotcut_nl.ts \
-#    ../translations/shotcut_pl.ts \
-#    ../translations/shotcut_pt_BR.ts \
-#    ../translations/shotcut_pt_PT.ts \
-#    ../translations/shotcut_ru.ts \
-#    ../translations/shotcut_sk.ts \
-#    ../translations/shotcut_uk.ts \
 
 
 INCLUDEPATH = ../CuteLogger/include ../mvcp ../RecentDock ../CommonUtil ../MltController ../QmlUtilities
@@ -352,10 +324,10 @@ debug_and_release {
         LIBS += -L../QmlUtilities/release -L../PlaylistDock/release
     }
 } else {
-    LIBS += -L../CuteLogger -L../mvcp -L../RecentDock -L../CommonUtil -L../MltController -L../QmlUtilities
+    LIBS += -L../CuteLogger -L../mvcp -L../RecentDock -L../CommonUtil -L../MltController -L../QmlUtilities #-L../mm
     LIBS += -L../PlaylistDock
 }
-LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lCommonUtil -lMltController -lQmlUtilities -lPlaylistDock
+LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lCommonUtil -lMltController -lQmlUtilities -lPlaylistDock #-lmm
 
 
 #INCLUDEPATH += ../PythonQt3.2/src
@@ -365,6 +337,7 @@ LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lCommonUtil -lMltController -lQ
 #LIBS += -lPythonQt-Qt5-Python2.7_d
 
 mac {
+    DEFINES += STEAM=1
     #pro share
     DEFINES += MOVIEMATOR_PRO=1
     DEFINES += SHARE_VERSION=1
@@ -382,7 +355,7 @@ mac {
     #free share
 #    DEFINES += SHARE_VERSION=1
 #    DEFINES += MOVIEMATOR_FREE=1
-#    TARGET = "MovieMator Free Mac Video Editor"
+#    TARGET = "MovieMator Video Editor"
 #    QMAKE_INFO_PLIST = ../Info-Free-share.plist
 #    ICON = ../icons/moviemator.icns
 
@@ -398,7 +371,8 @@ mac {
     # pkg-config such that the PKG_CONFIG_PATH env var is not set.
     isEmpty(MLT_PREFIX) {
 #        MLT_PREFIX = $$PWD/../../../../mlt_lib
-        MLT_PREFIX = $$PWD/../../../../MovieMator_gdb/MacVideoEditor/trunk/shotcut/mlt_build
+#        MLT_PREFIX = $$PWD/../../../../MovieMator_gdb/MacVideoEditor/trunk/shotcut/mlt_build
+        MLT_PREFIX = $$PWD/../../../../shotcut/mlt_build/
         count($$USER, wzq)
         {
             MLT_PREFIX = /Users/wzq/Desktop/data/project/2018/moviemator/libs/mlt_build/debug
@@ -427,9 +401,13 @@ mac {
 
 win32 {
     #free share
-    DEFINES += SHARE_VERSION=1
-    DEFINES += MOVIEMATOR_FREE=1
+#    DEFINES += SHARE_VERSION=1
+#    DEFINES += MOVIEMATOR_FREE=1
 
+    #pro share
+    DEFINES += STEAM=1
+    DEFINES += MOVIEMATOR_PRO=1
+    DEFINES += SHARE_VERSION=1
 }
 
 win32 {
@@ -441,6 +419,8 @@ win32 {
     INCLUDEPATH += $$MLT_PATH\\include\\mlt++ $$MLT_PATH\\include\\mlt
     LIBS += -L$$MLT_PATH\\lib -lmlt++ -lmlt -lopengl32
     RC_FILE = shotcut.rc
+
+    LIBS += -L$$MLT_PATH -leay32
 }
 
 unix:!mac {
@@ -455,7 +435,7 @@ isEmpty(SHOTCUT_VERSION) {
      win32:SHOTCUT_VERSION = adhoc
 }
 #DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
-DEFINES += SHOTCUT_VERSION=\\\"2.5.1\\\"
+DEFINES += SHOTCUT_VERSION=\\\"2.5.2\\\"
 
 
 unix:!mac:isEmpty(PREFIX) {

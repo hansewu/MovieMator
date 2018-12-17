@@ -557,7 +557,7 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
     m_updateCommand = 0;
     MAIN.undoStack()->push(command);
 
-    setSelection(originSelection);
+    //setSelection(originSelection);
 }
 
 void TimelineDock::addAudioTrack()
@@ -1735,7 +1735,7 @@ int TimelineDock::getPositionOnClip(int position)
         {
             Mlt::Playlist playlist(*track);
             Mlt::ClipInfo *info = playlist.clip_info(clipIndex);
-            if(info && info->frame_in > 0) {
+            if (info && (info->frame_in > 0)) {
                 ret = position - info->frame_in;
             } else {
                 ret = position;
