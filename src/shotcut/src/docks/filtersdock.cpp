@@ -70,6 +70,8 @@ void FiltersDock::clearCurrentFilter()
     m_qview.rootContext()->setContextProperty("metadata", 0);
     QMetaObject::invokeMethod(m_qview.rootObject(), "clearCurrentFilter");
     disconnect(this, SIGNAL(changed()));
+    m_qmlFilter = NULL;
+
 }
 
 void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index)
@@ -82,6 +84,7 @@ void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int ind
      //   qDebug()<<"filter m_path is "<<filter->path();
         connect(filter, SIGNAL(changed()), SIGNAL(changed()));
     }
+    m_qmlFilter = filter;
 }
 
 void FiltersDock::setFadeInDuration(int duration)
@@ -100,6 +103,11 @@ void FiltersDock::setFadeOutDuration(int duration)
     }
 }
 
+ void FiltersDock::onChangePosition()
+ {
+    if(m_qmlFilter)
+        emit positionChanged();
+ }
 bool FiltersDock::event(QEvent *event)
 {
     bool result = QDockWidget::event(event);

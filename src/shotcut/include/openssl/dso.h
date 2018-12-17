@@ -59,8 +59,6 @@
 #ifndef HEADER_DSO_H
 #define HEADER_DSO_H
 
-#include <AvailabilityMacros.h>
-
 #include <openssl/crypto.h>
 
 #ifdef __cplusplus
@@ -139,29 +137,29 @@ typedef struct dso_meth_st
 	/* Loads a shared library, NB: new DSO_METHODs must ensure that a
 	 * successful load populates the loaded_filename field, and likewise a
 	 * successful unload OPENSSL_frees and NULLs it out. */
-	int (*dso_load)(DSO *dso) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	int (*dso_load)(DSO *dso);
 	/* Unloads a shared library */
-	int (*dso_unload)(DSO *dso) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	int (*dso_unload)(DSO *dso);
 	/* Binds a variable */
-	void *(*dso_bind_var)(DSO *dso, const char *symname) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	void *(*dso_bind_var)(DSO *dso, const char *symname);
 	/* Binds a function - assumes a return type of DSO_FUNC_TYPE.
 	 * This should be cast to the real function prototype by the
 	 * caller. Platforms that don't have compatible representations
 	 * for different prototypes (this is possible within ANSI C)
 	 * are highly unlikely to have shared libraries at all, let
 	 * alone a DSO_METHOD implemented for them. */
-	DSO_FUNC_TYPE (*dso_bind_func)(DSO *dso, const char *symname) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	DSO_FUNC_TYPE (*dso_bind_func)(DSO *dso, const char *symname);
 
 /* I don't think this would actually be used in any circumstances. */
 #if 0
 	/* Unbinds a variable */
-	int (*dso_unbind_var)(DSO *dso, char *symname, void *symptr) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	int (*dso_unbind_var)(DSO *dso, char *symname, void *symptr);
 	/* Unbinds a function */
-	int (*dso_unbind_func)(DSO *dso, char *symname, DSO_FUNC_TYPE symptr) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	int (*dso_unbind_func)(DSO *dso, char *symname, DSO_FUNC_TYPE symptr);
 #endif
 	/* The generic (yuck) "ctrl()" function. NB: Negative return
 	 * values (rather than zero) indicate errors. */
-	long (*dso_ctrl)(DSO *dso, int cmd, long larg, void *parg) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	long (*dso_ctrl)(DSO *dso, int cmd, long larg, void *parg);
 	/* The default DSO_METHOD-specific function for converting filenames to
 	 * a canonical native form. */
 	DSO_NAME_CONVERTER_FUNC dso_name_converter;
@@ -170,8 +168,8 @@ typedef struct dso_meth_st
 	DSO_MERGER_FUNC dso_merger;
 
 	/* [De]Initialisation handlers. */
-	int (*init)(DSO *dso) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-	int (*finish)(DSO *dso) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	int (*init)(DSO *dso);
+	int (*finish)(DSO *dso);
 	} DSO_METHOD;
 
 /**********************************************************************/
@@ -215,23 +213,23 @@ struct dso_st
 	};
 
 
-DSO *	DSO_new(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-DSO *	DSO_new_method(DSO_METHOD *method) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int	DSO_free(DSO *dso) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int	DSO_flags(DSO *dso) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int	DSO_up_ref(DSO *dso) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-long	DSO_ctrl(DSO *dso, int cmd, long larg, void *parg) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+DSO *	DSO_new(void);
+DSO *	DSO_new_method(DSO_METHOD *method);
+int	DSO_free(DSO *dso);
+int	DSO_flags(DSO *dso);
+int	DSO_up_ref(DSO *dso);
+long	DSO_ctrl(DSO *dso, int cmd, long larg, void *parg);
 
 /* This function sets the DSO's name_converter callback. If it is non-NULL,
  * then it will be used instead of the associated DSO_METHOD's function. If
  * oldcb is non-NULL then it is set to the function pointer value being
  * replaced. Return value is non-zero for success. */
 int	DSO_set_name_converter(DSO *dso, DSO_NAME_CONVERTER_FUNC cb,
-				DSO_NAME_CONVERTER_FUNC *oldcb) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+				DSO_NAME_CONVERTER_FUNC *oldcb);
 /* These functions can be used to get/set the platform-independant filename
  * used for a DSO. NB: set will fail if the DSO is already loaded. */
-const char *DSO_get_filename(DSO *dso) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int	DSO_set_filename(DSO *dso, const char *filename) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+const char *DSO_get_filename(DSO *dso);
+int	DSO_set_filename(DSO *dso, const char *filename);
 /* This function will invoke the DSO's name_converter callback to translate a
  * filename, or if the callback isn't set it will instead use the DSO_METHOD's
  * converter. If "filename" is NULL, the "filename" in the DSO itself will be
@@ -240,12 +238,12 @@ int	DSO_set_filename(DSO *dso, const char *filename) DEPRECATED_IN_MAC_OS_X_VERS
  * DSO_METHOD during the processing of a DSO_load() call, and is exposed so that
  * caller-created DSO_METHODs can do the same thing. A non-NULL return value
  * will need to be OPENSSL_free()'d. */
-char	*DSO_convert_filename(DSO *dso, const char *filename) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+char	*DSO_convert_filename(DSO *dso, const char *filename);
 /* This function will invoke the DSO's merger callback to merge two file
  * specifications, or if the callback isn't set it will instead use the
  * DSO_METHOD's merger.  A non-NULL return value will need to be
  * OPENSSL_free()'d. */
-char	*DSO_merge(DSO *dso, const char *filespec1, const char *filespec2) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+char	*DSO_merge(DSO *dso, const char *filespec1, const char *filespec2);
 /* If the DSO is currently loaded, this returns the filename that it was loaded
  * under, otherwise it returns NULL. So it is also useful as a test as to
  * whether the DSO is currently loaded. NB: This will not necessarily return
@@ -253,56 +251,56 @@ char	*DSO_merge(DSO *dso, const char *filespec1, const char *filespec2) DEPRECAT
  * DSO_METHOD's load function may have tried a variety of filenames (with
  * and/or without the aid of the converters) before settling on the one it
  * actually loaded. */
-const char *DSO_get_loaded_filename(DSO *dso) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+const char *DSO_get_loaded_filename(DSO *dso);
 
-void	DSO_set_default_method(DSO_METHOD *meth) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-DSO_METHOD *DSO_get_default_method(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-DSO_METHOD *DSO_get_method(DSO *dso) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-DSO_METHOD *DSO_set_method(DSO *dso, DSO_METHOD *meth) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void	DSO_set_default_method(DSO_METHOD *meth);
+DSO_METHOD *DSO_get_default_method(void);
+DSO_METHOD *DSO_get_method(DSO *dso);
+DSO_METHOD *DSO_set_method(DSO *dso, DSO_METHOD *meth);
 
 /* The all-singing all-dancing load function, you normally pass NULL
  * for the first and third parameters. Use DSO_up and DSO_free for
  * subsequent reference count handling. Any flags passed in will be set
  * in the constructed DSO after its init() function but before the
  * load operation. If 'dso' is non-NULL, 'flags' is ignored. */
-DSO *DSO_load(DSO *dso, const char *filename, DSO_METHOD *meth, int flags) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+DSO *DSO_load(DSO *dso, const char *filename, DSO_METHOD *meth, int flags);
 
 /* This function binds to a variable inside a shared library. */
-void *DSO_bind_var(DSO *dso, const char *symname) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void *DSO_bind_var(DSO *dso, const char *symname);
 
 /* This function binds to a function inside a shared library. */
-DSO_FUNC_TYPE DSO_bind_func(DSO *dso, const char *symname) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+DSO_FUNC_TYPE DSO_bind_func(DSO *dso, const char *symname);
 
 /* This method is the default, but will beg, borrow, or steal whatever
  * method should be the default on any particular platform (including
  * DSO_METH_null() if necessary). */
-DSO_METHOD *DSO_METHOD_openssl(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+DSO_METHOD *DSO_METHOD_openssl(void);
 
 /* This method is defined for all platforms - if a platform has no
  * DSO support then this will be the only method! */
-DSO_METHOD *DSO_METHOD_null(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+DSO_METHOD *DSO_METHOD_null(void);
 
 /* If DSO_DLFCN is defined, the standard dlfcn.h-style functions
  * (dlopen, dlclose, dlsym, etc) will be used and incorporated into
  * this method. If not, this method will return NULL. */
-DSO_METHOD *DSO_METHOD_dlfcn(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+DSO_METHOD *DSO_METHOD_dlfcn(void);
 
 /* If DSO_DL is defined, the standard dl.h-style functions (shl_load, 
  * shl_unload, shl_findsym, etc) will be used and incorporated into
  * this method. If not, this method will return NULL. */
-DSO_METHOD *DSO_METHOD_dl(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+DSO_METHOD *DSO_METHOD_dl(void);
 
 /* If WIN32 is defined, use DLLs. If not, return NULL. */
-DSO_METHOD *DSO_METHOD_win32(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+DSO_METHOD *DSO_METHOD_win32(void);
 
 /* If VMS is defined, use shared images. If not, return NULL. */
-DSO_METHOD *DSO_METHOD_vms(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+DSO_METHOD *DSO_METHOD_vms(void);
 
 /* BEGIN ERROR CODES */
 /* The following lines are auto generated by the script mkerr.pl. Any changes
  * made after this point may be overwritten when the script is next run.
  */
-void ERR_load_DSO_strings(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void ERR_load_DSO_strings(void);
 
 /* Error codes for the DSO functions. */
 

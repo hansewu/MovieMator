@@ -754,7 +754,7 @@ void QmlFilter::combineAllKeyFramePara()
                 {
                     if (!animation.is_valid() || !animation.is_key(para.keyFrame)
                             || value.toDouble() != m_filter->anim_get_double(key.toUtf8().constData(), para.keyFrame, out - in + 1)) {
-                        m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), para.keyFrame, out - in + 1, mlt_keyframe_smooth);
+                        m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), para.keyFrame, out - in + 1, mlt_keyframe_linear);
                         MLT.refreshConsumer();
                         emit changed();
                     }
@@ -763,7 +763,7 @@ void QmlFilter::combineAllKeyFramePara()
                 {
                     if (!animation.is_valid() || !animation.is_key(para.keyFrame)
                             || value.toInt() != m_filter->anim_get_int(key.toUtf8().constData(), para.keyFrame, out - in + 1)) {
-                        m_filter->anim_set(key.toUtf8().constData(), value.toInt(), para.keyFrame, out - in + 1, mlt_keyframe_smooth);
+                        m_filter->anim_set(key.toUtf8().constData(), value.toInt(), para.keyFrame, out - in + 1, mlt_keyframe_linear);
                         MLT.refreshConsumer();
                         emit changed();
                     }

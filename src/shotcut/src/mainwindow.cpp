@@ -106,24 +106,49 @@
 
 #if defined(Q_OS_WIN)
 
+#if SHARE_VERSION
+
+#if MOVIEMATOR_PRO
 const QString g_homePage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
+const QString g_buynowPage = "http://www.macvideostudio.com/purchase/moviemator-video-editor-pro.html";
+#else
+const QString g_homePage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
+const QString g_buynowPage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
+#endif
 
 #else
+
+#if MOVIEMATOR_PRO
+const QString g_homePage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
+const QString g_buynowPage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
+#else
+const QString g_homePage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
+const QString g_buynowPage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
+#endif
+
+#endif
+
+#else //mac
 
 #if SHARE_VERSION
 
 #if MOVIEMATOR_PRO
 const QString g_homePage = "http://www.macvideostudio.com/mac-video-editor-moviemator-pro.html";
+const QString g_buynowPage = "http://www.macvideostudio.com/purchase/buy-video-editor-moviemator-pro.html";
+
 #else
 const QString g_homePage = "http://www.macvideostudio.com/moviemator-free-mac-video-editor.html";
+const QString g_buynowPage = "http://www.macvideostudio.com/purchase/buy-video-editor-moviemator-pro.html";
 #endif
 
 #else
 
 #if MOVIEMATOR_PRO
 const QString g_homePage = "http://www.macvideostudio.com/video-editor-moviemator-appstore.html";
+const QString g_buynowPage = "http://www.macvideostudio.com/purchase/buy-video-editor-moviemator-pro.html";
 #else
 const QString g_homePage = "http://www.macvideostudio.com/video-editor-moviemator-appstore.html";
+const QString g_buynowPage = "http://www.macvideostudio.com/purchase/buy-video-editor-moviemator-pro.html";
 #endif
 
 #endif
@@ -262,8 +287,6 @@ MainWindow::MainWindow()
     //LOG_DEBUG() << "setStyleSheet(\"QMainWindow::separator {width: 6px; background: '#1D1E1F'}\");  - end";
     LOG_DEBUG() << "customize toolbar";
     this->customizeToolbar();
-
-
 
     // Add the player widget.
     LOG_DEBUG() << "Add the player widget";
@@ -489,7 +512,8 @@ MainWindow::MainWindow()
     connect(m_filtersDock, SIGNAL(changePosition(int)), m_timelineDock, SLOT(changePostionFromFilter(int)));
 
     connect(m_timelineDock,SIGNAL(positionChangedForKeyFrame(int)), m_filtersDock,SLOT(setCurrentClipFrameFromTimeline(int)));
-    connect(m_timelineDock, SIGNAL(positionChanged()), m_filtersDock, SIGNAL(positionChanged()));
+    connect(m_timelineDock, SIGNAL(positionChanged()), m_filtersDock, SLOT(onChangePosition()));
+//    connect(m_timelineDock, SIGNAL(positionChanged()), m_filtersDock, SIGNAL(positionChanged()));
 #endif
 
     LOG_DEBUG() << "history dock";
@@ -695,7 +719,11 @@ MainWindow::MainWindow()
     else if (Registration.registrationType() == Registration_Personal)
         setWindowTitle(tr("MovieMator Video Editor Pro (Personal)"));
     else if (Registration.registrationType() == Registration_Family)
-        setWindowTitle(tr("MovieMator Video Editor Pro (Family)"));
+        setWindowTitle(tr("MovieMator Video Editor Pro (Business)"));
+    else if (Registration.registrationType() == Registration_Commercial)
+        setWindowTitle(tr("MovieMator Video Editor Pro"));
+    else
+        setWindowTitle(tr("MovieMator Video Editor Pro"));
 #else
     setWindowTitle(tr("MovieMator Video Editor"));
 #endif
@@ -740,6 +768,11 @@ void MainWindow::configureUI()
 #endif
 
 #ifndef MOVIEMATOR_PRO
+    ui->actionBuy_a_License_Code->setVisible(false);
+    ui->actionEnter_License_Code->setVisible(false);
+#endif
+
+#if STEAM
     ui->actionBuy_a_License_Code->setVisible(false);
     ui->actionEnter_License_Code->setVisible(false);
 #endif
@@ -1853,7 +1886,11 @@ void MainWindow::setCurrentFile(const QString &filename)
     else if (Registration.registrationType() == Registration_Personal)
         setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro (Personal)"));
     else if (Registration.registrationType() == Registration_Family)
-        setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro (Family)"));
+        setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro (Business)"));
+    else if (Registration.registrationType() == Registration_Commercial)
+        setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro"));
+    else
+        setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro"));
 #else
     setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor"));
 #endif
@@ -4218,7 +4255,7 @@ void MainWindow::on_activateButton_clicked()
 
 void MainWindow::on_buynowButton_clicked()
 {
-    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/purchase/buy-video-editor-moviemator-pro.html"));
+    QDesktopServices::openUrl(QUrl(g_buynowPage));
 }
 
 int MainWindow::showRegistrationTipDialog()
