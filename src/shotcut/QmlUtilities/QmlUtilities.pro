@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += widgets qml quick webkitwidgets
+QT       += widgets qml quick
 QT       += gui-private
 
 TARGET = QmlUtilities

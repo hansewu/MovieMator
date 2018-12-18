@@ -59,8 +59,6 @@
 #ifndef HEADER_DH_H
 #define HEADER_DH_H
 
-#include <AvailabilityMacros.h>
-
 #include <openssl/e_os2.h>
 
 #ifdef OPENSSL_NO_DH
@@ -102,18 +100,18 @@ struct dh_method
 	{
 	const char *name;
 	/* Methods here */
-	int (*generate_key)(DH *dh) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-	int (*compute_key)(unsigned char *key,const BIGNUM *pub_key,DH *dh) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	int (*generate_key)(DH *dh);
+	int (*compute_key)(unsigned char *key,const BIGNUM *pub_key,DH *dh);
 	int (*bn_mod_exp)(const DH *dh, BIGNUM *r, const BIGNUM *a,
 				const BIGNUM *p, const BIGNUM *m, BN_CTX *ctx,
-				BN_MONT_CTX *m_ctx) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER; /* Can be null */
+				BN_MONT_CTX *m_ctx); /* Can be null */
 
-	int (*init)(DH *dh) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-	int (*finish)(DH *dh) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	int (*init)(DH *dh);
+	int (*finish)(DH *dh);
 	int flags;
 	char *app_data;
 	/* If this is non-NULL, it will be used to generate parameters */
-	int (*generate_params)(DH *dh, int prime_len, int generator, BN_GENCB *cb) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	int (*generate_params)(DH *dh, int prime_len, int generator, BN_GENCB *cb);
 	};
 
 struct dh_st
@@ -169,56 +167,56 @@ struct dh_st
 #define d2i_DHparams_bio(bp,x) ASN1_d2i_bio_of(DH,DH_new,d2i_DHparams,bp,x)
 #define i2d_DHparams_bio(bp,x) ASN1_i2d_bio_of_const(DH,i2d_DHparams,bp,x)
 
-const DH_METHOD *DH_OpenSSL(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+const DH_METHOD *DH_OpenSSL(void);
 
 #ifdef OPENSSL_FIPS
-DH *	FIPS_dh_new(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void	FIPS_dh_free(DH *dh) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+DH *	FIPS_dh_new(void);
+void	FIPS_dh_free(DH *dh);
 #endif
 
-void DH_set_default_method(const DH_METHOD *meth) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-const DH_METHOD *DH_get_default_method(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int DH_set_method(DH *dh, const DH_METHOD *meth) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-DH *DH_new_method(ENGINE *engine) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void DH_set_default_method(const DH_METHOD *meth);
+const DH_METHOD *DH_get_default_method(void);
+int DH_set_method(DH *dh, const DH_METHOD *meth);
+DH *DH_new_method(ENGINE *engine);
 
-DH *	DH_new(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void	DH_free(DH *dh) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int	DH_up_ref(DH *dh) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int	DH_size(const DH *dh) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+DH *	DH_new(void);
+void	DH_free(DH *dh);
+int	DH_up_ref(DH *dh);
+int	DH_size(const DH *dh);
 int DH_get_ex_new_index(long argl, void *argp, CRYPTO_EX_new *new_func,
-	     CRYPTO_EX_dup *dup_func, CRYPTO_EX_free *free_func) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int DH_set_ex_data(DH *d, int idx, void *arg) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void *DH_get_ex_data(DH *d, int idx) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	     CRYPTO_EX_dup *dup_func, CRYPTO_EX_free *free_func);
+int DH_set_ex_data(DH *d, int idx, void *arg);
+void *DH_get_ex_data(DH *d, int idx);
 
 /* Deprecated version */
 #ifndef OPENSSL_NO_DEPRECATED
 DH *	DH_generate_parameters(int prime_len,int generator,
-		void (*callback)(int,int,void *),void *cb_arg) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		void (*callback)(int,int,void *),void *cb_arg);
 #endif /* !defined(OPENSSL_NO_DEPRECATED) */
 
 /* New version */
-int	DH_generate_parameters_ex(DH *dh, int prime_len,int generator, BN_GENCB *cb) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int	DH_generate_parameters_ex(DH *dh, int prime_len,int generator, BN_GENCB *cb);
 
-int	DH_check(const DH *dh,int *codes) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int	DH_check_pub_key(const DH *dh,const BIGNUM *pub_key, int *codes) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int	DH_generate_key(DH *dh) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int	DH_compute_key(unsigned char *key,const BIGNUM *pub_key,DH *dh) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-DH *	d2i_DHparams(DH **a,const unsigned char **pp, long length) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int	i2d_DHparams(const DH *a,unsigned char **pp) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int	DH_check(const DH *dh,int *codes);
+int	DH_check_pub_key(const DH *dh,const BIGNUM *pub_key, int *codes);
+int	DH_generate_key(DH *dh);
+int	DH_compute_key(unsigned char *key,const BIGNUM *pub_key,DH *dh);
+DH *	d2i_DHparams(DH **a,const unsigned char **pp, long length);
+int	i2d_DHparams(const DH *a,unsigned char **pp);
 #ifndef OPENSSL_NO_FP_API
-int	DHparams_print_fp(FILE *fp, const DH *x) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int	DHparams_print_fp(FILE *fp, const DH *x);
 #endif
 #ifndef OPENSSL_NO_BIO
-int	DHparams_print(BIO *bp, const DH *x) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int	DHparams_print(BIO *bp, const DH *x);
 #else
-int	DHparams_print(char *bp, const DH *x) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int	DHparams_print(char *bp, const DH *x);
 #endif
 
 /* BEGIN ERROR CODES */
 /* The following lines are auto generated by the script mkerr.pl. Any changes
  * made after this point may be overwritten when the script is next run.
  */
-void ERR_load_DH_strings(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void ERR_load_DH_strings(void);
 
 /* Error codes for the DH functions. */
 

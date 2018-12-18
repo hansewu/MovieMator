@@ -185,7 +185,8 @@ public:
             QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
         } else if (Settings.drawMethod() >= Qt::AA_UseDesktopOpenGL &&
                    Settings.drawMethod() <= Qt::AA_UseSoftwareOpenGL) {
-            QCoreApplication::setAttribute(Qt::ApplicationAttribute(Settings.drawMethod()));
+//            QCoreApplication::setAttribute(Qt::ApplicationAttribute(Settings.drawMethod()));
+            QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
         }
 #endif
         // Load translations

@@ -117,8 +117,6 @@
 #ifndef HEADER_CRYPTO_H
 #define HEADER_CRYPTO_H
 
-#include <AvailabilityMacros.h>
-
 #include <stdlib.h>
 
 #include <openssl/e_os2.h>
@@ -349,10 +347,10 @@ DECLARE_STACK_OF(CRYPTO_EX_DATA_FUNCS)
 
 /* Set standard debugging functions (not done by default
  * unless CRYPTO_MDEBUG is defined) */
-void CRYPTO_malloc_debug_init(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void CRYPTO_malloc_debug_init(void);
 
-int CRYPTO_mem_ctrl(int mode) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int CRYPTO_is_mem_check_on(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int CRYPTO_mem_ctrl(int mode);
+int CRYPTO_is_mem_check_on(void);
 
 /* for applications */
 #define MemCheck_start() CRYPTO_mem_ctrl(CRYPTO_MEM_CHECK_ON)
@@ -379,120 +377,120 @@ int CRYPTO_is_mem_check_on(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
 #define OPENSSL_free_locked(addr) CRYPTO_free_locked(addr)
 
 
-const char *SSLeay_version(int type) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-unsigned long SSLeay(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+const char *SSLeay_version(int type);
+unsigned long SSLeay(void);
 
-int OPENSSL_issetugid(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int OPENSSL_issetugid(void);
 
 /* An opaque type representing an implementation of "ex_data" support */
 typedef struct st_CRYPTO_EX_DATA_IMPL	CRYPTO_EX_DATA_IMPL;
 /* Return an opaque pointer to the current "ex_data" implementation */
-const CRYPTO_EX_DATA_IMPL *CRYPTO_get_ex_data_implementation(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+const CRYPTO_EX_DATA_IMPL *CRYPTO_get_ex_data_implementation(void);
 /* Sets the "ex_data" implementation to be used (if it's not too late) */
-int CRYPTO_set_ex_data_implementation(const CRYPTO_EX_DATA_IMPL *i) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int CRYPTO_set_ex_data_implementation(const CRYPTO_EX_DATA_IMPL *i);
 /* Get a new "ex_data" class, and return the corresponding "class_index" */
-int CRYPTO_ex_data_new_class(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int CRYPTO_ex_data_new_class(void);
 /* Within a given class, get/register a new index */
 int CRYPTO_get_ex_new_index(int class_index, long argl, void *argp,
 		CRYPTO_EX_new *new_func, CRYPTO_EX_dup *dup_func,
-		CRYPTO_EX_free *free_func) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		CRYPTO_EX_free *free_func);
 /* Initialise/duplicate/free CRYPTO_EX_DATA variables corresponding to a given
  * class (invokes whatever per-class callbacks are applicable) */
-int CRYPTO_new_ex_data(int class_index, void *obj, CRYPTO_EX_DATA *ad) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int CRYPTO_new_ex_data(int class_index, void *obj, CRYPTO_EX_DATA *ad);
 int CRYPTO_dup_ex_data(int class_index, CRYPTO_EX_DATA *to,
-		CRYPTO_EX_DATA *from) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void CRYPTO_free_ex_data(int class_index, void *obj, CRYPTO_EX_DATA *ad) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		CRYPTO_EX_DATA *from);
+void CRYPTO_free_ex_data(int class_index, void *obj, CRYPTO_EX_DATA *ad);
 /* Get/set data in a CRYPTO_EX_DATA variable corresponding to a particular index
  * (relative to the class type involved) */
-int CRYPTO_set_ex_data(CRYPTO_EX_DATA *ad, int idx, void *val) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void *CRYPTO_get_ex_data(const CRYPTO_EX_DATA *ad,int idx) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int CRYPTO_set_ex_data(CRYPTO_EX_DATA *ad, int idx, void *val);
+void *CRYPTO_get_ex_data(const CRYPTO_EX_DATA *ad,int idx);
 /* This function cleans up all "ex_data" state. It mustn't be called under
  * potential race-conditions. */
-void CRYPTO_cleanup_all_ex_data(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void CRYPTO_cleanup_all_ex_data(void);
 
-int CRYPTO_get_new_lockid(char *name) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int CRYPTO_get_new_lockid(char *name);
 
-int CRYPTO_num_locks(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER; /* return CRYPTO_NUM_LOCKS (shared libs!) */
-void CRYPTO_lock(int mode, int type,const char *file,int line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int CRYPTO_num_locks(void); /* return CRYPTO_NUM_LOCKS (shared libs!) */
+void CRYPTO_lock(int mode, int type,const char *file,int line);
 void CRYPTO_set_locking_callback(void (*func)(int mode,int type,
-					      const char *file,int line)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+					      const char *file,int line));
 void (*CRYPTO_get_locking_callback(void))(int mode,int type,const char *file,
-		int line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		int line);
 void CRYPTO_set_add_lock_callback(int (*func)(int *num,int mount,int type,
-					      const char *file, int line)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+					      const char *file, int line));
 int (*CRYPTO_get_add_lock_callback(void))(int *num,int mount,int type,
-					  const char *file,int line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void CRYPTO_set_id_callback(unsigned long (*func)(void)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-unsigned long (*CRYPTO_get_id_callback(void))(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-unsigned long CRYPTO_thread_id(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-const char *CRYPTO_get_lock_name(int type) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+					  const char *file,int line);
+void CRYPTO_set_id_callback(unsigned long (*func)(void));
+unsigned long (*CRYPTO_get_id_callback(void))(void);
+unsigned long CRYPTO_thread_id(void);
+const char *CRYPTO_get_lock_name(int type);
 int CRYPTO_add_lock(int *pointer,int amount,int type, const char *file,
-		    int line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+		    int line);
 
 void int_CRYPTO_set_do_dynlock_callback(
-	void (*do_dynlock_cb)(int mode, int type, const char *file, int line)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	void (*do_dynlock_cb)(int mode, int type, const char *file, int line));
 
-int CRYPTO_get_new_dynlockid(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void CRYPTO_destroy_dynlockid(int i) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-struct CRYPTO_dynlock_value *CRYPTO_get_dynlock_value(int i) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void CRYPTO_set_dynlock_create_callback(struct CRYPTO_dynlock_value *(*dyn_create_function)(const char *file, int line)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void CRYPTO_set_dynlock_lock_callback(void (*dyn_lock_function)(int mode, struct CRYPTO_dynlock_value *l, const char *file, int line)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void CRYPTO_set_dynlock_destroy_callback(void (*dyn_destroy_function)(struct CRYPTO_dynlock_value *l, const char *file, int line)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-struct CRYPTO_dynlock_value *(*CRYPTO_get_dynlock_create_callback(void))(const char *file,int line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void (*CRYPTO_get_dynlock_lock_callback(void))(int mode, struct CRYPTO_dynlock_value *l, const char *file,int line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void (*CRYPTO_get_dynlock_destroy_callback(void))(struct CRYPTO_dynlock_value *l, const char *file,int line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int CRYPTO_get_new_dynlockid(void);
+void CRYPTO_destroy_dynlockid(int i);
+struct CRYPTO_dynlock_value *CRYPTO_get_dynlock_value(int i);
+void CRYPTO_set_dynlock_create_callback(struct CRYPTO_dynlock_value *(*dyn_create_function)(const char *file, int line));
+void CRYPTO_set_dynlock_lock_callback(void (*dyn_lock_function)(int mode, struct CRYPTO_dynlock_value *l, const char *file, int line));
+void CRYPTO_set_dynlock_destroy_callback(void (*dyn_destroy_function)(struct CRYPTO_dynlock_value *l, const char *file, int line));
+struct CRYPTO_dynlock_value *(*CRYPTO_get_dynlock_create_callback(void))(const char *file,int line);
+void (*CRYPTO_get_dynlock_lock_callback(void))(int mode, struct CRYPTO_dynlock_value *l, const char *file,int line);
+void (*CRYPTO_get_dynlock_destroy_callback(void))(struct CRYPTO_dynlock_value *l, const char *file,int line);
 
 /* CRYPTO_set_mem_functions includes CRYPTO_set_locked_mem_functions --
  * call the latter last if you need different functions */
-int CRYPTO_set_mem_functions(void *(*m)(size_t),void *(*r)(void *,size_t), void (*f)(void *)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int CRYPTO_set_locked_mem_functions(void *(*m)(size_t), void (*free_func)(void *)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int CRYPTO_set_mem_functions(void *(*m)(size_t),void *(*r)(void *,size_t), void (*f)(void *));
+int CRYPTO_set_locked_mem_functions(void *(*m)(size_t), void (*free_func)(void *));
 int CRYPTO_set_mem_ex_functions(void *(*m)(size_t,const char *,int),
                                 void *(*r)(void *,size_t,const char *,int),
-                                void (*f)(void *)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+                                void (*f)(void *));
 int CRYPTO_set_locked_mem_ex_functions(void *(*m)(size_t,const char *,int),
-                                       void (*free_func)(void *)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+                                       void (*free_func)(void *));
 int CRYPTO_set_mem_debug_functions(void (*m)(void *,int,const char *,int,int),
 				   void (*r)(void *,void *,int,const char *,int,int),
 				   void (*f)(void *,int),
 				   void (*so)(long),
-				   long (*go)(void)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+				   long (*go)(void));
 void CRYPTO_set_mem_info_functions(
 	int  (*push_info_fn)(const char *info, const char *file, int line),
 	int  (*pop_info_fn)(void),
-	int (*remove_all_info_fn)(void)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void CRYPTO_get_mem_functions(void *(**m)(size_t),void *(**r)(void *, size_t), void (**f)(void *)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void CRYPTO_get_locked_mem_functions(void *(**m)(size_t), void (**f)(void *)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+	int (*remove_all_info_fn)(void));
+void CRYPTO_get_mem_functions(void *(**m)(size_t),void *(**r)(void *, size_t), void (**f)(void *));
+void CRYPTO_get_locked_mem_functions(void *(**m)(size_t), void (**f)(void *));
 void CRYPTO_get_mem_ex_functions(void *(**m)(size_t,const char *,int),
                                  void *(**r)(void *, size_t,const char *,int),
-                                 void (**f)(void *)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+                                 void (**f)(void *));
 void CRYPTO_get_locked_mem_ex_functions(void *(**m)(size_t,const char *,int),
-                                        void (**f)(void *)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+                                        void (**f)(void *));
 void CRYPTO_get_mem_debug_functions(void (**m)(void *,int,const char *,int,int),
 				    void (**r)(void *,void *,int,const char *,int,int),
 				    void (**f)(void *,int),
 				    void (**so)(long),
-				    long (**go)(void)) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+				    long (**go)(void));
 
-void *CRYPTO_malloc_locked(int num, const char *file, int line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void CRYPTO_free_locked(void *) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void *CRYPTO_malloc(int num, const char *file, int line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-char *CRYPTO_strdup(const char *str, const char *file, int line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void CRYPTO_free(void *) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void *CRYPTO_realloc(void *addr,int num, const char *file, int line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void *CRYPTO_malloc_locked(int num, const char *file, int line);
+void CRYPTO_free_locked(void *);
+void *CRYPTO_malloc(int num, const char *file, int line);
+char *CRYPTO_strdup(const char *str, const char *file, int line);
+void CRYPTO_free(void *);
+void *CRYPTO_realloc(void *addr,int num, const char *file, int line);
 void *CRYPTO_realloc_clean(void *addr,int old_num,int num,const char *file,
-			   int line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void *CRYPTO_remalloc(void *addr,int num, const char *file, int line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+			   int line);
+void *CRYPTO_remalloc(void *addr,int num, const char *file, int line);
 
-void OPENSSL_cleanse(void *ptr, size_t len) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void OPENSSL_cleanse(void *ptr, size_t len);
 
-void CRYPTO_set_mem_debug_options(long bits) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-long CRYPTO_get_mem_debug_options(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void CRYPTO_set_mem_debug_options(long bits);
+long CRYPTO_get_mem_debug_options(void);
 
 #define CRYPTO_push_info(info) \
         CRYPTO_push_info_(info, __FILE__, __LINE__);
-int CRYPTO_push_info_(const char *info, const char *file, int line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int CRYPTO_pop_info(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int CRYPTO_remove_all_info(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int CRYPTO_push_info_(const char *info, const char *file, int line);
+int CRYPTO_pop_info(void);
+int CRYPTO_remove_all_info(void);
 
 
 /* Default debugging functions (enabled by CRYPTO_malloc_debug_init() macro;
@@ -502,9 +500,9 @@ int CRYPTO_remove_all_info(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
  * 0:	called before the actual memory allocation has taken place
  * 1:	called after the actual memory allocation has taken place
  */
-void CRYPTO_dbg_malloc(void *addr,int num,const char *file,int line,int before_p) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void CRYPTO_dbg_realloc(void *addr1,void *addr2,int num,const char *file,int line,int before_p) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-void CRYPTO_dbg_free(void *addr,int before_p) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void CRYPTO_dbg_malloc(void *addr,int num,const char *file,int line,int before_p);
+void CRYPTO_dbg_realloc(void *addr1,void *addr2,int num,const char *file,int line,int before_p);
+void CRYPTO_dbg_free(void *addr,int before_p);
 /* Tell the debugging code about options.  By default, the following values
  * apply:
  *
@@ -513,28 +511,28 @@ void CRYPTO_dbg_free(void *addr,int before_p) DEPRECATED_IN_MAC_OS_X_VERSION_10_
  * V_CRYPTO_MDEBUG_THREAD (2):  Set the "Show Thread Number" option.
  * V_CRYPTO_MDEBUG_ALL (3):     1 + 2
  */
-void CRYPTO_dbg_set_options(long bits) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-long CRYPTO_dbg_get_options(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void CRYPTO_dbg_set_options(long bits);
+long CRYPTO_dbg_get_options(void);
 
-int CRYPTO_dbg_push_info(const char *info, const char *file, int line) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int CRYPTO_dbg_pop_info(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
-int CRYPTO_dbg_remove_all_info(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int CRYPTO_dbg_push_info(const char *info, const char *file, int line);
+int CRYPTO_dbg_pop_info(void);
+int CRYPTO_dbg_remove_all_info(void);
 
 #ifndef OPENSSL_NO_FP_API
-void CRYPTO_mem_leaks_fp(FILE *) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void CRYPTO_mem_leaks_fp(FILE *);
 #endif
-void CRYPTO_mem_leaks(struct bio_st *bio) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void CRYPTO_mem_leaks(struct bio_st *bio);
 /* unsigned long order, char *file, int line, int num_bytes, char *addr */
 typedef void *CRYPTO_MEM_LEAK_CB(unsigned long, const char *, int, int, void *);
-void CRYPTO_mem_leaks_cb(CRYPTO_MEM_LEAK_CB *cb) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void CRYPTO_mem_leaks_cb(CRYPTO_MEM_LEAK_CB *cb);
 
 /* die if we have to */
-void OpenSSLDie(const char *file,int line,const char *assertion) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void OpenSSLDie(const char *file,int line,const char *assertion);
 #define OPENSSL_assert(e)       (void)((e) ? 0 : (OpenSSLDie(__FILE__, __LINE__, #e),1))
 
-unsigned long *OPENSSL_ia32cap_loc(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+unsigned long *OPENSSL_ia32cap_loc(void);
 #define OPENSSL_ia32cap (*(OPENSSL_ia32cap_loc()))
-int OPENSSL_isservice(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int OPENSSL_isservice(void);
 
 #ifdef OPENSSL_FIPS
 #define FIPS_ERROR_IGNORED(alg) OpenSSLDie(__FILE__, __LINE__, \
@@ -591,20 +589,20 @@ int OPENSSL_isservice(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
 #endif /* def OPENSSL_FIPS */
 
 #define OPENSSL_HAVE_INIT	1
-void OPENSSL_init(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void OPENSSL_init(void);
 
 /* CRYPTO_memcmp returns zero iff the |len| bytes at |a| and |b| are equal. It
  * takes an amount of time dependent on |len|, but independent of the contents
  * of |a| and |b|. Unlike memcmp, it cannot be used to put elements into a
  * defined order as the return value when a != b is undefined, other than to be
  * non-zero. */
-int CRYPTO_memcmp(const void *a, const void *b, size_t len) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+int CRYPTO_memcmp(const void *a, const void *b, size_t len);
 
 /* BEGIN ERROR CODES */
 /* The following lines are auto generated by the script mkerr.pl. Any changes
  * made after this point may be overwritten when the script is next run.
  */
-void ERR_load_CRYPTO_strings(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+void ERR_load_CRYPTO_strings(void);
 
 /* Error codes for the CRYPTO functions. */
 

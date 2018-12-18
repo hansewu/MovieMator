@@ -7,11 +7,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleGetInfoString</key>
-        <string>MovieMator Video Editor, Copyright 2016-2018 effectmatrix inc</string>
+	<string>MovieMator Video Editor, Copyright 2016-2018 effectmatrix inc</string>
 	<key>CFBundleSignature</key>
 	<string>mmve</string>
 	<key>CFBundleExecutable</key>
-        <string>MovieMator Video Editor</string>
+	<string>MovieMator Video Editor</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.macvideostudio.moviemator-free</string>
 	<key>NSPrincipalClass</key>
@@ -19,11 +19,11 @@
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>CFBundleVersion</key>
-	<string>2510</string>
+	<string>2513</string>
 	<key>CFBundleName</key>
-        <string>MovieMator Video Editor</string>
+	<string>MovieMator Video Editor</string>
 	<key>CFBundleDisplayName</key>
-        <string>MovieMator Video Editor</string>
+	<string>MovieMator Video Editor</string>
 	<key>CFBundleShortVersionString</key>
 	<string>2.5.1</string>
 	<key>CFBundleDocumentTypes</key>
@@ -51,5 +51,9 @@
 	<string>10.8</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.video</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string></string>
 </dict>
 </plist>
