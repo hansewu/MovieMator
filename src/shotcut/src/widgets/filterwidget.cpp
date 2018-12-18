@@ -1,11 +1,11 @@
 #include <QQmlContext>
 #include "filterwidget.h"
 #include <qmlutilities.h>
-#include "qmltypes/qmlview.h"
+#include <qmlview.h>
 #include "models/metadatamodel.h"
 #include "models/attachedfiltersmodel.h"
 
-#include "qmltypes/qmlmetadata.h"
+#include "qmlmetadata.h"
 #include "settings.h"
 #include "mltcontroller.h"
 

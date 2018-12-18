@@ -17,7 +17,7 @@
  */
 
 #include "metadatamodel.h"
-#include "qmltypes/qmlmetadata.h"
+#include "qmlmetadata.h"
 #include "settings.h"
 #include <Logger.h>
 

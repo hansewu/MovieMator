@@ -19,10 +19,10 @@
 #include "qmltypes/colorpickeritem.h"
 #include "qmltypes/colorwheelitem.h"
 #include "qmltypes/mmqmlutilities.h"
-#include "qmltypes/qmlview.h"
+#include <qmlview.h>
 #include "qmltypes/qmlfile.h"
 #include "qmltypes/qmlhtmleditor.h"
-#include "qmltypes/qmlmetadata.h"
+#include "qmlmetadata.h"
 #include "qmltypes/timelineitems.h"
 #include "qmltypes/filesavedialog.h"
 #include "models/metadatamodel.h"

@@ -3,7 +3,7 @@
 
 #include <QAbstractListModel>
 #include <QList>
-#include "qmltypes/qmlmetadata.h"
+#include "qmlmetadata.h"
 class QmlTextMetaData;
 
 

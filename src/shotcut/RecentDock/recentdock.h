@@ -24,17 +24,20 @@
 #include <QDockWidget>
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
+#include <maininterface.h>
+#include "recentdockinterface.h"
+
 
 namespace Ui {
     class RecentDock;
 }
 
-class RECENTDOCKSHARED_EXPORT RecentDock : public QDockWidget
+class RecentDock : public QDockWidget
 {
     Q_OBJECT
 
 public:
-    explicit RecentDock(QWidget *parent = 0);
+    explicit RecentDock(MainInterface *main = 0, QWidget *parent = 0);
     ~RecentDock();
 
 signals:
@@ -49,6 +52,7 @@ private:
     QStringList m_recent;
     QStandardItemModel m_model;
     QSortFilterProxyModel m_proxyModel;
+    MainInterface *m_mainWindow;
 
 private slots:
     void on_listWidget_activated(const QModelIndex& i);

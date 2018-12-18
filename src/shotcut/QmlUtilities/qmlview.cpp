@@ -18,7 +18,6 @@
 
 #include "qmlview.h"
 #include <QWindow>
-#include <Logger.h>
 
 QmlView::QmlView(QWindow* qview)
     : QObject(qview)

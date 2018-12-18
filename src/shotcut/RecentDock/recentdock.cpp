@@ -30,9 +30,11 @@
 #include <QScrollBar>
 static const int MaxItems = 20;
 
-RecentDock::RecentDock(QWidget *parent) :
+
+RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
     QDockWidget(parent),
-    ui(new Ui::RecentDock)
+    ui(new Ui::RecentDock),
+    m_mainWindow(main)
 {
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
@@ -87,7 +89,9 @@ void RecentDock::add(const QString &s)
 void RecentDock::on_listWidget_activated(const QModelIndex& i)
 {
     ui->listWidget->setCurrentIndex(QModelIndex());
-    emit itemActivated(m_proxyModel.itemData(i)[Qt::ToolTipRole].toString());
+//    emit itemActivated(m_proxyModel.itemData(i)[Qt::ToolTipRole].toString());
+    FILE_HANDLE fileHandle = m_mainWindow->openFile(m_proxyModel.itemData(i)[Qt::ToolTipRole].toString());
+    m_mainWindow->playFile(fileHandle);
 }
 
 QString RecentDock::remove(const QString &s)
@@ -147,7 +151,6 @@ void RecentDock::on_actionRemoveAll_triggered()
 
 void RecentDock::on_actionPlay_triggered()
 {
-
     QModelIndex index = ui->listWidget->currentIndex();
     on_listWidget_activated(index);
 }
@@ -156,3 +159,42 @@ void RecentDock::on_actionProperties_triggered()
 {
 
 }
+
+
+
+
+static RecentDock *instance = 0;
+//初始化模块
+//参数，main 主程序接口对象
+//返回界面对象
+QDockWidget *RecentDock_initModule(MainInterface *main)
+{
+    if (instance == NULL)
+        instance = new RecentDock(main);
+    return instance;
+}
+
+//销毁模块
+void RecentDock_destroyModule()
+{
+
+}
+
+//获取选中的文件列表
+QList<QString> RecentDock_getSelectedFiles()
+{
+
+}
+
+//添加文件
+void RecentDock_add(QString filePath)
+{
+
+}
+
+//删除文件
+void RecentDock_remove(QString filePath)
+{
+
+}
+

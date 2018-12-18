@@ -25,7 +25,7 @@
 #include <QTimerEvent>
 #include "mltcontroller.h"
 #include "settings.h"
-#include "qmltypes/qmlmetadata.h"
+#include "qmlmetadata.h"
 #include <qmlutilities.h>
 #include "qmltypes/qmlfilter.h"
 

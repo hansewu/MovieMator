@@ -25,7 +25,7 @@
 #include "mainwindow.h"
 #include "commands/timelinecommands.h"
 #include <qmlutilities.h>
-#include "qmltypes/qmlview.h"
+#include <qmlview.h>
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
 #include "../mainwindow.h"
@@ -1646,7 +1646,7 @@ void TimelineDock::changePostionFromFilter(int position)
 }
 
 
-void TimelineDock::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta, int index)
+void TimelineDock::setCurrentFilter(QObject *filter, QmlMetadata *meta, int index)
 {
     m_quickView.rootContext()->setContextProperty("currentFilter", filter);
 }

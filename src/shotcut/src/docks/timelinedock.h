@@ -212,7 +212,7 @@ public slots:
     //MovieMator Pro
 #ifdef MOVIEMATOR_PRO
     void changePostionFromFilter(int position);
-    void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index);
+    void setCurrentFilter(QObject* filter, QmlMetadata* meta, int index);
 #endif
 
     void addFilterClipCommand(int TrackIndex, int clipIndex, QString strFromXml, QString strToXml);

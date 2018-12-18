@@ -20,7 +20,7 @@
 #include "mltcontroller.h"
 #include "mainwindow.h"
 #include "controllers/filtercontroller.h"
-#include "qmltypes/qmlmetadata.h"
+#include "qmlmetadata.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include <QTimer>

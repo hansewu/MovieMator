@@ -25,12 +25,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         qmlutilities.cpp \
-    qmlapplication.cpp
+    qmlapplication.cpp \
+    qmlmetadata.cpp \
+    qmlview.cpp
 
 HEADERS += \
         qmlutilities.h \
         qmlutilities_global.h \
-    qmlapplication.h
+    qmlapplication.h \
+    qmlmetadata.h \
+    qmlview.h
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 
