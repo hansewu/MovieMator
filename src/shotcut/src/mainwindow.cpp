@@ -312,7 +312,7 @@ MainWindow::MainWindow()
 //        rightDockWidget->setWidget(m_player);
         addDockWidget(Qt::RightDockWidgetArea, m_configurationDock);
         m_configurationDock->setTitleBarWidget(new QWidget());
-        m_configurationDock->setMinimumSize(400,320);
+        m_configurationDock->setMinimumSize(500,320);
         m_configurationDock->setContentsMargins(0,0,0,0);
 
 
@@ -3809,7 +3809,7 @@ void MainWindow::onHelpButtonTriggered()
 
 void MainWindow::onShowFilterDock()
 {
-    m_resourceBtnDock->on_showFilterDock_clicked();
+//    m_resourceBtnDock->on_showFilterDock_clicked();
 }
 
 
@@ -4164,8 +4164,8 @@ void MainWindow::showRecentDock()
 void MainWindow::showFilterDock()
 {
 //    m_playlistDock->hide();
-    m_recentDock->hide();
-    m_filtersDock->show();
+//    m_recentDock->hide();
+//    m_filtersDock->show();
 //    m_filtersDock->raise();
 }
 
@@ -4315,7 +4315,7 @@ void MainWindow::initParentDockForResourceDock()
     m_mainDockWidget = new QDockWidget(tr("123"));
     m_mainDockWidget->setTitleBarWidget(new QWidget());
     QWidget *layoutWidget = new QWidget;
-    layoutWidget->setMinimumWidth(400);
+    layoutWidget->setMinimumWidth(300);
     layoutWidget->setMinimumHeight(320);
     layoutWidget->setContentsMargins(0,0,0,0);
     QString strStyle = "QScrollBar::vertical{background-color:rgb(51,51,51);width:14px;border: 3px solid rgb(51,51,51);}";
@@ -4341,7 +4341,7 @@ void MainWindow::initParentDockForResourceDock()
     m_resourceBtnDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
     m_resourceBtnDock->setTitleBarWidget(new QWidget());
     m_resourceBtnDock->setFixedHeight(33);
-    m_resourceBtnDock->setMinimumWidth(400);
+    m_resourceBtnDock->setMinimumWidth(300);
     gLayout->addWidget(m_resourceBtnDock,1,0,1,1);
 
     layoutWidget->setLayout(gLayout);
@@ -4355,7 +4355,7 @@ void MainWindow::addResourceDock(QDockWidget *dock)
 {
     dock->setFeatures(QDockWidget::NoDockWidgetFeatures);
     dock->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    dock->setMinimumSize(400, 272);
+    dock->setMinimumSize(300, 272);
     dock->setTitleBarWidget(new QWidget());
 
     QGridLayout *gLayout = (QGridLayout *)m_mainDockWidget->widget()->layout();
