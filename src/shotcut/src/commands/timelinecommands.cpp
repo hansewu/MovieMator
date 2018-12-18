@@ -23,7 +23,22 @@
 #include "controllers/filtercontroller.h"
 #include "docks/timelinedock.h"
 #include <Logger.h>
+#include <QMetaType>
+#include <QVariant>
 #include <QMetaObject>
+
+
+typedef struct
+{
+    double fix_rotate_x;
+    double scale_x;
+    double scale_y;
+    double offsetx;
+    double offsety;
+
+}MY_ROTATE_COMMAND;
+
+Q_DECLARE_METATYPE(MY_ROTATE_COMMAND);
 
 namespace Timeline {
 
@@ -933,13 +948,33 @@ void MoveInsertClipCommand::undo()
     m_undoHelper.undoChanges();
 }
 
+
+
+
 FilterCommand::FilterCommand(Mlt::Filter* filter, QString name, double from_value, double to_value, QUndoCommand * parent)
  : QUndoCommand(parent)
 {
+    LOG_DEBUG() << "FilterCommand: " <<  name;
     m_filter = new Mlt::Filter(filter->get_filter());
     m_keyName   = name;
-    m_from_value    = QVariant(from_value);
-    m_to_value      = QVariant(to_value);
+
+    int transed_filter = 0;
+    if(name.startsWith("transition.") == true)
+    {
+        QVariant varFrom, varTo;
+        if(0 == transitionValue(varFrom, varTo, m_filter, name, from_value, to_value))
+        {
+            transed_filter = 1;
+            m_from_value    = varFrom;
+            m_to_value      = varTo;
+        }
+    }
+
+    if(transed_filter == 0)
+    {
+        m_from_value    = QVariant(from_value);
+        m_to_value      = QVariant(to_value);
+    }
 }
 
 FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  int from_value, int to_value, QUndoCommand * parent)
@@ -965,13 +1000,107 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_val
 {
     m_filter = new Mlt::Filter(filter->get_filter());
     m_keyName   = name;
-    m_from_value    = QVariant(from_value);
+    m_from_value = QVariant(from_value);
     m_to_value      = QVariant(to_value);
 }
 
 FilterCommand::~FilterCommand()
 {
     delete m_filter;
+}
+
+static const char *s_key_name[5] ={"transition.fix_rotate_x", "transition.scale_x", "transition.scale_y",
+                                   "transition.offsetx", "transition.offsety"};
+
+static int which_rotate_command(QString strKey)
+{
+    if(strKey.startsWith("transition.") == false)
+        return -1;
+
+    for(int i=0; i<5; i++)
+    {
+        if(strKey == QString(s_key_name[i]))
+        {
+            return i;
+        }
+    }
+
+    return -2;
+}
+
+int FilterCommand::transitionValue(QVariant &varFrom, QVariant &varTo, Mlt::Filter* filter, QString name,  double from_value, double to_value)
+{
+    if(name.startsWith("transition.") == false)
+        return -1;
+
+    int found_key = which_rotate_command(name);
+    if(found_key < 0 )  return -2;
+
+    double value_from[5], value_to[5];
+    for(int i=0; i<5; i++)
+    {
+        if(!filter->get(s_key_name[i]))
+        {
+            if(strcmp(s_key_name[i], "transition.scale_x") == 0
+                || strcmp(s_key_name[i], "transition.scale_y") == 0)
+                value_from[i]   =  1.0;
+            else value_from[i]   =  0.0;
+        }
+        else
+            value_from[i]   = filter->get_double(s_key_name[i]);
+
+        value_to[i]     = value_from[i];
+        if(found_key == i)
+        {
+            found_key = i;
+            value_from[i]   = from_value;
+            value_to[i]     = to_value;
+        }
+    }
+
+
+
+    MY_ROTATE_COMMAND rotateCmd_from, rotateCmd_to;
+
+
+    rotateCmd_from.fix_rotate_x = value_from[0];
+    rotateCmd_from.scale_x      = value_from[1];
+    rotateCmd_from.scale_y      = value_from[2];
+    rotateCmd_from.offsetx      = value_from[3];
+    rotateCmd_from.offsety      = value_from[4];
+
+    rotateCmd_to.fix_rotate_x = value_to[0];
+    rotateCmd_to.scale_x      = value_to[1];
+    rotateCmd_to.scale_y      = value_to[2];
+    rotateCmd_to.offsetx      = value_to[3];
+    rotateCmd_to.offsety      = value_to[4];
+
+    varFrom = QVariant::fromValue(rotateCmd_from);
+    varTo = QVariant::fromValue(rotateCmd_to);
+
+    return 0;
+}
+
+
+bool FilterCommand::mergeWith(const QUndoCommand *other)
+{
+    if (other->id() != id()) // make sure other is also an AppendText command
+              return false;
+
+    const FilterCommand *other_command =  static_cast<const FilterCommand*>(other);
+    if(other_command->m_filter->get_filter() != m_filter->get_filter()|| m_keyName.isEmpty())
+        return false;
+
+    if((which_rotate_command(m_keyName) >=0 && which_rotate_command(other_command->m_keyName) >= 0
+        && m_to_value.canConvert<MY_ROTATE_COMMAND>() && other_command->m_to_value.canConvert<MY_ROTATE_COMMAND>())
+            || other_command->m_keyName == m_keyName)
+    {
+        m_to_value = other_command->m_to_value;
+
+        return true;
+    }\
+
+    return false;
 }
 
 void FilterCommand::notify()
@@ -985,6 +1114,18 @@ void FilterCommand::set_value(QVariant value)
 {
     QVariant::Type value_type = value.type();
 
+    if (value.canConvert<MY_ROTATE_COMMAND>())
+    {
+        MY_ROTATE_COMMAND rotateCmd = value.value<MY_ROTATE_COMMAND>();
+
+        m_filter->set(s_key_name[0], rotateCmd.fix_rotate_x);
+        m_filter->set(s_key_name[1], rotateCmd.scale_x);
+        m_filter->set(s_key_name[2], rotateCmd.scale_y);
+        m_filter->set(s_key_name[3], rotateCmd.offsetx);
+        m_filter->set(s_key_name[4], rotateCmd.offsety);
+
+        return;
+    }
 
     if(value_type == QVariant::Double)
     {

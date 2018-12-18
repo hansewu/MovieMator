@@ -364,6 +364,7 @@ LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lCommonUtil -lMltController -lQ
 
 #LIBS += -lPythonQt-Qt5-Python2.7_d
 
+
 mac {
     #pro share
     DEFINES += MOVIEMATOR_PRO=1
@@ -426,9 +427,13 @@ mac {
 
 
 win32 {
-    #free share
+    #pro share
+    DEFINES += MOVIEMATOR_PRO=1
     DEFINES += SHARE_VERSION=1
-    DEFINES += MOVIEMATOR_FREE=1
+
+    #free share
+#    DEFINES += SHARE_VERSION=1
+#    DEFINES += MOVIEMATOR_FREE=1
 
 }
 
