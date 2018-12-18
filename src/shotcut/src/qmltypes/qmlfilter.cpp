@@ -198,7 +198,8 @@ void QmlFilter::set(QString name, QString value)
         QString from_value = m_filter->get(name.toUtf8().constData());
 
         m_filter->set(name.toUtf8().constData(), value.toUtf8().constData());
-        MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  from_value, value));
+         if(from_value != "" && from_value != value)
+            MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  from_value, value));
 
         MLT.refreshConsumer();
         emit changed();
@@ -214,7 +215,8 @@ void QmlFilter::set(QString name, double value)
         double from_value = m_filter->get_double(name.toUtf8().constData());
         m_filter->set(name.toUtf8().constData(), value);
 
-        MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  from_value, value));
+        if(from_value != value)
+            MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  from_value, value));
 
         MLT.refreshConsumer();
         emit changed();
@@ -229,7 +231,8 @@ void QmlFilter::set(QString name, int value)
 
         int from_value = m_filter->get_int(name.toUtf8().constData());
         m_filter->set(name.toUtf8().constData(), value);
-        MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  from_value, value));
+         if(from_value != value)
+            MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  from_value, value));
 
         MLT.refreshConsumer();
         emit changed();
@@ -248,7 +251,8 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
         QRectF rect_to(x, y, width, height);
 
         m_filter->set(name.toUtf8().constData(), x, y, width, height, opacity);
-        MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  rect_from, rect_to));
+        if(rect_from != rect_to)
+            MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  rect_from, rect_to));
 
         MLT.refreshConsumer();
         emit changed();

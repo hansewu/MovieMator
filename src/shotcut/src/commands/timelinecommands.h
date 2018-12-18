@@ -39,6 +39,8 @@ enum {
     UndoIdTrimTransitionOut,
     UndoIdAddTransitionByTrimIn,
     UndoIdAddTransitionByTrimOut,
+
+    UndoIdFilterCommand, //wzq
     UndoIdUpdate
 };
 
@@ -498,6 +500,7 @@ private:
 };
 
 
+
 class FilterCommand: public QUndoCommand
 {
 
@@ -511,9 +514,14 @@ public:
     void redo();
     void undo();
 protected:
+    int id() const { return UndoIdFilterCommand; }
+    bool mergeWith(const QUndoCommand *other);
+
+    int transitionValue(QVariant &varFrom, QVariant &varTo, Mlt::Filter* filter, QString name,  double from_value, double to_value);
+
     void notify();
     void set_value(QVariant value);
-private:
+protected:
     Mlt::Filter* m_filter;
     QString     m_keyName;
 
