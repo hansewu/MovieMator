@@ -607,7 +607,6 @@ MainWindow::MainWindow()
 
     LOG_DEBUG() << "RecentDock";
     m_recentDock = RecentDock_initModule(&MainInterface::singleton());//new RecentDock();
-//    connect(this, SIGNAL(openFailed(QString)), m_recentDock, SLOT(remove(QString)));
     addResourceDock(m_recentDock);
 
 //    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
@@ -1459,13 +1458,11 @@ void MainWindow::open1(QString url, const Mlt::Properties *properties)
         open(MLT.producer());
         if (url.startsWith(AutoSaveFile::path())) {
             if (m_autosaveFile && m_autosaveFile->managedFileName() != untitledFileName()) {
-//                m_recentDock->add(m_autosaveFile->managedFileName());
-//                MAININTERFACE.callbackFileOpened(m_autosaveFile->managedFileName());
+                onFileOpened(m_autosaveFile->managedFileName());
                 LOG_INFO() << m_autosaveFile->managedFileName();
             }
         } else {
-//            m_recentDock->add(url);
-//            MAININTERFACE.callbackFileOpened(url);
+            onFileOpened(url);
             LOG_INFO() << url;
         }
 
@@ -1476,7 +1473,7 @@ void MainWindow::open1(QString url, const Mlt::Properties *properties)
 //        showStatusMessage(tr("Failed to open ") + url);
         MLT.setProducer(new Mlt::Producer(*multitrack()));//设置producer，打开文件失败后，还可以获取时间值
         if (url != untitledFileName())
-            emit openFailed(url);
+           onOpenFailed(url);
     }
 }
 
@@ -3222,9 +3219,8 @@ void MainWindow::processMultipleFiles()
 //        m_playlistDock->raise();
 //        QThreadPool::globalInstance()->start(new AppendTask(model, m_multipleFiles));
 
-//        foreach (QString filename, m_multipleFiles)
-//            m_recentDock->add(filename.toUtf8().constData());
-//            MAININTERFACE.callbackFileOpened(filename.toUtf8().constData());
+        foreach (QString filename, m_multipleFiles)
+            onFileOpened(filename.toUtf8().constData());
         m_multipleFiles.clear();
     }
     if (m_isPlaylistLoaded && Settings.playerGPU()) {
@@ -3531,13 +3527,12 @@ void MainWindow::on_actionOpenXML_triggered()
             m_multipleFiles = filenames;
         if (!MLT.openXML(url)) {
             open(MLT.producer());
-//            m_recentDock->add(url);
-//            MAININTERFACE.callbackFileOpened(url);
+            onFileOpened(url);
             LOG_INFO() << url;
         }
         else {
             showStatusMessage(tr("Failed to open ") + url);
-            emit openFailed(url);
+            onOpenFailed(url);
         }
     }
 }
@@ -3819,12 +3814,6 @@ void MainWindow::setPauseAfterOpen(bool pause)
 void MainWindow::appendClipToPlaylist()
 {
 //    m_playlistDock->on_actionAppendCut_triggered();
-}
-
-void MainWindow::addToRecentDock(const QString &url)
-{
-//    m_recentDock->add(url);
-//    MAININTERFACE.callbackFileOpened(url);
 }
 
 
@@ -4363,4 +4352,14 @@ void MainWindow::addResourceDock(QDockWidget *dock)
 void MainWindow::addPropertiesDock(QDockWidget *dock)
 {
 
+}
+
+void MainWindow::onFileOpened(QString filePath)
+{
+    RecentDock_add(filePath);
+}
+
+void MainWindow::onOpenFailed(QString filePath)
+{
+    RecentDock_remove(filePath);
 }

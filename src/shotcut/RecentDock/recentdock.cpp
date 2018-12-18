@@ -183,18 +183,19 @@ void RecentDock_destroyModule()
 //获取选中的文件列表
 QList<QString> RecentDock_getSelectedFiles()
 {
-
+    QList<QString> selectedFiles;
+    return selectedFiles;
 }
 
 //添加文件
 void RecentDock_add(QString filePath)
 {
-
+    instance->add(filePath);
 }
 
 //删除文件
 void RecentDock_remove(QString filePath)
 {
-
+    instance->remove(filePath);
 }
 

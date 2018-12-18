@@ -279,9 +279,6 @@ public slots:
 
     void setCurrentTrack(int trackIndex);
 
-    void addToRecentDock(const QString &url);
-
-
     void openFiles(const QStringList &list);
 
     void showLoadProgress();
@@ -316,6 +313,8 @@ public slots:
     void setCurrentFilterForVideoWidget(QObject* filter, QmlMetadata* meta);
     void pushCommand(QUndoCommand *command);
 
+    void onFileOpened(QString filePath);
+    void onOpenFailed(QString filePath);
 
 private slots:
 
