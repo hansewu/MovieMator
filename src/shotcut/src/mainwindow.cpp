@@ -304,16 +304,14 @@ MainWindow::MainWindow()
     //      palette.setColor(QPalette::Background, QColor(0,0,0));
     //      //palette.setBrush(QPalette::Background, QBrush(QPixmap(":/background.png")));
     //      m_player->setPalette(palette);
-
-
     //      MLT.videoWidget()->installEventFilter(this);
+    //        rightDockWidget->setWidget(m_player);
 
-        m_configurationDock = new ConfigurationDock();
-//        rightDockWidget->setWidget(m_player);
-        addDockWidget(Qt::RightDockWidgetArea, m_configurationDock);
-        m_configurationDock->setTitleBarWidget(new QWidget());
-        m_configurationDock->setMinimumSize(500,320);
-        m_configurationDock->setContentsMargins(0,0,0,0);
+//    m_configurationDock = new ConfigurationDock();
+//    addDockWidget(Qt::RightDockWidgetArea, m_configurationDock);
+//    m_configurationDock->setTitleBarWidget(new QWidget());
+//    m_configurationDock->setMinimumSize(500,320);
+//    m_configurationDock->setContentsMargins(0,0,0,0);
 
 
 //        ui->centralWidget->setContentsMargins(0,0,0,0);
@@ -460,7 +458,7 @@ MainWindow::MainWindow()
 
     connect(ui->actionFilters, SIGNAL(triggered()), this, SLOT(onFiltersDockTriggered()));
     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_filtersDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
-    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_configurationDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
+//    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_configurationDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
     //MovieMator Pro
 #ifdef MOVIEMATOR_PRO
     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_timelineDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
@@ -605,7 +603,7 @@ MainWindow::MainWindow()
     //初始化资源管理Dock
     initParentDockForResourceDock();
 //    addResourceDock(m_filtersDock);
-    m_filtersDock->hide();
+    addDockWidget(Qt::RightDockWidgetArea, m_filtersDock);
 
     LOG_DEBUG() << "RecentDock";
     m_recentDock = RecentDock_initModule(&MainInterface::singleton());//new RecentDock();
@@ -3809,7 +3807,7 @@ void MainWindow::onHelpButtonTriggered()
 
 void MainWindow::onShowFilterDock()
 {
-//    m_resourceBtnDock->on_showFilterDock_clicked();
+    m_resourceBtnDock->on_showFilterDock_clicked();
 }
 
 
@@ -4157,7 +4155,7 @@ void MainWindow::showRecentDock()
 {
 //    m_playlistDock->hide();
     m_recentDock->show();
-    m_filtersDock->hide();
+//    m_filtersDock->hide();
 //    m_recentDock->raise();
 }
 
@@ -4165,7 +4163,7 @@ void MainWindow::showFilterDock()
 {
 //    m_playlistDock->hide();
 //    m_recentDock->hide();
-//    m_filtersDock->show();
+    m_filtersDock->show();
 //    m_filtersDock->raise();
 }
 
