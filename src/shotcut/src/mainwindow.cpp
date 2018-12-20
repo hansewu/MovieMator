@@ -604,6 +604,7 @@ MainWindow::MainWindow()
     initParentDockForResourceDock();
 //    addResourceDock(m_filtersDock);
     addDockWidget(Qt::RightDockWidgetArea, m_filtersDock);
+//    m_filtersDock->hide();
 
     LOG_DEBUG() << "RecentDock";
     m_recentDock = RecentDock_initModule(&MainInterface::singleton());//new RecentDock();
@@ -1554,7 +1555,7 @@ void MainWindow::openVideo()
         m_resourceBtnDock->on_showRecentDock_clicked();
         Settings.setOpenPath(QFileInfo(filenames.first()).path());
         activateWindow();
-    //    if (filenames.length() > 1)// 去掉限制添加所有的文件到playlist
+        if (filenames.length() > 1)// 去掉限制添加所有的文件到playlist
             m_multipleFiles = filenames;
 
         open(filenames.first());
@@ -1572,8 +1573,9 @@ void MainWindow::openVideo()
 
 void MainWindow::openFiles(const QStringList &list)
 {
-    m_multipleFiles = list;
-    open(m_multipleFiles.first());
+    if (list.length() > 1)
+        m_multipleFiles = list;
+    open(list.first());
 //    //添加所有文件到播放器列表
 //    PlaylistModel* model = m_playlistDock->model();
 //    QThreadPool::globalInstance()->start(new AppendTask(model, m_multipleFiles));
@@ -2351,18 +2353,18 @@ void MainWindow::dropEvent(QDropEvent *event)
         }
         if (roleDataMap.contains(Qt::ToolTipRole)) {
             // DisplayRole is just basename, ToolTipRole contains full path
-            m_multipleFiles.append(roleDataMap[Qt::ToolTipRole].toString());
+            //m_multipleFiles.append(roleDataMap[Qt::ToolTipRole].toString());
             open(roleDataMap[Qt::ToolTipRole].toString());
             event->acceptProposedAction();
         }
     }
     else if (mimeData->hasUrls()) {
-        //if (mimeData->urls().length() > 1) {
+        if (mimeData->urls().length() > 1) {
             foreach (QUrl url, mimeData->urls()) {
                 QString path = removeFileScheme(url);
                 m_multipleFiles.append(path);
             }
-        //}
+        }
         QString path = removeFileScheme(mimeData->urls().first());
         open(path);
         event->acceptProposedAction();
@@ -3213,12 +3215,12 @@ void MainWindow::changeInterpolation(bool checked, const char* method)
 
 void MainWindow::processMultipleFiles()
 {
-    if (m_multipleFiles.length() > 0) {
+    if (m_multipleFiles.length() > 1) {
 //        PlaylistModel* model = m_playlistDock->model();
 //        m_playlistDock->show();
 //        m_playlistDock->raise();
 //        QThreadPool::globalInstance()->start(new AppendTask(model, m_multipleFiles));
-
+        m_multipleFiles.removeFirst();
         foreach (QString filename, m_multipleFiles)
             onFileOpened(filename.toUtf8().constData());
         m_multipleFiles.clear();

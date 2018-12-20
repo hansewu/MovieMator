@@ -26,13 +26,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         recentdock.cpp \
-    widgets/lineeditclear.cpp
+    widgets/lineeditclear.cpp \
+    recenttableview.cpp \
+    recenttablemodel.cpp
 
 HEADERS += \
         recentdock.h \
         recentdock_global.h \ 
     widgets/lineeditclear.h \
-    recentdockinterface.h
+    recentdockinterface.h \
+    recenttableview.h \
+    recenttablemodel.h
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 INCLUDEPATH += ../src

@@ -5,6 +5,7 @@
 #include <QUndoStack>
 #include "docks/timelinedock.h"
 #include "commands/timelinecommands.h"
+#include <shotcut_mlt_properties.h>
 
 MainInterface& MainInterface::singleton()
 {
@@ -93,6 +94,11 @@ int MainInterface::addToTimeLine(FILE_HANDLE fileHandle)
 
 static const int THUMBNAIL_WIDTH = 80;
 static const int THUMBNAIL_HEIGHT = 45;
+
+static void deleteQImage(QImage* image)
+{
+    delete image;
+}
 //功能：获取文件的缩略图
 //QImage getThumbnail(QString filepath);
 //加入线程获取thumbnail
@@ -104,18 +110,52 @@ QImage MainInterface::getThumbnail(FILE_HANDLE fileHandle)
     if (!producer->is_valid())
         return QImage();
 
+
     int in = producer->get_in();
-    return MLT.image(*producer, in, THUMBNAIL_WIDTH*2, THUMBNAIL_HEIGHT*2);
+
+    QImage image;
+    if (producer->get_data(kThumbnailInProperty))
+    {
+        QImage* thumb = (QImage*)producer->get_data(kThumbnailInProperty);
+        image = *thumb;
+    }
+    else
+    {
+        image = MLT.image(*producer, in, THUMBNAIL_WIDTH*2, THUMBNAIL_HEIGHT*2);
+        producer->set(kThumbnailInProperty, new QImage(image), 0, (mlt_destructor) deleteQImage, nullptr);
+    }
+
+    return image;
+}
+
+QString MainInterface::getFileName(FILE_HANDLE fileHandle)
+{
+    Q_ASSERT(fileHandle);
+    Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
+    if (!producer->is_valid())
+        return QString();
+
+    QString resource = QString::fromUtf8(producer->get("resource"));
+    return resource;
 }
 
 //功能：获取文件时长
-QString getDuration(FILE_HANDLE fileHandle)
+QString MainInterface::getDuration(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
     Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
     if (!producer->is_valid())
         return QString("");
     return producer->get_length_time();
+}
+
+int MainInterface::getPlayTime(FILE_HANDLE fileHandle)
+{
+    Q_ASSERT(fileHandle);
+    Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
+    if (!producer->is_valid())
+        return -1;
+    return producer->get_playtime();
 }
 
 
