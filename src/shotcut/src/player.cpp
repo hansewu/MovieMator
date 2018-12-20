@@ -178,6 +178,7 @@ Player::Player(QFrame *parent)
     m_zoomComBox->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
 
     m_zoomComBox->addItem(tr("Fit"));
+    m_zoomComBox->addItem(tr("25%"));
     m_zoomComBox->addItem(tr("50%"));
     m_zoomComBox->addItem(tr("100%"));
 
@@ -1172,20 +1173,21 @@ void Player::ZoomChanged(int index)
 {
     switch(index)
     {
-        case 0:
-             zoomFit();
+    case 0:
+        zoomFit();
         break;
     case 1:
-        zoomOut50();
+        zoomOut25();
         break;
     case 2:
-        zoomOriginal();
+        zoomOut50();
         break;
     case 3:
+        zoomOriginal();
+        break;
+    case 4:
         zoomIn();
         break;
-
-
     }
 
 }
