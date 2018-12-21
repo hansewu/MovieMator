@@ -58,6 +58,7 @@ signals:
 #ifdef MOVIEMATOR_PRO
     void changePosition(int position);
 #endif
+    void currentFilterChanged(); //current fiter changed
 
 public slots:
     void clearCurrentFilter();
