@@ -52,6 +52,19 @@ debug_and_release {
 }
 LIBS += -lLogger -lCommonUtil
 
+
+#win32 {
+#    isEmpty(PREFIX) {
+#        PREFIX = C:\\Projects\\MovieMator
+#    }
+#    INCLUDEPATH += $$PREFIX\\include
+#    INCLUDEPATH += $$PREFIX\\include\\CuteLogger
+#    INCLUDEPATH += $$PREFIX\\include\\CommonUtil
+#    LIBS += -L$$PREFIX
+#    LIBS += -lLogger -lCommonUtil
+#}
+
+
 win32 {
     target.path = C:\\Projects\\MovieMator
     INSTALLS += target
