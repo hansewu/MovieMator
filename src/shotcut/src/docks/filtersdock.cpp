@@ -30,7 +30,7 @@
 #include <Logger.h>
 #include "qmltypes/qmlfilter.h"
 #include <qmlutilities.h>
-#include "qmltypes/qmlview.h"
+#include <qmlview.h>
 #include "models/metadatamodel.h"
 #include "models/attachedfiltersmodel.h"
 #include "mltcontroller.h"
@@ -59,6 +59,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
 
     setCurrentFilter(0, 0, -1);
     connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
+//    resetQview();
 
     LOG_DEBUG() << "end";
 }
@@ -71,20 +72,20 @@ void FiltersDock::clearCurrentFilter()
     QMetaObject::invokeMethod(m_qview.rootObject(), "clearCurrentFilter");
     disconnect(this, SIGNAL(changed()));
     m_qmlFilter = NULL;
-
 }
 
-void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index)
+void FiltersDock::setCurrentFilter(QObject* filter, QmlMetadata* meta, int index)
 {
-    m_qview.rootContext()->setContextProperty("filter", filter);
+    QmlFilter *qmlFilter = (QmlFilter *)filter;
+    m_qview.rootContext()->setContextProperty("filter", qmlFilter);
     m_qview.rootContext()->setContextProperty("metadata", meta);
     QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));
-    if (filter)
+    if (qmlFilter)
     {
      //   qDebug()<<"filter m_path is "<<filter->path();
-        connect(filter, SIGNAL(changed()), SIGNAL(changed()));
+        connect(qmlFilter, SIGNAL(changed()), SIGNAL(changed()));
     }
-    m_qmlFilter = filter;
+    m_qmlFilter = qmlFilter;
 }
 
 void FiltersDock::setFadeInDuration(int duration)

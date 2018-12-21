@@ -19,12 +19,14 @@
 #ifndef QMLVIEW_H
 #define QMLVIEW_H
 
+#include "qmlutilities_global.h"
+
 #include <QObject>
 #include <QPoint>
 
 class QWindow;
 
-class QmlView : public QObject
+class QMLUTILITIESSHARED_EXPORT QmlView : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QPoint pos READ pos);

@@ -618,6 +618,7 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
                    QVector<key_frame_item> keyFrameTo(m_keyFrameList);
 
                    MAIN.undoStack()->push(new Timeline::KeyFrameCommand(m_filter, keyFrameFrom, keyFrameTo));
+                   emit keyframeNumberChanged();
                    return ;
                }
                if(frame > lastPara.keyFrame)
@@ -629,6 +630,7 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
                    QVector<key_frame_item> keyFrameTo(m_keyFrameList);
 
                    MAIN.undoStack()->push(new Timeline::KeyFrameCommand(m_filter, keyFrameFrom, keyFrameTo));
+                   emit keyframeNumberChanged();
                    return ;
                }
 
@@ -648,6 +650,7 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
                        QVector<key_frame_item> keyFrameTo(m_keyFrameList);
 
                        MAIN.undoStack()->push(new Timeline::KeyFrameCommand(m_filter, keyFrameFrom, keyFrameTo));
+                       emit keyframeNumberChanged();
                        return ;
                    }
 
@@ -670,7 +673,10 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
        }
 
        if(hasSameKeyFrame)
+       {
            emit addKeyFrame();
+           emit keyframeNumberChanged();
+       }
      //  return false;
        //set all key frame value together
 
@@ -730,6 +736,7 @@ void QmlFilter::removeKeyFrameParaValue(double frame)
         {
             m_keyFrameList.remove(index);
             emit removeKeyFrame();
+            emit keyframeNumberChanged();
             if(keyFrameCount > 1)
                 combineAllKeyFramePara();
 

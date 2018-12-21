@@ -21,8 +21,6 @@
 #include "ui_recentdock.h"
 #include "util.h"
 
-//#include "../securitybookmark/transport_security_bookmark.h"
-
 #include <QDir>
 #include <Logger.h>
 #include <QMenu>
@@ -30,34 +28,52 @@
 #include <QScrollBar>
 static const int MaxItems = 20;
 
-RecentDock::RecentDock(QWidget *parent) :
+
+RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
     QDockWidget(parent),
-    ui(new Ui::RecentDock)
+    ui(new Ui::RecentDock),
+    m_mainWindow(main)
 {
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
     m_recent = Settings.recent();
 
-    ui->listWidget->setDragEnabled(true);
-    ui->listWidget->setDragDropMode(QAbstractItemView::DragOnly);
+    m_model = new RecentTableModel(m_mainWindow, this);
+
+    ui->tableView->setDragDropMode(QAbstractItemView::DragOnly);
+    ui->tableView->setDragEnabled(true);
+    ui->tableView->setDropIndicatorShown(true);
+    ui->tableView->setDragDropOverwriteMode(false);
+    ui->tableView->setAcceptDrops(false);
+    ui->tableView->setDefaultDropAction(Qt::MoveAction);
+    ui->tableView->setStyleSheet("QHeaderView::section { background-color:rgb(82,82,82); color:rgb(241,241,241) };");//QTableView{selection-color: rgb(35,148,229);background-color:rgb(51,51,51);font-color: rgb(255,255,255);color:rgb(214,214,214)}");
+    ui->tableView->setStyleSheet("QTableView{selection-background-color:rgb(192,72,44); selection-color: rgb(255,255,255);background-color:rgb(51,51,51);color:rgb(214,214,214);}");
 
 
-    //    ui->listWidget->verticalScrollBar()->setStyleSheet("QScrollBar::vertical{background-color:#515151;width:10px}""QScrollBar::handle:vertical{background:#aaaaaa;border:0px;border-radius:5px;}""QScrollBar::add-page:vertical{background:grey;}""QScrollBar::sub-page:vertical{background:grey}");
-    ui->listWidget->setStyleSheet("QListView {selection-color: rgb(255,255,255);background-color:rgb(51,51,51);color:rgb(214,214,214);}");
     QString style1 = "QLineEdit {padding-right: 20px; background-image: url(:/icons/light/32x32/search-icon.png); background-repeat: norepeat; background-position: center; border: 1px; border-radius: 3px; background-color: rgb(100,100,100) ; }";
     QString style2= "QLineEdit {padding-right: 20px; border: 1px; border-radius: 3px; background-color: rgb(100,100,100) ; }";
-
     ui->lineEdit->setStyleSheets(style1, style2);
 
     foreach (QString s, m_recent) {
-        QStandardItem* item = new QStandardItem(Util::baseName(s));
-        item->setToolTip(s);
-        m_model.appendRow(item);
+        // 工程文件不添加到历史记录里
+        if(!s.endsWith(".mmp"))
+        {
+            FILE_HANDLE fileHandle = m_mainWindow->openFile(s);
+            if(fileHandle)
+                m_model->append(fileHandle);
+        }
     }
-    m_proxyModel.setSourceModel(&m_model);
+
+    m_proxyModel.setSourceModel(m_model);
     m_proxyModel.setFilterCaseSensitivity(Qt::CaseInsensitive);
-    ui->listWidget->setModel(&m_proxyModel);
+    m_proxyModel.setFilterKeyColumn(2);
+
+    ui->tableView->setModel(&m_proxyModel);
+    ui->tableView->resizeColumnToContents(0);
+    ui->tableView->setColumnWidth(2, 250);
+    ui->tableView->verticalHeader()->setVisible(false);
+    ui->tableView->verticalHeader()->setDefaultSectionSize(50);
     LOG_DEBUG() << "end";
 }
 
@@ -68,26 +84,28 @@ RecentDock::~RecentDock()
 
 void RecentDock::add(const QString &s)
 {
-    if (s.startsWith(QDir::tempPath())) return;
-    QString name = remove(s);
-    QStandardItem* item = new QStandardItem(name);
-    item->setToolTip(s);
-    m_model.insertRow(0, item);
+    if (s.startsWith(QDir::tempPath()))
+        return;
+    if (m_recent.contains(s))
+        return;
 
-#if defined(Q_OS_MAC)
-    int ret = create_security_bookmark(s.toUtf8().constData());
-#endif
-
-    m_recent.prepend(s);
+    FILE_HANDLE fileHandle = m_mainWindow->openFile(s);
+    if(fileHandle)
+    {
+        m_model->insert(fileHandle, 0);
+        m_recent.prepend(s);
+    }
     while (m_recent.count() > MaxItems)
         m_recent.removeLast();
     Settings.setRecent(m_recent);
 }
 
-void RecentDock::on_listWidget_activated(const QModelIndex& i)
+void RecentDock::on_tableView_activated(const QModelIndex& i)
 {
-    ui->listWidget->setCurrentIndex(QModelIndex());
-    emit itemActivated(m_proxyModel.itemData(i)[Qt::ToolTipRole].toString());
+    //ui->tableView->setCurrentIndex(QModelIndex());
+    FILE_HANDLE fileHandle = m_model->fileAt(i.row());
+    m_mainWindow->playFile(fileHandle);
+    //ui->tableView->selectRow(0);
 }
 
 QString RecentDock::remove(const QString &s)
@@ -96,9 +114,16 @@ QString RecentDock::remove(const QString &s)
     Settings.setRecent(m_recent);
 
     QString name = Util::baseName(s);
-    QList<QStandardItem*> items = m_model.findItems(name);
-    if (items.count() > 0)
-        m_model.removeRow(items.first()->row());
+
+    for(int i=0; i<m_model->rowCount(); i++)
+    {
+        if(QString::compare(s, m_model->fileName(i))==0)
+        {
+            m_model->remove(i);
+            break;
+        }
+    }
+
     return name;
 }
 
@@ -107,52 +132,84 @@ void RecentDock::on_lineEdit_textChanged(const QString& search)
     m_proxyModel.setFilterFixedString(search);
 }
 
-void RecentDock::on_listWidget_customContextMenuRequested(const QPoint &pos)
+void RecentDock::on_tableView_customContextMenuRequested(const QPoint &pos)
 {
-    QModelIndex index = ui->listWidget->currentIndex();
-    if (index.isValid() && m_model.rowCount()) {
+    QModelIndex index = ui->tableView->currentIndex();
+    if (index.isValid() && m_model->rowCount()) {
         QMenu menu(this);
         menu.addAction(ui->actionRemove);
-        menu.addAction(ui->actionRemoveAll);
+        //menu.addAction(ui->actionRemoveAll);
         menu.addAction(ui->actionPlay);
 
         menu.exec(mapToGlobal(pos));
     }
-
 }
 
 void RecentDock::on_actionRemove_triggered()
 {
-    QModelIndex index = ui->listWidget->currentIndex();
-    if (index.isValid() && m_model.rowCount()) {
-
-        m_model.removeRow(index.row());
-        m_recent.removeAt(index.row());
+    QModelIndex index = ui->tableView->currentIndex();
+    int idx = m_proxyModel.itemData(index.sibling(index.row(), 0))[Qt::ToolTipRole].toInt() -1;
+    if(idx>=0 && m_model->rowCount()) {
+        m_model->remove(idx);
+        m_recent.removeAt(idx);
+//        // 以文件名删除，m_recent的 id和 m_model的 id不一定对应
+//        QString s = m_proxyModel.itemData(index.sibling(index.row(), 2))[Qt::ToolTipRole].toString();
+//        m_recent.removeOne(s);
         Settings.setRecent(m_recent);
     }
-
-
 }
 
 void RecentDock::on_actionRemoveAll_triggered()
 {
-    int count = m_model.rowCount();
-
-    m_model.removeRows(0,count);
+    m_model->clear();
     m_recent.clear();
     Settings.setRecent(m_recent);
-
-
 }
 
 void RecentDock::on_actionPlay_triggered()
 {
-
-    QModelIndex index = ui->listWidget->currentIndex();
-    on_listWidget_activated(index);
+    QModelIndex index = ui->tableView->currentIndex();
+    on_tableView_activated(index);
 }
 
 void RecentDock::on_actionProperties_triggered()
 {
 
 }
+
+static RecentDock *instance = 0;
+//初始化模块
+//参数，main 主程序接口对象
+//返回界面对象
+QDockWidget *RecentDock_initModule(MainInterface *main)
+{
+    if (instance == NULL)
+        instance = new RecentDock(main);
+    return instance;
+}
+
+//销毁模块
+void RecentDock_destroyModule()
+{
+
+}
+
+//获取选中的文件列表
+QList<QString> RecentDock_getSelectedFiles()
+{
+    QList<QString> selectedFiles;
+    return selectedFiles;
+}
+
+//添加文件
+void RecentDock_add(QString filePath)
+{
+    instance->add(filePath);
+}
+
+//删除文件
+void RecentDock_remove(QString filePath)
+{
+    instance->remove(filePath);
+}
+

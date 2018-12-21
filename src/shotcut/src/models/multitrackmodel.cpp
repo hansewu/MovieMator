@@ -3009,23 +3009,23 @@ void MultitrackModel::removeTrack(int trackIndex)
 
 void MultitrackModel::retainPlaylist()
 {
-    if (!MAIN.playlist())
-        MAIN.playlistDock()->model()->createIfNeeded();
-    Mlt::Playlist playlist(*MAIN.playlist());
-    playlist.set("id", kPlaylistTrackId);
-    QString retain = QString("xml_retain %1").arg(kPlaylistTrackId);
-    m_tractor->set(retain.toUtf8().constData(), playlist.get_service(), 0);
+//    if (!MAIN.playlist())
+//        MAIN.playlistDock()->model()->createIfNeeded();
+//    Mlt::Playlist playlist(*MAIN.playlist());
+//    playlist.set("id", kPlaylistTrackId);
+//    QString retain = QString("xml_retain %1").arg(kPlaylistTrackId);
+//    m_tractor->set(retain.toUtf8().constData(), playlist.get_service(), 0);
 }
 
 void MultitrackModel::loadPlaylist()
 {
-    Mlt::Properties retainList((mlt_properties) m_tractor->get_data("xml_retain"));
-    if (retainList.is_valid() && retainList.get_data(kPlaylistTrackId)) {
-        Mlt::Playlist playlist((mlt_playlist) retainList.get_data(kPlaylistTrackId));
-        if (playlist.is_valid() && playlist.type() == playlist_type)
-            MAIN.playlistDock()->model()->setPlaylist(playlist);
-    }
-    retainPlaylist();
+//    Mlt::Properties retainList((mlt_properties) m_tractor->get_data("xml_retain"));
+//    if (retainList.is_valid() && retainList.get_data(kPlaylistTrackId)) {
+//        Mlt::Playlist playlist((mlt_playlist) retainList.get_data(kPlaylistTrackId));
+//        if (playlist.is_valid() && playlist.type() == playlist_type)
+//            MAIN.playlistDock()->model()->setPlaylist(playlist);
+//    }
+//    retainPlaylist();
 }
 
 void MultitrackModel::removeRegion(int trackIndex, int position, int length)

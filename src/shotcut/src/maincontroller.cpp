@@ -102,7 +102,7 @@ int MainController::appendToTimelineFromPath(int trackIndex, const QString &path
         }
         MLT.setImageDurationFromDefault(p);
         MAIN.appendClipToPlaylist();
-        MAIN.addToRecentDock(path);
+        MAIN.onFileOpened(path);
 
         qApp->processEvents();
 

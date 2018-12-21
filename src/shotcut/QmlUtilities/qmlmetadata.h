@@ -19,6 +19,8 @@
 #ifndef QMLMETADATA_H
 #define QMLMETADATA_H
 
+#include "qmlutilities_global.h"
+
 #include <QObject>
 #include <QString>
 #include <QDir>
@@ -27,7 +29,7 @@
 #include <QMap>
 #include <QQmlListProperty>
 
-class QmlKeyframesParameter : public QObject
+class QMLUTILITIESSHARED_EXPORT QmlKeyframesParameter : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name MEMBER m_name NOTIFY changed)
@@ -82,7 +84,7 @@ private:
     QList<QString> m_factorFunc;
 };
 
-class QmlKeyframesMetadata : public QObject
+class QMLUTILITIESSHARED_EXPORT QmlKeyframesMetadata : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool allowTrim MEMBER m_allowTrim NOTIFY changed)
@@ -127,7 +129,7 @@ private:
 //   QMap<QString, QString> paraMap;
 //};
 
-class QmlMetadata : public QObject
+class QMLUTILITIESSHARED_EXPORT QmlMetadata : public QObject
 {
     Q_OBJECT
     Q_ENUMS(PluginType)

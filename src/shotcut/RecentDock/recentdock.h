@@ -24,21 +24,22 @@
 #include <QDockWidget>
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
+#include <maininterface.h>
+#include "recentdockinterface.h"
+#include "recenttablemodel.h"
+
 
 namespace Ui {
     class RecentDock;
 }
 
-class RECENTDOCKSHARED_EXPORT RecentDock : public QDockWidget
+class RecentDock : public QDockWidget
 {
     Q_OBJECT
 
 public:
-    explicit RecentDock(QWidget *parent = 0);
+    explicit RecentDock(MainInterface *main = 0, QWidget *parent = 0);
     ~RecentDock();
-
-signals:
-    void itemActivated(const QString& url);
 
 public slots:
     void add(const QString&);
@@ -47,12 +48,13 @@ public slots:
 private:
     Ui::RecentDock *ui;
     QStringList m_recent;
-    QStandardItemModel m_model;
+    RecentTableModel *m_model;
     QSortFilterProxyModel m_proxyModel;
+    MainInterface *m_mainWindow;
 
 private slots:
-    void on_listWidget_activated(const QModelIndex& i);
-    void on_listWidget_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_activated(const QModelIndex& i);
+    void on_tableView_customContextMenuRequested(const QPoint &pos);
     void on_lineEdit_textChanged(const QString& search);
     void on_actionRemove_triggered();
     void on_actionRemoveAll_triggered();

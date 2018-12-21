@@ -18,10 +18,10 @@
 
 #ifndef TRANSPORTCONTROL_H
 #define TRANSPORTCONTROL_H
-
+#include "mltcontroller_global.h"
 #include <QObject>
 
-class TransportControllable : public QObject
+class MLTCONTROLLERSHARED_EXPORT TransportControllable : public QObject
 {
     Q_OBJECT
 public slots:

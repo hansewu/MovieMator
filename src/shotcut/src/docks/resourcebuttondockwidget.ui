@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>520</width>
-    <height>38</height>
+    <width>400</width>
+    <height>87</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,6 +15,9 @@
   </property>
   <widget class="QWidget" name="dockWidgetContents">
    <widget class="QPushButton" name="m_showPlaylistDock">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -30,9 +33,9 @@
    <widget class="QPushButton" name="m_showRecentDock">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>0</x>
       <y>0</y>
-      <width>92</width>
+      <width>91</width>
       <height>35</height>
      </rect>
     </property>
@@ -43,7 +46,7 @@
    <widget class="QPushButton" name="m_showFilterDock">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>90</x>
       <y>0</y>
       <width>91</width>
       <height>35</height>

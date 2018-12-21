@@ -1,17 +1,17 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-11-26T14:32:35
+# Project created by QtCreator 2018-12-04T10:41:25
 #
 #-------------------------------------------------
-CONFIG   += link_prl
 
-QT       += widgets
+QT       += widgets qml quick quickwidgets
 
-TARGET = RecentDock
+QT       -= gui
+
+TARGET = ConfigurationDock
 TEMPLATE = lib
 
-DEFINES += RECENTDOCK_LIBRARY
-win32:DEFINES += QT_STATIC
+DEFINES += CONFIGURATIONDOCK_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -25,32 +25,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        recentdock.cpp \
-    widgets/lineeditclear.cpp \
-    recenttableview.cpp \
-    recenttablemodel.cpp
+        configurationdock.cpp
 
 HEADERS += \
-        recentdock.h \
-        recentdock_global.h \ 
-    widgets/lineeditclear.h \
-    recentdockinterface.h \
-    recenttableview.h \
-    recenttablemodel.h
+        configurationdock.h \
+        configurationdock_global.h 
 
-INCLUDEPATH = ../CuteLogger/include ../CommonUtil
-INCLUDEPATH += ../src
+INCLUDEPATH = ../QmlUtilities
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
-        LIBS += -L../CuteLogger/debug -L../CommonUtil/debug
+        LIBS += -L../QmlUtilities/debug
     } else {
-        LIBS += -L../CuteLogger/release -L../CommonUtil/release
+        LIBS += -L../QmlUtilities/release
     }
 } else {
-    LIBS += -L../CuteLogger -L../CommonUtil
+    LIBS += -L../QmlUtilities
 }
-LIBS += -lLogger -lCommonUtil
+LIBS += -lQmlUtilities
+
 
 win32 {
     target.path = C:\\Projects\\MovieMator
@@ -61,6 +54,3 @@ unix {
     target.path = /usr/lib
     INSTALLS += target
 }
-
-FORMS += \
-    recentdock.ui

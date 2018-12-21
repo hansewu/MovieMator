@@ -60,14 +60,12 @@ SOURCES += main.cpp\
     qmltypes/qmlfile.cpp \
     qmltypes/qmlfilter.cpp \
     qmltypes/qmlhtmleditor.cpp \
-    qmltypes/qmlmetadata.cpp \
     qmltypes/timelineitems.cpp \
     widgets/lineeditclear.cpp \
     widgets/webvfxproducer.cpp \
     widgets/gltestwidget.cpp \
     models/multitrackmodel.cpp \
     docks/timelinedock.cpp \
-    qmltypes/qmlview.cpp \
     qmltypes/thumbnailprovider.cpp \
     commands/timelinecommands.cpp \
     widgets/lumamixtransition.cpp \
@@ -120,7 +118,9 @@ SOURCES += main.cpp\
     jobs/melttask.cpp \
     dialogs/mmsplashscreen.cpp \
     qmltypes/mmqmlutilities.cpp \
-    eccregister/CEccRegister.cpp
+    eccregister/CEccRegister.cpp \
+    maininterface.cpp
+    maininterface.cpp
 
 HEADERS  += mainwindow.h \
     scrubbar.h \
@@ -161,7 +161,6 @@ HEADERS  += mainwindow.h \
     mvcp/meltedplaylistmodel.h \
     mvcp/meltedplaylistdock.h \
     mvcp/meltedserverdock.h \
-    transportcontrol.h \
     widgets/colorwheel.h \
     models/attachedfiltersmodel.h \
     models/metadatamodel.h \
@@ -172,14 +171,12 @@ HEADERS  += mainwindow.h \
     qmltypes/qmlfile.h \
     qmltypes/qmlfilter.h \
     qmltypes/qmlhtmleditor.h \
-    qmltypes/qmlmetadata.h \
     qmltypes/timelineitems.h \
     widgets/lineeditclear.h \
     widgets/webvfxproducer.h \
     widgets/gltestwidget.h \
     models/multitrackmodel.h \
     docks/timelinedock.h \
-    qmltypes/qmlview.h \
     qmltypes/thumbnailprovider.h \
     commands/timelinecommands.h \
     widgets/lumamixtransition.h \
@@ -201,7 +198,6 @@ HEADERS  += mainwindow.h \
     widgets/audioscale.h \
     commands/undohelper.h \
     models/audiolevelstask.h \
-    shotcut_mlt_properties.h \
     mltxmlchecker.h \
     widgets/avfoundationproducerwidget.h \
     widgets/gdigrabwidget.h \
@@ -236,8 +232,10 @@ HEADERS  += mainwindow.h \
     jobs/melttask.h \
     melt/melt.h \
     dialogs/mmsplashscreen.h \
-    qmltypes/mmqmlutilities.h
+    qmltypes/mmqmlutilities.h \
+    maininterface.h
     eccregister/CEccRegister.h
+    maininterface.h
 
 mac {
     SOURCES += securitybookmark/SecurityBookmark.mm \
@@ -312,22 +310,22 @@ TRANSLATIONS += \
 
 
 INCLUDEPATH = ../CuteLogger/include ../mvcp ../RecentDock ../CommonUtil ../MltController ../QmlUtilities
-INCLUDEPATH += ../PlaylistDock
+INCLUDEPATH += ../PlaylistDock ../ConfigurationDock
 INCLUDEPATH += ../include
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
         LIBS += -L../CuteLogger/debug -L../mvcp/debug -L../RecentDock/debug -L../CommonUtil/debug -L../MltController/debug
-        LIBS += -L../QmlUtilities/debug -L../PlaylistDock/debug
+        LIBS += -L../QmlUtilities/debug -L../PlaylistDock/debug -L../ConfigurationDock/debug
     } else {
         LIBS += -L../CuteLogger/release -L../mvcp/release -L../RecentDock/release -L../CommonUtil/release -L../MltController/release
-        LIBS += -L../QmlUtilities/release -L../PlaylistDock/release
+        LIBS += -L../QmlUtilities/release -L../PlaylistDock/release -L../ConfigurationDock/release
     }
 } else {
     LIBS += -L../CuteLogger -L../mvcp -L../RecentDock -L../CommonUtil -L../MltController -L../QmlUtilities #-L../mm
-    LIBS += -L../PlaylistDock
+    LIBS += -L../PlaylistDock -L../ConfigurationDock
 }
-LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lCommonUtil -lMltController -lQmlUtilities -lPlaylistDock #-lmm
+LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lCommonUtil -lMltController -lQmlUtilities -lPlaylistDock -lConfigurationDock #-lmm
 
 
 #INCLUDEPATH += ../PythonQt3.2/src

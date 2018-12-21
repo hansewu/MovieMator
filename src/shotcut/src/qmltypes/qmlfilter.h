@@ -45,6 +45,7 @@ class QmlFilter : public QObject
     Q_PROPERTY(int producerIn READ producerIn)
     Q_PROPERTY(int producerOut READ producerOut)
     Q_PROPERTY(double producerAspect READ producerAspect)
+    Q_PROPERTY(int keyframeNumber READ getKeyFrameNumber NOTIFY keyframeNumberChanged)
 
 public:
     explicit QmlFilter(Mlt::Filter* mltFilter, /*const*/ QmlMetadata* metadata, QObject *parent = 0);
@@ -127,6 +128,7 @@ signals:
     void addKeyFrame();
     void removeKeyFrame();
     void keyFrameChanged();
+    void keyframeNumberChanged();
 #endif
 
 private:

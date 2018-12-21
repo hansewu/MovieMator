@@ -45,7 +45,7 @@ namespace Ui {
     class MainWindow;
 }
 class Player;
-class RecentDock;
+//class RecentDock;
 class EncodeDock;
 class JobsDock;
 class PlaylistDock;
@@ -73,6 +73,7 @@ class InvalidProjectDialog;
 class EncodeTaskDock;
 class QmlFilter;
 class QUndoCommand;
+class ConfigurationDock;
 
 //class TextlistDock;
 
@@ -145,7 +146,7 @@ private:
     Ui::MainWindow* ui;
     Player* m_player;
     QDockWidget* m_propertiesDock;
-    RecentDock* m_recentDock;
+    QDockWidget* m_recentDock;
     EncodeDock* m_encodeDock;
     JobsDock* m_jobsDock;
     PlaylistDock* m_playlistDock;
@@ -185,7 +186,6 @@ private:
     QQuickWidget *m_quickWidgetForVoice;
     FilterWidget *m_filterWidget;
     QDockWidget *m_mainDockWidget;
-    QMainWindow *m_mainWindowForDockWidgets;
 
     TextManagerWidget *m_textManagerWidget;
 //    TextlistDock *m_textlistDock;
@@ -230,6 +230,8 @@ private:
 #endif
 
     EncodeTaskDock *m_tasksDock;
+
+    ConfigurationDock *m_configurationDock;
 
 public slots:
     void open(Mlt::Producer* producer);
@@ -277,9 +279,6 @@ public slots:
 
     void setCurrentTrack(int trackIndex);
 
-    void addToRecentDock(const QString &url);
-
-
     void openFiles(const QStringList &list);
 
     void showLoadProgress();
@@ -311,9 +310,11 @@ public slots:
 #endif
 
 
-    void setCurrentFilterForVideoWidget(QmlFilter* filter, QmlMetadata* meta);
+    void setCurrentFilterForVideoWidget(QObject* filter, QmlMetadata* meta);
     void pushCommand(QUndoCommand *command);
 
+    void onFileOpened(QString filePath);
+    void onOpenFailed(QString filePath);
 
 private slots:
 
@@ -428,6 +429,11 @@ private slots:
     void on_actionGet_Total_Video_Converter_Pro_triggered();
     void on_actionGet_Total_Video_Player_triggered();
     void on_actionTutorial_triggered();
+
+    void initParentDockForResourceDock();
+    void addResourceDock(QDockWidget *dock);
+    void addPropertiesDock(QDockWidget *dock);
+
 };
 
 #define MAIN MainWindow::singleton()

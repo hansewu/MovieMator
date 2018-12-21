@@ -178,9 +178,10 @@ Player::Player(QFrame *parent)
     m_zoomComBox->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
 
     m_zoomComBox->addItem(tr("Fit"));
+    m_zoomComBox->addItem(tr("10%"));
+    m_zoomComBox->addItem(tr("25%"));
     m_zoomComBox->addItem(tr("50%"));
     m_zoomComBox->addItem(tr("100%"));
-
     m_zoomComBox->addItem(tr("200%"));
 
     connect(m_zoomComBox, SIGNAL(currentIndexChanged(int)), this, SLOT(ZoomChanged(int)));
@@ -1116,43 +1117,16 @@ void Player::setZoom(float factor)//, const QIcon& icon)
     }
 }
 
-void Player::zoomFit()
+void Player::zoomPlayer(float fZoomFactor)
 {
-    setZoom(0.0f);//, m_zoomFitAction->icon());
-}
-
-void Player::zoomOriginal()
-{
-    setZoom(1.0f);//, m_zoomOriginalAction->icon());
-}
-
-void Player::zoomOut50()
-{
-    setZoom(0.5f);//, m_zoomOutAction50->icon());
-}
-
-void Player::zoomOut25()
-{
-    setZoom(0.25f);//, m_zoomOutAction25->icon());
-}
-
-void Player::zoomIn()
-{
-    setZoom(2.0f);//, m_zoomInAction->icon());
+    setZoom(fZoomFactor);
 }
 
 void Player::toggleZoom(bool checked)
 {
-    if (!checked || m_zoomToggleFactor == 0.0f)
-        zoomFit();
-    else if (m_zoomToggleFactor == 1.0f)
-        zoomOriginal();
-    else if (m_zoomToggleFactor == 0.5f)
-        zoomOut50();
-    else if (m_zoomToggleFactor == 0.25f)
-        zoomOut25();
-    else if (m_zoomToggleFactor == 2.0f)
-        zoomIn();
+    if (!checked)
+        m_zoomToggleFactor = 0.0f;
+    zoomPlayer(m_zoomToggleFactor);
 }
 
 //bool Player::eventFilter(QObject* target, QEvent* event)
@@ -1170,22 +1144,26 @@ void Player::toggleZoom(bool checked)
 
 void Player::ZoomChanged(int index)
 {
+    float fZoom = 0.0f;
     switch(index)
     {
-        case 0:
-             zoomFit();
+    case 0:
         break;
     case 1:
-        zoomOut50();
+        fZoom = 0.10f;
         break;
     case 2:
-        zoomOriginal();
+        fZoom = 0.25f;
         break;
     case 3:
-        zoomIn();
+        fZoom = 0.50f;
         break;
-
-
+    case 4:
+        fZoom = 1.0f;
+        break;
+    case 5:
+        fZoom = 2.0f;
+        break;
     }
-
+    zoomPlayer(fZoom);
 }

@@ -24,7 +24,7 @@
 #include <QFuture>
 #include "models/metadatamodel.h"
 #include "models/attachedfiltersmodel.h"
-#include "qmltypes/qmlmetadata.h"
+#include "qmlmetadata.h"
 #include "qmltypes/qmlfilter.h"
 
 class QTimerEvent;
@@ -46,7 +46,7 @@ protected:
 
 signals:
     void currentFilterAboutToChange();
-    void currentFilterChanged(QmlFilter* filter, QmlMetadata* meta, int index);
+    void currentFilterChanged(QObject* filter, QmlMetadata* meta, int index);
     void statusChanged(QString);
 
 public slots:
