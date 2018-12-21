@@ -188,14 +188,11 @@ private slots:
     void on_actionVolume_triggered();
     void onMuteButtonToggled(bool bChecked);
     void setZoom(float factor);//, const QIcon &icon);
-    void zoomFit();
-    void zoomOriginal();
-    void zoomOut50();
-    void zoomOut25();
-    void zoomIn();
     void toggleZoom(bool checked);
     void onFadeOutFinished();
     void ZoomChanged(int index);
+
+    void zoomPlayer(float fZoomFactor);
 };
 
 #endif // PLAYER_H
