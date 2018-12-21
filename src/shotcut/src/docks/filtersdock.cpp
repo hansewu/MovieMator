@@ -193,4 +193,9 @@ void FiltersDock::setExtraQmlContextProperty(QString name, QObject *object)
 }
 
 
+QRect FiltersDock::dockPosition()
+{
+    return this->geometry();
+}
+
 
