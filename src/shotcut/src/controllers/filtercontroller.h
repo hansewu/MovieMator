@@ -67,6 +67,9 @@ public slots:
     void addFilter(const QString& filterID);
     void removeFilter(int row);
 
+    void refreshCurrentFilter(Mlt::Filter *filter); //wzq
+    void refreshKeyFrame(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame); //wzq
+
 private slots:
     void handleAttachedModelChange();
     void handleAttachedModelAboutToReset();

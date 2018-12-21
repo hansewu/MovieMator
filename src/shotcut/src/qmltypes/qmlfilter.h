@@ -52,6 +52,8 @@ public:
 
     bool isNew() const { return m_isNew; }
     void setIsNew(bool isNew) { m_isNew = isNew; };
+    Mlt::Filter *getMltFilter() {return m_filter;};
+    void refreshKeyFrame(const QVector<key_frame_item> &listKeyFrame) ;
 
     Q_INVOKABLE QString get(QString name);
     Q_INVOKABLE double getDouble(QString name);
@@ -86,6 +88,9 @@ public:
     Q_INVOKABLE void setKeyFrameParaValue(double frame, QString key, QString value);
     Q_INVOKABLE void setKeyFrameParaRectValue(double frame, QString key, const QRectF& rect, double opacity = 1.0);
     Q_INVOKABLE void removeKeyFrameParaValue(double frame);
+
+    void removeAllKeyFrame();
+
     Q_INVOKABLE void removeAllKeyFrame(QString name);
     Q_INVOKABLE QString getKeyFrameParaValue(double frame, QString key);
     Q_INVOKABLE double getKeyFrameParaDoubleValue(double frame, QString key);
@@ -110,11 +115,8 @@ public:
 
 #endif
 
-
-
 public slots:
     void preset(const QString& name);
-
 
 signals:
     void presetsChanged();
@@ -136,14 +138,6 @@ private:
     
     QString objectNameOrService();
 
-
- //   QMap<QString, QString> m_keyFrameParaMap;
-
-//     struct key_frame_item
-//    {
-//        double keyFrame;
-//        QMap<QString, QString> paraMap;
-//    };
 
     QVector<key_frame_item> m_keyFrameList;
 };

@@ -25,6 +25,7 @@
 #include <QUndoCommand>
 #include <QString>
 #include <QObject>
+#include <QTime>
 #include <MltTransition.h>
 
 namespace Timeline
@@ -41,6 +42,7 @@ enum {
     UndoIdAddTransitionByTrimOut,
 
     UndoIdFilterCommand, //wzq
+    UndoIdKeyFrameCommand,
     UndoIdUpdate
 };
 
@@ -527,6 +529,56 @@ protected:
 
     QVariant  m_from_value;
     QVariant  m_to_value;
+
+    bool      m_bFirstExec;
+};
+
+
+class KeyFrameCommand: public QUndoCommand
+{
+
+public:
+    KeyFrameCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item>  &to_value, QUndoCommand * parent= 0);
+    ~KeyFrameCommand();
+    void redo();
+    void undo();
+protected:
+    int id() const { return UndoIdKeyFrameCommand; }
+    bool mergeWith(const QUndoCommand *other);
+    void set_value(const QVector<key_frame_item>  &value);
+    void notify();
+
+protected:
+    Mlt::Filter* m_filter;
+
+    QVector<key_frame_item>   m_from_value;
+    QVector<key_frame_item>   m_to_value;
+
+    bool      m_bFirstExec;
+    QTime     m_execTime;
+};
+
+
+
+class FilterAttachCommand: public QUndoCommand
+{
+
+public:
+    FilterAttachCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item>  &to_value, QUndoCommand * parent= 0);
+    ~FilterAttachCommand();
+    void redo();
+    void undo();
+protected:
+    void set_value(const QVector<key_frame_item>  &value);
+    void notify();
+
+protected:
+    Mlt::Filter* m_filter;
+
+    QVector<key_frame_item>   m_from_value;
+    QVector<key_frame_item>   m_to_value;
+
+    bool      m_bFirstExec;
 };
 
 } // namespace Timeline

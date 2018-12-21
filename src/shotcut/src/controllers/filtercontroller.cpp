@@ -144,6 +144,41 @@ void FilterController::setCurrentFilter(int attachedIndex)
     m_currentFilter.reset(filter);
 }
 
+void FilterController::refreshCurrentFilter(Mlt::Filter *filter)
+{
+    if(m_currentFilterIndex == -1) return;
+
+    QmlFilter *qmlFilter = m_currentFilter.data();
+    if(!qmlFilter) return;
+
+    Mlt::Filter* mltFilter = qmlFilter->getMltFilter();
+    if(mltFilter->get_filter() != filter->get_filter())
+    {
+        return;
+    }
+
+    QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
+
+    emit currentFilterAboutToChange();
+    emit currentFilterChanged(m_currentFilter.data(), meta, m_currentFilterIndex);
+}
+
+void FilterController::refreshKeyFrame(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame)
+{
+    if(m_currentFilterIndex == -1) return;
+
+    QmlFilter *qmlFilter = m_currentFilter.data();
+    if(!qmlFilter) return;
+
+    Mlt::Filter* mltFilter = qmlFilter->getMltFilter();
+    if(mltFilter->get_filter() != filter->get_filter())
+    {
+        return;
+    }
+
+    qmlFilter->refreshKeyFrame(listKeyFrame);
+}
+
 void FilterController::handleAttachedModelChange()
 {
     MLT.refreshConsumer();
