@@ -604,7 +604,7 @@ MainWindow::MainWindow()
     initParentDockForResourceDock();
 //    addResourceDock(m_filtersDock);
     addDockWidget(Qt::RightDockWidgetArea, m_filtersDock);
-//    m_filtersDock->hide();
+//    m_filtersDock->show();
 
     LOG_DEBUG() << "RecentDock";
     m_recentDock = RecentDock_initModule(&MainInterface::singleton());//new RecentDock();

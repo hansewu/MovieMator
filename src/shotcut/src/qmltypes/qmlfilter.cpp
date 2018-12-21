@@ -611,6 +611,7 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
                    hasSameKeyFrame = true;
 
                    emit addKeyFrame();
+                   emit keyframeNumberChanged();
                    return ;
                }
                if(frame > lastPara.keyFrame)
@@ -619,6 +620,7 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
                    hasSameKeyFrame = true;
 
                    emit addKeyFrame();
+                   emit keyframeNumberChanged();
                    return ;
                }
 
@@ -635,6 +637,7 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
                        m_keyFrameList.insert(index+1, newItem);
                        hasSameKeyFrame = true;
                        emit addKeyFrame();
+                       emit keyframeNumberChanged();
                        return ;
                    }
 
@@ -657,7 +660,10 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
        }
 
        if(hasSameKeyFrame)
+       {
            emit addKeyFrame();
+           emit keyframeNumberChanged();
+       }
      //  return false;
        //set all key frame value together
 
@@ -703,6 +709,7 @@ void QmlFilter::removeKeyFrameParaValue(double frame)
         {
             m_keyFrameList.remove(index);
             emit removeKeyFrame();
+            emit keyframeNumberChanged();
             if(keyFrameCount > 1)
                 combineAllKeyFramePara();
 
