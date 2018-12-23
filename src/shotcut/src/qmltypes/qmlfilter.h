@@ -90,6 +90,7 @@ public:
     Q_INVOKABLE void removeAllKeyFrame(QString name);
     Q_INVOKABLE QString getKeyFrameParaValue(double frame, QString key);
     Q_INVOKABLE double getKeyFrameParaDoubleValue(double frame, QString key);
+    Q_INVOKABLE QRectF getKeyFrameParaRectValue(double frame, QString key);
     Q_INVOKABLE double getPreKeyFrameNum(double currentKeyFrame);
     Q_INVOKABLE double getNextKeyFrameNum(double currentKeyFrame);
     Q_INVOKABLE void combineAllKeyFramePara();

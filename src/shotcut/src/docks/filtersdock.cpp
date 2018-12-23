@@ -86,6 +86,8 @@ void FiltersDock::setCurrentFilter(QObject* filter, QmlMetadata* meta, int index
         connect(qmlFilter, SIGNAL(changed()), SIGNAL(changed()));
     }
     m_qmlFilter = qmlFilter;
+
+    emit currentFilterChanged();
 }
 
 void FiltersDock::setFadeInDuration(int duration)

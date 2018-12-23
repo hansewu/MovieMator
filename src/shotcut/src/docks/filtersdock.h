@@ -60,6 +60,7 @@ signals:
     void changePosition(int position);
 #endif
     void dockPositionChanged();
+    void currentFilterChanged(); //current fiter changed
 
 public slots:
     void clearCurrentFilter();
