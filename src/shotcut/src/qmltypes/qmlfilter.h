@@ -56,6 +56,7 @@ public:
 
     Q_INVOKABLE QString get(QString name);
     Q_INVOKABLE double getDouble(QString name);
+    Q_INVOKABLE int getInt(QString name);
     Q_INVOKABLE QRectF getRect(QString name, int position = -1);
     Q_INVOKABLE QRectF getRectOfTextFilter(QString name, int position = -1);//FIXME: 暫時之應用與Text Filter，之後其他濾鏡獲取rect方法統一后移除
     Q_INVOKABLE void set(QString name, QString value);
