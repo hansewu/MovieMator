@@ -152,6 +152,8 @@ class QMLUTILITIESSHARED_EXPORT QmlMetadata : public QObject
     Q_PROPERTY(bool freeVersion READ freeVersion WRITE setFreeVersion)
     Q_PROPERTY(bool isGpuCompatible READ isGpuCompatible() WRITE setIsGpuCompatible)
     Q_PROPERTY(QmlKeyframesMetadata* keyframes READ keyframes NOTIFY changed)
+    Q_PROPERTY(QString filterType READ filterType WRITE setFilterType)
+
 
 public:
     enum PluginType {
@@ -202,11 +204,15 @@ public:
     void setIsGpuCompatible(bool isCompatible) { m_isGpuCompatible = isCompatible; }
     QmlKeyframesMetadata* keyframes() { return &m_keyframes; }
 
+    QString filterType() const { return m_filterType; }
+    void setFilterType(const QString&);
+
 signals:
     void changed();
 
 private:
     PluginType m_type;
+
     QString m_name;
     QString m_mlt_service;
     bool m_needsGPU;
@@ -225,6 +231,7 @@ private:
     bool m_isGpuCompatible;
     QmlKeyframesMetadata m_keyframes;
 //   QVector<key_frame_item> m_keyFrameList;
+    QString m_filterType;
 };
 
 #endif // QMLMETADATA_H
