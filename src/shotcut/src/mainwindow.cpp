@@ -323,8 +323,8 @@ MainWindow::MainWindow()
 
      ui->centralWidget->setMinimumWidth(500);
      ui->centralWidget->setMinimumHeight(320);
-     ui->centralWidget->setFixedWidth(600);
-     //     ui->centralWidget->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+     //ui->centralWidget->setFixedWidth(600);
+     //ui->centralWidget->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 
 
 
@@ -2494,8 +2494,61 @@ bool MainWindow::on_actionSave_triggered()
     }
 }
 
+void MainWindow::exportTemplate()
+{
+    Mlt::Tractor *tractor = m_timelineDock->model()->tractor();
+
+    int trackCount = tractor->count();
+
+    int i = 0;
+    for (i = 0; i < trackCount; i++)
+    {
+        QScopedPointer<Mlt::Producer> track(tractor->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            int clipCount = playlist.count();
+            for (int j = 0; j < clipCount; j++)
+            {
+                Mlt::Producer *producer = playlist.get_clip(j);
+
+                QString mltService(producer->parent().get("mlt_service"));
+                if (!mltService.isEmpty() && mltService != "color" && mltService != "colour" && mltService != "blank")
+                {
+                    playlist.remove(j);
+                    Mlt::Producer *newProducer = new Mlt::Producer(MLT.profile(), "C:\\Users\\gdbwin\\Videos\\exercise_.mp4");
+                    playlist.insert(*newProducer, j);
+                }
+            }
+
+        }
+    }
+
+
+    QString path = Settings.savePath();
+    path.append("/untitled.xml");//xjp
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Template"), path, tr("Template (*.xml)"));
+    if (!filename.isEmpty()) {
+        QFileInfo fi(filename);
+        Settings.setSavePath(fi.path());
+        // if (fi.suffix() != "mlt")
+        //     filename += ".mlt";
+        // if (MLT.producer())
+        //     saveXML(filename, false);
+        // else
+        //     showStatusMessage(tr("Unable to save empty file, but saved its name for future."));
+        if (fi.suffix() != "xml")//xjp
+            filename += ".xml";//xjp
+        if (MLT.producer())
+            saveXML(filename, false);
+        else
+            showStatusMessage(tr("Unable to save empty file, but saved its name for future."));
+    }
+}
+
 bool MainWindow::on_actionSave_As_triggered()
 {
+    exportTemplate();
+    return false;
     QString path = Settings.savePath();
     path.append("/untitled.mmp");//xjp
     QString filename = QFileDialog::getSaveFileName(this, tr("Save MMP"), path, tr("MMP (*.mmp)"));

@@ -399,6 +399,8 @@ private slots:
 
     void configureUI();
 
+    void exportTemplate();
+
 
 #ifdef Q_OS_WIN
     void onDrawingMethodTriggered(QAction*);
