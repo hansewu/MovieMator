@@ -55,8 +55,8 @@ Player::Player(QFrame *parent)
     m_playIcon = actionPlay->icon();
     m_pauseIcon = actionPause->icon();
 
-    setMinimumSize(500, 318);
- //   setFixedWidth(800);
+    //setMinimumSize(480, 360);
+    //setFixedWidth(800);
 
 
     // Create a layout.
@@ -113,7 +113,9 @@ Player::Player(QFrame *parent)
     // Add the video widgets.
     m_videoWidget = qobject_cast<QWidget*>(MLT.videoWidget());
     Q_ASSERT(m_videoWidget);
-    m_videoWidget->setMinimumSize(QSize(320, 180));
+
+    //16:9显示
+    m_videoWidget->setMinimumSize(QSize(480, 270));
 
     glayout->addWidget(m_videoWidget, 0, 0);
 

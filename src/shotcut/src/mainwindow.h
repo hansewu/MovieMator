@@ -128,6 +128,7 @@ protected:
     void dropEvent(QDropEvent*);
     void closeEvent(QCloseEvent*);
     void showEvent(QShowEvent*);
+    void resizeEvent(QResizeEvent* event);
 
 private:
     void setupSettingsMenu();
@@ -316,6 +317,9 @@ public slots:
     void onFileOpened(QString filePath);
     void onOpenFailed(QString filePath);
 
+
+    void resizePlayer(int width, int height);
+
 private slots:
 
 
@@ -435,6 +439,7 @@ private slots:
     void initParentDockForResourceDock();
     void addResourceDock(QDockWidget *dock);
     void addPropertiesDock(QDockWidget *dock);
+
 
 };
 

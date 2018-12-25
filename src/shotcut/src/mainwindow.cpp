@@ -286,7 +286,6 @@ MainWindow::MainWindow()
     LOG_DEBUG() << "setStyleSheet(\"QMainWindow::separator {width: 6px; background: '#1D1E1F'}\");";
     setStyleSheet("QMainWindow::separator {width: 6px; background: '#1D1E1F'}");
 
-    //LOG_DEBUG() << "setStyleSheet(\"QMainWindow::separator {width: 6px; background: '#1D1E1F'}\");  - end";
     LOG_DEBUG() << "customize toolbar";
     this->customizeToolbar();
 
@@ -313,19 +312,9 @@ MainWindow::MainWindow()
 //    m_configurationDock->setMinimumSize(500,320);
 //    m_configurationDock->setContentsMargins(0,0,0,0);
 
-
-//        ui->centralWidget->setContentsMargins(0,0,0,0);
-
      ui->centralWidget->layout()->addWidget(m_player);
 
-     ui->centralWidget->layout()->setContentsMargins(0,0,0,1);
-
-
-     ui->centralWidget->setMinimumWidth(500);
-     ui->centralWidget->setMinimumHeight(320);
-     //ui->centralWidget->setFixedWidth(600);
-     //ui->centralWidget->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-
+     ui->centralWidget->layout()->setContentsMargins(0,0,0,0);
 
 
       //    ui->horizontalLayout->addWidget(m_tabForResource);
@@ -450,7 +439,7 @@ MainWindow::MainWindow()
     m_filtersDock->setExtraQmlContextProperty("mainwindow", this);
     m_filtersDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
     m_filtersDock->setTitleBarWidget(new QWidget());
-    m_filtersDock->setMinimumSize(519,272);
+    m_filtersDock->setMinimumSize(520,272);
 
 
 
@@ -583,19 +572,9 @@ MainWindow::MainWindow()
     setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
     setCorner(Qt::BottomLeftCorner, Qt::BottomDockWidgetArea);
     setCorner(Qt::BottomRightCorner, Qt::BottomDockWidgetArea);
- //   setDockNestingEnabled(true);
 
     setFocus();
     setCurrentFile("");
-
-//    LeapNetworkListener* leap = new LeapNetworkListener(this);
-//    connect(leap, SIGNAL(shuttle(float)), SLOT(onShuttle(float)));
-//    connect(leap, SIGNAL(jogRightFrame()), SLOT(stepRightOneFrame()));
-//    connect(leap, SIGNAL(jogRightSecond()), SLOT(stepRightOneSecond()));
-//    connect(leap, SIGNAL(jogLeftFrame()), SLOT(stepLeftOneFrame()));
-//    connect(leap, SIGNAL(jogLeftSecond()), SLOT(stepLeftOneSecond()));
-
-//    connect(&m_network, SIGNAL(finished(QNetworkReply*)), SLOT(onUpgradeCheckFinished(QNetworkReply*)));
 
     m_timelineDock->setFocusPolicy(Qt::StrongFocus);
 
@@ -4418,3 +4397,14 @@ void MainWindow::onOpenFailed(QString filePath)
 {
     RecentDock_remove(filePath);
 }
+
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+}
+
+void MainWindow::resizePlayer(int width, int height)
+{
+//    resizeDocks({m_filtersDock}, {size().width()/2}, Qt::Horizontal);
+//    m_player->resize(width, height);
+}
+
