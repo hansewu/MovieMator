@@ -113,7 +113,11 @@ public:
 
 #endif
 
+    Q_INVOKABLE bool enableAnimation() const { return m_bEnableAnimation; }
+    Q_INVOKABLE void setEnableAnimation(bool bEnableAnimation) { m_bEnableAnimation = bEnableAnimation; };
 
+    Q_INVOKABLE bool autoAddKeyFrame() const { return m_bAutoAddKeyFrame; }
+    Q_INVOKABLE void setAutoAddKeyFrame(bool bAutoAddKeyFrame) { m_bAutoAddKeyFrame = bAutoAddKeyFrame; };
 
 public slots:
     void preset(const QString& name);
@@ -150,6 +154,8 @@ private:
 //    };
 
     QVector<key_frame_item> m_keyFrameList;
+    bool m_bEnableAnimation;
+    bool m_bAutoAddKeyFrame;
 };
 
 class AnalyzeDelegate : public QObject
