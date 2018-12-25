@@ -74,6 +74,7 @@ class EncodeTaskDock;
 class QmlFilter;
 class QUndoCommand;
 class ConfigurationDock;
+class ContainerDock;
 
 //class TextlistDock;
 
@@ -186,7 +187,6 @@ private:
     QQuickWidget *m_quickWidgetForSoundEffect;
     QQuickWidget *m_quickWidgetForVoice;
     FilterWidget *m_filterWidget;
-    QDockWidget *m_mainDockWidget;
 
     TextManagerWidget *m_textManagerWidget;
 //    TextlistDock *m_textlistDock;
@@ -233,6 +233,9 @@ private:
     EncodeTaskDock *m_tasksDock;
 
     ConfigurationDock *m_configurationDock;
+
+    ContainerDock *m_resourceDockContainer;
+    ContainerDock *m_propertiesDockContainer;
 
 public slots:
     void open(Mlt::Producer* producer);
@@ -437,8 +440,9 @@ private slots:
     void on_actionTutorial_triggered();
 
     void initParentDockForResourceDock();
-    void addResourceDock(QDockWidget *dock);
-    void addPropertiesDock(QDockWidget *dock);
+    void initParentDockForPropteriesDock();
+    void addResourceDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);
+    void addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);
 
 
 };
