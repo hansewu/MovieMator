@@ -2533,8 +2533,8 @@ void MainWindow::exportTemplate()
 
 bool MainWindow::on_actionSave_As_triggered()
 {
-    exportTemplate();
-    return false;
+//    exportTemplate();
+//    return false;
     QString path = Settings.savePath();
     path.append("/untitled.mmp");//xjp
     QString filename = QFileDialog::getSaveFileName(this, tr("Save MMP"), path, tr("MMP (*.mmp)"));
