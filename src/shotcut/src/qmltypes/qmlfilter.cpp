@@ -149,6 +149,14 @@ double QmlFilter::getDouble(QString name)
         return 0;
 }
 
+int QmlFilter::getInt(QString name)
+{
+    if (m_filter)
+        return m_filter->get_int(name.toUtf8().constData());
+    else
+        return 0;
+}
+
 QRectF QmlFilter::getRect(QString name, int position)
 {
     if (!m_filter->is_valid()) return QRectF();

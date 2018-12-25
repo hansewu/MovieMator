@@ -301,6 +301,39 @@ bool removeDir(const QString & dirName)
     return result;
 }
 
+bool copyDirectoryFiles(const QString &fromDir, const QString &toDir, bool coverFileIfExist) {
+    QDir sourceDir(fromDir);
+    QDir targetDir(toDir);
+    if(!targetDir.exists()){    /**< 如果目标目录不存在，则进行创建 */
+        if(!targetDir.mkdir(targetDir.absolutePath())) {
+            return false;
+        }
+    }
+
+    QFileInfoList fileInfoList = sourceDir.entryInfoList();
+    foreach(QFileInfo fileInfo, fileInfoList){
+        if(fileInfo.fileName() == "." || fileInfo.fileName() == "..") {
+             continue;
+        }
+
+        if(fileInfo.isDir()){    /**< 当为目录时，递归的进行copy */
+            if(!copyDirectoryFiles(fileInfo.filePath(), targetDir.filePath(fileInfo.fileName()), coverFileIfExist)) {
+                return false;
+            }
+        } else {            /**< 当允许覆盖操作时，将旧文件进行删除操作 */
+            if(coverFileIfExist && targetDir.exists(fileInfo.fileName())){
+                targetDir.remove(fileInfo.fileName());
+            }
+
+            /// 进行文件copy
+            if(!QFile::copy(fileInfo.filePath(), targetDir.filePath(fileInfo.fileName()))){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 int main(int argc, char **argv)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
@@ -366,6 +399,12 @@ int main(int argc, char **argv)
     duration = clock() - begin;
     printf("copy qml --- %ld\n", duration);
 
+    //copy filter presets
+    QDir applicationDir(qApp->applicationDirPath());
+    QString filterPresetsPath = qApp->applicationDirPath() + "/share/mlt/presets/filter";
+    QDir userDataDir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    QString targetPath = userDataDir.path() + "/presets";
+    copyDirectoryFiles(filterPresetsPath, targetPath, true);
 
     QDir appDir(qApp->applicationDirPath());
     appDir.cdUp();

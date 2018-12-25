@@ -43,6 +43,7 @@ public:
         ThumbnailRole,
         NeedsProVersionRole,
         FreeVersionRole,
+        FilterTypeDisplayRole,
     };
 
     enum MetadataFilter {
