@@ -301,7 +301,7 @@ bool removeDir(const QString & dirName)
     return result;
 }
 
-bool copyDirectoryFiles(const QString &fromDir, const QString &toDir, bool coverFileIfExist) {
+bool copyDirectoryFiles(const QString &fromDir, const QString &toDir, bool coverFileIfExist, const QMap<QString, QString> filter) {
     QDir sourceDir(fromDir);
     QDir targetDir(toDir);
     if(!targetDir.exists()){    /**< 如果目标目录不存在，则进行创建 */
@@ -317,21 +317,72 @@ bool copyDirectoryFiles(const QString &fromDir, const QString &toDir, bool cover
         }
 
         if(fileInfo.isDir()){    /**< 当为目录时，递归的进行copy */
-            if(!copyDirectoryFiles(fileInfo.filePath(), targetDir.filePath(fileInfo.fileName()), coverFileIfExist)) {
+            if(!copyDirectoryFiles(fileInfo.filePath(), targetDir.filePath(fileInfo.fileName()), coverFileIfExist, filter)) {
                 return false;
             }
         } else {            /**< 当允许覆盖操作时，将旧文件进行删除操作 */
-            if(coverFileIfExist && targetDir.exists(fileInfo.fileName())){
-                targetDir.remove(fileInfo.fileName());
-            }
+            QString fileName_en = fileInfo.fileName();
+            if (!fileName_en.isEmpty()) {
+                if(coverFileIfExist && targetDir.exists(fileName_en)){
+                    targetDir.remove(fileName_en);
+                }
 
-            /// 进行文件copy
-            if(!QFile::copy(fileInfo.filePath(), targetDir.filePath(fileInfo.fileName()))){
-                return false;
+                QString fileName_zh = filter.value(fileName_en);
+                if (!fileName_zh.isEmpty()) {
+                    if(coverFileIfExist && targetDir.exists(fileName_zh)){
+                        targetDir.remove(fileName_zh);
+                    }
+                }
+
+                QString language = QLocale::system().name();
+                QString targetFileName = fileName_en;
+                if (language == "zh_CN" && !fileName_zh.isEmpty()) {
+                    targetFileName = fileName_zh;
+                }
+
+                /// 进行文件copy
+                if(!QFile::copy(fileInfo.filePath(), targetDir.filePath(targetFileName))){
+                    return false;
+                }
             }
         }
     }
     return true;
+}
+
+void copyTextFilterPresetFile() {
+    const QMap<QString, QString> textFilterPresetNameMap = {
+        {"(defaults)", "默认"},
+        {"Bottom Left", "左下"},
+        {"Bottom Right", "右下"},
+        {"Lower Third", "底部字幕"},
+        {"Slide In From Bottom", "从底划入"},
+        {"Slide In From Left", "从左划入"},
+        {"Slide In From Right", "从右划入"},
+        {"Slide In From Top", "从顶划入"},
+        {"Slide Out Bottom", "从底划出"},
+        {"Slide Out Left", "从左划出"},
+        {"Slide Out Right", "从右划出"},
+        {"Slide Out Top", "从顶划出"},
+        {"Slow Pan Down", "由小变大"},
+        {"Slow Pan Left", "从左侧由小变大"},
+        {"Slow Pan Right", "从右侧由小变大"},
+        {"Slow Pan Up", "缓缓从上落下"},
+        {"Slow Zoom In", "逐渐缩小"},
+        {"Slow Zoom In, Pan Up Left", "向左上逐渐缩小"},
+        {"Slow Zoom In. Pan Down Right", "向右下逐渐缩小"},
+        {"Slow Zoom Out, Pan Down Left", "向左下逐渐放大"},
+        {"Slow Zoom Out, Pan Up Right", "向右上逐渐放大"},
+        {"Slow Zoom Out", "逐渐放大"},
+        {"Top Left", "左上"},
+        {"Top Right", "右上"},
+    };
+
+    QDir applicationDir(qApp->applicationDirPath());
+    QString filterPresetsPath = qApp->applicationDirPath() + "/share/mlt/presets/filter/dynamicText";
+    QDir userDataDir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    QString targetPath = userDataDir.path() + "/presets/dynamicText";
+    copyDirectoryFiles(filterPresetsPath, targetPath, true, textFilterPresetNameMap);
 }
 
 int main(int argc, char **argv)
@@ -399,12 +450,8 @@ int main(int argc, char **argv)
     duration = clock() - begin;
     printf("copy qml --- %ld\n", duration);
 
-    //copy filter presets
-    QDir applicationDir(qApp->applicationDirPath());
-    QString filterPresetsPath = qApp->applicationDirPath() + "/share/mlt/presets/filter";
-    QDir userDataDir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
-    QString targetPath = userDataDir.path() + "/presets";
-    copyDirectoryFiles(filterPresetsPath, targetPath, true);
+    //copy text filter presets
+    copyTextFilterPresetFile();
 
     QDir appDir(qApp->applicationDirPath());
     appDir.cdUp();
