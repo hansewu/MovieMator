@@ -71,7 +71,7 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
 
     ui->tableView->setModel(&m_proxyModel);
     ui->tableView->resizeColumnToContents(0);
-    ui->tableView->setColumnWidth(2, 250);
+    ui->tableView->setColumnWidth(2, 100);
     ui->tableView->verticalHeader()->setVisible(false);
     ui->tableView->verticalHeader()->setDefaultSectionSize(50);
     LOG_DEBUG() << "end";

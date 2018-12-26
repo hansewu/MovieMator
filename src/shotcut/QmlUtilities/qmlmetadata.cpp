@@ -34,6 +34,7 @@ QmlMetadata::QmlMetadata(QObject *parent)
     , m_needsProVersion(false)
     , m_freeVersion(false)
     , m_isGpuCompatible(true)
+    , m_filterType("")
 {
 }
 
@@ -168,6 +169,10 @@ void QmlMetadata::setFreeVersion(bool freeVersion)
     m_freeVersion = freeVersion;
 }
 
+void QmlMetadata::setFilterType(const QString &filterType)
+{
+    m_filterType = filterType;
+}
 
 QmlKeyframesMetadata::QmlKeyframesMetadata(QObject* parent)
     : QObject(parent)

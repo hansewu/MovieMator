@@ -119,7 +119,8 @@ SOURCES += main.cpp\
     dialogs/mmsplashscreen.cpp \
     qmltypes/mmqmlutilities.cpp \
     eccregister/CEccRegister.cpp \
-    maininterface.cpp
+    maininterface.cpp \
+    containerdock.cpp
     maininterface.cpp
 
 HEADERS  += mainwindow.h \
@@ -233,7 +234,8 @@ HEADERS  += mainwindow.h \
     melt/melt.h \
     dialogs/mmsplashscreen.h \
     qmltypes/mmqmlutilities.h \
-    maininterface.h
+    maininterface.h \
+    containerdock.h
     eccregister/CEccRegister.h
     maininterface.h
 

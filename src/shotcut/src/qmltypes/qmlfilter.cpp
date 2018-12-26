@@ -149,6 +149,14 @@ double QmlFilter::getDouble(QString name)
         return 0;
 }
 
+int QmlFilter::getInt(QString name)
+{
+    if (m_filter)
+        return m_filter->get_int(name.toUtf8().constData());
+    else
+        return 0;
+}
+
 QRectF QmlFilter::getRect(QString name, int position)
 {
     if (!m_filter->is_valid()) return QRectF();
@@ -958,6 +966,29 @@ double QmlFilter::getKeyFrameParaDoubleValue(double frame, QString key)
     }
     return -1.0;
 
+}
+
+QRectF QmlFilter::getKeyFrameParaRectValue(double frame, QString key)
+{
+    int keyFrameCount = m_keyFrameList.count();
+    if(keyFrameCount == 0) {
+        return QRectF();
+    } else {
+        for(int index=0; index < keyFrameCount; index++) {
+            key_frame_item para = m_keyFrameList.at(index);
+            if(frame == para.keyFrame) {
+                QString value = para.paraMap.value(key);
+                QStringList listValue = value.split(" ", QString::SkipEmptyParts);
+                double x = listValue[0].toDouble();
+                double y = listValue[1].toDouble();
+                double width = listValue[2].toDouble();
+                double height = listValue[3].toDouble();
+
+                return QRectF(x, y, width, height);
+            }
+        }
+    }
+    return QRectF();
 }
 
 QString QmlFilter::getKeyFrameParaValue(double frame, QString key)

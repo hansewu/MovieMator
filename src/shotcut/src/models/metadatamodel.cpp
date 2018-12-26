@@ -75,6 +75,9 @@ QVariant MetadataModel::data(const QModelIndex &index, int role) const
             case FreeVersionRole:
                 result = meta->freeVersion();
                 break;
+            case FilterTypeDisplayRole:
+                result = meta->filterType();
+                break;
         }
     }
 
@@ -112,6 +115,8 @@ QHash<int, QByteArray> MetadataModel::roleNames() const {
     roles[ThumbnailRole] = "thumbnail";
     roles[NeedsProVersionRole] = "needsProVersion";
     roles[FreeVersionRole] = "freeVersion";
+    roles[FilterTypeDisplayRole] = "filterTypeDisplay";
+
     return roles;
 }
 
@@ -125,9 +130,21 @@ Qt::ItemFlags MetadataModel::flags(const QModelIndex &index) const
 void MetadataModel::add(QmlMetadata* data)
 {
     int i = 0;
+//    for( i = 0; i < m_list.size(); i++ ) {
+//        if (m_list[i]->name().toLower() > data->name().toLower() ) {
+//            break;
+//        }
+//    }
+
     for( i = 0; i < m_list.size(); i++ ) {
-        if (m_list[i]->name().toLower() > data->name().toLower() ) {
+        if (m_list[i]->filterType().toLower() > data->filterType().toLower() ) {
             break;
+        }
+        if (m_list[i]->filterType().toLower() == data->filterType().toLower() )
+        {
+            if (m_list[i]->name().toLower() > data->name().toLower() ) {
+                break;
+            }
         }
     }
 

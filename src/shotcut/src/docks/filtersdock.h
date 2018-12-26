@@ -33,7 +33,7 @@ class AttachedFiltersModel;
 class FiltersDock : public QDockWidget
 {
     Q_OBJECT
-
+    Q_PROPERTY(QRect dockPosition READ dockPosition NOTIFY dockPositionChanged)
 public:
     explicit FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent = 0);
     int position() const { return m_position; }
@@ -50,6 +50,7 @@ public:
     Q_INVOKABLE void promptForUpgrade();
 
     void setExtraQmlContextProperty(QString name, QObject *object);
+    QRect dockPosition();
 
 signals:
     void currentFilterRequested(int attachedIndex);
@@ -58,6 +59,8 @@ signals:
 #ifdef MOVIEMATOR_PRO
     void changePosition(int position);
 #endif
+    void dockPositionChanged();
+    void currentFilterChanged(); //current fiter changed
 
 public slots:
     void clearCurrentFilter();

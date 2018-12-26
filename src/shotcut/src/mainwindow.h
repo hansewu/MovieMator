@@ -74,6 +74,7 @@ class EncodeTaskDock;
 class QmlFilter;
 class QUndoCommand;
 class ConfigurationDock;
+class ContainerDock;
 
 //class TextlistDock;
 
@@ -128,6 +129,7 @@ protected:
     void dropEvent(QDropEvent*);
     void closeEvent(QCloseEvent*);
     void showEvent(QShowEvent*);
+    void resizeEvent(QResizeEvent* event);
 
 private:
     void setupSettingsMenu();
@@ -185,7 +187,6 @@ private:
     QQuickWidget *m_quickWidgetForSoundEffect;
     QQuickWidget *m_quickWidgetForVoice;
     FilterWidget *m_filterWidget;
-    QDockWidget *m_mainDockWidget;
 
     TextManagerWidget *m_textManagerWidget;
 //    TextlistDock *m_textlistDock;
@@ -232,6 +233,9 @@ private:
     EncodeTaskDock *m_tasksDock;
 
     ConfigurationDock *m_configurationDock;
+
+    ContainerDock *m_resourceDockContainer;
+    ContainerDock *m_propertiesDockContainer;
 
 public slots:
     void open(Mlt::Producer* producer);
@@ -316,6 +320,9 @@ public slots:
     void onFileOpened(QString filePath);
     void onOpenFailed(QString filePath);
 
+
+    void resizePlayer(int width, int height);
+
 private slots:
 
 
@@ -399,6 +406,8 @@ private slots:
 
     void configureUI();
 
+    void exportTemplate();
+
 
 #ifdef Q_OS_WIN
     void onDrawingMethodTriggered(QAction*);
@@ -431,8 +440,10 @@ private slots:
     void on_actionTutorial_triggered();
 
     void initParentDockForResourceDock();
-    void addResourceDock(QDockWidget *dock);
-    void addPropertiesDock(QDockWidget *dock);
+    void initParentDockForPropteriesDock();
+    void addResourceDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);
+    void addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);
+
 
 };
 

@@ -58,6 +58,7 @@ public:
 
     Q_INVOKABLE QString get(QString name);
     Q_INVOKABLE double getDouble(QString name);
+    Q_INVOKABLE int getInt(QString name);
     Q_INVOKABLE QRectF getRect(QString name, int position = -1);
     Q_INVOKABLE QRectF getRectOfTextFilter(QString name, int position = -1);//FIXME: 暫時之應用與Text Filter，之後其他濾鏡獲取rect方法統一后移除
     Q_INVOKABLE void set(QString name, QString value);
@@ -95,6 +96,7 @@ public:
     Q_INVOKABLE void removeAllKeyFrame(QString name);
     Q_INVOKABLE QString getKeyFrameParaValue(double frame, QString key);
     Q_INVOKABLE double getKeyFrameParaDoubleValue(double frame, QString key);
+    Q_INVOKABLE QRectF getKeyFrameParaRectValue(double frame, QString key);
     Q_INVOKABLE double getPreKeyFrameNum(double currentKeyFrame);
     Q_INVOKABLE double getNextKeyFrameNum(double currentKeyFrame);
     Q_INVOKABLE void combineAllKeyFramePara();
@@ -115,6 +117,12 @@ public:
     Q_INVOKABLE QRectF getAnimRectValue(double frame, QString key);
 
 #endif
+
+    Q_INVOKABLE bool enableAnimation() const { return m_bEnableAnimation; }
+    Q_INVOKABLE void setEnableAnimation(bool bEnableAnimation) { m_bEnableAnimation = bEnableAnimation; };
+
+    Q_INVOKABLE bool autoAddKeyFrame() const { return m_bAutoAddKeyFrame; }
+    Q_INVOKABLE void setAutoAddKeyFrame(bool bAutoAddKeyFrame) { m_bAutoAddKeyFrame = bAutoAddKeyFrame; };
 
 public slots:
     void preset(const QString& name);
@@ -142,6 +150,8 @@ private:
 
 
     QVector<key_frame_item> m_keyFrameList;
+    bool m_bEnableAnimation;
+    bool m_bAutoAddKeyFrame;
 };
 
 class AnalyzeDelegate : public QObject

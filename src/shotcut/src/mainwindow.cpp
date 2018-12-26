@@ -93,6 +93,8 @@
 #include "maininterface.h"
 #include <recentdockinterface.h>
 
+#include "containerdock.h"
+
 #include <QtWidgets>
 #include <Logger.h>
 #include <QThreadPool>
@@ -104,6 +106,7 @@
 #include <QJSEngine>
 #include <QQmlEngine>
 #include <QQmlContext>
+
 
 
 #if defined(Q_OS_WIN)
@@ -286,7 +289,6 @@ MainWindow::MainWindow()
     LOG_DEBUG() << "setStyleSheet(\"QMainWindow::separator {width: 6px; background: '#1D1E1F'}\");";
     setStyleSheet("QMainWindow::separator {width: 6px; background: '#1D1E1F'}");
 
-    //LOG_DEBUG() << "setStyleSheet(\"QMainWindow::separator {width: 6px; background: '#1D1E1F'}\");  - end";
     LOG_DEBUG() << "customize toolbar";
     this->customizeToolbar();
 
@@ -313,19 +315,9 @@ MainWindow::MainWindow()
 //    m_configurationDock->setMinimumSize(500,320);
 //    m_configurationDock->setContentsMargins(0,0,0,0);
 
-
-//        ui->centralWidget->setContentsMargins(0,0,0,0);
-
      ui->centralWidget->layout()->addWidget(m_player);
 
-     ui->centralWidget->layout()->setContentsMargins(0,0,0,1);
-
-
-     ui->centralWidget->setMinimumWidth(500);
-     ui->centralWidget->setMinimumHeight(320);
-     ui->centralWidget->setFixedWidth(600);
-     //     ui->centralWidget->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-
+     ui->centralWidget->layout()->setContentsMargins(0,0,0,0);
 
 
       //    ui->horizontalLayout->addWidget(m_tabForResource);
@@ -450,7 +442,7 @@ MainWindow::MainWindow()
     m_filtersDock->setExtraQmlContextProperty("mainwindow", this);
     m_filtersDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
     m_filtersDock->setTitleBarWidget(new QWidget());
-    m_filtersDock->setMinimumSize(519,272);
+    m_filtersDock->setMinimumSize(520,272);
 
 
 
@@ -583,19 +575,9 @@ MainWindow::MainWindow()
     setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
     setCorner(Qt::BottomLeftCorner, Qt::BottomDockWidgetArea);
     setCorner(Qt::BottomRightCorner, Qt::BottomDockWidgetArea);
- //   setDockNestingEnabled(true);
 
     setFocus();
     setCurrentFile("");
-
-//    LeapNetworkListener* leap = new LeapNetworkListener(this);
-//    connect(leap, SIGNAL(shuttle(float)), SLOT(onShuttle(float)));
-//    connect(leap, SIGNAL(jogRightFrame()), SLOT(stepRightOneFrame()));
-//    connect(leap, SIGNAL(jogRightSecond()), SLOT(stepRightOneSecond()));
-//    connect(leap, SIGNAL(jogLeftFrame()), SLOT(stepLeftOneFrame()));
-//    connect(leap, SIGNAL(jogLeftSecond()), SLOT(stepLeftOneSecond()));
-
-//    connect(&m_network, SIGNAL(finished(QNetworkReply*)), SLOT(onUpgradeCheckFinished(QNetworkReply*)));
 
     m_timelineDock->setFocusPolicy(Qt::StrongFocus);
 
@@ -603,12 +585,16 @@ MainWindow::MainWindow()
     //初始化资源管理Dock
     initParentDockForResourceDock();
 //    addResourceDock(m_filtersDock);
-    addDockWidget(Qt::RightDockWidgetArea, m_filtersDock);
+//    addDockWidget(Qt::RightDockWidgetArea, m_filtersDock);
 //    m_filtersDock->show();
+
+    initParentDockForPropteriesDock();
 
     LOG_DEBUG() << "RecentDock";
     m_recentDock = RecentDock_initModule(&MainInterface::singleton());//new RecentDock();
-    addResourceDock(m_recentDock);
+    addResourceDock(m_recentDock, tr("Recent"), QIcon(":/icons/light/32x32/show-recent.png"), QIcon(":/icons/light/32x32/show-recent-highlight.png"));
+
+    addPropertiesDock(m_filtersDock, tr("Filter"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
 
 //    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
 //    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
@@ -1552,7 +1538,7 @@ void MainWindow::openVideo()
     if (filenames.length() > 0) {
 
 //        m_resourceBtnDock->on_showPlaylistDock_clicked();
-        m_resourceBtnDock->on_showRecentDock_clicked();
+//        m_resourceBtnDock->on_showRecentDock_clicked();
         Settings.setOpenPath(QFileInfo(filenames.first()).path());
         activateWindow();
         if (filenames.length() > 1)// 去掉限制添加所有的文件到playlist
@@ -2494,8 +2480,61 @@ bool MainWindow::on_actionSave_triggered()
     }
 }
 
+void MainWindow::exportTemplate()
+{
+    Mlt::Tractor *tractor = m_timelineDock->model()->tractor();
+
+    int trackCount = tractor->count();
+
+    int i = 0;
+    for (i = 0; i < trackCount; i++)
+    {
+        QScopedPointer<Mlt::Producer> track(tractor->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            int clipCount = playlist.count();
+            for (int j = 0; j < clipCount; j++)
+            {
+                Mlt::Producer *producer = playlist.get_clip(j);
+
+                QString mltService(producer->parent().get("mlt_service"));
+                if (!mltService.isEmpty() && mltService != "color" && mltService != "colour" && mltService != "blank")
+                {
+                    playlist.remove(j);
+                    Mlt::Producer *newProducer = new Mlt::Producer(MLT.profile(), "C:\\Users\\gdbwin\\Videos\\exercise_.mp4");
+                    playlist.insert(*newProducer, j);
+                }
+            }
+
+        }
+    }
+
+
+    QString path = Settings.savePath();
+    path.append("/untitled.xml");//xjp
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Template"), path, tr("Template (*.xml)"));
+    if (!filename.isEmpty()) {
+        QFileInfo fi(filename);
+        Settings.setSavePath(fi.path());
+        // if (fi.suffix() != "mlt")
+        //     filename += ".mlt";
+        // if (MLT.producer())
+        //     saveXML(filename, false);
+        // else
+        //     showStatusMessage(tr("Unable to save empty file, but saved its name for future."));
+        if (fi.suffix() != "xml")//xjp
+            filename += ".xml";//xjp
+        if (MLT.producer())
+            saveXML(filename, false);
+        else
+            showStatusMessage(tr("Unable to save empty file, but saved its name for future."));
+    }
+}
+
 bool MainWindow::on_actionSave_As_triggered()
 {
+//    exportTemplate();
+//    return false;
     QString path = Settings.savePath();
     path.append("/untitled.mmp");//xjp
     QString filename = QFileDialog::getSaveFileName(this, tr("Save MMP"), path, tr("MMP (*.mmp)"));
@@ -3804,7 +3843,7 @@ void MainWindow::onHelpButtonTriggered()
 
 void MainWindow::onShowFilterDock()
 {
-    m_resourceBtnDock->on_showFilterDock_clicked();
+
 }
 
 
@@ -4300,60 +4339,37 @@ void MainWindow::setCurrentFilterForVideoWidget(QObject* filter, QmlMetadata* me
 
 void MainWindow::initParentDockForResourceDock()
 {
-    LOG_DEBUG() << "initParentDockForResourceDock";
-    m_mainDockWidget = new QDockWidget(tr("123"));
-    m_mainDockWidget->setTitleBarWidget(new QWidget());
-    QWidget *layoutWidget = new QWidget;
-    layoutWidget->setMinimumWidth(300);
-    layoutWidget->setMinimumHeight(320);
-    layoutWidget->setContentsMargins(0,0,0,0);
-    QString strStyle = "QScrollBar::vertical{background-color:rgb(51,51,51);width:14px;border: 3px solid rgb(51,51,51);}";
-    strStyle.append("QScrollBar::handle:vertical{background:#787878;border-radius:4px;}");
-    strStyle.append("QScrollBar::add-page:vertical{background:none;}");
-    strStyle.append("QScrollBar::sub-page:vertical{background:none;}");
-    strStyle.append("QScrollBar::add-line:vertical{height: 0px; background:none;}");
-    strStyle.append("QScrollBar::sub-line:vertical{height: 0px; background:none;}");
-    strStyle.append("QScrollBar::horizontal{background-color:rgb(51,51,51);height:14px;border: 3px solid rgb(51,51,51);}");
-    strStyle.append("QScrollBar::handle:horizontal{background:#787878;border-radius:4px;}");
-    strStyle.append("QScrollBar::add-page:horizontal{background:none;}");
-    strStyle.append("QScrollBar::sub-page:horizontal{background:none;}");
-    strStyle.append("QScrollBar::add-line:horizontal{width:0px; background:none;}");
-    strStyle.append("QScrollBar::sub-line:horizontal{width:0px; background:none;}");
-    strStyle.append(".QWidget{background-color:rgb(51,51,51)}");
-    layoutWidget->setStyleSheet(strStyle);
+    m_resourceDockContainer = new ContainerDock(this);
 
-    QGridLayout *gLayout = new QGridLayout(m_mainDockWidget);
-    gLayout->setContentsMargins(0,0,0,0);
-    gLayout->setSpacing(0);
-
-    m_resourceBtnDock = new ResourceButtonDockWidget(this);
-    m_resourceBtnDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
-    m_resourceBtnDock->setTitleBarWidget(new QWidget());
-    m_resourceBtnDock->setFixedHeight(33);
-    m_resourceBtnDock->setMinimumWidth(300);
-    gLayout->addWidget(m_resourceBtnDock,1,0,1,1);
-
-    layoutWidget->setLayout(gLayout);
-    m_mainDockWidget->setWidget(layoutWidget);
-    m_mainDockWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
-    addDockWidget(Qt::LeftDockWidgetArea, m_mainDockWidget);
-    LOG_DEBUG() << "initParentDockForResourceDock end";
+    addDockWidget(Qt::LeftDockWidgetArea, m_resourceDockContainer);
 }
 
-void MainWindow::addResourceDock(QDockWidget *dock)
+
+void MainWindow::initParentDockForPropteriesDock()
+{
+    m_propertiesDockContainer = new ContainerDock(this);
+
+    addDockWidget(Qt::RightDockWidgetArea, m_propertiesDockContainer);
+}
+
+void MainWindow::addResourceDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
 {
     dock->setFeatures(QDockWidget::NoDockWidgetFeatures);
     dock->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     dock->setMinimumSize(300, 272);
     dock->setTitleBarWidget(new QWidget());
 
-    QGridLayout *gLayout = (QGridLayout *)m_mainDockWidget->widget()->layout();
-    gLayout->addWidget(dock,0,0,1,1);
+    m_resourceDockContainer->addDock(dock, tabButtonTitle, tabButtonNormalIcon, tabButtonAcitveIcon);
 }
 
-void MainWindow::addPropertiesDock(QDockWidget *dock)
+void MainWindow::addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
 {
+    dock->setFeatures(QDockWidget::NoDockWidgetFeatures);
+    dock->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    dock->setMinimumSize(300, 272);
+    dock->setTitleBarWidget(new QWidget());
 
+    m_propertiesDockContainer->addDock(dock, tabButtonTitle, tabButtonNormalIcon, tabButtonAcitveIcon);
 }
 
 void MainWindow::onFileOpened(QString filePath)
@@ -4365,3 +4381,14 @@ void MainWindow::onOpenFailed(QString filePath)
 {
     RecentDock_remove(filePath);
 }
+
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+}
+
+void MainWindow::resizePlayer(int width, int height)
+{
+//    resizeDocks({m_filtersDock}, {size().width()/2}, Qt::Horizontal);
+//    m_player->resize(width, height);
+}
+
