@@ -158,9 +158,17 @@ void FilterController::refreshCurrentFilter(Mlt::Filter *filter)
     }
 
     QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
-
-    emit currentFilterAboutToChange();
+ /*   QmlFilter* qfilter = 0;
+    if (meta)
+    {
+        Mlt::Filter* mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
+        qfilter = new QmlFilter(mltFilter, meta);
+    }
+*/
+ //   emit currentFilterAboutToChange();
     emit currentFilterChanged(m_currentFilter.data(), meta, m_currentFilterIndex);
+
+//    m_currentFilter.reset(qfilter);
 }
 
 void FilterController::refreshKeyFrame(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame)

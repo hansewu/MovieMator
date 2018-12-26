@@ -65,9 +65,9 @@ signals:
     void isProducerSelectedChanged();
 
 public slots:
-    void add(QmlMetadata* meta);
-    void remove(int row);
-    bool move(int fromRow, int toRow);
+    void add(QmlMetadata* meta, bool bFromUndo = false);
+    void remove(int row, bool bFromUndo = false);
+    bool move(int fromRow, int toRow, bool bFromUndo = false);
 
 private:
     static void producerChanged(mlt_properties owner, AttachedFiltersModel* model);

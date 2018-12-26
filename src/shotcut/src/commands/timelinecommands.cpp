@@ -1111,6 +1111,8 @@ void FilterCommand::notify()
 {
     MLT.refreshConsumer();
     MAIN.filterController()->refreshCurrentFilter(m_filter);
+
+
     //emit MAIN.filterController()->attachedModel()->changed();
     //emit MAIN.timelineDock()->positionChanged();
 }
@@ -1235,6 +1237,100 @@ void KeyFrameCommand::notify()
     MLT.refreshConsumer();
 
 }
+
+
+
+FilterAttachCommand::FilterAttachCommand( QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, QUndoCommand * parent)
+: QUndoCommand(parent)
+{
+    m_bFirstExec    = true;
+    m_meta          = meta;
+    m_rowIndex      = rowIndex;
+    m_metaIndex     = metaIndex;
+    m_bAdd          = bAdd;
+}
+
+void FilterAttachCommand::redo()
+{
+    if(m_bFirstExec)//第一次自动执行不调用，外部已经执行
+    {
+        m_bFirstExec = false;
+        return;
+    }
+
+    if(m_bAdd)
+    {
+        MAIN.filterController()->attachedModel()->add(m_meta, true);
+        MAIN.filterController()->attachedModel()->move(-1, m_rowIndex, true);
+    }
+    else
+    {
+        MAIN.filterController()->attachedModel()->remove(m_rowIndex, true);
+    }
+}
+
+void FilterAttachCommand::undo()
+{
+    if(m_bAdd)
+    {
+        MAIN.filterController()->attachedModel()->remove(m_rowIndex, true);
+    }
+    else
+    {
+        MAIN.filterController()->attachedModel()->add(m_meta, true);
+        MAIN.filterController()->attachedModel()->move(-1, m_rowIndex, true);
+    }
+
+}
+
+
+/*
+protected:
+ //   Mlt::Filter*    m_filter;
+
+    QmlMetadata     m_meta;
+    int             m_rowIndex;
+    int             m_metaIndex;
+    bool            m_bAdd;
+
+    bool            m_bFirstExec;
+*/
+
+FilterMoveCommand::FilterMoveCommand(int rowIndexFrom, int rowIndexTo, QUndoCommand * parent)
+{
+    m_bFirstExec    = true;
+
+    m_rowIndexFrom  = rowIndexFrom;
+    m_rowIndexTo    = rowIndexTo;
+}
+void FilterMoveCommand::redo()
+{
+    if(m_bFirstExec)//第一次自动执行不调用，外部已经执行
+    {
+        m_bFirstExec = false;
+        return;
+    }
+    MAIN.filterController()->attachedModel()->move(m_rowIndexFrom, m_rowIndexTo, true);
+}
+
+void FilterMoveCommand::undo()
+{
+    MAIN.filterController()->attachedModel()->move(m_rowIndexTo, m_rowIndexFrom, true);
+}
+
+/*
+protected:
+//    void notify();
+
+protected:
+    Mlt::Filter*    m_filter;
+
+    int             m_rowIndexFrom;
+    int             m_rowIndexTo;
+
+    bool            m_bFirstExec;
+};
+*/
 
 /*
 FilterClipCommand::FilterClipCommand(MultitrackModel& model, int trackIndex, int clipIndex, QString strFromXml, QString strToXml, QUndoCommand * parent)

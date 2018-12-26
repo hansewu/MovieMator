@@ -239,6 +239,26 @@ void QmlFilter::set(QString name, int value)
     }
 }
 
+bool isValidRect(QRectF &rect)
+{
+    if(rect.isValid() || rect.isEmpty() || rect.isNull())
+        return false;
+
+    if(rect.left() < -10000.0 && rect.left() > 10000.0)
+        return false;
+    if(rect.top() < -10000.0 && rect.top() > 10000.0)
+        return false;
+
+    if(rect.width()> 10000.0)
+        return false;
+
+    if(rect.height()> 10000.0)
+        return false;
+
+    return true;
+
+}
+
 void QmlFilter::set(QString name, double x, double y, double width, double height, double opacity,
                     int position, mlt_keyframe_type keyframeType)
 {
@@ -251,7 +271,7 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
         QRectF rect_to(x, y, width, height);
 
         m_filter->set(name.toUtf8().constData(), x, y, width, height, opacity);
-        if(rect_from != rect_to)
+        if(rect_from != rect_to && isValidRect(rect_from))
             MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  rect_from, rect_to));
 
         MLT.refreshConsumer();
