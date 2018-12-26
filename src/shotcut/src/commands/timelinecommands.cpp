@@ -954,6 +954,7 @@ void MoveInsertClipCommand::undo()
 FilterCommand::FilterCommand(Mlt::Filter* filter, QString name, double from_value, double to_value, QUndoCommand * parent)
  : QUndoCommand(parent)
 {
+    m_bFirstExec = true;
     LOG_DEBUG() << "FilterCommand: " <<  name;
     m_filter = new Mlt::Filter(filter->get_filter());
     m_keyName   = name;
@@ -980,6 +981,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name, double from_valu
 FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  int from_value, int to_value, QUndoCommand * parent)
 : QUndoCommand(parent)
 {
+    m_bFirstExec = true;
     m_filter = new Mlt::Filter(filter->get_filter());
     m_keyName   = name;
     m_from_value    = QVariant(from_value);
@@ -989,6 +991,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  int from_value,
 FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QString from_value, QString to_value, QUndoCommand * parent)
 : QUndoCommand(parent)
 {
+    m_bFirstExec = true;
     m_filter = new Mlt::Filter(filter->get_filter());
     m_keyName   = name;
     m_from_value    = QVariant(from_value);
@@ -998,6 +1001,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QString from_va
 FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, QUndoCommand * parent)
 : QUndoCommand(parent)
 {
+    m_bFirstExec = true;
     m_filter = new Mlt::Filter(filter->get_filter());
     m_keyName   = name;
     m_from_value = QVariant(from_value);
@@ -1098,7 +1102,7 @@ bool FilterCommand::mergeWith(const QUndoCommand *other)
         m_to_value = other_command->m_to_value;
 
         return true;
-    }\
+    }
 
     return false;
 }
@@ -1106,8 +1110,11 @@ bool FilterCommand::mergeWith(const QUndoCommand *other)
 void FilterCommand::notify()
 {
     MLT.refreshConsumer();
-    emit MAIN.filterController()->attachedModel()->changed();
-    emit MAIN.timelineDock()->positionChanged();
+    MAIN.filterController()->refreshCurrentFilter(m_filter);
+
+
+    //emit MAIN.filterController()->attachedModel()->changed();
+    //emit MAIN.timelineDock()->positionChanged();
 }
 
 void FilterCommand::set_value(QVariant value)
@@ -1150,6 +1157,11 @@ void FilterCommand::set_value(QVariant value)
 
 void FilterCommand::redo()
 {
+    if(m_bFirstExec)//第一次自动执行不调用，外部已经执行
+    {
+        m_bFirstExec = false;
+        return;
+    }
     set_value(m_to_value);
     notify();
 }
@@ -1159,6 +1171,166 @@ void FilterCommand::undo()
     set_value(m_from_value);
     notify();
 }
+
+KeyFrameCommand::KeyFrameCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item>  &to_value, QUndoCommand * parent)
+: QUndoCommand(parent)
+,m_from_value(from_value)
+,m_to_value(to_value)
+{
+    m_bFirstExec    = true;
+    m_filter        = new Mlt::Filter(filter->get_filter());
+
+    m_execTime.start();
+   // m_from_value    = QVector(from_value);
+   // m_to_value      = QVector(to_value);
+}
+
+KeyFrameCommand::~KeyFrameCommand()
+{
+    delete m_filter;
+}
+
+void KeyFrameCommand::redo()
+{
+    if(m_bFirstExec)//第一次自动执行不调用，外部已经执行
+    {
+        m_bFirstExec = false;
+        return;
+    }
+    set_value(m_to_value);
+  //  notify();
+}
+
+void KeyFrameCommand::undo()
+{
+    set_value(m_from_value);
+ //   notify();
+}
+
+
+bool KeyFrameCommand::mergeWith(const QUndoCommand *other)
+{
+    if (other->id() != id()) // make sure other is also an AppendText command
+              return false;
+
+    const KeyFrameCommand *other_command =  static_cast<const KeyFrameCommand*>(other);
+    if(other_command->m_filter->get_filter() != m_filter->get_filter())
+    {
+            return false;
+    }
+    if(m_execTime.elapsed() > 2000)  return false;
+
+    m_to_value = other_command->m_to_value;
+
+    return true;
+}
+
+void KeyFrameCommand::set_value(const QVector<key_frame_item>  &value)
+{
+    MAIN.filterController()->refreshKeyFrame(m_filter, value);
+}
+
+void KeyFrameCommand::notify()
+{
+
+    MAIN.filterController()->refreshCurrentFilter(m_filter);
+    MLT.refreshConsumer();
+
+}
+
+
+
+FilterAttachCommand::FilterAttachCommand( QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, QUndoCommand * parent)
+: QUndoCommand(parent)
+{
+    m_bFirstExec    = true;
+    m_meta          = meta;
+    m_rowIndex      = rowIndex;
+    m_metaIndex     = metaIndex;
+    m_bAdd          = bAdd;
+}
+
+void FilterAttachCommand::redo()
+{
+    if(m_bFirstExec)//第一次自动执行不调用，外部已经执行
+    {
+        m_bFirstExec = false;
+        return;
+    }
+
+    if(m_bAdd)
+    {
+        MAIN.filterController()->attachedModel()->add(m_meta, true);
+        MAIN.filterController()->attachedModel()->move(-1, m_rowIndex, true);
+    }
+    else
+    {
+        MAIN.filterController()->attachedModel()->remove(m_rowIndex, true);
+    }
+}
+
+void FilterAttachCommand::undo()
+{
+    if(m_bAdd)
+    {
+        MAIN.filterController()->attachedModel()->remove(m_rowIndex, true);
+    }
+    else
+    {
+        MAIN.filterController()->attachedModel()->add(m_meta, true);
+        MAIN.filterController()->attachedModel()->move(-1, m_rowIndex, true);
+    }
+
+}
+
+
+/*
+protected:
+ //   Mlt::Filter*    m_filter;
+
+    QmlMetadata     m_meta;
+    int             m_rowIndex;
+    int             m_metaIndex;
+    bool            m_bAdd;
+
+    bool            m_bFirstExec;
+*/
+
+FilterMoveCommand::FilterMoveCommand(int rowIndexFrom, int rowIndexTo, QUndoCommand * parent)
+{
+    m_bFirstExec    = true;
+
+    m_rowIndexFrom  = rowIndexFrom;
+    m_rowIndexTo    = rowIndexTo;
+}
+void FilterMoveCommand::redo()
+{
+    if(m_bFirstExec)//第一次自动执行不调用，外部已经执行
+    {
+        m_bFirstExec = false;
+        return;
+    }
+    MAIN.filterController()->attachedModel()->move(m_rowIndexFrom, m_rowIndexTo, true);
+}
+
+void FilterMoveCommand::undo()
+{
+    MAIN.filterController()->attachedModel()->move(m_rowIndexTo, m_rowIndexFrom, true);
+}
+
+/*
+protected:
+//    void notify();
+
+protected:
+    Mlt::Filter*    m_filter;
+
+    int             m_rowIndexFrom;
+    int             m_rowIndexTo;
+
+    bool            m_bFirstExec;
+};
+*/
 
 /*
 FilterClipCommand::FilterClipCommand(MultitrackModel& model, int trackIndex, int clipIndex, QString strFromXml, QString strToXml, QUndoCommand * parent)

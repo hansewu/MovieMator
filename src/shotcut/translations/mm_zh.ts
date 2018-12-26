@@ -6388,17 +6388,17 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="19"/>
         <source>Position / Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">位置/大小</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="25"/>
         <source>Text Color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">文字颜色</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="31"/>
         <source>Outline Color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">轮廓颜色</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="37"/>
@@ -6408,17 +6408,17 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="43"/>
         <source>Background Color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">背景颜色</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="49"/>
         <source>Pad</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">边距</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="55"/>
         <source>Letter Spaceing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">字间距</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/grain/meta.qml" line="17"/>
@@ -7534,7 +7534,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters/dynamictext/ui.qml" line="405"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="880"/>
         <source>Padding</source>
-        <translation type="unfinished">间距</translation>
+        <translation type="unfinished">边距</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters--/dynamictext/ui.qml" line="593"/>
@@ -8500,7 +8500,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="757"/>
         <source>Letter Spaceing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">字间距</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="148"/>

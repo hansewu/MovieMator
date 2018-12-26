@@ -23,8 +23,10 @@
 #include "qmlmetadata.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
+#include "commands/timelinecommands.h"
 #include <QTimer>
 #include <Logger.h>
+#include <QUndoCommand>
 
 static bool sortIsLess (const QmlMetadata* lhs, const QmlMetadata* rhs) {
     // Sort order is: GPU, Video, Audio
@@ -274,7 +276,7 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
     return false;
 }
 
-void AttachedFiltersModel::add(QmlMetadata* meta)
+void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
 {
     if (!m_producer->is_valid())
         return;
@@ -302,45 +304,66 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
         // Put the filter after the last filter that is greater than or equal
         // in sort order.
         insertIndex = 0;
-        for (int i = m_metaList.count() - 1; i >= 0; i--) {
-            if (!sortIsLess(m_metaList[i], meta)) {
+        for (int i = m_metaList.count() - 1; i >= 0; i--)
+        {
+            if (!sortIsLess(m_metaList[i], meta))
+            {
                 insertIndex = i + 1;
                 break;
             }
         }
 
         // Calculate the MLT index for the new filter.
-        if (m_mltIndexMap.count() == 0) {
+        if (m_mltIndexMap.count() == 0)
+        {
             mltIndex = m_producer->filter_count();
-        } else if (insertIndex == 0) {
+        } else if (insertIndex == 0)
+        {
             mltIndex = m_mltIndexMap[0];
-        } else {
+        } else
+        {
             mltIndex = m_mltIndexMap[insertIndex -1] + 1;
         }
 
         beginInsertRows(QModelIndex(), insertIndex, insertIndex);
         if (MLT.isSeekable())
             MLT.pause();
+
         m_event->block();
         m_producer->attach(*filter);
         m_producer->move_filter(m_producer->filter_count() - 1, mltIndex);
         m_event->unblock();
+
         // Adjust MLT index map for indices that just changed.
-        for (int i = 0; i < m_mltIndexMap.count(); i++) {
-            if (m_mltIndexMap[i] >= mltIndex) {
+        for (int i = 0; i < m_mltIndexMap.count(); i++)
+        {
+            if (m_mltIndexMap[i] >= mltIndex)
+            {
                 m_mltIndexMap[i] = m_mltIndexMap[i] + 1;
             }
         }
         m_mltIndexMap.insert(insertIndex, mltIndex);
         m_metaList.insert(insertIndex, meta);
+
         endInsertRows();
         emit changed();
+
+        if(!bFromUndo)
+        {
+            int nCount = MAIN.undoStack()->count();
+             QUndoCommand *attachCommand = new Timeline::FilterAttachCommand(meta, m_metaList.count()-1, insertIndex, true);
+
+             MAIN.undoStack()->push(attachCommand);
+             nCount = MAIN.undoStack()->count();
+            LOG_DEBUG() << "MAIN.undoStack()->count() " <<  nCount;
+        }
     }
     else LOG_WARNING() << "Failed to load filter" << meta->mlt_service();
+
     delete filter;
 }
 
-void AttachedFiltersModel::remove(int row)
+void AttachedFiltersModel::remove(int row, bool bFromUndo)
 {
     if (row >= m_metaList.count()) {
         LOG_WARNING() << "Invalid index:" << row;
@@ -363,17 +386,32 @@ void AttachedFiltersModel::remove(int row)
             m_mltIndexMap[i] = m_mltIndexMap[i] - 1;
         }
     }
+
+    QmlMetadata *metaData = (m_metaList.at(row));
     m_metaList.removeAt(row);
+
     endRemoveRows();
     emit changed();
+
     delete filter;
+
+    if(!bFromUndo)
+    {
+        MAIN.undoStack()->push(new Timeline::FilterAttachCommand(metaData, row, row, false));
+    }
 }
 
-bool AttachedFiltersModel::move(int fromRow, int toRow)
+bool AttachedFiltersModel::move(int fromRow, int toRow, bool bFromUndo)
 {
     QModelIndex parent = QModelIndex();
 
-    if (fromRow < 0 || toRow < 0) {
+    if( fromRow == -1)
+        fromRow = m_metaList.count() - 1;
+
+    int toRowOld = toRow;
+
+    if (fromRow < 0 || toRow < 0)
+    {
         return false;
     }
 
@@ -382,7 +420,13 @@ bool AttachedFiltersModel::move(int fromRow, int toRow)
         toRow++;
     }
 
-    return moveRows(parent, fromRow, 1, parent, toRow);
+    bool bRet = moveRows(parent, fromRow, 1, parent, toRow);
+
+    if(!bFromUndo && bRet)
+    {
+        MAIN.undoStack()->push(new Timeline::FilterMoveCommand(fromRow, toRowOld));
+    }
+    return bRet;
 }
 
 void AttachedFiltersModel::reset(Mlt::Producer* producer)

@@ -247,6 +247,26 @@ void QmlFilter::set(QString name, int value)
     }
 }
 
+bool isValidRect(QRectF &rect)
+{
+    if(rect.isValid() || rect.isEmpty() || rect.isNull())
+        return false;
+
+    if(rect.left() < -10000.0 && rect.left() > 10000.0)
+        return false;
+    if(rect.top() < -10000.0 && rect.top() > 10000.0)
+        return false;
+
+    if(rect.width()> 10000.0)
+        return false;
+
+    if(rect.height()> 10000.0)
+        return false;
+
+    return true;
+
+}
+
 void QmlFilter::set(QString name, double x, double y, double width, double height, double opacity,
                     int position, mlt_keyframe_type keyframeType)
 {
@@ -259,7 +279,7 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
         QRectF rect_to(x, y, width, height);
 
         m_filter->set(name.toUtf8().constData(), x, y, width, height, opacity);
-        if(rect_from != rect_to)
+        if(rect_from != rect_to && isValidRect(rect_from))
             MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  rect_from, rect_to));
 
         MLT.refreshConsumer();
@@ -576,6 +596,7 @@ void QmlFilter::setKeyFrameParaRectValue(double frame, QString key, const QRectF
 
 void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
 {
+        QVector<key_frame_item> keyFrameFrom(m_keyFrameList);
        int keyFrameCount = m_keyFrameList.count();
 
        bool hasSameKeyFrame = false;
@@ -596,6 +617,9 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
                    m_keyFrameList.removeAt(index);//paraMap.insert(key, value);
                    m_keyFrameList.insert(index, para);
                    hasSameKeyFrame = true;
+                    QVector<key_frame_item> keyFrameTo(m_keyFrameList);
+
+                    MAIN.undoStack()->push(new Timeline::KeyFrameCommand(m_filter, keyFrameFrom, keyFrameTo));
                    return;
                //  return hasSameKeyFrame;
 
@@ -619,6 +643,9 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
                    hasSameKeyFrame = true;
 
                    emit addKeyFrame();
+                   QVector<key_frame_item> keyFrameTo(m_keyFrameList);
+
+                   MAIN.undoStack()->push(new Timeline::KeyFrameCommand(m_filter, keyFrameFrom, keyFrameTo));
                    emit keyframeNumberChanged();
                    return ;
                }
@@ -628,6 +655,9 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
                    hasSameKeyFrame = true;
 
                    emit addKeyFrame();
+                   QVector<key_frame_item> keyFrameTo(m_keyFrameList);
+
+                   MAIN.undoStack()->push(new Timeline::KeyFrameCommand(m_filter, keyFrameFrom, keyFrameTo));
                    emit keyframeNumberChanged();
                    return ;
                }
@@ -645,6 +675,9 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
                        m_keyFrameList.insert(index+1, newItem);
                        hasSameKeyFrame = true;
                        emit addKeyFrame();
+                       QVector<key_frame_item> keyFrameTo(m_keyFrameList);
+
+                       MAIN.undoStack()->push(new Timeline::KeyFrameCommand(m_filter, keyFrameFrom, keyFrameTo));
                        emit keyframeNumberChanged();
                        return ;
                    }
@@ -675,6 +708,20 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
      //  return false;
        //set all key frame value together
 
+       QVector<key_frame_item> keyFrameTo(m_keyFrameList);
+
+       MAIN.undoStack()->push(new Timeline::KeyFrameCommand(m_filter, keyFrameFrom, keyFrameTo));
+
+}
+
+void QmlFilter::removeAllKeyFrame()
+{
+    int paramCount = m_metadata->keyframes()->parameterCount();
+    for (int i = 0; i < paramCount; i++)
+    {
+         QString name = m_metadata->keyframes()->parameter(i)->property();
+         removeAllKeyFrame(name);
+    }
 }
 
 void QmlFilter::removeAllKeyFrame(QString name)
@@ -721,7 +768,6 @@ void QmlFilter::removeKeyFrameParaValue(double frame)
             if(keyFrameCount > 1)
                 combineAllKeyFramePara();
 
-         //   return true;
             return;
         }
     }
@@ -1055,6 +1101,13 @@ int QmlFilter::getKeyFrame(int index)
     else
         return -1;
 
+}
+
+void QmlFilter::refreshKeyFrame(const QVector<key_frame_item> &listKeyFrame)
+{
+    removeAllKeyFrame();
+    m_keyFrameList = listKeyFrame;
+    combineAllKeyFramePara();
 }
 
 #endif
