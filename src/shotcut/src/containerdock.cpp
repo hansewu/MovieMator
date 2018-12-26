@@ -81,6 +81,21 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
     connect(button, SIGNAL(clicked()), this, SLOT(onTabButtonClicked2()));
 }
 
+void ContainerDock::showDock(QDockWidget *dock)
+{
+    if(!m_docks.contains(dock))
+        return;
+
+    onTabButtonClicked();
+
+    dock->show();
+    int index = m_docks.indexOf(dock);
+    BUTTON_INFO buttonInfo = m_buttons[index];
+    QPushButton *button = buttonInfo.button;
+    button->setIcon(buttonInfo.activeIcon);
+    button->setStyleSheet("background-color:rgb(51,51,51);color:rgb(225,225,225)");
+}
+
 
 void ContainerDock::onTabButtonClicked()
 {
@@ -118,5 +133,10 @@ void ContainerDock::onTabButtonClicked2()
     QPushButton *button = buttonInfo.button;
     button->setIcon(buttonInfo.activeIcon);
     button->setStyleSheet("background-color:rgb(51,51,51);color:rgb(225,225,225)");
+}
+
+QRect ContainerDock::dockPosition()
+{
+    return this->geometry();
 }
 

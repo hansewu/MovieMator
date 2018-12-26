@@ -70,7 +70,6 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     ui->label->hide();
     ui->notesTextEdit->hide();
     ui->menuButton->hide();
-  //  connect(ui->okButton,SIGNAL(triggered()), MAIN, SLOT(onPropertiesDockTriggered()));
 }
 
 AvformatProducerWidget::~AvformatProducerWidget()

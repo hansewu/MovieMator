@@ -32,6 +32,7 @@ ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->filenameLabel);
+    ui->cancelButton->setHidden(true);
 }
 
 ImageProducerWidget::~ImageProducerWidget()
@@ -250,10 +251,10 @@ void ImageProducerWidget::on_okButton_clicked()
     kAspectRatioNumerator "," kAspectRatioDenominator ","
     kShotcutResourceProperty ", resource, ttl, length," kShotcutSequenceProperty);
     reopen(p);
-    MAIN.onPropertiesDockTriggered(false);
+//    MAIN.onPropertiesDockTriggered(false);
 }
 
 void ImageProducerWidget::on_cancelButton_clicked()
 {
-    MAIN.onPropertiesDockTriggered(false);
+//    MAIN.onPropertiesDockTriggered(false);
 }

@@ -112,7 +112,7 @@ public:
     Player *player() const {return m_player;}
     EncodeDock* encodeDock() const {return m_encodeDock;}
 
-
+    Q_INVOKABLE void setMultitrackAsCurrentProducer();
 
 
 signals:
@@ -148,6 +148,7 @@ private:
     Ui::MainWindow* ui;
     Player* m_player;
     QDockWidget* m_propertiesDock;
+    QDockWidget* m_simplePropertiesDock;
     QDockWidget* m_recentDock;
     EncodeDock* m_encodeDock;
     JobsDock* m_jobsDock;
@@ -269,6 +270,7 @@ public slots:
 
     void onJobsDockTriggered(bool);
     void onPropertiesDockTriggered(bool checked = true);
+    void showPropertiesDock();
 
     void setPauseAfterOpen(bool pause);
     void appendClipToPlaylist();

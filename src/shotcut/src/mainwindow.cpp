@@ -39,6 +39,7 @@
 #include "widgets/video4linuxwidget.h"
 #include "widgets/x11grabwidget.h"
 #include "widgets/avformatproducerwidget.h"
+#include "widgets/avformatproducersimplewidget.h"
 #include "widgets/imageproducerwidget.h"
 #include "widgets/webvfxproducer.h"
 //#include "docks/recentdock.h"
@@ -349,24 +350,6 @@ MainWindow::MainWindow()
    // setWindowFlags(Qt::Window|Qt::WindowTitleHint|Qt::CustomizeWindowHint);
     //setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint|Qt::WindowSystemMenuHint|Qt::WindowCloseButtonHint);
 
-    m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
-    m_propertiesDock->installEventFilter(this);
-    m_propertiesDock->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
-    m_propertiesDock->setWindowModality(Qt::WindowModal);
-    m_propertiesDock->setObjectName("propertiesDock");
-    m_propertiesDock->setWindowIcon(ui->actionProperties->icon());
-    m_propertiesDock->setMinimumWidth(300);
-    //m_propertiesDock->setStyleSheet("background-color: rgb(81,82,82)");
-    QScrollArea* scroll = new QScrollArea;
-    scroll->setWidgetResizable(true);
-    m_propertiesDock->setWidget(scroll);
-    m_propertiesDock->setVisible(false);
-
- //   addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
-  //  ui->menuView->addAction(m_propertiesDock->toggleViewAction());
- //   connect(m_propertiesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPropertiesDockTriggered(bool)));
- //   connect(ui->actionProperties, SIGNAL(triggered()), this, SLOT(onPropertiesDockTriggered()));
-
 
 ////    LOG_DEBUG() << "PlaylistDock";
 //    m_playlistDock = new PlaylistDock(this, this);
@@ -467,7 +450,6 @@ MainWindow::MainWindow()
     connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filtersDock, SLOT(setFadeOutDuration(int)));
     connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
 
-    connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), SLOT(loadProducerWidget(Mlt::Producer*)));
     connect(m_timelineDock, SIGNAL(addPositionAndSize()), m_filterController, SLOT(addPositionAndSizeFilter()));
 
     connect(m_timelineDock, SIGNAL(addRotate()), m_filterController, SLOT(addRotateFilter()));
@@ -526,7 +508,6 @@ MainWindow::MainWindow()
     connect(ui->actionEncode, SIGNAL(triggered()), this, SLOT(onEncodeTriggered()));
   //  connect(m_encodeDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onEncodeTriggered(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_player, SLOT(onCaptureStateChanged(bool)));
-    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_propertiesDock, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_filtersDock, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionOpen, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionOpenOther, SLOT(setDisabled(bool)));
@@ -594,12 +575,35 @@ MainWindow::MainWindow()
     m_recentDock = RecentDock_initModule(&MainInterface::singleton());//new RecentDock();
     addResourceDock(m_recentDock, tr("Recent"), QIcon(":/icons/light/32x32/show-recent.png"), QIcon(":/icons/light/32x32/show-recent-highlight.png"));
 
+
+
+
+    m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
+    m_propertiesDock->installEventFilter(this);
+    m_propertiesDock->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
+    m_propertiesDock->setWindowModality(Qt::WindowModal);
+    m_propertiesDock->setObjectName("propertiesDock");
+    m_propertiesDock->setWindowIcon(ui->actionProperties->icon());
+    m_propertiesDock->setMinimumWidth(300);
+    m_propertiesDock->setStyleSheet(".QWidget {background-color: rgb(53,53,53)}");
+    QScrollArea* scroll = new QScrollArea;
+    scroll->setWidgetResizable(true);
+    m_propertiesDock->setWidget(scroll);
+    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_propertiesDock, SLOT(setDisabled(bool)));
+    //m_propertiesDock->setVisible(false);
+
+    m_simplePropertiesDock = new QDockWidget(tr("Simple Properties"));
+    QScrollArea* scroll1 = new QScrollArea;
+    scroll1->setWidgetResizable(true);
+    scroll1->setFrameShape(QFrame::NoFrame);
+    m_simplePropertiesDock->setWidget(scroll1);
+    addPropertiesDock(m_simplePropertiesDock, tr("Properties"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
+
+
+    m_filtersDock->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);
     addPropertiesDock(m_filtersDock, tr("Filter"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
 
-//    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
-//    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
-//    setCorner(Qt::BottomLeftCorner, Qt::BottomDockWidgetArea);
-//    setCorner(Qt::BottomRightCorner, Qt::BottomDockWidgetArea);
+
 
     m_registrationTipsDialog = new RegistrationTipsDialog();
     m_registrationDialog = new RegistrationDialog();
@@ -1586,12 +1590,9 @@ void MainWindow::showStatusMessage(QAction* action, int timeoutSeconds)
 
 void MainWindow::removeVideo()
 {
-
- //      m_textManagerWidget->addTextToTimeline(NULL);
-
-
- //   m_textlistDock->addTextToTimeline(NULL);
-//    m_playlistDock->on_removeButton_clicked();
+//   m_textManagerWidget->addTextToTimeline(NULL);
+//   m_textlistDock->addTextToTimeline(NULL);
+//   m_playlistDock->on_removeButton_clicked();
 }
 
 
@@ -1629,13 +1630,24 @@ void MainWindow::seekTimeline(int position)
 {
     LOG_DEBUG() << "begin";
     if (!multitrack()) return;
+    setMultitrackAsCurrentProducer();
+
+    if (MLT.producer())
+    {
+        m_player->seek(position);
+    }
+
+}
+
+void MainWindow::setMultitrackAsCurrentProducer()
+{
+    if (!multitrack()) return;
     // we bypass this->open() to prevent sending producerOpened signal to self, which causes to reload playlist
     if (MLT.producer() && (void*) MLT.producer()->get_producer() != (void*) multitrack()->get_producer()) {
         MLT.setProducer(new Mlt::Producer(*multitrack()));
         m_player->setIn(-1);
         m_player->setOut(-1);
         // since we do not emit producerOpened, these components need updating
-        on_actionJack_triggered(ui->actionJack && ui->actionJack->isChecked());
         m_player->onProducerOpened(false);
         m_encodeDock->onProducerOpened();
         m_filterController->setProducer();
@@ -1644,15 +1656,6 @@ void MainWindow::seekTimeline(int position)
         m_player->switchToTab(Player::ProjectTabIndex);
         m_timelineDock->emitSelectedFromSelection();
     }
-
-    if (MLT.producer())
-    {
-        int length = MLT.producer()->get_length();
-        int inTime = MLT.producer()->get_in();
-
-        m_player->seek(position);
-    }
-
 }
 
 void MainWindow::readPlayerSettings()
@@ -2719,6 +2722,7 @@ void MainWindow::onRecentDockTriggered(bool checked)
     }
 }
 
+//高级属性的显示和隐藏
 void MainWindow::onPropertiesDockTriggered(bool checked)
 {
     if (checked)
@@ -2728,6 +2732,12 @@ void MainWindow::onPropertiesDockTriggered(bool checked)
     }
     else
         m_propertiesDock->hide();
+}
+
+//显示右上角简单属性界面
+void MainWindow::showPropertiesDock()
+{
+    m_propertiesDockContainer->showDock(m_simplePropertiesDock);
 }
 
 void MainWindow::onPlaylistDockTriggered(bool checked)
@@ -2926,7 +2936,7 @@ void MainWindow::changeTheme(const QString &theme)
     if (theme == "dark") {
         QApplication::setStyle("Windows");//Fusion");
         QPalette palette;
-        palette.setColor(QPalette::Window, QColor(82,82,82));
+        palette.setColor(QPalette::Window, QColor(53,53,53));
         palette.setColor(QPalette::WindowText, QColor(235,235,235));
         //palette.setColor(QPalette::Disabled, QPalette::WindowText, QColor(255,0,0));
         palette.setColor(QPalette::Base, QColor(82,82,82));
@@ -2939,7 +2949,7 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::ToolTipText, Qt::black);
         palette.setColor(QPalette::Text, palette.color(QPalette::WindowText));
         palette.setColor(QPalette::BrightText, Qt::red);
-        palette.setColor(QPalette::Button, palette.color(QPalette::Window));
+        palette.setColor(QPalette::Button, QColor(82,82,82));
         palette.setColor(QPalette::ButtonText, palette.color(QPalette::WindowText));
         palette.setColor(QPalette::Link, palette.color(QPalette::Highlight).lighter());
         palette.setColor(QPalette::LinkVisited, palette.color(QPalette::Highlight));
@@ -2978,14 +2988,20 @@ Mlt::Producer *MainWindow::multitrack() const
 QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
 {
     QWidget* w = 0;
-    QScrollArea* scrollArea = (QScrollArea*) m_propertiesDock->widget();
+    //QScrollArea* scrollArea = (QScrollArea*) m_propertiesDock->widget();
+    QScrollArea* scrollArea = (QScrollArea*) m_simplePropertiesDock->widget();
+
+
+    QWidget* advancedW = 0; //视频高级属性
+    QScrollArea* advancedScrollArea = (QScrollArea*) m_propertiesDock->widget(); //视频高级属性
 
     if (!producer || !producer->is_valid()) {
         if (scrollArea->widget())
             scrollArea->widget()->deleteLater();
+        if (advancedScrollArea->widget())
+            scrollArea->widget()->deleteLater();
         return  w;
     }  
-
 
     QString service(producer->get("mlt_service"));
     QString resource = QString::fromUtf8(producer->get("resource"));
@@ -3007,8 +3023,10 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new X11grabWidget(this);
     else if (resource.startsWith("gdigrab:"))
         w = new GDIgrabWidget(this);
-    else if (service.startsWith("avformat") || shotcutProducer == "avformat")
-        w = new AvformatProducerWidget(this);
+    else if (service.startsWith("avformat") || shotcutProducer == "avformat") {
+        w = new AvformatProducerSimpleWidget(this);
+        advancedW = new AvformatProducerWidget(this);
+    }
     else if (MLT.isImageProducer(producer)) {
         ImageProducerWidget* ipw = new ImageProducerWidget(this);
         connect(m_player, SIGNAL(outChanged(int)), ipw, SLOT(setOutPoint(int)));
@@ -3058,6 +3076,21 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         onProducerChanged();
     } else if (scrollArea->widget()) {
         scrollArea->widget()->deleteLater();
+    }
+
+    //视频高级属性
+    if (advancedW) {
+        dynamic_cast<AbstractProducerWidget*>(advancedW)->setProducer(producer);
+        if (-1 != advancedW->metaObject()->indexOfSignal("producerChanged(Mlt::Producer*)")) {
+            connect(advancedW, SIGNAL(producerChanged(Mlt::Producer*)), SLOT(onProducerChanged()));
+            connect(advancedW, SIGNAL(producerChanged(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
+            if (producer->get_int(kMultitrackItemProperty))
+                connect(advancedW, SIGNAL(producerChanged(Mlt::Producer*)), m_timelineDock, SLOT(onProducerChanged(Mlt::Producer*)));
+        }
+        advancedScrollArea->setWidget(advancedW);
+        onProducerChanged();
+    } else if (advancedScrollArea->widget()) {
+        advancedScrollArea->widget()->deleteLater();
     }
     return w;
 }
@@ -3843,7 +3876,7 @@ void MainWindow::onHelpButtonTriggered()
 
 void MainWindow::onShowFilterDock()
 {
-
+    m_propertiesDockContainer->showDock(m_filtersDock);
 }
 
 

@@ -120,7 +120,8 @@ SOURCES += main.cpp\
     qmltypes/mmqmlutilities.cpp \
     eccregister/CEccRegister.cpp \
     maininterface.cpp \
-    containerdock.cpp
+    containerdock.cpp \
+    widgets/avformatproducersimplewidget.cpp
     maininterface.cpp
 
 HEADERS  += mainwindow.h \
@@ -235,7 +236,8 @@ HEADERS  += mainwindow.h \
     dialogs/mmsplashscreen.h \
     qmltypes/mmqmlutilities.h \
     maininterface.h \
-    containerdock.h
+    containerdock.h \
+    widgets/avformatproducersimplewidget.h
     eccregister/CEccRegister.h
     maininterface.h
 
@@ -290,7 +292,8 @@ FORMS    += mainwindow.ui \
     dialogs/profeaturepromptdialog.ui \
     dialogs/upgradetopropromptdialog.ui \
     dialogs/invalidprojectdialog.ui \
-    docks/encodetaskdock.ui
+    docks/encodetaskdock.ui \
+    widgets/avformatproducersimplewidget.ui
 
 RESOURCES += \
     ../icons/resources.qrc \

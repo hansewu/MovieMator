@@ -785,6 +785,8 @@ void TimelineDock::emitSelectedFromSelection()
             info->producer->set("out", info->cut->get_int("out"));
         info->producer->set(kMultitrackItemProperty, 1);
         m_ignoreNextPositionChange = true;
+
+        info->producer->set_in_and_out(info->frame_in, info->frame_out);
         emit selected(info->producer);
 
         delete info;
@@ -1153,17 +1155,10 @@ void TimelineDock::onShowProperties(int trackIndex, int clipIndex)
 
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
 
-
-
-
     int i = m_model.trackList().at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
-//        QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
-//        MAIN.loadProducerWidget(new Mlt::Producer(producer));
-
-//        MAIN.onPropertiesDockTriggered(true);
 
         Mlt::ClipInfo* i = playlist.clip_info(clipIndex);
         if (i) {
@@ -1176,10 +1171,11 @@ void TimelineDock::onShowProperties(int trackIndex, int clipIndex)
 //            Mlt::Producer *producer2 = i->producer;
 //            Mlt::Producer *producer3 = i->cut;
 
-            i->producer->set_in_and_out(i->frame_in, i->frame_out);
+//            i->producer->set_in_and_out(i->frame_in, i->frame_out);
 
-            MAIN.loadProducerWidget(i->producer);
-            MAIN.onPropertiesDockTriggered();
+//            MAIN.loadProducerWidget(i->producer);
+//            MAIN.onPropertiesDockTriggered();
+            MAIN.showPropertiesDock();
         }
 
     }
