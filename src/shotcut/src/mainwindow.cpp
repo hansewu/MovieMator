@@ -597,7 +597,7 @@ MainWindow::MainWindow()
     scroll1->setWidgetResizable(true);
     scroll1->setFrameShape(QFrame::NoFrame);
     m_simplePropertiesDock->setWidget(scroll1);
-    addPropertiesDock(m_simplePropertiesDock, tr("Properties"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
+    addPropertiesDock(m_simplePropertiesDock, tr("Properties"), QIcon(":/icons/light/32x32/show-properties.png"), QIcon(":/icons/light/32x32/show-properties-highlight.png"));
 
 
     m_filtersDock->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);

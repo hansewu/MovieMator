@@ -135,6 +135,8 @@
         <file>filters/text/slide-out-top.gif</file>
         <file>filters/text/top-left.gif</file>
         <file>filters/text/top-right.gif</file>
+        <file>light/32x32/show-properties.png</file>
+        <file>light/32x32/show-properties-highlight.png</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>
