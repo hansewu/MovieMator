@@ -92,6 +92,14 @@ int QmlFilter::getKeyFrameOnProjectOnIndex(int index, QString name)
     return -1;
 }
 
+void QmlFilter::removeAnimationKeyFrame(int nFrame, QString name)
+{
+    if (m_filter)
+    {
+        getAnimation(name).remove(nFrame);
+    }
+}
+
 float QmlFilter::getKeyValueOnProjectOnIndex(int index, QString name)
 {
     if (m_filter)
