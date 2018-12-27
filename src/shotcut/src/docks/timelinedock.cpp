@@ -613,19 +613,23 @@ void TimelineDock::append(int trackIndex)
         pulseLockButtonOnTrack(trackIndex);
         return;
     }
-//    if (MLT.isSeekableClip() || MLT.savedProducer()) {
-//        MAIN.undoStack()->push(
-//            new Timeline::AppendCommand(m_model, trackIndex,
-//                MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
-
-//        selectClipUnderPlayhead();
-//    }
 
     QList<FILE_HANDLE> fileList = RecentDock_getSelectedFiles();
     foreach (FILE_HANDLE fileHandle, fileList)
     {
         MAININTERFACE.addToTimeLine(fileHandle);
         selectClipUnderPlayhead();
+    }
+
+    if (fileList.count() <= 0)
+    {
+        if (MLT.isSeekableClip() || MLT.savedProducer()) {
+            MAIN.undoStack()->push(
+            new Timeline::AppendCommand(m_model, trackIndex,
+                    MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
+
+            selectClipUnderPlayhead();
+        }
     }
 
 }
