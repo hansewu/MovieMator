@@ -4417,11 +4417,62 @@ void MainWindow::onOpenFailed(QString filePath)
 
 void MainWindow::resizeEvent(QResizeEvent* event)
 {
+    resizePlayer();
 }
 
-void MainWindow::resizePlayer(int width, int height)
+void MainWindow::resizePlayer()
 {
-//    resizeDocks({m_filtersDock}, {size().width()/2}, Qt::Horizontal);
-//    m_player->resize(width, height);
+    QSize playerSize = m_player->videoSize();
+    QSize propertiesDockSize = m_propertiesDockContainer->size();
+    QSize resourceDockSize = m_resourceDockContainer->size();
+    QSize timelineDockSize = m_timelineDock->size();
+
+    if (fabs(playerSize.width()*1.0 / playerSize.height() - 16.0/9.0) < 0.05)
+        return;
+
+    if (playerSize.width()*1.0 / playerSize.height() > 16.0/9.0)
+    {//太宽
+        int newPlayerHeight = playerSize.width() * 9.0/16.0;
+        int deltaH = newPlayerHeight - playerSize.height();
+        int newTimelineHeight = timelineDockSize.height() - deltaH;
+        if (newTimelineHeight >= m_timelineDock->minimumHeight())
+        {//减小时间线高度
+            resizeDocks({m_timelineDock}, {timelineDockSize.height() - deltaH}, Qt::Vertical);
+        }
+        else
+        {//增加播放器左右两边dock的宽度
+            int newPlayerWidth = playerSize.height() * 16.0/9.0;
+            int deltaW = playerSize.width() - newPlayerWidth;
+            resizeDocks({m_propertiesDockContainer}, {propertiesDockSize.width() + deltaW}, Qt::Horizontal);
+        }
+    }
+    else
+    {// 太窄
+        int newPlayerWidth = playerSize.height() * 16.0/9.0;
+        int deltaW = newPlayerWidth - playerSize.width();
+        int extraResourceDockWidth = resourceDockSize.width() - m_resourceDockContainer->minimumWidth();
+        int extraPropertiesDockWidth = propertiesDockSize.width() - m_propertiesDockContainer->minimumWidth();
+        if (deltaW <= extraResourceDockWidth + extraPropertiesDockWidth)
+        {//减小播放器左右两边宽度
+            if (deltaW <= extraResourceDockWidth)
+                resizeDocks({m_resourceDockContainer}, {resourceDockSize.width() - deltaW}, Qt::Horizontal);
+            else
+            {
+                int remainedDeltaW = deltaW - extraResourceDockWidth;
+                resizeDocks(
+                            {m_resourceDockContainer, m_propertiesDockContainer},
+                            {resourceDockSize.width() - extraResourceDockWidth, propertiesDockSize.width() - remainedDeltaW},
+                            Qt::Horizontal
+                            );
+            }
+        }
+        else
+        {//增加时间线高度
+            int newPlayerHeight = playerSize.width() * 9.0/16.0;
+            int deltaH = playerSize.height() - newPlayerHeight;
+            resizeDocks({m_timelineDock}, {timelineDockSize.height()+deltaH}, Qt::Vertical);
+        }
+    }
+
 }
 

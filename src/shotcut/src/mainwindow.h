@@ -323,7 +323,7 @@ public slots:
     void onOpenFailed(QString filePath);
 
 
-    void resizePlayer(int width, int height);
+    void resizePlayer();
 
 private slots:
 
