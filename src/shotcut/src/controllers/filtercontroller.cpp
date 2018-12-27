@@ -20,6 +20,7 @@
 #include "filtercontroller.h"
 #include <QQmlEngine>
 #include <QDir>
+#include <QtWidgets>
 #include <Logger.h>
 #include <QQmlComponent>
 #include <QTimerEvent>
@@ -28,6 +29,7 @@
 #include "qmlmetadata.h"
 #include <qmlutilities.h>
 #include "qmltypes/qmlfilter.h"
+#include <MltFilter.h>
 
 FilterController::FilterController(QObject* parent) : QObject(parent),
  m_metadataModel(this),
@@ -46,6 +48,12 @@ void FilterController::loadFilterMetadata() {
     QDir dir = QmlUtilities::qmlDir();
     dir.cd("filters");
     foreach (QString dirName, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Executable)) {
+        if (dirName == "frei0r")
+        {
+            loadFrei0rFilterMetadata();
+            continue;
+        }
+
         QDir subdir = dir;
         subdir.cd(dirName);
         subdir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
@@ -68,6 +76,101 @@ void FilterController::loadFilterMetadata() {
             }
         }
     };
+}
+
+void FilterController::loadFrei0rFilterMetadata() {
+    QDir dir = QmlUtilities::qmlDir();
+    dir.cd("filters");
+    QDir subdir = dir;
+    subdir.cd("frei0r");
+    subdir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
+    subdir.setNameFilters(QStringList("meta*.qml"));
+    foreach (QString fileName, subdir.entryList()) {
+        LOG_DEBUG() << "reading filter metadata" << "frei0r" << fileName;
+
+        QDir applicationDir(qApp->applicationDirPath());
+        applicationDir.cd("lib");
+        applicationDir.cd("frei0r-1");
+        QDir frei0rDir = applicationDir;
+        frei0rDir.setNameFilters(QStringList("*.so"));
+        foreach (QString libName, frei0rDir.entryList(QDir::NoFilter)) {
+            QQmlComponent component(QmlUtilities::sharedEngine(), subdir.absoluteFilePath(fileName));
+            QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
+            if (meta) {
+                QString mlt_service = "frei0r." + libName.mid(0, libName.length() - 3);
+
+                meta->set_mlt_service(mlt_service);
+
+                Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), mlt_service.toUtf8().constData());
+                if (!filter) continue;
+                if (!filter->is_valid())  continue;  //有些库可能不是filter，所以filter 方式生成出来后续可能会出错。
+
+                f0r_plugin_info_t info;
+                getFrei0rPluginInfo(filter, info);
+                if(info.plugin_type != F0R_PLUGIN_TYPE_FILTER) continue;   //frei0r只开放出filter的库
+
+                meta->setName(tr("%1").arg(info.name));
+
+                meta->keyframes()->clearParameter();
+                for (int nIndex = 0; nIndex < info.num_params; nIndex++)
+                {
+                    f0r_param_info_t paramInfo;
+                    getFrei0rParamInfo(filter, nIndex, paramInfo);
+
+                    QmlKeyframesParameter * param = new QmlKeyframesParameter();
+//                    QmlKeyframesParameter * param2 = meta->keyframes()->parameter(0);
+
+                    param->setName(paramInfo.name);
+
+                    QString paramType = "double";
+                    if (paramInfo.type == F0R_PARAM_BOOL)  paramType = "bool";
+                    if (paramInfo.type == F0R_PARAM_DOUBLE)  paramType = "double";
+                    if (paramInfo.type == F0R_PARAM_COLOR)  paramType = "color";
+                    if (paramInfo.type == F0R_PARAM_POSITION)  paramType = "position";
+                    if (paramInfo.type == F0R_PARAM_STRING)  paramType = "string";
+                    param->setParaType(paramType);
+
+
+                    meta->keyframes()->appendParameter(param);
+//                    delete param;
+                }
+
+                delete filter;
+                // Check if mlt_service is available.
+                if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
+                    LOG_DEBUG() << "added filter" << meta->name();
+
+                    meta->loadSettings();
+                    meta->setPath(subdir);
+                    meta->setParent(0);
+                    addMetadata(meta);
+                }
+            } else if (!meta) {
+                LOG_WARNING() << component.errorString();
+            }
+        }
+    }
+
+}
+
+void FilterController::getFrei0rPluginInfo(Mlt::Filter *filter, f0r_plugin_info_t &info)
+{
+    mlt_service service = filter->get_service();
+    mlt_properties prop = MLT_SERVICE_PROPERTIES(service);
+
+    if(!prop) return;
+
+    void (*f0r_get_plugin_info)(f0r_plugin_info_t*) = (void (*)(f0r_plugin_info_t*))mlt_properties_get_data( prop, "f0r_get_plugin_info" ,NULL);
+    f0r_get_plugin_info(&info);
+}
+
+void FilterController::getFrei0rParamInfo(Mlt::Filter *filter, int index, f0r_param_info_t &info)
+{
+    mlt_service service = filter->get_service();
+    mlt_properties prop = MLT_SERVICE_PROPERTIES(service);
+    void (*f0r_get_param_info)(f0r_param_info_t*, int) = (void (*)(f0r_param_info_t*, int))mlt_properties_get_data( prop, "f0r_get_param_info" ,NULL);
+
+    f0r_get_param_info(&info, index);
 }
 
 QmlMetadata *FilterController::metadataForService(Mlt::Service *service)

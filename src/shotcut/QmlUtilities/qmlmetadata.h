@@ -51,20 +51,31 @@ public:
     explicit QmlKeyframesParameter(QObject* parent = 0);
 
     QString name() const { return m_name; }
+    void setName(const QString &name) {m_name = name;};
     QString property() const { return m_property; }
+    void setProperty(const QString &property) {m_property = property;};
     bool isSimple() const { return m_isSimple; }
+    void setIsSimple(const bool isSimple) {m_isSimple = isSimple;};
     bool isCurve() const { return m_isCurve; }
+    void setIsCurve(const bool isCurve) {m_isCurve = isCurve;};
     double minimum() const { return m_minimum; }
+    void setMinimum(const double minimum) {m_minimum = minimum;};
     double maximum() const { return m_maximum; }
+    void setMaximum(const double maximum) {m_maximum = maximum;};
 
 
     QString objectName() const { return m_objectName; }
+    void setObjectName(const QString &objectName) {m_objectName = objectName;};
     QString controlType() const { return m_controlType; }
+    void setControlType(const QString &controlType) {m_controlType = controlType;};
     QString paraType() const { return m_paraType; }
+    void setParaType(const QString &paraType) {m_paraType = paraType;};
     QString defaultValue() const { return m_defaultValue; }
+    void setDefaultValue(const QString &defaultValue) {m_defaultValue = defaultValue;};
     QString value() const { return m_value; }
+    void setValue(const QString &value) {m_value = value;};
     QList<QString> factorFunc() const { return m_factorFunc; }
-
+    void setFactorFunc(const QList<QString> &factorFunc) {m_factorFunc.append(factorFunc);};
 signals:
     void changed();
 
@@ -105,11 +116,18 @@ public:
     bool allowAnimateOut() const { return m_allowAnimateOut; }
     QList<QString> simpleProperties() const { return m_simpleProperties; }
 
-    QQmlListProperty<QmlKeyframesParameter> parameters() { return QQmlListProperty<QmlKeyframesParameter>(this, m_parameters); }
+//    QQmlListProperty<QmlKeyframesParameter> parameters() { return QQmlListProperty<QmlKeyframesParameter>(this, m_parameters); }
+
+    QQmlListProperty<QmlKeyframesParameter> parameters();
     int parameterCount() const { return m_parameters.count(); }
     QmlKeyframesParameter *parameter(int index) const { return m_parameters[index]; }
     void checkVersion(const QString& version);
     void setDisabled();
+
+    void appendParameter(QmlKeyframesParameter * param);
+    int paramCount() const;
+    QmlKeyframesParameter *paramAt(int idx) const;
+    void clearParameter();
 
 signals:
     void changed();
@@ -122,6 +140,12 @@ private:
     QList<QString> m_simpleProperties;
     QString m_minimumVersion;
     bool m_enabled;
+
+    static void appendParameter(QQmlListProperty<QmlKeyframesParameter> *paramsList, QmlKeyframesParameter * param);
+    static int paramCount(QQmlListProperty<QmlKeyframesParameter> *);
+    static QmlKeyframesParameter *paramAt(QQmlListProperty<QmlKeyframesParameter> *,int idx);
+    static void clearParameter(QQmlListProperty<QmlKeyframesParameter> *);
+
 };
 //struct key_frame_item
 //{

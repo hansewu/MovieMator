@@ -115,6 +115,7 @@ public:
     Q_INVOKABLE int getAnimIntValue(double frame, QString key);
     Q_INVOKABLE double getAnimDoubleValue(double frame, QString key);
     Q_INVOKABLE QRectF getAnimRectValue(double frame, QString key);
+    Q_INVOKABLE void removeAnimationKeyFrame(int nFrame, QString name);
 
 #endif
 
