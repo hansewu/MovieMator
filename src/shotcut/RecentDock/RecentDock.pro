@@ -52,6 +52,9 @@ debug_and_release {
 }
 LIBS += -lLogger -lCommonUtil
 
+mac {
+    QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/
+}
 
 #win32 {
 #    isEmpty(PREFIX) {

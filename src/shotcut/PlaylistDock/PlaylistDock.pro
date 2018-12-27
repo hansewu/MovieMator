@@ -86,5 +86,9 @@ unix {
     INSTALLS += target
 }
 
+mac {
+    QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/
+}
+
 FORMS += \
     playlistdock.ui

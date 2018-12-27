@@ -88,3 +88,7 @@ unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+
+mac {
+    QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/
+}
