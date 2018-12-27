@@ -40,6 +40,7 @@
 
 
 #include "../maincontroller.h"
+#include <recentdockinterface.h>
 
 void TimelineDock::filterScrollChild(QObject* parent)
 {
@@ -612,18 +613,21 @@ void TimelineDock::append(int trackIndex)
         pulseLockButtonOnTrack(trackIndex);
         return;
     }
-    if (MLT.isSeekableClip() || MLT.savedProducer()) {
-        MAIN.undoStack()->beginMacro(tr("Append to track"));
-        MAIN.undoStack()->push(
-            new Timeline::AppendCommand(m_model, trackIndex,
-                MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
+//    if (MLT.isSeekableClip() || MLT.savedProducer()) {
+//        MAIN.undoStack()->push(
+//            new Timeline::AppendCommand(m_model, trackIndex,
+//                MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
 
+//        selectClipUnderPlayhead();
+//    }
+
+    QList<FILE_HANDLE> fileList = RecentDock_getSelectedFiles();
+    foreach (FILE_HANDLE fileHandle, fileList)
+    {
+        MAININTERFACE.addToTimeLine(fileHandle);
         selectClipUnderPlayhead();
-
-//        addTransitionOnClipAfterAppend();
-        MAIN.undoStack()->endMacro();
-
     }
+
 }
 
 void TimelineDock::remove(int trackIndex, int clipIndex)

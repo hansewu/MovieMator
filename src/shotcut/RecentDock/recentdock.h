@@ -44,6 +44,7 @@ public:
 public slots:
     void add(const QString&);
     QString remove(const QString& s);
+    QList<FILE_HANDLE> getSelected();
 
 private:
     Ui::RecentDock *ui;

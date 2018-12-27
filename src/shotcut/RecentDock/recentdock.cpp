@@ -177,6 +177,19 @@ void RecentDock::on_actionProperties_triggered()
 
 }
 
+QList<FILE_HANDLE> RecentDock::getSelected()
+{
+    QList<FILE_HANDLE> seleted;
+    QModelIndexList seletedIndexes =  ui->tableView->getSeleted();
+    foreach(QModelIndex index, seletedIndexes)
+    {
+        QModelIndex sourceIndex = m_proxyModel.mapToSource(index);
+        FILE_HANDLE fileHandle = m_model->fileAt(sourceIndex.row());
+        seleted.append(fileHandle);
+    }
+    return seleted;
+}
+
 static RecentDock *instance = 0;
 //初始化模块
 //参数，main 主程序接口对象
@@ -195,10 +208,9 @@ void RecentDock_destroyModule()
 }
 
 //获取选中的文件列表
-QList<QString> RecentDock_getSelectedFiles()
+QList<FILE_HANDLE> RecentDock_getSelectedFiles()
 {
-    QList<QString> selectedFiles;
-    return selectedFiles;
+    return instance->getSelected();
 }
 
 //添加文件

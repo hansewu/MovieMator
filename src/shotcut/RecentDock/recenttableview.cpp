@@ -71,3 +71,8 @@ void RecentTableView::mouseMoveEvent(QMouseEvent* event)
     }
 }
 
+QModelIndexList RecentTableView::getSeleted()
+{
+    return selectionModel()->selectedRows();
+}
+
