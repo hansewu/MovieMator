@@ -26,6 +26,7 @@
 #include "models/attachedfiltersmodel.h"
 #include "qmlmetadata.h"
 #include "qmltypes/qmlfilter.h"
+#include <../frei0r.h>
 
 class QTimerEvent;
 
@@ -80,6 +81,9 @@ private slots:
 
 private:
     void loadFilterMetadata();
+    void loadFrei0rFilterMetadata();
+    void getFrei0rPluginInfo(Mlt::Filter *filter, f0r_plugin_info_t &info);
+    void getFrei0rParamInfo(Mlt::Filter *filter, int index, f0r_param_info_t &info);
 
     QFuture<void> m_future;
     QScopedPointer<QmlFilter> m_currentFilter;
