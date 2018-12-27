@@ -438,7 +438,7 @@ isEmpty(SHOTCUT_VERSION) {
      win32:SHOTCUT_VERSION = adhoc
 }
 #DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
-DEFINES += SHOTCUT_VERSION=\\\"2.5.2\\\"
+DEFINES += SHOTCUT_VERSION=\\\"2.5.3\\\"
 
 
 unix:!mac:isEmpty(PREFIX) {
