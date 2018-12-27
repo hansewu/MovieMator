@@ -86,6 +86,9 @@ void ContainerDock::showDock(QDockWidget *dock)
     if(!m_docks.contains(dock))
         return;
 
+    if (dock->isVisible())
+        return;
+
     onTabButtonClicked();
 
     dock->show();
