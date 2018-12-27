@@ -842,6 +842,7 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
 
         MAIN.undoStack()->push(
             new Timeline::AddTransitionCommand(m_model, fromTrack, clipIndex, position));
+        emitSelectedFromSelection();
         return true;
     } else if ( ( newPosition = m_model.moveInsertClipValid(fromTrack, toTrack, clipIndex, position) )  >= 0) {
         MAIN.undoStack()->push(
