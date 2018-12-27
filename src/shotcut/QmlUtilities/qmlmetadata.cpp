@@ -184,6 +184,54 @@ QmlKeyframesMetadata::QmlKeyframesMetadata(QObject* parent)
 {
 }
 
+QQmlListProperty<QmlKeyframesParameter> QmlKeyframesMetadata::parameters()
+{
+    return QQmlListProperty<QmlKeyframesParameter>(this, this, &QmlKeyframesMetadata::appendParameter,
+                                                               &QmlKeyframesMetadata::paramCount,
+                                                               &QmlKeyframesMetadata::paramAt,
+                                                               &QmlKeyframesMetadata::clearParameter);
+}
+
+void QmlKeyframesMetadata::appendParameter(QmlKeyframesParameter *param)
+{
+    m_parameters.append(param);
+}
+
+int QmlKeyframesMetadata::paramCount() const
+{
+    return m_parameters.count();
+}
+
+QmlKeyframesParameter *QmlKeyframesMetadata::paramAt(int idx) const
+{
+    return m_parameters.at(idx);
+}
+
+void QmlKeyframesMetadata::clearParameter()
+{
+    m_parameters.clear();
+}
+
+void QmlKeyframesMetadata::appendParameter(QQmlListProperty<QmlKeyframesParameter> *paramsList, QmlKeyframesParameter * param)
+{
+    reinterpret_cast< QmlKeyframesMetadata* >(paramsList->data)->appendParameter(param);
+}
+
+int QmlKeyframesMetadata::paramCount(QQmlListProperty<QmlKeyframesParameter> *list)
+{
+    return reinterpret_cast<QmlKeyframesMetadata *>(list->data)->paramCount();
+}
+
+QmlKeyframesParameter *QmlKeyframesMetadata::paramAt(QQmlListProperty<QmlKeyframesParameter> *list,int idx)
+{
+    return reinterpret_cast<QmlKeyframesMetadata *>(list->data)->paramAt(idx);
+}
+
+void QmlKeyframesMetadata::clearParameter(QQmlListProperty<QmlKeyframesParameter> *list)
+{
+    reinterpret_cast<QmlKeyframesMetadata *>(list->data)->clearParameter();
+}
+
 void QmlKeyframesMetadata::checkVersion(const QString& version)
 {
     if (!m_minimumVersion.isEmpty()) {
@@ -206,6 +254,8 @@ void QmlKeyframesMetadata::setDisabled()
     m_enabled = m_allowAnimateIn = m_allowAnimateOut = false;
 }
 
+
+
 QmlKeyframesParameter::QmlKeyframesParameter(QObject* parent)
     : QObject(parent)
     , m_isSimple(false)
@@ -215,3 +265,5 @@ QmlKeyframesParameter::QmlKeyframesParameter(QObject* parent)
     , m_paraType("string")
 {
 }
+
+
