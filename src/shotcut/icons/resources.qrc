@@ -137,6 +137,12 @@
         <file>filters/text/top-right.gif</file>
         <file>light/32x32/show-properties.png</file>
         <file>light/32x32/show-properties-highlight.png</file>
+        <file>light/32x32/rotate-90.png</file>
+        <file>light/32x32/rotate-180.png</file>
+        <file>light/32x32/rotate-270.png</file>
+        <file>light/32x32/size-fit-crop.png</file>
+        <file>light/32x32/size-fit.png</file>
+        <file>light/32x32/size-tile.png</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>
