@@ -380,6 +380,12 @@ void copyTextFilterPresetFile() {
 
     QDir applicationDir(qApp->applicationDirPath());
     QString filterPresetsPath = qApp->applicationDirPath() + "/share/mlt/presets/filter/dynamicText";
+#ifdef Q_OS_MAC
+    QDir appDir0(qApp->applicationDirPath());
+    appDir0.cdUp();
+    appDir0.cd("Resources");
+    filterPresetsPath = appDir0.path() + "/share/mlt/presets/filter/dynamicText";
+#endif
     QDir userDataDir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
     QString targetPath = userDataDir.path() + "/presets/dynamicText";
     copyDirectoryFiles(filterPresetsPath, targetPath, true, textFilterPresetNameMap);
