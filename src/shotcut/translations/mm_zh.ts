@@ -187,12 +187,12 @@
     <message>
         <location filename="../src/widgets/avformatproducersimplewidget.ui" line="65"/>
         <source>Start Point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">开始时间点</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducersimplewidget.ui" line="120"/>
         <source>End Point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">结束时间点</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducersimplewidget.ui" line="178"/>
@@ -202,7 +202,7 @@
     <message>
         <location filename="../src/widgets/avformatproducersimplewidget.ui" line="265"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">高级</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducersimplewidget.ui" line="325"/>
