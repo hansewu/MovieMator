@@ -305,7 +305,10 @@ bool copyDirectoryFiles(const QString &fromDir, const QString &toDir, bool cover
     QDir sourceDir(fromDir);
     QDir targetDir(toDir);
     if(!targetDir.exists()){    /**< 如果目标目录不存在，则进行创建 */
-        if(!targetDir.mkdir(targetDir.absolutePath())) {
+//        if(!targetDir.mkdir(targetDir.absolutePath())) {
+//            return false;
+//        }
+        if(!targetDir.mkpath(targetDir.absolutePath())) {
             return false;
         }
     }
@@ -381,10 +384,7 @@ void copyTextFilterPresetFile() {
     QDir applicationDir(qApp->applicationDirPath());
     QString filterPresetsPath = qApp->applicationDirPath() + "/share/mlt/presets/filter/dynamicText";
 #ifdef Q_OS_MAC
-    QDir appDir0(qApp->applicationDirPath());
-    appDir0.cdUp();
-    appDir0.cd("Resources");
-    filterPresetsPath = appDir0.path() + "/share/mlt/presets/filter/dynamicText";
+    filterPresetsPath = qApp->applicationDirPath() + "/../Resources/share/mlt/presets/filter/dynamicText";
 #endif
     QDir userDataDir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
     QString targetPath = userDataDir.path() + "/presets/dynamicText";
