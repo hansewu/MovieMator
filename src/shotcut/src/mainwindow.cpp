@@ -108,6 +108,10 @@
 #include <QQmlEngine>
 #include <QQmlContext>
 
+#if defined (Q_OS_MAC)
+    #include "securitybookmark/transport_security_bookmark.h"
+#endif
+
 
 
 #if defined(Q_OS_WIN)
@@ -4408,6 +4412,10 @@ void MainWindow::addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QI
 void MainWindow::onFileOpened(QString filePath)
 {
     RecentDock_add(filePath);
+
+#ifdef Q_OS_MAC
+    create_security_bookmark(filePath.toLatin1().constData());
+#endif
 }
 
 void MainWindow::onOpenFailed(QString filePath)
