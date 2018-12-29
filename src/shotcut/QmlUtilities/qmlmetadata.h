@@ -40,6 +40,7 @@ class QMLUTILITIESSHARED_EXPORT QmlKeyframesParameter : public QObject
     Q_PROPERTY(double minimum MEMBER m_minimum NOTIFY changed)
     Q_PROPERTY(double maximum MEMBER m_maximum NOTIFY changed)
 
+    Q_PROPERTY(QString explanation MEMBER m_explanation NOTIFY changed)
     Q_PROPERTY(QString objectName MEMBER m_objectName NOTIFY changed)
     Q_PROPERTY(QString controlType MEMBER m_controlType NOTIFY changed)
     Q_PROPERTY(QString paraType MEMBER m_paraType NOTIFY changed)
@@ -63,6 +64,8 @@ public:
     double maximum() const { return m_maximum; }
     void setMaximum(const double maximum) {m_maximum = maximum;};
 
+    QString explanation() const { return m_explanation; }
+    void setExplanation(const QString &explanation) {m_explanation = explanation;};
 
     QString objectName() const { return m_objectName; }
     void setObjectName(const QString &objectName) {m_objectName = objectName;};
@@ -87,6 +90,7 @@ private:
     double m_minimum;
     double m_maximum;
 
+    QString m_explanation;
     QString m_objectName;
     QString m_controlType;
     QString m_paraType;

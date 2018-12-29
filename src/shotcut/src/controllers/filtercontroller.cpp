@@ -121,6 +121,7 @@ void FilterController::loadFrei0rFilterMetadata() {
 //                    QmlKeyframesParameter * param2 = meta->keyframes()->parameter(0);
 
                     param->setName(paramInfo.name);
+                    param->setExplanation(paramInfo.explanation);
 
                     QString paramType = "double";
                     if (paramInfo.type == F0R_PARAM_BOOL)  paramType = "bool";
