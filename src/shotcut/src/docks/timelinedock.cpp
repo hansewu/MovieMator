@@ -614,23 +614,29 @@ void TimelineDock::append(int trackIndex)
         return;
     }
 
-    QList<FILE_HANDLE> fileList = RecentDock_getSelectedFiles();
-    foreach (FILE_HANDLE fileHandle, fileList)
-    {
-        MAININTERFACE.addToTimeLine(fileHandle);
-        selectClipUnderPlayhead();
-    }
 
-    if (fileList.count() <= 0)
+    if (MLT.isSeekableClip())
+        MAIN.undoStack()->push(
+                                new Timeline::AppendCommand(m_model, trackIndex,
+                                MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
+    else
     {
-        if (MLT.isSeekableClip() || MLT.savedProducer()) {
-            MAIN.undoStack()->push(
-            new Timeline::AppendCommand(m_model, trackIndex,
-                    MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
 
-            selectClipUnderPlayhead();
+        QList<FILE_HANDLE> fileList = RecentDock_getSelectedFiles();
+        foreach (FILE_HANDLE fileHandle, fileList)
+        {
+            MAININTERFACE.addToTimeLine(fileHandle);
+        }
+        if (fileList.count() <= 0)
+        {
+            if (MLT.isSeekableClip() || MLT.savedProducer()) {
+                MAIN.undoStack()->push(
+                new Timeline::AppendCommand(m_model, trackIndex,
+                        MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
+            }
         }
     }
+    selectClipUnderPlayhead();
 
 }
 
@@ -796,6 +802,7 @@ void TimelineDock::emitSelectedFromSelection()
 
         info->producer->set_in_and_out(info->frame_in, info->frame_out);
         emit selected(info->producer);
+        info->producer->set_in_and_out(0, -1);
 
         delete info;
     }

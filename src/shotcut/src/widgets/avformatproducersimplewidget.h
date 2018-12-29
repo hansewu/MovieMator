@@ -49,20 +49,13 @@ protected:
 private slots:
     void onFrameDisplayed(const SharedFrame&);
 
+    void on_speedSpinBox_editingFinished();
+
+    void on_advanced_clicked();
+
     void on_resetButton_clicked();
 
     void on_okButton_clicked();
-
-
-    void on_durationSpinBox_editingFinished();
-
-    void on_speedSpinBox_editingFinished();
-
-    void on_actionOpenFolder_triggered();
-
-    void on_actionCopyFullFilePath_triggered();
-
-    void on_advanced_clicked();
 
 private:
     Ui::AvformatProducerSimpleWidget *ui;
@@ -72,9 +65,7 @@ private:
     Mlt::Producer *m_tempProducer;
 
     void reopen(Mlt::Producer* p);
-    void recreateProducer();
-    Mlt::Producer * createTempProducer(Mlt::Profile&);  // 创建一个m_producer的拷贝
-    Mlt::Producer * recreateTempProducer();  //创建一个新的producer
+    Mlt::Producer * createProducer(Mlt::Profile&, Mlt::Producer*, double speed);  // 创建一个m_producer的拷贝
 };
 
 #endif // AVFORMATPRODUCERSIMPLEWIDGET_H
