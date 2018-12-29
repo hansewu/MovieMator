@@ -357,9 +357,9 @@ void TimelineDock::setSelection(QList<int> newSelection, int trackIndex, bool is
         MLT.pause();
 
         //MovieMator Pro
-#ifdef MOVIEMATOR_PRO
+//#ifdef MOVIEMATOR_PRO
         setCurrentFilter(NULL, 0,0);
-#endif
+//#endif
         //end
 
         emit selectionChanged();
@@ -1636,7 +1636,7 @@ void TimelineDock::removeTransition(int trackIndex, int transitionIndex)
     }
 }
 
-#ifdef MOVIEMATOR_PRO
+//#ifdef MOVIEMATOR_PRO
 void TimelineDock::changePostionFromFilter(int position)
 {
     int trackIndex = currentTrack();
@@ -1663,7 +1663,7 @@ void TimelineDock::setCurrentFilter(QObject *filter, QmlMetadata *meta, int inde
     m_quickView.rootContext()->setContextProperty("currentFilter", filter);
 }
 
-#endif
+//#endif
 
 int TimelineDock::getPositionInCurrentClip()
 {

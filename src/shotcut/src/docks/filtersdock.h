@@ -39,11 +39,11 @@ public:
     int position() const { return m_position; }
 
 //    Q_INVOKABLE int getCurrentPosition();
-#ifdef MOVIEMATOR_PRO
+//#ifdef MOVIEMATOR_PRO
     Q_PROPERTY(int position READ position WRITE setPosition);
     void setPosition(int position);
     void setCurrentClipFrameFromTimeline(int position);
-#endif
+//#endif
     Q_PROPERTY(bool proVersion READ proVersion)
     bool proVersion();
 
@@ -56,9 +56,9 @@ signals:
     void currentFilterRequested(int attachedIndex);
     void changed(); /// Notifies when a filter parameter changes.
     void positionChanged();
-#ifdef MOVIEMATOR_PRO
+//#ifdef MOVIEMATOR_PRO
     void changePosition(int position);
-#endif
+//#endif
     void dockPositionChanged();
     void currentFilterChanged(); //current fiter changed
 
