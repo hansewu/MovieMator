@@ -2665,7 +2665,12 @@ void MainWindow::onEncodeTriggered(bool checked)
 
         }
         if(bHasClipInTimeline)
+        {
             m_encodeDock->show();
+#if MOVIEMATOR_FREE
+            showUpgradeToProPromptDialog();
+#endif
+        }
         else
         {
             QMessageBox dialog(QMessageBox::NoIcon,
