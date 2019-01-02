@@ -46,7 +46,7 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
 
 void FilterController::loadFilterMetadata() {
     QDir dir = QmlUtilities::qmlDir();
-    dir.cd("filters");
+    dir.cd("filters_pro");
     foreach (QString dirName, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Executable)) {
         if (dirName == "frei0r")
         {
@@ -80,7 +80,7 @@ void FilterController::loadFilterMetadata() {
 
 void FilterController::loadFrei0rFilterMetadata() {
     QDir dir = QmlUtilities::qmlDir();
-    dir.cd("filters");
+    dir.cd("filters_pro");
     QDir subdir = dir;
     subdir.cd("frei0r");
     subdir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);

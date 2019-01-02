@@ -85,7 +85,7 @@ public:
     Q_INVOKABLE void resetProperty(const QString& name);
 
     //function to set or get key frame para value
-#ifdef MOVIEMATOR_PRO
+//#ifdef MOVIEMATOR_PRO
 
     Q_INVOKABLE void setKeyFrameParaValue(double frame, QString key, QString value);
     Q_INVOKABLE void setKeyFrameParaRectValue(double frame, QString key, const QRectF& rect, double opacity = 1.0);
@@ -117,7 +117,7 @@ public:
     Q_INVOKABLE QRectF getAnimRectValue(double frame, QString key);
     Q_INVOKABLE void removeAnimationKeyFrame(int nFrame, QString name);
 
-#endif
+//#endif
 
     Q_INVOKABLE bool enableAnimation() const { return m_bEnableAnimation; }
     Q_INVOKABLE void setEnableAnimation(bool bEnableAnimation) { m_bEnableAnimation = bEnableAnimation; };
@@ -133,12 +133,12 @@ signals:
     void analyzeFinished(bool isSuccess);
     void changed(); /// Use to let UI and VUI QML signal updates to each other.
 
-#ifdef MOVIEMATOR_PRO
+//#ifdef MOVIEMATOR_PRO
     void addKeyFrame();
     void removeKeyFrame();
     void keyFrameChanged();
     void keyframeNumberChanged();
-#endif
+//#endif
 
 private:
     QmlMetadata* m_metadata;

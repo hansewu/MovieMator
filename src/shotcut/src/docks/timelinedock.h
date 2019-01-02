@@ -129,9 +129,9 @@ signals:
     void dockPositionChanged();
 
     //MovieMator Pro
-#ifdef MOVIEMATOR_PRO
+//#ifdef MOVIEMATOR_PRO
     void positionChangedForKeyFrame(int position);
-#endif
+//#endif
 
 
 
@@ -210,10 +210,10 @@ public slots:
     void removeTransition(int trackIndex, int transitionIndex);
 
     //MovieMator Pro
-#ifdef MOVIEMATOR_PRO
+//#ifdef MOVIEMATOR_PRO
     void changePostionFromFilter(int position);
     void setCurrentFilter(QObject* filter, QmlMetadata* meta, int index);
-#endif
+//#endif
 
     void addFilterClipCommand(int TrackIndex, int clipIndex, QString strFromXml, QString strToXml);
 

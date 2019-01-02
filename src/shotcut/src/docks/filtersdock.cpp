@@ -152,7 +152,7 @@ void FiltersDock::resetQview()
     LOG_DEBUG() << "end";
 }
 
-#ifdef MOVIEMATOR_PRO
+//#ifdef MOVIEMATOR_PRO
 void FiltersDock::setCurrentClipFrameFromTimeline(int position)
 {
     m_position = position;
@@ -165,7 +165,7 @@ void FiltersDock::setPosition(int position)
     m_position = position;
     emit changePosition(position);
 }
-#endif
+//#endif
 
 
 

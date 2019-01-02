@@ -55,7 +55,7 @@ QmlFilter::~QmlFilter()
     delete m_filter;
 }
 
-#ifdef MOVIEMATOR_PRO
+//#ifdef MOVIEMATOR_PRO
 Mlt::Animation QmlFilter::getAnimation(const QString& name)
 {
     if (m_filter) {
@@ -137,7 +137,7 @@ QString QmlFilter::getStringKeyValueOnProjectOnIndex(int index, QString name)
         return "";
 }
 
-#endif
+//#endif
 QString QmlFilter::get(QString name)
 {
     if (m_filter)
@@ -530,7 +530,7 @@ QString QmlFilter::objectNameOrService()
     return m_metadata->objectName().isEmpty()? m_metadata->mlt_service() : m_metadata->objectName();
 }
 
-#ifdef MOVIEMATOR_PRO
+//#ifdef MOVIEMATOR_PRO
 
 double QmlFilter::getPreKeyFrameNum(double currentKeyFrame)
 {
@@ -1118,7 +1118,7 @@ void QmlFilter::refreshKeyFrame(const QVector<key_frame_item> &listKeyFrame)
     combineAllKeyFramePara();
 }
 
-#endif
+//#endif
 
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter* filter)
     : QObject(0)

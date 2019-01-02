@@ -439,9 +439,9 @@ MainWindow::MainWindow()
     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_filtersDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
 //    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_configurationDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
     //MovieMator Pro
-#ifdef MOVIEMATOR_PRO
+//#ifdef MOVIEMATOR_PRO
     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_timelineDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
-#endif
+//#endif
     //End
     connect(m_filterController, SIGNAL(currentFilterAboutToChange()), m_filtersDock, SLOT(clearCurrentFilter()));
     connect(this, SIGNAL(producerOpened()), m_filterController, SLOT(setProducer()));
@@ -472,13 +472,13 @@ MainWindow::MainWindow()
     connect(m_timelineDock, SIGNAL(filterAdded()), this, SLOT(onShowFilterDock()));
     connect(m_timelineDock, SIGNAL(showFilterDock()), this, SLOT(onShowFilterDock()));
 
-#ifdef MOVIEMATOR_PRO
+//#ifdef MOVIEMATOR_PRO
     connect(m_filtersDock, SIGNAL(changePosition(int)), m_timelineDock, SLOT(changePostionFromFilter(int)));
 
     connect(m_timelineDock,SIGNAL(positionChangedForKeyFrame(int)), m_filtersDock,SLOT(setCurrentClipFrameFromTimeline(int)));
     connect(m_timelineDock, SIGNAL(positionChanged()), m_filtersDock, SLOT(onChangePosition()));
 //    connect(m_timelineDock, SIGNAL(positionChanged()), m_filtersDock, SIGNAL(positionChanged()));
-#endif
+//#endif
 
     LOG_DEBUG() << "history dock";
     m_historyDock = new QDockWidget(tr("History"), this);
