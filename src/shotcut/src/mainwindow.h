@@ -75,6 +75,7 @@ class QmlFilter;
 class QUndoCommand;
 class ConfigurationDock;
 class ContainerDock;
+class QToolButton;
 
 //class TextlistDock;
 
@@ -193,7 +194,7 @@ private:
 //    TextlistDock *m_textlistDock;
     QDockWidget *m_textDock;
 
-    QPushButton *m_addButton;
+    QToolButton *m_addButton;
     QPushButton *m_removeButton;
     QPushButton *m_undoButton;
     QPushButton *m_redoButton;

@@ -3932,6 +3932,7 @@ void MainWindow::customizeToolbar()
     toolbar->setFloatable(false);
     toolbar->setMovable(false);
 
+
     QWidget *widget = new QWidget(this);
     widget->setFixedHeight(75);
 
@@ -3943,16 +3944,30 @@ void MainWindow::customizeToolbar()
     QGridLayout *gridLayout = new QGridLayout;
     gridLayout->setHorizontalSpacing(12);
 
-    m_addButton = new QPushButton("");
 
-    m_addButton->setFlat(true);
-    m_addButton->setFixedSize(40,40);
-    m_addButton->setIconSize(QSize(40,40));
+    m_addButton = new QToolButton();
+    m_addButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    //m_addButton = new QPushButton("");
+
+    //m_addButton->setFlat(true);
+    int iconSize = 40;
+    QPixmap pixmap(iconSize,iconSize);
+    pixmap.fill(QColor(0,0,0,0));
+//    m_addButton->setFixedSize(40,56);
+    m_addButton->setFixedHeight(56);
+    m_addButton->setIcon(QIcon(pixmap));
+    m_addButton->setIconSize(QSize(iconSize,iconSize));
+//    m_addButton->setIcon(QIcon(":/icons/light/32x32/toolbar-add.png"));
     connect(m_addButton, SIGNAL(clicked()), this, SLOT(openVideo()));
-    m_addButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/toolbar-add.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-add-pressed.png)}" );
+     m_addButton->setStyleSheet("QToolButton { image: url(:/icons/light/32x32/toolbar-add.png); image-position: top; border: none; }" "QToolButton:pressed{color: red; image: url(:/icons/light/32x32/toolbar-add-pressed.png); image-position: top; }");
+//    m_addButton->setStyleSheet("QToolButton { image: url(:/icons/light/32x32/toolbar-add.png); border: none; }" "QToolButton:pressed{image: url(:/icons/light/32x32/toolbar-add-pressed.png);}");
+    //m_addButton->setStyleSheet("QToolButton{ border-image: url(:/icons/light/32x32/toolbar-add.png)}" "QToolButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-add-pressed.png)}" );
     m_addButton->setToolTip(tr("Open a video, audio or image file"));
+    m_addButton->setText(tr("Open Open Open Open"));
+
     openLabel = new QLabel(tr("Open"));
     openLabel->setAlignment(Qt::AlignHCenter);
+//    openLabel->setStyleSheet("QLabel { border: 2px solid green; border-radius: 4px; padding: 2px; color: red; }");
 
 
     m_removeButton = new QPushButton("");
