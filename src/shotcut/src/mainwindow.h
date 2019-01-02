@@ -326,6 +326,8 @@ public slots:
 
     void resizePlayer();
 
+    void addPlayer();
+
 private slots:
 
 

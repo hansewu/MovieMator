@@ -44,8 +44,9 @@ class QPropertyAnimation;
 class QPushButton;
 class QComboBox;
 class MySlider;
+class QVBoxLayout;
 
-class Player : public QFrame//QWidget
+class Player : public QWidget//QFrame//
 {
     Q_OBJECT
 public:
@@ -54,7 +55,7 @@ public:
         ProjectTabIndex
     } TabIndex;
 
-    explicit Player(QFrame *parent = 0);
+    explicit Player(QWidget *parent = 0);
     void connectTransport(const TransportControllable*);
     void setIn(int);
     void setOut(int);
@@ -110,10 +111,13 @@ public slots:
     void enableTab(TabIndex index, bool enabled = true);
     void onTabBarClicked(int index);
     void setStatusLabel(const QString& text, int timeoutSeconds, QAction* action);
+    void toggleFullScreen();
 
 protected:
     void resizeEvent(QResizeEvent* event);
 //    bool eventFilter(QObject* target, QEvent* event);
+    void keyPressEvent(QKeyEvent*);
+    void mouseDoubleClickEvent(QMouseEvent *event);
 
 private:
     void setupActions(QWidget* widget);
@@ -169,6 +173,7 @@ private:
     int m_monitorScreen;
     QWidget* m_videoWidget;
     QHBoxLayout* m_videoLayout;
+    QVBoxLayout* m_playerLayout;
     QWidget* m_videoScrollWidget;
     const TransportControllable* m_currentTransport;
     QPushButton * m_statusLabel;

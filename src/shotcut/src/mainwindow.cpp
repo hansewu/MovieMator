@@ -905,7 +905,10 @@ void MainWindow::setupSettingsMenu()
         }
     }
     if (m_externalGroup->actions().count() > 1)
+    {
         ui->menuExternal->addActions(m_externalGroup->actions());
+        ui->menuExternal->setHidden(true);
+    }
     else {
         delete ui->menuExternal;
         ui->menuExternal = 0;
@@ -4504,3 +4507,8 @@ void MainWindow::resizePlayer()
 
 }
 
+
+void MainWindow::addPlayer()
+{
+    ui->centralWidget->layout()->addWidget(m_player);
+}
