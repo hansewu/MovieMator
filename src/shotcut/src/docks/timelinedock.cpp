@@ -344,12 +344,19 @@ void TimelineDock::makeTracksTaller()
     QMetaObject::invokeMethod(m_quickView.rootObject(), "makeTracksTaller");
 }
 
-void TimelineDock::setSelection(QList<int> newSelection, int trackIndex, bool isMultitrack)
+void TimelineDock::setSelection(QList<int> newSelection, int trackIndex, bool isMultitrack, bool bFromUndo)
 {
     if (newSelection != selection()
             || trackIndex != m_selection.selectedTrack
-            || isMultitrack != m_selection.isMultitrackSelected) {
+            || isMultitrack != m_selection.isMultitrackSelected)
+    {
         LOG_DEBUG() << "Changing selection to" << newSelection << " trackIndex" << trackIndex << "isMultitrack" << isMultitrack;
+        if(!bFromUndo)
+        {
+            MAIN.undoStack()->push(
+                new Timeline::ClipsSelectCommand(newSelection, trackIndex, isMultitrack,
+                                                 m_selection.selectedClips, m_selection.selectedTrack, m_selection.isMultitrackSelected));
+        }
         m_selection.selectedClips = newSelection;
         m_selection.selectedTrack = trackIndex;
         m_selection.isMultitrackSelected = isMultitrack;

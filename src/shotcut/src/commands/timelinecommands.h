@@ -603,6 +603,25 @@ protected:
     bool            m_bFirstExec;
 };
 
+
+class ClipsSelectCommand: public QUndoCommand
+{
+
+public:
+    ClipsSelectCommand(QList<int> newSelection, int newTrackIndex, bool isNewMultitrack,
+                       QList<int> oldSelection, int oldTrackIndex, bool isOldMultitrack,
+                       QUndoCommand * parent= 0);
+
+    void redo();
+    void undo();
+
+protected:
+    bool            m_bFirstExec;
+    QList<int>  m_newSelection, m_oldSelection;
+    int         m_newTrackIndex, m_oldTrackIndex;
+    bool        m_bNewIsMultitrack, m_bOldIsMultitrack;
+};
+
 } // namespace Timeline
 
 #endif

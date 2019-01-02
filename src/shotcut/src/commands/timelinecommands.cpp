@@ -1297,6 +1297,7 @@ protected:
 */
 
 FilterMoveCommand::FilterMoveCommand(int rowIndexFrom, int rowIndexTo, QUndoCommand * parent)
+: QUndoCommand(parent)
 {
     m_bFirstExec    = true;
 
@@ -1317,6 +1318,40 @@ void FilterMoveCommand::undo()
 {
     MAIN.filterController()->attachedModel()->move(m_rowIndexTo, m_rowIndexFrom, true);
 }
+
+
+ClipsSelectCommand::ClipsSelectCommand(QList<int> newSelection, int newTrackIndex, bool isNewMultitrack,
+                                       QList<int> oldSelection, int oldTrackIndex, bool isOldMultitrack,
+                                       QUndoCommand * parent)
+: QUndoCommand(parent)
+{
+    m_bFirstExec    = true;
+    m_newSelection  = newSelection;
+    m_oldSelection  = oldSelection;
+
+    m_newTrackIndex = newTrackIndex;
+    m_oldTrackIndex = oldTrackIndex;
+
+    m_bNewIsMultitrack  = isNewMultitrack;
+    m_bOldIsMultitrack  = isOldMultitrack;
+}
+
+void ClipsSelectCommand::redo()
+{
+    if(m_bFirstExec)//第一次自动执行不调用，外部已经执行
+    {
+        m_bFirstExec = false;
+        return;
+    }
+
+    MAIN.timelineDock()->setSelection(m_newSelection, m_newTrackIndex, m_bNewIsMultitrack, true);
+}
+
+void ClipsSelectCommand::undo()
+{
+    MAIN.timelineDock()->setSelection(m_oldSelection, m_oldTrackIndex, m_bOldIsMultitrack, true);
+}
+
 
 /*
 protected:

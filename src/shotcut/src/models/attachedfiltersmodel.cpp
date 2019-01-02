@@ -278,7 +278,7 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
 
 void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
 {
-    if (!m_producer->is_valid())
+    if (!m_producer || !m_producer->is_valid())
         return;
 
     if (!meta->allowMultiple()) {
