@@ -24,6 +24,7 @@
 #include <QObject>
 #include <QQuickView>
 #include <QQuickWidget>
+#include <QQuickView>
 
 class QmlFilter;
 class QmlMetadata;
@@ -77,9 +78,11 @@ private slots:
     void resetQview();
 
 private:
-    QQuickWidget m_qview;
+//    QQuickWidget m_qview;
     int m_position;
     QmlFilter *m_qmlFilter;
+    QQuickView m_quickView;
+    QWidget *m_containerView;
 };
 
 #endif // FILTERSDOCK_H

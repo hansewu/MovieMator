@@ -38,7 +38,8 @@
 
 FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent) :
     QDockWidget(tr("Filters"), parent),
-    m_qview(QmlUtilities::sharedEngine(), this)
+    m_quickView(QmlUtilities::sharedEngine(), qobject_cast<QWindow *>(this))
+//    m_qview(QmlUtilities::sharedEngine(), this)
 {
     LOG_DEBUG() << "begin";
     setObjectName("FiltersDock");
@@ -46,20 +47,31 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
     setMinimumWidth(300);
-    m_qview.setFocusPolicy(Qt::StrongFocus);
-    setWidget(&m_qview);
+//    m_qview.setFocusPolicy(Qt::StrongFocus);
+//    setWidget(&m_qview);
 
-    QmlUtilities::setCommonProperties(m_qview.rootContext());
-//    m_qview.rootContext()->setContextProperty("mainwindow", &MAIN);
-    m_qview.rootContext()->setContextProperty("view", new QmlView(m_qview.quickWindow()));
-    m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
-    m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
+    m_containerView = QWidget::createWindowContainer(&m_quickView, this);
+    m_containerView->setFocusPolicy(Qt::StrongFocus);
+    setWidget(m_containerView);
 
-    m_qview.rootContext()->setContextProperty("filterDock", this);
+    QmlUtilities::setCommonProperties(m_quickView.rootContext());
+    m_quickView.rootContext()->setContextProperty("view", new QmlView(&m_quickView));
+    m_quickView.rootContext()->setContextProperty("metadatamodel", metadataModel);
+    m_quickView.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
+    m_quickView.rootContext()->setContextProperty("filterDock", this);
+
+//    QmlUtilities::setCommonProperties(m_qview.rootContext());
+////    m_qview.rootContext()->setContextProperty("mainwindow", &MAIN);
+//    m_qview.rootContext()->setContextProperty("view", new QmlView(m_qview.quickWindow()));
+//    m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
+//    m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
+
+//    m_qview.rootContext()->setContextProperty("filterDock", this);
 
     setCurrentFilter(0, 0, -1);
-    connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
-//    resetQview();
+//    connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
+    connect(&m_quickView, SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
+    resetQview();
 
     LOG_DEBUG() << "end";
 }
@@ -68,8 +80,10 @@ void FiltersDock::clearCurrentFilter()
 {
     MLT.pause();
     disconnect(this, SIGNAL(positionChanged()), 0, 0);
-    m_qview.rootContext()->setContextProperty("metadata", 0);
-    QMetaObject::invokeMethod(m_qview.rootObject(), "clearCurrentFilter");
+//    m_qview.rootContext()->setContextProperty("metadata", 0);
+//    QMetaObject::invokeMethod(m_qview.rootObject(), "clearCurrentFilter");
+    m_quickView.rootContext()->setContextProperty("metadata", 0);
+    QMetaObject::invokeMethod(m_quickView.rootObject(), "clearCurrentFilter");
     disconnect(this, SIGNAL(changed()));
     m_qmlFilter = NULL;
 }
@@ -77,9 +91,12 @@ void FiltersDock::clearCurrentFilter()
 void FiltersDock::setCurrentFilter(QObject* filter, QmlMetadata* meta, int index)
 {
     QmlFilter *qmlFilter = (QmlFilter *)filter;
-    m_qview.rootContext()->setContextProperty("filter", qmlFilter);
-    m_qview.rootContext()->setContextProperty("metadata", meta);
-    QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));
+//    m_qview.rootContext()->setContextProperty("filter", qmlFilter);
+//    m_qview.rootContext()->setContextProperty("metadata", meta);
+//    QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));
+    m_quickView.rootContext()->setContextProperty("filter", qmlFilter);
+    m_quickView.rootContext()->setContextProperty("metadata", meta);
+    QMetaObject::invokeMethod(m_quickView.rootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));
     if (qmlFilter)
     {
      //   qDebug()<<"filter m_path is "<<filter->path();
@@ -92,7 +109,8 @@ void FiltersDock::setCurrentFilter(QObject* filter, QmlMetadata* meta, int index
 
 void FiltersDock::setFadeInDuration(int duration)
 {
-    QObject* filterUi = m_qview.rootObject()->findChild<QObject*>("fadeIn");
+//    QObject* filterUi = m_qview.rootObject()->findChild<QObject*>("fadeIn");
+    QObject* filterUi = m_quickView.rootObject()->findChild<QObject*>("fadeIn");
     if (filterUi) {
         filterUi->setProperty("duration", duration);
     }
@@ -100,7 +118,8 @@ void FiltersDock::setFadeInDuration(int duration)
 
 void FiltersDock::setFadeOutDuration(int duration)
 {
-    QObject* filterUi = m_qview.rootObject()->findChild<QObject*>("fadeOut");
+//    QObject* filterUi = m_qview.rootObject()->findChild<QObject*>("fadeOut");
+    QObject* filterUi = m_quickView.rootObject()->findChild<QObject*>("fadeOut");
     if (filterUi) {
         filterUi->setProperty("duration", duration);
     }
@@ -123,29 +142,44 @@ bool FiltersDock::event(QEvent *event)
 void FiltersDock::resetQview()
 {
     LOG_DEBUG() << "begin";
-    if (m_qview.status() != QQuickWidget::Null) {
-        QObject* root = m_qview.rootObject();
+//    if (m_qview.status() != QQuickWidget::Null) {
+//        QObject* root = m_qview.rootObject();
+//        QObject::disconnect(root, SIGNAL(currentFilterRequested(int)),
+//                            this, SIGNAL(currentFilterRequested(int)));
+
+//        m_qview.setSource(QUrl(""));
+//    }
+
+    if (m_quickView.status() != QQuickView::Null) {
+        QObject* root = m_quickView.rootObject();
         QObject::disconnect(root, SIGNAL(currentFilterRequested(int)),
                             this, SIGNAL(currentFilterRequested(int)));
 
-        m_qview.setSource(QUrl(""));
+        m_quickView.setSource(QUrl(""));
     }
 
     QDir viewPath = QmlUtilities::qmlDir();
     viewPath.cd("views");
     viewPath.cd("filter");
-    m_qview.engine()->addImportPath(viewPath.path());
+//    m_qview.engine()->addImportPath(viewPath.path());
+    m_quickView.engine()->addImportPath(viewPath.path());
 
     QDir modulePath = QmlUtilities::qmlDir();
     modulePath.cd("modules");
-    m_qview.engine()->addImportPath(modulePath.path());
+//    m_qview.engine()->addImportPath(modulePath.path());
+    m_quickView.engine()->addImportPath(modulePath.path());
 
-    m_qview.setResizeMode(QQuickWidget::SizeRootObjectToView);
-    m_qview.quickWindow()->setColor(palette().window().color());
+//    m_qview.setResizeMode(QQuickWidget::SizeRootObjectToView);
+//    m_qview.quickWindow()->setColor(palette().window().color());
+    m_quickView.setResizeMode(QQuickView::SizeRootObjectToView);
+    m_quickView.setColor(palette().window().color());
     QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("filterview.qml"));
-    m_qview.setSource(source);
+//    m_qview.setSource(source);
+    m_quickView.setSource(source);
 
-    QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
+//    QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
+//        SIGNAL(currentFilterRequested(int)));
+    QObject::connect(m_quickView.rootObject(), SIGNAL(currentFilterRequested(int)),
         SIGNAL(currentFilterRequested(int)));
     emit currentFilterRequested(0);
 
@@ -191,7 +225,8 @@ void FiltersDock::promptForUpgrade()
 
 void FiltersDock::setExtraQmlContextProperty(QString name, QObject *object)
 {
-    m_qview.rootContext()->setContextProperty(name, object);
+//    m_qview.rootContext()->setContextProperty(name, object);
+    m_quickView.rootContext()->setContextProperty(name, object);
 }
 
 
