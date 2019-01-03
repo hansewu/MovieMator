@@ -7,7 +7,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleGetInfoString</key>
-        <string>MovieMator Free Mac Video Editor, Copyright 2016-2018 effectmatrix inc</string>
+        <string>MovieMator Free Mac Video Editor, Copyright 2016-2019 effectmatrix inc</string>
 	<key>CFBundleSignature</key>
 	<string>mmve</string>
 	<key>CFBundleExecutable</key>
@@ -19,13 +19,13 @@
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>CFBundleVersion</key>
-	<string>2511</string>
+	<string>2530</string>
 	<key>CFBundleName</key>
 	<string>MovieMator Video Editor</string>
 	<key>CFBundleDisplayName</key>
 	<string>MovieMator Video Editor</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.5.1</string>
+	<string>2.5.3</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
