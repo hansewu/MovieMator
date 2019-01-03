@@ -3936,6 +3936,23 @@ void MainWindow::showCurrentTextSettingWidget(Mlt::Producer *textProcucer)
 //    m_textlistDock->showTextSettingWidget(textProcucer);
 }
 
+QToolButton *MainWindow::createToolButton(const QString& icon, const QString& iconPressed, const QString& iconDisabled, const QString& title, const QString& tooltip)
+{
+    QToolButton *toolButton = new QToolButton();
+    toolButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    toolButton->setFixedHeight(60);
+    int iconSize = 40;
+    toolButton->setIconSize(QSize(iconSize,iconSize));
+    QPixmap pixmap(iconSize,iconSize);
+    pixmap.fill(QColor(0,0,0,0));
+    toolButton->setIcon(QIcon(pixmap));
+    QString styleSheet = QString("QToolButton { image: url(%1); image-position: top; border: none; }" "QToolButton:pressed{color: rgb(142, 53, 62); image: url(%2); image-position: top; }" "QToolButton:disabled{image: url(%3)}").arg(icon).arg(iconPressed).arg(iconDisabled);
+    toolButton->setStyleSheet(styleSheet);
+    toolButton->setToolTip(tooltip);
+    toolButton->setText(title);
+    return toolButton;
+}
+
 
 void MainWindow::customizeToolbar()
 {
@@ -3947,160 +3964,77 @@ void MainWindow::customizeToolbar()
     QWidget *widget = new QWidget(this);
     widget->setFixedHeight(75);
 
-    QLabel *openLabel, *removeLabel, *undoLabel, *redoLabel, *saveLabel, *exportLabel, *emailLabel, *forumLabel, *helpLabel;
-    QLabel *activateLabel, *buynowLabel, *upgradeLabel, *tvcProLabel;
-
-
 
     QGridLayout *gridLayout = new QGridLayout;
     gridLayout->setHorizontalSpacing(12);
 
-
-    m_addButton = new QToolButton();
-    m_addButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    //m_addButton = new QPushButton("");
-
-    //m_addButton->setFlat(true);
-    int iconSize = 40;
-    QPixmap pixmap(iconSize,iconSize);
-    pixmap.fill(QColor(0,0,0,0));
-//    m_addButton->setFixedSize(40,56);
-    m_addButton->setFixedHeight(56);
-    m_addButton->setIcon(QIcon(pixmap));
-    m_addButton->setIconSize(QSize(iconSize,iconSize));
-//    m_addButton->setIcon(QIcon(":/icons/light/32x32/toolbar-add.png"));
+    m_addButton = createToolButton(QString(":/icons/light/32x32/toolbar-add.png"),
+                                   QString(":/icons/light/32x32/toolbar-add-pressed.png"),
+                                   "", tr("Open"), tr("Open a video, audio or image file"));
     connect(m_addButton, SIGNAL(clicked()), this, SLOT(openVideo()));
-     m_addButton->setStyleSheet("QToolButton { image: url(:/icons/light/32x32/toolbar-add.png); image-position: top; border: none; }" "QToolButton:pressed{color: red; image: url(:/icons/light/32x32/toolbar-add-pressed.png); image-position: top; }");
-//    m_addButton->setStyleSheet("QToolButton { image: url(:/icons/light/32x32/toolbar-add.png); border: none; }" "QToolButton:pressed{image: url(:/icons/light/32x32/toolbar-add-pressed.png);}");
-    //m_addButton->setStyleSheet("QToolButton{ border-image: url(:/icons/light/32x32/toolbar-add.png)}" "QToolButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-add-pressed.png)}" );
-    m_addButton->setToolTip(tr("Open a video, audio or image file"));
-    m_addButton->setText(tr("Open Open Open Open"));
 
-    openLabel = new QLabel(tr("Open"));
-    openLabel->setAlignment(Qt::AlignHCenter);
-//    openLabel->setStyleSheet("QLabel { border: 2px solid green; border-radius: 4px; padding: 2px; color: red; }");
-
-
-    m_removeButton = new QPushButton("");
-
-    m_removeButton->setFlat(true);
-    m_removeButton->setFixedSize(40,40);
-    m_removeButton->setIconSize(QSize(40,40));
-    m_removeButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/toolbar-remove.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-remove-pressed.png)}");
-    m_removeButton->setToolTip(tr("Remove media files"));
+    m_removeButton = createToolButton(":/icons/light/32x32/toolbar-remove.png",
+                                      ":/icons/light/32x32/toolbar-remove-pressed.png",
+                                      "", tr("Remove"), tr("Remove media files"));
     connect(m_removeButton, SIGNAL(clicked()), this, SLOT(removeVideo()));
-    removeLabel = new QLabel(tr("Remove"));
-    removeLabel->setAlignment(Qt::AlignHCenter);
 
 
-
-    m_undoButton = new QPushButton("");
-
-    m_undoButton->setFlat(true);
-    m_undoButton->setFixedSize(40,40);
-    m_undoButton->setIconSize(QSize(40,40));
-    m_undoButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/toolbar-undo.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-undo-pressed.png)}" "QPushButton:disabled{ border-image: url(:/icons/light/32x32/toolbar-undo-disable.png)}");
-    m_undoButton->setToolTip(tr("Undo"));
+    m_undoButton = createToolButton(":/icons/light/32x32/toolbar-undo.png",
+                                    ":/icons/light/32x32/toolbar-undo-pressed.png",
+                                    ":/icons/light/32x32/toolbar-undo-disable.png",
+                                    tr("Undo"), tr("Undo"));
     connect(m_undoButton, SIGNAL(clicked()), this, SLOT(on_actionUndo_triggered()));
-    undoLabel = new QLabel(tr("Undo"));
-    undoLabel->setAlignment(Qt::AlignHCenter);
 
 
-    m_redoButton = new QPushButton("");
+    m_redoButton = createToolButton(":/icons/light/32x32/toolbar-redo.png",
+                                    ":/icons/light/32x32/toolbar-redo-pressed.png",
+                                    ":/icons/light/32x32/toolbar-redo-disable.png",
+                                    tr("Redo"), tr("Redo"));
 
-    m_redoButton->setFlat(true);
-    m_redoButton->setFixedSize(40,40);
-    m_redoButton->setIconSize(QSize(40,40));
-    m_redoButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/toolbar-redo.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-redo-pressed.png)}" "QPushButton:disabled{ border-image: url(:/icons/light/32x32/toolbar-redo-disable.png)}");
-    m_redoButton->setToolTip(tr("Redo"));
     connect(m_redoButton, SIGNAL(clicked()), this, SLOT(on_actionRedo_triggered()));
-    redoLabel = new QLabel(tr("Redo"));
-    redoLabel->setAlignment(Qt::AlignHCenter);
 
 
-
-    m_saveButton = new QPushButton("");
-
-    m_saveButton->setFlat(true);
-    m_saveButton->setFixedSize(40,40);
-    m_saveButton->setIconSize(QSize(40,40));
-    m_saveButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/toolbar-save.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-save-pressed.png)}");
-    m_saveButton->setToolTip(tr("Save project"));
+    m_saveButton = createToolButton(":/icons/light/32x32/toolbar-save.png",
+                                    ":/icons/light/32x32/toolbar-save-pressed.png",
+                                    "", tr("Save Project"), tr("Save Project"));
     connect(m_saveButton, SIGNAL(clicked()), this, SLOT(on_actionSave_triggered()));
-    saveLabel = new QLabel(tr("Save Project"));
-    saveLabel->setAlignment(Qt::AlignHCenter);
 
 
-    m_exportButton = new QPushButton("");
-
-    m_exportButton->setFlat(true);
-    m_exportButton->setFixedSize(40,40);
-    m_exportButton->setIconSize(QSize(40,40));
-    m_exportButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/toolbar-export.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-export-pressed.png)}");
-    m_exportButton->setToolTip(tr("Export video, audio or image file"));
+    m_exportButton = createToolButton(":/icons/light/32x32/toolbar-export.png",
+                                      ":/icons/light/32x32/toolbar-export-pressed.png",
+                                      "", tr("Export Video"), tr("Export video, audio or image file"));
     connect(m_exportButton, SIGNAL(clicked()), this, SLOT(onEncodeTriggered()));
-    exportLabel = new QLabel(tr("Export Video"));
-    exportLabel->setAlignment(Qt::AlignHCenter);
 
 
-
-
-    m_helpButton = new QPushButton("");
-    m_helpButton->setFlat(true);
-    m_helpButton->setFixedSize(40,40);
-    m_helpButton->setIconSize(QSize(40,40));
-    m_helpButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/toolbar-help.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-help-pressed.png)}");
-    m_helpButton->setToolTip(tr("Tutorials"));
+    m_helpButton = createToolButton(":/icons/light/32x32/toolbar-help.png",
+                                    ":/icons/light/32x32/toolbar-help-pressed.png",
+                                    "", tr("Tutorial"), tr("Tutorials"));
     connect(m_helpButton, SIGNAL(clicked()), this, SLOT(onHelpButtonTriggered()));
-    helpLabel = new QLabel(tr("Tutorial"));
-    helpLabel->setAlignment(Qt::AlignHCenter);
 
 
-    m_emailButton = new QPushButton("");
-
-    m_emailButton->setFlat(true);
-    m_emailButton->setFixedSize(40,40);
-    m_emailButton->setIconSize(QSize(40,40));
-    m_emailButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/toolbar-email.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-email-pressed.png)}");
-    m_emailButton->setToolTip(tr("Send us your suggestions"));
+    m_emailButton = createToolButton(":/icons/light/32x32/toolbar-email.png",
+                                     ":/icons/light/32x32/toolbar-email-pressed.png",
+                                     "", tr("Feedback"), tr("Send us your suggestions"));
     connect(m_emailButton, SIGNAL(clicked()), this, SLOT(onEmail_triggered()));
-    emailLabel = new QLabel(tr("Feedback"));
-    emailLabel->setAlignment(Qt::AlignHCenter);
 
-
-//    m_forumButton = new QPushButton("");
-
-//    m_forumButton->setFlat(true);
-//    m_forumButton->setFixedSize(40,40);
-//    m_forumButton->setIconSize(QSize(40,40));
-//    m_forumButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/toolbar-forum.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-forum-pressed.png)}");
-//    m_forumButton->setToolTip(tr("Forum"));
+//    m_forumButton = createToolButton(":/icons/light/32x32/toolbar-forum.png",
+//                                     ":/icons/light/32x32/toolbar-forum-pressed.png",
+//                                     "", tr("Forum"), tr("Forum"));
 //    connect(m_forumButton, SIGNAL(clicked()), this, SLOT(on_actionForum_triggered()));
-//    forumLabel = new QLabel(tr("Forum"));
-//    forumLabel->setAlignment(Qt::AlignHCenter);
+
 
 #if SHARE_VERSION
 #if MOVIEMATOR_PRO
     if (Registration.registrationType() == Registration_None)
     {
-        m_activateButton = new QPushButton("");
-        m_activateButton->setFlat(true);
-        m_activateButton->setFixedSize(40,40);
-        m_activateButton->setIconSize(QSize(40,40));
-        m_activateButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/toolbar-activate.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-activate-pressed.png)}");
-        m_activateButton->setToolTip(tr("Enter Licensse Code"));
-        activateLabel = new QLabel(tr("Register"));
-        activateLabel->setAlignment(Qt::AlignHCenter);
+        m_activateButton = createToolButton(":/icons/light/32x32/toolbar-activate.png",
+                                            ":/icons/light/32x32/toolbar-activate-pressed.png",
+                                            "", tr("Register"), tr("Enter Licensse Code"));
         connect(m_activateButton, SIGNAL(clicked()), this, SLOT(on_activateButton_clicked()));
 
-        m_buynowButton = new QPushButton("");
-        m_buynowButton->setFlat(true);
-        m_buynowButton->setFixedSize(40,40);
-        m_buynowButton->setIconSize(QSize(40,40));
-        m_buynowButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/toolbar-buynow.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-buynow-pressed.png)}");
-        m_buynowButton->setToolTip(tr("Buy a License Code"));
-        buynowLabel = new QLabel(tr("Buy Now"));
-        buynowLabel->setAlignment(Qt::AlignHCenter);
+        m_buynowButton = createToolButton(":/icons/light/32x32/toolbar-buynow.png",
+                                          ":/icons/light/32x32/toolbar-buynow-pressed.png",
+                                          "", tr("Buy Now"), tr("Buy a License Code"));
         connect(m_buynowButton, SIGNAL(clicked()), this, SLOT(on_buynowButton_clicked()));
     }
 #endif
@@ -4108,78 +4042,43 @@ void MainWindow::customizeToolbar()
 
 #if MOVIEMATOR_FREE
 #if defined(Q_OS_MAC)
-    m_upgradeButton = new QPushButton("");
-    m_upgradeButton->setFlat(true);
-    m_upgradeButton->setFixedSize(40,40);
-    m_upgradeButton->setIconSize(QSize(40,40));
-    m_upgradeButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/toolbar-upgrade.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-upgrade-pressed.png)}");
-    m_upgradeButton->setToolTip(tr("Upgrade to Pro version"));
-    upgradeLabel = new QLabel(tr("Upgrade"));
-    upgradeLabel->setAlignment(Qt::AlignHCenter);
+    m_upgradeButton = createToolButton(":/icons/light/32x32/toolbar-upgrade.png",
+                                       ":/icons/light/32x32/toolbar-upgrade-pressed.png",
+                                       "", tr("Upgrade"), tr("Upgrade to Pro version"));
     connect(m_upgradeButton, SIGNAL(clicked()), this, SLOT(upgradeToProVersion()));
 
-    m_tvcProButton = new QPushButton("");
-    m_tvcProButton->setFlat(true);
-    m_tvcProButton->setFixedSize(40,40);
-    m_tvcProButton->setIconSize(QSize(40,40));
-    m_tvcProButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/toolbar-tvcpro.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-tvcpro-pressed.png)}");
-    m_tvcProButton->setToolTip(tr("Get Total Video Converter Pro - a great video converter and dvd burner"));
-    tvcProLabel = new QLabel(tr("Great Converter & DVD Burner"));
-    tvcProLabel->setAlignment(Qt::AlignHCenter);
+    m_tvcProButton = createToolButton(":/icons/light/32x32/toolbar-tvcpro.png",
+                                      ":/icons/light/32x32/toolbar-tvcpro-pressed.png",
+                                      "", tr("Great Converter & DVD Burner"), tr("Get Total Video Converter Pro - a great video converter and dvd burner"));
     connect(m_tvcProButton, SIGNAL(clicked()), this, SLOT(on_actionGet_Total_Video_Converter_Pro_triggered()));
 #endif
 #endif
 
     int buttonIndex = 0;
     QSpacerItem *spacer1 = new QSpacerItem(50,20);
-    QSpacerItem *spacer11 = new QSpacerItem(50,20);
 
-    gridLayout->addWidget(m_addButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
-    gridLayout->addWidget(openLabel, 1, buttonIndex++, 1, 1);
+    gridLayout->addWidget(m_addButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+    gridLayout->addWidget(m_removeButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+    gridLayout->addItem(spacer1, 0, buttonIndex++, 1, 1);
 
-    gridLayout->addWidget(m_removeButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
-    gridLayout->addWidget(removeLabel, 1, buttonIndex++, 1, 1);
-
-    gridLayout->addItem(spacer1, 0, buttonIndex, 1, 1);
-    gridLayout->addItem(spacer11, 1, buttonIndex++, 1, 1);
-
-    gridLayout->addWidget(m_undoButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
-    gridLayout->addWidget(undoLabel, 1, buttonIndex++, 1, 1);
-
-    gridLayout->addWidget(m_redoButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
-    gridLayout->addWidget(redoLabel, 1, buttonIndex++, 1, 1);
-
+    gridLayout->addWidget(m_undoButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+    gridLayout->addWidget(m_redoButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     QSpacerItem *spacer2 = new QSpacerItem(50,20);
-    QSpacerItem *spacer22 = new QSpacerItem(50,20);
-    gridLayout->addItem(spacer2, 0, buttonIndex, 1, 1);
-    gridLayout->addItem(spacer22, 1, buttonIndex++, 1, 1);
+    gridLayout->addItem(spacer2, 0, buttonIndex++, 1, 1);
 
-    gridLayout->addWidget(m_saveButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
-    gridLayout->addWidget(saveLabel, 1, buttonIndex++, 1, 1);
-
-    gridLayout->addWidget(m_exportButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
-    gridLayout->addWidget(exportLabel, 1, buttonIndex++, 1, 1);
-
+    gridLayout->addWidget(m_saveButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+    gridLayout->addWidget(m_exportButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     QSpacerItem *spacer3 = new QSpacerItem(50,20, QSizePolicy::Expanding);
-    QSpacerItem *spacer33 = new QSpacerItem(50,20, QSizePolicy::Expanding);
-    gridLayout->addItem(spacer3, 0, buttonIndex, 1, 1);
-    gridLayout->addItem(spacer33, 1, buttonIndex++, 1, 1);
+    gridLayout->addItem(spacer3, 0, buttonIndex++, 1, 1);
 
 #if SHARE_VERSION
 #if MOVIEMATOR_PRO
     if (Registration.registrationType() == Registration_None)
     {
-        gridLayout->addWidget(m_activateButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
-        gridLayout->addWidget(activateLabel, 1, buttonIndex++, 1, 1);
-
-        gridLayout->addWidget(m_buynowButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
-        gridLayout->addWidget(buynowLabel, 1, buttonIndex++, 1, 1);
-
-
+        gridLayout->addWidget(m_activateButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+        gridLayout->addWidget(m_buynowButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
         QSpacerItem *spacer4 = new QSpacerItem(50,20);
-        QSpacerItem *spacer44 = new QSpacerItem(50,20);
-        gridLayout->addItem(spacer4, 0, buttonIndex, 1, 1);
-        gridLayout->addItem(spacer44, 1, buttonIndex++, 1, 1);
+        gridLayout->addItem(spacer4, 0, buttonIndex++, 1, 1);
     }
 #endif
 #endif
@@ -4188,31 +4087,20 @@ void MainWindow::customizeToolbar()
 
 #if MOVIEMATOR_FREE
 #if defined(Q_OS_MAC)
-    gridLayout->addWidget(m_tvcProButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
-    gridLayout->addWidget(tvcProLabel, 1, buttonIndex++, 1, 1);
+    gridLayout->addWidget(m_tvcProButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     QSpacerItem *spacer4 = new QSpacerItem(50,20);
-    QSpacerItem *spacer44 = new QSpacerItem(50,20);
-    gridLayout->addItem(spacer4, 0, buttonIndex, 1, 1);
-    gridLayout->addItem(spacer44, 1, buttonIndex++, 1, 1);
-
+    gridLayout->addItem(spacer4, 0, buttonIndex++, 1, 1);
 
     gridLayout->addWidget(m_upgradeButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
-    gridLayout->addWidget(upgradeLabel, 1, buttonIndex++, 1, 1);
     QSpacerItem *spacer5 = new QSpacerItem(50,20);
-    QSpacerItem *spacer55 = new QSpacerItem(50,20);
-    gridLayout->addItem(spacer5, 0, buttonIndex, 1, 1);
-    gridLayout->addItem(spacer55, 1, buttonIndex++, 1, 1);
+    gridLayout->addItem(spacer5, 0, buttonIndex++, 1, 1);
 #endif
 #endif
 
-    gridLayout->addWidget(m_helpButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
-    gridLayout->addWidget(helpLabel, 1, buttonIndex++, 1, 1);
-
-    gridLayout->addWidget(m_emailButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
-    gridLayout->addWidget(emailLabel, 1, buttonIndex++, 1, 1);
+    gridLayout->addWidget(m_helpButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+    gridLayout->addWidget(m_emailButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
 
 //    gridLayout->addWidget(m_forumButton, 0, 10,1,1, Qt::AlignHCenter);
-//    gridLayout->addWidget(forumLabel, 1, 10, 1, 1);
 
 //    QPushButton *clearButtonForTest;
 //    clearButtonForTest = new QPushButton("");
@@ -4222,22 +4110,18 @@ void MainWindow::customizeToolbar()
 //    clearButtonForTest->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/toolbar-activate.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/toolbar-activate-pressed.png)}");
 //    clearButtonForTest->setToolTip(tr("Enter Licensse Code"));
 //    connect(clearButtonForTest, SIGNAL(clicked()), this, SLOT(on_clearButtonForTest_clicked()));
-//    gridLayout->addWidget(clearButtonForTest, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
+//    gridLayout->addWidget(clearButtonForTest, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
 
 
 
     widget->setLayout(gridLayout);
-
     toolbar->setStyleSheet("QToolBar{background-image: url(:/toolbar-bg.png); background-repeat: repeat-x; border: 0px}");
-
     toolbar->addWidget(widget);
-
     this->addToolBar(toolbar);
 //    this->setUnifiedTitleAndToolBarOnMac(true);//不加这句，自定义的工具栏将不能显示
 
     connect(m_undoStack, SIGNAL(canUndoChanged(bool)), m_undoButton, SLOT(setEnabled(bool)));
     connect(m_undoStack, SIGNAL(canRedoChanged(bool)), m_redoButton, SLOT(setEnabled(bool)));
-
 }
 
 void MainWindow::showPlaylistDock()

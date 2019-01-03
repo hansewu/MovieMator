@@ -197,14 +197,18 @@ private:
     QDockWidget *m_textDock;
 
     QToolButton *m_addButton;
-    QPushButton *m_removeButton;
-    QPushButton *m_undoButton;
-    QPushButton *m_redoButton;
-    QPushButton *m_saveButton;
-    QPushButton *m_exportButton;
-    QPushButton *m_emailButton;
-    QPushButton *m_forumButton;
-    QPushButton *m_helpButton;
+    QToolButton *m_removeButton;
+    QToolButton *m_undoButton;
+    QToolButton *m_redoButton;
+    QToolButton *m_saveButton;
+    QToolButton *m_exportButton;
+    QToolButton *m_emailButton;
+    QToolButton *m_forumButton;
+    QToolButton *m_helpButton;
+    QToolButton *m_activateButton;
+    QToolButton *m_buynowButton;
+    QToolButton *m_upgradeButton;
+    QToolButton *m_tvcProButton;
 
     ResourceButtonDockWidget *m_resourceBtnDock;
 
@@ -213,8 +217,7 @@ private:
 
     RegistrationTipsDialog *m_registrationTipsDialog;
     RegistrationDialog *m_registrationDialog;
-    QPushButton *m_activateButton;
-    QPushButton *m_buynowButton;
+
 
     ProFeaturePromptDialog *m_proFeaturePromptDialog;
     UpgradeToProPromptDialog *m_upgradeToProPromptDialog;
@@ -224,8 +227,6 @@ private:
 #endif
 #endif
 
-    QPushButton *m_upgradeButton;
-    QPushButton *m_tvcProButton;
 
 
     MainController& m_mainController;
@@ -409,6 +410,8 @@ private slots:
     void onTimelineClipSelected();
     void onAddAllToTimeline(Mlt::Playlist* playlist);
     void on_actionScrubAudio_triggered(bool checked);
+
+    QToolButton *createToolButton(const QString& icon, const QString& iconPressed, const QString& iconDisabled, const QString& title, const QString& tooltip);
     void customizeToolbar();
 
     void configureUI();
