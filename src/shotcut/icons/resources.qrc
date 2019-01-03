@@ -216,5 +216,19 @@
         <file>timeline/timeline-toolbar-filter-p.png</file>
         <file>timeline/timeline-toolbar-filter-n.png</file>
         <file>timeline/timeline-toolbar-transition-n.png</file>
+        <file>timeline/timeline-toolbar-transition-d.png</file>
+        <file>timeline/timeline-toolbar-filter-d.png</file>
+        <file>timeline/timeline-toolbar-volume-d.png</file>
+        <file>timeline/timeline-toolbar-text-d.png</file>
+        <file>timeline/timeline-toolbar-split-d.png</file>
+        <file>timeline/timeline-toolbar-size-d.png</file>
+        <file>timeline/timeline-toolbar-rotate-d.png</file>
+        <file>timeline/timeline-toolbar-remove-d.png</file>
+        <file>timeline/timeline-toolbar-menu-d.png</file>
+        <file>timeline/timeline-toolbar-insert-d.png</file>
+        <file>timeline/timeline-toolbar-fade-out-d.png</file>
+        <file>timeline/timeline-toolbar-fade-in-d.png</file>
+        <file>timeline/timeline-toolbar-crop-d.png</file>
+        <file>timeline/timeline-toolbar-append-d.png</file>
     </qresource>
 </RCC>
