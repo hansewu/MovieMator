@@ -85,7 +85,7 @@ class TimelinePlayhead : public QQuickPaintedItem
         path.lineTo(width() / 2.0, height());
         path.lineTo(0, 0);
         QPalette p;
-        painter->fillPath(path, p.color(QPalette::WindowText));
+        painter->fillPath(path, p.color(QPalette::Active, QPalette::Highlight));
     }
 };
 
