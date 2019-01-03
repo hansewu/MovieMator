@@ -1867,7 +1867,7 @@ void MainWindow::on_actionAbout_TVE_triggered()
              tr("<h1>MovieMator Video Editor Pro %1</h1>"
                 "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor Pro</a></p>"
                 "<p />"
-                "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
+                "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
 #else
@@ -1875,7 +1875,7 @@ void MainWindow::on_actionAbout_TVE_triggered()
              tr("<h1>MovieMator Video Editor %1</h1>"
                 "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor</a></p>"
                 "<p />"
-                "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
+                "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
 #endif
@@ -1886,7 +1886,7 @@ void MainWindow::on_actionAbout_TVE_triggered()
              tr("<h1>MovieMator Video Editor Pro %1</h1>"
                 "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor Pro</a></p>"
                 "<p />"
-                "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
+                "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
 #else
@@ -1894,7 +1894,7 @@ void MainWindow::on_actionAbout_TVE_triggered()
              tr("<h1>MovieMator Video Editor %1</h1>"
                 "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor</a></p>"
                 "<p />"
-                "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
+                "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
 #endif
