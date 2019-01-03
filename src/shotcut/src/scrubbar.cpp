@@ -41,7 +41,7 @@ ScrubBar::ScrubBar(QSlider *parent)
     setMouseTracking(true);
  //   setMinimumHeight(/*fontMetrics().height() +*/ selectionSize);
   //  setStyleSheet("background-color:rgb(255,0,0);");
-    QString scrubStyle = "QSlider::sub-page:horizontal{background:'#3593e4';border-radius: 4px}";
+    QString scrubStyle = "QSlider::sub-page:horizontal{background:rgb(15,114,103);border-radius: 4px}";
     scrubStyle.append("QSlider::groove:horizontal{background:'grey';height:8px;border-radius: 4px }");
     scrubStyle.append("QSlider::handle:horizontal{background:'white';width:5px;margin: -2px 1px -2px 1px;border-radius: 2px}");
 

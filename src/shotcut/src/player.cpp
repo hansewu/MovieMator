@@ -218,7 +218,7 @@ Player::Player(QWidget *parent)
 
      m_volumeSlider->setValue(Settings.playerVolume());
 
-     QString strStyle = "QSlider::sub-page:horizontal{background:'#3593e4';border-radius: 4px}";
+     QString strStyle = "QSlider::sub-page:horizontal{background:rgb(15,114,103);border-radius: 4px}";
      strStyle.append("QSlider::groove:horizontal{background:'grey';height:8px;border-radius: 4px;}");
      strStyle.append("QSlider::handle:horizontal{background:'white';width:5px;margin: -2px 1px -2px 1px;border-radius: 2px}");
      m_volumeSlider->setStyleSheet(strStyle);
