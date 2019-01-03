@@ -4,6 +4,9 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 
+static QString buttonSytleSheetNormal("background-color:rgb(82,82,82);color:rgb(225,225,225)");
+static QString buttonSytleSheetSelected("background-color:rgb(51,51,51);color:rgb(192,72,44)");
+
 ContainerDock::ContainerDock(QWidget *parent) : QDockWidget(parent)
 {
     setTitleBarWidget(new QWidget());
@@ -63,10 +66,10 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
     QPushButton *button = new QPushButton(tabButtonNormalIcon, tabButtonTitle);
     button->setFixedSize(90, 35);
     if (m_buttons.count() > 0)
-        button->setStyleSheet("background-color:rgb(82,82,82);color:rgb(225,225,225)");
+        button->setStyleSheet(buttonSytleSheetNormal);
     else
     {
-        button->setStyleSheet("background-color:rgb(51,51,51);color:rgb(225,225,225)");
+        button->setStyleSheet(buttonSytleSheetSelected);
         button->setIcon(tabButtonAcitveIcon);
     }
     hLayout->insertWidget(hLayout->count()-1,button);
@@ -96,7 +99,7 @@ void ContainerDock::showDock(QDockWidget *dock)
     BUTTON_INFO buttonInfo = m_buttons[index];
     QPushButton *button = buttonInfo.button;
     button->setIcon(buttonInfo.activeIcon);
-    button->setStyleSheet("background-color:rgb(51,51,51);color:rgb(225,225,225)");
+    button->setStyleSheet(buttonSytleSheetSelected);
 }
 
 
@@ -114,7 +117,7 @@ void ContainerDock::onTabButtonClicked()
         BUTTON_INFO buttonInfo = m_buttons[i];
         QPushButton *button = buttonInfo.button;
         button->setIcon(buttonInfo.normalIcon);
-        button->setStyleSheet("background-color:rgb(82,82,82);color:rgb(225,225,225)");
+        button->setStyleSheet(buttonSytleSheetNormal);
     }
 }
 
@@ -135,7 +138,7 @@ void ContainerDock::onTabButtonClicked2()
     BUTTON_INFO buttonInfo = m_buttons[index];
     QPushButton *button = buttonInfo.button;
     button->setIcon(buttonInfo.activeIcon);
-    button->setStyleSheet("background-color:rgb(51,51,51);color:rgb(225,225,225)");
+    button->setStyleSheet(buttonSytleSheetSelected);
 }
 
 QRect ContainerDock::dockPosition()

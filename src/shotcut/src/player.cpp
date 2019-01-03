@@ -33,8 +33,8 @@ static const int STATUS_ANIMATION_MS = 350;
 
 //Player::Player(QWidget *parent)
 //    : QWidget(parent)
-Player::Player(QFrame *parent)
-    : QFrame(parent)
+Player::Player(QWidget *parent)
+    : QWidget(parent)
     , m_position(0)
     , m_isMeltedPlaying(-1)
     , m_zoomToggleFactor(Settings.playerZoom() == 0.0f? 1.0f : Settings.playerZoom())
@@ -218,7 +218,7 @@ Player::Player(QFrame *parent)
 
      m_volumeSlider->setValue(Settings.playerVolume());
 
-     QString strStyle = "QSlider::sub-page:horizontal{background:'#3593e4';border-radius: 4px}";
+     QString strStyle = "QSlider::sub-page:horizontal{background:rgb(15,114,103);border-radius: 4px}";
      strStyle.append("QSlider::groove:horizontal{background:'grey';height:8px;border-radius: 4px;}");
      strStyle.append("QSlider::handle:horizontal{background:'white';width:5px;margin: -2px 1px -2px 1px;border-radius: 2px}");
      m_volumeSlider->setStyleSheet(strStyle);
@@ -235,8 +235,6 @@ Player::Player(QFrame *parent)
     QGridLayout *toolbarlayout = new QGridLayout(this);
     toolbarlayout->setContentsMargins(0,0,0,0);
     toolbarlayout->setSpacing(0);
-
-
 
     QWidget *toolWidget = new QWidget;
     toolWidget->setFixedHeight(52);
@@ -328,11 +326,11 @@ Player::Player(QFrame *parent)
 
     toolWidget->setLayout(toolbarlayout);
 
-    QVBoxLayout *playerLayout = new QVBoxLayout(this);
-    playerLayout->setSpacing(0);
-    playerLayout->setContentsMargins(0,0,0,0);
-    playerLayout->addWidget(m_videoScrollWidget, 1);
-    playerLayout->addWidget(toolWidget,1);
+    m_playerLayout = new QVBoxLayout(this);
+    m_playerLayout->setSpacing(0);
+    m_playerLayout->setContentsMargins(0,0,0,0);
+    m_playerLayout->addWidget(m_videoScrollWidget, 1);
+    m_playerLayout->addWidget(toolWidget,1);
 
 
 //    toolbar->addWidget(toolWidget);
@@ -991,7 +989,7 @@ void Player::moveVideoToScreen(int screen)
         // -2 = embedded
         if (!m_videoScrollWidget->isFullScreen()) return;
         m_videoScrollWidget->showNormal();
-        m_videoLayout->insertWidget(0, m_videoScrollWidget, 10);
+        m_playerLayout->insertWidget(0, m_videoScrollWidget, 10);
     } else if (QApplication::desktop()->screenCount() > 1) {
         // -1 = find first screen the app is not using
         for (int i = 0; screen == -1 && i < QApplication::desktop()->screenCount(); i++) {
@@ -1122,6 +1120,7 @@ void Player::setZoom(float factor)//, const QIcon& icon)
 void Player::zoomPlayer(float fZoomFactor)
 {
     setZoom(fZoomFactor);
+    //MAIN.showFullScreen();
 }
 
 void Player::toggleZoom(bool checked)
@@ -1168,4 +1167,38 @@ void Player::ZoomChanged(int index)
         break;
     }
     zoomPlayer(fZoom);
+}
+
+
+void Player::toggleFullScreen()
+{
+    if (isFullScreen())
+    {
+        this->showNormal();
+        MAIN.addPlayer();
+    }
+    else
+    {
+        int screen = QApplication::desktop()->screenNumber(this);
+        this->setParent(QApplication::desktop()->screen(screen));
+        this->move(QApplication::desktop()->screenGeometry(screen).bottomLeft());
+        this->showFullScreen();
+        setFocus();
+    }
+}
+
+void Player::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+    case Qt::Key_Escape:
+        if (isFullScreen())
+            toggleFullScreen();
+        break;
+    }
+}
+
+void Player::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    toggleFullScreen();
 }
