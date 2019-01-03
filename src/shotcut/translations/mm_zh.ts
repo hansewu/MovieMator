@@ -2450,7 +2450,7 @@ duration of the transition.</source>
         <location filename="../src/mainwindow.cpp" line="657"/>
         <location filename="../src/mainwindow.cpp" line="1825"/>
         <source>MovieMator Video Editor</source>
-        <translation type="unfinished">视频编辑大师</translation>
+        <translation type="unfinished">剪大师</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="74"/>
@@ -3164,7 +3164,7 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <location filename="../src/mainwindow.cpp" line="1870"/>
         <location filename="../src/mainwindow.cpp" line="1889"/>
         <source>About MovieMator Video Editor</source>
-        <translation type="unfinished">关于视频编辑大师</translation>
+        <translation type="unfinished">关于剪大师</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2480"/>
