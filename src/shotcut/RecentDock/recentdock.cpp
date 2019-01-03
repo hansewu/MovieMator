@@ -49,7 +49,7 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
     ui->tableView->setDefaultDropAction(Qt::MoveAction);
     ui->tableView->setStyleSheet("QHeaderView::section { background-color:rgb(82,82,82); color:rgb(241,241,241) };");//QTableView{selection-color: rgb(35,148,229);background-color:rgb(51,51,51);font-color: rgb(255,255,255);color:rgb(214,214,214)}");
     //ui->tableView->setStyleSheet("QTableView{selection-background-color:rgb(192,72,44); selection-color: rgb(255,255,255);background-color:rgb(51,51,51);color:rgb(214,214,214);}");
-    ui->tableView->setStyleSheet("QTableView{selection-color: rgb(255,255,255);background-color:rgb(51,51,51);color:rgb(214,214,214);}");
+    ui->tableView->setStyleSheet("QTableView{background-color:rgb(51,51,51);color:rgb(214,214,214);}");
 
     QString style1 = "QLineEdit {padding-right: 20px; background-image: url(:/icons/light/32x32/search-icon.png); background-repeat: norepeat; background-position: center; border: 1px; border-radius: 3px; background-color: rgb(100,100,100) ; }";
     QString style2= "QLineEdit {padding-right: 20px; border: 1px; border-radius: 3px; background-color: rgb(100,100,100) ; }";
