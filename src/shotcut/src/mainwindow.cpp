@@ -2500,14 +2500,19 @@ bool MainWindow::on_actionSave_triggered()
 
 void MainWindow::exportTemplate()
 {
-    Mlt::Tractor *tractor = m_timelineDock->model()->tractor();
 
-    int trackCount = tractor->count();
+    Mlt::Tractor *tractor = m_timelineDock->model()->tractor();
+    QString xml = MLT.XML(tractor);
+
+    Mlt::Tractor *tempTractor = new Mlt::Tractor(MLT.profile(), "xml-string", (char *)xml.toUtf8().constData());
+
+
+    int trackCount = tempTractor->count();
 
     int i = 0;
     for (i = 0; i < trackCount; i++)
     {
-        QScopedPointer<Mlt::Producer> track(tractor->track(i));
+        QScopedPointer<Mlt::Producer> track(tempTractor->track(i));
         if (track) {
             Mlt::Playlist playlist(*track);
             int clipCount = playlist.count();
@@ -2518,18 +2523,20 @@ void MainWindow::exportTemplate()
                 QString mltService(producer->parent().get("mlt_service"));
                 if (!mltService.isEmpty() && mltService != "color" && mltService != "colour" && mltService != "blank")
                 {
-                    playlist.remove(j);
                     Mlt::Producer *newProducer = new Mlt::Producer(MLT.profile(), "C:\\Users\\gdbwin\\Videos\\exercise_.mp4");
+                    newProducer->set_in_and_out(0, producer->get_length());
+                    MLT.getHash(*newProducer);
+                    MLT.copyFilters(*producer, *newProducer);
+                    playlist.remove(j);
                     playlist.insert(*newProducer, j);
                 }
             }
-
         }
     }
 
 
     QString path = Settings.savePath();
-    path.append("/untitled.xml");//xjp
+    path.append("/untitled.xml");
     QString filename = QFileDialog::getSaveFileName(this, tr("Save Template"), path, tr("Template (*.xml)"));
     if (!filename.isEmpty()) {
         QFileInfo fi(filename);
@@ -2540,19 +2547,18 @@ void MainWindow::exportTemplate()
         //     saveXML(filename, false);
         // else
         //     showStatusMessage(tr("Unable to save empty file, but saved its name for future."));
-        if (fi.suffix() != "xml")//xjp
-            filename += ".xml";//xjp
-        if (MLT.producer())
-            saveXML(filename, false);
-        else
-            showStatusMessage(tr("Unable to save empty file, but saved its name for future."));
+        if (fi.suffix() != "xml")
+            filename += ".xml";
+
+        MLT.saveXML(filename, tempTractor, false);
     }
+    delete tempTractor;
 }
 
 bool MainWindow::on_actionSave_As_triggered()
 {
-//    exportTemplate();
-//    return false;
+    exportTemplate();
+    return false;
     QString path = Settings.savePath();
     path.append("/untitled.mmp");//xjp
     QString filename = QFileDialog::getSaveFileName(this, tr("Save MMP"), path, tr("MMP (*.mmp)"));
@@ -2962,8 +2968,9 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::Base, QColor(82,82,82));
         palette.setColor(QPalette::AlternateBase, QColor(40,40,40));
         //palette.setColor(QPalette::Highlight, QColor(23,92,118));
-        palette.setColor(QPalette::Active, QPalette::Highlight,QColor(192,72,44));
+        palette.setColor(QPalette::Active, QPalette::Highlight, QColor(192,72,44));
         palette.setColor(QPalette::Inactive, QPalette::Highlight, QColor(82,82,82));
+        palette.setColor(QPalette::Disabled, QPalette::Highlight, QColor(192,72,44));
         palette.setColor(QPalette::HighlightedText, Qt::white);
         palette.setColor(QPalette::ToolTipBase, QColor(203,203,203));
         palette.setColor(QPalette::ToolTipText, Qt::black);
