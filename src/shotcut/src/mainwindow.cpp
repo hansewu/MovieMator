@@ -4380,21 +4380,19 @@ void MainWindow::onExportTemplate()
             int clipCount = playlist.count();
             for (int j = 0; j < clipCount; j++)
             {
-
                 QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(j));
                 Mlt::Producer *producer = info->producer;
 
-
                 QString mltService(producer->parent().get("mlt_service"));
                 if (!mltService.isEmpty() && mltService != "color" && mltService != "colour" && mltService != "blank"
-                        && mltService != "tractor")
+                        && mltService != "tractor" && mltService != "gifdec")
                 {
                     Mlt::Producer *newProducer = new Mlt::Producer(MLT.profile(), "C:\\Users\\gdbwin\\Videos\\exercise_.mp4");
-                    newProducer->set_in_and_out(0, info->frame_count);
+                    //newProducer->set_in_and_out(0, info->frame_count);
                     MLT.getHash(*newProducer);
                     MLT.copyFilters(*producer, *newProducer);
                     playlist.remove(j);
-                    playlist.insert(*newProducer, j);
+                    playlist.insert(*newProducer, j, 0, info->frame_count-1);
                 }
             }
         }
