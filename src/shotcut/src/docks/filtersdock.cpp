@@ -70,7 +70,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
 
     setCurrentFilter(0, 0, -1);
 //    connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
-    connect(&m_quickView, SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
+//    connect(&m_quickView, SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
     resetQview();
 
     LOG_DEBUG() << "end";
