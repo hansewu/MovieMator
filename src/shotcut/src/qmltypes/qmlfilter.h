@@ -71,6 +71,8 @@ public:
     QString path() const { return m_path; }
     Q_INVOKABLE void loadPresets();
     QStringList presets() const { return m_presets; }
+    Q_INVOKABLE int presetCount() { return m_presets.count(); }
+    Q_INVOKABLE QString getPresetWithIndex(int index) { return m_presets.at(index); }
     /// returns the index of the new preset
     Q_INVOKABLE int  savePreset(const QStringList& propertyNames, const QString& name = QString());
     Q_INVOKABLE void deletePreset(const QString& name);
