@@ -209,6 +209,7 @@ private:
     QToolButton *m_buynowButton;
     QToolButton *m_upgradeButton;
     QToolButton *m_tvcProButton;
+    QToolButton *m_exportTemplateButton;
 
     ResourceButtonDockWidget *m_resourceBtnDock;
 
@@ -416,7 +417,7 @@ private slots:
 
     void configureUI();
 
-    void exportTemplate();
+    void onExportTemplate();
 
 
 #ifdef Q_OS_WIN

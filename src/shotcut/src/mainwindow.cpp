@@ -2498,71 +2498,8 @@ bool MainWindow::on_actionSave_triggered()
     }
 }
 
-void MainWindow::exportTemplate()
-{
-
-    Mlt::Tractor *tractor = m_timelineDock->model()->tractor();
-    QString xml = MLT.XML(tractor);
-
-    Mlt::Tractor *tempTractor = new Mlt::Tractor(MLT.profile(), "xml-string", (char *)xml.toUtf8().constData());
-
-
-    int trackCount = tempTractor->count();
-
-    int i = 0;
-    for (i = 0; i < trackCount; i++)
-    {
-        QScopedPointer<Mlt::Producer> track(tempTractor->track(i));
-        if (track) {
-            Mlt::Playlist playlist(*track);
-            int clipCount = playlist.count();
-            for (int j = 0; j < clipCount; j++)
-            {
-
-                QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(j));
-                Mlt::Producer *producer = info->producer;
-
-
-                QString mltService(producer->parent().get("mlt_service"));
-                if (!mltService.isEmpty() && mltService != "color" && mltService != "colour" && mltService != "blank"
-                        && mltService != "tractor")
-                {
-                    Mlt::Producer *newProducer = new Mlt::Producer(MLT.profile(), "C:\\Users\\gdbwin\\Videos\\exercise_.mp4");
-                    newProducer->set_in_and_out(0, info->frame_count);
-                    MLT.getHash(*newProducer);
-                    MLT.copyFilters(*producer, *newProducer);
-                    playlist.remove(j);
-                    playlist.insert(*newProducer, j);
-                }
-            }
-        }
-    }
-
-
-    QString path = Settings.savePath();
-    path.append("/untitled.xml");
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save Template"), path, tr("Template (*.xml)"));
-    if (!filename.isEmpty()) {
-        QFileInfo fi(filename);
-        Settings.setSavePath(fi.path());
-        // if (fi.suffix() != "mlt")
-        //     filename += ".mlt";
-        // if (MLT.producer())
-        //     saveXML(filename, false);
-        // else
-        //     showStatusMessage(tr("Unable to save empty file, but saved its name for future."));
-        if (fi.suffix() != "xml")
-            filename += ".xml";
-
-        MLT.saveXML(filename, tempTractor, false);
-    }
-    delete tempTractor;
-}
-
 bool MainWindow::on_actionSave_As_triggered()
 {
-    exportTemplate();
-    return false;
     QString path = Settings.savePath();
     path.append("/untitled.mmp");//xjp
     QString filename = QFileDialog::getSaveFileName(this, tr("Save MMP"), path, tr("MMP (*.mmp)"));
@@ -4034,6 +3971,12 @@ void MainWindow::customizeToolbar()
 //    connect(m_forumButton, SIGNAL(clicked()), this, SLOT(on_actionForum_triggered()));
 
 
+    m_exportTemplateButton = createToolButton(":/icons/light/32x32/toolbar-export.png",
+                                      ":/icons/light/32x32/toolbar-export-pressed.png",
+                                      "", tr("Export Template"), tr("Export project as a template file"));
+    connect(m_exportTemplateButton, SIGNAL(clicked()), this, SLOT(onExportTemplate()));
+
+
 #if SHARE_VERSION
 #if MOVIEMATOR_PRO
     if (Registration.registrationType() == Registration_None)
@@ -4079,6 +4022,7 @@ void MainWindow::customizeToolbar()
 
     gridLayout->addWidget(m_saveButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     gridLayout->addWidget(m_exportButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+    gridLayout->addWidget(m_exportTemplateButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     QSpacerItem *spacer3 = new QSpacerItem(50,20, QSizePolicy::Expanding);
     gridLayout->addItem(spacer3, 0, buttonIndex++, 1, 1);
 
@@ -4414,4 +4358,65 @@ void MainWindow::resizePlayer()
 void MainWindow::addPlayer()
 {
     ui->centralWidget->layout()->addWidget(m_player);
+}
+
+void MainWindow::onExportTemplate()
+{
+
+    Mlt::Tractor *tractor = m_timelineDock->model()->tractor();
+    QString xml = MLT.XML(tractor);
+
+    Mlt::Tractor *tempTractor = new Mlt::Tractor(MLT.profile(), "xml-string", (char *)xml.toUtf8().constData());
+
+
+    int trackCount = tempTractor->count();
+
+    int i = 0;
+    for (i = 0; i < trackCount; i++)
+    {
+        QScopedPointer<Mlt::Producer> track(tempTractor->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            int clipCount = playlist.count();
+            for (int j = 0; j < clipCount; j++)
+            {
+
+                QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(j));
+                Mlt::Producer *producer = info->producer;
+
+
+                QString mltService(producer->parent().get("mlt_service"));
+                if (!mltService.isEmpty() && mltService != "color" && mltService != "colour" && mltService != "blank"
+                        && mltService != "tractor")
+                {
+                    Mlt::Producer *newProducer = new Mlt::Producer(MLT.profile(), "C:\\Users\\gdbwin\\Videos\\exercise_.mp4");
+                    newProducer->set_in_and_out(0, info->frame_count);
+                    MLT.getHash(*newProducer);
+                    MLT.copyFilters(*producer, *newProducer);
+                    playlist.remove(j);
+                    playlist.insert(*newProducer, j);
+                }
+            }
+        }
+    }
+
+
+    QString path = Settings.savePath();
+    path.append("/untitled.xml");
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Template"), path, tr("Template (*.xml)"));
+    if (!filename.isEmpty()) {
+        QFileInfo fi(filename);
+        Settings.setSavePath(fi.path());
+        // if (fi.suffix() != "mlt")
+        //     filename += ".mlt";
+        // if (MLT.producer())
+        //     saveXML(filename, false);
+        // else
+        //     showStatusMessage(tr("Unable to save empty file, but saved its name for future."));
+        if (fi.suffix() != "xml")
+            filename += ".xml";
+
+        MLT.saveXML(filename, tempTractor, false);
+    }
+    delete tempTractor;
 }
