@@ -93,8 +93,8 @@
 #include <configurationdock.h>
 #include "maininterface.h"
 #include <recentdockinterface.h>
-#include <templatedockinterface.h>
-#include <templateeditordockinterface.h>
+//#include <templatedockinterface.h>
+//#include <templateeditordockinterface.h>
 
 #include "containerdock.h"
 
@@ -582,8 +582,8 @@ MainWindow::MainWindow()
     addResourceDock(m_recentDock, tr("Recent"), QIcon(":/icons/light/32x32/show-recent.png"), QIcon(":/icons/light/32x32/show-recent-highlight.png"));
 
 
-    m_templateDock = TemplateDock_initModule(&MainInterface::singleton());
-    addResourceDock(m_templateDock, tr("Recent"), QIcon(":/icons/light/32x32/show-playlist.png"), QIcon(":/icons/light/32x32/show-playlist-highlight.png"));
+//    m_templateDock = TemplateDock_initModule(&MainInterface::singleton());
+//    addResourceDock(m_templateDock, tr("Recent"), QIcon(":/icons/light/32x32/show-playlist.png"), QIcon(":/icons/light/32x32/show-playlist-highlight.png"));
 
 
 
@@ -612,8 +612,8 @@ MainWindow::MainWindow()
     m_filtersDock->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);
     addPropertiesDock(m_filtersDock, tr("Filter"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
 
-    m_templateEditorDock = TemplateEditorDock_initModule(&MainInterface::singleton());
-    addPropertiesDock(m_templateEditorDock, tr("Template"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
+//    m_templateEditorDock = TemplateEditorDock_initModule(&MainInterface::singleton());
+//    addPropertiesDock(m_templateEditorDock, tr("Template"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
 
 
 
