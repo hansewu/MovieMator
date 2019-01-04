@@ -2518,13 +2518,17 @@ void MainWindow::exportTemplate()
             int clipCount = playlist.count();
             for (int j = 0; j < clipCount; j++)
             {
-                Mlt::Producer *producer = playlist.get_clip(j);
+
+                QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(j));
+                Mlt::Producer *producer = info->producer;
+
 
                 QString mltService(producer->parent().get("mlt_service"));
-                if (!mltService.isEmpty() && mltService != "color" && mltService != "colour" && mltService != "blank")
+                if (!mltService.isEmpty() && mltService != "color" && mltService != "colour" && mltService != "blank"
+                        && mltService != "tractor")
                 {
                     Mlt::Producer *newProducer = new Mlt::Producer(MLT.profile(), "C:\\Users\\gdbwin\\Videos\\exercise_.mp4");
-                    newProducer->set_in_and_out(0, producer->get_length());
+                    newProducer->set_in_and_out(0, info->frame_count);
                     MLT.getHash(*newProducer);
                     MLT.copyFilters(*producer, *newProducer);
                     playlist.remove(j);
