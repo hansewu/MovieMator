@@ -2364,7 +2364,8 @@ void MainWindow::closeEvent(QCloseEvent* event)
             QThreadPool::globalInstance()->clear();
             AudioLevelsTask::closeAll();
             event->accept();
-            emit aboutToShutDown();
+            //emit aboutToShutDown();
+            DB.shutdown();
 
             //退出程序有时会调用ImageProvider的RequestImage崩溃
             QmlUtilities::sharedEngine()->removeImageProvider(QString("thumbnail"));
