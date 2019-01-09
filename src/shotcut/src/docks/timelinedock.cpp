@@ -1392,9 +1392,37 @@ void TimelineDock::addVolumeFilter()
     emit filterAdded();
 }
 
-void TimelineDock::addTextFilter()
-{
-    if (selection().count() <=0)
+void TimelineDock::addTransparentProducer(int trackIndex, int position, int length) {
+    //创建一个空的producer
+    Mlt::Producer *producer = new Mlt::Producer(MLT.profile(), "color:#00000000");
+    producer->set_in_and_out(0, length);
+
+    m_model.insertClip(trackIndex, *producer, position);
+}
+
+void TimelineDock::addTextFilterNew() {
+    //如果不存在文字轨，则添加文字轨
+    if (!m_model.isExistsTextTrack()) {
+        addTextTrack();
+    }
+
+    //设置文字轨为当前轨道，并选中
+    int textTrackIndex = m_model.getTextTrackIndex();
+    if (textTrackIndex >= 0) {
+        setCurrentTrack(textTrackIndex);
+    }
+
+    //如果文字轨的当前位是空白，即无文字clip，则添加空producer并选中
+    int currentPosition = position();
+    int clipIndex = clipIndexAtPosition(textTrackIndex, currentPosition);
+    if ((clipIndex < 0) || (clipIndex >= 0 && isBlank(textTrackIndex, clipIndex))) {
+        addTransparentProducer(textTrackIndex, currentPosition);
+    }
+
+    //选中文字clip
+    selectClipAtPosition(textTrackIndex, currentPosition);
+
+    if (selection().count() <= 0)
         return;
 
     if (isTrackLocked(currentTrack())) {
@@ -1402,15 +1430,39 @@ void TimelineDock::addTextFilter()
         return;
     }
 
-
     //判断选中的是视频clip
     int trackIndex = currentTrack();
     const Track& track = m_model.trackList().value(trackIndex);
-    if (track.type != VideoTrackType)
+    if (track.type != TextTrackType)
         return;
 
     emit addText();
     emit filterAdded();
+}
+
+void TimelineDock::addTextFilter()
+{
+    //新的文字滤镜添加机制
+    addTextFilterNew();
+    return;
+
+//    if (selection().count() <=0)
+//        return;
+
+//    if (isTrackLocked(currentTrack())) {
+//        pulseLockButtonOnTrack(currentTrack());
+//        return;
+//    }
+
+
+//    //判断选中的是视频clip
+//    int trackIndex = currentTrack();
+//    const Track& track = m_model.trackList().value(trackIndex);
+//    if (track.type != VideoTrackType)
+//        return;
+
+//    emit addText();
+//    emit filterAdded();
 }
 
 void TimelineDock::appendFromPath(int trackIndex, const QString &path)

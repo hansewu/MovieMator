@@ -45,6 +45,7 @@
 #define kShotcutDetailProperty "moviemator:detail"
 #define kShotcutHashProperty "moviemator:hash"
 #define kFilterTrackProperty "moviemator:filterTrack"
+#define kTextTrackProperty "moviemator:textTrack"
 
 /* Ideally all shotcut properties should begin with "shotcut:", but these
  * do not and kept for legacy reasons? */

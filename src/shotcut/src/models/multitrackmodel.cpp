@@ -2829,6 +2829,10 @@ int MultitrackModel::addVideoTrack()
     }
     m_tractor->plant_transition(composite, last_mlt_index, i);
 
+    int videoTrackIndex = 0;
+    if (isExistsTextTrack()) {
+        videoTrackIndex = getTextTrackIndex() + 1;
+    }
 
     // Add the shotcut logical video track.
     Track t;
@@ -2837,15 +2841,16 @@ int MultitrackModel::addVideoTrack()
     t.number = v++;
     QString trackName = QString("V%1").arg(v);
     playlist.set(kTrackNameProperty, trackName.toUtf8().constData());
-    beginInsertRows(QModelIndex(), 0, 0);
-    m_trackList.prepend(t);
+    beginInsertRows(QModelIndex(), videoTrackIndex, videoTrackIndex);
+//    m_trackList.prepend(t);
+    m_trackList.insert(videoTrackIndex, t);
 
 
     emit modified();
-    MAIN.setCurrentTrack(0);
+    MAIN.setCurrentTrack(videoTrackIndex);
     endInsertRows();
 
-    return 0;
+    return videoTrackIndex;
 }
 
 int MultitrackModel::addFilterTrack()
@@ -2900,8 +2905,77 @@ int MultitrackModel::addFilterTrack()
     return m_trackList.count() - 1;
 }
 
+bool MultitrackModel::isExistsTextTrack() {
+    foreach (Track t, m_trackList) {
+        if (t.type == TextTrackType) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int MultitrackModel::getTextTrackIndex() {
+    for (int i = 0; i < m_trackList.count(); i++) {
+        Track track = m_trackList.at(i);
+        if (track.type == TextTrackType) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 int MultitrackModel::addTextTrack()
 {
+//    if (!m_tractor) {
+//        m_tractor = new Mlt::Tractor(MLT.profile());
+//        MLT.profile().set_explicit(true);
+//        m_tractor->set("moviemator", 1);
+//        retainPlaylist();
+//        addBackgroundTrack();
+//        addTextTrack();
+//        emit created();
+//        emit modified();
+//        return 0;
+//    }
+
+//    // Get the new track index.
+//    int i = m_tractor->count();
+
+//    // Create the MLT track.
+//    Mlt::Playlist playlist(MLT.profile());
+//    playlist.set(kFilterTrackProperty, 1);
+//    playlist.set("hide", 0);
+//    playlist.blank(0);
+//    m_tractor->set_track(playlist, i);
+////    MLT.updateAvformatCaching(m_tractor->count());
+
+//    // Add the mix transition.
+////    Mlt::Transition mix(MLT.profile(), "mix");
+////    mix.set("always_active", 1);
+////    mix.set("combine", 1);
+////    m_tractor->plant_transition(mix, 0, i);
+
+//    // Get the new, logical audio-only index.
+//    int a = 0;
+//    foreach (Track t, m_trackList) {
+//        if (t.type == TextTrackType)
+//            ++a;
+//    }
+
+//    // Add the shotcut logical audio track.
+//    Track t;
+//    t.mlt_index = i;
+//    t.type = TextTrackType;
+//    t.number = a++;
+//    QString trackName = QString("T%1").arg(a);
+//    playlist.set(kTrackNameProperty, trackName.toUtf8().constData());
+//    beginInsertRows(QModelIndex(), m_trackList.count(), m_trackList.count());
+//    m_trackList.append(t);
+//    endInsertRows();
+//    emit modified();
+//    return m_trackList.count() - 1;
+
     if (!m_tractor) {
         m_tractor = new Mlt::Tractor(MLT.profile());
         MLT.profile().set_explicit(true);
@@ -2919,37 +2993,57 @@ int MultitrackModel::addTextTrack()
 
     // Create the MLT track.
     Mlt::Playlist playlist(MLT.profile());
-    playlist.set(kFilterTrackProperty, 1);
-    playlist.set("hide", 0);
+    playlist.set(kTextTrackProperty, 1);
     playlist.blank(0);
     m_tractor->set_track(playlist, i);
-//    MLT.updateAvformatCaching(m_tractor->count());
+    MLT.updateAvformatCaching(m_tractor->count());
 
     // Add the mix transition.
-//    Mlt::Transition mix(MLT.profile(), "mix");
-//    mix.set("always_active", 1);
-//    mix.set("combine", 1);
-//    m_tractor->plant_transition(mix, 0, i);
+    Mlt::Transition mix(MLT.profile(), "mix");
+    mix.set("always_active", 1);
+    mix.set("combine", 1);
+    m_tractor->plant_transition(mix, 0, i);
 
-    // Get the new, logical audio-only index.
-    int a = 0;
+    // Add the composite transition.
+    Mlt::Transition composite(MLT.profile(), Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend");
+    if (!composite.is_valid())
+    qDebug() << "composite is invalid!";
+    composite.set("disable", 1);
     foreach (Track t, m_trackList) {
-        if (t.type == TextTrackType)
-            ++a;
+        if (t.type == VideoTrackType) {
+            composite.set("disable", 0);
+            break;
+        }
     }
 
-    // Add the shotcut logical audio track.
+    // Get the new, logical video-only index.
+    int v = 0;
+    int last_mlt_index = 0;
+    foreach (Track t, m_trackList) {
+        if (t.type == VideoTrackType) {
+            ++v;
+            last_mlt_index = t.mlt_index;
+        }
+    }
+    m_tractor->plant_transition(composite, last_mlt_index, i);
+
+
+    // Add the shotcut logical video track.
     Track t;
     t.mlt_index = i;
     t.type = TextTrackType;
-    t.number = a++;
-    QString trackName = QString("T%1").arg(a);
+    t.number = v++;
+    QString trackName = QString("T%1").arg(v);
     playlist.set(kTrackNameProperty, trackName.toUtf8().constData());
-    beginInsertRows(QModelIndex(), m_trackList.count(), m_trackList.count());
-    m_trackList.append(t);
-    endInsertRows();
+    beginInsertRows(QModelIndex(), 0, 0);
+    m_trackList.prepend(t);
+
+
     emit modified();
-    return m_trackList.count() - 1;
+    MAIN.setCurrentTrack(0);
+    endInsertRows();
+
+    return 0;
 }
 
 
@@ -3336,7 +3430,7 @@ void MultitrackModel::refreshTrackList()
             isKdenlive = true;
         else if (trackId == kBackgroundTrackId)
             continue;
-        else if (!track->get(kShotcutPlaylistProperty) && !track->get(kAudioTrackProperty)) {
+        else if (!track->get(kShotcutPlaylistProperty) && !track->get(kAudioTrackProperty) && !track->get(kTextTrackProperty)) {
             int hide = track->get_int("hide");
              // hide: 0 = a/v, 2 = muted video track
             if (track->get(kVideoTrackProperty) || hide == 0 || hide == 2) {
@@ -3368,7 +3462,7 @@ void MultitrackModel::refreshTrackList()
             continue;
         else if (trackId == kPlaylistTrackId)
             continue;
-        else if (!track->get(kShotcutPlaylistProperty) && !track->get(kVideoTrackProperty)) {
+        else if (!track->get(kShotcutPlaylistProperty) && !track->get(kVideoTrackProperty) && !track->get(kTextTrackProperty)) {
             int hide = track->get_int("hide");
             // hide: 1 = audio only track, 3 = muted audio-only track
             if (track->get(kAudioTrackProperty) || hide == 1 || hide == 3) {
@@ -3382,6 +3476,33 @@ void MultitrackModel::refreshTrackList()
                 track->set(kTrackNameProperty, trackName.toUtf8().constData());
                 m_trackList.append(t);
 //                LOG_DEBUG() << __FUNCTION__ << QString(track->get("id")) << i;
+            }
+        }
+    }
+
+    // Add text tracks in reverse order.
+    for (int i = 0; i < n; ++i) {
+        Q_ASSERT(m_tractor->track(i));
+
+        QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+        if (!track)
+            continue;
+        QString trackId = track->get("id");
+        if (trackId == "black_track")
+            isKdenlive = true;
+        else if (trackId == kBackgroundTrackId)
+            continue;
+        else if (!track->get(kShotcutPlaylistProperty) && !track->get(kAudioTrackProperty) && !track->get(kVideoTrackProperty)) {
+            if (track->get(kTextTrackProperty)) {
+                Track t;
+                t.mlt_index = i;
+                t.type = TextTrackType;
+                t.number = v++;
+                QString trackName = track->get(kTrackNameProperty);
+                if (trackName.isEmpty())
+                    trackName = QString("T%1").arg(v);
+                track->set(kTrackNameProperty, trackName.toUtf8().constData());
+                m_trackList.prepend(t);
             }
         }
     }

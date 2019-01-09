@@ -196,6 +196,8 @@ public slots:
     void addFadeOutVideoFilter();
     void addVolumeFilter();
     void addTextFilter();
+    void addTextFilterNew();
+    void addTransparentProducer(int trackIndex, int position, int length = 200);
 
     int removeTransitionOnClip(int trackIndex, int clipIndex);
     int removeTransitionOnClipWithUndo(int trackIndex, int clipIndex);

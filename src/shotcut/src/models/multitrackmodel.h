@@ -110,6 +110,8 @@ public:
     int addVideoTrack();
     int addFilterTrack();
     int addTextTrack();
+    int getTextTrackIndex();
+    bool isExistsTextTrack();
     void removeTrack(int trackIndex);
     void load();
     Q_INVOKABLE void reload(bool asynchronous = false);
