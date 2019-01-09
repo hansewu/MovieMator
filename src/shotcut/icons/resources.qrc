@@ -149,6 +149,7 @@
         <file>light/32x32/size-fit-a.png</file>
         <file>light/32x32/size-fit-crop-a.png</file>
         <file>light/32x32/size-tile-a.png</file>
+        <file>filters/icon/down-arrow.png</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>

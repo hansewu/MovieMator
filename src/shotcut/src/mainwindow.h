@@ -98,7 +98,6 @@ public:
     Mlt::Producer* multitrack() const;
     void doAutosave();
     void setFullScreen(bool isFullScreen);
-    QString removeFileScheme(QUrl& url);
     QString untitledFileName() const;
     QString getFileHash(const QString& path) const;
     void setProfile(const QString& profile_name);

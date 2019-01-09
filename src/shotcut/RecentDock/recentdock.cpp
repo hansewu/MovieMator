@@ -138,7 +138,7 @@ void RecentDock::on_tableView_customContextMenuRequested(const QPoint &pos)
     if (index.isValid() && m_model->rowCount()) {
         QMenu menu(this);
         menu.addAction(ui->actionRemove);
-        //menu.addAction(ui->actionRemoveAll);
+        menu.addAction(ui->actionRemoveAll);
         menu.addAction(ui->actionPlay);
 
         menu.exec(mapToGlobal(pos));

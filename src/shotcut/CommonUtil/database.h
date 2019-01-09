@@ -39,12 +39,13 @@ public:
     bool upgradeVersion1();
     bool putThumbnail(const QString& hash, const QImage& image);
     QImage getThumbnail(const QString& hash);
+    void shutdown();
 
 private slots:
     void commitTransaction();
 
-private slots:
-    void shutdown();
+//private slots:
+//    void shutdown();
 
 private:
     void doJob(DatabaseJob * job);

@@ -93,8 +93,12 @@
 #include <configurationdock.h>
 #include "maininterface.h"
 #include <recentdockinterface.h>
+
 //#include <templatedockinterface.h>
 //#include <templateeditordockinterface.h>
+
+#include <util.h>
+
 
 #include "containerdock.h"
 
@@ -1284,20 +1288,6 @@ void MainWindow::setFullScreen(bool isFullScreen)
     }
 }
 
-QString MainWindow::removeFileScheme(QUrl &url)
-{
-    QString path = url.url();
-    if (url.scheme() == "file")
-        path = url.url(QUrl::RemoveScheme);
-    if (path.length() > 2 && path.startsWith("///"))
-#ifdef Q_OS_WIN
-        path.remove(0, 3);
-#else
-        path.remove(0, 2);
-#endif
-    return path;
-}
-
 QString MainWindow::untitledFileName() const
 {
     QDir dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
@@ -1878,7 +1868,7 @@ void MainWindow::on_actionAbout_TVE_triggered()
              tr("<h1>MovieMator Video Editor Pro %1</h1>"
                 "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor Pro</a></p>"
                 "<p />"
-                "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
+                "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
 #else
@@ -1886,7 +1876,7 @@ void MainWindow::on_actionAbout_TVE_triggered()
              tr("<h1>MovieMator Video Editor %1</h1>"
                 "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor</a></p>"
                 "<p />"
-                "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
+                "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
 #endif
@@ -1897,7 +1887,7 @@ void MainWindow::on_actionAbout_TVE_triggered()
              tr("<h1>MovieMator Video Editor Pro %1</h1>"
                 "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor Pro</a></p>"
                 "<p />"
-                "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
+                "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
 #else
@@ -1905,7 +1895,7 @@ void MainWindow::on_actionAbout_TVE_triggered()
              tr("<h1>MovieMator Video Editor %1</h1>"
                 "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor</a></p>"
                 "<p />"
-                "<p>Copyright &copy; 2016-2018 effectmatrix, Inc</p>"
+                "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
 #endif
@@ -2365,11 +2355,11 @@ void MainWindow::dropEvent(QDropEvent *event)
     else if (mimeData->hasUrls()) {
         if (mimeData->urls().length() > 1) {
             foreach (QUrl url, mimeData->urls()) {
-                QString path = removeFileScheme(url);
+                QString path = Util::removeFileScheme(url);
                 m_multipleFiles.append(path);
             }
         }
-        QString path = removeFileScheme(mimeData->urls().first());
+        QString path = Util::removeFileScheme(mimeData->urls().first());
         open(path);
         event->acceptProposedAction();
     }
@@ -2388,7 +2378,8 @@ void MainWindow::closeEvent(QCloseEvent* event)
             QThreadPool::globalInstance()->clear();
             AudioLevelsTask::closeAll();
             event->accept();
-            emit aboutToShutDown();
+            //emit aboutToShutDown();
+            DB.shutdown();
 
             //退出程序有时会调用ImageProvider的RequestImage崩溃
             QmlUtilities::sharedEngine()->removeImageProvider(QString("thumbnail"));
@@ -3262,7 +3253,7 @@ void MainWindow::processMultipleFiles()
 //        QThreadPool::globalInstance()->start(new AppendTask(model, m_multipleFiles));
         m_multipleFiles.removeFirst();
         foreach (QString filename, m_multipleFiles)
-            onFileOpened(filename.toUtf8().constData());
+            onFileOpened(filename);
         m_multipleFiles.clear();
     }
     if (m_isPlaylistLoaded && Settings.playerGPU()) {
@@ -4284,7 +4275,7 @@ void MainWindow::onFileOpened(QString filePath)
     RecentDock_add(filePath);
 
 #ifdef Q_OS_MAC
-    create_security_bookmark(filePath.toLatin1().constData());
+    create_security_bookmark(filePath.toUtf8().constData());
 #endif
 }
 

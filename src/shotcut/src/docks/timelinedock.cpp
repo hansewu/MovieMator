@@ -30,6 +30,7 @@
 #include "settings.h"
 #include "../mainwindow.h"
 #include "controllers/filtercontroller.h"
+#include <util.h>
 
 #include <QtQml>
 #include <QtQuick>
@@ -1475,7 +1476,7 @@ void TimelineDock::appendFromPath(int trackIndex, const QString &path)
 void TimelineDock::appendFromUrls(int trackIndex, QList<QUrl> urlList)
 {
     foreach (QUrl url, urlList) {
-        QString path = MAIN.removeFileScheme(url);
+        QString path = Util::removeFileScheme(url);
         //this->appendFromPath(trackIndex, path);
         MAINCONTROLLER.appendToTimelineFromPath(trackIndex, path);
     }
