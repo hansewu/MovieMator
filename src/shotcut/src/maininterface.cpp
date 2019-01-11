@@ -6,6 +6,7 @@
 #include "docks/timelinedock.h"
 #include "commands/timelinecommands.h"
 #include <shotcut_mlt_properties.h>
+#include "templateeidtor.h"
 
 MainInterface& MainInterface::singleton()
 {
@@ -198,7 +199,12 @@ FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
 // 功能：把模板中的索引为index的文件替换成文件destFile
 int MainInterface::replaceFileInTemplate(int index, FILE_HANDLE destFile)
 {
-
+    Q_ASSERT(destFile);
+    Mlt::Producer *producer = (Mlt::Producer *)destFile;
+    if (!producer->is_valid())
+        return -1;
+    TemplateEidtor *templateEditor = MAIN.templateEditor();
+    templateEditor->replaceFileInTemplate(index, producer);
     return 0;
 }
 
@@ -206,5 +212,7 @@ int MainInterface::replaceFileInTemplate(int index, FILE_HANDLE destFile)
 // 返回值：成功返回0，失败返回-1
 int MainInterface::resetFileInTemplate(int index)
 {
+    TemplateEidtor *templateEditor = MAIN.templateEditor();
+    templateEditor->resetFileToTemplateDefault(index);
     return 0;
 }

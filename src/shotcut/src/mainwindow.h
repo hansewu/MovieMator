@@ -116,6 +116,8 @@ public:
 
     Q_INVOKABLE void setMultitrackAsCurrentProducer();
 
+    TemplateEidtor *templateEditor() const { return m_templateEditor; }
+
 
 signals:
     void producerOpened();
