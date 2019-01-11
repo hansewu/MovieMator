@@ -187,3 +187,24 @@ const QString& MainInterface::getXMLMimeTypeForDragDrop()
 {
     return MLT.MltXMLMimeType();
 }
+
+
+// 功能：通过xml字符串生成FILE_HANDLE；主程序提供接口
+FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
+{
+    return 0;
+}
+
+// 功能：把模板中的索引为index的文件替换成文件destFile
+int MainInterface::replaceFileInTemplate(int index, FILE_HANDLE destFile)
+{
+
+    return 0;
+}
+
+// 功能：重置模板文件为缺省文件
+// 返回值：成功返回0，失败返回-1
+int MainInterface::resetFileInTemplate(int index)
+{
+    return 0;
+}

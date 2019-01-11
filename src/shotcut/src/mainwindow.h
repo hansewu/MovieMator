@@ -76,6 +76,7 @@ class QUndoCommand;
 class ConfigurationDock;
 class ContainerDock;
 class QToolButton;
+class TemplateEidtor;
 
 //class TextlistDock;
 
@@ -243,6 +244,8 @@ private:
     ContainerDock *m_resourceDockContainer;
     ContainerDock *m_propertiesDockContainer;
 
+    TemplateEidtor *m_templateEditor;
+
 public slots:
     void open(Mlt::Producer* producer);
 
@@ -331,6 +334,8 @@ public slots:
     void resizePlayer();
 
     void addPlayer();
+
+    void loadTemplateInfo(Mlt::Producer *producer);
 
 private slots:
 

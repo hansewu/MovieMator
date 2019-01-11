@@ -54,6 +54,18 @@ public:
 
     //功能：返回xml mime字符串；实现拖放时使用。
     virtual const QString& getXMLMimeTypeForDragDrop();
+
+    // 功能：通过xml字符串生成FILE_HANDLE；主程序提供接口
+    virtual FILE_HANDLE createFileWithXMLForDragAndDrop(QString xml);
+
+    // 功能：把模板中的索引为index的文件替换成文件destFile
+    virtual int replaceFileInTemplate(int index, FILE_HANDLE destFile);
+
+    // 功能：重置模板文件为缺省文件
+    // 返回值：成功返回0，失败返回-1
+    virtual int resetFileInTemplate(int index);
+
+
 };
 
 #define MAININTERFACE MainInterface::singleton()

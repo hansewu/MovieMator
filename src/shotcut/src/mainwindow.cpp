@@ -97,6 +97,7 @@
 //#include <templateeditordockinterface.h>
 
 #include "containerdock.h"
+#include "templateeidtor.h"
 
 #include <QtWidgets>
 #include <Logger.h>
@@ -424,6 +425,10 @@ MainWindow::MainWindow()
 //    connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onAddAllToTimeline(Mlt::Playlist*)));
     connect(m_player, SIGNAL(previousSought()), m_timelineDock, SLOT(seekPreviousEdit()));
     connect(m_player, SIGNAL(nextSought()), m_timelineDock, SLOT(seekNextEdit()));
+    connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), SLOT(loadTemplateInfo(Mlt::Producer*)));
+
+    m_templateEditor = new TemplateEidtor();
+
 
     LOG_DEBUG() << "FilterController";
     m_filterController = new FilterController(this);
@@ -4360,19 +4365,22 @@ void MainWindow::addPlayer()
     ui->centralWidget->layout()->addWidget(m_player);
 }
 
+
+
 void MainWindow::onExportTemplate()
 {
 
     Mlt::Tractor *tractor = m_timelineDock->model()->tractor();
     QString xml = MLT.XML(tractor);
 
+    //create a temporary tractor
     Mlt::Tractor *tempTractor = new Mlt::Tractor(MLT.profile(), "xml-string", (char *)xml.toUtf8().constData());
-
 
     int trackCount = tempTractor->count();
 
-    int i = 0;
-    for (i = 0; i < trackCount; i++)
+
+    //replace clips
+    for (int i = 0; i < trackCount; i++)
     {
         QScopedPointer<Mlt::Producer> track(tempTractor->track(i));
         if (track) {
@@ -4380,24 +4388,62 @@ void MainWindow::onExportTemplate()
             int clipCount = playlist.count();
             for (int j = 0; j < clipCount; j++)
             {
+                QScopedPointer<Mlt::ClipInfo> originalInfo(playlist.clip_info(j));
+                Mlt::Producer *originalProducer = originalInfo->producer;
+
+                QString mltService(originalProducer->parent().get("mlt_service"));
+                if (!mltService.isEmpty()
+                        && mltService != "color"
+                        && mltService != "colour"
+                        && mltService != "blank"
+                        && mltService != "tractor"
+                        && mltService != "gifdec")
+                {
+                    Mlt::Producer *newProducer = new Mlt::Producer(MLT.profile(),
+                                                                   "C:\\Users\\gdbwin\\Videos\\exercise_.mp4");
+                    MLT.getHash(*newProducer);
+                    MLT.copyFilters(*originalProducer, *newProducer);
+                    //set same in/out/length as original
+                    newProducer->set("length", originalInfo->frame_count);
+                    newProducer->set("in", originalInfo->frame_in);
+                    newProducer->set("out", originalInfo->frame_out);
+
+                    playlist.remove(j);
+                    playlist.insert(*newProducer, j, originalInfo->frame_in, originalInfo->frame_out);
+                }
+            }
+
+            //process transitions
+            for (int j = 0; j < clipCount; j++)
+            {
                 QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(j));
                 Mlt::Producer *producer = info->producer;
 
                 QString mltService(producer->parent().get("mlt_service"));
-                if (!mltService.isEmpty() && mltService != "color" && mltService != "colour" && mltService != "blank"
-                        && mltService != "tractor" && mltService != "gifdec")
+                if (mltService == "tractor")
                 {
-                    Mlt::Producer *newProducer = new Mlt::Producer(MLT.profile(), "C:\\Users\\gdbwin\\Videos\\exercise_.mp4");
+                    QScopedPointer<Mlt::ClipInfo> preClipInfo(playlist.clip_info(j-1));
+                    QScopedPointer<Mlt::ClipInfo> nextClipInfo(playlist.clip_info(j+1));
+                    Mlt::Producer *preProducer = preClipInfo->producer;
+                    Mlt::Producer *nextProducer = nextClipInfo->producer;
                     //newProducer->set_in_and_out(0, info->frame_count);
-                    MLT.getHash(*newProducer);
-                    MLT.copyFilters(*producer, *newProducer);
-                    playlist.remove(j);
-                    playlist.insert(*newProducer, j, 0, info->frame_count-1);
+                    int duration = info->frame_count;
+                    preProducer->set("length", preClipInfo->frame_count+duration);
+                    preProducer->set("out", preClipInfo->frame_out+duration);
+                    nextProducer->set("length", nextClipInfo->frame_count+duration);
+                    nextProducer->set("in", nextClipInfo->frame_in-duration);
+
+                    Mlt::Tractor tractor(producer->parent());
+                    Mlt::Producer *aTrack = preProducer->cut(preClipInfo->frame_out + 1, preClipInfo->frame_out + duration);
+                    Mlt::Producer *bTrack = nextProducer->cut(nextClipInfo->frame_in - duration, nextClipInfo->frame_in - 1);
+                    tractor.set_track(*aTrack, 0);
+                    tractor.set_track(*bTrack, 1);
+                    //playlist.resize_clip(j-1, preClipInfo->frame_in, preClipInfo->frame_out - duration);
+                    //playlist.resize_clip(j+1, nextClipInfo->frame_in+duration, nextClipInfo->frame_out);
                 }
             }
         }
     }
-
 
     QString path = Settings.savePath();
     path.append("/untitled.xml");
@@ -4405,16 +4451,21 @@ void MainWindow::onExportTemplate()
     if (!filename.isEmpty()) {
         QFileInfo fi(filename);
         Settings.setSavePath(fi.path());
-        // if (fi.suffix() != "mlt")
-        //     filename += ".mlt";
-        // if (MLT.producer())
-        //     saveXML(filename, false);
-        // else
-        //     showStatusMessage(tr("Unable to save empty file, but saved its name for future."));
         if (fi.suffix() != "xml")
             filename += ".xml";
-
         MLT.saveXML(filename, tempTractor, false);
     }
     delete tempTractor;
+}
+
+void MainWindow::loadTemplateInfo(Mlt::Producer *producer)
+{
+    if (!producer || !producer->is_valid())
+    {
+       m_templateEditor->setProducer(0);
+       return;
+    }
+    QString service(producer->get("mlt_service"));
+    if (service == "xml")
+        m_templateEditor->setProducer(producer);
 }

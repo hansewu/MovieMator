@@ -121,7 +121,8 @@ SOURCES += main.cpp\
     eccregister/CEccRegister.cpp \
     maininterface.cpp \
     containerdock.cpp \
-    widgets/avformatproducersimplewidget.cpp
+    widgets/avformatproducersimplewidget.cpp \
+    templateeidtor.cpp
     maininterface.cpp
 
 HEADERS  += mainwindow.h \
@@ -237,7 +238,8 @@ HEADERS  += mainwindow.h \
     qmltypes/mmqmlutilities.h \
     maininterface.h \
     containerdock.h \
-    widgets/avformatproducersimplewidget.h
+    widgets/avformatproducersimplewidget.h \
+    templateeidtor.h
     eccregister/CEccRegister.h
     maininterface.h
 
