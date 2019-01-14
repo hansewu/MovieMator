@@ -1858,6 +1858,8 @@ void MainWindow::on_actionAbout_TVE_triggered()
                 "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor Pro</a></p>"
                 "<p />"
                 "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
+                "<p>Based on Shotcut v16.06 Copyright &copy; 2011-2016 Meltytech, LLC.</p>"
+                "<p>Licensed under the GNU General Public License v3.0</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
 #else
@@ -1866,6 +1868,8 @@ void MainWindow::on_actionAbout_TVE_triggered()
                 "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor</a></p>"
                 "<p />"
                 "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
+                "<p>Based on Shotcut v16.06 Copyright &copy; 2011-2016 Meltytech, LLC.</p>"
+                "<p>Licensed under the GNU General Public License v3.0</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
 #endif
@@ -1877,6 +1881,8 @@ void MainWindow::on_actionAbout_TVE_triggered()
                 "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor Pro</a></p>"
                 "<p />"
                 "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
+                "<p>Based on Shotcut v16.06 Copyright &copy; 2011-2016 Meltytech, LLC.</p>"
+                "<p>Licensed under the GNU General Public License v3.0</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
 #else
@@ -1885,6 +1891,8 @@ void MainWindow::on_actionAbout_TVE_triggered()
                 "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor</a></p>"
                 "<p />"
                 "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
+                "<p>Based on Shotcut v16.06 Copyright &copy; 2011-2016 Meltytech, LLC.</p>"
+                "<p>Licensed under the GNU General Public License v3.0</p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
 #endif
