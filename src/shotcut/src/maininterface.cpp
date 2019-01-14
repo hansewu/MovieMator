@@ -193,7 +193,13 @@ const QString& MainInterface::getXMLMimeTypeForDragDrop()
 // 功能：通过xml字符串生成FILE_HANDLE；主程序提供接口
 FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
 {
-    return 0;
+    Mlt::Producer *producer = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+    if (!producer->is_valid())
+    {
+        delete producer;
+        producer = 0;
+    }
+    return producer;
 }
 
 // 功能：把模板中的索引为index的文件替换成文件destFile
