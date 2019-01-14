@@ -4251,7 +4251,7 @@ void MainWindow::setCurrentFilterForVideoWidget(QObject* filter, QmlMetadata* me
 
 void MainWindow::initParentDockForResourceDock()
 {
-    m_resourceDockContainer = new ContainerDock(this);
+    m_resourceDockContainer = new ContainerDock(TabPosition_Left, this);
 
     addDockWidget(Qt::LeftDockWidgetArea, m_resourceDockContainer);
 }
@@ -4259,7 +4259,7 @@ void MainWindow::initParentDockForResourceDock()
 
 void MainWindow::initParentDockForPropteriesDock()
 {
-    m_propertiesDockContainer = new ContainerDock(this);
+    m_propertiesDockContainer = new ContainerDock(TabPosition_Bottom, this);
 
     addDockWidget(Qt::RightDockWidgetArea, m_propertiesDockContainer);
 }
