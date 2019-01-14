@@ -82,6 +82,7 @@ public:
     Q_INVOKABLE void getHash();
     int producerIn() const;
     int producerOut() const;
+    Q_INVOKABLE void setInAndOut(int in, int out);
     double producerAspect() const;
     Q_INVOKABLE void anim_set(QString name, QString value);
     Q_INVOKABLE void resetProperty(const QString& name);
@@ -150,6 +151,7 @@ private:
     QStringList m_presets;
     
     QString objectNameOrService();
+    double getPreKeyFrameNumInParent(double currentKeyFrame);
 
 
     QVector<key_frame_item> m_keyFrameList;

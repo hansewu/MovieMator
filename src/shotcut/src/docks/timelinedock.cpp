@@ -1690,15 +1690,61 @@ int TimelineDock::getPositionInCurrentClip()
             int start = playlist.clip_start(clipIndex);
             int end = playlist.clip_start(clipIndex) + playlist.clip_length(clipIndex) - 1;
             if (m_position < start)
-                position = 0;
+                position = -1;//0;
             else if (m_position > end)
-                position = end - start;
+                position = -1;//end - start;
             else
                 position = m_position - start;
         }
     }
 
     return position;
+}
+
+int TimelineDock::getCurrentClipLength()
+{
+    int trackIndex = currentTrack();
+    int length = -1;
+    if ( selection().count() > 0)
+    {
+        int clipIndex = selection().first();
+
+        int mlt_index = m_model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
+        if (track)
+        {
+            Mlt::Playlist playlist(*track);
+            length = playlist.clip_length(clipIndex);
+        }
+    }
+
+    return length;
+}
+
+int TimelineDock::getCurrentClipParentLength()
+{
+    int trackIndex = currentTrack();
+    int length = -1;
+    if ( selection().count() > 0)
+    {
+        int clipIndex = selection().first();
+
+        int mlt_index = m_model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
+        if (track)
+        {
+            Mlt::Playlist playlist(*track);
+
+            QScopedPointer<Mlt::ClipInfo> clipInfo(playlist.clip_info(clipIndex));
+            Mlt::Producer *testproducer = clipInfo->producer;
+            int in = testproducer->get_in();
+            int out = testproducer->get_out();
+            length = out - in + 1;
+
+        }
+    }
+
+    return length;
 }
 
 void TimelineDock::seekToKeyFrame(int position)

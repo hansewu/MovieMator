@@ -62,7 +62,8 @@ Mlt::Animation QmlFilter::getAnimation(const QString& name)
         const char* propertyName = name.toUtf8().constData();
         if (!m_filter->get_animation(propertyName)) {
             // Cause a string property to be interpreted as animated value.
-            m_filter->anim_get_double(propertyName, 0, 0);
+//            m_filter->anim_get_double(propertyName, 0, 0);
+            return Mlt::Animation();
         }
         return m_filter->get_animation(propertyName);
     }
@@ -80,13 +81,20 @@ int QmlFilter::getKeyFrameCountOnProject(QString name)
         return 0;
 }
 
+//获取的是在当前clip中的位置信息，不是producer中的信息，split后，获取的是在split单个clip中的位置
 int QmlFilter::getKeyFrameOnProjectOnIndex(int index, QString name)
 {
+
     if (m_filter)
     {
         int nKeyFrame = getAnimation(name).key_get_frame(index);
 
-        return MAIN.timelineDock()->getPositionOnClip(nKeyFrame);
+        int nPositionInClip = MAIN.timelineDock()->getPositionOnClip(nKeyFrame);
+        int nClipLength = MAIN.timelineDock()->getCurrentClipLength();
+        if (nPositionInClip > (nClipLength - 1)) return -1;
+
+        return nPositionInClip;
+//        return MAIN.timelineDock()->getPositionOnClip(nKeyFrame);
     }
 
     return -1;
@@ -94,6 +102,8 @@ int QmlFilter::getKeyFrameOnProjectOnIndex(int index, QString name)
 
 void QmlFilter::removeAnimationKeyFrame(int nFrame, QString name)
 {
+    nFrame = MAIN.timelineDock()->getPositionOnParentProducer(nFrame);
+
     if (m_filter)
     {
         getAnimation(name).remove(nFrame);
@@ -167,6 +177,8 @@ int QmlFilter::getInt(QString name)
 
 QRectF QmlFilter::getRect(QString name, int position)
 {
+    position = MAIN.timelineDock()->getPositionOnParentProducer(position);
+
     if (!m_filter->is_valid()) return QRectF();
     const char* s = m_filter->get(name.toUtf8().constData());
     if (s) {
@@ -193,6 +205,7 @@ QRectF QmlFilter::getRect(QString name, int position)
 //FIXME: 暫時之應用與Text Filter，之後其他濾鏡獲取rect方法統一后移除
 QRectF QmlFilter::getRectOfTextFilter(QString name, int position)
 {
+    position = MAIN.timelineDock()->getPositionOnParentProducer(position);
     if (!m_filter->is_valid()) return QRectF();
 
     const char* propertyName = name.toUtf8().constData();
@@ -472,30 +485,74 @@ void QmlFilter::getHash()
 
 int QmlFilter::producerIn() const
 {
-    // Every attached filter has a service property that points to the service to
-    // which it is attached.
-    Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
-    if (producer.get(kFilterInProperty))
-        // Shots on the timeline will set the producer to the cut parent.
-        // However, we want time-based filters such as fade in/out to use
-        // the cut's in/out and not the parent's.
-        return producer.get_int(kFilterInProperty);
-    else
-        return producer.get_in();
+    int result = 0;
+    if (m_filter->is_valid()) {
+        if (m_filter->get_int("in") == 0 && m_filter->get_int("out") == 0) { // undefined/always-on
+            Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
+            if (!producer.is_valid()) {
+                result = 0;
+            } else if (producer.get(kFilterInProperty)) {
+                // Shots on the timeline will set the producer to the cut parent.
+                // However, we want time-based filters such as fade in/out to use
+                // the cut's in/out and not the parent's.
+                result = producer.get_int(kFilterInProperty);
+            } else {
+                result = producer.get_in();
+            }
+        } else {
+            result = m_filter->get_int("in");
+        }
+    }
+    return result;
+//    // Every attached filter has a service property that points to the service to
+//    // which it is attached.
+
+//    if (producer.get(kFilterInProperty))
+//        // Shots on the timeline will set the producer to the cut parent.
+//        // However, we want time-based filters such as fade in/out to use
+//        // the cut's in/out and not the parent's.
+//        return producer.get_int(kFilterInProperty);
+//    else
+//        return producer.get_in();
 }
 
 int QmlFilter::producerOut() const
 {
-    // Every attached filter has a service property that points to the service to
-    // which it is attached.
-    Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
-    if (producer.get(kFilterOutProperty))
-        // Shots on the timeline will set the producer to the cut parent.
-        // However, we want time-based filters such as fade in/out to use
-        // the cut's in/out and not the parent's.
-        return producer.get_int(kFilterOutProperty);
-    else
-        return producer.get_out();
+    int result = 0;
+    if (m_filter->is_valid()) {
+        if (m_filter->get_int("in") == 0 && m_filter->get_int("out") == 0) { // undefined/always-on
+            // Every attached filter has a service property that points to the service to
+            // which it is attached.
+            Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
+            if (!producer.is_valid()) {
+                result = 0;
+            } else if (producer.get(kFilterOutProperty)) {
+                // Shots on the timeline will set the producer to the cut parent.
+                // However, we want time-based filters such as fade in/out to use
+                // the cut's in/out and not the parent's.
+                result = producer.get_int(kFilterOutProperty);
+            } else {
+                result = producer.get_out();
+            }
+        } else {
+            result = m_filter->get_int("out");
+        }
+    }
+    return result;
+
+//    if (producer.get(kFilterOutProperty))
+//        // Shots on the timeline will set the producer to the cut parent.
+//        // However, we want time-based filters such as fade in/out to use
+//        // the cut's in/out and not the parent's.
+//        return producer.get_int(kFilterOutProperty);
+//    else
+//        return producer.get_out();
+}
+
+void QmlFilter::setInAndOut(int in, int out)
+{
+    if (m_filter->get_int("in") == 0 && m_filter->get_int("out") == 0)
+        m_filter->set_in_and_out(in, out);
 }
 
 double QmlFilter::producerAspect() const
@@ -532,13 +589,9 @@ QString QmlFilter::objectNameOrService()
 
 //#ifdef MOVIEMATOR_PRO
 
-double QmlFilter::getPreKeyFrameNum(double currentKeyFrame)
+double QmlFilter::getPreKeyFrameNumInParent(double currentKeyFrame)
 {
-//    if(m_metadata)
-//    {
-//        return m_metadata->getPreKeyFrameNum(currentKeyFrame);
-//    }
-
+    currentKeyFrame = MAIN.timelineDock()->getPositionOnParentProducer(currentKeyFrame);
     int keyFrameCount = m_keyFrameList.count();
     bool bExist = false;
     if(keyFrameCount > 0)
@@ -576,8 +629,41 @@ double QmlFilter::getPreKeyFrameNum(double currentKeyFrame)
 }
 
 
+
+
+double QmlFilter::getPreKeyFrameNum(double currentKeyFrame)
+{
+    double nFrameInParent = getPreKeyFrameNumInParent(currentKeyFrame);
+
+    int nPositionInClip = MAIN.timelineDock()->getPositionOnClip(nFrameInParent);
+
+    if (nPositionInClip < 0) nPositionInClip = -1;
+
+    int nClipLength = MAIN.timelineDock()->getCurrentClipLength();
+    if (nPositionInClip > (nClipLength - 1)) nPositionInClip = -1;
+
+    return nPositionInClip;
+}
+
+
 double QmlFilter::getNextKeyFrameNum(double currentKeyFrame)
 {
+    currentKeyFrame = MAIN.timelineDock()->getPositionOnParentProducer(currentKeyFrame);
+//    double frameInParent = MAIN.timelineDock()->getPositionOnParentProducer(currentKeyFrame);
+//    if (m_filter)
+//    {
+//        int paramCount = m_metadata->keyframes()->parameterCount();
+//        if (paramCount <= 0) return false;
+//        QString name = m_metadata->keyframes()->parameter(0)->property();
+
+//        if (getAnimation(name).is_key(frameInParent)) frameInParent = frameInParent + 1;
+//        int nKeyFrame = getAnimation(name).next_key(frameInParent);
+//        nKeyFrame = MAIN.timelineDock()->getPositionOnClip(nKeyFrame);
+
+//        return nKeyFrame;
+//    }
+
+//    return -1;
 
     int keyFrameCount = m_keyFrameList.count();
     if(keyFrameCount > 0)
@@ -588,7 +674,14 @@ double QmlFilter::getNextKeyFrameNum(double currentKeyFrame)
 
             if(para.keyFrame > currentKeyFrame)//(currentKeyFrame > para.keyFrame) && (currentKeyFrame < para1.keyFrame))
             {
-                return para.keyFrame;
+                int nFrameInParent = para.keyFrame;
+
+                int nPositionInClip = MAIN.timelineDock()->getPositionOnClip(nFrameInParent);
+                int nClipLength = MAIN.timelineDock()->getCurrentClipLength();
+                if (nPositionInClip > (nClipLength - 1)) nPositionInClip = -1;
+
+                return nPositionInClip;
+//                return para.keyFrame;
             }
         }
     }
@@ -604,6 +697,10 @@ void QmlFilter::setKeyFrameParaRectValue(double frame, QString key, const QRectF
 
 void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
 {
+    if(frame < 0) return;
+    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
+
+
         QVector<key_frame_item> keyFrameFrom(m_keyFrameList);
        int keyFrameCount = m_keyFrameList.count();
 
@@ -743,6 +840,7 @@ void QmlFilter::removeAllKeyFrame(QString name)
 
 void QmlFilter::removeKeyFrameParaValue(double frame)
 {
+    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
 //    if(m_metadata)
 //    {
 //        bool result = m_metadata->removeKeyFrameParaValue(frame);
@@ -808,6 +906,9 @@ void QmlFilter::combineAllKeyFramePara()
 
                int out = producerOut();
                int in = producerIn();
+//               int duration = out - in + 1;
+               //duration = filter.out - filter.in + 1;应该等于没有split的producer长度
+               int duration = MAIN.timelineDock()->getCurrentClipParentLength();
 
                 QString key = para1.paraMap.keys().at(keyIndex);
                 QString value = para.paraMap.values().at(keyIndex);
@@ -821,13 +922,20 @@ void QmlFilter::combineAllKeyFramePara()
                      if (name == key) { paraType = m_metadata->keyframes()->parameter(i)->paraType(); break; }
                 }
 
+
+
+//                Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
+//                if (producer.is_valid() && producer.get(kFilterInProperty))
+//                m_filter->set("in", producer.get_int(kFilterInProperty));
+//                if (producer.is_valid() && producer.get(kFilterOutProperty))
+//                m_filter->set("out", producer.get_int(kFilterOutProperty));
                 // Only set an animation keyframe if it does not already exist with the same value.
                 Mlt::Animation animation(m_filter->get_animation(key.toUtf8().constData()));
                 if (paraType == "double")
                 {
                     if (!animation.is_valid() || !animation.is_key(para.keyFrame)
                             || value.toDouble() != m_filter->anim_get_double(key.toUtf8().constData(), para.keyFrame, out - in + 1)) {
-                        m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), para.keyFrame, out - in + 1, mlt_keyframe_linear);
+                        m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), para.keyFrame, duration, mlt_keyframe_linear);
                         MLT.refreshConsumer();
                         emit changed();
                     }
@@ -836,7 +944,7 @@ void QmlFilter::combineAllKeyFramePara()
                 {
                     if (!animation.is_valid() || !animation.is_key(para.keyFrame)
                             || value.toInt() != m_filter->anim_get_int(key.toUtf8().constData(), para.keyFrame, out - in + 1)) {
-                        m_filter->anim_set(key.toUtf8().constData(), value.toInt(), para.keyFrame, out - in + 1, mlt_keyframe_linear);
+                        m_filter->anim_set(key.toUtf8().constData(), value.toInt(), para.keyFrame, duration, mlt_keyframe_linear);
                         MLT.refreshConsumer();
                         emit changed();
                     }
@@ -845,7 +953,7 @@ void QmlFilter::combineAllKeyFramePara()
                 {
                     if (!animation.is_valid() || !animation.is_key(para.keyFrame) || value != m_filter->anim_get(key.toUtf8().constData(), para.keyFrame, out - in + 1))
                     {
-                        m_filter->anim_set(key.toUtf8().constData(), value.toUtf8().constData(), para.keyFrame, out - in + 1);
+                        m_filter->anim_set(key.toUtf8().constData(), value.toUtf8().constData(), para.keyFrame, duration);
                         MLT.refreshConsumer();
                         emit changed();
                     }
@@ -859,7 +967,7 @@ void QmlFilter::combineAllKeyFramePara()
                     double height = listValue[3].toDouble();
                     double opacity = listValue[4].toDouble();
 
-                    mlt_rect rect = m_filter->anim_get_rect(key.toUtf8().constData(), para.keyFrame, out - in + 1);
+                    mlt_rect rect = m_filter->anim_get_rect(key.toUtf8().constData(), para.keyFrame, duration);
                     if (!animation.is_valid() || !animation.is_key(para.keyFrame)
                         || x != rect.x || y != rect.y || width != rect.w || height != rect.h || opacity != rect.o)
                     {
@@ -877,7 +985,7 @@ void QmlFilter::combineAllKeyFramePara()
                 {
                     if (!animation.is_valid() || !animation.is_key(para.keyFrame) || value != m_filter->anim_get(key.toUtf8().constData(), para.keyFrame, out - in + 1))
                     {
-                        m_filter->anim_set(key.toUtf8().constData(), value.toUtf8().constData(), para.keyFrame, out - in + 1);
+                        m_filter->anim_set(key.toUtf8().constData(), value.toUtf8().constData(), para.keyFrame, duration);
                         MLT.refreshConsumer();
                         emit changed();
                     }
@@ -888,11 +996,19 @@ void QmlFilter::combineAllKeyFramePara()
 
     }
 
+
+//    int paramCount = m_metadata->keyframes()->parameterCount();
+//    if (paramCount <= 0) return;
+//    QString name = m_metadata->keyframes()->parameter(0)->property();
+//     int ncount = getKeyFrameCountOnProject(name);
+//     for (int i = 0; i < ncount;i++)
+//     getKeyFrameOnProjectOnIndex(i,name);
 }
 
 
 bool QmlFilter::bKeyFrame(double frame)
 {
+    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     int keyFrameCount = m_keyFrameList.count();
     if(keyFrameCount == 0)
         return false;
@@ -912,10 +1028,24 @@ bool QmlFilter::bKeyFrame(double frame)
 
 bool QmlFilter::bHasPreKeyFrame(double frame)
 {
-//    if(m_metadata)
-//         return m_metadata->bHasPreKeyFrame(frame);
-//    else
-//        return false;
+//    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
+    double frameInParent = MAIN.timelineDock()->getPositionOnParentProducer(frame);
+    if (m_filter)
+    {
+        int paramCount = m_metadata->keyframes()->parameterCount();
+        if (paramCount <= 0) return false;
+        QString name = m_metadata->keyframes()->parameter(0)->property();
+
+        if (getAnimation(name).is_key(frameInParent)) frameInParent = frameInParent - 1;
+        int nKeyFrame = getAnimation(name).previous_key(frameInParent);
+        nKeyFrame = MAIN.timelineDock()->getPositionOnClip(nKeyFrame);
+
+        if (nKeyFrame >= 0 && (nKeyFrame != frame)) return true;
+    }
+
+    return false;
+
+
     int keyFrameCount = m_keyFrameList.count();
     if(keyFrameCount == 0)
         return false;
@@ -930,10 +1060,27 @@ bool QmlFilter::bHasPreKeyFrame(double frame)
 
 bool QmlFilter::bHasNextKeyFrame(double frame)
 {
-//    if(m_metadata)
-//        return m_metadata->bHasNextKeyFrame(frame);
-//    else
-//        return false;
+//    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
+    double frameInParent = MAIN.timelineDock()->getPositionOnParentProducer(frame);
+    if (m_filter)
+    {
+        int paramCount = m_metadata->keyframes()->parameterCount();
+        if (paramCount <= 0) return false;
+        QString name = m_metadata->keyframes()->parameter(0)->property();
+
+        if (getAnimation(name).is_key(frameInParent)) frameInParent = frameInParent + 1;
+
+        int nKeyFrame = getAnimation(name).next_key(frameInParent);
+        nKeyFrame = MAIN.timelineDock()->getPositionOnClip(nKeyFrame);
+
+        int nClipLength = MAIN.timelineDock()->getCurrentClipLength();
+        if (nKeyFrame > (nClipLength - 1)) return false;
+
+        if (nKeyFrame > frame) return true;
+    }
+
+    return false;
+
     int keyFrameCount = m_keyFrameList.count();
     if(keyFrameCount == 0)
         return false;
@@ -948,6 +1095,7 @@ bool QmlFilter::bHasNextKeyFrame(double frame)
 
 double QmlFilter::getKeyFrameParaDoubleValue(double frame, QString key)
 {
+    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
 //    if(m_filter)
 //    {
 //        return m_filter->anim_get_double(key.toUtf8().constData(), frame);
@@ -978,6 +1126,7 @@ double QmlFilter::getKeyFrameParaDoubleValue(double frame, QString key)
 
 QRectF QmlFilter::getKeyFrameParaRectValue(double frame, QString key)
 {
+    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     int keyFrameCount = m_keyFrameList.count();
     if(keyFrameCount == 0) {
         return QRectF();
@@ -1001,6 +1150,7 @@ QRectF QmlFilter::getKeyFrameParaRectValue(double frame, QString key)
 
 QString QmlFilter::getKeyFrameParaValue(double frame, QString key)
 {
+    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
 //    if(m_metadata)
 //        return m_metadata->getKeyFrameParaValue(frame, key);
 //    else
@@ -1029,6 +1179,7 @@ QString QmlFilter::getKeyFrameParaValue(double frame, QString key)
 
 QString QmlFilter::getAnimStringValue(double frame, QString key)
 {
+    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     if(m_filter)
     {
         QString str = QString::fromUtf8(m_filter->anim_get(key.toUtf8().constData(), frame));
@@ -1040,6 +1191,7 @@ QString QmlFilter::getAnimStringValue(double frame, QString key)
 
 int QmlFilter::getAnimIntValue(double frame, QString key)
 {
+    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     if(m_filter)
     {
         return m_filter->anim_get_int(key.toUtf8().constData(), frame);
@@ -1050,6 +1202,7 @@ int QmlFilter::getAnimIntValue(double frame, QString key)
 
 double QmlFilter::getAnimDoubleValue(double frame, QString key)
 {
+    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     if(m_filter)
     {
         return m_filter->anim_get_double(key.toUtf8().constData(), frame);
@@ -1060,6 +1213,7 @@ double QmlFilter::getAnimDoubleValue(double frame, QString key)
 
 QRectF QmlFilter::getAnimRectValue(double frame, QString key)
 {
+    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     if (!m_filter) return QRectF();
 
     const char* s = m_filter->get(key.toUtf8().constData());
@@ -1105,7 +1259,10 @@ int QmlFilter::getKeyFrame(int index)
 {
     int keyFrameCount = m_keyFrameList.count();
     if(index < keyFrameCount)
-        return m_keyFrameList.at(index).keyFrame;
+    {
+        int nKeyFrame = m_keyFrameList.at(index).keyFrame;
+        return MAIN.timelineDock()->getPositionOnClip(nKeyFrame);
+    }
     else
         return -1;
 

@@ -86,8 +86,10 @@ public:
     void selectClipAtPosition(int trackIndex, int position);
 
     Q_INVOKABLE int getPositionInCurrentClip();
+    Q_INVOKABLE int getCurrentClipLength();
     Q_INVOKABLE void seekToKeyFrame(int position);
 
+    Q_INVOKABLE int getCurrentClipParentLength();
     int getPositionOnParentProducer(int position);
     int getPositionOnClip(int position);
 

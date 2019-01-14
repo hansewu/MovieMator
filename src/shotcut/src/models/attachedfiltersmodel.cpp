@@ -300,7 +300,8 @@ void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
     if (filter->is_valid()) {
         if (!meta->objectName().isEmpty())
             filter->set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
-
+        if (filter->get_int("in") == 0 && filter->get_int("out") == 0)
+            filter->set_in_and_out(0, MAIN.timelineDock()->getCurrentClipParentLength());
         // Put the filter after the last filter that is greater than or equal
         // in sort order.
         insertIndex = 0;
