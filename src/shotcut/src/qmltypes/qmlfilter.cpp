@@ -904,8 +904,8 @@ void QmlFilter::combineAllKeyFramePara()
               for(int keyIndex=0; keyIndex<paraCount; keyIndex++)
               {
 
-               int out = producerOut();
-               int in = producerIn();
+               int out = m_filter->get_out();// producerOut();
+               int in = m_filter->get_in();//producerIn();
 //               int duration = out - in + 1;
                //duration = filter.out - filter.in + 1;应该等于没有split的producer长度
                int duration = MAIN.timelineDock()->getCurrentClipParentLength();
@@ -923,18 +923,12 @@ void QmlFilter::combineAllKeyFramePara()
                 }
 
 
-
-//                Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
-//                if (producer.is_valid() && producer.get(kFilterInProperty))
-//                m_filter->set("in", producer.get_int(kFilterInProperty));
-//                if (producer.is_valid() && producer.get(kFilterOutProperty))
-//                m_filter->set("out", producer.get_int(kFilterOutProperty));
                 // Only set an animation keyframe if it does not already exist with the same value.
                 Mlt::Animation animation(m_filter->get_animation(key.toUtf8().constData()));
                 if (paraType == "double")
                 {
                     if (!animation.is_valid() || !animation.is_key(para.keyFrame)
-                            || value.toDouble() != m_filter->anim_get_double(key.toUtf8().constData(), para.keyFrame, out - in + 1)) {
+                            || value.toDouble() != m_filter->anim_get_double(key.toUtf8().constData(), para.keyFrame, duration)) {
                         m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), para.keyFrame, duration, mlt_keyframe_linear);
                         MLT.refreshConsumer();
                         emit changed();
@@ -943,7 +937,7 @@ void QmlFilter::combineAllKeyFramePara()
                 else if(paraType == "int")
                 {
                     if (!animation.is_valid() || !animation.is_key(para.keyFrame)
-                            || value.toInt() != m_filter->anim_get_int(key.toUtf8().constData(), para.keyFrame, out - in + 1)) {
+                            || value.toInt() != m_filter->anim_get_int(key.toUtf8().constData(), para.keyFrame, duration)) {
                         m_filter->anim_set(key.toUtf8().constData(), value.toInt(), para.keyFrame, duration, mlt_keyframe_linear);
                         MLT.refreshConsumer();
                         emit changed();
@@ -951,7 +945,7 @@ void QmlFilter::combineAllKeyFramePara()
                 }
                 else if(paraType == "string")
                 {
-                    if (!animation.is_valid() || !animation.is_key(para.keyFrame) || value != m_filter->anim_get(key.toUtf8().constData(), para.keyFrame, out - in + 1))
+                    if (!animation.is_valid() || !animation.is_key(para.keyFrame) || value != m_filter->anim_get(key.toUtf8().constData(), para.keyFrame, duration))
                     {
                         m_filter->anim_set(key.toUtf8().constData(), value.toUtf8().constData(), para.keyFrame, duration);
                         MLT.refreshConsumer();
@@ -976,14 +970,14 @@ void QmlFilter::combineAllKeyFramePara()
                         rect.w = width;
                         rect.h = height;
                         rect.o = opacity;
-                        m_filter->anim_set(key.toUtf8().constData(), rect, para.keyFrame, out - in + 1, mlt_keyframe_smooth);
+                        m_filter->anim_set(key.toUtf8().constData(), rect, para.keyFrame, duration, mlt_keyframe_smooth);
                         MLT.refreshConsumer();
                         emit changed();
                     }
                 }
                 else
                 {
-                    if (!animation.is_valid() || !animation.is_key(para.keyFrame) || value != m_filter->anim_get(key.toUtf8().constData(), para.keyFrame, out - in + 1))
+                    if (!animation.is_valid() || !animation.is_key(para.keyFrame) || value != m_filter->anim_get(key.toUtf8().constData(), para.keyFrame, duration))
                     {
                         m_filter->anim_set(key.toUtf8().constData(), value.toUtf8().constData(), para.keyFrame, duration);
                         MLT.refreshConsumer();
