@@ -485,68 +485,28 @@ void QmlFilter::getHash()
 
 int QmlFilter::producerIn() const
 {
-    int result = 0;
-    if (m_filter->is_valid()) {
-        if (m_filter->get_int("in") == 0 && m_filter->get_int("out") == 0) { // undefined/always-on
-            Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
-            if (!producer.is_valid()) {
-                result = 0;
-            } else if (producer.get(kFilterInProperty)) {
-                // Shots on the timeline will set the producer to the cut parent.
-                // However, we want time-based filters such as fade in/out to use
-                // the cut's in/out and not the parent's.
-                result = producer.get_int(kFilterInProperty);
-            } else {
-                result = producer.get_in();
-            }
-        } else {
-            result = m_filter->get_int("in");
-        }
-    }
-    return result;
-//    // Every attached filter has a service property that points to the service to
-//    // which it is attached.
-
-//    if (producer.get(kFilterInProperty))
-//        // Shots on the timeline will set the producer to the cut parent.
-//        // However, we want time-based filters such as fade in/out to use
-//        // the cut's in/out and not the parent's.
-//        return producer.get_int(kFilterInProperty);
-//    else
-//        return producer.get_in();
+    // Every attached filter has a service property that points to the service to
+    // which it is attached.
+    Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
+    if (producer.get(kFilterInProperty))
+        // Shots on the timeline will set the producer to the cut parent.
+        // However, we want time-based filters such as fade in/out to use
+        // the cut's in/out and not the parent's.
+        return producer.get_int(kFilterInProperty);
+    else
+        return producer.get_in();
 }
 
 int QmlFilter::producerOut() const
 {
-    int result = 0;
-    if (m_filter->is_valid()) {
-        if (m_filter->get_int("in") == 0 && m_filter->get_int("out") == 0) { // undefined/always-on
-            // Every attached filter has a service property that points to the service to
-            // which it is attached.
-            Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
-            if (!producer.is_valid()) {
-                result = 0;
-            } else if (producer.get(kFilterOutProperty)) {
-                // Shots on the timeline will set the producer to the cut parent.
-                // However, we want time-based filters such as fade in/out to use
-                // the cut's in/out and not the parent's.
-                result = producer.get_int(kFilterOutProperty);
-            } else {
-                result = producer.get_out();
-            }
-        } else {
-            result = m_filter->get_int("out");
-        }
-    }
-    return result;
-
-//    if (producer.get(kFilterOutProperty))
-//        // Shots on the timeline will set the producer to the cut parent.
-//        // However, we want time-based filters such as fade in/out to use
-//        // the cut's in/out and not the parent's.
-//        return producer.get_int(kFilterOutProperty);
-//    else
-//        return producer.get_out();
+    Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
+    if (producer.get(kFilterOutProperty))
+        // Shots on the timeline will set the producer to the cut parent.
+        // However, we want time-based filters such as fade in/out to use
+        // the cut's in/out and not the parent's.
+        return producer.get_int(kFilterOutProperty);
+    else
+        return producer.get_out();
 }
 
 void QmlFilter::setInAndOut(int in, int out)
