@@ -2,6 +2,9 @@
  * Copyright (c) 2011-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
+ * Copyright (c) 2016-2019 EffectMatrix Inc.
+ * Author: vgawen <gdb_1986@163.com>
+ *
  * GL shader based on BSD licensed code from Peter Bengtsson:
  * http://www.fourcc.org/source/YUV420P-OpenGL-GLSLang.c
  *
