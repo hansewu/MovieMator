@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
+ * Author: wyl <wyl@pylwyl.local>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
