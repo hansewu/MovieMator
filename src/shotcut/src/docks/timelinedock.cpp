@@ -703,6 +703,8 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
             new Timeline::LiftCommand(m_model, *this, trackIndex, newClipIndex, xml));
 
         MAIN.undoStack()->endMacro();
+
+        setSelection();
     }
 }
 
