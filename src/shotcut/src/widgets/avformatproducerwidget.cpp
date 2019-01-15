@@ -525,6 +525,7 @@ void AvformatProducerWidget::on_okButton_clicked()
 {
     //使用用tempProducer发送producerChanged消息
     if (m_producer->get_int(kMultitrackItemProperty)) {
+        recreateTempProducer();
         emit producerChanged(m_tempProducer);
         delete m_tempProducer;
         m_tempProducer = 0;
@@ -582,7 +583,7 @@ Mlt::Producer *AvformatProducerWidget::recreateTempProducer()
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty);
-    Mlt::Controller::copyFilters(*m_tempProducer, *p);
+    Mlt::Controller::copyFilters(*m_producer, *p);
     delete m_tempProducer;
     m_tempProducer = 0;
     m_tempProducer = p;

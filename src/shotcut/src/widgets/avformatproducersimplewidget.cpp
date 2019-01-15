@@ -142,7 +142,7 @@ void AvformatProducerSimpleWidget::setProducer(Mlt::Producer *aProducer)
     if (aProducer) {
         loadPreset(*aProducer);
         double speed = GetSpeedFromProducer(aProducer);
-        m_producer = createProducer(MLT.profile(), aProducer, speed);
+        m_producer = new Mlt::Producer(aProducer);//createProducer(MLT.profile(), aProducer, speed);
         m_tempProducer = createProducer(MLT.profile(), aProducer, speed);
     }
 }
@@ -168,7 +168,7 @@ Mlt::Producer * AvformatProducerSimpleWidget::createProducer(Mlt::Profile& profi
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty);
-    Mlt::Controller::copyFilters(*producer, *p);
+    Mlt::Controller::copyFilters(*m_producer, *p);
     p->set_in_and_out(producer->get_in(), producer->get_out());
     p->set(kMultitrackItemProperty, producer->get(kMultitrackItemProperty));
     return p;
