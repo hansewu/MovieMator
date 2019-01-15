@@ -141,7 +141,7 @@ public:
 #else
         setApplicationName("MovieMator");
 #endif
-        setApplicationVersion(SHOTCUT_VERSION);
+        setApplicationVersion(MOVIEMATOR_VERSION);
         setAttribute(Qt::AA_UseHighDpiPixmaps);
         setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 #if defined(Q_OS_MAC)
@@ -173,7 +173,7 @@ public:
         mlt_log_set_callback(mlt_log_handler);
 
         // Log some basic info.
-        LOG_INFO() << "Starting MovieMator version" << SHOTCUT_VERSION;
+        LOG_INFO() << "Starting MovieMator version" << MOVIEMATOR_VERSION;
 #if defined (Q_OS_WIN)
         LOG_INFO() << "Windows version" << QSysInfo::windowsVersion();
 #elif defined(Q_OS_MAC)

@@ -301,10 +301,8 @@ RESOURCES += \
 
 OTHER_FILES += \
     ../COPYING \
-    shotcut.rc \
-    ../scripts/build-shotcut.sh \
+    moviemator.rc \
     ../icons/moviemator.icns \
-    ../scripts/shotcut.nsi \
     ../Info.plist \
     ../icons/dark/index.theme \
     ../icons/light/index.theme \
@@ -335,7 +333,7 @@ LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lCommonUtil -lMltController -lQ
 
 #INCLUDEPATH += ../PythonQt3.2/src
 
-#LIBS += -L/Users/gdb/work/MacVideoEditor/trunk/shotcut/PythonQt3.2/lib
+#LIBS += -L/Users/gdb/work/MacVideoEditor/trunk/MovieMator/PythonQt3.2/lib
 
 #LIBS += -lPythonQt-Qt5-Python2.7_d
 
@@ -421,7 +419,7 @@ win32 {
     }
     INCLUDEPATH += $$MLT_PATH\\include\\mlt++ $$MLT_PATH\\include\\mlt
     LIBS += -L$$MLT_PATH\\lib -lmlt++ -lmlt -lopengl32
-    RC_FILE = shotcut.rc
+    RC_FILE = moviemator.rc
 
     LIBS += -L$$MLT_PATH -leay32
 }
@@ -433,12 +431,12 @@ unix:!mac {
     LIBS += -lX11
 }
 
-isEmpty(SHOTCUT_VERSION) {
-    !win32:SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
-     win32:SHOTCUT_VERSION = adhoc
+isEmpty(MOVIEMATOR_VERSION) {
+    !win32:MOVIEMATOR_VERSION = $$system(date "+%y.%m.%d")
+     win32:MOVIEMATOR_VERSION = adhoc
 }
-#DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
-DEFINES += SHOTCUT_VERSION=\\\"2.5.3\\\"
+#DEFINES += MOVIEMATOR_VERSION=\\\"$$MOVIEMATOR_VERSION\\\"
+DEFINES += MOVIEMATOR_VERSION=\\\"2.5.3\\\"
 
 
 unix:!mac:isEmpty(PREFIX) {
@@ -460,7 +458,7 @@ win32 {
 }
 
 mac {
-    qmlfiles.files = $$PWD/../../../../shotcut/moviemator_qml/moviemator/qml
+    qmlfiles.files = $$PWD/../../../../MovieMator/moviemator_qml/moviemator/qml
     qmlfiles.path = $$PREFIX/share/MovieMator
     INSTALLS += qmlfiles
 }
@@ -468,7 +466,6 @@ mac {
 DISTFILES += \
     qss/mainstylesheet.qss \
     ../Info_share.plist \
-#    ../translations/shotcut_zh.qm \
     ../translations/mm_en.qm \
     ../translations/mm_zh.qm
 
