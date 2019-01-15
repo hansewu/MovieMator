@@ -93,8 +93,8 @@
 #include <configurationdock.h>
 #include "maininterface.h"
 #include <recentdockinterface.h>
-//#include <templatedockinterface.h>
-//#include <templateeditordockinterface.h>
+#include <templatedockinterface.h>
+#include <templateeditordockinterface.h>
 
 #include "containerdock.h"
 #include "templateeidtor.h"
@@ -587,8 +587,8 @@ MainWindow::MainWindow()
     addResourceDock(m_recentDock, tr("Recent"), QIcon(":/icons/light/32x32/show-recent.png"), QIcon(":/icons/light/32x32/show-recent-highlight.png"));
 
 
-//    m_templateDock = TemplateDock_initModule(&MainInterface::singleton());
-//    addResourceDock(m_templateDock, tr("Recent"), QIcon(":/icons/light/32x32/show-playlist.png"), QIcon(":/icons/light/32x32/show-playlist-highlight.png"));
+    m_templateDock = TemplateDock_initModule(&MainInterface::singleton());
+    addResourceDock(m_templateDock, tr("Recent"), QIcon(":/icons/light/32x32/show-playlist.png"), QIcon(":/icons/light/32x32/show-playlist-highlight.png"));
 
 
 
@@ -617,8 +617,8 @@ MainWindow::MainWindow()
     m_filtersDock->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);
     addPropertiesDock(m_filtersDock, tr("Filter"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
 
-//    m_templateEditorDock = TemplateEditorDock_initModule(&MainInterface::singleton());
-//    addPropertiesDock(m_templateEditorDock, tr("Template"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
+    m_templateEditorDock = TemplateEditorDock_initModule(&MainInterface::singleton());
+    addPropertiesDock(m_templateEditorDock, tr("Template"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
 
 
 
@@ -4370,13 +4370,24 @@ void MainWindow::addPlayer()
 void MainWindow::onExportTemplate()
 {
 
+    QDir dir(qApp->applicationDirPath());
+#if defined(Q_OS_MAC)
+    dir.cdUp();
+    dir.cd("Resources");
+#endif
+    dir.cd("Samples");
+
     Mlt::Tractor *tractor = m_timelineDock->model()->tractor();
     QString xml = MLT.XML(tractor);
+
+
+
 
     //create a temporary tractor
     Mlt::Tractor *tempTractor = new Mlt::Tractor(MLT.profile(), "xml-string", (char *)xml.toUtf8().constData());
 
     int trackCount = tempTractor->count();
+
 
 
     //replace clips
@@ -4399,8 +4410,10 @@ void MainWindow::onExportTemplate()
                         && mltService != "tractor"
                         && mltService != "gifdec")
                 {
+                    QString sampleFile = dir.absoluteFilePath("1.mp4");
                     Mlt::Producer *newProducer = new Mlt::Producer(MLT.profile(),
-                                                                   "C:\\Users\\gdbwin\\Videos\\exercise_.mp4");
+                                                                   sampleFile.toUtf8().constData());
+
                     MLT.getHash(*newProducer);
                     MLT.copyFilters(*originalProducer, *newProducer);
                     //set same in/out/length as original

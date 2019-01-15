@@ -59,13 +59,12 @@ public:
     virtual FILE_HANDLE createFileWithXMLForDragAndDrop(QString xml);
 
     // 功能：把模板中的索引为index的文件替换成文件destFile
+    // 返回值：成功返回0，失败返回-1
     virtual int replaceFileInTemplate(int index, FILE_HANDLE destFile);
 
     // 功能：重置模板文件为缺省文件
     // 返回值：成功返回0，失败返回-1
     virtual int resetFileInTemplate(int index);
-
-
 };
 
 #define MAININTERFACE MainInterface::singleton()

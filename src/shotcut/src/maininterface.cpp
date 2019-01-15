@@ -203,6 +203,7 @@ FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
 }
 
 // 功能：把模板中的索引为index的文件替换成文件destFile
+// 返回值：成功返回0，失败返回-1
 int MainInterface::replaceFileInTemplate(int index, FILE_HANDLE destFile)
 {
     Q_ASSERT(destFile);
