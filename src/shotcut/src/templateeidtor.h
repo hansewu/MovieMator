@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <Mlt.h>
+#include <maininterface.h>
 
 typedef struct {
     int trackIndex;
@@ -18,7 +19,7 @@ public:
     ~TemplateEidtor();
 
     int replaceFileInTemplate(int index, Mlt::Producer *producer);
-    int resetFileToTemplateDefault(int index);
+    FILE_HANDLE resetFileToTemplateDefault(int index);
 
 signals:
 

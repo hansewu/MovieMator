@@ -12,13 +12,16 @@ TemplateEidtor::TemplateEidtor(QObject *parent)
 
 TemplateEidtor::~TemplateEidtor()
 {
-
+    if (m_templateProducer)
+        delete  m_templateProducer;
 }
 
 
 int TemplateEidtor::setProducer(Mlt::Producer *producer)
 {
-    m_templateProducer = producer;
+    if (m_templateProducer)
+        delete m_templateProducer;
+    m_templateProducer = new Mlt::Producer(producer);
 
     QList<FILE_HANDLE> replaceableClipList;
 
@@ -58,7 +61,7 @@ int TemplateEidtor::setProducer(Mlt::Producer *producer)
                         templateClipInfo.clipIndex = j;
                         //templateClipInfo.producer = new Mlt::Producer(clipProducer);
                         m_clipList.append(templateClipInfo);
-                        replaceableClipList.append(clipProducer);
+                        replaceableClipList.append((FILE_HANDLE)new Mlt::Producer(clipProducer));
                     }
                 }
             }
@@ -79,8 +82,14 @@ int TemplateEidtor::setProducer(Mlt::Producer *producer)
 int TemplateEidtor::replaceFileInTemplate(int index, Mlt::Producer *producer)
 {
     Q_ASSERT(index >= 0 && index < m_clipList.count());
-    Q_ASSERT(m_templateProducer != 0);
+    Q_ASSERT(m_templateProducer && m_templateProducer->is_valid());
 
+    int ret = -1;
+    if (index < 0 || index > m_clipList.count() - 1)
+        return ret;
+
+    if (!m_templateProducer || !m_templateProducer->is_valid())
+        return ret;
     //create a tractor
     char *resource = m_templateProducer->get("resource");
     m_templateProducer->set("resource", "<tractor>");
@@ -93,62 +102,67 @@ int TemplateEidtor::replaceFileInTemplate(int index, Mlt::Producer *producer)
     {
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> originalPlaylistClipInfo(playlist.clip_info(clipInfo.clipIndex));
-        Mlt::Producer *originalPlaylistClipProducer = originalPlaylistClipInfo->producer;
-        //set same in/out/length as original
-        producer->set("length", originalPlaylistClipInfo->frame_count);
-        producer->set("in", originalPlaylistClipInfo->frame_in);
-        producer->set("out", originalPlaylistClipInfo->frame_out);
-        playlist.remove(clipInfo.clipIndex);
-        playlist.insert(*producer, clipInfo.clipIndex, originalPlaylistClipInfo->frame_in, originalPlaylistClipInfo->frame_out);
-        QScopedPointer<Mlt::ClipInfo> newPlaylistClipInfo(playlist.clip_info(clipInfo.clipIndex));
-        Mlt::Producer *newPlaylistClipProducer = newPlaylistClipInfo->producer;
-        //process transitions
-        if (clipInfo.clipIndex > 0)
+        if (originalPlaylistClipInfo)
         {
-            QScopedPointer<Mlt::ClipInfo> preClipInfo(playlist.clip_info(clipInfo.clipIndex - 1));
-            Mlt::Producer *preClipProducer = preClipInfo->producer;
-            QString mltService(preClipProducer->parent().get("mlt_service"));
-            if (mltService == "tractor")
+            Mlt::Producer *originalPlaylistClipProducer = originalPlaylistClipInfo->producer;
+            //set same in/out/length as original
+            producer->set("length", originalPlaylistClipInfo->frame_count);
+            producer->set("in", originalPlaylistClipInfo->frame_in);
+            producer->set("out", originalPlaylistClipInfo->frame_out);
+            playlist.remove(clipInfo.clipIndex);
+            playlist.insert(*producer, clipInfo.clipIndex, originalPlaylistClipInfo->frame_in, originalPlaylistClipInfo->frame_out);
+            QScopedPointer<Mlt::ClipInfo> newPlaylistClipInfo(playlist.clip_info(clipInfo.clipIndex));
+            Mlt::Producer *newPlaylistClipProducer = newPlaylistClipInfo->producer;
+            //process transitions
+            if (clipInfo.clipIndex > 0)
             {
-                int transitionDuration = preClipInfo->frame_count;
-                newPlaylistClipProducer->set("length", newPlaylistClipInfo->frame_count + transitionDuration);
-                newPlaylistClipProducer->set("in", newPlaylistClipInfo->frame_in - transitionDuration);
-                Mlt::Producer *bTrack = newPlaylistClipProducer->cut(newPlaylistClipInfo->frame_in - transitionDuration, newPlaylistClipInfo->frame_in - 1);
-                Mlt::Tractor tractor(*preClipProducer);
-                tractor.set_track(*bTrack, 1);
-                //playlist.resize_clip(clipInfo.clipIndex, playlistClipInfo->frame_in + transitionDuration, playlistClipInfo->frame_out);
+                QScopedPointer<Mlt::ClipInfo> preClipInfo(playlist.clip_info(clipInfo.clipIndex - 1));
+                Mlt::Producer *preClipProducer = preClipInfo->producer;
+                QString mltService(preClipProducer->parent().get("mlt_service"));
+                if (mltService == "tractor")
+                {
+                    int transitionDuration = preClipInfo->frame_count;
+                    newPlaylistClipProducer->set("length", newPlaylistClipInfo->frame_count + transitionDuration);
+                    newPlaylistClipProducer->set("in", newPlaylistClipInfo->frame_in - transitionDuration);
+                    Mlt::Producer *bTrack = newPlaylistClipProducer->cut(newPlaylistClipInfo->frame_in - transitionDuration, newPlaylistClipInfo->frame_in - 1);
+                    Mlt::Tractor tractor(*preClipProducer);
+                    tractor.set_track(*bTrack, 1);
+                    //playlist.resize_clip(clipInfo.clipIndex, playlistClipInfo->frame_in + transitionDuration, playlistClipInfo->frame_out);
+                }
             }
-        }
-        if (clipInfo.clipIndex < playlist.count() - 1)
-        {
-            QScopedPointer<Mlt::ClipInfo> nextClipInfo(playlist.clip_info(clipInfo.clipIndex + 1));
-            Mlt::Producer *nextClipProducer = nextClipInfo->producer;
-            QString mltService(nextClipProducer->parent().get("mlt_service"));
-            if (mltService == "tractor")
+            if (clipInfo.clipIndex < playlist.count() - 1)
             {
-                int transitionDuration = nextClipInfo->frame_count;
-                newPlaylistClipProducer->set("length", newPlaylistClipInfo->frame_count + transitionDuration);
-                newPlaylistClipProducer->set("out", newPlaylistClipInfo->frame_out + transitionDuration);
-                Mlt::Producer *aTrack = newPlaylistClipProducer->cut(newPlaylistClipInfo->frame_out + 1, newPlaylistClipInfo->frame_out + transitionDuration);
-                Mlt::Tractor tractor(*nextClipProducer);
-                tractor.set_track(*aTrack, 0);
-                //playlist.resize_clip(clipInfo.clipIndex, playlistClipInfo->frame_in, playlistClipInfo->frame_out - transitionDuration + 1);
+                QScopedPointer<Mlt::ClipInfo> nextClipInfo(playlist.clip_info(clipInfo.clipIndex + 1));
+                Mlt::Producer *nextClipProducer = nextClipInfo->producer;
+                QString mltService(nextClipProducer->parent().get("mlt_service"));
+                if (mltService == "tractor")
+                {
+                    int transitionDuration = nextClipInfo->frame_count;
+                    newPlaylistClipProducer->set("length", newPlaylistClipInfo->frame_count + transitionDuration);
+                    newPlaylistClipProducer->set("out", newPlaylistClipInfo->frame_out + transitionDuration);
+                    Mlt::Producer *aTrack = newPlaylistClipProducer->cut(newPlaylistClipInfo->frame_out + 1, newPlaylistClipInfo->frame_out + transitionDuration);
+                    Mlt::Tractor tractor(*nextClipProducer);
+                    tractor.set_track(*aTrack, 0);
+                    //playlist.resize_clip(clipInfo.clipIndex, playlistClipInfo->frame_in, playlistClipInfo->frame_out - transitionDuration + 1);
+                }
             }
+            MLT.refreshConsumer();
+            ret = 0;
         }
-
-        MLT.refreshConsumer();
     }
+    return ret;
 }
 
-int TemplateEidtor::resetFileToTemplateDefault(int index)
+FILE_HANDLE TemplateEidtor::resetFileToTemplateDefault(int index)
 {
     Q_ASSERT(index >= 0 && index < m_clipList.count());
 
+    Mlt::Producer *resultProducer = 0;
     //create a new producer from template file
     char *templateFile = m_templateProducer->get("resource");
     Mlt::Producer *tractorProducer = new Mlt::Producer(MLT.profile(), templateFile);
     if (!tractorProducer || !tractorProducer->is_valid())
-        return -1;
+        return 0;
     tractorProducer->set("resource", "<tractor>");
     Mlt::Tractor tractor(*tractorProducer);
 
@@ -158,9 +172,16 @@ int TemplateEidtor::resetFileToTemplateDefault(int index)
     {
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipInfo.clipIndex));
-        replaceFileInTemplate(index, info->producer);
+        if (info)
+        {
+            int ret = replaceFileInTemplate(index, info->producer);
+            if (ret == 0)
+                resultProducer = new Mlt::Producer(info->producer);
+        }
     }
     delete tractorProducer;
+
+    return resultProducer;
 }
 
 

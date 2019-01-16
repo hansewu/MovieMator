@@ -217,9 +217,8 @@ int MainInterface::replaceFileInTemplate(int index, FILE_HANDLE destFile)
 
 // 功能：重置模板文件为缺省文件
 // 返回值：成功返回0，失败返回-1
-int MainInterface::resetFileInTemplate(int index)
+FILE_HANDLE MainInterface::resetFileInTemplate(int index)
 {
     TemplateEidtor *templateEditor = MAIN.templateEditor();
-    templateEditor->resetFileToTemplateDefault(index);
-    return 0;
+    return templateEditor->resetFileToTemplateDefault(index);
 }

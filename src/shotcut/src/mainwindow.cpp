@@ -95,7 +95,6 @@
 #include <recentdockinterface.h>
 #include <templatedockinterface.h>
 #include <templateeditordockinterface.h>
-
 #include "containerdock.h"
 #include "templateeidtor.h"
 
@@ -4481,4 +4480,6 @@ void MainWindow::loadTemplateInfo(Mlt::Producer *producer)
     QString service(producer->get("mlt_service"));
     if (service == "xml")
         m_templateEditor->setProducer(producer);
+    else
+        m_templateEditor->setProducer(0);
 }

@@ -64,7 +64,7 @@ public:
 
     // 功能：重置模板文件为缺省文件
     // 返回值：成功返回0，失败返回-1
-    virtual int resetFileInTemplate(int index);
+    virtual FILE_HANDLE resetFileInTemplate(int index);
 };
 
 #define MAININTERFACE MainInterface::singleton()
