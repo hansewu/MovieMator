@@ -1862,6 +1862,10 @@ void MainWindow::on_actionAbout_TVE_triggered()
                 "<p>Based on Shotcut v16.06 Copyright &copy; 2011-2016 Meltytech, LLC.</p>"
                 "<p>Licensed under the GNU General Public License v3.0</p>"
                 "</small>"
+                "<p />"
+                "<small>"
+                "<p><a href=\"http://www.moviemator.net/develop/third-party.html\">Related Information</a>    <a href=\"mailto:market@effectmatrix.com\">Freeback</a></p>"
+                "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
 #else
     QMessageBox::about(this, tr("About MovieMator Video Editor"),
