@@ -118,7 +118,6 @@ SOURCES += main.cpp\
     jobs/melttask.cpp \
     dialogs/mmsplashscreen.cpp \
     qmltypes/mmqmlutilities.cpp \
-    eccregister/CEccRegister.cpp \
     maininterface.cpp \
     containerdock.cpp \
     widgets/avformatproducersimplewidget.cpp
@@ -238,7 +237,6 @@ HEADERS  += mainwindow.h \
     maininterface.h \
     containerdock.h \
     widgets/avformatproducersimplewidget.h
-    eccregister/CEccRegister.h
     maininterface.h
 
 mac {
@@ -422,6 +420,7 @@ win32 {
     RC_FILE = moviemator.rc
 
     LIBS += -L$$MLT_PATH -leay32
+    LIBS += -L$$MLT_PATH -lregister
 }
 
 unix:!mac {
