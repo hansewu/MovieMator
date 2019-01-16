@@ -175,9 +175,10 @@ int QmlFilter::getInt(QString name)
         return 0;
 }
 
-QRectF QmlFilter::getRect(QString name, int position)
+QRectF QmlFilter::getRect(QString name, int position)  //
 {
-    position = MAIN.timelineDock()->getPositionOnParentProducer(position);
+    if (position != -1)
+        position = MAIN.timelineDock()->getPositionOnParentProducer(position);
 
     if (!m_filter->is_valid()) return QRectF();
     const char* s = m_filter->get(name.toUtf8().constData());
@@ -205,7 +206,8 @@ QRectF QmlFilter::getRect(QString name, int position)
 //FIXME: 暫時之應用與Text Filter，之後其他濾鏡獲取rect方法統一后移除
 QRectF QmlFilter::getRectOfTextFilter(QString name, int position)
 {
-    position = MAIN.timelineDock()->getPositionOnParentProducer(position);
+    if (position != -1)
+        position = MAIN.timelineDock()->getPositionOnParentProducer(position);
     if (!m_filter->is_valid()) return QRectF();
 
     const char* propertyName = name.toUtf8().constData();
