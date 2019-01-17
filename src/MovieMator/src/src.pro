@@ -388,6 +388,7 @@ mac {
 #    LIBS += -L$$MLT_PREFIX/lib -lmlt++ -lmlt -lSDL
 #    LIBS += -lexif -lmltqt
     LIBS += "-framework Cocoa"
+    LIBS += -L$$PWD/../../../../build/ecc -lregister
 
     QMAKE_LFLAGS += -Wl,/usr/lib/libcrypto.0.9.8.dylib
 #    INCLUDEPATH += /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7
