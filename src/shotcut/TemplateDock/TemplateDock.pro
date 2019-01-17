@@ -7,10 +7,10 @@ CONFIG   += link_prl
 
 QT       += widgets
 
-TARGET = RecentDock
+TARGET = TemplateDock
 TEMPLATE = lib
 
-DEFINES += RECENTDOCK_LIBRARY
+DEFINES += TEMPLATEDOCK_LIBRARY
 win32:DEFINES += QT_STATIC
 
 # The following define makes your compiler emit warnings if you use
@@ -25,18 +25,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        recentdock.cpp \
-    widgets/lineeditclear.cpp \
-    recentlistview.cpp \
-    recentlistmodel.cpp
+    templatelistmodel.cpp \
+    templatedock.cpp \
+    templatelistview.cpp
 
 HEADERS += \
-        recentdock.h \
-        recentdock_global.h \ 
-    widgets/lineeditclear.h \
-    recentdockinterface.h \
-    recentlistview.h \
-    recentlistmodel.h
+        templatedock_global.h \
+    templatedockinterface.h \
+    templatelistmodel.h \
+    templatedock.h \
+    templatelistview.h
 
 #INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 #INCLUDEPATH += ../src
@@ -52,9 +50,6 @@ HEADERS += \
 #}
 #LIBS += -lLogger -lCommonUtil
 
-mac {
-    QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/
-}
 
 win32 {
     isEmpty(PREFIX) {
@@ -79,4 +74,4 @@ unix {
 }
 
 FORMS += \
-    recentdock.ui
+    templatedock.ui

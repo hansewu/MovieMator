@@ -109,6 +109,7 @@ int TemplateEidtor::replaceFileInTemplate(int index, Mlt::Producer *producer)
             producer->set("length", originalPlaylistClipInfo->frame_count);
             producer->set("in", originalPlaylistClipInfo->frame_in);
             producer->set("out", originalPlaylistClipInfo->frame_out);
+            MLT.copyFilters(*originalPlaylistClipProducer, *producer);
             playlist.remove(clipInfo.clipIndex);
             playlist.insert(*producer, clipInfo.clipIndex, originalPlaylistClipInfo->frame_in, originalPlaylistClipInfo->frame_out);
             QScopedPointer<Mlt::ClipInfo> newPlaylistClipInfo(playlist.clip_info(clipInfo.clipIndex));

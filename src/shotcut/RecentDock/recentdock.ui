@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>287</height>
+    <width>610</width>
+    <height>386</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>150</width>
-    <height>188</height>
+    <width>164</width>
+    <height>263</height>
    </size>
   </property>
   <property name="windowIcon">
@@ -26,50 +26,78 @@
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
-     <number>0</number>
+     <number>2</number>
     </property>
     <property name="leftMargin">
-     <number>0</number>
+     <number>2</number>
     </property>
     <property name="topMargin">
-     <number>0</number>
+     <number>2</number>
     </property>
     <property name="rightMargin">
-     <number>0</number>
+     <number>2</number>
     </property>
     <property name="bottomMargin">
-     <number>0</number>
+     <number>2</number>
     </property>
     <item>
-     <widget class="LineEditClear" name="lineEdit">
-      <property name="toolTip">
-       <string>Show only files with name matching text</string>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>15</number>
       </property>
-      <property name="placeholderText">
-       <string>search</string>
-      </property>
-     </widget>
+      <item>
+       <widget class="LineEditClear" name="lineEdit">
+        <property name="toolTip">
+         <string>Show only files with name matching text</string>
+        </property>
+        <property name="placeholderText">
+         <string>search</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBox"/>
+      </item>
+     </layout>
     </item>
     <item>
-     <widget class="RecentTableView" name="tableView">
-      <property name="contextMenuPolicy">
-       <enum>Qt::CustomContextMenu</enum>
-      </property>
-      <property name="selectionMode">
-       <enum>QAbstractItemView::SingleSelection</enum>
-      </property>
-      <property name="selectionBehavior">
-       <enum>QAbstractItemView::SelectRows</enum>
-      </property>
-      <attribute name="horizontalHeaderHighlightSections">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="horizontalHeaderStretchLastSection">
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="widgetResizable">
        <bool>true</bool>
-      </attribute>
-      <attribute name="verticalHeaderVisible">
-       <bool>false</bool>
-      </attribute>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>604</width>
+         <height>325</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>2</number>
+        </property>
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -112,11 +140,6 @@
    <class>LineEditClear</class>
    <extends>QLineEdit</extends>
    <header>widgets/lineeditclear.h</header>
-  </customwidget>
-  <customwidget>
-   <class>RecentTableView</class>
-   <extends>QTableView</extends>
-   <header>recenttableview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
