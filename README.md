@@ -26,7 +26,7 @@ Shotcut V16.06  [http://www.shotcut.org]
   *  Movit
 
 #  License
-* Community free edition
+* Community free edition  GPL3
 * Pro  Commercial edition
 
 [http://www.moviemator.net]: http://www.moviemator.net
