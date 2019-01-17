@@ -1864,7 +1864,7 @@ void MainWindow::on_actionAbout_TVE_triggered()
                 "</small>"
                 "<small>"
                 "<p />"
-                "<p><a href=\"http://www.moviemator.net/develop/third-party.html\">Related Information</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"mailto:market@effectmatrix.com\">Freeback</a></p>"
+                "<p><a href=\"http://www.moviemator.net/develop/third-party.html\">Related Information</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"mailto:market@effectmatrix.com\">Feedback</a></p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
 #else
