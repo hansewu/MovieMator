@@ -36,6 +36,7 @@ public:
     static void setColorsToHighlight(QWidget* widget, QPalette::ColorRole role = QPalette::Window);
     static QString removeFileScheme(QUrl& url);
     static QString getFileHash(const QString& path);
+    static QString templatePath();
 };
 
 #endif // UTIL_H

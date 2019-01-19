@@ -462,7 +462,7 @@ INSTALLS += target
 
 win32 {
     qmlfiles.files = $$PWD/moviemator_qml/moviemator/qml
-    qmlfiles.path = $$PREFIX/share/MovieMator
+    qmlfiles.path = $$PREFIX/share/moviemator
     INSTALLS += qmlfiles
 }
 

@@ -97,6 +97,7 @@
 #include <templateeditordockinterface.h>
 #include "containerdock.h"
 #include "templateeidtor.h"
+#include <util.h>
 
 #include <QtWidgets>
 #include <Logger.h>
@@ -1369,7 +1370,6 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
     LOG_DEBUG() << url;
 
 #if SHARE_VERSION
-
 #else
     if (url.endsWith(".vob", Qt::CaseInsensitive) || url.endsWith(".m4p", Qt::CaseInsensitive))
     {
@@ -1391,27 +1391,29 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
 #endif
 
     bool modified = false;
-    MltXmlChecker checker;
-    if (checker.check(url)) {
-        if (!isCompatibleWithGpuMode(checker))
-            return;
-    }
-#ifdef MOVIEMATOR_PRO
-  #ifndef SHARE_VERSION
-    if(checker.hasUnbookmarkedFile())
-    {
-        showInvalidProjectDialog();
-        return;
-    }
-#endif
-#endif
     if ( url.endsWith(".mmp")) {//xjp
+
+        MltXmlChecker checker;
+        if (checker.check(url)) {
+            if (!isCompatibleWithGpuMode(checker))
+                return;
+        }
+#ifdef MOVIEMATOR_PRO
+#ifndef SHARE_VERSION
+        if(checker.hasUnbookmarkedFile())
+        {
+            showInvalidProjectDialog();
+            return;
+        }
+#endif
+#endif
+
         // only check for a modified project when loading a project, not a simple producer
         if (!continueModified())
             return;
         // close existing project
-//        if (playlist())
-//            m_playlistDock->model()->close();
+        //if (playlist())
+        //    m_playlistDock->model()->close();
         if (multitrack())
             m_timelineDock->model()->close();
         if (!isXmlRepaired(checker, url))
@@ -1423,6 +1425,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
             setWindowModified(modified);
         }
     }
+
     if (!playlist() && !multitrack()) {
         if (!modified && !continueModified())
             return;
@@ -1451,6 +1454,17 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         //QFuture<void> fut1 = QtConcurrent::run(openFileTask, this, url, properties);
         //fut1.waitForFinished();
         //showLoadProgress();
+    }
+    else if (url.endsWith(".mlt"))
+    {
+        //拷贝到模板目录,并添加到模板管理界面
+        if (!MLT.openXML(url)) {
+            open(MLT.producer());
+            LOG_INFO() << url;
+        }
+        else {
+            showStatusMessage(tr("Failed to open ") + url);
+        }
     }
     else
     {
@@ -4251,7 +4265,8 @@ void MainWindow::setCurrentFilterForVideoWidget(QObject* filter, QmlMetadata* me
 void MainWindow::initParentDockForResourceDock()
 {
     m_resourceDockContainer = new ContainerDock(TabPosition_Left, this);
-
+    m_resourceDockContainer->setMinimumWidth(360);
+    //m_resourceDockContainer->setMinimumHeight()
     addDockWidget(Qt::LeftDockWidgetArea, m_resourceDockContainer);
 }
 
@@ -4285,11 +4300,17 @@ void MainWindow::addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QI
 
 void MainWindow::onFileOpened(QString filePath)
 {
-    RecentDock_add(filePath);
-
+    if (filePath.endsWith(".mlt"))
+    {
+        //拷贝到模板目录，并添加到模板管理界面
+    }
+    else
+    {
+        RecentDock_add(filePath);
 #ifdef Q_OS_MAC
-    create_security_bookmark(filePath.toLatin1().constData());
+        create_security_bookmark(filePath.toLatin1().constData());
 #endif
+    }
 }
 
 void MainWindow::onOpenFailed(QString filePath)
@@ -4368,13 +4389,8 @@ void MainWindow::addPlayer()
 
 void MainWindow::onExportTemplate()
 {
-
-    QDir dir(qApp->applicationDirPath());
-#if defined(Q_OS_MAC)
-    dir.cdUp();
-    dir.cd("Resources");
-#endif
-    dir.cd("Samples");
+    QString templatePath = Util::templatePath();
+    QString sampleFile = QString("%1/Samples/1.mp4").arg(templatePath);
 
     Mlt::Tractor *tractor = m_timelineDock->model()->tractor();
     QString xml = MLT.XML(tractor);
@@ -4409,7 +4425,6 @@ void MainWindow::onExportTemplate()
                         && mltService != "tractor"
                         && mltService != "gifdec")
                 {
-                    QString sampleFile = dir.absoluteFilePath("1.mp4");
                     Mlt::Producer *newProducer = new Mlt::Producer(MLT.profile(),
                                                                    sampleFile.toUtf8().constData());
 
@@ -4457,6 +4472,13 @@ void MainWindow::onExportTemplate()
         }
     }
 
+    // get temp filename
+    QString tmpTemplate = QString("%1/tmp_XXXXX").arg(templatePath);
+
+    QTemporaryFile tmp(tmpTemplate);
+    tmp.open();
+    tmp.close();
+
     QString path = Settings.savePath();
     path.append("/untitled.xml");
     QString filename = QFileDialog::getSaveFileName(this, tr("Save Template"), path, tr("Template (*.xml)"));
@@ -4465,7 +4487,10 @@ void MainWindow::onExportTemplate()
         Settings.setSavePath(fi.path());
         if (fi.suffix() != "xml")
             filename += ".xml";
-        MLT.saveXML(filename, tempTractor, false);
+        MLT.saveXML(tmp.fileName(), tempTractor, true);
+        QFile::remove(filename);
+        QFile::copy(tmp.fileName(), filename);
+        QFile::remove(tmp.fileName());
     }
     delete tempTractor;
 }

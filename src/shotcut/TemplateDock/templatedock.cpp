@@ -40,7 +40,7 @@ TemplateDock::TemplateDock(MainInterface *main, QWidget *parent) :
     m_currentListView = nullptr;
 
     // 模板文件路径
-    QDir dir("C:/Projects/MovieMator/template");
+    QDir dir("C:/Projects/MovieMator/templates");
 
     if(!dir.exists())
     {

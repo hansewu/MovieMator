@@ -21,6 +21,8 @@ FILE_HANDLE MainInterface::openFile(QString filepath)
     Mlt::Producer *producer = new Mlt::Producer(MLT.profile(), filepath.toUtf8().constData());
     if (producer->is_valid()) {
         MLT.setImageDurationFromDefault(producer);
+        if (filepath.endsWith(".mlt"))
+            producer->set(kShotcutVirtualClip, 1);
     }
     else {
         delete producer;

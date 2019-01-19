@@ -1477,6 +1477,8 @@ void TimelineDock::appendFromUrls(int trackIndex, QList<QUrl> urlList)
     foreach (QUrl url, urlList) {
         QString path = MAIN.removeFileScheme(url);
         //this->appendFromPath(trackIndex, path);
+
+        //模板文件拷贝到模板目录，再加到时间线
         MAINCONTROLLER.appendToTimelineFromPath(trackIndex, path);
     }
 }
@@ -1786,4 +1788,23 @@ QRect TimelineDock::dockPosition()
 void TimelineDock::setExtraQmlContextProperty(QString name, QObject *object)
 {
     m_quickView.rootContext()->setContextProperty(name, object);
+}
+
+void TimelineDock::exportAsTemplate(int trackIndex, int clipIndex)
+{
+    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
+
+    if (trackIndex >= 0 && clipIndex >= 0)
+    {
+        int i = m_model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        if (track)
+        {
+            Mlt::Playlist playlist(*track);
+            QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+            QString xml = MLT.XML(info->producer);
+            qDebug() << xml;
+            MLT.saveXML("C:\\Users\\gdbwin\\Desktop\\test.xml", info->producer, true);
+        }
+    }
 }

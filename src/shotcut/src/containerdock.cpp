@@ -48,8 +48,8 @@ ContainerDock::ContainerDock(TAB_POSITION tabPosition, QWidget *parent)
 
 
     QWidget *layoutWidget = new QWidget;
-    layoutWidget->setMinimumWidth(300);
-    layoutWidget->setMinimumHeight(320);
+//    layoutWidget->setMinimumWidth(300);
+//    layoutWidget->setMinimumHeight(320);
     layoutWidget->setContentsMargins(0,0,0,0);
     QString strStyle = "QScrollBar::vertical{background-color:rgb(51,51,51);width:14px;border: 3px solid rgb(51,51,51);}";
     strStyle.append("QScrollBar::handle:vertical{background:#787878;border-radius:4px;}");

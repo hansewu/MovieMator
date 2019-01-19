@@ -98,6 +98,8 @@ public:
 
     void setExtraQmlContextProperty(QString name, QObject *object);
 
+    Q_INVOKABLE void exportAsTemplate(int trackIndex, int clipIndex);
+
 signals:
     void currentTrackChanged();
     void selectionChanged();

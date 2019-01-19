@@ -10,6 +10,7 @@
 #include "docks/encodedock.h"
 #include <QMessageBox>
 #include <qmlapplication.h>
+#include <shotcut_mlt_properties.h>
 
 
 
@@ -93,6 +94,8 @@ int MainController::appendToTimelineFromPath(int trackIndex, const QString &path
 
     Mlt::Producer *p = new Mlt::Producer(MLT.profile(), path.toUtf8().constData());
     if (p->is_valid()) {
+        if (path.endsWith(".mlt"))
+            p->set(kShotcutVirtualClip, 1);
         MLT.setProducer(p);
 
         // Convert avformat to avformat-novalidate so that XML loads faster.
