@@ -502,6 +502,7 @@ void TimelineDock::clearSelectionIfInvalid()
 
         newSelection << index;
     }
+    setSelection();
     setSelection(newSelection);
     emit selectionChanged();
 }
