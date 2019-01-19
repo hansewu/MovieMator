@@ -86,6 +86,7 @@ private slots:
 private:
     void loadFilterMetadata();
     void loadFrei0rFilterMetadata();
+    void readFilterTypeFromFile(QString &pFilePath, std::map<QString, QString> &filterTypes);
     void getFrei0rPluginInfo(Mlt::Filter *filter, f0r_plugin_info_t &info);
     void getFrei0rParamInfo(Mlt::Filter *filter, int index, f0r_param_info_t &info);
 

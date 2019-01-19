@@ -34,6 +34,7 @@
 #include <qmlutilities.h>
 #include "qmltypes/qmlfilter.h"
 #include <MltFilter.h>
+#include <map>
 
 FilterController::FilterController(QObject* parent) : QObject(parent),
  m_metadataModel(this),
@@ -154,6 +155,20 @@ void FilterController::loadFilterMetadata() {
 //    }
 
 //}
+void FilterController::readFilterTypeFromFile(QString &pFilePath, std::map<QString, QString> &filterTypes)
+{
+    QFile file(pFilePath);
+    if(!file.open(QIODevice::ReadOnly))  return;
+
+    QTextStream in(&file);
+    while( !in.atEnd())
+    {
+        QString lineString = in.readLine();
+        QStringList filterType = lineString.split(':');
+        filterTypes.insert(std::make_pair(filterType.at(0), filterType.at(1)));
+    }
+    file.close();
+}
 
 void FilterController::loadFrei0rFilterMetadata() {
     QDir dir = QmlUtilities::qmlDir();
@@ -164,6 +179,10 @@ void FilterController::loadFrei0rFilterMetadata() {
     subdir.setNameFilters(QStringList("meta*.qml"));
     foreach (QString fileName, subdir.entryList())
     {
+        QString filePath = qApp->applicationDirPath() + "/../Resources/frei0r.txt";
+        std::map<QString, QString> filterTypes;
+        readFilterTypeFromFile(filePath, filterTypes);
+
         QDir applicationDir(qApp->applicationDirPath());
         applicationDir.cd("lib");
         applicationDir.cd("frei0r-1");
@@ -175,6 +194,14 @@ void FilterController::loadFrei0rFilterMetadata() {
             QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
             if (meta)
             {
+                std::map<QString, QString>::iterator iter = filterTypes.find(libName.mid(0, libName.length() - 3));
+                if (iter != filterTypes.end())
+                {
+                    QString filterType = iter->second;
+                    meta->setFilterType(filterType);
+                }
+
+
                 QString mlt_service_s       = "frei0r." + libName.mid(0, libName.length() - 3);
 
 //                    Mlt::Properties *metadata = MLT.repository()->metadata(filter_type, mlt_service_s.toUtf8().constData());
