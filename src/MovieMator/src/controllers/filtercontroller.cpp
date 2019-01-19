@@ -35,6 +35,7 @@
 #include "qmltypes/qmlfilter.h"
 #include <MltFilter.h>
 #include <map>
+#include <filterdockinterface.h>
 
 FilterController::FilterController(QObject* parent) : QObject(parent),
  m_metadataModel(this),
@@ -341,9 +342,28 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
     return meta;
 }
 
+void FilterController::updateFilterDock()
+{
+    int nFilterCount = m_metadataModel.rowCount();
+
+    Filter_Info filterInfos[200];
+    for (int nIndex = 0; nIndex < nFilterCount; nIndex++)
+    {
+        QmlMetadata* metadataModel          = m_metadataModel.get(nIndex);
+
+        strcpy(filterInfos[nIndex].name, metadataModel->name().toStdString().c_str());
+        strcpy(filterInfos[nIndex].type, metadataModel->filterType().toStdString().c_str());
+        QString imageSourcePath             = ":/icons/light/32x32/" + metadataModel->name()  + ".png";
+        strcpy(filterInfos[nIndex].imageSourcePath, imageSourcePath.toStdString().c_str());
+    }
+
+    setFiltersInfo(filterInfos, nFilterCount);
+}
+
 void FilterController::timerEvent(QTimerEvent* event)
 {
     loadFilterMetadata();
+    updateFilterDock();
     killTimer(event->timerId());
 }
 
