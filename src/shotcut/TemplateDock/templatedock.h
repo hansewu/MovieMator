@@ -35,6 +35,8 @@ namespace Ui {
     class TemplateDock;
 }
 
+static const QString s_templateDir = "C:/Projects/MovieMator/template";
+
 class TemplateDock : public QDockWidget
 {
     Q_OBJECT
@@ -45,20 +47,29 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent *event);
+    void dropEvent(QDropEvent *event);
+    void dragEnterEvent(QDragEnterEvent *event);
 
 private:
-    // 根据文件信息创建listView
-    void createFileListView(QFileInfoList &fileList, QObject *parent=nullptr);
+    // 判断是不是模板文件
+    bool isTemplateFile(QString path);
+    // 样式化 listView
+    void formatListView(QListView *listView);
+    // 添加 listView+label到 scrollView
+    void addListViewAndLabel(TemplateListModel *model, QString itemName);
+    // 根据文件信息创建 listView
+    void createFileListView(QFileInfoList &fileList);
 
 private:
     Ui::TemplateDock *ui;
     MainInterface *m_mainWindow;
 
+    QDir m_dir;
+    QSpacerItem *m_spacerItem;
+
     QModelIndex m_currentIndex;
     TemplateListView *m_currentListView;
     QList<TemplateListView*> *m_listviewList;
-
-    QSpacerItem *m_spacerItem;
 
 private slots:
     void on_listView_customContextMenuRequested(const QPoint &pos);

@@ -90,7 +90,6 @@ Rectangle {
                     Image { // 缩略图
                         id: thumbImg
                         anchors.centerIn: parent
-                        cache: false
                         source: "image://editorThumbnail/" + templateEditorDock.filePath(index)
                     }
                 }
@@ -191,6 +190,7 @@ Rectangle {
         Connections {
             target: templateEditorDock
             onRefreshView: {
+                gridView.model = 0;
                 gridView.model = templateEditorDock.count();
             }
         }

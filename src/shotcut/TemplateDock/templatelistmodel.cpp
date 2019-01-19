@@ -87,7 +87,8 @@ QMimeData *TemplateListModel::mimeData(const QModelIndexList &indexes) const
     FILE_HANDLE fileHandle = m_templateList->at(indexes.first().row());
 
     mimeData->setData(m_mainWindow->getXMLMimeTypeForDragDrop(), m_mainWindow->getXmlForDragDrop(fileHandle).toUtf8());
-    mimeData->setText(m_mainWindow->getDuration(fileHandle));
+//    mimeData->setText(m_mainWindow->getDuration(fileHandle));
+    mimeData->setText(QString::number(m_mainWindow->getPlayTime(fileHandle)));
 
     return mimeData;
 }

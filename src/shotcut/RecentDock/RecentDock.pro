@@ -38,34 +38,34 @@ HEADERS += \
     recentlistview.h \
     recentlistmodel.h
 
-#INCLUDEPATH = ../CuteLogger/include ../CommonUtil
-#INCLUDEPATH += ../src
+INCLUDEPATH = ../CuteLogger/include ../CommonUtil
+INCLUDEPATH += ../src
 
-#debug_and_release {
-#    build_pass:CONFIG(debug, debug|release) {
-#        LIBS += -L../CuteLogger/debug -L../CommonUtil/debug
-#    } else {
-#        LIBS += -L../CuteLogger/release -L../CommonUtil/release
-#    }
-#} else {
-#    LIBS += -L../CuteLogger -L../CommonUtil
-#}
-#LIBS += -lLogger -lCommonUtil
+debug_and_release {
+    build_pass:CONFIG(debug, debug|release) {
+        LIBS += -L../CuteLogger/debug -L../CommonUtil/debug
+    } else {
+        LIBS += -L../CuteLogger/release -L../CommonUtil/release
+    }
+} else {
+    LIBS += -L../CuteLogger -L../CommonUtil
+}
+LIBS += -lLogger -lCommonUtil
 
 mac {
     QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/
 }
 
-win32 {
-    isEmpty(PREFIX) {
-        PREFIX = C:\\Projects\\MovieMator
-    }
-    INCLUDEPATH += $$PREFIX\\include
-    INCLUDEPATH += $$PREFIX\\include\\CuteLogger
-    INCLUDEPATH += $$PREFIX\\include\\CommonUtil
-    LIBS += -L$$PREFIX
-    LIBS += -lLogger -lCommonUtil
-}
+#win32 {
+#    isEmpty(PREFIX) {
+#        PREFIX = C:\\Projects\\MovieMator
+#    }
+#    INCLUDEPATH += $$PREFIX\\include
+#    INCLUDEPATH += $$PREFIX\\include\\CuteLogger
+#    INCLUDEPATH += $$PREFIX\\include\\CommonUtil
+#    LIBS += -L$$PREFIX
+#    LIBS += -lLogger -lCommonUtil
+#}
 
 
 win32 {

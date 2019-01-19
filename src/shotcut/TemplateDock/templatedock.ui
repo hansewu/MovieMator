@@ -16,6 +16,9 @@
     <height>404</height>
    </size>
   </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>Template</string>
   </property>
@@ -60,6 +63,9 @@
      <widget class="QScrollArea" name="scrollArea">
       <property name="contextMenuPolicy">
        <enum>Qt::CustomContextMenu</enum>
+      </property>
+      <property name="acceptDrops">
+       <bool>true</bool>
       </property>
       <property name="widgetResizable">
        <bool>true</bool>

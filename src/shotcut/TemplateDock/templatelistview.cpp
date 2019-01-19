@@ -6,11 +6,13 @@
 
 #include "templatelistmodel.h"
 
+#include <Logger.h>
+
 TemplateListView::TemplateListView(QWidget *parent)
     : QListView(parent)
     , m_canStartDrag(false)
 {
-
+    setAcceptDrops(true);
 }
 
 void TemplateListView::keyPressEvent(QKeyEvent* event)
@@ -85,4 +87,3 @@ void TemplateListView::focusOutEvent(QFocusEvent *event)
 
     QListView::focusOutEvent(event);
 }
-
