@@ -97,6 +97,7 @@
 #include <configurationdock.h>
 #include "maininterface.h"
 #include <recentdockinterface.h>
+#include <filterdockinterface.h>
 
 //#include <templatedockinterface.h>
 //#include <templateeditordockinterface.h>
@@ -588,6 +589,9 @@ MainWindow::MainWindow()
     LOG_DEBUG() << "RecentDock";
     m_recentDock = RecentDock_initModule(&MainInterface::singleton());//new RecentDock();
     addResourceDock(m_recentDock, tr("Recent"), QIcon(":/icons/light/32x32/show-recent.png"), QIcon(":/icons/light/32x32/show-recent-highlight.png"));
+
+    m_filterDock = FilterDock_initModule(&MainInterface::singleton());
+    addResourceDock(m_filterDock, tr("Filter"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
 
 
 //    m_templateDock = TemplateDock_initModule(&MainInterface::singleton());
