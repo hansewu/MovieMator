@@ -993,17 +993,24 @@ void EncodeDock::resetOptions()
     loadPresetFromProperties(preset);
 }
 
+//FIXME: 要支持获取单个clip或者playlist，则需要修改
 Mlt::Service *EncodeDock::fromProducer() const
 {
+//    QString from = ui->fromCombo->currentData().toString();
+//    if (from == "clip")
+//        return MLT.isClip()? MLT.producer() : MLT.savedProducer();
+//    else if (from == "playlist")
+//        return MAIN.playlist();
+//    else if (from == "timeline")
+//        return MAIN.multitrack();
+//    else
+//        return 0;
     QString from = ui->fromCombo->currentData().toString();
-    if (from == "clip")
-        return MLT.isClip()? MLT.producer() : MLT.savedProducer();
-    else if (from == "playlist")
-        return MAIN.playlist();
-    else if (from == "timeline")
+    if (!from.isEmpty()) {
         return MAIN.multitrack();
-    else
-        return 0;
+    }
+
+    return 0;
 }
 
 static double getBufferSize(Mlt::Properties& preset, const char* property)
