@@ -4390,7 +4390,7 @@ void MainWindow::addPlayer()
 void MainWindow::onExportTemplate()
 {
     QString templatePath = Util::templatePath();
-    QString sampleFile = QString("%1/Samples/1.mp4").arg(templatePath);
+    QString sampleFile = QString("%1/Samples/1.png").arg(templatePath);
 
     Mlt::Tractor *tractor = m_timelineDock->model()->tractor();
     QString xml = MLT.XML(tractor);
@@ -4480,13 +4480,13 @@ void MainWindow::onExportTemplate()
     tmp.close();
 
     QString path = Settings.savePath();
-    path.append("/untitled.xml");
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save Template"), path, tr("Template (*.xml)"));
+    path.append("/untitled.mlt");
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Template"), path, tr("Template (*.mlt)"));
     if (!filename.isEmpty()) {
         QFileInfo fi(filename);
         Settings.setSavePath(fi.path());
-        if (fi.suffix() != "xml")
-            filename += ".xml";
+        if (fi.suffix() != "mlt")
+            filename += ".mlt";
         MLT.saveXML(tmp.fileName(), tempTractor, true);
         QFile::remove(filename);
         QFile::copy(tmp.fileName(), filename);
