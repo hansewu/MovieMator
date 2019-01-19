@@ -6,6 +6,7 @@ SUBDIRS = CuteLogger \
     QmlUtilities \
     MltController \
     RecentDock \
+    FilterDock \
     PlaylistDock \
     ConfigurationDock \
     src
@@ -16,6 +17,6 @@ MltController.depends = QmlUtilities
 RecentDock.depends = CommonUtil
 PlaylistDock.depends = MltController
 ConfigurationDock.depends = QmlUtilities
-src.depends = CuteLogger mvcp CommonUtil QmlUtilities MltController RecentDock PlaylistDock ConfigurationDock
+src.depends = CuteLogger mvcp CommonUtil QmlUtilities MltController RecentDock FilterDock PlaylistDock ConfigurationDock
 
 

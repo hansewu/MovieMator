@@ -310,27 +310,27 @@ TRANSLATIONS += \
      ../translations/mm_zh.ts \
 
 
-INCLUDEPATH = ../CuteLogger/include ../mvcp ../RecentDock ../CommonUtil ../MltController ../QmlUtilities
+INCLUDEPATH = ../CuteLogger/include ../mvcp ../RecentDock ../FilterDock ../CommonUtil ../MltController ../QmlUtilities
 INCLUDEPATH += ../PlaylistDock ../ConfigurationDock
 #INCLUDEPATH += ../TemplateDock ../TemplateEditorDock
 INCLUDEPATH += ../include
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
-        LIBS += -L../CuteLogger/debug -L../mvcp/debug -L../RecentDock/debug -L../CommonUtil/debug -L../MltController/debug
+        LIBS += -L../CuteLogger/debug -L../mvcp/debug -L../RecentDock/debug -L../FilterDock/debug -L../CommonUtil/debug -L../MltController/debug
         LIBS += -L../QmlUtilities/debug -L../PlaylistDock/debug -L../ConfigurationDock/debug
 #        LIBS += -L../TemplateDock/debug -L../TemplateEditorDock/debug
     } else {
-        LIBS += -L../CuteLogger/release -L../mvcp/release -L../RecentDock/release -L../CommonUtil/release -L../MltController/release
+        LIBS += -L../CuteLogger/release -L../mvcp/release -L../RecentDock/release -L../FilterDock/release -L../CommonUtil/release -L../MltController/release
         LIBS += -L../QmlUtilities/release -L../PlaylistDock/release -L../ConfigurationDock/release
 #        LIBS += -L../TemplateDock/release -L../TemplateEditorDock/release
     }
 } else {
-    LIBS += -L../CuteLogger -L../mvcp -L../RecentDock -L../CommonUtil -L../MltController -L../QmlUtilities #-L../mm
+    LIBS += -L../CuteLogger -L../mvcp -L../RecentDock -L../FilterDock -L../CommonUtil -L../MltController -L../QmlUtilities #-L../mm
     LIBS += -L../PlaylistDock -L../ConfigurationDock
 #    LIBS += -L../TemplateDock -L../TemplateEditorDock
 }
-LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lCommonUtil -lMltController -lQmlUtilities -lPlaylistDock -lConfigurationDock
+LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lFilterDock -lCommonUtil -lMltController -lQmlUtilities -lPlaylistDock -lConfigurationDock
 #LIBS += -lTemplateDock -lTemplateEditorDock
 
 
