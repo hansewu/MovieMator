@@ -4730,7 +4730,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/dialogs/registrationtipsdialog.ui" line="122"/>
         <source>Not Now</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">继续</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
