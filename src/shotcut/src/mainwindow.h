@@ -155,6 +155,7 @@ private:
     QDockWidget* m_simplePropertiesDock;
     QDockWidget* m_recentDock;
     QDockWidget* m_templateDock;
+    QDockWidget* m_effectDock;
     QDockWidget* m_templateEditorDock;
     EncodeDock* m_encodeDock;
     JobsDock* m_jobsDock;

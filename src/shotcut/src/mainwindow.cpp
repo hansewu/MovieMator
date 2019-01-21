@@ -94,6 +94,7 @@
 #include "maininterface.h"
 #include <recentdockinterface.h>
 #include <templatedockinterface.h>
+#include <effectdockinterface.h>
 #include <templateeditordockinterface.h>
 #include "containerdock.h"
 #include "templateeidtor.h"
@@ -587,10 +588,11 @@ MainWindow::MainWindow()
     addResourceDock(m_recentDock, tr("Recent"), QIcon(":/icons/light/32x32/show-recent.png"), QIcon(":/icons/light/32x32/show-recent-highlight.png"));
 
 
-    m_templateDock = TemplateDock_initModule(&MainInterface::singleton());
-    addResourceDock(m_templateDock, tr("Recent"), QIcon(":/icons/light/32x32/show-playlist.png"), QIcon(":/icons/light/32x32/show-playlist-highlight.png"));
+//    m_templateDock = TemplateDock_initModule(&MainInterface::singleton());
+//    addResourceDock(m_templateDock, tr("Recent"), QIcon(":/icons/light/32x32/show-playlist.png"), QIcon(":/icons/light/32x32/show-playlist-highlight.png"));
 
-
+    m_effectDock = EffectDock_initModule(&MainInterface::singleton());
+    addResourceDock(m_effectDock, tr("Recent"), QIcon(":/icons/light/32x32/show-playlist.png"), QIcon(":/icons/light/32x32/show-playlist-highlight.png"));
 
     m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
     m_propertiesDock->installEventFilter(this);
