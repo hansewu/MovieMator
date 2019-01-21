@@ -703,14 +703,14 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
         textFilter = new Mlt::Filter(MLT.profile(), "dynamictext");
         textFilter->set("argument", "MovieMator Video Editor Pro\nwww.macvideostudio.com");
         textFilter->set("family", "Arial");
-        textFilter->set("fgcolour", "#ffffffff");
-        textFilter->set("bgcolour", "#00000000");
-        textFilter->set("olcolour", "#ff000000");
+        textFilter->set("fgcolour", 255.0, 255.0, 255.0, 255.0);
+        textFilter->set("bgcolour", 0.0, 0.0, 0.0, 0.0);
+        textFilter->set("olcolour", 255.0, 0.0, 0.0, 0.0);
         textFilter->set("outline", "1");
 
         textFilter->set("weight", 600);
 
-        textFilter->set("geometry",   "25%/0%:50%x100%");
+        textFilter->set("geometry", 0.25, 0.0, 0.5, 1.0);
         textFilter->set("valign", "center");
         textFilter->set("halign", "center");
         service->attach(*textFilter);
@@ -993,17 +993,24 @@ void EncodeDock::resetOptions()
     loadPresetFromProperties(preset);
 }
 
+//FIXME: 要支持获取单个clip或者playlist，则需要修改
 Mlt::Service *EncodeDock::fromProducer() const
 {
+//    QString from = ui->fromCombo->currentData().toString();
+//    if (from == "clip")
+//        return MLT.isClip()? MLT.producer() : MLT.savedProducer();
+//    else if (from == "playlist")
+//        return MAIN.playlist();
+//    else if (from == "timeline")
+//        return MAIN.multitrack();
+//    else
+//        return 0;
     QString from = ui->fromCombo->currentData().toString();
-    if (from == "clip")
-        return MLT.isClip()? MLT.producer() : MLT.savedProducer();
-    else if (from == "playlist")
-        return MAIN.playlist();
-    else if (from == "timeline")
+    if (!from.isEmpty()) {
         return MAIN.multitrack();
-    else
-        return 0;
+    }
+
+    return 0;
 }
 
 static double getBufferSize(Mlt::Properties& preset, const char* property)
