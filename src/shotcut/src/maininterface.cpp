@@ -142,6 +142,36 @@ QString MainInterface::getFileName(FILE_HANDLE fileHandle)
     return resource;
 }
 
+FILE_TYPE MainInterface::getFileType(FILE_HANDLE fileHandle)
+{
+    Q_ASSERT(fileHandle);
+    FILE_TYPE result = FILE_TYPE_NONE;
+    Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
+    if (!producer->is_valid()) {
+        return result;
+    }
+
+    int audio_index = producer->get_int("audio_index");
+    int video_index = producer->get_int("video_index");
+    if (video_index >= 0) {
+        if (audio_index == 0 && video_index == 0) {
+            //image
+            result = FILE_TYPE_IMAGE;
+        } else {
+            //video
+            result = FILE_TYPE_VIDEO;
+        }
+    } else if (audio_index >= 0) {
+        //audio
+        result = FILE_TYPE_AUDIO;
+    } else {
+        //
+        result = FILE_TYPE_NONE;
+    }
+
+    return result;
+}
+
 //功能：获取文件时长
 QString MainInterface::getDuration(FILE_HANDLE fileHandle)
 {

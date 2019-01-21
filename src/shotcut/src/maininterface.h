@@ -3,6 +3,13 @@
 
 #include <QObject>
 
+enum FILE_TYPE {
+    FILE_TYPE_NONE,
+    FILE_TYPE_VIDEO,
+    FILE_TYPE_AUDIO,
+    FILE_TYPE_IMAGE,
+};
+
 typedef void * FILE_HANDLE; 
 class MainInterface
 {
@@ -40,6 +47,9 @@ public:
    virtual QImage getThumbnail(FILE_HANDLE fileHandle);
 
    virtual QString getFileName(FILE_HANDLE fileHandle);
+
+    //功能：获取文件类型
+    virtual FILE_TYPE getFileType(FILE_HANDLE fileHandle);
 
     //功能：获取文件时长
     virtual QString getDuration(FILE_HANDLE fileHandle);
