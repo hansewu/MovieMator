@@ -138,8 +138,12 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
     ui->comboBox->setFixedHeight(ui->lineEdit->height()-2);
     ui->comboBox->setMinimumWidth(50);
 
-    ui->scrollArea->setStyleSheet("/*background-color:rgb(51,51,51);*/border:none;");
     ui->scrollArea->setWidgetResizable(true);
+    ui->scrollArea->setStyleSheet("border:none;");
+    ui->scrollArea->verticalScrollBar()
+            ->setStyleSheet("QScrollBar:vertical{width:8px;background:rgba(0,0,0,0%);margin:0px,0px,0px,0px;}"
+                            "QScrollBar::handle:vertical{width:8px;background:rgba(160,160,160,25%);border-radius:4px;min-height:20;}"
+                            "QScrollBar::handle:vertical:hover{width:8px;background:rgba(160,160,160,50%);border-radius:4px;min-height:20;}");
 
     LOG_DEBUG() << "end";
 }

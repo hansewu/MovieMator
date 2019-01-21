@@ -4504,8 +4504,9 @@ void MainWindow::loadTemplateInfo(Mlt::Producer *producer)
     }
     QString resource(producer->get("resource"));
     QString service(producer->get("mlt_service"));
-    if (service == "xml")
+    if (service == "xml" || service == "xml-string")
         m_templateEditor->setProducer(producer);
     else
         m_templateEditor->setProducer(0);
 }
+
