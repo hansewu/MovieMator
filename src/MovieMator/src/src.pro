@@ -338,8 +338,8 @@ debug_and_release {
 }
 
 LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lFilterDock -lCommonUtil -lMltController -lQmlUtilities -lPlaylistDock -lConfigurationDock
-LIBS += -lTemplateDock -lTemplateEditorDock
-LIBS += -lEffectDock -lEffectDock
+LIBS += -lTemplateEditorDock
+LIBS += -lEffectDock
 
 
 
@@ -472,7 +472,7 @@ win32 {
 }
 
 mac {
-    qmlfiles.files = $$PWD/../../../../MovieMator/moviemator_qml/moviemator/qml
+    qmlfiles.files = $$PWD/../../../../shotcut/moviemator_qml/moviemator/qml
     qmlfiles.path = $$PREFIX/share/MovieMator
     INSTALLS += qmlfiles
 }

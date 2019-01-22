@@ -36,32 +36,23 @@ HEADERS += \
     effectdock.h \
     effectlistview.h
 
-#INCLUDEPATH = ../CuteLogger/include ../CommonUtil
-#INCLUDEPATH += ../src
+INCLUDEPATH = ../CuteLogger/include ../CommonUtil
+INCLUDEPATH += ../src
 
-#debug_and_release {
-#    build_pass:CONFIG(debug, debug|release) {
-#        LIBS += -L../CuteLogger/debug -L../CommonUtil/debug
-#    } else {
-#        LIBS += -L../CuteLogger/release -L../CommonUtil/release
-#    }
-#} else {
-#    LIBS += -L../CuteLogger -L../CommonUtil
-#}
-#LIBS += -lLogger -lCommonUtil
-
-
-win32 {
-    isEmpty(PREFIX) {
-        PREFIX = C:\\Projects\\MovieMator
+debug_and_release {
+    build_pass:CONFIG(debug, debug|release) {
+        LIBS += -L../CuteLogger/debug -L../CommonUtil/debug
+    } else {
+        LIBS += -L../CuteLogger/release -L../CommonUtil/release
     }
-    INCLUDEPATH += $$PREFIX\\include
-    INCLUDEPATH += $$PREFIX\\include\\CuteLogger
-    INCLUDEPATH += $$PREFIX\\include\\CommonUtil
-    LIBS += -L$$PREFIX
-    LIBS += -lLogger -lCommonUtil
+} else {
+    LIBS += -L../CuteLogger -L../CommonUtil
 }
+LIBS += -lLogger -lCommonUtil
 
+mac {
+    QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/
+}
 
 win32 {
     target.path = C:\\Projects\\MovieMator
