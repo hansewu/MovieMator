@@ -30,6 +30,7 @@
 #include <QTimer>
 #include <Logger.h>
 #include <QUndoCommand>
+#include <QtWidgets>
 
 static bool sortIsLess (const QmlMetadata* lhs, const QmlMetadata* rhs) {
     // Sort order is: GPU, Video, Audio
@@ -281,6 +282,12 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
 
 void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
 {
+    if (MAIN.timelineDock()->selection().isEmpty() )
+    {
+        QMessageBox::warning(NULL, tr("Add filter failed"), tr("Add filter failed\n\nPlease select a clip!"), QMessageBox::Ok);
+        return;
+    }
+
     if (!m_producer || !m_producer->is_valid())
         return;
 
