@@ -431,9 +431,12 @@ MainWindow::MainWindow()
 //    connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onAddAllToTimeline(Mlt::Playlist*)));
     connect(m_player, SIGNAL(previousSought()), m_timelineDock, SLOT(seekPreviousEdit()));
     connect(m_player, SIGNAL(nextSought()), m_timelineDock, SLOT(seekNextEdit()));
-    connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), SLOT(loadTemplateInfo(Mlt::Producer*)));
 
-    m_templateEditor = new TemplateEidtor();
+    //connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), SLOT(loadTemplateInfo(Mlt::Producer*)));
+
+
+    //模板编辑类
+    //m_templateEditor = new TemplateEidtor();
 
 
     LOG_DEBUG() << "FilterController";
@@ -596,6 +599,7 @@ MainWindow::MainWindow()
     addResourceDock(m_filterDock, tr("Filter"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
 
 
+    //模板资源管理界面Dock
 //    m_templateDock = TemplateDock_initModule(&MainInterface::singleton());
 //    addResourceDock(m_templateDock, tr("Recent"), QIcon(":/icons/light/32x32/show-playlist.png"), QIcon(":/icons/light/32x32/show-playlist-highlight.png"));
 
@@ -627,8 +631,9 @@ MainWindow::MainWindow()
     m_filtersDock->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);
     addPropertiesDock(m_filtersDock, tr("Filter"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
 
-    m_templateEditorDock = TemplateEditorDock_initModule(&MainInterface::singleton());
-    addPropertiesDock(m_templateEditorDock, tr("Template"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
+    //替换模板文件界面Dock
+    //m_templateEditorDock = TemplateEditorDock_initModule(&MainInterface::singleton());
+    //addPropertiesDock(m_templateEditorDock, tr("Template"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
 
 
 
@@ -4516,6 +4521,7 @@ void MainWindow::onExportTemplate()
     delete tempTractor;
 }
 
+//加载模板信息
 void MainWindow::loadTemplateInfo(Mlt::Producer *producer)
 {
     if (!producer || !producer->is_valid())
