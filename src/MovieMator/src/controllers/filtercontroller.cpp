@@ -285,7 +285,13 @@ void FilterController::updateFilterDock()
 
         strcpy(filterInfos[nIndex].name, metadataModel->name().toStdString().c_str());
         strcpy(filterInfos[nIndex].type, metadataModel->filterType().toStdString().c_str());
-        QString imageSourcePath             = 'qrc:///icons/light/32x32/' + metadataModel->name()  + ".png";
+
+        QString imageSourcePath             = "qrc:///icons/filters/" + metadataModel->name()  + ".png";
+        if(metadataModel->filterType() == "Common")
+            imageSourcePath             = "qrc:///icons/filters/Common.png";
+        else if(metadataModel->isAudio() == true)
+            imageSourcePath             = "qrc:///icons/filters/Audio.png";
+
         strcpy(filterInfos[nIndex].imageSourcePath, imageSourcePath.toStdString().c_str());
 
 
