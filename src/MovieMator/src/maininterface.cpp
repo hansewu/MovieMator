@@ -24,6 +24,7 @@
 #include "docks/timelinedock.h"
 #include "commands/timelinecommands.h"
 #include <shotcut_mlt_properties.h>
+#include "templateeidtor.h"
 
 MainInterface& MainInterface::singleton()
 {
@@ -38,6 +39,8 @@ FILE_HANDLE MainInterface::openFile(QString filepath)
     Mlt::Producer *producer = new Mlt::Producer(MLT.profile(), filepath.toUtf8().constData());
     if (producer->is_valid()) {
         MLT.setImageDurationFromDefault(producer);
+        if (filepath.endsWith(".mlt"))
+            producer->set(kShotcutVirtualClip, 1);
     }
     else {
         delete producer;
@@ -157,6 +160,36 @@ QString MainInterface::getFileName(FILE_HANDLE fileHandle)
     return resource;
 }
 
+FILE_TYPE MainInterface::getFileType(FILE_HANDLE fileHandle)
+{
+    Q_ASSERT(fileHandle);
+    FILE_TYPE result = FILE_TYPE_NONE;
+    Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
+    if (!producer->is_valid()) {
+        return result;
+    }
+
+    int audio_index = producer->get_int("audio_index");
+    int video_index = producer->get_int("video_index");
+    if (video_index >= 0) {
+        if (audio_index == 0 && video_index == 0) {
+            //image
+            result = FILE_TYPE_IMAGE;
+        } else {
+            //video
+            result = FILE_TYPE_VIDEO;
+        }
+    } else if (audio_index >= 0) {
+        //audio
+        result = FILE_TYPE_AUDIO;
+    } else {
+        //
+        result = FILE_TYPE_NONE;
+    }
+
+    return result;
+}
+
 //功能：获取文件时长
 QString MainInterface::getDuration(FILE_HANDLE fileHandle)
 {
@@ -204,4 +237,38 @@ QString MainInterface::getXmlForDragDrop(FILE_HANDLE fileHandle)
 const QString& MainInterface::getXMLMimeTypeForDragDrop()
 {
     return MLT.MltXMLMimeType();
+}
+
+
+// 功能：通过xml字符串生成FILE_HANDLE；主程序提供接口
+FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
+{
+    Mlt::Producer *producer = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+    if (!producer->is_valid())
+    {
+        delete producer;
+        producer = 0;
+    }
+    return producer;
+}
+
+// 功能：把模板中的索引为index的文件替换成文件destFile
+// 返回值：成功返回0，失败返回-1
+int MainInterface::replaceFileInTemplate(int index, FILE_HANDLE destFile)
+{
+    Q_ASSERT(destFile);
+    Mlt::Producer *producer = (Mlt::Producer *)destFile;
+    if (!producer->is_valid())
+        return -1;
+    TemplateEidtor *templateEditor = MAIN.templateEditor();
+    templateEditor->replaceFileInTemplate(index, producer);
+    return 0;
+}
+
+// 功能：重置模板文件为缺省文件
+// 返回值：成功返回0，失败返回-1
+FILE_HANDLE MainInterface::resetFileInTemplate(int index)
+{
+    TemplateEidtor *templateEditor = MAIN.templateEditor();
+    return templateEditor->resetFileToTemplateDefault(index);
 }

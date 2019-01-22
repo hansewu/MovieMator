@@ -30,8 +30,14 @@
 #include <QSortFilterProxyModel>
 #include <maininterface.h>
 #include "recentdockinterface.h"
-#include "recenttablemodel.h"
+#include "recentlistmodel.h"
+#include "recentlistview.h"
 
+#include <QLabel>
+
+#include <QMap>
+#include <QGroupBox>
+#include <QSpacerItem>
 
 namespace Ui {
     class RecentDock;
@@ -44,6 +50,7 @@ class RecentDock : public QDockWidget
 public:
     explicit RecentDock(MainInterface *main = 0, QWidget *parent = 0);
     ~RecentDock();
+    static const int num = 3;
 
 public slots:
     void add(const QString&);
@@ -51,20 +58,39 @@ public slots:
     QList<FILE_HANDLE> getSelected();
 
 private:
+    void resizeEvent(QResizeEvent* event);
+
+private:
     Ui::RecentDock *ui;
     QStringList m_recent;
-    RecentTableModel *m_model;
-    QSortFilterProxyModel m_proxyModel;
     MainInterface *m_mainWindow;
 
+    QModelIndex m_currentIndex;
+    RecentListView *m_currentListView;
+
+    QList<RecentListView*> *m_listviewList;
+    QList<RecentListModel*> *m_modelList;
+    QSortFilterProxyModel *m_proxyArray[num];
+    QLabel *m_labelArray[num];
+    bool m_flag[num] = {false};
+    const QString m_itemNames[num] = {"Videos", "Audios", "Images"};
+
+    QMap<int, QString> m_map;
+    QSpacerItem *m_verticalSpacerItem;
+
 private slots:
-    void on_tableView_activated(const QModelIndex& i);
-    void on_tableView_customContextMenuRequested(const QPoint &pos);
     void on_lineEdit_textChanged(const QString& search);
     void on_actionRemove_triggered();
     void on_actionRemoveAll_triggered();
     void on_actionPlay_triggered();
     void on_actionProperties_triggered();
+//    void on_comboBox_currentIndexChanged(int index);
+    void on_comboBox_currentTextChanged(const QString &arg1);
+
+    void on_listView_activated(const QModelIndex &index);
+    void on_listView_clicked(const QModelIndex &index);
+    void on_listView_doubleClicked(const QModelIndex &index);
+    void on_listView_customContextMenuRequested(const QPoint &pos);
 };
 
 #endif // RECENTDOCK_H

@@ -601,13 +601,16 @@ void TimelineDock::addTextTrack()
 
 void TimelineDock::onShowFrame(const SharedFrame& frame)
 {
+    qDebug() << "timelineDock position = " << frame.get_position();
     if (m_ignoreNextPositionChange) {
         m_ignoreNextPositionChange = false;
     } else if (MLT.isMultitrack()) {
-     if ( MLT.isMultitrack() && (MLT.producer()->get_speed() != 0) ) {//加此判断解决点击clip有时指针不跳的问题
+     qDebug() << "timelineDock position 2 = " << frame.get_position();
+     //if ( MLT.isMultitrack() && (MLT.producer()->get_speed() != 0) ) {//加此判断解决点击clip有时指针不跳的问题
         m_position = frame.get_position();
+        qDebug() << "m_position = " << m_position;
         emit positionChanged();
-     }
+     //}
     }
 }
 
@@ -1486,6 +1489,8 @@ void TimelineDock::appendFromUrls(int trackIndex, QList<QUrl> urlList)
     foreach (QUrl url, urlList) {
         QString path = Util::removeFileScheme(url);
         //this->appendFromPath(trackIndex, path);
+
+        //模板文件拷贝到模板目录，再加到时间线
         MAINCONTROLLER.appendToTimelineFromPath(trackIndex, path);
     }
 }
@@ -1841,4 +1846,23 @@ QRect TimelineDock::dockPosition()
 void TimelineDock::setExtraQmlContextProperty(QString name, QObject *object)
 {
     m_quickView.rootContext()->setContextProperty(name, object);
+}
+
+void TimelineDock::exportAsTemplate(int trackIndex, int clipIndex)
+{
+    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
+
+    if (trackIndex >= 0 && clipIndex >= 0)
+    {
+        int i = m_model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        if (track)
+        {
+            Mlt::Playlist playlist(*track);
+            QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+            QString xml = MLT.XML(info->producer);
+            qDebug() << xml;
+            MLT.saveXML("C:\\Users\\gdbwin\\Desktop\\test.xml", info->producer, true);
+        }
+    }
 }

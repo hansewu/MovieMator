@@ -23,6 +23,8 @@
 #include <QFileInfo>
 #include <QWidget>
 #include <QCryptographicHash>
+#include <QApplication>
+#include <QDir>
 
 QString Util::baseName(const QString &filePath)
 {
@@ -70,4 +72,14 @@ QString Util::getFileHash(const QString& path)
         return QCryptographicHash::hash(fileData, QCryptographicHash::Md5).toHex();
     }
     return QString();
+}
+
+QString Util::templatePath()
+{
+    QDir dir(qApp->applicationDirPath());
+#if defined(Q_OS_MAC)
+    dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+#endif
+    dir.cd("templates");
+    return  dir.absolutePath();
 }

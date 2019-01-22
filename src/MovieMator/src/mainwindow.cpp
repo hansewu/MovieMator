@@ -98,14 +98,12 @@
 #include "maininterface.h"
 #include <recentdockinterface.h>
 #include <filterdockinterface.h>
-
-//#include <templatedockinterface.h>
-//#include <templateeditordockinterface.h>
-
-#include <util.h>
-
-
+#include <templatedockinterface.h>
+#include <effectdockinterface.h>
+#include <templateeditordockinterface.h>
 #include "containerdock.h"
+#include "templateeidtor.h"
+#include <util.h>
 
 #include <QtWidgets>
 #include <Logger.h>
@@ -433,6 +431,10 @@ MainWindow::MainWindow()
 //    connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onAddAllToTimeline(Mlt::Playlist*)));
     connect(m_player, SIGNAL(previousSought()), m_timelineDock, SLOT(seekPreviousEdit()));
     connect(m_player, SIGNAL(nextSought()), m_timelineDock, SLOT(seekNextEdit()));
+    connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), SLOT(loadTemplateInfo(Mlt::Producer*)));
+
+    m_templateEditor = new TemplateEidtor();
+
 
     LOG_DEBUG() << "FilterController";
     m_filterController = new FilterController(this);
@@ -597,7 +599,8 @@ MainWindow::MainWindow()
 //    m_templateDock = TemplateDock_initModule(&MainInterface::singleton());
 //    addResourceDock(m_templateDock, tr("Recent"), QIcon(":/icons/light/32x32/show-playlist.png"), QIcon(":/icons/light/32x32/show-playlist-highlight.png"));
 
-
+    m_effectDock = EffectDock_initModule(&MainInterface::singleton());
+    addResourceDock(m_effectDock, tr("Recent"), QIcon(":/icons/light/32x32/show-playlist.png"), QIcon(":/icons/light/32x32/show-playlist-highlight.png"));
 
     m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
     m_propertiesDock->installEventFilter(this);
@@ -624,8 +627,8 @@ MainWindow::MainWindow()
     m_filtersDock->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);
     addPropertiesDock(m_filtersDock, tr("Filter"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
 
-//    m_templateEditorDock = TemplateEditorDock_initModule(&MainInterface::singleton());
-//    addPropertiesDock(m_templateEditorDock, tr("Template"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
+    m_templateEditorDock = TemplateEditorDock_initModule(&MainInterface::singleton());
+    addPropertiesDock(m_templateEditorDock, tr("Template"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
 
 
 
@@ -1363,7 +1366,6 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
     LOG_DEBUG() << url;
 
 #if SHARE_VERSION
-
 #else
     if (url.endsWith(".vob", Qt::CaseInsensitive) || url.endsWith(".m4p", Qt::CaseInsensitive))
     {
@@ -1385,27 +1387,29 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
 #endif
 
     bool modified = false;
-    MltXmlChecker checker;
-    if (checker.check(url)) {
-        if (!isCompatibleWithGpuMode(checker))
-            return;
-    }
-#ifdef MOVIEMATOR_PRO
-  #ifndef SHARE_VERSION
-    if(checker.hasUnbookmarkedFile())
-    {
-        showInvalidProjectDialog();
-        return;
-    }
-#endif
-#endif
     if ( url.endsWith(".mmp")) {//xjp
+
+        MltXmlChecker checker;
+        if (checker.check(url)) {
+            if (!isCompatibleWithGpuMode(checker))
+                return;
+        }
+#ifdef MOVIEMATOR_PRO
+#ifndef SHARE_VERSION
+        if(checker.hasUnbookmarkedFile())
+        {
+            showInvalidProjectDialog();
+            return;
+        }
+#endif
+#endif
+
         // only check for a modified project when loading a project, not a simple producer
         if (!continueModified())
             return;
         // close existing project
-//        if (playlist())
-//            m_playlistDock->model()->close();
+        //if (playlist())
+        //    m_playlistDock->model()->close();
         if (multitrack())
             m_timelineDock->model()->close();
         if (!isXmlRepaired(checker, url))
@@ -1417,6 +1421,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
             setWindowModified(modified);
         }
     }
+
     if (!playlist() && !multitrack()) {
         if (!modified && !continueModified())
             return;
@@ -1445,6 +1450,17 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         //QFuture<void> fut1 = QtConcurrent::run(openFileTask, this, url, properties);
         //fut1.waitForFinished();
         //showLoadProgress();
+    }
+    else if (url.endsWith(".mlt"))
+    {
+        //拷贝到模板目录,并添加到模板管理界面
+        if (!MLT.openXML(url)) {
+            open(MLT.producer());
+            LOG_INFO() << url;
+        }
+        else {
+            showStatusMessage(tr("Failed to open ") + url);
+        }
     }
     else
     {
@@ -4269,15 +4285,16 @@ void MainWindow::setCurrentFilterForVideoWidget(QObject* filter, QmlMetadata* me
 
 void MainWindow::initParentDockForResourceDock()
 {
-    m_resourceDockContainer = new ContainerDock(this);
-
+    m_resourceDockContainer = new ContainerDock(TabPosition_Left, this);
+    m_resourceDockContainer->setMinimumWidth(360);
+    //m_resourceDockContainer->setMinimumHeight()
     addDockWidget(Qt::LeftDockWidgetArea, m_resourceDockContainer);
 }
 
 
 void MainWindow::initParentDockForPropteriesDock()
 {
-    m_propertiesDockContainer = new ContainerDock(this);
+    m_propertiesDockContainer = new ContainerDock(TabPosition_Bottom, this);
 
     addDockWidget(Qt::RightDockWidgetArea, m_propertiesDockContainer);
 }
@@ -4304,11 +4321,17 @@ void MainWindow::addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QI
 
 void MainWindow::onFileOpened(QString filePath)
 {
-    RecentDock_add(filePath);
-
+    if (filePath.endsWith(".mlt"))
+    {
+        //拷贝到模板目录，并添加到模板管理界面
+    }
+    else
+    {
+        RecentDock_add(filePath);
 #ifdef Q_OS_MAC
     create_security_bookmark(filePath.toUtf8().constData());
 #endif
+    }
 }
 
 void MainWindow::onOpenFailed(QString filePath)
@@ -4383,19 +4406,28 @@ void MainWindow::addPlayer()
     ui->centralWidget->layout()->addWidget(m_player);
 }
 
+
+
 void MainWindow::onExportTemplate()
 {
+    QString templatePath = Util::templatePath();
+    QString sampleFile = QString("%1/Samples/1.png").arg(templatePath);
 
     Mlt::Tractor *tractor = m_timelineDock->model()->tractor();
     QString xml = MLT.XML(tractor);
 
-    Mlt::Tractor *tempTractor = new Mlt::Tractor(MLT.profile(), "xml-string", (char *)xml.toUtf8().constData());
 
+
+
+    //create a temporary tractor
+    Mlt::Tractor *tempTractor = new Mlt::Tractor(MLT.profile(), "xml-string", (char *)xml.toUtf8().constData());
 
     int trackCount = tempTractor->count();
 
-    int i = 0;
-    for (i = 0; i < trackCount; i++)
+
+
+    //replace clips
+    for (int i = 0; i < trackCount; i++)
     {
         QScopedPointer<Mlt::Producer> track(tempTractor->track(i));
         if (track) {
@@ -4403,41 +4435,99 @@ void MainWindow::onExportTemplate()
             int clipCount = playlist.count();
             for (int j = 0; j < clipCount; j++)
             {
+                QScopedPointer<Mlt::ClipInfo> originalInfo(playlist.clip_info(j));
+                Mlt::Producer *originalProducer = originalInfo->producer;
+
+                QString mltService(originalProducer->parent().get("mlt_service"));
+                if (!mltService.isEmpty()
+                        && mltService != "color"
+                        && mltService != "colour"
+                        && mltService != "blank"
+                        && mltService != "tractor"
+                        && mltService != "gifdec")
+                {
+                    Mlt::Producer *newProducer = new Mlt::Producer(MLT.profile(),
+                                                                   sampleFile.toUtf8().constData());
+
+                    MLT.getHash(*newProducer);
+                    MLT.copyFilters(*originalProducer, *newProducer);
+                    //set same in/out/length as original
+                    newProducer->set("length", originalInfo->frame_count);
+                    newProducer->set("in", originalInfo->frame_in);
+                    newProducer->set("out", originalInfo->frame_out);
+
+                    playlist.remove(j);
+                    playlist.insert(*newProducer, j, originalInfo->frame_in, originalInfo->frame_out);
+                }
+            }
+
+            //process transitions
+            for (int j = 0; j < clipCount; j++)
+            {
                 QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(j));
                 Mlt::Producer *producer = info->producer;
 
                 QString mltService(producer->parent().get("mlt_service"));
-                if (!mltService.isEmpty() && mltService != "color" && mltService != "colour" && mltService != "blank"
-                        && mltService != "tractor" && mltService != "gifdec")
+                if (mltService == "tractor")
                 {
-                    Mlt::Producer *newProducer = new Mlt::Producer(MLT.profile(), "C:\\Users\\gdbwin\\Videos\\exercise_.mp4");
+                    QScopedPointer<Mlt::ClipInfo> preClipInfo(playlist.clip_info(j-1));
+                    QScopedPointer<Mlt::ClipInfo> nextClipInfo(playlist.clip_info(j+1));
+                    Mlt::Producer *preProducer = preClipInfo->producer;
+                    Mlt::Producer *nextProducer = nextClipInfo->producer;
                     //newProducer->set_in_and_out(0, info->frame_count);
-                    MLT.getHash(*newProducer);
-                    MLT.copyFilters(*producer, *newProducer);
-                    playlist.remove(j);
-                    playlist.insert(*newProducer, j, 0, info->frame_count-1);
+                    int duration = info->frame_count;
+                    preProducer->set("length", preClipInfo->frame_count+duration);
+                    preProducer->set("out", preClipInfo->frame_out+duration);
+                    nextProducer->set("length", nextClipInfo->frame_count+duration);
+                    nextProducer->set("in", nextClipInfo->frame_in-duration);
+
+                    Mlt::Tractor tractor(producer->parent());
+                    Mlt::Producer *aTrack = preProducer->cut(preClipInfo->frame_out + 1, preClipInfo->frame_out + duration);
+                    Mlt::Producer *bTrack = nextProducer->cut(nextClipInfo->frame_in - duration, nextClipInfo->frame_in - 1);
+                    tractor.set_track(*aTrack, 0);
+                    tractor.set_track(*bTrack, 1);
+                    //playlist.resize_clip(j-1, preClipInfo->frame_in, preClipInfo->frame_out - duration);
+                    //playlist.resize_clip(j+1, nextClipInfo->frame_in+duration, nextClipInfo->frame_out);
                 }
             }
         }
     }
 
+    // get temp filename
+    QString tmpTemplate = QString("%1/tmp_XXXXX").arg(templatePath);
+
+    QTemporaryFile tmp(tmpTemplate);
+    tmp.open();
+    tmp.close();
 
     QString path = Settings.savePath();
-    path.append("/untitled.xml");
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save Template"), path, tr("Template (*.xml)"));
+    path.append("/untitled.mlt");
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Template"), path, tr("Template (*.mlt)"));
     if (!filename.isEmpty()) {
         QFileInfo fi(filename);
         Settings.setSavePath(fi.path());
-        // if (fi.suffix() != "mlt")
-        //     filename += ".mlt";
-        // if (MLT.producer())
-        //     saveXML(filename, false);
-        // else
-        //     showStatusMessage(tr("Unable to save empty file, but saved its name for future."));
-        if (fi.suffix() != "xml")
-            filename += ".xml";
-
-        MLT.saveXML(filename, tempTractor, false);
+        if (fi.suffix() != "mlt")
+            filename += ".mlt";
+        MLT.saveXML(tmp.fileName(), tempTractor, true);
+        QFile::remove(filename);
+        QFile::copy(tmp.fileName(), filename);
+        QFile::remove(tmp.fileName());
     }
     delete tempTractor;
 }
+
+void MainWindow::loadTemplateInfo(Mlt::Producer *producer)
+{
+    if (!producer || !producer->is_valid())
+    {
+       m_templateEditor->setProducer(0);
+       return;
+    }
+    QString resource(producer->get("resource"));
+    QString service(producer->get("mlt_service"));
+    if (service == "xml" || service == "xml-string")
+        m_templateEditor->setProducer(producer);
+    else
+        m_templateEditor->setProducer(0);
+}
+

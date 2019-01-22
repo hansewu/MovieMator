@@ -79,6 +79,7 @@ class QUndoCommand;
 class ConfigurationDock;
 class ContainerDock;
 class QToolButton;
+class TemplateEidtor;
 
 //class TextlistDock;
 
@@ -116,6 +117,8 @@ public:
     EncodeDock* encodeDock() const {return m_encodeDock;}
 
     Q_INVOKABLE void setMultitrackAsCurrentProducer();
+
+    TemplateEidtor *templateEditor() const { return m_templateEditor; }
 
 
 signals:
@@ -155,6 +158,7 @@ private:
     QDockWidget* m_recentDock;
     QDockWidget* m_filterDock;
     QDockWidget* m_templateDock;
+    QDockWidget* m_effectDock;
     QDockWidget* m_templateEditorDock;
     EncodeDock* m_encodeDock;
     JobsDock* m_jobsDock;
@@ -246,6 +250,8 @@ private:
     ContainerDock *m_resourceDockContainer;
     ContainerDock *m_propertiesDockContainer;
 
+    TemplateEidtor *m_templateEditor;
+
 public slots:
     void open(Mlt::Producer* producer);
 
@@ -334,6 +340,8 @@ public slots:
     void resizePlayer();
 
     void addPlayer();
+
+    void loadTemplateInfo(Mlt::Producer *producer);
 
 private slots:
 
