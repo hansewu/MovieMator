@@ -9,6 +9,7 @@ typedef struct {
     char name[256];
     char type[256];
     char imageSourcePath[256];
+    char visible[2];
 } Filter_Info;
 
 //初始化模块

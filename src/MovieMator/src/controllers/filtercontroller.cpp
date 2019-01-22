@@ -285,8 +285,20 @@ void FilterController::updateFilterDock()
 
         strcpy(filterInfos[nIndex].name, metadataModel->name().toStdString().c_str());
         strcpy(filterInfos[nIndex].type, metadataModel->filterType().toStdString().c_str());
-        QString imageSourcePath             = ":/icons/light/32x32/" + metadataModel->name()  + ".png";
+        QString imageSourcePath             = 'qrc:///icons/light/32x32/' + metadataModel->name()  + ".png";
         strcpy(filterInfos[nIndex].imageSourcePath, imageSourcePath.toStdString().c_str());
+
+
+
+        bool bVisible = true;
+        if (metadataModel->isHidden()) bVisible = false;
+        if (metadataModel->needsGPU() && !Settings.playerGPU()) bVisible = false;
+        if (!metadataModel->needsGPU() && Settings.playerGPU() && !metadataModel->gpuAlt().isEmpty()) bVisible = false;
+
+        if(bVisible == true)
+            strcpy(filterInfos[nIndex].visible, "1");
+        else
+            strcpy(filterInfos[nIndex].visible, "0");
     }
 
     setFiltersInfo(filterInfos, nFilterCount);

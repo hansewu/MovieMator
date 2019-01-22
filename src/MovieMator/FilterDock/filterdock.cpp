@@ -20,6 +20,7 @@ FilterDock::FilterDock(MainInterface *main, QWidget *parent):
   m_qview(QmlUtilities::sharedEngine(), this)
 {
     m_mainWindow = main;
+    m_pFilterInfo = NULL;
     m_qview.setFocusPolicy(Qt::StrongFocus);
     setWidget(&m_qview);
 
@@ -30,7 +31,7 @@ FilterDock::FilterDock(MainInterface *main, QWidget *parent):
 }
 FilterDock::~FilterDock()
 {
-
+    if(m_pFilterInfo) {delete m_pFilterInfo; m_pFilterInfo = NULL;}
 }
 
 void FilterDock::resetQview()
@@ -54,15 +55,15 @@ int FilterDock::UpdateFilters()
 {
     if(filterInfoList->size() <= 0)  return -1;
 
-    FiltersInfo *data = new FiltersInfo(filterInfoList);
+    if(m_pFilterInfo) {delete m_pFilterInfo; m_pFilterInfo = NULL;}
+
+    m_pFilterInfo = new FiltersInfo(filterInfoList);
     qmlRegisterType<FilterItemInfo>("FilterItemInfo", 1, 0, "FilterItemInfo");
 
-    m_qview.rootContext()->setContextProperty("filtersInfo", data);
-
+    m_qview.rootContext()->setContextProperty("filtersInfo", m_pFilterInfo);
     m_qview.rootContext()->setContextProperty("filtersResDock", this);
+
     resetQview();
-
-
 
     return 0;
 }
@@ -103,6 +104,7 @@ int setFiltersInfo(Filter_Info * filterInfos, int nFilterCount)
     filterInfoList->clear();
     for(int i=0;i<nFilterCount;i++){
         FilterItemInfo *filterInfo = new FilterItemInfo();
+        filterInfo->setVisible(QString(filterInfos[i].visible));
         filterInfo->setName(QString(filterInfos[i].name));
         filterInfo->setFilterType(QString(filterInfos[i].type));
         filterInfo->setImageSourcePath(QString(filterInfos[i].imageSourcePath));
