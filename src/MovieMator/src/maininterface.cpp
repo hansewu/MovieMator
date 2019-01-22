@@ -24,6 +24,7 @@
 #include "docks/timelinedock.h"
 #include "commands/timelinecommands.h"
 #include <shotcut_mlt_properties.h>
+#include "controllers/filtercontroller.h"
 
 MainInterface& MainInterface::singleton()
 {
@@ -204,4 +205,10 @@ QString MainInterface::getXmlForDragDrop(FILE_HANDLE fileHandle)
 const QString& MainInterface::getXMLMimeTypeForDragDrop()
 {
     return MLT.MltXMLMimeType();
+}
+
+//功能：返回xml的mimetype；实现拖放时使用。
+void MainInterface::addFilter(int nFilterIndex)
+{
+    MAIN.filterController()->addFilter(nFilterIndex);
 }

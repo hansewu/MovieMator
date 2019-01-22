@@ -72,6 +72,9 @@ public:
 
     //功能：返回xml mime字符串；实现拖放时使用。
     virtual const QString& getXMLMimeTypeForDragDrop();
+
+
+    virtual void addFilter(int nFilterIndex = -1);
 };
 
 #define MAININTERFACE MainInterface::singleton()

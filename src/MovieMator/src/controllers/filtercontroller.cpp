@@ -532,6 +532,18 @@ QmlMetadata *FilterController::metadataForUniqueId(const char *uniqueId)
     return meta;
 }
 
+void FilterController::addFilter(int nFilterIndex)
+{
+    int nCurrentFilter = nFilterIndex;
+    if(nCurrentFilter == -1)
+        nCurrentFilter = getCurrentSelectedFilterIndex();
+
+    QmlMetadata *meta = m_metadataModel.get(nCurrentFilter);
+
+    if (meta)
+        m_attachedModel.add(meta);
+}
+
 void FilterController::addFilter(const QString &filterID)
 {
     QmlMetadata *meta = metadataForUniqueId(filterID.toUtf8().constData());

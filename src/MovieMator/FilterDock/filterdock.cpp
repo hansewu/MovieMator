@@ -94,7 +94,7 @@ int setFiltersInfo(Filter_Info * filterInfos, int nFilterCount)
     return 0;
 }
 
-int getCurrentedFilterIndex()
+int getCurrentSelectedFilterIndex()
 {
     return 0;
 }
