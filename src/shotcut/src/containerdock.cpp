@@ -3,6 +3,7 @@
 #include <QIcon>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QToolButton>
 
 static QString buttonSytleSheetNormal("background-color:rgb(82,82,82);color:rgb(225,225,225)");
 static QString buttonSytleSheetSelected("background-color:rgb(51,51,51);color:rgb(192,72,44)");
@@ -96,7 +97,11 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
     m_docks.append(dock);
 
 
-    QPushButton *button = new QPushButton(tabButtonNormalIcon, tabButtonTitle);
+//    QPushButton *button = new QPushButton(tabButtonNormalIcon, tabButtonTitle);
+
+    QToolButton* button = new QToolButton(this);
+    button->setIcon(tabButtonNormalIcon);
+    button->setText(tabButtonTitle);
 
     if (m_buttons.count() > 0)
         button->setStyleSheet(buttonSytleSheetNormal);
@@ -109,12 +114,14 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
     if (m_tabPostion == TabPosition_Left)
     {
         button->setFixedSize(BUTTON_WIDTH_SQUARE, BUTTON_HEIGHT_SQUARE);
+        button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         QVBoxLayout *vLayout = (QVBoxLayout *)m_tabBtnWidget->layout();
         vLayout->insertWidget(vLayout->count()-1,button);
     }
     else if (m_tabPostion == TabPosition_Bottom)
     {
         button->setFixedSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         QHBoxLayout *hLayout = (QHBoxLayout *)m_tabBtnWidget->layout();
         hLayout->insertWidget(hLayout->count()-1,button);
     }
@@ -143,7 +150,7 @@ void ContainerDock::showDock(QDockWidget *dock)
     dock->show();
     int index = m_docks.indexOf(dock);
     BUTTON_INFO buttonInfo = m_buttons[index];
-    QPushButton *button = buttonInfo.button;
+    QToolButton *button = buttonInfo.button;
     button->setIcon(buttonInfo.activeIcon);
     button->setStyleSheet(buttonSytleSheetSelected);
 }
@@ -161,7 +168,7 @@ void ContainerDock::onTabButtonClicked()
     for (i = 0; i < m_buttons.count(); i++)
     {
         BUTTON_INFO buttonInfo = m_buttons[i];
-        QPushButton *button = buttonInfo.button;
+        QToolButton *button = buttonInfo.button;
         button->setIcon(buttonInfo.normalIcon);
         button->setStyleSheet(buttonSytleSheetNormal);
     }
@@ -182,7 +189,7 @@ void ContainerDock::onTabButtonClicked2()
     }
 \
     BUTTON_INFO buttonInfo = m_buttons[index];
-    QPushButton *button = buttonInfo.button;
+    QToolButton *button = buttonInfo.button;
     button->setIcon(buttonInfo.activeIcon);
     button->setStyleSheet(buttonSytleSheetSelected);
 }

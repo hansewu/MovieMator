@@ -4,9 +4,10 @@
 #include<QDockWidget>
 #include<QList>
 #include<QPushButton>
+#include<QToolButton>
 
 typedef struct button_info{
-    QPushButton *button;
+    QToolButton *button;
     QIcon normalIcon;
     QIcon activeIcon;
 } BUTTON_INFO;
