@@ -154,6 +154,9 @@
         <file>light/32x32/file-highlight.png</file>
         <file>light/32x32/template.png</file>
         <file>light/32x32/template-highlight.png</file>
+        <file>light/32x32/line.png</file>
+        <file>light/32x32/filter_add-a.png</file>
+        <file>light/32x32/filter_add.png</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>
