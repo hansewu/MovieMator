@@ -25,6 +25,7 @@
 #include <QCryptographicHash>
 #include <QApplication>
 #include <QDir>
+#include <QStandardPaths>
 
 QString Util::baseName(const QString &filePath)
 {
