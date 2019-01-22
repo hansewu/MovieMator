@@ -5,7 +5,7 @@
 #-------------------------------------------------
 CONFIG   += link_prl
 
-QT       += widgets qml quick
+QT       += widgets qml quick gui-private quick-private
 QT       += quickwidgets
 TARGET = FilterDock
 TEMPLATE = lib
@@ -28,6 +28,20 @@ HEADERS += \
     filterdock.h \
     filterdock_global.h \
     filterdockinterface.h
+
+INCLUDEPATH = ../QmlUtilities
+INCLUDEPATH += ../src
+
+debug_and_release {
+    build_pass:CONFIG(debug, debug|release) {
+        LIBS += -L../QmlUtilities/debug
+    } else {
+        LIBS += -L../QmlUtilities/release
+    }
+} else {
+    LIBS += -L../QmlUtilities
+}
+LIBS += -lQmlUtilities
 
 mac {
     QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/

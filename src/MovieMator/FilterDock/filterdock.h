@@ -1,12 +1,13 @@
 #ifndef FILTERDOCK_H
 #define FILTERDOCK_H
 #include <QDockWidget>
+#include <QQuickWidget>
 #include <maininterface.h>
 #include "filterdock_global.h"
 #include "filterdockinterface.h"
 
 namespace Ui {
-    class filterdock;
+    class FilterDock;
 }
 
 //extern QList<Filter_Info> *filterInfoList;
@@ -20,10 +21,13 @@ public:
     ~FilterDock();
 
     int UpdateFilters();
+    void resetQview();
 
 private:
-    Ui::filterdock *ui;
+    Ui::FilterDock *ui;
     MainInterface *m_mainWindow;
+
+    QQuickWidget m_qview;
 };
 
 class FilterItemInfo : public QObject

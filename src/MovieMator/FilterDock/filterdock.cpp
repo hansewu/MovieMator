@@ -7,49 +7,59 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QtQml>
+#include <qmlutilities.h>
+#include <qmlview.h>
 
 QList<FilterItemInfo*> *filterInfoList = new QList<FilterItemInfo*>();
 
 FilterDock::FilterDock(MainInterface *main, QWidget *parent):
     QDockWidget(parent),
-  ui(new Ui::filterdock)
+//  ui(new Ui::FilterDock),
+  m_qview(QmlUtilities::sharedEngine(), this)
 {
+    m_qview.setFocusPolicy(Qt::StrongFocus);
+    setWidget(&m_qview);
+
+    QmlUtilities::setCommonProperties(m_qview.rootContext());
+//    m_qview.rootContext()->setContextProperty("view", new QmlView(m_qview.quickWindow()));
+
 
     UpdateFilters();
-
-//    QQuickView *view = new QQuickView;
-//    FiltersInfo *data = new FiltersInfo(filterInfoList);
-//    view->rootContext()->setContextProperty("metadatamodel", data);
-//    view->setSource(QUrl::fromLocalFile(filterUIPath));
-//    QWidget *container = QWidget::createWindowContainer(view);
-//    ui->gridLayout->addWidget(container);
-
 }
 FilterDock::~FilterDock()
 {
 
 }
+
+void FilterDock::resetQview()
+{
+    QDir viewPath = QmlUtilities::qmlDir();
+    viewPath.cd("views");
+    viewPath.cd("filter");
+    m_qview.engine()->addImportPath(viewPath.path());
+
+    QDir modulePath = QmlUtilities::qmlDir();
+    modulePath.cd("modules");
+    m_qview.engine()->addImportPath(modulePath.path());
+
+    m_qview.setResizeMode(QQuickWidget::SizeRootObjectToView);
+    m_qview.quickWindow()->setColor(palette().window().color());
+    QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("FiltersUI.qml"));
+    m_qview.setSource(source);
+}
+
 int FilterDock::UpdateFilters()
 {
-    if(filterInfoList->size() <= 0){
-        return -1;
-    }else{
-        QString filterUIPath = qApp->applicationDirPath();
+    if(filterInfoList->size() <= 0)  return -1;
 
-        #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-            filterUIPath = qApp->applicationDirPath() + "/../share/moviemator/qml/views/filter/FiltersLoader.qml”;
-        #elif defined(Q_OS_MAC)
-            QDir dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
-            filterUIPath = dir.absolutePath() + "/share/moviemator/qml/views/filter/FiltersLoader.qml";
-        #endif
+//    FiltersInfo *data = new FiltersInfo(filterInfoList);
+//    qmlRegisterType<FilterItemInfo>("FilterItemInfo", 1, 0, "FilterItemInfo");
 
-        ui->setupUi(this);
-        FiltersInfo *data = new FiltersInfo(filterInfoList);
-        qmlRegisterType<FilterItemInfo>("FilterItemInfo", 1, 0, "FilterItemInfo");
-        ui->quickWidget->rootContext()->setContextProperty("metadatamodel", data);
-        ui->quickWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
-        ui->quickWidget->setSource(QUrl::fromLocalFile(filterUIPath));
-    }
+//    m_qview.rootContext()->setContextProperty("metadatamodel", data);
+
+
+    resetQview();
+
     return 0;
 }
 //FilterItemInfo::FilterItemInfo(QObject *parent){}
