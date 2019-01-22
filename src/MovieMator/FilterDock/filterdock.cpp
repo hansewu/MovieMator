@@ -9,7 +9,9 @@
 #include <QtQml>
 #include <qmlutilities.h>
 #include <qmlview.h>
+//#include <Logger.h>
 
+static MainInterface * mainInterface;
 QList<FilterItemInfo*> *filterInfoList = new QList<FilterItemInfo*>();
 
 FilterDock::FilterDock(MainInterface *main, QWidget *parent):
@@ -17,6 +19,7 @@ FilterDock::FilterDock(MainInterface *main, QWidget *parent):
 //  ui(new Ui::FilterDock),
   m_qview(QmlUtilities::sharedEngine(), this)
 {
+    m_mainWindow = main;
     m_qview.setFocusPolicy(Qt::StrongFocus);
     setWidget(&m_qview);
 
@@ -56,10 +59,24 @@ int FilterDock::UpdateFilters()
 
     m_qview.rootContext()->setContextProperty("filtersInfo", data);
 
+    m_qview.rootContext()->setContextProperty("filtersResDock", this);
     resetQview();
+
+
 
     return 0;
 }
+
+void FilterDock::addFilterItem(int index)
+{
+    m_mainWindow->addFilter(index);
+}
+
+
+//void FiltersInfo::addFilterItem(int index)
+//{
+
+//}
 
 
 static FilterDock *instance = 0;
@@ -68,6 +85,7 @@ static FilterDock *instance = 0;
 //返回界面对象
 QDockWidget *FilterDock_initModule(MainInterface *main)
 {
+
     if (instance == NULL)
         instance = new FilterDock(main);
     return instance;
