@@ -84,78 +84,6 @@ void FilterController::loadFilterMetadata() {
     };
 }
 
-//void FilterController::loadFrei0rFilterMetadata() {
-//    QDir dir = QmlUtilities::qmlDir();
-//    dir.cd("filters_pro");
-//    QDir subdir = dir;
-//    subdir.cd("frei0r");
-//    subdir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
-//    subdir.setNameFilters(QStringList("meta*.qml"));
-//    foreach (QString fileName, subdir.entryList()) {
-//        LOG_DEBUG() << "reading filter metadata" << "frei0r" << fileName;
-
-//        QDir applicationDir(qApp->applicationDirPath());
-//        applicationDir.cd("lib");
-//        applicationDir.cd("frei0r-1");
-//        QDir frei0rDir = applicationDir;
-//        frei0rDir.setNameFilters(QStringList("*.so"));
-//        foreach (QString libName, frei0rDir.entryList(QDir::NoFilter)) {
-//            QQmlComponent component(QmlUtilities::sharedEngine(), subdir.absoluteFilePath(fileName));
-//            QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
-//            if (meta) {
-//                QString mlt_service = "frei0r." + libName.mid(0, libName.length() - 3);
-
-//                Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), mlt_service.toUtf8().constData());
-//                if (!filter) continue;
-//                if (!filter->is_valid())  continue;  //有些库可能不是filter，所以filter 方式生成出来后续可能会出错。
-
-//                f0r_plugin_info_t info;
-//                getFrei0rPluginInfo(filter, info);
-//                if(info.plugin_type != F0R_PLUGIN_TYPE_FILTER) continue;   //frei0r只开放出filter的库
-
-//                meta->set_mlt_service(mlt_service);
-//                meta->setName(tr("%1").arg(info.name));
-//                meta->setType(QmlMetadata::Filter);
-//                meta->keyframes()->clearParameter();
-//                for (int nIndex = 0; nIndex < info.num_params; nIndex++)
-//                {
-//                    f0r_param_info_t paramInfo;
-//                    getFrei0rParamInfo(filter, nIndex, paramInfo);
-
-//                    QmlKeyframesParameter * param = new QmlKeyframesParameter();
-
-//                    param->setName(paramInfo.name);
-//                    param->setExplanation(paramInfo.explanation);
-
-//                    QString paramType = "double";
-//                    if (paramInfo.type == F0R_PARAM_BOOL)  paramType = "bool";
-//                    if (paramInfo.type == F0R_PARAM_DOUBLE)  paramType = "double";
-//                    if (paramInfo.type == F0R_PARAM_COLOR)  paramType = "color";
-//                    if (paramInfo.type == F0R_PARAM_POSITION)  paramType = "position";
-//                    if (paramInfo.type == F0R_PARAM_STRING)  paramType = "string";
-//                    param->setParaType(paramType);
-
-
-//                    meta->keyframes()->appendParameter(param);
-//                }
-
-//                delete filter;
-//                // Check if mlt_service is available.
-//                if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
-//                    LOG_DEBUG() << "added filter" << meta->name();
-
-//                    meta->loadSettings();
-//                    meta->setPath(subdir);
-//                    meta->setParent(0);
-//                    addMetadata(meta);
-//                }
-//            } else if (!meta) {
-//                LOG_WARNING() << component.errorString();
-//            }
-//        }
-//    }
-
-//}
 void FilterController::readFilterTypeFromFile(QString &pFilePath, std::map<QString, QString> &filterTypes)
 {
     QFile file(pFilePath);
@@ -180,9 +108,9 @@ void FilterController::loadFrei0rFilterMetadata() {
     subdir.setNameFilters(QStringList("meta*.qml"));
     foreach (QString fileName, subdir.entryList())
     {
-        QString filePath = qApp->applicationDirPath() + "/../Resources/frei0r.txt";
-        std::map<QString, QString> filterTypes;
-        readFilterTypeFromFile(filePath, filterTypes);
+//        QString filePath = qApp->applicationDirPath() + "/../Resources/frei0r.txt";
+//        std::map<QString, QString> filterTypes;
+//        readFilterTypeFromFile(filePath, filterTypes);
 
         QDir applicationDir(qApp->applicationDirPath());
         applicationDir.cd("lib");
@@ -195,13 +123,17 @@ void FilterController::loadFrei0rFilterMetadata() {
             QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
             if (meta)
             {
-                std::map<QString, QString>::iterator iter = filterTypes.find(libName.mid(0, libName.length() - 3));
-                if (iter != filterTypes.end())
-                {
-                    QString filterType = iter->second;
-                    meta->setFilterType(filterType);
-                }
-
+//                std::map<QString, QString>::iterator iter = filterTypes.find(libName.mid(0, libName.length() - 3));
+//                if (iter != filterTypes.end())
+//                {
+//                    QString filterType = iter->second;
+//                    meta->setFilterType(filterType);
+//                }
+                std::string string = libName.toStdString();
+                if(string.find("alpha") != std::string::npos )
+                    continue;
+                int nCount = libName.contains('alpha',Qt::CaseInsensitive);
+                if (nCount > 0) continue;
 
                 QString mlt_service_s       = "frei0r." + libName.mid(0, libName.length() - 3);
 
