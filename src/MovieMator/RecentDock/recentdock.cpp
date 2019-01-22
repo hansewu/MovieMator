@@ -69,18 +69,13 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
 
             if(fileHandle)
             {
-                if(s.endsWith(".avi") || s.endsWith(".mov") || s.endsWith(".mp4"))   // 视频
-                {
+                if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_VIDEO) {
                     model1->append(fileHandle);
                     m_flag[0] = true;
-                }
-                else if(s.endsWith(".mp3"))  // 音频
-                {
+                } else if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_AUDIO) {
                     model2->append(fileHandle);
                     m_flag[1] = true;
-                }
-                else/* if(s.endsWith(".png"))*/  // 图片
-                {
+                } else if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_IMAGE) {
                     model3->append(fileHandle);
                     m_flag[2] = true;
                 }
@@ -215,25 +210,20 @@ void RecentDock::add(const QString &s)
         m_recent.prepend(s);
 //        /*
         int index = 0;
-        if(s.endsWith(".avi") || s.endsWith(".mov") || s.endsWith(".mp4"))   // 视频
-        {
+        FILE_TYPE file_type = m_mainWindow->getFileType(fileHandle);
+        if (file_type == FILE_TYPE_VIDEO) {
             m_modelList->at(0)->insert(fileHandle, 0);
             m_flag[0] = true;
             index = 0;
-        }
-        else if(s.endsWith(".mp3"))  // 音频
-        {
+        } else if (file_type == FILE_TYPE_AUDIO) {
             m_modelList->at(1)->insert(fileHandle, 0);
             m_flag[1] = true;
             index = 1;
-        }
-        else/* if(s.endsWith(".png"))*/  // 图片
-        {
+        } else if (file_type == FILE_TYPE_IMAGE) {
             m_modelList->at(2)->insert(fileHandle, 0);
             m_flag[2] = true;
             index = 2;
         }
-
 
         ui->comboBox->clear();
         m_map.clear();
