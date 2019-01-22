@@ -70,6 +70,7 @@ public slots:
     void addTextFilter();
 
     void addFilter(const QString& filterID);
+    void addFilter(int nFilterIndex = -1);
     void removeFilter(int row);
 
     void refreshCurrentFilter(Mlt::Filter *filter); //wzq

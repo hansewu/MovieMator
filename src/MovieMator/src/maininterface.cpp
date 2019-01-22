@@ -25,6 +25,7 @@
 #include "commands/timelinecommands.h"
 #include <shotcut_mlt_properties.h>
 #include "templateeidtor.h"
+#include "controllers/filtercontroller.h"
 
 MainInterface& MainInterface::singleton()
 {
@@ -271,4 +272,10 @@ FILE_HANDLE MainInterface::resetFileInTemplate(int index)
 {
     TemplateEidtor *templateEditor = MAIN.templateEditor();
     return templateEditor->resetFileToTemplateDefault(index);
+}
+
+//功能：返回xml的mimetype；实现拖放时使用。
+void MainInterface::addFilter(int nFilterIndex)
+{
+    MAIN.filterController()->addFilter(nFilterIndex);
 }
