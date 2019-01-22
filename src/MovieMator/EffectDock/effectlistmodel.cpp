@@ -87,7 +87,6 @@ QMimeData *EffectListModel::mimeData(const QModelIndexList &indexes) const
     FILE_HANDLE fileHandle = m_effectList->at(indexes.first().row());
 
     mimeData->setData(m_mainWindow->getXMLMimeTypeForDragDrop(), m_mainWindow->getXmlForDragDrop(fileHandle).toUtf8());
-//    mimeData->setText(m_mainWindow->getDuration(fileHandle));
     mimeData->setText(QString::number(m_mainWindow->getPlayTime(fileHandle)));
 
     return mimeData;
@@ -109,15 +108,6 @@ void EffectListModel::append(FILE_HANDLE fileHandle)
     beginInsertRows(QModelIndex(), count, count);
     m_effectList->append(fileHandle);
     endInsertRows();
-}
-
-void EffectListModel::clear()
-{
-    if (rowCount()) {
-        beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
-        m_effectList->clear();
-        endRemoveRows();
-    }
 }
 
 FILE_HANDLE EffectListModel::fileAt(int row) const

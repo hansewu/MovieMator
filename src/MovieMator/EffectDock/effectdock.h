@@ -22,6 +22,8 @@
 #include "effectdock_global.h"
 
 #include <QDir>
+#include <QLabel>
+#include <QMimeData>
 #include <QDockWidget>
 #include <QSpacerItem>
 #include <maininterface.h>
@@ -34,7 +36,7 @@ namespace Ui {
     class EffectDock;
 }
 
-static const QString s_templateDir = "C:/Projects/MovieMator/template";
+static const QString s_effectDir = "C:/Projects/MovieMator/template/";
 
 class EffectDock : public QDockWidget
 {
@@ -44,23 +46,27 @@ public:
     explicit EffectDock(MainInterface *main=nullptr, QWidget *parent=nullptr);
     ~EffectDock();
 
-    FILE_HANDLE getEffectFile();
-//    void setMimeDataForDrag() const;
+protected:
+    void resizeEvent(QResizeEvent *event);
 
 private:
-    // 样式化 listView
-    void formatListView(QListView *listView);
     // 图片添加特效
     void replaceImage(QString effectFile, QString imageFile);
-    void setEffectFile();
+    void setMimeDataForDrag();
+    void createEffectFile();
 
-public slots:
-    void on_listView_clicked(const QModelIndex&);
-    void on_listView_doubleClicked(const QModelIndex&);
-    void on_listView_customContextMenuRequested(const QPoint&);
+    void createImageFileList(QFileInfoList &fileList, QString folderName);
+    void appendListViewAndLabel(EffectListModel *model, QString itemName);
 
 private slots:
+    void on_listView_pressed(const QModelIndex&);
+    void on_listView_clicked(const QModelIndex&);
+//    void on_listView_doubleClicked(const QModelIndex&);
+    void on_listView_customContextMenuRequested(const QPoint&);
     void on_actionAddToTimeline_triggered();
+    void on_comboBox_activated(int index);
+    void on_comboBox_currentIndexChanged(int index);
+    void on_comboBox_2_currentIndexChanged(int index);
 
 private:
     Ui::EffectDock *ui;
@@ -68,7 +74,14 @@ private:
 
     QDir m_dir;
     FILE_HANDLE m_effectFile;
-//    QMimeData *m_mimeData;
+    QList<FILE_HANDLE> *m_effectList;
+    QMimeData *m_mimeData;
+
+    QList<EffectListView*> *m_imageList;
+    QModelIndex m_currentIndex;
+    EffectListView *m_currentListView;
+
+    QSpacerItem *m_spacerItem;
 };
 
 #endif // EFFECTDOCK_H

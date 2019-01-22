@@ -1,35 +1,31 @@
 #include "effectlistview.h"
+#include "effectlistmodel.h"
 
 #include <QKeyEvent>
 #include <QDrag>
 #include <QApplication>
-//#include <QMimeData>
-#include <Logger.h>
+#include <QMimeData>
 
 EffectListView::EffectListView(QWidget *parent)
     : QListView(parent)
     , m_canStartDrag(false)
-//    , m_mimeData(new QMimeData())
+    , m_mimeData(new QMimeData())
 {
     setAcceptDrops(false);
 }
 
-//EffectListView::~EffectListView()
-//{
-//    delete m_mimeData;
-//    m_mimeData = nullptr;
-//}
+EffectListView::~EffectListView()
+{
+    delete m_mimeData;
+    m_mimeData = nullptr;
+}
 
-//void EffectListView::setMimeData(QMimeData *mimeData)
-//{
-//    delete m_mimeData;
-//    m_mimeData = mimeData;
-//}
-
-//void EffectListView::setThumbnail(QImage thumbnail)
-//{
-//    m_thumbnail = thumbnail;
-//}
+void EffectListView::setMimeData(QMimeData *mimeData, const QString &mimeType)
+{
+    m_mimeData->setData(mimeType, mimeData->data(mimeType));
+    m_mimeData->setText(mimeData->text());
+    m_mimeType = mimeType;
+}
 
 void EffectListView::keyPressEvent(QKeyEvent* event)
 {
@@ -72,24 +68,35 @@ void EffectListView::mouseMoveEvent(QMouseEvent* event)
     QDrag drag(this);
 
     EffectListModel *viewModel = static_cast<EffectListModel *>(model());
-    if(viewModel/* && m_mimeData*/)
+    if(viewModel && m_mimeData)
     {
-        QModelIndex first = selectedIndexes().first();
-        QMimeData *mimeData = viewModel->mimeData(selectedIndexes());
+        QMimeData *mimeData = new QMimeData;
+        mimeData->setData(m_mimeType, m_mimeData->data(m_mimeType));
+        mimeData->setText(m_mimeData->text());
         drag.setMimeData(mimeData);
-        QImage thumbnail = viewModel->thumbnail(first.row());
+        QImage thumbnail = viewModel->thumbnail(selectedIndexes().first().row());
         drag.setPixmap(QPixmap::fromImage(thumbnail).scaled(80, 45));
-
-//        drag.setMimeData(m_mimeData);
-//        if(m_thumbnail.isNull())
-//        {
-//            m_thumbnail = viewModel->thumbnail(selectedIndexes().first().row());
-//        }
-//        drag.setPixmap(QPixmap::fromImage(m_thumbnail).scaled(80, 45));
 
         drag.setHotSpot(QPoint(0, 0));
         drag.exec(Qt::MoveAction);
 
 //        QListView::mouseMoveEvent(event);
     }
+}
+
+void EffectListView::focusInEvent(QFocusEvent *event)
+{
+    setCurrentIndex(m_currentIndex);
+
+    QListView::focusInEvent(event);
+}
+
+void EffectListView::focusOutEvent(QFocusEvent *event)
+{
+    // 失去焦点时取消当前被选中状态
+    m_currentIndex = currentIndex();
+    QModelIndex index = model()->index(-1, 0);
+    setCurrentIndex(index);
+
+    QListView::focusOutEvent(event);
 }

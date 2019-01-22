@@ -3,29 +3,28 @@
 
 #include <QListView>
 
-#include "effectlistmodel.h"
-
 class EffectListView : public QListView
 {
 public:
     EffectListView(QWidget *parent = nullptr);
-//    ~EffectListView();
-//    void setMimeData(QMimeData *mimeData);
-//    void setThumbnail(QImage thumbnail);
+    ~EffectListView();
+    void setMimeData(QMimeData *mimeData, const QString &mimeType);
 
     void keyPressEvent(QKeyEvent*);
 
 protected:
     void mousePressEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
+    void focusInEvent(QFocusEvent *);
+    void focusOutEvent(QFocusEvent *);
 
 private:
-//    QModelIndex m_currentIndex;
+    QModelIndex m_currentIndex;
     QPoint m_dragStart;
     bool m_canStartDrag;
 
-//    QMimeData *m_mimeData;
-//    QImage m_thumbnail;
+    QMimeData *m_mimeData;
+    QString m_mimeType;
 };
 
 #endif // EFFECTLISTVIEW_H

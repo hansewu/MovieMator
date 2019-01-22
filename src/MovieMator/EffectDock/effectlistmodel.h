@@ -24,7 +24,6 @@ public:
     QModelIndex parent(const QModelIndex &child) const;
 
     void append(FILE_HANDLE fileHandle);
-    void clear();
 
     FILE_HANDLE fileAt(int row) const;
     QImage thumbnail(int row) const;

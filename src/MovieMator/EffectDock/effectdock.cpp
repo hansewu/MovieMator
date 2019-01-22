@@ -22,16 +22,8 @@
 #include "util.h"
 
 #include <QMenu>
-#include <QLabel>
 #include <Logger.h>
 #include <QScrollBar>
-
-//#include <QDropEvent>
-#include <QMimeData>
-//#include <QUrl>
-
-#include <QSplitter>
-
 #include <QDomDocument>
 
 EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
@@ -44,181 +36,109 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
 
-    m_dir = QDir(s_templateDir);
-    m_effectFile = nullptr;
-//    m_mimeData = new QMimeData;
-
+    m_dir = QDir(s_effectDir);
     if(!m_dir.exists())
     {
         return;
     }
 
-    QSplitter *splitter = new QSplitter();
-    splitter->addWidget(ui->listView);
-    splitter->addWidget(ui->listView_2);
-    splitter->setOrientation(Qt::Vertical);
-    ui->verticalLayout->addWidget(splitter);
-    splitter->setStyleSheet("QSplitter::handle{background-color:rgba(160, 160, 160, 75%)}");
-    splitter->setHandleWidth(3);
+    m_effectFile = nullptr;
+    m_effectList = new QList<FILE_HANDLE>;
+    m_mimeData = new QMimeData;
 
-    EffectListModel *model = new EffectListModel(main, this);
-    QDir dir1(s_templateDir+"/Effects");
-    QFileInfoList files = dir1.entryInfoList(QDir::Files | QDir::NoSymLinks);
-    if(files.count()>0)
+    m_imageList = new QList<EffectListView*>;
+    m_currentListView = nullptr;
+
+    // 特效文件列表
+    QDir effectDir(s_effectDir+"Effects");
+    if(!effectDir.exists())
     {
-        for(int i=0; i<files.count(); i++)
-            model->append(m_mainWindow->openFile(files.at(i).filePath()));
+        return;
     }
-    ui->listView->setModel(model);
-
-    EffectListModel *model2 = new EffectListModel(main, this);
-    QDir dir2(s_templateDir+"/Images");
-    QFileInfoList files2 = dir2.entryInfoList(QDir::Files | QDir::NoSymLinks);
-    if(files2.count()>0)
+    QFileInfoList effectFiles = effectDir.entryInfoList(QDir::Files | QDir::NoSymLinks);
+    if(effectFiles.count()>0)
     {
-        for(int i=0; i<files2.count(); i++)
+        for(int i=0; i<effectFiles.count(); i++)
         {
-            model2->append(m_mainWindow->openFile(files2.at(i).filePath()));
+            m_effectList->append(m_mainWindow->openFile(effectFiles.at(i).filePath()));
+            ui->comboBox->addItem(effectFiles[i].fileName().split(".")[0]);
         }
     }
-    ui->listView_2->setModel(model2);
+    // 图片文件列表
+    QDir imageDir(s_effectDir+"Images");
+    if(!imageDir.exists())
+    {
+        return;
+    }
+    QFileInfoList folderList = imageDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
+    for(int i=0; i<folderList.count(); i++)
+    {
+        QFileInfo folder = folderList.at(i);
+        QFileInfoList fileList = QDir(folder.absoluteFilePath()).entryInfoList(QDir::Files | QDir::NoSymLinks);
 
-    formatListView(ui->listView);
-    formatListView(ui->listView_2);
+        if(fileList.count()>0)
+        {
+            ui->comboBox_2->addItem(folder.fileName());
+            createImageFileList(fileList, folder.fileName());
+        }
+    }
+
+    // 实际上文件夹多了就用不上了
+    m_spacerItem = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    ui->verticalLayout_2->addItem(m_spacerItem);
+
+    ui->scrollArea->setWidgetResizable(true);
+    ui->scrollArea->setStyleSheet("border:none;background:rgb(51, 51, 51);");
+    ui->scrollArea->verticalScrollBar()
+            ->setStyleSheet("QScrollBar:vertical{width:8px;background:rgba(0,0,0,0%);margin:0px,0px,0px,0px;}"
+                            "QScrollBar::handle:vertical{width:8px;background:rgba(160,160,160,25%);border-radius:4px;min-height:20;}"
+                            "QScrollBar::handle:vertical:hover{width:8px;background:rgba(160,160,160,50%);border-radius:4px;min-height:20;}");
 
     LOG_DEBUG() << "end";
 }
 
 EffectDock::~EffectDock()
 {
-//    qDeleteAll(*m_listviewList);
-//    m_listviewList->clear();
-//    delete m_listviewList;
-//    m_listviewList = nullptr;
+    qDeleteAll(*m_effectList);
+    m_effectList->clear();
+    delete m_effectList;
+    m_effectList = nullptr;
 
-//    delete m_spacerItem;
-//    m_spacerItem = nullptr;
+    delete m_mimeData;
+    m_mimeData = nullptr;
+
+    qDeleteAll(*m_imageList);
+    m_imageList->clear();
+    delete m_imageList;
+    m_imageList = nullptr;
+
+    delete m_spacerItem;
+    m_spacerItem = nullptr;
 
     delete ui;
 }
 
-FILE_HANDLE EffectDock::getEffectFile()
+void EffectDock::resizeEvent(QResizeEvent *event)
 {
-    return m_effectFile;
-}
-
-//void EffectDock::setMimeDataForDrag() const
-//{
-//    m_mimeData->setData(m_mainWindow->getXMLMimeTypeForDragDrop(), m_mainWindow->getXmlForDragDrop(m_effectFile).toUtf8());
-//    m_mimeData->setText(QString::number(m_mainWindow->getPlayTime(m_effectFile)));
-//}
-
-void EffectDock::formatListView(QListView *listView)
-{
-    listView->setFocusPolicy(Qt::StrongFocus);
-    listView->setViewMode(QListView::IconMode);
-    listView->setGridSize(QSize(120, 100));
-    listView->setResizeMode(QListView::Adjust);
-    listView->setContextMenuPolicy(Qt::CustomContextMenu);
-    listView->setContentsMargins(5, 5, 5, 5);
-
-    listView->setStyleSheet("QListView{selection-background-color:rgb(192,72,44); selection-color: rgb(255,255,255);background-color:rgba(160,160,160,0%);color:rgb(214,214,214);}");
-    listView->verticalScrollBar()
-            ->setStyleSheet("QScrollBar:vertical{background:rgba(0,0,0,0%);margin:0px,0px,0px,0px;}"
-                            "QScrollBar::handle:vertical{background:rgba(160,160,160,25%);border-radius:4px;min-height:20;}"
-                            "QScrollBar::handle:vertical:hover{background:rgba(160,160,160,50%);border-radius:4px;min-height:20;}");
-
-    connect(listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(on_listView_clicked(const QModelIndex&)));
-    connect(listView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(on_listView_doubleClicked(const QModelIndex&)));
-    connect(listView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(on_listView_customContextMenuRequested(const QPoint&)));
-}
-
-void EffectDock::on_listView_clicked(const QModelIndex &)
-{
-    setEffectFile();
-}
-
-void EffectDock::on_listView_doubleClicked(const QModelIndex &)
-{
-    setEffectFile();
-    if(m_effectFile)
+    for(int i=0; i<m_imageList->count(); i++)
     {
-        m_mainWindow->playFile(m_effectFile);
+        EffectListView *listView = m_imageList->at(i);
+        int wSize = listView->gridSize().width();
+        int hSize = listView->gridSize().height();
+        int width = listView->size().width();
+        int columns = width/wSize<1 ? 1: width/wSize;
+        int rowCount = listView->model()->rowCount();
+        int rows = rowCount%columns>0 ? (rowCount/columns+1) : (rowCount/columns);
+        listView->setFixedHeight(rows*hSize);
     }
-}
 
-void EffectDock::on_listView_customContextMenuRequested(const QPoint &pos)
-{
-    if(ui->listView->hasFocus())
-    {
-        QModelIndex index = ui->listView->currentIndex();
-        if(index.isValid())
-        {
-            QMenu menu(this);
-            menu.addAction(ui->actionAddToTimeline);
-            menu.exec(ui->listView->mapToGlobal(pos));
-        }
-    }
-    else if(ui->listView_2->hasFocus())
-    {
-        QModelIndex index = ui->listView_2->currentIndex();
-        if(index.isValid())
-        {
-            QMenu menu(this);
-            menu.addAction(ui->actionAddToTimeline);
-            menu.exec(ui->listView_2->mapToGlobal(pos));
-        }
-    }
-}
+    on_comboBox_2_currentIndexChanged(ui->comboBox_2->currentIndex());
 
-void EffectDock::on_actionAddToTimeline_triggered()
-{
-    setEffectFile();
-    if(m_effectFile)
-    {
-        m_mainWindow->addToTimeLine(m_effectFile);
-    }
-}
-
-void EffectDock::setEffectFile()
-{   // 切换特效或图片时都会触发效果
-    QModelIndex currentEffect = ui->listView->currentIndex();
-    QModelIndex currentImage = ui->listView_2->currentIndex();
-    if(!currentEffect.isValid() && !currentImage.isValid())
-    {
-        return;
-    }
-    else if(!currentEffect.isValid())
-    {
-        m_effectFile = qobject_cast<EffectListModel*>(ui->listView_2->model())->fileAt(currentImage.row());
-//        ui->listView->setThumbnail(m_mainWindow->getThumbnail(m_effectFile));
-//        ui->listView_2->setThumbnail(m_mainWindow->getThumbnail(m_effectFile));
-    }
-    else if(!currentImage.isValid())
-    {
-        m_effectFile = qobject_cast<EffectListModel*>(ui->listView->model())->fileAt(currentEffect.row());
-//        ui->listView->setThumbnail(m_mainWindow->getThumbnail(m_effectFile));
-//        ui->listView_2->setThumbnail(m_mainWindow->getThumbnail(m_effectFile));
-    }
-    else // if(currentEffect.isValid() && currentImage.isValid())
-    {
-        QString effectFile = m_mainWindow->getFileName(qobject_cast<EffectListModel*>(ui->listView->model())->fileAt(currentEffect.row()));
-        QString imageFile = m_mainWindow->getFileName(qobject_cast<EffectListModel*>(ui->listView_2->model())->fileAt(currentImage.row()));
-
-        replaceImage(effectFile, imageFile);
-//        ui->listView->setThumbnail(m_mainWindow->getThumbnail(qobject_cast<EffectListModel*>(ui->listView_2->model())->fileAt(currentImage.row())));
-//        ui->listView_2->setThumbnail(m_mainWindow->getThumbnail(qobject_cast<EffectListModel*>(ui->listView_2->model())->fileAt(currentImage.row())));
-    }
-//    if(m_effectFile)
-//    {
-//        ui->listView->setMimeData(m_mimeData);
-//        ui->listView_2->setMimeData(m_mimeData);
-//    }
+    QDockWidget::resizeEvent(event);
 }
 
 void EffectDock::replaceImage(QString effectFile, QString imageFile)
-{
-    // 替换XML内容
+{   // 替换 XML内容
     QFile file(effectFile);
     if(!file.exists())
     {
@@ -267,6 +187,155 @@ void EffectDock::replaceImage(QString effectFile, QString imageFile)
             domNode.setNodeValue(imageFile);
             m_effectFile = m_mainWindow->createFileWithXMLForDragAndDrop(doc.toString());
             return;
+        }
+    }
+}
+
+void EffectDock::setMimeDataForDrag()
+{
+    m_mimeData->setData(m_mainWindow->getXMLMimeTypeForDragDrop(), m_mainWindow->getXmlForDragDrop(m_effectFile).toUtf8());
+    m_mimeData->setText(QString::number(m_mainWindow->getPlayTime(m_effectFile)));
+}
+
+void EffectDock::createEffectFile()
+{
+    QString effectFile;
+    QString imageFile;
+    int comboIndex = ui->comboBox->currentIndex();
+    if(comboIndex>=0 && comboIndex<m_effectList->count())
+    {
+        m_effectFile = m_effectList->at(comboIndex);
+        effectFile = m_mainWindow->getFileName(m_effectFile);
+    }
+    if(m_currentIndex.isValid())
+    {
+        m_effectFile = qobject_cast<EffectListModel*>(m_currentListView->model())->fileAt(m_currentIndex.row());
+        imageFile = m_mainWindow->getFileName(m_effectFile);
+    }
+    if(!effectFile.isEmpty() && !imageFile.isEmpty())
+    {
+        replaceImage(effectFile, imageFile);
+    }
+    if(m_effectFile && m_currentListView)
+    {
+        setMimeDataForDrag();
+        m_currentListView->setMimeData(m_mimeData, m_mainWindow->getXMLMimeTypeForDragDrop());
+    }
+}
+
+void EffectDock::createImageFileList(QFileInfoList &fileList, QString folderName)
+{
+    EffectListModel *model = new EffectListModel(m_mainWindow, this);
+    for(int i=0; i<fileList.count(); i++)
+    {
+        model->append(m_mainWindow->openFile(fileList[i].filePath()));
+    }
+
+    appendListViewAndLabel(model, folderName);
+}
+
+void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName)
+{
+    EffectListView *listView = new EffectListView();
+    QLabel *label = new QLabel(itemName, this);
+
+    listView->setModel(model);
+
+    m_imageList->append(listView);
+    ui->verticalLayout_2->addWidget(label);
+    ui->verticalLayout_2->addWidget(listView);
+
+    label->setFixedHeight(40);
+
+    listView->setFocusPolicy(Qt::ClickFocus);
+    listView->setViewMode(QListView::IconMode);
+    listView->setGridSize(QSize(120, 100));
+    listView->setResizeMode(QListView::Adjust);
+    listView->setContextMenuPolicy(Qt::CustomContextMenu);
+    listView->setContentsMargins(5, 5, 5, 5);
+    listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    listView->setStyleSheet("QListView{selection-background-color:rgb(192,72,44); selection-color: rgb(255,255,255);background-color:rgb(51,51,51);color:rgb(214,214,214);}");
+
+    connect(listView, SIGNAL(pressed(const QModelIndex&)), this, SLOT(on_listView_pressed(const QModelIndex&)));
+    connect(listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(on_listView_clicked(const QModelIndex&)));
+//    connect(listView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(on_listView_doubleClicked(const QModelIndex&)));
+    connect(listView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(on_listView_customContextMenuRequested(const QPoint&)));
+}
+
+void EffectDock::on_listView_pressed(const QModelIndex &)
+{
+    for(int i=0; i<m_imageList->count(); i++)
+    {
+        if(m_imageList->at(i)->hasFocus()){
+            m_currentListView = m_imageList->at(i);
+            m_currentIndex = m_currentListView->currentIndex();
+            createEffectFile();
+            return;
+        }
+    }
+}
+
+void EffectDock::on_listView_clicked(const QModelIndex &)
+{
+    if(m_effectFile)
+    {
+        m_mainWindow->playFile(m_effectFile);
+    }
+}
+
+//void EffectDock::on_listView_doubleClicked(const QModelIndex &)
+//{
+////    createEffectFile();
+//    if(m_effectFile)
+//    {
+//        m_mainWindow->playFile(m_effectFile);
+//    }
+//}
+
+void EffectDock::on_listView_customContextMenuRequested(const QPoint &pos)
+{
+    if(m_currentIndex.isValid() && m_currentListView->indexAt(pos).isValid())
+    {
+        QMenu menu(this);
+        menu.addAction(ui->actionAddToTimeline);
+        menu.exec(m_currentListView->mapToGlobal(pos));
+    }
+}
+
+void EffectDock::on_actionAddToTimeline_triggered()
+{
+//    createEffectFile();
+    if(m_effectFile)
+    {
+        m_mainWindow->addToTimeLine(m_effectFile);
+    }
+}
+
+void EffectDock::on_comboBox_activated(int index)
+{
+    if(index>=0 && index<ui->comboBox->count() && m_effectFile)
+    {
+        m_mainWindow->playFile(m_effectFile);
+    }
+}
+
+void EffectDock::on_comboBox_currentIndexChanged(int index)
+{
+    if(index>=0 && index<ui->comboBox->count())
+    {
+        createEffectFile();
+    }
+}
+
+void EffectDock::on_comboBox_2_currentIndexChanged(int index)
+{
+    QLayoutItem *item = ui->verticalLayout_2->itemAt(index*2);
+    if(item)
+    {
+        QWidget *widget = item->widget();
+        if(widget)
+        {
+            ui->scrollArea->verticalScrollBar()->setValue(widget->y());
         }
     }
 }
