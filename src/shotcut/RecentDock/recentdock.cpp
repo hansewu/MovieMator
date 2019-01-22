@@ -64,18 +64,13 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
 
             if(fileHandle)
             {
-                if(s.endsWith(".avi") || s.endsWith(".mov") || s.endsWith(".mp4"))   // 视频
-                {
+                if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_VIDEO) {
                     model1->append(fileHandle);
                     m_flag[0] = true;
-                }
-                else if(s.endsWith(".mp3"))  // 音频
-                {
+                } else if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_AUDIO) {
                     model2->append(fileHandle);
                     m_flag[1] = true;
-                }
-                else/* if(s.endsWith(".png"))*/  // 图片
-                {
+                } else if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_IMAGE) {
                     model3->append(fileHandle);
                     m_flag[2] = true;
                 }

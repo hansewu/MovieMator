@@ -585,14 +585,14 @@ MainWindow::MainWindow()
 
     LOG_DEBUG() << "RecentDock";
     m_recentDock = RecentDock_initModule(&MainInterface::singleton());//new RecentDock();
-    addResourceDock(m_recentDock, tr("Recent"), QIcon(":/icons/light/32x32/show-recent.png"), QIcon(":/icons/light/32x32/show-recent-highlight.png"));
+    addResourceDock(m_recentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file-highlight.png"));
 
 
 //    m_templateDock = TemplateDock_initModule(&MainInterface::singleton());
 //    addResourceDock(m_templateDock, tr("Recent"), QIcon(":/icons/light/32x32/show-playlist.png"), QIcon(":/icons/light/32x32/show-playlist-highlight.png"));
 
     m_effectDock = EffectDock_initModule(&MainInterface::singleton());
-    addResourceDock(m_effectDock, tr("Recent"), QIcon(":/icons/light/32x32/show-playlist.png"), QIcon(":/icons/light/32x32/show-playlist-highlight.png"));
+    addResourceDock(m_effectDock, tr("Stickers"), QIcon(":/icons/light/32x32/template.png"), QIcon(":/icons/light/32x32/template-highlight.png"));
 
     m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
     m_propertiesDock->installEventFilter(this);
