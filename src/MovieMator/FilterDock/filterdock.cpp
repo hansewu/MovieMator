@@ -21,7 +21,6 @@ FilterDock::FilterDock(MainInterface *main, QWidget *parent):
     setWidget(&m_qview);
 
     QmlUtilities::setCommonProperties(m_qview.rootContext());
-//    m_qview.rootContext()->setContextProperty("view", new QmlView(m_qview.quickWindow()));
 
 
     UpdateFilters();
@@ -52,20 +51,15 @@ int FilterDock::UpdateFilters()
 {
     if(filterInfoList->size() <= 0)  return -1;
 
-//    FiltersInfo *data = new FiltersInfo(filterInfoList);
-//    qmlRegisterType<FilterItemInfo>("FilterItemInfo", 1, 0, "FilterItemInfo");
+    FiltersInfo *data = new FiltersInfo(filterInfoList);
+    qmlRegisterType<FilterItemInfo>("FilterItemInfo", 1, 0, "FilterItemInfo");
 
-//    m_qview.rootContext()->setContextProperty("metadatamodel", data);
-
+    m_qview.rootContext()->setContextProperty("filtersInfo", data);
 
     resetQview();
 
     return 0;
 }
-//FilterItemInfo::FilterItemInfo(QObject *parent){}
-//FilterItemInfo::FilterItemInfo(QObject *parent)
-//{
-//}
 
 
 static FilterDock *instance = 0;
