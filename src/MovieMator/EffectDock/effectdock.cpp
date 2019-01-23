@@ -26,6 +26,12 @@
 #include <QScrollBar>
 #include <QDomDocument>
 
+#include <QJsonDocument>
+#include <QJsonParseError>
+#include <QFile>
+#include <QDebug>
+#include <QJsonArray>
+
 EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::EffectDock),
@@ -86,6 +92,9 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
                             "QScrollBar::handle:vertical{width:8px;background:rgba(160,160,160,25%);border-radius:4px;min-height:20;}"
                             "QScrollBar::handle:vertical:hover{width:8px;background:rgba(160,160,160,50%);border-radius:4px;min-height:20;}");
 
+    readJsonFile(templateDir + "animation_name_translation_info.json", m_animationNameTranslateInfo);
+    readJsonFile(templateDir + "imageclass_name_translation_info.json", m_animationNameTranslateInfo);
+
     LOG_DEBUG() << "end";
 }
 
@@ -127,6 +136,44 @@ void EffectDock::resizeEvent(QResizeEvent *event)
     on_comboBox_2_currentIndexChanged(ui->comboBox_2->currentIndex());
 
     QDockWidget::resizeEvent(event);
+}
+
+void EffectDock::readJsonFile(QString filePath, QJsonObject &jsonObj) {
+    QFile jsonFile(filePath);
+    if (!jsonFile.open(QIODevice::ReadOnly)) {
+        qDebug()<<"sll-----could't open"<<filePath;
+        return;
+    }
+
+    QByteArray jsonData = jsonFile.readAll();
+    jsonFile.close();
+
+    QJsonParseError json_error;
+    QJsonDocument jsonDoc(QJsonDocument::fromJson(jsonData, &json_error));
+    if (json_error.error != QJsonParseError::NoError) {
+        qDebug()<<"sll-----json error!";
+        return;
+    }
+
+    jsonObj = jsonDoc.object();
+}
+
+QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInfo) {
+    if (translationInfo.isEmpty()) {
+        return srcStr;
+    }
+
+    QString result = srcStr;
+    if (translationInfo.contains(srcStr)) {
+        QJsonObject subObj = translationInfo.value(srcStr).toObject();
+        QString language = QLocale::system().name();
+        result = subObj.value(language).toString();
+        if (result.isEmpty()) {
+            result = srcStr;
+        }
+    }
+
+    return result;
 }
 
 void EffectDock::replaceImage(QString effectFile, QString imageFile)

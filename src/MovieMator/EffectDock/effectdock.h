@@ -27,6 +27,7 @@
 #include <QDockWidget>
 #include <QSpacerItem>
 #include <maininterface.h>
+#include <QJsonObject>
 
 #include "effectdockinterface.h"
 #include "effectlistmodel.h"
@@ -55,6 +56,8 @@ private:
 
     void createImageFileList(QFileInfoList &fileList, QString folderName);
     void appendListViewAndLabel(EffectListModel *model, QString itemName);
+    void readJsonFile(QString filePath, QJsonObject &jsonObj);
+    QString getTranslationStr(QString srcStr, QJsonObject translationInfo);
 
 private slots:
     void on_listView_pressed(const QModelIndex&);
@@ -80,6 +83,9 @@ private:
     EffectListView *m_currentListView;
 
     QSpacerItem *m_spacerItem;
+
+    QJsonObject m_animationNameTranslateInfo;
+    QJsonObject m_imageClassNameTranslateInfo;
 };
 
 #endif // EFFECTDOCK_H
