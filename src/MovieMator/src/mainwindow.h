@@ -157,6 +157,7 @@ private:
     QDockWidget* m_simplePropertiesDock;
     QDockWidget* m_recentDock;
     QDockWidget* m_filterDock;
+    QDockWidget* m_audiofilterDock;
     QDockWidget* m_templateDock;
     QDockWidget* m_effectDock;
     QDockWidget* m_templateEditorDock;

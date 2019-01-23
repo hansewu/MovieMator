@@ -36,6 +36,7 @@
 #include <MltFilter.h>
 #include <map>
 #include <filterdockinterface.h>
+#include <audiofilterdockinterface.h>
 #include "mainwindow.h"
 
 FilterController::FilterController(QObject* parent) : QObject(parent),
@@ -303,6 +304,17 @@ void FilterController::updateFilterDock()
     }
 
     setFiltersInfo(filterInfos, nFilterCount);
+
+
+    AudioFilter_Info audiofilterInfos[200];
+    for (int nIndex = 0; nIndex < nFilterCount; nIndex++)
+    {
+        strcpy(audiofilterInfos[nIndex].name, filterInfos[nIndex].name);
+        strcpy(audiofilterInfos[nIndex].type, filterInfos[nIndex].type);
+        strcpy(audiofilterInfos[nIndex].imageSourcePath, filterInfos[nIndex].imageSourcePath);
+        audiofilterInfos[nIndex].visible = filterInfos[nIndex].visible;
+    }
+    setAudioFiltersInfo(audiofilterInfos, nFilterCount);
 }
 
 void FilterController::timerEvent(QTimerEvent* event)

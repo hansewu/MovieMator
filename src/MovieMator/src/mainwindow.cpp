@@ -98,6 +98,7 @@
 #include "maininterface.h"
 #include <recentdockinterface.h>
 #include <filterdockinterface.h>
+#include <audiofilterdockinterface.h>
 #include <templatedockinterface.h>
 #include <effectdockinterface.h>
 #include <templateeditordockinterface.h>
@@ -597,6 +598,9 @@ MainWindow::MainWindow()
 
     m_filterDock = FilterDock_initModule(&MainInterface::singleton());
     addResourceDock(m_filterDock, tr("Filter"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
+
+    m_audiofilterDock = AudioFilterDock_initModule(&MainInterface::singleton());
+    addResourceDock(m_audiofilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/show-audio-filters.png"), QIcon(":/icons/light/32x32/show-audio-filters-highlight.png"));
 
 
     //模板资源管理界面Dock
