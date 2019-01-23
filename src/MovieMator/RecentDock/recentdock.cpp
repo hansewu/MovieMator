@@ -33,7 +33,7 @@
 
 #include <QSpacerItem>
 
-static const int MaxItems = 20;
+//static const int MaxItems = 20;
 
 RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
     QDockWidget(parent),
@@ -66,7 +66,6 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
         if(!s.endsWith(".mmp"))
         {
             FILE_HANDLE fileHandle = m_mainWindow->openFile(s);
-
             if(fileHandle)
             {
                 if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_VIDEO) {
@@ -79,67 +78,72 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
                     model3->append(fileHandle);
                     m_flag[2] = true;
                 }
-//*/
             }
         }
     }
 
-//    /*
     for(int i=0; i<num; i++)
     {
-        QLabel *label = new QLabel(m_itemNames[i]);
-        RecentListView *listView = new RecentListView();
-
-        label->setMinimumHeight(30);
-
+        QLabel *label = new QLabel(m_itemNames[i], this);
+        label->setMinimumHeight(40);
+        label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        QLabel *image = new QLabel(this);
+        image->setScaledContents(true);
+        image->setPixmap(QPixmap(":/icons/light/32x32/line.png"));
+        image->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        QHBoxLayout *box = new QHBoxLayout(this);
+        box->addWidget(label);
+        box->addWidget(image);
         QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel;
+        proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
         proxyModel->setSourceModel(m_modelList->at(i));
-
-        m_proxyArray[i] = proxyModel;
+        RecentListView *listView = new RecentListView();
         listView->setModel(proxyModel);
-
         listView->setViewMode(QListView::IconMode);
-        listView->setFocusPolicy(Qt::StrongFocus);
-        listView->setGridSize(QSize(110, 90));
+        listView->setFocusPolicy(Qt::ClickFocus);
+        listView->setGridSize(QSize(120, 100));
+        listView->setUniformItemSizes(true);
         listView->setResizeMode(QListView::Adjust);
-
+        listView->setContentsMargins(5, 5, 5, 5);
         listView->setContextMenuPolicy(Qt::CustomContextMenu);
-        listView->setStyleSheet("QListView{selection-background-color:rgb(192,72,44); selection-color: rgb(255,255,255);background-color:rgb(51,51,51);color:rgb(214,214,214);}");
         listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        listView->setStyleSheet("QListView{selection-background-color:rgb(192,72,44); selection-color:rgb(255,255,255);background-color:transparent;color:rgb(214,214,214);}");
+        listView->setStyleSheet("QListView::item:selected{background:rgb(192,72,44); color:rgb(255,255,255);}");
 
         connect(listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(on_listView_clicked(const QModelIndex&)));
         connect(listView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(on_listView_doubleClicked(const QModelIndex&)));
         connect(listView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(on_listView_customContextMenuRequested(const QPoint&)));
 
-        ui->verticalLayout_2->addWidget(label);
-        ui->verticalLayout_2->addWidget(listView);
-
         label->setVisible(false);
+        image->setVisible(false);
         listView->setVisible(false);
 
-        m_listviewList->append(listView);
         m_labelArray[i] = label;
+        m_imageArray[i] = image;
+        m_proxyArray[i] = proxyModel;
+        m_listviewList->append(listView);
+
+        ui->verticalLayout_2->addLayout(box);
+        ui->verticalLayout_2->addWidget(listView);
 
         if(m_flag[i])
         {
             ui->comboBox->addItem(m_itemNames[i]);
             m_map.insert(ui->comboBox->count()-1, m_itemNames[i]);
             label->setVisible(true);
+            image->setVisible(true);
             listView->setVisible(true);
         }
     }
-//*/
 
     m_verticalSpacerItem = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
     ui->verticalLayout_2->addItem(m_verticalSpacerItem);
 
-    ui->comboBox->setCurrentIndex(0);
-
     ui->comboBox->setFixedHeight(ui->lineEdit->height()-2);
     ui->comboBox->setMinimumWidth(50);
-
+    ui->comboBox->setStyleSheet("QComboBox{ background-color:rgb(100,100,100);color:rgb(225,225,225); }");
     ui->scrollArea->setWidgetResizable(true);
-    ui->scrollArea->setStyleSheet("border:none;");
+    ui->scrollArea->setStyleSheet("border:none;background:rgb(51, 51, 51);");
     ui->scrollArea->verticalScrollBar()
             ->setStyleSheet("QScrollBar:vertical{width:8px;background:rgba(0,0,0,0%);margin:0px,0px,0px,0px;}"
                             "QScrollBar::handle:vertical{width:8px;background:rgba(160,160,160,25%);border-radius:4px;min-height:20;}"
@@ -187,9 +191,7 @@ void RecentDock::resizeEvent(QResizeEvent* event)
         int row = rowCount%columns>0 ? (rowCount/columns+1) : (rowCount/columns);
         listView->setFixedHeight(row*hSize);
     }
-
 //    on_comboBox_currentIndexChanged(ui->comboBox->currentIndex());
-
     QDockWidget::resizeEvent(event);
 }
 
@@ -207,20 +209,21 @@ void RecentDock::add(const QString &s)
     FILE_HANDLE fileHandle = m_mainWindow->openFile(s);
     if(fileHandle)
     {
-        m_recent.prepend(s);
-//        /*
         int index = 0;
         FILE_TYPE file_type = m_mainWindow->getFileType(fileHandle);
         if (file_type == FILE_TYPE_VIDEO) {
             m_modelList->at(0)->insert(fileHandle, 0);
+            m_recent.prepend(s);
             m_flag[0] = true;
             index = 0;
         } else if (file_type == FILE_TYPE_AUDIO) {
             m_modelList->at(1)->insert(fileHandle, 0);
+            m_recent.prepend(s);
             m_flag[1] = true;
             index = 1;
         } else if (file_type == FILE_TYPE_IMAGE) {
             m_modelList->at(2)->insert(fileHandle, 0);
+            m_recent.prepend(s);
             m_flag[2] = true;
             index = 2;
         }
@@ -232,12 +235,10 @@ void RecentDock::add(const QString &s)
            if(m_flag[i])
            {
                ui->comboBox->addItem(m_itemNames[i]);
-
                m_map.insert(ui->comboBox->count()-1, m_itemNames[i]);
-
                m_listviewList->at(i)->setVisible(true);
                m_labelArray[i]->setVisible(true);
-//               m_labelArray[i]->setText(m_itemNames[i]);
+               m_imageArray[i]->setVisible(true);
            }
            if(index==i)
            {
@@ -246,13 +247,12 @@ void RecentDock::add(const QString &s)
         }
 
         resizeEvent(nullptr);
-//        */
     }
-    while (m_recent.count() > MaxItems)
-    {
-        m_recent.removeLast();
+//    while (m_recent.count() > MaxItems)
+//    {
+//        m_recent.removeLast();
 //        m_model->remove(m_model->rowCount()-1);
-    }
+//    }
     Settings.setRecent(m_recent);
 }
 
@@ -293,32 +293,14 @@ void RecentDock::on_lineEdit_textChanged(const QString& search)
     resizeEvent(nullptr);
 }
 
-//void RecentDock::on_comboBox_currentIndexChanged(int index)
-//{
-//    if(ui->verticalLayout_2->itemAt(index*2))
-//    {
-//        QWidget *widget = ui->verticalLayout_2->itemAt(index*2)->widget();
-//        if(widget)
-//        {
-//            ui->scrollArea->verticalScrollBar()->setValue(widget->y());
-//        }
-//    }
-//}
-
 void RecentDock::on_comboBox_currentTextChanged(const QString &arg1)
 {
-    for(int i=m_map.key(arg1)*2; i<ui->verticalLayout_2->count()-1; i+=2)
+    for(int i=m_map.key(arg1); i<num; i++)
     {
-        if(ui->verticalLayout_2->itemAt(i))
+        if(m_labelArray[i]->text()==arg1)
         {
-            QLabel *label = qobject_cast<QLabel*>(ui->verticalLayout_2->itemAt(i)->widget());
-            QListView *listView = qobject_cast<QListView*>(ui->verticalLayout_2->itemAt(i+1)->widget());
-            if(label && listView && QString::compare(label->text(),arg1)==0)
-            {
-                ui->scrollArea->verticalScrollBar()->setValue(label->y());
-                listView->setFocus();
-                return;
-            }
+            ui->scrollArea->verticalScrollBar()->setValue(m_labelArray[i]->y());
+            return;
         }
     }
 }
@@ -366,7 +348,7 @@ void RecentDock::on_listView_customContextMenuRequested(const QPoint &pos)
     for(RecentListView *listView : *m_listviewList)
     {
         QModelIndex index = listView->currentIndex();
-        if(index.isValid())
+        if(index.isValid() && listView->indexAt(pos).isValid())
         {
             m_currentIndex = index;
             m_currentListView = listView;
@@ -401,27 +383,16 @@ void RecentDock::on_actionRemove_triggered()
                 if(m_listviewList->at(i)==m_currentListView)
                 {
                     m_flag[i] = false;
-                    QLabel *label = qobject_cast<QLabel*>(ui->verticalLayout_2->itemAt(i*2)->widget());
-                    label->setVisible(false);
                     m_currentListView->setVisible(false);
-
-                    int key = m_map.key(label->text());
-                    ui->comboBox->removeItem(key);
-                    m_map.remove(key);
-
-//                    for(int j=0; j<ui->comboBox->count(); j++)
-//                    {
-//                        if(ui->comboBox->itemText(j)==label->text())
-//                        {
-//                            ui->comboBox->removeItem(j);
-//                            break;
-//                        }
-//                    }
+                    m_labelArray[i]->setVisible(false);
+                    m_imageArray[i]->setVisible(false);
+                    QString itemName = m_labelArray[i]->text();
+                    m_map.remove(m_map.key(itemName));
+                    ui->comboBox->removeItem(ui->comboBox->findText(itemName));
                     break;
                 }
             }
         }
-
         resizeEvent(nullptr);
     }
 }
@@ -432,10 +403,13 @@ void RecentDock::on_actionRemoveAll_triggered()
     {
         m_flag[i] = false;
         m_modelList->at(i)->clear();
-        ui->comboBox->removeItem(i);
-        ui->verticalLayout_2->itemAt(i*2)->widget()->setVisible(false);
-        ui->verticalLayout_2->itemAt(i*2+1)->widget()->setVisible(false);
+        m_labelArray[i]->setVisible(false);
+        m_imageArray[i]->setVisible(false);
+        m_listviewList->at(i)->setVisible(false);
     }
+
+    ui->comboBox->clear();
+    m_map.clear();
 
     m_recent.clear();
     Settings.setRecent(m_recent);
@@ -454,11 +428,9 @@ void RecentDock::on_actionProperties_triggered()
 QList<FILE_HANDLE> RecentDock::getSelected()
 {
     QList<FILE_HANDLE> selected;
-    if (!m_currentListView)
-        return selected;
-    QModelIndexList seletedIndexes = m_currentListView->getSelected();
+    QModelIndexList selectedIndexes = m_currentListView->getSelected();
 
-    foreach(QModelIndex index, seletedIndexes)
+    foreach(QModelIndex index, selectedIndexes)
     {
         QModelIndex sourceIndex = qobject_cast<QSortFilterProxyModel*>(m_currentListView->model())->mapToSource(index);
         FILE_HANDLE fileHandle = qobject_cast<RecentListModel*>(qobject_cast<QSortFilterProxyModel*>(m_currentListView->model())->sourceModel())->fileAt(sourceIndex.row());

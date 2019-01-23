@@ -71,6 +71,9 @@ QVariant RecentListModel::data(const QModelIndex &index, int role) const
             }
             return image;
         }
+        case Qt::TextAlignmentRole: {
+            return Qt::AlignLeft;
+        }
         default:
             break;
     }
@@ -84,6 +87,20 @@ QMimeData *RecentListModel::mimeData(const QModelIndexList &indexes) const
     QMimeData *mimeData = new QMimeData;
 
     FILE_HANDLE fileHandle = m_recentList->at(indexes.first().row());
+
+    mimeData->setData(m_mainWindow->getXMLMimeTypeForDragDrop(), m_mainWindow->getXmlForDragDrop(fileHandle).toUtf8());
+    mimeData->setText(QString::number(m_mainWindow->getPlayTime(fileHandle)));
+
+    return mimeData;
+}
+
+QMimeData *RecentListModel::mimeData(const int index) const
+{
+    Q_ASSERT(index < m_recentList->count());
+
+    QMimeData *mimeData = new QMimeData;
+
+    FILE_HANDLE fileHandle = m_recentList->at(index);
 
     mimeData->setData(m_mainWindow->getXMLMimeTypeForDragDrop(), m_mainWindow->getXmlForDragDrop(fileHandle).toUtf8());
     mimeData->setText(QString::number(m_mainWindow->getPlayTime(fileHandle)));
