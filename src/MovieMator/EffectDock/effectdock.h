@@ -36,8 +36,6 @@ namespace Ui {
     class EffectDock;
 }
 
-static const QString s_effectDir = "C:/Projects/MovieMator/template/";
-
 class EffectDock : public QDockWidget
 {
     Q_OBJECT

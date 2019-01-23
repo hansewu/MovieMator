@@ -36,7 +36,8 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
 
-    m_dir = QDir(s_effectDir);
+    QString templateDir = Util::resourcesPath() + "/template/";
+    m_dir = QDir(templateDir);
     if(!m_dir.exists())
     {
         return;
@@ -50,7 +51,7 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     m_currentListView = nullptr;
 
     // 特效文件列表
-    QDir effectDir(s_effectDir+"Effects");
+    QDir effectDir(templateDir+"Effects");
     if(!effectDir.exists())
     {
         return;
@@ -65,7 +66,7 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
         }
     }
     // 图片文件列表
-    QDir imageDir(s_effectDir+"Images");
+    QDir imageDir(templateDir+"Images");
     if(!imageDir.exists())
     {
         return;
@@ -87,8 +88,11 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     m_spacerItem = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
     ui->verticalLayout_2->addItem(m_spacerItem);
 
+    ui->comboBox->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
+    ui->comboBox_2->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
+
     ui->scrollArea->setWidgetResizable(true);
-    ui->scrollArea->setStyleSheet("border:none;background:rgb(51, 51, 51);");
+    ui->scrollArea->setStyleSheet("border:none;background:transparent;");       // 51,51,51
     ui->scrollArea->verticalScrollBar()
             ->setStyleSheet("QScrollBar:vertical{width:8px;background:rgba(0,0,0,0%);margin:0px,0px,0px,0px;}"
                             "QScrollBar::handle:vertical{width:8px;background:rgba(160,160,160,25%);border-radius:4px;min-height:20;}"
@@ -238,11 +242,21 @@ void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName
 {
     EffectListView *listView = new EffectListView();
     QLabel *label = new QLabel(itemName, this);
+    label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    QLabel *image = new QLabel(this);
+    image->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    image->setScaledContents(true);     // 可以让图片随 label拉伸
+    image->setPixmap(QPixmap(":/icons/light/32x32/line.png"));
+
+    QHBoxLayout *box = new QHBoxLayout(this);
+    box->addWidget(label);
+    box->addWidget(image);
 
     listView->setModel(model);
 
     m_imageList->append(listView);
-    ui->verticalLayout_2->addWidget(label);
+//    ui->verticalLayout_2->addWidget(label);
+    ui->verticalLayout_2->addLayout(box);
     ui->verticalLayout_2->addWidget(listView);
 
     label->setFixedHeight(40);
@@ -250,11 +264,13 @@ void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName
     listView->setFocusPolicy(Qt::ClickFocus);
     listView->setViewMode(QListView::IconMode);
     listView->setGridSize(QSize(120, 100));
+    listView->setUniformItemSizes(true);
     listView->setResizeMode(QListView::Adjust);
     listView->setContextMenuPolicy(Qt::CustomContextMenu);
     listView->setContentsMargins(5, 5, 5, 5);
     listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    listView->setStyleSheet("QListView{selection-background-color:rgb(192,72,44); selection-color: rgb(255,255,255);background-color:rgb(51,51,51);color:rgb(214,214,214);}");
+    listView->setStyleSheet("QListView{selection-background-color:rgb(192,72,44); selection-color: rgb(255,255,255);background-color:transparent;color:rgb(214,214,214);}");
+    listView->setStyleSheet("QListView::item:selected{background:rgb(192,72,44); color:rgb(255,255,255);/*background-color:rgb(51,51,51);color:rgb(214,214,214);*/}");
 
     connect(listView, SIGNAL(pressed(const QModelIndex&)), this, SLOT(on_listView_pressed(const QModelIndex&)));
     connect(listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(on_listView_clicked(const QModelIndex&)));
@@ -332,7 +348,7 @@ void EffectDock::on_comboBox_2_currentIndexChanged(int index)
     QLayoutItem *item = ui->verticalLayout_2->itemAt(index*2);
     if(item)
     {
-        QWidget *widget = item->widget();
+        QWidget *widget = item->layout()->itemAt(0)->widget();  // item->widget();
         if(widget)
         {
             ui->scrollArea->verticalScrollBar()->setValue(widget->y());
