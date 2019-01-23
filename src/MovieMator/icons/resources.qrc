@@ -173,6 +173,27 @@
         <file>filters/Common.jpg</file>
         <file>light/32x32/anim-stickers.png</file>
         <file>light/32x32/anim-stickers-highlight.png</file>
+        <file>filters/Blur.jpg</file>
+        <file>filters/Circular Frame.jpg</file>
+        <file>filters/Color Grading.jpg</file>
+        <file>filters/Contrast.jpg</file>
+        <file>filters/Crop.jpg</file>
+        <file>filters/Fade In Video.jpg</file>
+        <file>filters/Fade Out Video.jpg</file>
+        <file>filters/Glow.jpg</file>
+        <file>filters/Invert Colors.jpg</file>
+        <file>filters/Mirror.jpg</file>
+        <file>filters/Old Film-Grain.jpg</file>
+        <file>filters/Opacity.jpg</file>
+        <file>filters/Overlay.jpg</file>
+        <file>filters/Reduce Noise.jpg</file>
+        <file>filters/Rotate.jpg</file>
+        <file>filters/Rutt-Etra-Izer.jpg</file>
+        <file>filters/Sepia Tone.jpg</file>
+        <file>filters/Sharpen.jpg</file>
+        <file>filters/Stabilize.jpg</file>
+        <file>filters/Text.jpg</file>
+        <file>filters/Vignette.jpg</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>

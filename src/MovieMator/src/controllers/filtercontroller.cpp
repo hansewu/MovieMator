@@ -298,7 +298,7 @@ QString FilterController::getFilterImageSourcePath(QString filterName, QString f
         {"Glow", "发光"},
         {"Overlay", "叠加"},
         {"Circular Frame", "环形边框"},
-        {"Old Film: Grain", "老电影：颗粒"},
+        {"Old Film-Grain", "老电影：颗粒"},
         {"Fade In Video", "视频淡入"},
         {"Fade Out Video", "视频淡出"},
         {"Opacity", "透明度"},
