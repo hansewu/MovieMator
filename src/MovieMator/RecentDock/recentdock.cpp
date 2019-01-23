@@ -453,7 +453,9 @@ void RecentDock::on_actionProperties_triggered()
 
 QList<FILE_HANDLE> RecentDock::getSelected()
 {
-    QList<FILE_HANDLE> seleted;
+    QList<FILE_HANDLE> selected;
+    if (!m_currentListView)
+        return selected;
     QModelIndexList seletedIndexes = m_currentListView->getSelected();
 
     foreach(QModelIndex index, seletedIndexes)
@@ -461,9 +463,9 @@ QList<FILE_HANDLE> RecentDock::getSelected()
         QModelIndex sourceIndex = qobject_cast<QSortFilterProxyModel*>(m_currentListView->model())->mapToSource(index);
         FILE_HANDLE fileHandle = qobject_cast<RecentListModel*>(qobject_cast<QSortFilterProxyModel*>(m_currentListView->model())->sourceModel())->fileAt(sourceIndex.row());
 
-        seleted.append(fileHandle);
+        selected.append(fileHandle);
     }
-    return seleted;
+    return selected;
 }
 
 static RecentDock *instance = 0;
