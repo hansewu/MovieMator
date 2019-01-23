@@ -133,8 +133,6 @@ void FilterController::loadFrei0rFilterMetadata() {
                 std::string string = libName.toStdString();
                 if(string.find("alpha") != std::string::npos )
                     continue;
-                int nCount = libName.contains('alpha',Qt::CaseInsensitive);
-                if (nCount > 0) continue;
 
                 QString mlt_service_s       = "frei0r." + libName.mid(0, libName.length() - 3);
 
@@ -287,15 +285,14 @@ void FilterController::updateFilterDock()
         strcpy(filterInfos[nIndex].name, metadataModel->name().toStdString().c_str());
         strcpy(filterInfos[nIndex].type, metadataModel->filterType().toStdString().c_str());
 
-        QString imageSourcePath             = "qrc:///icons/filters/" + metadataModel->name()  + ".png";
-        if(metadataModel->filterType() == "Common")
+        QString imageSourcePath             = "qrc:///icons/filters/" + metadataModel->mlt_service()  + ".png";
+        if(metadataModel->mlt_service().toStdString().find("frei0r.") != std::string::npos)
             imageSourcePath             = "qrc:///icons/filters/Common.png";
-        else if(metadataModel->isAudio() == true)
+
+        if(metadataModel->isAudio() == true)
             imageSourcePath             = "qrc:///icons/filters/Audio.png";
 
         strcpy(filterInfos[nIndex].imageSourcePath, imageSourcePath.toStdString().c_str());
-
-
 
         bool bVisible = true;
         if (metadataModel->isHidden()) bVisible = false;
