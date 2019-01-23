@@ -84,3 +84,13 @@ QString Util::templatePath()
     dir.cd("templates");
     return  dir.absolutePath();
 }
+
+QString Util::resourcesPath()
+{
+    QDir dir(qApp->applicationDirPath());
+#if defined(Q_OS_MAC)
+    dir.cdUp();
+    dir.cd("Resources");
+#endif
+    return dir.absolutePath();
+}
