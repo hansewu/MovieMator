@@ -1576,12 +1576,17 @@ in temporal compression</source>
 <context>
     <name>FilterController</name>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="154"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="153"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="429"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="292"/>
+        <source>Common</source>
+        <translation type="unfinished">常用</translation>
+    </message>
+    <message>
+        <location filename="../src/controllers/filtercontroller.cpp" line="445"/>
         <source>Only one %1 filter is allowed.</source>
         <translation type="unfinished">仅允许一个%1滤镜</translation>
     </message>
@@ -1646,6 +1651,20 @@ in temporal compression</source>
     <name>FiltersDock</name>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="45"/>
+        <source>Filters</source>
+        <translation type="unfinished">滤镜</translation>
+    </message>
+</context>
+<context>
+    <name>FiltersUI</name>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FiltersUI.qml" line="73"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FiltersUI.qml" line="96"/>
+        <source>All</source>
+        <translation type="unfinished">全部</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FiltersUI.qml" line="274"/>
         <source>Filters</source>
         <translation type="unfinished">滤镜</translation>
     </message>
@@ -1859,13 +1878,13 @@ with the framebuffer object extension.</source>
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;This is not a project created with &lt;/span&gt;MovieMator&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Video&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Editor&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt; Pro.  &lt;/span&gt;MovieMator&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Video&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Editor &lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;Pro can not access this &lt;/span&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;mmp file because of the limitation of Apple sandbox. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;This is not a project created with &lt;/span&gt;MovieMator&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Video&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Editor&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt; Pro.  &lt;/span&gt;MovieMator&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Video&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Editor &lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;Pro can not access this &lt;/span&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;mmp file because of the limitation of Apple sandbox. &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;PingFang SC&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;If you would like to open this mmp file,  please go to following official url and download the MovieMator Pro without limitation of Apple sandbox: &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;If you would like to open this mmp file,  please go to following official url and download the MovieMator Pro without limitation of Apple sandbox: &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;PingFang SC&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;http://www.macvideostudio.com/download/video-editor-moviemator-pro.dmg&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;After installation, send email to us (market@effectmatrix.com) to get a free license. &lt;/span&gt; &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;After installation, send email to us (market@effectmatrix.com) to get a free license. &lt;/span&gt; &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2441,9 +2460,9 @@ duration of the transition.</source>
     <name>MainWindow</name>
     <message>
         <location filename="../src/mainwindow.ui" line="26"/>
-        <location filename="../src/mainwindow.cpp" line="677"/>
-        <location filename="../src/mainwindow.cpp" line="684"/>
-        <location filename="../src/mainwindow.cpp" line="1854"/>
+        <location filename="../src/mainwindow.cpp" line="682"/>
+        <location filename="../src/mainwindow.cpp" line="689"/>
+        <location filename="../src/mainwindow.cpp" line="1859"/>
         <source>MovieMator Video Editor</source>
         <translation type="unfinished">剪大师</translation>
     </message>
@@ -2622,7 +2641,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="368"/>
-        <location filename="../src/mainwindow.cpp" line="3130"/>
+        <location filename="../src/mainwindow.cpp" line="3135"/>
         <source>Enter Full Screen</source>
         <translation type="unfinished">进入全屏模式</translation>
     </message>
@@ -2643,15 +2662,13 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="395"/>
-        <location filename="../src/mainwindow.cpp" line="605"/>
-        <location filename="../src/mainwindow.cpp" line="624"/>
+        <location filename="../src/mainwindow.cpp" line="609"/>
+        <location filename="../src/mainwindow.cpp" line="628"/>
         <source>Properties</source>
         <translation type="unfinished">属性</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="407"/>
-        <location filename="../src/mainwindow.cpp" line="593"/>
-        <location filename="../src/mainwindow.cpp" line="603"/>
         <source>Recent</source>
         <translation type="unfinished">当前</translation>
     </message>
@@ -2662,7 +2679,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="431"/>
-        <location filename="../src/mainwindow.cpp" line="497"/>
+        <location filename="../src/mainwindow.cpp" line="500"/>
         <source>History</source>
         <translation type="unfinished">历史</translation>
     </message>
@@ -2906,7 +2923,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="869"/>
-        <location filename="../src/mainwindow.cpp" line="3965"/>
+        <location filename="../src/mainwindow.cpp" line="3970"/>
         <source>Remove</source>
         <translation type="unfinished">删除</translation>
     </message>
@@ -2917,7 +2934,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="881"/>
-        <location filename="../src/mainwindow.cpp" line="4004"/>
+        <location filename="../src/mainwindow.cpp" line="4009"/>
         <source>Feedback</source>
         <translation type="unfinished">反馈</translation>
     </message>
@@ -2938,7 +2955,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="902"/>
-        <location filename="../src/mainwindow.cpp" line="4030"/>
+        <location filename="../src/mainwindow.cpp" line="4035"/>
         <source>Buy a License Code</source>
         <translation type="unfinished">购买注册码</translation>
     </message>
@@ -2997,93 +3014,88 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="631"/>
-        <source>Template</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="667"/>
+        <location filename="../src/mainwindow.cpp" line="672"/>
         <source>MovieMator Video Editor Pro (Unregistered)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="669"/>
+        <location filename="../src/mainwindow.cpp" line="674"/>
         <source>MovieMator Video Editor Pro (Personal)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="673"/>
-        <location filename="../src/mainwindow.cpp" line="675"/>
-        <location filename="../src/mainwindow.cpp" line="682"/>
+        <location filename="../src/mainwindow.cpp" line="678"/>
+        <location filename="../src/mainwindow.cpp" line="680"/>
+        <location filename="../src/mainwindow.cpp" line="687"/>
         <source>MovieMator Video Editor Pro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="850"/>
+        <location filename="../src/mainwindow.cpp" line="855"/>
         <source>Non-Broadcast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="861"/>
+        <location filename="../src/mainwindow.cpp" line="866"/>
         <source>DVD Widescreen NTSC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="862"/>
+        <location filename="../src/mainwindow.cpp" line="867"/>
         <source>DVD Widescreen PAL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="867"/>
+        <location filename="../src/mainwindow.cpp" line="872"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="886"/>
+        <location filename="../src/mainwindow.cpp" line="891"/>
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="917"/>
+        <location filename="../src/mainwindow.cpp" line="922"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="920"/>
+        <location filename="../src/mainwindow.cpp" line="925"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="923"/>
+        <location filename="../src/mainwindow.cpp" line="928"/>
         <source>External</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="940"/>
+        <location filename="../src/mainwindow.cpp" line="945"/>
         <source>DeckLink Keyer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1105"/>
-        <location filename="../src/mainwindow.cpp" line="1107"/>
-        <location filename="../src/mainwindow.cpp" line="1462"/>
-        <location filename="../src/mainwindow.cpp" line="3615"/>
+        <location filename="../src/mainwindow.cpp" line="1110"/>
+        <location filename="../src/mainwindow.cpp" line="1112"/>
+        <location filename="../src/mainwindow.cpp" line="1467"/>
+        <location filename="../src/mainwindow.cpp" line="3620"/>
         <source>Failed to open </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1133"/>
+        <location filename="../src/mainwindow.cpp" line="1138"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1186"/>
+        <location filename="../src/mainwindow.cpp" line="1191"/>
         <source>Repairing the project failed.</source>
         <translation type="unfinished">修复工程失败</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1198"/>
+        <location filename="../src/mainwindow.cpp" line="1203"/>
         <source>MovieMator noticed some problems in your project.
 Do you want MovieMator to try to repair it?
 
@@ -3092,17 +3104,17 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1239"/>
+        <location filename="../src/mainwindow.cpp" line="1244"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1374"/>
+        <location filename="../src/mainwindow.cpp" line="1379"/>
         <source>For reasons of copyright protection, you can not import vob or m4p files</source>
         <translation type="unfinished">因为版权保护，不支持导入vob和m4p文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4505"/>
+        <location filename="../src/mainwindow.cpp" line="4510"/>
         <source>Template (*.mlt)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3123,29 +3135,29 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation type="obsolete">&lt;h1&gt;MovieMator Video Editor %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;产品主页: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;MovieMator Video Editor&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2019 effectmatrix, Inc&lt;/p&gt;&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1569"/>
-        <location filename="../src/mainwindow.cpp" line="3595"/>
+        <location filename="../src/mainwindow.cpp" line="1574"/>
+        <location filename="../src/mainwindow.cpp" line="3600"/>
         <source>Open File</source>
         <translation type="unfinished">打开文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1837"/>
-        <location filename="../src/mainwindow.cpp" line="1839"/>
-        <location filename="../src/mainwindow.cpp" line="1841"/>
-        <location filename="../src/mainwindow.cpp" line="1843"/>
-        <location filename="../src/mainwindow.cpp" line="1845"/>
-        <location filename="../src/mainwindow.cpp" line="1847"/>
+        <location filename="../src/mainwindow.cpp" line="1842"/>
+        <location filename="../src/mainwindow.cpp" line="1844"/>
+        <location filename="../src/mainwindow.cpp" line="1846"/>
+        <location filename="../src/mainwindow.cpp" line="1848"/>
+        <location filename="../src/mainwindow.cpp" line="1850"/>
         <location filename="../src/mainwindow.cpp" line="1852"/>
-        <location filename="../src/mainwindow.cpp" line="1854"/>
+        <location filename="../src/mainwindow.cpp" line="1857"/>
+        <location filename="../src/mainwindow.cpp" line="1859"/>
         <source>%1[*] - %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="230"/>
         <location filename="../src/mainwindow.ui" line="233"/>
-        <location filename="../src/mainwindow.cpp" line="730"/>
-        <location filename="../src/mainwindow.cpp" line="1891"/>
-        <location filename="../src/mainwindow.cpp" line="1922"/>
+        <location filename="../src/mainwindow.cpp" line="735"/>
+        <location filename="../src/mainwindow.cpp" line="1896"/>
+        <location filename="../src/mainwindow.cpp" line="1927"/>
         <source>About MovieMator Video Editor Pro</source>
         <translation type="unfinished">关于MovieMator Video Editor Pro</translation>
     </message>
@@ -3154,85 +3166,85 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation type="obsolete">关于MovieMator Free Mac Video Editor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="732"/>
-        <location filename="../src/mainwindow.cpp" line="1905"/>
-        <location filename="../src/mainwindow.cpp" line="1936"/>
+        <location filename="../src/mainwindow.cpp" line="737"/>
+        <location filename="../src/mainwindow.cpp" line="1910"/>
+        <location filename="../src/mainwindow.cpp" line="1941"/>
         <source>About MovieMator Video Editor</source>
         <translation type="unfinished">关于剪大师</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2534"/>
-        <location filename="../src/mainwindow.cpp" line="2567"/>
+        <location filename="../src/mainwindow.cpp" line="2539"/>
+        <location filename="../src/mainwindow.cpp" line="2572"/>
         <source>Saved %1</source>
         <translation type="unfinished">保存 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2544"/>
+        <location filename="../src/mainwindow.cpp" line="2549"/>
         <source>Save MMP</source>
         <translation type="unfinished">保存MMP</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2544"/>
+        <location filename="../src/mainwindow.cpp" line="2549"/>
         <source>MMP (*.mmp)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2559"/>
+        <location filename="../src/mainwindow.cpp" line="2564"/>
         <source>Unable to save empty file, but saved its name for future.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="619"/>
+        <location filename="../src/mainwindow.cpp" line="623"/>
         <source>Simple Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="596"/>
-        <location filename="../src/mainwindow.cpp" line="628"/>
+        <location filename="../src/mainwindow.cpp" line="599"/>
+        <location filename="../src/mainwindow.cpp" line="632"/>
         <source>Filter</source>
         <translation type="unfinished">滤镜</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1892"/>
-        <location filename="../src/mainwindow.cpp" line="1923"/>
+        <location filename="../src/mainwindow.cpp" line="1897"/>
+        <location filename="../src/mainwindow.cpp" line="1928"/>
         <source>&lt;h1&gt;MovieMator Video Editor Pro %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=%2&gt;MovieMator Video Editor Pro&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2019 effectmatrix, Inc&lt;/p&gt;&lt;p&gt;Based on Shotcut v16.06 Copyright &amp;copy; 2011-2016 Meltytech, LLC.&lt;/p&gt;&lt;p&gt;Licensed under the GNU General Public License v3.0&lt;/p&gt;&lt;/small&gt;&lt;small&gt;&lt;p /&gt;&lt;p&gt;&lt;a href=&quot;http://www.moviemator.net/develop/third-party.html&quot;&gt;Related Information&lt;/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;mailto:market@effectmatrix.com&quot;&gt;Feedback&lt;/a&gt;&lt;/p&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1906"/>
-        <location filename="../src/mainwindow.cpp" line="1937"/>
+        <location filename="../src/mainwindow.cpp" line="1911"/>
+        <location filename="../src/mainwindow.cpp" line="1942"/>
         <source>&lt;h1&gt;MovieMator Video Editor %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=%2&gt;MovieMator Video Editor&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2019 effectmatrix, Inc&lt;/p&gt;&lt;p&gt;Based on Shotcut v16.06 Copyright &amp;copy; 2011-2016 Meltytech, LLC.&lt;/p&gt;&lt;p&gt;Licensed under the GNU General Public License v3.0&lt;/p&gt;&lt;/small&gt;&lt;small&gt;&lt;p /&gt;&lt;p&gt;&lt;a href=&quot;http://www.moviemator.net/develop/third-party.html&quot;&gt;Related Information&lt;/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;mailto:market@effectmatrix.com&quot;&gt;Feedback&lt;/a&gt;&lt;/p&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2578"/>
+        <location filename="../src/mainwindow.cpp" line="2583"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished">工程已修改，要保存吗?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2610"/>
+        <location filename="../src/mainwindow.cpp" line="2615"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation type="unfinished">还有任务没有完成，确定退出吗?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2675"/>
+        <location filename="../src/mainwindow.cpp" line="2680"/>
         <source>To export video, you must add one or more files to timeline.</source>
         <translation type="unfinished">要导出视频，需要拖放至少一个文件到时间线</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3133"/>
+        <location filename="../src/mainwindow.cpp" line="3138"/>
         <source>Exit Full Screen</source>
         <translation type="unfinished">退出全屏</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3146"/>
+        <location filename="../src/mainwindow.cpp" line="3151"/>
         <source>GPU Processing is not supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3318"/>
+        <location filename="../src/mainwindow.cpp" line="3323"/>
         <source>You must restart MovieMator to switch to the new language.
 Do you want to change language now?</source>
         <translation type="unfinished"></translation>
@@ -3244,198 +3256,208 @@ Do you want to restart now?</source>
 现在重启吗?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="671"/>
+        <location filename="../src/mainwindow.cpp" line="676"/>
         <source>MovieMator Video Editor Pro (Business)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1568"/>
+        <location filename="../src/mainwindow.cpp" line="1573"/>
         <source>All supported files(*.mmp *.png *.bmp *.tiff *.jpeg *.gif *.jpg *.3gp *.3gp2 *.3g2 *.3gpp *.a52  *.avi *.asf  *.ac3 *.aac *.au *.aiff *.aif *.ape *.amr *.caf *.cda *.dat *.divx *.dsm *.dv *.dts *.dvr-ms *.flac  *.fli  *.flc *.flv *.f4v *.gif *.ifo *.m4r *.mp2 *.mp3 *.mmf *.mp4 *.mov *.mpg *.mpeg *.m1v *.mpeg1 *.mpeg2 *.m2a *.mp1  *.m2p *.m2v *.mpv *.mpa *.mpeg4*.mod *.m2ts *.mts *.m4v *.m4a *.mxf *.mkv *.mka *.ogg *.ogv*.ogm *.oga *.qt *.rmvb *.rm *.ra *.ram *.tod  *.ts *.vob *.wma *.wav *.wmv *.webm *.wtv)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4505"/>
+        <location filename="../src/mainwindow.cpp" line="4510"/>
         <source>Save Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3388"/>
+        <location filename="../src/mainwindow.cpp" line="3393"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3397"/>
+        <location filename="../src/mainwindow.cpp" line="596"/>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="607"/>
+        <source>Stickers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="3402"/>
         <source>You must restart MovieMator to switch using GPU processing.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3596"/>
+        <location filename="../src/mainwindow.cpp" line="3601"/>
         <source>MMP (*.mmp);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3656"/>
+        <location filename="../src/mainwindow.cpp" line="3661"/>
         <source>You must restart MovieMator to change the display method.
 Do you want to restart now?</source>
         <translation type="unfinished">要修改显示模式，需要重启MovieMator
 现在重启吗?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3678"/>
+        <location filename="../src/mainwindow.cpp" line="3683"/>
         <source>Application Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3713"/>
+        <location filename="../src/mainwindow.cpp" line="3718"/>
         <source>MovieMator version %1 is available! Click here to get it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3717"/>
+        <location filename="../src/mainwindow.cpp" line="3722"/>
         <source>You are running the latest version of MovieMator.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3727"/>
+        <location filename="../src/mainwindow.cpp" line="3732"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3777"/>
+        <location filename="../src/mainwindow.cpp" line="3782"/>
         <source>Export EDL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3777"/>
+        <location filename="../src/mainwindow.cpp" line="3782"/>
         <source>EDL (*.edl)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3818"/>
+        <location filename="../src/mainwindow.cpp" line="3823"/>
         <source>A JavaScript error occurred during export.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3821"/>
+        <location filename="../src/mainwindow.cpp" line="3826"/>
         <source>Failed to open export-edl.js</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3879"/>
-        <location filename="../src/mainwindow.cpp" line="4270"/>
+        <location filename="../src/mainwindow.cpp" line="3884"/>
+        <location filename="../src/mainwindow.cpp" line="4275"/>
         <source>http://www.macvideostudio.com/mac-movie-video-editor-MovieMator-guide.html</source>
         <translation type="unfinished">http://www.macvideostudio.com/mac-shipinbianji-guide.html</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3960"/>
+        <location filename="../src/mainwindow.cpp" line="3965"/>
         <source>Open a video, audio or image file</source>
         <translation type="unfinished">打开一个视频，视频或图片</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3960"/>
+        <location filename="../src/mainwindow.cpp" line="3965"/>
         <source>Open</source>
         <translation type="unfinished">打开文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3965"/>
+        <location filename="../src/mainwindow.cpp" line="3970"/>
         <source>Remove media files</source>
         <translation type="unfinished">删除媒体文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3972"/>
+        <location filename="../src/mainwindow.cpp" line="3977"/>
         <source>Undo</source>
         <translation type="unfinished">撤销</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3979"/>
+        <location filename="../src/mainwindow.cpp" line="3984"/>
         <source>Redo</source>
         <translation type="unfinished">重做</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3986"/>
+        <location filename="../src/mainwindow.cpp" line="3991"/>
         <source>Save Project</source>
         <translation type="unfinished">保存工程</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3992"/>
+        <location filename="../src/mainwindow.cpp" line="3997"/>
         <source>Export video, audio or image file</source>
         <translation type="unfinished">导出视频，音频或图片</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3992"/>
+        <location filename="../src/mainwindow.cpp" line="3997"/>
         <source>Export Video</source>
         <translation type="unfinished">导出视频</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3998"/>
+        <location filename="../src/mainwindow.cpp" line="4003"/>
         <source>Tutorials</source>
         <translation type="unfinished">教程</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="940"/>
-        <location filename="../src/mainwindow.cpp" line="3998"/>
+        <location filename="../src/mainwindow.cpp" line="4003"/>
         <source>Tutorial</source>
         <translation type="unfinished">教程</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4004"/>
+        <location filename="../src/mainwindow.cpp" line="4009"/>
         <source>Send us your suggestions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4015"/>
+        <location filename="../src/mainwindow.cpp" line="4020"/>
         <source>Export Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4015"/>
+        <location filename="../src/mainwindow.cpp" line="4020"/>
         <source>Export project as a template file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4025"/>
+        <location filename="../src/mainwindow.cpp" line="4030"/>
         <source>Enter Licensse Code</source>
         <translation type="unfinished">输入注册码</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4025"/>
+        <location filename="../src/mainwindow.cpp" line="4030"/>
         <source>Register</source>
         <translation type="unfinished">注册</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4030"/>
+        <location filename="../src/mainwindow.cpp" line="4035"/>
         <source>Buy Now</source>
         <translation type="unfinished">立即购买</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4040"/>
+        <location filename="../src/mainwindow.cpp" line="4045"/>
         <source>Upgrade to Pro version</source>
         <translation type="unfinished">升级到专业版</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4040"/>
+        <location filename="../src/mainwindow.cpp" line="4045"/>
         <source>Upgrade</source>
         <translation type="unfinished">升级</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4045"/>
+        <location filename="../src/mainwindow.cpp" line="4050"/>
         <source>Get Total Video Converter Pro - a great video converter and dvd burner</source>
         <translation type="unfinished">获取“超级转霸Total Video Converter Pro” - 强大的视频转换和DVD刻录功能</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4045"/>
+        <location filename="../src/mainwindow.cpp" line="4050"/>
         <source>Great Converter &amp; DVD Burner</source>
         <translation type="unfinished">视频转换 &amp; DVD刻录</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4183"/>
+        <location filename="../src/mainwindow.cpp" line="4188"/>
         <source>Execute Python File</source>
         <translation type="unfinished">执行Python文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4183"/>
+        <location filename="../src/mainwindow.cpp" line="4188"/>
         <source>Python File (*.py)</source>
         <translation type="unfinished">Python文件(*.py)</translation>
     </message>
@@ -6465,7 +6487,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/wave/meta.qml" line="18"/>
         <source>Distortion</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">扭曲</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/wave/meta.qml" line="25"/>

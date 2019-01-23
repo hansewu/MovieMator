@@ -160,6 +160,9 @@
         <file>filters/Audio.png</file>
         <file>filters/Brightness.png</file>
         <file>filters/Common.png</file>
+        <file>filters/brightness.png</file>
+        <file>light/32x32/show-audio-filters-highlight.png</file>
+        <file>light/32x32/show-audio-filters.png</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>
