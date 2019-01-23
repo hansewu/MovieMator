@@ -597,10 +597,10 @@ MainWindow::MainWindow()
     addResourceDock(m_recentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file-highlight.png"));
 
     m_filterDock = FilterDock_initModule(&MainInterface::singleton());
-    addResourceDock(m_filterDock, tr("Filter"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
+    addResourceDock(m_filterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
 
     m_audiofilterDock = AudioFilterDock_initModule(&MainInterface::singleton());
-    addResourceDock(m_audiofilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/show-audio-filters.png"), QIcon(":/icons/light/32x32/show-audio-filters-highlight.png"));
+    addResourceDock(m_audiofilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
 
 
     //模板资源管理界面Dock
