@@ -92,6 +92,7 @@ private:
     void getFrei0rParamInfo(Mlt::Filter *filter, int index, f0r_param_info_t &info);
 
     void updateFilterDock();
+    QString getFilterImageSourcePath(QString filterName, QString filterType);
 
     QFuture<void> m_future;
     QScopedPointer<QmlFilter> m_currentFilter;

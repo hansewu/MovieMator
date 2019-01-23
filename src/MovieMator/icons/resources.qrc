@@ -157,16 +157,20 @@
         <file>light/32x32/line.png</file>
         <file>light/32x32/filter_add-a.png</file>
         <file>light/32x32/filter_add.png</file>
-        <file>filters/Audio.png</file>
-        <file>filters/Brightness.png</file>
-        <file>filters/Common.png</file>
-        <file>filters/brightness.png</file>
         <file>light/32x32/show-audio-filters-highlight.png</file>
         <file>light/32x32/show-audio-filters.png</file>
         <file>light/32x32/audio_filter_on.png</file>
         <file>light/32x32/audio_filter.png</file>
         <file>light/32x32/video_filter_on.png</file>
         <file>light/32x32/video_filter.png</file>
+        <file>filters/3D Text.jpg</file>
+        <file>filters/Saturation.jpg</file>
+        <file>filters/Size and Position.jpg</file>
+        <file>filters/Wave.jpg</file>
+        <file>filters/White Balance.jpg</file>
+        <file>filters/Audio.jpg</file>
+        <file>filters/Brightness.jpg</file>
+        <file>filters/Common.jpg</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>
