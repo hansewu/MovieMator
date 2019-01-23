@@ -605,8 +605,10 @@ void TimelineDock::onShowFrame(const SharedFrame& frame)
         m_ignoreNextPositionChange = false;
     } else if ((void*) MLT.producer()->get_producer() == (void*) MAIN.multitrack()->get_producer()) {
      //if ( MLT.isMultitrack() && (MLT.producer()->get_speed() != 0) ) {//加此判断解决点击clip有时指针不跳的问题
-        m_position = frame.get_position();
-        emit positionChanged();
+        if (frame.get_position() < MLT.producer()->get_playtime()) {
+            m_position = frame.get_position();
+            emit positionChanged();
+        }
      //}
     }
 }

@@ -171,6 +171,8 @@
         <file>filters/Audio.jpg</file>
         <file>filters/Brightness.jpg</file>
         <file>filters/Common.jpg</file>
+        <file>light/32x32/anim-stickers.png</file>
+        <file>light/32x32/anim-stickers-highlight.png</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>
