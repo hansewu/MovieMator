@@ -601,14 +601,11 @@ void TimelineDock::addTextTrack()
 
 void TimelineDock::onShowFrame(const SharedFrame& frame)
 {
-    qDebug() << "timelineDock position = " << frame.get_position();
     if (m_ignoreNextPositionChange) {
         m_ignoreNextPositionChange = false;
-    } else if (MLT.isMultitrack()) {
-     qDebug() << "timelineDock position 2 = " << frame.get_position();
+    } else if ((void*) MLT.producer()->get_producer() == (void*) MAIN.multitrack()->get_producer()) {
      //if ( MLT.isMultitrack() && (MLT.producer()->get_speed() != 0) ) {//加此判断解决点击clip有时指针不跳的问题
         m_position = frame.get_position();
-        qDebug() << "m_position = " << m_position;
         emit positionChanged();
      //}
     }
