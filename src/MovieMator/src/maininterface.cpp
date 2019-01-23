@@ -250,6 +250,10 @@ FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
         delete producer;
         producer = 0;
     }
+    QString resource(producer->get("resource"));
+    if (resource == "<tractor>")
+        producer->set(kShotcutVirtualClip, 1);
+
     return producer;
 }
 
