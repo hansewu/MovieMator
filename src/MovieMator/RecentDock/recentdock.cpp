@@ -150,18 +150,18 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
 
 RecentDock::~RecentDock()
 {
-    delete m_verticalSpacerItem;
-    m_verticalSpacerItem = nullptr;
-
-    qDeleteAll(*m_listviewList);
-    m_listviewList->clear();
-    delete m_listviewList;
-    m_listviewList = nullptr;
+//    delete m_verticalSpacerItem;
+//    m_verticalSpacerItem = nullptr;
 
     qDeleteAll(*m_modelList);
     m_modelList->clear();
     delete m_modelList;
     m_modelList = nullptr;
+
+    qDeleteAll(*m_listviewList);
+    m_listviewList->clear();
+    delete m_listviewList;
+    m_listviewList = nullptr;
 
     delete ui;
 }

@@ -104,8 +104,8 @@ EffectDock::~EffectDock()
     delete m_imageList;
     m_imageList = nullptr;
 
-    delete m_spacerItem;
-    m_spacerItem = nullptr;
+//    delete m_spacerItem;
+//    m_spacerItem = nullptr;
 
     delete ui;
 }
