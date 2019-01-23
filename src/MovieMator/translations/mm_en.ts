@@ -98,6 +98,20 @@ Please select a clip!</source>
     </message>
 </context>
 <context>
+    <name>AudioFiltersUI</name>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AudioFiltersUI.qml" line="73"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AudioFiltersUI.qml" line="96"/>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AudioFiltersUI.qml" line="259"/>
+        <source>Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AudioLoudnessScopeWidget</name>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="83"/>
@@ -1633,7 +1647,7 @@ in temporal compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FiltersUI.qml" line="274"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FiltersUI.qml" line="288"/>
         <source>Filters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3075,7 +3089,6 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="600"/>
         <location filename="../src/mainwindow.cpp" line="636"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
@@ -3094,6 +3107,11 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="597"/>
         <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="600"/>
+        <source>Video Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

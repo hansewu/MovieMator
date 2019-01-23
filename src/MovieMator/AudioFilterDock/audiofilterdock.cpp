@@ -70,7 +70,7 @@ void AudioFilterDock::resetQview()
 {
     QDir viewPath = QmlUtilities::qmlDir();
     viewPath.cd("views");
-    viewPath.cd("AudioFilter");
+    viewPath.cd("filter");
     m_qview.engine()->addImportPath(viewPath.path());
 
     QDir modulePath = QmlUtilities::qmlDir();
