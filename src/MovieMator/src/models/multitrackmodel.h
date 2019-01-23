@@ -172,6 +172,7 @@ public slots:
     void joinClips(int trackIndex, int clipIndex);
     void appendFromPlaylist(Mlt::Playlist* playlist, int trackIndex);
     void overwriteFromPlaylist(Mlt::Playlist& playlist, int trackIndex, int position);
+    void AttachedfilterChanged(int trackIndex, int clipIndex);
     void fadeIn(int trackIndex, int clipIndex, int duration);
     void fadeOut(int trackIndex, int clipIndex, int duration);
     bool addTransitionValid(int fromTrack, int toTrack, int clipIndex, int position);

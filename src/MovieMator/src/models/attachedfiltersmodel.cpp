@@ -371,6 +371,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
              nCount = MAIN.undoStack()->count();
             LOG_DEBUG() << "MAIN.undoStack()->count() " <<  nCount;
         }
+        MAIN.timelineDock()->AttachedfilterChanged();
     }
     else LOG_WARNING() << "Failed to load filter" << meta->mlt_service();
 
@@ -413,6 +414,8 @@ void AttachedFiltersModel::remove(int row, bool bFromUndo)
     {
         MAIN.undoStack()->push(new Timeline::FilterAttachCommand(metaData, row, row, false));
     }
+
+    MAIN.timelineDock()->AttachedfilterChanged();
 }
 
 bool AttachedFiltersModel::move(int fromRow, int toRow, bool bFromUndo)

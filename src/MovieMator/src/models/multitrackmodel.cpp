@@ -1621,6 +1621,18 @@ void MultitrackModel::overwriteFromPlaylist(Mlt::Playlist& from, int trackIndex,
     
 }
 
+
+
+
+void MultitrackModel::AttachedfilterChanged(int trackIndex, int clipIndex)
+{
+    // Signal change.
+    QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
+    QVector<int> roles;
+    roles << HasFilterRole;
+    emit dataChanged(modelIndex, modelIndex, roles);
+}
+
 void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
 {
     Q_ASSERT(trackIndex < m_trackList.size());

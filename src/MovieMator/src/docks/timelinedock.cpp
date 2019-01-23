@@ -1013,6 +1013,18 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
     }
 }
 
+
+void TimelineDock::AttachedfilterChanged()
+{
+    int trackIndex = currentTrack();;
+    int clipIndex = m_selection.selectedClips[0];
+
+    if (trackIndex < 0) return;
+    if (clipIndex < 0) return;
+
+    m_model.AttachedfilterChanged(trackIndex, clipIndex);
+}
+
 void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
 {
     if (isTrackLocked(trackIndex)) {
