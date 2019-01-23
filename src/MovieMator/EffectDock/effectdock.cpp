@@ -38,10 +38,6 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
 
     QString templateDir = Util::resourcesPath() + "/template/";
     m_dir = QDir(templateDir);
-    if(!m_dir.exists())
-    {
-        return;
-    }
 
     m_effectFile = nullptr;
     m_effectList = new QList<FILE_HANDLE>;
@@ -52,10 +48,6 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
 
     // 特效文件列表
     QDir effectDir(templateDir+"Effects");
-    if(!effectDir.exists())
-    {
-        return;
-    }
     QFileInfoList effectFiles = effectDir.entryInfoList(QDir::Files | QDir::NoSymLinks);
     if(effectFiles.count()>0)
     {
@@ -67,10 +59,6 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     }
     // 图片文件列表
     QDir imageDir(templateDir+"Images");
-    if(!imageDir.exists())
-    {
-        return;
-    }
     QFileInfoList folderList = imageDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
     for(int i=0; i<folderList.count(); i++)
     {
@@ -270,7 +258,7 @@ void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName
     listView->setContentsMargins(5, 5, 5, 5);
     listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     listView->setStyleSheet("QListView{selection-background-color:rgb(192,72,44); selection-color: rgb(255,255,255);background-color:transparent;color:rgb(214,214,214);}");
-    listView->setStyleSheet("QListView::item:selected{background:rgb(192,72,44); color:rgb(255,255,255);/*background-color:rgb(51,51,51);color:rgb(214,214,214);*/}");
+    listView->setStyleSheet("QListView::item:selected{background:rgb(192,72,44); color:rgb(255,255,255);}");
 
     connect(listView, SIGNAL(pressed(const QModelIndex&)), this, SLOT(on_listView_pressed(const QModelIndex&)));
     connect(listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(on_listView_clicked(const QModelIndex&)));
