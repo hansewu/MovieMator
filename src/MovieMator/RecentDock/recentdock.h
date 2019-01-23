@@ -26,17 +26,14 @@
 #include "recentdock_global.h"
 
 #include <QDockWidget>
-#include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 #include <maininterface.h>
 #include "recentdockinterface.h"
 #include "recentlistmodel.h"
 #include "recentlistview.h"
 
-#include <QLabel>
-
 #include <QMap>
-#include <QGroupBox>
+#include <QLabel>
 #include <QSpacerItem>
 
 namespace Ui {
@@ -72,6 +69,7 @@ private:
     QList<RecentListModel*> *m_modelList;
     QSortFilterProxyModel *m_proxyArray[num];
     QLabel *m_labelArray[num];
+    QLabel *m_imageArray[num];
     bool m_flag[num] = {false};
     const QString m_itemNames[num] = {"Videos", "Audios", "Images"};
 
@@ -84,7 +82,6 @@ private slots:
     void on_actionRemoveAll_triggered();
     void on_actionPlay_triggered();
     void on_actionProperties_triggered();
-//    void on_comboBox_currentIndexChanged(int index);
     void on_comboBox_currentTextChanged(const QString &arg1);
 
     void on_listView_activated(const QModelIndex &index);

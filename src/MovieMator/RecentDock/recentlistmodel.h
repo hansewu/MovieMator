@@ -10,8 +10,8 @@ class RecentListModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    static const int THUMBNAIL_WIDTH = 80;
-    static const int THUMBNAIL_HEIGHT = 60;
+    static const int THUMBNAIL_WIDTH = 100;
+    static const int THUMBNAIL_HEIGHT = 70;
 
     explicit RecentListModel(MainInterface *main=nullptr, QObject *parent=nullptr);
     ~RecentListModel();
@@ -20,6 +20,7 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QMimeData *mimeData(const QModelIndexList &indexes) const;
+    QMimeData *mimeData(const int index) const;
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
     QModelIndex parent(const QModelIndex &child) const;
 
