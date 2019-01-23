@@ -365,14 +365,14 @@ mac {
 
     #free appstore
 #    DEFINES += MOVIEMATOR_FREE=1
-#    TARGET = "MovieMator Video Editor"
+#    TARGET = "MovieMator Video Editor Lite"
 #    QMAKE_INFO_PLIST = ../Info-Free.plist
 #    ICON = ../icons/moviemator.icns
 
     #free share
 #    DEFINES += SHARE_VERSION=1
 #    DEFINES += MOVIEMATOR_FREE=1
-#    TARGET = "MovieMator Video Editor"
+#    TARGET = "MovieMator Video Editor Lite"
 #    QMAKE_INFO_PLIST = ../Info-Free-share.plist
 #    ICON = ../icons/moviemator.icns
 
@@ -454,7 +454,7 @@ isEmpty(MOVIEMATOR_VERSION) {
      win32:MOVIEMATOR_VERSION = adhoc
 }
 #DEFINES += MOVIEMATOR_VERSION=\\\"$$MOVIEMATOR_VERSION\\\"
-DEFINES += MOVIEMATOR_VERSION=\\\"2.5.3\\\"
+DEFINES += MOVIEMATOR_VERSION=\\\"2.5.4\\\"
 
 
 unix:!mac:isEmpty(PREFIX) {
