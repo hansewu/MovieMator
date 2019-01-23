@@ -71,7 +71,7 @@ private:
     QLabel *m_labelArray[num];
     QLabel *m_imageArray[num];
     bool m_flag[num] = {false};
-    const QString m_itemNames[num] = {"Videos", "Audios", "Images"};
+    const QString m_itemNames[num] = {tr("Videos"), tr("Audios"), tr("Images")};
 
     QMap<int, QString> m_map;
     QSpacerItem *m_verticalSpacerItem;

@@ -52,6 +52,9 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     m_imageList = new QList<EffectListView*>;
     m_currentListView = nullptr;
 
+    readJsonFile(templateDir + "animation_name_translation_info.json", m_animationNameTranslateInfo);
+    readJsonFile(templateDir + "imageclass_name_translation_info.json", m_imageClassNameTranslateInfo);
+
     // 特效文件列表
     QDir effectDir(templateDir+"Effects");
     QFileInfoList effectFiles = effectDir.entryInfoList(QDir::Files | QDir::NoSymLinks);
@@ -60,7 +63,8 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
         for(int i=0; i<effectFiles.count(); i++)
         {
             m_effectList->append(m_mainWindow->openFile(effectFiles.at(i).filePath()));
-            ui->comboBox->addItem(effectFiles[i].fileName().split(".")[0]);
+            QString itemName = getTranslationStr(effectFiles[i].fileName().split(".")[0], m_animationNameTranslateInfo);
+            ui->comboBox->addItem(itemName);
         }
     }
     // 图片文件列表
@@ -73,8 +77,9 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
 
         if(fileList.count()>0)
         {
-            ui->comboBox_2->addItem(folder.fileName());
-            createImageFileList(fileList, folder.fileName());
+            QString itemName = getTranslationStr(folder.fileName(), m_imageClassNameTranslateInfo);
+            ui->comboBox_2->addItem(itemName);
+            createImageFileList(fileList, itemName);
         }
     }
 
@@ -91,9 +96,6 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
             ->setStyleSheet("QScrollBar:vertical{width:8px;background:rgba(0,0,0,0%);margin:0px,0px,0px,0px;}"
                             "QScrollBar::handle:vertical{width:8px;background:rgba(160,160,160,25%);border-radius:4px;min-height:20;}"
                             "QScrollBar::handle:vertical:hover{width:8px;background:rgba(160,160,160,50%);border-radius:4px;min-height:20;}");
-
-    readJsonFile(templateDir + "animation_name_translation_info.json", m_animationNameTranslateInfo);
-    readJsonFile(templateDir + "imageclass_name_translation_info.json", m_animationNameTranslateInfo);
 
     LOG_DEBUG() << "end";
 }
@@ -169,7 +171,7 @@ QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInf
         QString language = QLocale::system().name();
         result = subObj.value(language).toString();
         if (result.isEmpty()) {
-            result = srcStr;
+            result = subObj.value("en").toString();;
         }
     }
 
