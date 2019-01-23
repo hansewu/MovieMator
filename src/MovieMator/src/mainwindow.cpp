@@ -608,7 +608,7 @@ MainWindow::MainWindow()
 //    addResourceDock(m_templateDock, tr("Recent"), QIcon(":/icons/light/32x32/show-playlist.png"), QIcon(":/icons/light/32x32/show-playlist-highlight.png"));
 
     m_effectDock = EffectDock_initModule(&MainInterface::singleton());
-    addResourceDock(m_effectDock, tr("Stickers"), QIcon(":/icons/light/32x32/template.png"), QIcon(":/icons/light/32x32/template-highlight.png"));
+    addResourceDock(m_effectDock, tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
 
     m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
     m_propertiesDock->installEventFilter(this);

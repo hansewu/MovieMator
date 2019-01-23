@@ -167,6 +167,8 @@
         <file>light/32x32/audio_filter.png</file>
         <file>light/32x32/video_filter_on.png</file>
         <file>light/32x32/video_filter.png</file>
+        <file>light/32x32/anim-stickers.png</file>
+        <file>light/32x32/anim-stickers-highlight.png</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>
