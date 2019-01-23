@@ -10,8 +10,8 @@ class EffectListModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    static const int THUMBNAIL_WIDTH = 90;
-    static const int THUMBNAIL_HEIGHT = 60;
+    static const int THUMBNAIL_WIDTH = 100;
+    static const int THUMBNAIL_HEIGHT = 70;
 
     explicit EffectListModel(MainInterface *main=nullptr, QObject *parent=nullptr);
     ~EffectListModel();

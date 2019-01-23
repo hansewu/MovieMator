@@ -72,6 +72,9 @@ QVariant EffectListModel::data(const QModelIndex &index, int role) const
             }
             return image;
         }
+        case Qt::TextAlignmentRole: {   // 设置标题文本对齐方式
+            return Qt::AlignLeft;
+        }
         default:
             break;
     }
