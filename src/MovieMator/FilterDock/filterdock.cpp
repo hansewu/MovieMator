@@ -5,18 +5,32 @@
 #include <QQmlContext>
 #include <filterdockinterface.h>
 #include <QDir>
+/*
+ * Copyright (c) 2016-2019 EffectMatrix Inc.
+ * Author: wyl1987527 <wyl1987527@163.com>
+ * Author: Author: fuyunhuaxin <2446010587@qq.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include <QStandardPaths>
 #include <QtQml>
 #include <qmlutilities.h>
 #include <qmlview.h>
-//#include <Logger.h>
-
-static MainInterface * mainInterface;
-QList<FilterItemInfo*> *filterInfoList = new QList<FilterItemInfo*>();
 
 FilterDock::FilterDock(MainInterface *main, QWidget *parent):
     QDockWidget(parent),
-//  ui(new Ui::FilterDock),
   m_qview(QmlUtilities::sharedEngine(), this)
 {
     m_mainWindow = main;
@@ -26,9 +40,9 @@ FilterDock::FilterDock(MainInterface *main, QWidget *parent):
 
     QmlUtilities::setCommonProperties(m_qview.rootContext());
 
-
-    UpdateFilters();
+    updateFilters(NULL, 0);
 }
+
 FilterDock::~FilterDock()
 {
     if(m_pFilterInfo) {delete m_pFilterInfo; m_pFilterInfo = NULL;}
@@ -51,13 +65,23 @@ void FilterDock::resetQview()
     m_qview.setSource(source);
 }
 
-int FilterDock::UpdateFilters()
+int FilterDock::updateFilters(Filter_Info * filterInfos, int nFilterCount)
 {
-    if(filterInfoList->size() <= 0)  return -1;
-
     if(m_pFilterInfo) {delete m_pFilterInfo; m_pFilterInfo = NULL;}
 
-    m_pFilterInfo = new FiltersInfo(filterInfoList);
+    m_pFilterInfo = new FiltersInfo();
+    for(int i = 0; i < nFilterCount; i++)
+    {
+        FilterItemInfo *filterInfo = new FilterItemInfo();
+
+        filterInfo->setVisible(filterInfos[i].visible);
+        filterInfo->setName(QString(filterInfos[i].name));
+        filterInfo->setFilterType(QString(filterInfos[i].type));
+        filterInfo->setImageSourcePath(QString(filterInfos[i].imageSourcePath));
+
+        m_pFilterInfo->addFilterItemInfo(filterInfo);
+    }
+
     qmlRegisterType<FilterItemInfo>("FilterItemInfo", 1, 0, "FilterItemInfo");
 
     m_qview.rootContext()->setContextProperty("filtersInfo", m_pFilterInfo);
@@ -74,43 +98,30 @@ void FilterDock::addFilterItem(int index)
 }
 
 
-//void FiltersInfo::addFilterItem(int index)
-//{
+void FiltersInfo::addFilterItemInfo(FilterItemInfo *filterInfo)
+{
+    m_filterInfoList.append(filterInfo);
+}
 
-//}
 
-
-static FilterDock *instance = 0;
-//初始化模块
-//参数，main 主程序接口对象
-//返回界面对象
+static FilterDock *ftDocInstance = 0;
 QDockWidget *FilterDock_initModule(MainInterface *main)
 {
+    if (ftDocInstance == NULL)
+        ftDocInstance = new FilterDock(main);
 
-    if (instance == NULL)
-        instance = new FilterDock(main);
-    return instance;
+    return ftDocInstance;
 }
 
-//销毁模块
 void FilterDock_destroyModule()
 {
-
+    if(ftDocInstance) delete ftDocInstance;
 }
-
 
 int setFiltersInfo(Filter_Info * filterInfos, int nFilterCount)
 {
-    filterInfoList->clear();
-    for(int i=0;i<nFilterCount;i++){
-        FilterItemInfo *filterInfo = new FilterItemInfo();
-        filterInfo->setVisible(QString(filterInfos[i].visible));
-        filterInfo->setName(QString(filterInfos[i].name));
-        filterInfo->setFilterType(QString(filterInfos[i].type));
-        filterInfo->setImageSourcePath(QString(filterInfos[i].imageSourcePath));
-        filterInfoList->append(filterInfo);
-    }
-    instance->UpdateFilters();
+    ftDocInstance->updateFilters(filterInfos, nFilterCount);
+
     return 0;
 }
 

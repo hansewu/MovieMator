@@ -36,6 +36,7 @@
 #include <MltFilter.h>
 #include <map>
 #include <filterdockinterface.h>
+#include "mainwindow.h"
 
 FilterController::FilterController(QObject* parent) : QObject(parent),
  m_metadataModel(this),
@@ -71,7 +72,7 @@ void FilterController::loadFilterMetadata() {
             if (meta) {
                 // Check if mlt_service is available.
                 if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
-                    LOG_DEBUG() << "added filter" << meta->name();
+//                    LOG_DEBUG() << "added filter" << meta->name();
                     meta->loadSettings();
                     meta->setPath(subdir);
                     meta->setParent(0);
@@ -217,7 +218,7 @@ void FilterController::loadFrei0rFilterMetadata() {
 
                 // Check if mlt_service is available.
                 if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
-                    LOG_DEBUG() << "added filter 2" << meta->name();
+//                    LOG_DEBUG() << "added filter 2" << meta->name();
 
                     meta->loadSettings();
                     meta->setPath(subdir);
@@ -301,10 +302,7 @@ void FilterController::updateFilterDock()
         if (metadataModel->needsGPU() && !Settings.playerGPU()) bVisible = false;
         if (!metadataModel->needsGPU() && Settings.playerGPU() && !metadataModel->gpuAlt().isEmpty()) bVisible = false;
 
-        if(bVisible == true)
-            strcpy(filterInfos[nIndex].visible, "1");
-        else
-            strcpy(filterInfos[nIndex].visible, "0");
+        filterInfos[nIndex].visible = bVisible;
     }
 
     setFiltersInfo(filterInfos, nFilterCount);
@@ -552,6 +550,7 @@ QmlMetadata *FilterController::metadataForUniqueId(const char *uniqueId)
 
 void FilterController::addFilter(int nFilterIndex)
 {
+    MAIN.onShowFilterDock();
     int nCurrentFilter = nFilterIndex;
     if(nCurrentFilter == -1)
         nCurrentFilter = getCurrentSelectedFilterIndex();
