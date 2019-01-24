@@ -194,6 +194,8 @@
         <file>filters/Stabilize.jpg</file>
         <file>filters/Text.jpg</file>
         <file>filters/Vignette.jpg</file>
+        <file>light/32x32/size-fit-1-a.png</file>
+        <file>light/32x32/size-fit-1.png</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>

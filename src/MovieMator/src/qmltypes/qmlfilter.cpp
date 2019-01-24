@@ -539,6 +539,28 @@ double QmlFilter::producerAspect() const
     return MLT.profile().dar();
 }
 
+double QmlFilter::mediaHeight() const
+{
+    // Every attached filter has a service property that points to the service to
+    // which it is attached.
+    Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
+    if (producer.get(kHeightProperty))
+        return QString(producer.get(kHeightProperty)).toDouble();
+
+    return -1;
+}
+
+double QmlFilter::mediaWidth() const
+{
+    // Every attached filter has a service property that points to the service to
+    // which it is attached.
+    Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
+    if (producer.get(kWidthProperty))
+        return QString(producer.get(kWidthProperty)).toDouble();
+
+    return -1;
+}
+
 void QmlFilter::preset(const QString &name)
 {
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());

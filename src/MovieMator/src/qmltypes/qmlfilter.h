@@ -50,6 +50,8 @@ class QmlFilter : public QObject
     Q_PROPERTY(int producerIn READ producerIn)
     Q_PROPERTY(int producerOut READ producerOut)
     Q_PROPERTY(double producerAspect READ producerAspect)
+    Q_PROPERTY(double mediaWidth READ mediaWidth)
+    Q_PROPERTY(double mediaHeight READ mediaHeight)
     Q_PROPERTY(int keyframeNumber READ getKeyFrameNumber NOTIFY keyframeNumberChanged)
 
 public:
@@ -89,6 +91,8 @@ public:
     int producerOut() const;
     Q_INVOKABLE void setInAndOut(int in, int out);
     double producerAspect() const;
+    double mediaWidth() const;
+    double mediaHeight() const;
     Q_INVOKABLE void anim_set(QString name, QString value);
     Q_INVOKABLE void resetProperty(const QString& name);
 
