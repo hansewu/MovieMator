@@ -91,7 +91,8 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     ui->comboBox_2->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
 
     ui->scrollArea->setWidgetResizable(true);
-    ui->scrollArea->setStyleSheet("border:none;background:transparent;");       // 51,51,51
+    ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->scrollArea->setStyleSheet("border:none;");
     ui->scrollArea->verticalScrollBar()
             ->setStyleSheet("QScrollBar:vertical{width:8px;background:rgba(0,0,0,0%);margin:0px,0px,0px,0px;}"
                             "QScrollBar::handle:vertical{width:8px;background:rgba(160,160,160,25%);border-radius:4px;min-height:20;}"
@@ -269,7 +270,7 @@ void EffectDock::createEffectFile()
         m_effectFile = m_effectList->at(comboIndex);
         effectFile = m_mainWindow->getFileName(m_effectFile);
     }
-    if(m_currentIndex.isValid())
+    if(m_currentListView && m_currentIndex.isValid() )
     {
         m_effectFile = qobject_cast<EffectListModel*>(m_currentListView->model())->fileAt(m_currentIndex.row());
         imageFile = m_mainWindow->getFileName(m_effectFile);
@@ -327,12 +328,12 @@ void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName
     listView->setContextMenuPolicy(Qt::CustomContextMenu);
     listView->setContentsMargins(5, 5, 5, 5);
     listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    listView->setStyleSheet("QListView{selection-background-color:rgb(192,72,44); selection-color: rgb(255,255,255);background-color:transparent;color:rgb(214,214,214);}");
-    listView->setStyleSheet("QListView::item:selected{background:rgb(192,72,44); color:rgb(255,255,255);}");
+    listView->setStyleSheet(
+                "QListView::item:selected{background-color:rgb(192,72,44); color:rgb(255,255,255);}"
+                "QListView{background-color:transparent;color:rgb(214,214,214);}");
 
     connect(listView, SIGNAL(pressed(const QModelIndex&)), this, SLOT(on_listView_pressed(const QModelIndex&)));
     connect(listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(on_listView_clicked(const QModelIndex&)));
-//    connect(listView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(on_listView_doubleClicked(const QModelIndex&)));
     connect(listView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(on_listView_customContextMenuRequested(const QPoint&)));
 }
 
@@ -357,18 +358,9 @@ void EffectDock::on_listView_clicked(const QModelIndex &)
     }
 }
 
-//void EffectDock::on_listView_doubleClicked(const QModelIndex &)
-//{
-////    createEffectFile();
-//    if(m_effectFile)
-//    {
-//        m_mainWindow->playFile(m_effectFile);
-//    }
-//}
-
 void EffectDock::on_listView_customContextMenuRequested(const QPoint &pos)
 {
-    if(m_currentIndex.isValid() && m_currentListView->indexAt(pos).isValid())
+    if(m_currentIndex.isValid() && m_currentListView->indexAt(pos)==m_currentIndex)
     {
         QMenu menu(this);
         menu.addAction(ui->actionAddToTimeline);
