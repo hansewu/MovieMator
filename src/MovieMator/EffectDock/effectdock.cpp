@@ -31,6 +31,7 @@
 #include <QFile>
 #include <QDebug>
 #include <QJsonArray>
+#include <QImage>
 
 EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     QDockWidget(parent),
@@ -213,6 +214,23 @@ void EffectDock::replaceImage(QString effectFile, QString imageFile)
     QDomText imageNameDom = doc.createTextNode(imageName);
     image.appendChild(imageNameDom);
     tractorDomElement.appendChild(image);
+
+    //添加图片宽
+    QDomElement imageW = doc.createElement("property");
+    imageW.setAttribute("name","moviemator:imageW");
+    QPixmap pixmap = QPixmap(imageFile);
+    int width = pixmap.width();
+    QDomText imageWDom = doc.createTextNode(QString::number(width));
+    imageW.appendChild(imageWDom);
+    tractorDomElement.appendChild(imageW);
+
+    //添加图片宽
+    QDomElement imageH = doc.createElement("property");
+    imageH.setAttribute("name","moviemator:imageH");
+    int height = pixmap.height();
+    QDomText imageHDom = doc.createTextNode(QString::number(height));
+    imageH.appendChild(imageHDom);
+    tractorDomElement.appendChild(imageH);
 
     QDomNodeList nodeList = doc.elementsByTagName("producer");
     QDomNode domNode;

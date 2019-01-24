@@ -259,8 +259,16 @@ FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
         sizeAndPositionFilter = new Mlt::Filter(MLT.profile(), "affine");
         sizeAndPositionFilter->set("moviemator:filter", "affineSizePosition");
         sizeAndPositionFilter->set("transition.fill", 1);
-        sizeAndPositionFilter->set("transition.distort", 0);
-        sizeAndPositionFilter->set("transition.rect_anim_relative", 0, 0, 1, 1);
+        sizeAndPositionFilter->set("transition.distort", 1);
+        QString imageWStr(producer->get("moviemator:imageW"));
+        QString imageHStr(producer->get("moviemator:imageH"));
+        int imageW = imageWStr.toInt();
+        int imageH = imageHStr.toInt();
+        double x = ((double)MLT.profile().width() - (double)imageW) / 2 / (double)MLT.profile().width();
+        double y = ((double)MLT.profile().height() - (double)imageH) / 2 / (double)MLT.profile().height();
+        double w = (double)imageW / (double)MLT.profile().width();
+        double h = (double)imageH / (double)MLT.profile().height();
+        sizeAndPositionFilter->set("transition.rect_anim_relative", x, y, w, h);
         sizeAndPositionFilter->set("transition.valign", "top");
         sizeAndPositionFilter->set("transition.halign", "left");
         sizeAndPositionFilter->set("transition.threads", 0);
