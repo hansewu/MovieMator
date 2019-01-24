@@ -250,9 +250,22 @@ FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
         delete producer;
         producer = 0;
     }
+
     QString resource(producer->get("resource"));
-    if (resource == "<tractor>")
+    if (resource == "<tractor>") {
         producer->set(kShotcutVirtualClip, 1);
+        //添加模板，自动添加调节大小滤镜
+        Mlt::Filter* sizeAndPositionFilter;
+        sizeAndPositionFilter = new Mlt::Filter(MLT.profile(), "affine");
+        sizeAndPositionFilter->set("moviemator:filter", "affineSizePosition");
+        sizeAndPositionFilter->set("transition.fill", 1);
+        sizeAndPositionFilter->set("transition.distort", 0);
+        sizeAndPositionFilter->set("transition.rect_anim_relative", 0, 0, 1, 1);
+        sizeAndPositionFilter->set("transition.valign", "top");
+        sizeAndPositionFilter->set("transition.halign", "left");
+        sizeAndPositionFilter->set("transition.threads", 0);
+        producer->attach(*sizeAndPositionFilter);
+    }
 
     return producer;
 }
