@@ -31,8 +31,6 @@
 #include <QMenu>
 #include <QScrollBar>
 
-#include <QSpacerItem>
-
 //static const int MaxItems = 20;
 
 RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
@@ -63,7 +61,7 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
 
     foreach (QString s, m_recent) {
         // 工程文件不添加到历史记录列表里
-        if(!s.endsWith(".mmp"))
+        if(!s.endsWith(".mmp") && !s.endsWith(".xml") && !s.endsWith(".mlt"))
         {
             FILE_HANDLE fileHandle = m_mainWindow->openFile(s);
             if(fileHandle)
@@ -107,11 +105,12 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
         listView->setContentsMargins(5, 5, 5, 5);
         listView->setContextMenuPolicy(Qt::CustomContextMenu);
         listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        listView->setStyleSheet("QListView{selection-background-color:rgb(192,72,44); selection-color:rgb(255,255,255);background-color:transparent;color:rgb(214,214,214);}");
-        listView->setStyleSheet("QListView::item:selected{background:rgb(192,72,44); color:rgb(255,255,255);}");
+        listView->setStyleSheet(
+                    "QListView::item:selected{background-color:rgb(192,72,44);color:rgb(255,255,255);}"
+                    "QListView{background-color:transparent;color:rgb(214,214,214);}");
 
+        connect(listView, SIGNAL(pressed(const QModelIndex&)), this, SLOT(on_listView_pressed(const QModelIndex&)));
         connect(listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(on_listView_clicked(const QModelIndex&)));
-        connect(listView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(on_listView_doubleClicked(const QModelIndex&)));
         connect(listView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(on_listView_customContextMenuRequested(const QPoint&)));
 
         label->setVisible(false);
@@ -143,7 +142,8 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
     ui->comboBox->setMinimumWidth(50);
     ui->comboBox->setStyleSheet("QComboBox{ background-color:rgb(100,100,100);color:rgb(225,225,225); }");
     ui->scrollArea->setWidgetResizable(true);
-    ui->scrollArea->setStyleSheet("border:none;background:rgb(51, 51, 51);");
+    ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->scrollArea->setStyleSheet("border:none;");
     ui->scrollArea->verticalScrollBar()
             ->setStyleSheet("QScrollBar:vertical{width:8px;background:rgba(0,0,0,0%);margin:0px,0px,0px,0px;}"
                             "QScrollBar::handle:vertical{width:8px;background:rgba(160,160,160,25%);border-radius:4px;min-height:20;}"
@@ -203,7 +203,7 @@ void RecentDock::add(const QString &s)
         return;
 
     // 工程文件不添加到历史记录里
-    if(s.endsWith(".mmp"))
+    if(s.endsWith(".mmp") || s.endsWith(".xml") || s.endsWith(".mlt"))
         return;
 
     FILE_HANDLE fileHandle = m_mainWindow->openFile(s);
@@ -290,6 +290,10 @@ void RecentDock::on_lineEdit_textChanged(const QString& search)
     {
         m_proxyArray[i]->setFilterFixedString(search);
     }
+    for(RecentListView *listView : *m_listviewList)
+    {
+        listView->clearSelection();
+    }
     resizeEvent(nullptr);
 }
 
@@ -308,12 +312,15 @@ void RecentDock::on_comboBox_currentTextChanged(const QString &arg1)
 void RecentDock::on_listView_activated(const QModelIndex &index)
 {
     QSortFilterProxyModel *proxyModel = qobject_cast<QSortFilterProxyModel*>(m_currentListView->model());
-    RecentListModel *model = qobject_cast<RecentListModel*>(proxyModel->sourceModel());
-    FILE_HANDLE fileHandle = model->fileAt(proxyModel->mapToSource(index).row());
-    m_mainWindow->playFile(fileHandle);
+    RecentListModel *model = proxyModel ? qobject_cast<RecentListModel*>(proxyModel->sourceModel()) : nullptr;
+    if(model)
+    {
+        FILE_HANDLE fileHandle = model->fileAt(proxyModel->mapToSource(index).row());
+        m_mainWindow->playFile(fileHandle);
+    }
 }
 
-void RecentDock::on_listView_clicked(const QModelIndex &index)
+void RecentDock::on_listView_pressed(const QModelIndex &index)
 {
     for(RecentListView *listView : *m_listviewList)
     {
@@ -321,49 +328,37 @@ void RecentDock::on_listView_clicked(const QModelIndex &index)
         {
             m_currentIndex = index;
             m_currentListView = listView;
-            return;
+        }
+        else
+        {
+            listView->clearSelection();
         }
     }
 }
 
-void RecentDock::on_listView_doubleClicked(const QModelIndex &index)
+void RecentDock::on_listView_clicked(const QModelIndex &index)
 {
-    for(RecentListView *listView : *m_listviewList)
+    if(m_currentIndex.isValid() && m_currentListView && index==m_currentIndex)
     {
-        if(index.isValid() && index==listView->currentIndex())
+        QSortFilterProxyModel *proxyModel = qobject_cast<QSortFilterProxyModel*>(m_currentListView->model());
+        RecentListModel *model = proxyModel ? qobject_cast<RecentListModel*>(proxyModel->sourceModel()) : nullptr;
+        if(model)
         {
-            m_currentIndex = index;
-            m_currentListView = listView;
-            QSortFilterProxyModel *proxyModel = qobject_cast<QSortFilterProxyModel*>(listView->model());
-            RecentListModel *model = qobject_cast<RecentListModel*>(proxyModel->sourceModel());
             FILE_HANDLE fileHandle = model->fileAt(proxyModel->mapToSource(m_currentIndex).row());
             m_mainWindow->playFile(fileHandle);
-            return;
         }
     }
 }
 
 void RecentDock::on_listView_customContextMenuRequested(const QPoint &pos)
 {
-    for(RecentListView *listView : *m_listviewList)
+    if(m_currentIndex.isValid() && m_currentListView->indexAt(pos).isValid())
     {
-        QModelIndex index = listView->currentIndex();
-        if(index.isValid() && listView->indexAt(pos).isValid())
-        {
-            m_currentIndex = index;
-            m_currentListView = listView;
-
-            QMenu menu(this);
-            menu.addAction(ui->actionRemove);
-            menu.addAction(ui->actionRemoveAll);
-            menu.addAction(ui->actionPlay);
-//            menu.exec(mapToGlobal(pos));
-            menu.exec(listView->mapToGlobal(pos));
-
-            listView->setCurrentIndex(index);
-
-            return;
-        }
+        QMenu menu(this);
+        menu.addAction(ui->actionRemove);
+        menu.addAction(ui->actionRemoveAll);
+        menu.addAction(ui->actionPlay);
+        menu.exec(m_currentListView->mapToGlobal(pos));
     }
 }
 
@@ -428,14 +423,17 @@ void RecentDock::on_actionProperties_triggered()
 QList<FILE_HANDLE> RecentDock::getSelected()
 {
     QList<FILE_HANDLE> selected;
-    QModelIndexList selectedIndexes = m_currentListView->getSelected();
-
-    foreach(QModelIndex index, selectedIndexes)
+    if(m_currentListView)
     {
-        QModelIndex sourceIndex = qobject_cast<QSortFilterProxyModel*>(m_currentListView->model())->mapToSource(index);
-        FILE_HANDLE fileHandle = qobject_cast<RecentListModel*>(qobject_cast<QSortFilterProxyModel*>(m_currentListView->model())->sourceModel())->fileAt(sourceIndex.row());
+        QModelIndexList selectedIndexes = m_currentListView->getSelected();
 
-        selected.append(fileHandle);
+        foreach(QModelIndex index, selectedIndexes)
+        {
+            QModelIndex sourceIndex = qobject_cast<QSortFilterProxyModel*>(m_currentListView->model())->mapToSource(index);
+            FILE_HANDLE fileHandle = qobject_cast<RecentListModel*>(qobject_cast<QSortFilterProxyModel*>(m_currentListView->model())->sourceModel())->fileAt(sourceIndex.row());
+
+            selected.append(fileHandle);
+        }
     }
     return selected;
 }

@@ -146,6 +146,10 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                     result = Util::baseName(QString::fromUtf8(info->resource));
                 if (result == "<producer>" && info->producer && info->producer->is_valid())
                     result = QString::fromUtf8(info->producer->get("mlt_service"));
+                if (result == "<tractor>") {
+                    result = QString::fromUtf8(info->producer->get("moviemator:imageName"));
+                    result += "-" + QString::fromUtf8(info->producer->get("moviemator:animationName"));
+                }
                 return result;
             }
             case ResourceRole:

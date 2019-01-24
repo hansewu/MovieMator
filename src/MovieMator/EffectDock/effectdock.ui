@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>238</width>
-    <height>163</height>
+    <width>625</width>
+    <height>430</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
-    <height>0</height>
+    <width>238</width>
+    <height>163</height>
    </size>
   </property>
   <property name="acceptDrops">
@@ -64,7 +64,7 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>提示：左边下拉列表选择动画特效，右边下拉列表选择图片。</string>
+           <string/>
           </property>
           <property name="text">
            <string>Animation</string>
@@ -89,18 +89,11 @@
         <item>
          <widget class="QComboBox" name="comboBox">
           <property name="toolTip">
-           <string>Effects</string>
+           <string/>
           </property>
          </widget>
         </item>
        </layout>
-      </item>
-      <item>
-       <widget class="QComboBox" name="comboBox_2">
-        <property name="toolTip">
-         <string>Images</string>
-        </property>
-       </widget>
       </item>
       <item>
        <spacer name="horizontalSpacer">
@@ -115,6 +108,13 @@
         </property>
        </spacer>
       </item>
+      <item>
+       <widget class="QComboBox" name="comboBox_2">
+        <property name="toolTip">
+         <string/>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item>
@@ -127,8 +127,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>229</width>
-         <height>85</height>
+         <width>616</width>
+         <height>352</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">

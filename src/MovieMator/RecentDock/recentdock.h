@@ -85,8 +85,8 @@ private slots:
     void on_comboBox_currentTextChanged(const QString &arg1);
 
     void on_listView_activated(const QModelIndex &index);
+    void on_listView_pressed(const QModelIndex &index);
     void on_listView_clicked(const QModelIndex &index);
-    void on_listView_doubleClicked(const QModelIndex &index);
     void on_listView_customContextMenuRequested(const QPoint &pos);
 };
 

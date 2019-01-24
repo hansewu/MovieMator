@@ -62,7 +62,6 @@ private:
 private slots:
     void on_listView_pressed(const QModelIndex&);
     void on_listView_clicked(const QModelIndex&);
-//    void on_listView_doubleClicked(const QModelIndex&);
     void on_listView_customContextMenuRequested(const QPoint&);
     void on_actionAddToTimeline_triggered();
     void on_comboBox_activated(int index);

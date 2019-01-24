@@ -13,8 +13,6 @@ public:
 protected:
     void mousePressEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
-    void focusInEvent(QFocusEvent *);
-    void focusOutEvent(QFocusEvent *);
 
 private:
     QModelIndex m_currentIndex;
