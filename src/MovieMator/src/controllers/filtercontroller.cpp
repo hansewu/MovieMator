@@ -132,7 +132,9 @@ void FilterController::loadFrei0rFilterMetadata() {
 //                    meta->setFilterType(filterType);
 //                }
                 std::string string = libName.toStdString();
-                if(string.find("alpha") != std::string::npos )
+                if(string.find("alpha") != std::string::npos )   //remove alpha
+                    continue;
+                if(string.find("curves") != std::string::npos )  //remove curves
                     continue;
 
                 QString mlt_service_s       = "frei0r." + libName.mid(0, libName.length() - 3);
