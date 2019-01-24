@@ -3011,7 +3011,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
     QWidget* advancedW = 0; //视频高级属性
     QScrollArea* advancedScrollArea = (QScrollArea*) m_propertiesDock->widget(); //视频高级属性
 
-    if (!producer || !producer->is_valid()) {
+    if (!producer || !producer->is_valid()
+            || producer->get("moviemator:imageName")) {
         if (scrollArea->widget())
             scrollArea->widget()->deleteLater();
         if (advancedScrollArea->widget())
