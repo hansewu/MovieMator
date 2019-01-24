@@ -86,15 +86,27 @@
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="287"/>
-        <source>Add filter failed</source>
-        <translation type="unfinished">添加滤镜失败</translation>
+        <source>Tips</source>
+        <translation type="unfinished">提示</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="287"/>
+        <source>Tips
+
+To apply the filter, please first select the clip by clicking on it on the timeline.</source>
+        <translation type="unfinished">提示
+
+滤镜需要添加到选中的片段上，请先在时间线上选择一个片段。</translation>
+    </message>
+    <message>
+        <source>Add filter failed</source>
+        <translation type="obsolete">添加滤镜失败</translation>
+    </message>
+    <message>
         <source>Add filter failed
 
 Please select a clip!</source>
-        <translation type="unfinished">添加滤镜失败
+        <translation type="obsolete">添加滤镜失败
 
 请先选择至少一个片段!</translation>
     </message>
@@ -108,7 +120,7 @@ Please select a clip!</source>
         <translation type="unfinished">全部</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AudioFiltersUI.qml" line="259"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AudioFiltersUI.qml" line="256"/>
         <source>Filters</source>
         <translation type="unfinished">滤镜</translation>
     </message>
@@ -1590,7 +1602,7 @@ in temporal compression</source>
 <context>
     <name>FilterController</name>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="154"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="156"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1599,7 +1611,7 @@ in temporal compression</source>
         <translation type="obsolete">常用</translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="454"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="506"/>
         <source>Only one %1 filter is allowed.</source>
         <translation type="unfinished">仅允许一个%1滤镜</translation>
     </message>
@@ -3825,7 +3837,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MultitrackModel</name>
     <message>
-        <location filename="../src/models/multitrackmodel.cpp" line="3698"/>
+        <location filename="../src/models/multitrackmodel.cpp" line="3704"/>
         <source>Failed to Add Clip
 Invalid Time Code!</source>
         <translation type="unfinished">添加片段失败
@@ -5184,17 +5196,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">增加到轨道</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="704"/>
+        <location filename="../src/docks/timelinedock.cpp" line="706"/>
         <source>Lift from track</source>
         <translation type="unfinished">从轨道提升</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1007"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1009"/>
         <source>You cannot split a transition.</source>
         <translation type="unfinished">不能切割转场</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1444"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1446"/>
         <source>For reasons of copyright protection, you can not import vob or m4p files</source>
         <translation type="unfinished">因为版权保护，不支持导入vob和m4p文件</translation>
     </message>
@@ -7023,7 +7035,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/wave/ui.qml" line="54"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="65"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="73"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/white/ui.qml" line="132"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/white/ui.qml" line="109"/>
         <source>Preset</source>
         <translation type="unfinished">预设</translation>
     </message>
@@ -7919,12 +7931,12 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/white/ui.qml" line="152"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/white/ui.qml" line="129"/>
         <source>Neutral color</source>
         <translation type="unfinished">中性色</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/white/ui.qml" line="185"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/white/ui.qml" line="155"/>
         <source>Color temperature</source>
         <translation type="unfinished">色温</translation>
     </message>

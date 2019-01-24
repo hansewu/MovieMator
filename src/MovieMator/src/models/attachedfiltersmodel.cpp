@@ -284,7 +284,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
 {
     if (MAIN.timelineDock()->selection().isEmpty() )
     {
-        QMessageBox::warning(NULL, tr("Add filter failed"), tr("Add filter failed\n\nPlease select a clip!"), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Tips"), tr("Tips\n\nTo apply the filter, please first select the clip by clicking on it on the timeline."), QMessageBox::Ok);
         return;
     }
 
