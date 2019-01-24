@@ -224,6 +224,11 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 return QString("..") + QString(info->producer->get("thumbnail"));
             case HasFilterRole:
                 return hasFilterApplied(info->producer);
+            case IsAnimStickerRole:
+            {
+                QString resource = QString::fromUtf8(info->resource);
+                return resource == "<tractor>";
+            }
             default:
                 break;
             }
@@ -340,6 +345,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[TrackTypeRole] = "trackType";
     roles[ThumbnailRole] = "thumbnail";
     roles[HasFilterRole] = "hasFilter";
+    roles[IsAnimStickerRole] = "isAnimSticker";
     return roles;
 }
 
