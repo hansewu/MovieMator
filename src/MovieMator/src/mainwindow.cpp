@@ -4019,10 +4019,10 @@ void MainWindow::customizeToolbar()
 //    connect(m_forumButton, SIGNAL(clicked()), this, SLOT(on_actionForum_triggered()));
 
 
-    m_exportTemplateButton = createToolButton(":/icons/light/32x32/toolbar-export.png",
-                                      ":/icons/light/32x32/toolbar-export-pressed.png",
-                                      "", tr("Export Template"), tr("Export project as a template file"));
-    connect(m_exportTemplateButton, SIGNAL(clicked()), this, SLOT(onExportTemplate()));
+//    m_exportTemplateButton = createToolButton(":/icons/light/32x32/toolbar-export.png",
+//                                      ":/icons/light/32x32/toolbar-export-pressed.png",
+//                                      "", tr("Export Template"), tr("Export project as a template file"));
+//    connect(m_exportTemplateButton, SIGNAL(clicked()), this, SLOT(onExportTemplate()));
 
 
 #if SHARE_VERSION
@@ -4070,7 +4070,7 @@ void MainWindow::customizeToolbar()
 
     gridLayout->addWidget(m_saveButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     gridLayout->addWidget(m_exportButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
-    gridLayout->addWidget(m_exportTemplateButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+    //gridLayout->addWidget(m_exportTemplateButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     QSpacerItem *spacer3 = new QSpacerItem(50,20, QSizePolicy::Expanding);
     gridLayout->addItem(spacer3, 0, buttonIndex++, 1, 1);
 
