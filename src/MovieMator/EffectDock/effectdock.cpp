@@ -192,6 +192,27 @@ void EffectDock::replaceImage(QString effectFile, QString imageFile)
         return;
     }
     file.close();
+
+    QDomNodeList tractorNodeList = doc.elementsByTagName("tractor");
+    QDomElement tractorDomElement = tractorNodeList.at(0).toElement();
+
+    //添加动画名
+    QDomElement animation = doc.createElement("property");
+    animation.setAttribute("name","moviemator:animationName");
+    QString animationName = Util::baseName(effectFile).split(".")[0];
+    QString itemName = getTranslationStr(animationName, m_animationNameTranslateInfo);
+    QDomText animationNameDom = doc.createTextNode(itemName);
+    animation.appendChild(animationNameDom);
+    tractorDomElement.appendChild(animation);
+
+    //添加图片名
+    QDomElement image = doc.createElement("property");
+    image.setAttribute("name","moviemator:imageName");
+    QString imageName = Util::baseName(imageFile).split(".")[0];
+    QDomText imageNameDom = doc.createTextNode(imageName);
+    image.appendChild(imageNameDom);
+    tractorDomElement.appendChild(image);
+
     QDomNodeList nodeList = doc.elementsByTagName("producer");
     QDomNode domNode;
     bool flagResource = false;
