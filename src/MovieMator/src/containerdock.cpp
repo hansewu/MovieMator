@@ -26,12 +26,12 @@
 static QString buttonSytleSheetNormal("background-color:rgb(82,82,82);color:rgb(225,225,225)");
 static QString buttonSytleSheetSelected("background-color:rgb(51,51,51);color:rgb(192,72,44)");
 
-#define TABBAR_WIDTH 56
+#define TABBAR_WIDTH 70
 #define TABBAR_HEIGHT 33
 #define BUTTON_WIDTH 90
 #define BUTTON_HEIGHT 35
-#define BUTTON_WIDTH_SQUARE 56
-#define BUTTON_HEIGHT_SQUARE 56
+#define BUTTON_WIDTH_SQUARE 70
+#define BUTTON_HEIGHT_SQUARE 60
 
 
 ContainerDock::ContainerDock(TAB_POSITION tabPosition, QWidget *parent)
@@ -46,7 +46,7 @@ ContainerDock::ContainerDock(TAB_POSITION tabPosition, QWidget *parent)
     if (m_tabPostion == TabPosition_Left)
     {
         m_tabBtnWidget->setStyleSheet(".QWidget{background-color: rgb(82,82,82);border-radius:1px}");
-        m_tabBtnWidget->setFixedWidth(56);
+        m_tabBtnWidget->setFixedWidth(TABBAR_WIDTH);
         QVBoxLayout *tabButtonLayout = new QVBoxLayout();
         tabButtonLayout->setSpacing(0);
         tabButtonLayout->setContentsMargins(0,0,0,0);
@@ -118,6 +118,11 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
 //    QPushButton *button = new QPushButton(tabButtonNormalIcon, tabButtonTitle);
 
     QToolButton* button = new QToolButton(this);
+    QFont font = button->font();
+    font.setPixelSize(11);
+    font.setLetterSpacing(QFont::PercentageSpacing, 90);
+    font.setWordSpacing(-2);
+    button->setFont(font);
     button->setIcon(tabButtonNormalIcon);
     button->setText(tabButtonTitle);
 
