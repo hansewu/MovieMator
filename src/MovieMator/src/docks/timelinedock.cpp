@@ -1706,6 +1706,7 @@ int TimelineDock::getPositionInCurrentClip()
     {
         int clipIndex = selection().first();
 
+        if(trackIndex >= m_model.trackList().length()) return position;
         int mlt_index = m_model.trackList().at(trackIndex).mlt_index;
         QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
         if (track)
@@ -1732,7 +1733,7 @@ int TimelineDock::getCurrentClipLength()
     if ( selection().count() > 0)
     {
         int clipIndex = selection().first();
-
+        if(trackIndex >= m_model.trackList().length()) return -1;
         int mlt_index = m_model.trackList().at(trackIndex).mlt_index;
         QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
         if (track)
@@ -1752,7 +1753,7 @@ int TimelineDock::getCurrentClipParentLength()
     if ( selection().count() > 0)
     {
         int clipIndex = selection().first();
-
+        if(trackIndex >= m_model.trackList().length()) return -1;
         int mlt_index = m_model.trackList().at(trackIndex).mlt_index;
         QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
         if (track)
@@ -1796,6 +1797,7 @@ int TimelineDock::getPositionOnParentProducer(int position)
     if (selection().count() > 0)
     {
         int clipIndex = selection().first();
+        if(trackIndex >= m_model.trackList().length()) return -1;
         int mlt_index = m_model.trackList().at(trackIndex).mlt_index;
         QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
         if (track)
