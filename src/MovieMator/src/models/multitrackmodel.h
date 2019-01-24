@@ -90,7 +90,8 @@ public:
         TrackTypeRole,
         IsDefaultTrackRole,
         ThumbnailRole,
-        HasFilterRole
+        HasFilterRole,
+        IsAnimStickerRole
     };
 
     explicit MultitrackModel(QObject *parent = 0);
