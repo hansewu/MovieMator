@@ -98,6 +98,8 @@ QString AttachedFiltersModel::producerTitle() const
             return tr("Transition");
         if (m_producer->get(kTrackNameProperty))
             return tr("for Track: %1").arg(QString::fromUtf8(m_producer->get(kTrackNameProperty)));
+        if (m_producer->get("moviemator:imageName"))
+            return QString(m_producer->get("moviemator:imageName"));
         if (tractor_type == m_producer->type())
             return tr("for Timeline");
         if (m_producer->get(kShotcutCaptionProperty))
