@@ -239,7 +239,6 @@ void EffectDock::replaceImage(QString effectFile, QString imageFile)
 //    tractorDomElement.appendChild(imageH);
 
     QDomNodeList nodeList = doc.elementsByTagName("producer");
-    QDomNode domNode;
     bool flagResource = false;
     bool flagHash = false;
     for(int i=0; i<nodeList.count(); i++)
@@ -270,13 +269,15 @@ void EffectDock::replaceImage(QString effectFile, QString imageFile)
         imageH.appendChild(imageHDom);
         domElement.appendChild(imageH);
 
+        QDomNode domNodeResource;
+        QDomNode domNodeHash;
         QDomNodeList elementList = domElement.elementsByTagName("property");
         for(int j=0; j<elementList.count(); j++)
         {
             QDomElement de = elementList.at(j).toElement();
             if(de.attribute("name").contains("resource"))
             {
-                domNode = de.toElement().firstChild();
+                domNodeResource = de.toElement().firstChild();
                 flagResource = true;
                 if(flagHash)
                 {
@@ -286,6 +287,7 @@ void EffectDock::replaceImage(QString effectFile, QString imageFile)
             }
             if(de.attribute("name").contains("moviemator:hash"))
             {
+                domNodeHash = de.toElement().firstChild();
                 flagHash = true;
                 if(flagResource)
                 {
@@ -296,7 +298,8 @@ void EffectDock::replaceImage(QString effectFile, QString imageFile)
         }
         if(flagResource && flagHash)
         {
-            domNode.setNodeValue(imageFile);
+            domNodeResource.setNodeValue(imageFile);
+            domNodeHash.setNodeValue(Util::getFileHash(imageFile));
             m_effectFile = m_mainWindow->createFileWithXMLForDragAndDrop(doc.toString());
             return;
         }
