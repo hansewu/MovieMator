@@ -43,6 +43,7 @@
 #include <QtConcurrent/QtConcurrentRun>
 #include <QMessageBox>
 #include <QAction>
+#include <QFileDialog>
 
 
 #include "../maincontroller.h"
@@ -1016,7 +1017,9 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
 void TimelineDock::AttachedfilterChanged()
 {
     int trackIndex = currentTrack();;
-    int clipIndex = m_selection.selectedClips[0];
+    int clipIndex = -1;
+    if (m_selection.selectedClips.count() > 0)
+           clipIndex = m_selection.selectedClips[0];
 
     if (trackIndex < 0) return;
     if (clipIndex < 0) return;
@@ -1875,7 +1878,34 @@ void TimelineDock::exportAsTemplate(int trackIndex, int clipIndex)
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
             QString xml = MLT.XML(info->producer);
             qDebug() << xml;
-            MLT.saveXML("C:\\Users\\gdbwin\\Desktop\\test.xml", info->producer, true);
+            //MLT.saveXML("C:\\Users\\gdbwin\\Desktop\\test.mlt", info->producer, true);
+
+
+            QString templatePath = Util::templatePath();
+            QString sampleFile = QString("%1/Samples/1.png").arg(templatePath);
+            // get temp filename
+            QString tmpTemplate = QString("%1/tmp_XXXXX").arg(templatePath);
+
+            QTemporaryFile tmp(tmpTemplate);
+            tmp.open();
+            tmp.close();
+
+            QString path = Settings.savePath();
+            path.append("/untitled.mlt");
+            QString filename = QFileDialog::getSaveFileName(this, tr("Save Template"), path, tr("Template (*.mlt)"));
+            if (!filename.isEmpty()) {
+                QFileInfo fi(filename);
+                Settings.setSavePath(fi.path());
+                if (fi.suffix() != "mlt")
+                    filename += ".mlt";
+
+                info->producer->set_in_and_out(info->frame_in, info->frame_out);
+                MLT.saveXML(tmp.fileName(), info->producer, false);
+                info->producer->set_in_and_out(-1, -1);
+                QFile::remove(filename);
+                QFile::copy(tmp.fileName(), filename);
+                QFile::remove(tmp.fileName());
+            }
         }
     }
 }
