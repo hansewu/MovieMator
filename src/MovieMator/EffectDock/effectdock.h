@@ -74,7 +74,7 @@ private:
 
     QDir m_dir;
     FILE_HANDLE m_effectFile;
-    QList<FILE_HANDLE> *m_effectList;
+    QList<QString> *m_effectList;
     QMimeData *m_mimeData;
 
     QList<EffectListView*> *m_imageList;

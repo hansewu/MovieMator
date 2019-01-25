@@ -1864,6 +1864,12 @@ void TimelineDock::setExtraQmlContextProperty(QString name, QObject *object)
     m_quickView.rootContext()->setContextProperty(name, object);
 }
 
+void TimelineDock::select_sll(int index)
+{
+    qDebug()<<"sll---TimelineDock::select_sll(int index)---"<<index;
+    emit selected_sll_singal(index);
+}
+
 void TimelineDock::exportAsTemplate(int trackIndex, int clipIndex)
 {
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);

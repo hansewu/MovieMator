@@ -66,6 +66,7 @@ signals:
     void duplicateAddFailed(int index);
     void trackTitleChanged();
     void isProducerSelectedChanged();
+    void selectClip(int filterIndex);
 
 public slots:
     void add(QmlMetadata* meta, bool bFromUndo = false);

@@ -47,7 +47,7 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     m_dir = QDir(templateDir);
 
     m_effectFile = nullptr;
-    m_effectList = new QList<FILE_HANDLE>;
+    m_effectList = new QList<QString>;
     m_mimeData = new QMimeData;
 
     m_imageList = new QList<EffectListView*>;
@@ -63,7 +63,7 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     {
         for(int i=0; i<effectFiles.count(); i++)
         {
-            m_effectList->append(m_mainWindow->openFile(effectFiles.at(i).filePath()));
+            m_effectList->append(effectFiles.at(i).filePath());
             QString itemName = getTranslationStr(effectFiles[i].fileName().split(".")[0], m_animationNameTranslateInfo);
             ui->comboBox->addItem(itemName);
         }
@@ -107,10 +107,10 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
 
 EffectDock::~EffectDock()
 {
-    qDeleteAll(*m_effectList);
-    m_effectList->clear();
-    delete m_effectList;
-    m_effectList = nullptr;
+//    qDeleteAll(*m_effectList);
+//    m_effectList->clear();
+//    delete m_effectList;
+//    m_effectList = nullptr;
 
     delete m_mimeData;
     m_mimeData = nullptr;
@@ -185,12 +185,14 @@ QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInf
 }
 
 void EffectDock::replaceImage(QString effectFile, QString imageFile)
-{   // 替换 XML内容
+{
+    // 替换 XML内容
     QFile file(effectFile);
     if(!file.exists())
     {
         return;
     }
+
     QDomDocument doc;
     if(!doc.setContent(&file))
     {
@@ -199,42 +201,42 @@ void EffectDock::replaceImage(QString effectFile, QString imageFile)
     }
     file.close();
 
-    QDomNodeList tractorNodeList = doc.elementsByTagName("tractor");
-    QDomElement tractorDomElement = tractorNodeList.at(0).toElement();
+//    QDomNodeList tractorNodeList = doc.elementsByTagName("tractor");
+//    QDomElement tractorDomElement = tractorNodeList.at(0).toElement();
 
-    //添加动画名
-    QDomElement animation = doc.createElement("property");
-    animation.setAttribute("name","moviemator:animationName");
-    QString animationName = Util::baseName(effectFile).split(".")[0];
-    QString itemName = getTranslationStr(animationName, m_animationNameTranslateInfo);
-    QDomText animationNameDom = doc.createTextNode(itemName);
-    animation.appendChild(animationNameDom);
-    tractorDomElement.appendChild(animation);
+//    //添加动画名
+//    QDomElement animation = doc.createElement("property");
+//    animation.setAttribute("name","moviemator:animationName");
+//    QString animationName = Util::baseName(effectFile).split(".")[0];
+//    QString itemName = getTranslationStr(animationName, m_animationNameTranslateInfo);
+//    QDomText animationNameDom = doc.createTextNode(itemName);
+//    animation.appendChild(animationNameDom);
+//    tractorDomElement.appendChild(animation);
 
-    //添加图片名
-    QDomElement image = doc.createElement("property");
-    image.setAttribute("name","moviemator:imageName");
-    QString imageName = Util::baseName(imageFile).split(".")[0];
-    QDomText imageNameDom = doc.createTextNode(imageName);
-    image.appendChild(imageNameDom);
-    tractorDomElement.appendChild(image);
+//    //添加图片名
+//    QDomElement image = doc.createElement("property");
+//    image.setAttribute("name","moviemator:imageName");
+//    QString imageName = Util::baseName(imageFile).split(".")[0];
+//    QDomText imageNameDom = doc.createTextNode(imageName);
+//    image.appendChild(imageNameDom);
+//    tractorDomElement.appendChild(image);
 
-    //添加图片宽
-    QDomElement imageW = doc.createElement("property");
-    imageW.setAttribute("name","moviemator:imageW");
-    QPixmap pixmap = QPixmap(imageFile);
-    int width = pixmap.width();
-    QDomText imageWDom = doc.createTextNode(QString::number(width));
-    imageW.appendChild(imageWDom);
-    tractorDomElement.appendChild(imageW);
+//    //添加图片宽
+//    QDomElement imageW = doc.createElement("property");
+//    imageW.setAttribute("name","moviemator:imageW");
+//    QPixmap pixmap = QPixmap(imageFile);
+//    int width = pixmap.width();
+//    QDomText imageWDom = doc.createTextNode(QString::number(width));
+//    imageW.appendChild(imageWDom);
+//    tractorDomElement.appendChild(imageW);
 
-    //添加图片宽
-    QDomElement imageH = doc.createElement("property");
-    imageH.setAttribute("name","moviemator:imageH");
-    int height = pixmap.height();
-    QDomText imageHDom = doc.createTextNode(QString::number(height));
-    imageH.appendChild(imageHDom);
-    tractorDomElement.appendChild(imageH);
+//    //添加图片宽
+//    QDomElement imageH = doc.createElement("property");
+//    imageH.setAttribute("name","moviemator:imageH");
+//    int height = pixmap.height();
+//    QDomText imageHDom = doc.createTextNode(QString::number(height));
+//    imageH.appendChild(imageHDom);
+//    tractorDomElement.appendChild(imageH);
 
     QDomNodeList nodeList = doc.elementsByTagName("producer");
     QDomNode domNode;
@@ -243,6 +245,31 @@ void EffectDock::replaceImage(QString effectFile, QString imageFile)
     for(int i=0; i<nodeList.count(); i++)
     {
         QDomElement domElement = nodeList.at(i).toElement();
+
+        //添加模板标记
+        QDomElement templateDom = doc.createElement("property");
+        templateDom.setAttribute("name","moviemator:template");
+        QDomText templatePropertyValue = doc.createTextNode("template");
+        templateDom.appendChild(templatePropertyValue);
+        domElement.appendChild(templateDom);
+
+        //添加图片宽
+        QDomElement imageW = doc.createElement("property");
+        imageW.setAttribute("name","moviemator:imageW");
+        QPixmap pixmap = QPixmap(imageFile);
+        int width = pixmap.width();
+        QDomText imageWDom = doc.createTextNode(QString::number(width));
+        imageW.appendChild(imageWDom);
+        domElement.appendChild(imageW);
+
+        //添加图片宽
+        QDomElement imageH = doc.createElement("property");
+        imageH.setAttribute("name","moviemator:imageH");
+        int height = pixmap.height();
+        QDomText imageHDom = doc.createTextNode(QString::number(height));
+        imageH.appendChild(imageHDom);
+        domElement.appendChild(imageH);
+
         QDomNodeList elementList = domElement.elementsByTagName("property");
         for(int j=0; j<elementList.count(); j++)
         {
@@ -289,8 +316,8 @@ void EffectDock::createEffectFile()
     int comboIndex = ui->comboBox->currentIndex();
     if(comboIndex>=0 && comboIndex<m_effectList->count())
     {
-        m_effectFile = m_effectList->at(comboIndex);
-        effectFile = m_mainWindow->getFileName(m_effectFile);
+//        m_effectFile = m_effectList->at(comboIndex);
+        effectFile = m_effectList->at(comboIndex);
     }
     if(m_currentListView && m_currentIndex.isValid() )
     {
