@@ -106,7 +106,7 @@ public:
 
     Q_INVOKABLE void exportAsTemplate(int trackIndex, int clipIndex);
 
-    void select_sll(int index);
+    void selectSizeAndPositionFilter(int index);
 
 signals:
     void currentTrackChanged();
@@ -137,7 +137,7 @@ signals:
     void addText();
     void showFilterDock();
     void dockPositionChanged();
-    void selected_sll_singal(int index);
+    void sizeAndPositionFilterSelected(int index);
 
     //MovieMator Pro
 //#ifdef MOVIEMATOR_PRO

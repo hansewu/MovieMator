@@ -259,6 +259,7 @@ FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
          char* filter_name = filter->get("moviemator:filter");
          if (QString(filter_name) == "affineSizePosition") {
              hasSizeAndPositionFilter = true;
+             break;
          }
     }
 
