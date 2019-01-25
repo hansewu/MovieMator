@@ -5361,6 +5361,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">裁剪</translation>
     </message>
     <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="385"/>
+        <source>Zoom to Fit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Fade in</source>
         <translation type="obsolete">渐入</translation>
     </message>
@@ -5388,11 +5393,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="358"/>
         <source>Transition Settings</source>
         <translation type="unfinished">转场设置</translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="385"/>
-        <source>All Clips</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="482"/>

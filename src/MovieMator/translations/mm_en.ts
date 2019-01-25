@@ -4969,7 +4969,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="385"/>
-        <source>All Clips</source>
+        <source>Zoom to Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
