@@ -277,5 +277,8 @@
         <file>timeline/timeline-toolbar-fade-in-d.png</file>
         <file>timeline/timeline-toolbar-crop-d.png</file>
         <file>timeline/timeline-toolbar-append-d.png</file>
+        <file>timeline/timeline-toolbar-fit-d.png</file>
+        <file>timeline/timeline-toolbar-fit-n.png</file>
+        <file>timeline/timeline-toolbar-fit-p.png</file>
     </qresource>
 </RCC>
