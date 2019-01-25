@@ -1880,7 +1880,7 @@ void TimelineDock::exportAsTemplate(int trackIndex, int clipIndex)
             qDebug() << xml;
             //MLT.saveXML("C:\\Users\\gdbwin\\Desktop\\test.mlt", info->producer, true);
 
-
+            Mlt::Producer *tempProducer = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
             QString templatePath = Util::templatePath();
             QString sampleFile = QString("%1/Samples/1.png").arg(templatePath);
             // get temp filename
@@ -1899,12 +1899,14 @@ void TimelineDock::exportAsTemplate(int trackIndex, int clipIndex)
                 if (fi.suffix() != "mlt")
                     filename += ".mlt";
 
-                info->producer->set_in_and_out(info->frame_in, info->frame_out);
-                MLT.saveXML(tmp.fileName(), info->producer, false);
-                info->producer->set_in_and_out(-1, -1);
+                tempProducer->set_in_and_out(info->frame_in, info->frame_out);
+                tempProducer->set("length", info->frame_count);
+                MLT.saveXML(tmp.fileName(), tempProducer, false);
+                //info->producer->set_in_and_out(-1, -1);
                 QFile::remove(filename);
                 QFile::copy(tmp.fileName(), filename);
                 QFile::remove(tmp.fileName());
+                delete tempProducer;
             }
         }
     }
