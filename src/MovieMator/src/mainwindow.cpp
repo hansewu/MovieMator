@@ -1460,17 +1460,17 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         //fut1.waitForFinished();
         //showLoadProgress();
     }
-    else if (url.endsWith(".mlt"))
-    {
-        //拷贝到模板目录,并添加到模板管理界面
-        if (!MLT.openXML(url)) {
-            open(MLT.producer());
-            LOG_INFO() << url;
-        }
-        else {
-            showStatusMessage(tr("Failed to open ") + url);
-        }
-    }
+//    else if (url.endsWith(".mlt"))
+//    {
+//        //拷贝到模板目录,并添加到模板管理界面
+//        if (!MLT.openXML(url)) {
+//            open(MLT.producer());
+//            LOG_INFO() << url;
+//        }
+//        else {
+//            showStatusMessage(tr("Failed to open ") + url);
+//        }
+//    }
     else
     {
         open1(url, properties);

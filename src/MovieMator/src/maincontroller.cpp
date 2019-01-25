@@ -112,8 +112,8 @@ int MainController::appendToTimelineFromPath(int trackIndex, const QString &path
 
     Mlt::Producer *p = new Mlt::Producer(MLT.profile(), path.toUtf8().constData());
     if (p->is_valid()) {
-        if (path.endsWith(".mlt"))
-            p->set(kShotcutVirtualClip, 1);
+        //if (path.endsWith(".mlt"))
+        //    p->set(kShotcutVirtualClip, 1);
         MLT.setProducer(p);
 
         // Convert avformat to avformat-novalidate so that XML loads faster.
