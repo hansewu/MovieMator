@@ -1235,8 +1235,18 @@ int QmlFilter::getKeyFrameNumber()
 //    }
 
 //    return 0;
+    int nCount = m_keyFrameList.count();
+    if(nCount <= 0)
+    {
+        int paramCount = m_metadata->keyframes()->parameterCount();
+        if (paramCount <= 0) return nCount;
+        QString name = m_metadata->keyframes()->parameter(0)->property();
+        nCount = getKeyFrameCountOnProject(name);
+        if(nCount <= 0)
+            nCount = getKeyFrameCountOnProject(name);
+    }
 
-    return m_keyFrameList.count();
+    return nCount;
 }
 
 int QmlFilter::getKeyFrame(int index)
