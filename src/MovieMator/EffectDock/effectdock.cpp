@@ -88,6 +88,9 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     m_spacerItem = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
     ui->verticalLayout_2->addItem(m_spacerItem);
 
+    ui->comboBox->setMinimumContentsLength(10);
+    ui->comboBox->setSizeAdjustPolicy(QComboBox::SizeAdjustPolicy::AdjustToMinimumContentsLengthWithIcon);
+    ui->comboBox->setFixedHeight(ui->comboBox_2->height());
     ui->comboBox->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
     ui->comboBox_2->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
 
@@ -128,6 +131,7 @@ void EffectDock::resizeEvent(QResizeEvent *event)
     for(int i=0; i<m_imageList->count(); i++)
     {
         EffectListView *listView = m_imageList->at(i);
+        listView->setFixedWidth(ui->scrollArea->width()-5);
         int wSize = listView->gridSize().width();
         int hSize = listView->gridSize().height();
         int width = listView->size().width();
@@ -340,11 +344,11 @@ void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName
 
     listView->setFocusPolicy(Qt::ClickFocus);
     listView->setViewMode(QListView::IconMode);
-    listView->setGridSize(QSize(120, 100));
+    listView->setGridSize(QSize(95, 90));         // 120,100    ,300/3-5
     listView->setUniformItemSizes(true);
     listView->setResizeMode(QListView::Adjust);
     listView->setContextMenuPolicy(Qt::CustomContextMenu);
-    listView->setContentsMargins(5, 5, 5, 5);
+    listView->setContentsMargins(0, 5, 0, 5);
     listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     listView->setStyleSheet(
                 "QListView::item:selected{background-color:rgb(192,72,44); color:rgb(255,255,255);}"
@@ -357,10 +361,15 @@ void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName
 
 void EffectDock::on_listView_pressed(const QModelIndex &)
 {
-    for(int i=0; i<m_imageList->count(); i++)
+    for(EffectListView *listView : *m_imageList)
     {
-        if(m_imageList->at(i)->hasFocus()){
-            m_currentListView = m_imageList->at(i);
+        if(listView->hasFocus())
+        {
+            if(m_currentListView && m_currentListView!=listView)
+            {
+                m_currentListView->clearSelection();
+            }
+            m_currentListView = listView;
             m_currentIndex = m_currentListView->currentIndex();
             createEffectFile();
             return;
@@ -388,7 +397,6 @@ void EffectDock::on_listView_customContextMenuRequested(const QPoint &pos)
 
 void EffectDock::on_actionAddToTimeline_triggered()
 {
-//    createEffectFile();
     if(m_effectFile)
     {
         m_mainWindow->addToTimeLine(m_effectFile);

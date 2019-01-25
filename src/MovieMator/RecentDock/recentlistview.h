@@ -15,7 +15,6 @@ protected:
     void mouseMoveEvent(QMouseEvent *);
 
 private:
-    QModelIndex m_currentIndex;
     QPoint m_dragStart;
     bool m_canStartDrag;
 };

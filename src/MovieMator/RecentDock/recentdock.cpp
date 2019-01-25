@@ -99,10 +99,10 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
         listView->setModel(proxyModel);
         listView->setViewMode(QListView::IconMode);
         listView->setFocusPolicy(Qt::ClickFocus);
-        listView->setGridSize(QSize(120, 100));
+        listView->setGridSize(QSize(95, 90));     // 120, 100
         listView->setUniformItemSizes(true);
         listView->setResizeMode(QListView::Adjust);
-        listView->setContentsMargins(5, 5, 5, 5);
+        listView->setContentsMargins(0, 5, 0, 5);
         listView->setContextMenuPolicy(Qt::CustomContextMenu);
         listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         listView->setStyleSheet(
@@ -138,7 +138,7 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
     m_verticalSpacerItem = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
     ui->verticalLayout_2->addItem(m_verticalSpacerItem);
 
-    ui->comboBox->setFixedHeight(ui->lineEdit->height()-2);
+    ui->comboBox->setFixedHeight(ui->lineEdit->height());
     ui->comboBox->setMinimumWidth(50);
     ui->comboBox->setStyleSheet("QComboBox{ background-color:rgb(100,100,100);color:rgb(225,225,225); }");
     ui->scrollArea->setWidgetResizable(true);
@@ -182,7 +182,7 @@ void RecentDock::resizeEvent(QResizeEvent* event)
             continue;
         }
         listView->setVisible(true);
-
+        listView->setFixedWidth(ui->scrollArea->width()-5);
         int wSize = listView->gridSize().width()/* +5*/;
         int hSize = listView->gridSize().height();
         int width = listView->size().width();
@@ -290,9 +290,9 @@ void RecentDock::on_lineEdit_textChanged(const QString& search)
     {
         m_proxyArray[i]->setFilterFixedString(search);
     }
-    for(RecentListView *listView : *m_listviewList)
+    if(m_currentListView)
     {
-        listView->clearSelection();
+        m_currentListView->clearSelection();
     }
     resizeEvent(nullptr);
 }
@@ -326,12 +326,13 @@ void RecentDock::on_listView_pressed(const QModelIndex &index)
     {
         if(index.isValid() && index==listView->currentIndex())
         {
+            if(m_currentListView && m_currentListView!=listView)
+            {
+                m_currentListView->clearSelection();
+            }
             m_currentIndex = index;
             m_currentListView = listView;
-        }
-        else
-        {
-            listView->clearSelection();
+            return;
         }
     }
 }

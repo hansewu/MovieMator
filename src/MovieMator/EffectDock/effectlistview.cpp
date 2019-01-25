@@ -83,20 +83,3 @@ void EffectListView::mouseMoveEvent(QMouseEvent* event)
 //        QListView::mouseMoveEvent(event);
     }
 }
-
-void EffectListView::focusInEvent(QFocusEvent *event)
-{
-    setCurrentIndex(m_currentIndex);
-
-    QListView::focusInEvent(event);
-}
-
-void EffectListView::focusOutEvent(QFocusEvent *event)
-{
-    // 失去焦点时取消当前被选中状态
-    m_currentIndex = currentIndex();
-    QModelIndex index = model()->index(-1, 0);
-    setCurrentIndex(index);
-
-    QListView::focusOutEvent(event);
-}
