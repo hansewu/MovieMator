@@ -485,7 +485,7 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
                 m_mltIndexMap.insert(newIndex, i);
 
                 //如果当前的producer是模板，且其中有sizeAndProducer滤镜时，自动选中sizeAndProducer滤镜
-                QString templateFlag = QString(producer->get("moviemator:template"));
+                QString templateFlag = QString(m_producer->get("moviemator:template"));
                 if (templateFlag == "template") {
                     char* filter_name = filter->get("moviemator:filter");
                     if (QString(filter_name) == "affineSizePosition") {
