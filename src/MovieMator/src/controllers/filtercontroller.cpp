@@ -118,7 +118,11 @@ void FilterController::loadFrei0rFilterMetadata() {
         applicationDir.cd("lib");
         applicationDir.cd("frei0r-1");
         QDir frei0rDir = applicationDir;
+#ifdef Q_OS_WIN
+        frei0rDir.setNameFilters(QStringList("*.dll"));
+#else
         frei0rDir.setNameFilters(QStringList("*.so"));
+#endif
         foreach (QString libName, frei0rDir.entryList(QDir::NoFilter))
         {
             QQmlComponent component(QmlUtilities::sharedEngine(), subdir.absoluteFilePath(fileName));
@@ -138,6 +142,9 @@ void FilterController::loadFrei0rFilterMetadata() {
                     continue;
 
                 QString mlt_service_s       = "frei0r." + libName.mid(0, libName.length() - 3);
+#ifdef Q_OS_WIN
+                mlt_service_s       = "frei0r." + libName.mid(0, libName.length() - 4);
+#endif
 
 //                    Mlt::Properties *metadata = MLT.repository()->metadata(filter_type, mlt_service_s.toUtf8().constData());
 
