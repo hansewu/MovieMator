@@ -354,7 +354,7 @@ LIBS += -lEffectDock
 #LIBS += -lPythonQt-Qt5-Python2.7_d
 
 mac {
-    DEFINES += STEAM=1
+#    DEFINES += STEAM=1
     #pro share
     DEFINES += MOVIEMATOR_PRO=1
     DEFINES += SHARE_VERSION=1
