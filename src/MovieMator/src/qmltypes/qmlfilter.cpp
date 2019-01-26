@@ -64,8 +64,8 @@ QmlFilter::~QmlFilter()
 Mlt::Animation QmlFilter::getAnimation(const QString& name)
 {
     if (m_filter) {
-//        const char* propertyName = name.toUtf8().constData();
-        const char* propertyName = name.toStdString().c_str();
+        const char* propertyName = name.toUtf8().constData();
+//        const char* propertyName = name.toStdString().c_str();
         if (!m_filter->get_animation(propertyName)) {
             // Cause a string property to be interpreted as animated value.
             m_filter->anim_get_double(propertyName, 0, 0);
