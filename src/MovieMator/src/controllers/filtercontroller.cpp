@@ -408,6 +408,10 @@ void FilterController::setProducer(Mlt::Producer *producer)
 
 void FilterController::setCurrentFilter(int attachedIndex)
 {
+    if (attachedIndex > m_attachedModel.rowCount()) {
+        return;
+    }
+
     Q_ASSERT(attachedIndex <= m_attachedModel.rowCount());
 
     if (attachedIndex == m_currentFilterIndex) {
