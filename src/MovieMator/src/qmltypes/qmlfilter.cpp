@@ -519,6 +519,10 @@ int QmlFilter::producerOut() const
 
 void QmlFilter::setInAndOut(int in, int out)
 {
+    if (out < in) {
+        return;
+    }
+
     if (m_filter->get_int("in") == 0 && m_filter->get_int("out") == 0)
         m_filter->set_in_and_out(in, out);
 }
