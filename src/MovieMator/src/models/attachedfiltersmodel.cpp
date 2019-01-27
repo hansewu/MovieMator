@@ -454,14 +454,18 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
 
     beginResetModel();
     m_event.reset();
-    if (producer && producer->is_valid())
+
+    //only load filter ui when selected the timeline item
+    if (producer && producer->is_valid() && producer->get_int(kMultitrackItemProperty))
         m_producer.reset(new Mlt::Producer(producer));
-    else if (MLT.isClip())
-        m_producer.reset(new Mlt::Producer(MLT.producer()));
+//    else if (MLT.isClip())
+//        m_producer.reset(new Mlt::Producer(MLT.producer()));
     else
         m_producer.reset();
     m_metaList.clear();
     m_mltIndexMap.clear();
+
+//    int selectIndex = -1;
 
    //  Q_ASSERT(producer && producer->is_valid());
     if (m_producer && m_producer->is_valid()) {
@@ -491,6 +495,7 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
                     if (QString(filter_name) == "affineSizePosition") {
                         MAIN.onShowFilterDock();
                         MAIN.timelineDock()->selectSizeAndPositionFilter(newIndex);
+//                        selectIndex = newIndex;
                     }
                 }
             }
@@ -499,6 +504,9 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
     }
 
     endResetModel();
+
+//    if (selectIndex >= 0)
+//        MAIN.timelineDock()->selectSizeAndPositionFilter(selectIndex);
     emit trackTitleChanged();
     emit isProducerSelectedChanged();
     emit readyChanged();
