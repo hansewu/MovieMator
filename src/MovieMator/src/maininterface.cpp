@@ -40,8 +40,8 @@ FILE_HANDLE MainInterface::openFile(QString filepath)
     Mlt::Producer *producer = new Mlt::Producer(MLT.profile(), filepath.toUtf8().constData());
     if (producer->is_valid()) {
         MLT.setImageDurationFromDefault(producer);
-        if (filepath.endsWith(".mlt"))
-            producer->set(kShotcutVirtualClip, 1);
+        //if (filepath.endsWith(".mlt"))
+        //    producer->set(kShotcutVirtualClip, 1);
     }
     else {
         delete producer;
@@ -251,15 +251,26 @@ FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
         producer = 0;
     }
 
-    QString resource(producer->get("resource"));
-    if (resource == "<tractor>") {
+    QString resource(producer->get("moviemator:template"));
+    int filter_count = producer->filter_count();
+    bool hasSizeAndPositionFilter = false;
+    for (int i = 0; i < filter_count; i++) {
+         Mlt::Filter* filter = producer->filter(i);
+         char* filter_name = filter->get("moviemator:filter");
+         if (QString(filter_name) == "affineSizePosition") {
+             hasSizeAndPositionFilter = true;
+             break;
+         }
+    }
+
+    if (resource == "template" && !hasSizeAndPositionFilter) {
         producer->set(kShotcutVirtualClip, 1);
         //添加模板，自动添加调节大小滤镜
         Mlt::Filter* sizeAndPositionFilter;
         sizeAndPositionFilter = new Mlt::Filter(MLT.profile(), "affine");
         sizeAndPositionFilter->set("moviemator:filter", "affineSizePosition");
         sizeAndPositionFilter->set("transition.fill", 1);
-        sizeAndPositionFilter->set("transition.distort", 1);
+        sizeAndPositionFilter->set("transition.distort", 0);
         QString imageWStr(producer->get("moviemator:imageW"));
         QString imageHStr(producer->get("moviemator:imageH"));
         int imageW = imageWStr.toInt();

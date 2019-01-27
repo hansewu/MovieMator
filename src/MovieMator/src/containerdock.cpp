@@ -210,7 +210,7 @@ void ContainerDock::onTabButtonClicked2()
             break;
         }
     }
-\
+
     BUTTON_INFO buttonInfo = m_buttons[index];
     QToolButton *button = buttonInfo.button;
     button->setIcon(buttonInfo.activeIcon);

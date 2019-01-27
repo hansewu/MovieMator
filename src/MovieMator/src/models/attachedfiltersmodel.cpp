@@ -454,14 +454,18 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
 
     beginResetModel();
     m_event.reset();
-    if (producer && producer->is_valid())
+
+    //only load filter ui when selected the timeline item
+    if (producer && producer->is_valid() && producer->get_int(kMultitrackItemProperty))
         m_producer.reset(new Mlt::Producer(producer));
-    else if (MLT.isClip())
-        m_producer.reset(new Mlt::Producer(MLT.producer()));
+//    else if (MLT.isClip())
+//        m_producer.reset(new Mlt::Producer(MLT.producer()));
     else
         m_producer.reset();
     m_metaList.clear();
     m_mltIndexMap.clear();
+
+//    int selectIndex = -1;
 
    //  Q_ASSERT(producer && producer->is_valid());
     if (m_producer && m_producer->is_valid()) {
@@ -483,12 +487,26 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
                 }
                 m_metaList.insert(newIndex, newMeta);
                 m_mltIndexMap.insert(newIndex, i);
+
+                //如果当前的producer是模板，且其中有sizeAndProducer滤镜时，自动选中sizeAndProducer滤镜
+                QString templateFlag = QString(m_producer->get("moviemator:template"));
+                if (templateFlag == "template") {
+                    char* filter_name = filter->get("moviemator:filter");
+                    if (QString(filter_name) == "affineSizePosition") {
+                        MAIN.onShowFilterDock();
+                        MAIN.timelineDock()->selectSizeAndPositionFilter(newIndex);
+//                        selectIndex = newIndex;
+                    }
+                }
             }
             delete filter;
         }
     }
 
     endResetModel();
+
+//    if (selectIndex >= 0)
+//        MAIN.timelineDock()->selectSizeAndPositionFilter(selectIndex);
     emit trackTitleChanged();
     emit isProducerSelectedChanged();
     emit readyChanged();
@@ -496,5 +514,5 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
 
 void AttachedFiltersModel::producerChanged(mlt_properties, AttachedFiltersModel* model)
 {
-    model->reset(model->m_producer.data());
+//    model->reset(model->m_producer.data());
 }

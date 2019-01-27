@@ -395,8 +395,15 @@ AttachedFiltersModel* FilterController::attachedModel()
 
 void FilterController::setProducer(Mlt::Producer *producer)
 {
+    //only load filter ui when selected the timeline item
+    if (!producer)
+        return;
+    if (producer && !producer->get_int(kMultitrackItemProperty))
+        return;
+
     if (producer && producer->get_int("meta.fx_cut"))
         return;
+
     m_attachedModel.setProducer(producer);
     if (producer && producer->is_valid()) {
         mlt_service_type service_type = producer->type();
@@ -408,6 +415,10 @@ void FilterController::setProducer(Mlt::Producer *producer)
 
 void FilterController::setCurrentFilter(int attachedIndex)
 {
+    if (attachedIndex > m_attachedModel.rowCount()) {
+        return;
+    }
+
     Q_ASSERT(attachedIndex <= m_attachedModel.rowCount());
 
     if (attachedIndex == m_currentFilterIndex) {
