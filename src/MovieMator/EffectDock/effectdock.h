@@ -68,6 +68,7 @@ private slots:
     void on_comboBox_activated(int index);
     void on_comboBox_currentIndexChanged(int index);
     void on_comboBox_2_currentIndexChanged(int index);
+    void on_EffectDock_visibilityChanged(bool visible);
 
 private:
     Ui::EffectDock *ui;

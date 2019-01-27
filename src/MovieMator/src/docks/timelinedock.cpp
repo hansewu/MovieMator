@@ -630,30 +630,44 @@ void TimelineDock::append(int trackIndex)
         pulseLockButtonOnTrack(trackIndex);
         return;
     }
-
-
-    if (MLT.isSeekableClip())
+    if (MLT.isSeekableClip() || MLT.savedProducer()) {
         MAIN.undoStack()->push(
-                                new Timeline::AppendCommand(m_model, trackIndex,
-                                MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
-    else
-    {
-
-        QList<FILE_HANDLE> fileList = RecentDock_getSelectedFiles();
-        foreach (FILE_HANDLE fileHandle, fileList)
-        {
-            MAININTERFACE.addToTimeLine(fileHandle);
-        }
-        if (fileList.count() <= 0)
-        {
-            if (MLT.isSeekableClip() || MLT.savedProducer()) {
-                MAIN.undoStack()->push(
-                new Timeline::AppendCommand(m_model, trackIndex,
-                        MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
-            }
-        }
+        new Timeline::AppendCommand(m_model, trackIndex,
+                MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
     }
     selectClipUnderPlayhead();
+
+
+//    if (trackIndex < 0)
+//        trackIndex = currentTrack();
+//    if (isTrackLocked(trackIndex)) {
+//        pulseLockButtonOnTrack(trackIndex);
+//        return;
+//    }
+
+
+//    if (MLT.isSeekableClip())
+//        MAIN.undoStack()->push(
+//                                new Timeline::AppendCommand(m_model, trackIndex,
+//                                MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
+//    else
+//    {
+
+//        QList<FILE_HANDLE> fileList = RecentDock_getSelectedFiles();
+//        foreach (FILE_HANDLE fileHandle, fileList)
+//        {
+//            MAININTERFACE.addToTimeLine(fileHandle);
+//        }
+//        if (fileList.count() <= 0)
+//        {
+//            if (MLT.isSeekableClip() || MLT.savedProducer()) {
+//                MAIN.undoStack()->push(
+//                new Timeline::AppendCommand(m_model, trackIndex,
+//                        MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
+//            }
+//        }
+//    }
+//    selectClipUnderPlayhead();
 
 }
 

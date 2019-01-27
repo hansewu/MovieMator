@@ -83,6 +83,7 @@ private slots:
     void on_actionPlay_triggered();
     void on_actionProperties_triggered();
     void on_comboBox_currentTextChanged(const QString &arg1);
+    void on_RecentDock_visibilityChanged(bool visible);
 
     void on_listView_activated(const QModelIndex &index);
     void on_listView_pressed(const QModelIndex &index);
