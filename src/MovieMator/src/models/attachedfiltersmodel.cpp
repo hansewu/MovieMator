@@ -514,5 +514,5 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
 
 void AttachedFiltersModel::producerChanged(mlt_properties, AttachedFiltersModel* model)
 {
-    model->reset(model->m_producer.data());
+//    model->reset(model->m_producer.data());
 }
