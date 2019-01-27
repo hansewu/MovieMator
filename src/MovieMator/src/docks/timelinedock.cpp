@@ -503,7 +503,11 @@ void TimelineDock::clearSelectionIfInvalid()
 
         newSelection << index;
     }
-    setSelection();
+    //commit: 5834deadb70be3b2841ae7c4ede50b3724a1b34a
+    //fix bug:
+    //（1）The filter information of the new clip is error when a new clip is inserted at the beginning of the selected clip.
+    //setSelection();
+
     setSelection(newSelection);
     emit selectionChanged();
 }

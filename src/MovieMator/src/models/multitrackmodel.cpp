@@ -3778,7 +3778,7 @@ void MultitrackModel::setTransitionDuration(int trackIndex, int clipIndex, int d
             roles << InPointRole;
             roles << DurationRole;
             emit dataChanged(modelIndex, modelIndex, roles);
-//            emit modified();
+            emit modified();
         }
     }
 }
