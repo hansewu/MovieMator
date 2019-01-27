@@ -463,6 +463,13 @@ void EffectDock::on_comboBox_2_currentIndexChanged(int index)
     }
 }
 
+void EffectDock::on_EffectDock_visibilityChanged(bool visible)
+{
+    if (visible) {
+        on_listView_clicked(QModelIndex());
+    }
+}
+
 static EffectDock *instance = nullptr;
 //初始化模块
 //参数，main 主程序接口对象

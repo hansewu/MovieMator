@@ -311,11 +311,15 @@ void RecentDock::on_comboBox_currentTextChanged(const QString &arg1)
 
 void RecentDock::on_listView_activated(const QModelIndex &index)
 {
+    if (!m_currentListView) {
+        return;
+    }
+
     QSortFilterProxyModel *proxyModel = qobject_cast<QSortFilterProxyModel*>(m_currentListView->model());
     RecentListModel *model = proxyModel ? qobject_cast<RecentListModel*>(proxyModel->sourceModel()) : nullptr;
     if(model)
     {
-        FILE_HANDLE fileHandle = model->fileAt(proxyModel->mapToSource(index).row());
+        FILE_HANDLE fileHandle = model->fileAt(proxyModel->mapToSource(m_currentIndex).row());
         m_mainWindow->playFile(fileHandle);
     }
 }
@@ -454,6 +458,13 @@ QDockWidget *RecentDock_initModule(MainInterface *main)
 void RecentDock_destroyModule()
 {
 
+}
+
+void RecentDock::on_RecentDock_visibilityChanged(bool visible)
+{
+    if (visible) {
+        on_listView_activated(QModelIndex());
+    }
 }
 
 //获取选中的文件列表
