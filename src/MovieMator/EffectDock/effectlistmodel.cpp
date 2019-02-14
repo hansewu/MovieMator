@@ -61,7 +61,7 @@ QVariant EffectListModel::data(const QModelIndex &index, int role) const
         case Qt::DisplayRole:
         case Qt::ToolTipRole: {
             QString result = Util::baseName(m_mainWindow->getFileName(fileHandle));
-            return result;
+            return result.split(".")[0];
         }
         case Qt::DecorationRole: {
             int width = THUMBNAIL_WIDTH;

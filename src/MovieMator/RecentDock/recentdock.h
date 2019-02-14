@@ -74,7 +74,6 @@ private:
     const QString m_itemNames[num] = {tr("Videos"), tr("Audios"), tr("Images")};
 
     QMap<int, QString> m_map;
-    QSpacerItem *m_verticalSpacerItem;
 
 private slots:
     void on_lineEdit_textChanged(const QString& search);
@@ -82,7 +81,7 @@ private slots:
     void on_actionRemoveAll_triggered();
     void on_actionPlay_triggered();
     void on_actionProperties_triggered();
-    void on_comboBox_currentTextChanged(const QString &arg1);
+    void on_comboBox_activated(const QString &arg1);
     void on_RecentDock_visibilityChanged(bool visible);
 
     void on_listView_activated(const QModelIndex &index);

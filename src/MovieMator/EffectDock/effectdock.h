@@ -50,7 +50,6 @@ protected:
     void resizeEvent(QResizeEvent *event);
 
 private:
-    // 图片添加特效
     void replaceImage(QString effectFile, QString imageFile);
     void setMimeDataForDrag();
     void createEffectFile();
@@ -67,14 +66,13 @@ private slots:
     void on_actionAddToTimeline_triggered();
     void on_comboBox_activated(int index);
     void on_comboBox_currentIndexChanged(int index);
-    void on_comboBox_2_currentIndexChanged(int index);
+    void on_comboBox_2_activated(int index);
     void on_EffectDock_visibilityChanged(bool visible);
 
 private:
     Ui::EffectDock *ui;
     MainInterface *m_mainWindow;
 
-    QDir m_dir;
     FILE_HANDLE m_effectFile;
     QList<QString> *m_effectList;
     QMimeData *m_mimeData;
@@ -82,8 +80,6 @@ private:
     QList<EffectListView*> *m_imageList;
     QModelIndex m_currentIndex;
     EffectListView *m_currentListView;
-
-    QSpacerItem *m_spacerItem;
 
     QJsonObject m_animationNameTranslateInfo;
     QJsonObject m_imageClassNameTranslateInfo;

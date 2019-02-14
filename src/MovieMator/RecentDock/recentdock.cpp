@@ -135,8 +135,8 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
         }
     }
 
-    m_verticalSpacerItem = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    ui->verticalLayout_2->addItem(m_verticalSpacerItem);
+    QSpacerItem *verticalSpacerItem = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    ui->verticalLayout_2->addItem(verticalSpacerItem);
 
     ui->comboBox->setFixedHeight(ui->lineEdit->height());
     ui->comboBox->setMinimumWidth(50);
@@ -154,9 +154,6 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
 
 RecentDock::~RecentDock()
 {
-//    delete m_verticalSpacerItem;
-//    m_verticalSpacerItem = nullptr;
-
     qDeleteAll(*m_modelList);
     m_modelList->clear();
     delete m_modelList;
@@ -297,7 +294,7 @@ void RecentDock::on_lineEdit_textChanged(const QString& search)
     resizeEvent(nullptr);
 }
 
-void RecentDock::on_comboBox_currentTextChanged(const QString &arg1)
+void RecentDock::on_comboBox_activated(const QString &arg1)
 {
     for(int i=m_map.key(arg1); i<num; i++)
     {
@@ -425,6 +422,15 @@ void RecentDock::on_actionProperties_triggered()
 
 }
 
+void RecentDock::on_RecentDock_visibilityChanged(bool visible)
+{
+    if (visible) {
+        on_listView_activated(QModelIndex());
+
+        resizeEvent(nullptr);   // 切换dock后listView大小会变化
+    }
+}
+
 QList<FILE_HANDLE> RecentDock::getSelected()
 {
     QList<FILE_HANDLE> selected;
@@ -458,13 +464,6 @@ QDockWidget *RecentDock_initModule(MainInterface *main)
 void RecentDock_destroyModule()
 {
 
-}
-
-void RecentDock::on_RecentDock_visibilityChanged(bool visible)
-{
-    if (visible) {
-        on_listView_activated(QModelIndex());
-    }
 }
 
 //获取选中的文件列表

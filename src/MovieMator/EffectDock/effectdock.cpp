@@ -45,7 +45,6 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     toggleViewAction()->setIcon(windowIcon());
 
     QString templateDir = Util::resourcesPath() + "/template/";
-    m_dir = QDir(templateDir);
 
     m_effectFile = nullptr;
     m_effectList = new QList<QString>;
@@ -68,6 +67,14 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
             QString itemName = getTranslationStr(effectFiles[i].fileName().split(".")[0], m_animationNameTranslateInfo);
             ui->comboBox->addItem(itemName);
         }
+
+        if(effectFiles[0].fileName().split(".")[0]=="blur" && effectFiles.count()>1)
+        {   // 模糊效果blur不作为默认效果
+            m_effectList->removeFirst();
+            m_effectList->insert(1, effectFiles[0].filePath());
+            ui->comboBox->removeItem(0);
+            ui->comboBox->insertItem(1, getTranslationStr(effectFiles[0].fileName().split(".")[0], m_animationNameTranslateInfo));
+        }
     }
     // 图片文件列表
     QDir imageDir(templateDir+"Images");
@@ -86,8 +93,8 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     }
 
     // 实际上文件夹多了就用不上了
-    m_spacerItem = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    ui->verticalLayout_2->addItem(m_spacerItem);
+    QSpacerItem *spacerItem = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    ui->verticalLayout_2->addItem(spacerItem);
 
     ui->comboBox->setMinimumContentsLength(10);
     ui->comboBox->setSizeAdjustPolicy(QComboBox::SizeAdjustPolicy::AdjustToMinimumContentsLengthWithIcon);
@@ -129,10 +136,9 @@ EffectDock::~EffectDock()
 
 void EffectDock::resizeEvent(QResizeEvent *event)
 {
-    for(int i=0; i<m_imageList->count(); i++)
+    for(EffectListView *listView : *m_imageList)
     {
-        EffectListView *listView = m_imageList->at(i);
-        listView->setFixedWidth(ui->scrollArea->width()-5);
+        listView->setFixedWidth(ui->scrollArea->width() -5);
         int wSize = listView->gridSize().width();
         int hSize = listView->gridSize().height();
         int width = listView->size().width();
@@ -141,9 +147,7 @@ void EffectDock::resizeEvent(QResizeEvent *event)
         int rows = rowCount%columns>0 ? (rowCount/columns+1) : (rowCount/columns);
         listView->setFixedHeight(rows*hSize);
     }
-
-    on_comboBox_2_currentIndexChanged(ui->comboBox_2->currentIndex());
-
+    on_comboBox_2_activated(ui->comboBox_2->currentIndex());
     QDockWidget::resizeEvent(event);
 }
 
@@ -373,6 +377,7 @@ void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName
 
     label->setFixedHeight(40);
 
+    listView->setFont(QFont(font().family(), 8));   // 改变字体大小
     listView->setFocusPolicy(Qt::ClickFocus);
     listView->setViewMode(QListView::IconMode);
     listView->setGridSize(QSize(95, 90));         // 120,100    ,300/3-5
@@ -450,12 +455,12 @@ void EffectDock::on_comboBox_currentIndexChanged(int index)
     }
 }
 
-void EffectDock::on_comboBox_2_currentIndexChanged(int index)
+void EffectDock::on_comboBox_2_activated(int index)
 {
     QLayoutItem *item = ui->verticalLayout_2->itemAt(index*2);
     if(item)
     {
-        QWidget *widget = item->layout()->itemAt(0)->widget();  // item->widget();
+        QWidget *widget = item->layout()->itemAt(0)->widget();
         if(widget)
         {
             ui->scrollArea->verticalScrollBar()->setValue(widget->y());
@@ -467,6 +472,8 @@ void EffectDock::on_EffectDock_visibilityChanged(bool visible)
 {
     if (visible) {
         on_listView_clicked(QModelIndex());
+
+        resizeEvent(nullptr);   // 切换dock后listView大小会随dock变化
     }
 }
 
