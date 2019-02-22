@@ -750,7 +750,7 @@ void Player::onFrameDisplayed(const SharedFrame& frame)
 {
 
     int position = frame.get_position();
-    if (position <= m_duration) {
+    if (position < m_duration) {
         m_position = position;
         m_positionSpinner->blockSignals(true);
         m_positionSpinner->setValue(position);
@@ -758,11 +758,12 @@ void Player::onFrameDisplayed(const SharedFrame& frame)
         m_scrubber->onSeek(position);
    //     m_progressBar->setValue(position);
     }
-    if (position > m_duration)
+    if (position >= m_duration - 1)
     {
+        emit endOfStream();
         m_scrubber->onSeek(m_duration);
     //    m_progressBar->setValue(m_duration);
-        emit endOfStream();
+//        emit endOfStream();
     }
 }
 
