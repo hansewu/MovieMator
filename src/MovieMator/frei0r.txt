@@ -1,4 +1,4 @@
-3dflippo:Art
+3dflippo:Transform
 addition_alpha:Art
 addition:Art
 alpha0ps:Art
@@ -12,25 +12,25 @@ alphaspot:Art
 alphaxor:Art
 B:Black & White
 balanc0r:Art
-baltan:Art
-bgsubtract0r:Art
+baltan:Effect 2
+bgsubtract0r:Effect 2
 blend:Art
-bluescreen0r:Art
+bluescreen0r:Effect 2
 brightness:Color Adjustment
 burn:Art
 bw0r:Black & White
 c0rners:Distortion
 cairoaffineblend:Art
 cairoblend:Art
-cairogradient:Utility
-cairoimagegrid:Utility
+cairogradient:Effect 2
+cairoimagegrid:Effect 2
 cartoon:Art
 cluster:Art
 colgate:Art
 color_only:Art
 coloradj_RGB:Color Adjustment
 colordistance:Black & White
-colorhalftone:Art
+colorhalftone:Effect 2
 colorize:Color Adjustment
 colortap:Art
 composition:Art
@@ -39,91 +39,91 @@ curves:Color Adjustment
 d90stairsteppingfix:Art
 darken:Art
 defish0r:Distortion
-delay0r:Art
-delaygrab:Art
+delay0r:Effect 2
+delaygrab:Effect 2
 difference:Art
 distort0r:Distortion
 dither:Art
 divide:Art
 dodge:Art
-edgeglow:Art
+edgeglow:Effect 2
 emboss:Material
 equaliz0r:Art
 flippo:Distortion
 G:Black & White
 gamma:Color Adjustment
-glitch0r:Art
-glow:Art
+glitch0r:Effect 2
+glow:Effect 2
 grain_extract:Art
 grain_merge:Art
 hardlight:Art
-hqdn3d:Art
+hqdn3d:Effect 2
 hue:Color Adjustment
-hueshift0r:Art
+hueshift0r:Color Adjustment
 IIRblur:Blur
-invert0r:Art
+invert0r:Effect
 ising0r:Art
-keyspillm0pup:Art
+keyspillm0pup:Color Extraction
 lenscorrection:Distortion
-letterb0xed:Utility
+letterb0xed:Crop
 levels:Color Adjustment
 lighten:Art
-lightgraffiti:Art
+lightgraffiti:Effect 2
 lissajous0r:Art
 luminance:Black & White
-mask0mate:Art
-medians:Art
+mask0mate:Effect 2
+medians:Color Extraction
 multiply:Art
-ndvi:Art
-nervous:Art
-nois0r:Art
-normaliz0r:Art
-nosync0r:Art
+ndvi:Black & White
+nervous:Effect 2
+nois0r:Effect 2
+normaliz0r:Color Adjustment
+nosync0r:Effect 2
 onecol0r:Art
 overlay:Art
 partik0l:Art
 perspective:Transform
 pixeliz0r:Art
 plasma:Art
-posterize:Art
-pr0be:Art
-pr0file:Art
-premultiply:Art
+posterize:Color Extraction
+pr0be:Effect 2
+pr0file:Effect 2
+premultiply:Effect 2
 primaries:Art
 R:Black & White
 RGB:Art
-rgbnoise:Art
-rgbsplit0r:Art
-saturat0r:Art
-saturation:Art
-scanline0r:Art
+rgbnoise:Effect 2
+rgbsplit0r:Effect 2
+saturat0r:Color Adjustment
+saturation:Color Adjustment
+scanline0r:Effect 2
 screen:Art
-select0r:Art
-sharpness:Art
-sigmoidaltransfer:Art
+select0r:Effect 2
+sharpness:Effect
+sigmoidaltransfer:Black & White
 sobel:Art
-softglow:Art
+softglow:Effect
 softlight:Art
-sopsat:Art
-spillsupress:Art
+sopsat:Color Adjustment
+spillsupress:Color Adjustment
 squareblur:Blur
 subtract:Art
-tehroxx0r:Art
+tehroxx0r:Effect 2
 test_pat_B:Art
 test_pat_C:Art
 test_pat_G:Art
 test_pat_I:Art
 test_pat_L:Art
 test_pat_R:Art
-three_point_balance:Art
+three_point_balance:Color Adjustment
 threelay0r:Black & White
-threshold0r:Art
-timeout:Art
-tint0r:Art
-transparency:Art
-twolay0r:Art
+threshold0r:Effect 2
+timeout:Effect 2
+tint0r:Color Adjustment
+transparency:Effect 2
+twolay0r:Black & White
 uvmap:Art
 value:Art
-vertigo:Art
-vignette:Art
+vertigo:Effect 2
+vignette:Effect 2
 xfade0r:Art

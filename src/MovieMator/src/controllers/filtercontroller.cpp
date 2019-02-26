@@ -110,9 +110,9 @@ void FilterController::loadFrei0rFilterMetadata() {
     subdir.setNameFilters(QStringList("meta*.qml"));
     foreach (QString fileName, subdir.entryList())
     {
-//        QString filePath = qApp->applicationDirPath() + "/../Resources/frei0r.txt";
-//        std::map<QString, QString> filterTypes;
-//        readFilterTypeFromFile(filePath, filterTypes);
+        QString filePath = qApp->applicationDirPath() + "/../Resources/frei0r.txt";
+        std::map<QString, QString> filterTypes;
+        readFilterTypeFromFile(filePath, filterTypes);
 
         QDir applicationDir(qApp->applicationDirPath());
         applicationDir.cd("lib");
@@ -129,12 +129,12 @@ void FilterController::loadFrei0rFilterMetadata() {
             QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
             if (meta)
             {
-//                std::map<QString, QString>::iterator iter = filterTypes.find(libName.mid(0, libName.length() - 3));
-//                if (iter != filterTypes.end())
-//                {
-//                    QString filterType = iter->second;
-//                    meta->setFilterType(filterType);
-//                }
+                std::map<QString, QString>::iterator iter = filterTypes.find(libName.mid(0, libName.length() - 3));
+                if (iter != filterTypes.end())
+                {
+                    QString filterType = iter->second;
+                    meta->setFilterType(filterType);
+                }
                 std::string string = libName.toStdString();
                 if(string.find("alpha") != std::string::npos )   //remove alpha
                     continue;
@@ -283,7 +283,7 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
     return meta;
 }
 
-QString FilterController::getFilterImageSourcePath(QString filterName, QString filterType)
+QString FilterController::getFilterImageSourcePath(QString filterName, QString filterType, QString serviceName)
 {
     const QMap<QString, QString> filterNameMap = {
         {"Common", "常用"},
@@ -333,7 +333,46 @@ QString FilterController::getFilterImageSourcePath(QString filterName, QString f
     if(filterType == "Common")
         imageSourcePath         = "qrc:///icons/filters/Common.jpg";
 
+    std::string string = serviceName.toStdString();
+    if(string.find("frei0r") != std::string::npos )
+        imageSourcePath         = "qrc:///icons/filters/Common.jpg";
+
     return imageSourcePath;
+}
+
+QString FilterController::getFilterType(QString filterType)
+{
+    const QMap<QString, QString> filterTypeMap =
+    {
+        {"Common", "常用"},
+        {"Distortion", "扭曲"},
+        {"Art", "艺术"},
+        {"Color Adjustment", "调色"},
+        {"Transform", "变换"},
+        {"Black & White", "黑 & 白"},
+        {"Time Dimension Effect", "时间维度特效"},
+        {"Color Extraction", "色彩提取"},
+        {"Blur", "模糊"},
+        {"Color Depth", "颜色深度"},
+        {"Material", "材质"},
+        {"Other", "其它"},
+        {"Effect 2", "特效 2"},
+        {"Effect", "特效"},
+        {"Crop", "裁剪"},
+    };
+
+    QLocale ql;
+    if(ql.language() == QLocale::Chinese)
+    {
+        QMap<QString, QString>::const_iterator iter;
+        for (iter = filterTypeMap.constBegin(); iter != filterTypeMap.constEnd(); ++iter )
+        {
+            if(iter.key() == filterType)
+                filterType = iter.value();
+        }
+    }
+
+    return filterType;
 }
 
 void FilterController::updateFilterDock()
@@ -346,9 +385,11 @@ void FilterController::updateFilterDock()
         QmlMetadata* metadataModel          = m_metadataModel.get(nIndex);
 
         strcpy(filterInfos[nIndex].name, metadataModel->name().toStdString().c_str());
-        strcpy(filterInfos[nIndex].type, metadataModel->filterType().toStdString().c_str());
 
-        QString imageSourcePath = getFilterImageSourcePath(metadataModel->name(), metadataModel->filterType());
+        QString filterType = getFilterType(metadataModel->filterType());
+        strcpy(filterInfos[nIndex].type, filterType.toStdString().c_str());
+
+        QString imageSourcePath = getFilterImageSourcePath(metadataModel->name(), metadataModel->filterType(), metadataModel->mlt_service());
         if(metadataModel->isAudio() == true)
             imageSourcePath         = "qrc:///icons/filters/Audio.jpg";
 
