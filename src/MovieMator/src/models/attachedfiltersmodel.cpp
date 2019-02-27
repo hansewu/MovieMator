@@ -56,6 +56,7 @@ static bool sortIsLess (const QmlMetadata* lhs, const QmlMetadata* rhs) {
 AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_dropRow(-1)
+    , m_filter(VideoFilter)
 {
 }
 
@@ -515,4 +516,21 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
 void AttachedFiltersModel::producerChanged(mlt_properties, AttachedFiltersModel* model)
 {
 //    model->reset(model->m_producer.data());
+}
+
+
+void AttachedFiltersModel::setFilter(AttachedMetadataFilter filter)
+{
+    beginResetModel();
+    m_filter = filter;
+    emit filterChanged();
+    endResetModel();
+}
+
+bool AttachedFiltersModel::isVisible(int row) const
+{
+    QmlMetadata* meta = m_metaList.at(row);
+    if (m_filter == AudioFilter && !meta->isAudio()) return false;
+    if (m_filter == VideoFilter && meta->isAudio()) return false;
+    return true;
 }

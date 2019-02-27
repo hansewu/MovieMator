@@ -35,9 +35,18 @@ class AttachedFiltersModel : public QAbstractListModel
     Q_PROPERTY(bool ready READ isReady NOTIFY readyChanged)
     Q_PROPERTY(QString producerTitle READ producerTitle NOTIFY trackTitleChanged)
     Q_PROPERTY(bool isProducerSelected READ isProducerSelected NOTIFY isProducerSelectedChanged)
+    Q_ENUMS(AttachedMetadataFilter)
+    Q_PROPERTY(AttachedMetadataFilter filter READ filter WRITE setFilter NOTIFY filterChanged)
+
 public:
     enum ModelRoles {
         TypeDisplayRole = Qt::UserRole + 1
+    };
+
+    enum AttachedMetadataFilter {
+        NoFilter,
+        VideoFilter,
+        AudioFilter
     };
 
     explicit AttachedFiltersModel(QObject *parent = 0);
@@ -60,12 +69,17 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent);
     bool moveRows(const QModelIndex & sourceParent, int sourceRow, int count, const QModelIndex & destinationParent, int destinationRow);
     QScopedPointer<Mlt::Producer> m_producer;
+
+    AttachedMetadataFilter filter() const { return m_filter; }
+    void setFilter(AttachedMetadataFilter);
+    Q_INVOKABLE bool isVisible(int row) const;
 signals:
     void changed();
     void readyChanged();
     void duplicateAddFailed(int index);
     void trackTitleChanged();
     void isProducerSelectedChanged();
+    void filterChanged();
 
 public slots:
     void add(QmlMetadata* meta, bool bFromUndo = false);
@@ -84,6 +98,8 @@ private:
     MetadataList m_metaList;
     typedef QList<int> IndexMap;
     IndexMap m_mltIndexMap;
+
+    AttachedMetadataFilter m_filter;
 };
 
 #endif // ATTACHEDFILTERSMODEL_H
