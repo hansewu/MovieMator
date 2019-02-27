@@ -29,6 +29,7 @@
 #include "qmltypes/timelineitems.h"
 #include "qmltypes/filesavedialog.h"
 #include "models/metadatamodel.h"
+#include "models/attachedfiltersmodel.h"
 #include <QCoreApplication>
 #include <QSysInfo>
 #include <QCursor>
@@ -56,6 +57,8 @@ void MMQmlUtilities::registerCommonTypes()
     // MetadataModel is registered to access its MetadataFilter enum.
     qmlRegisterUncreatableType<MetadataModel>("com.moviemator.qml", 1, 0, "MetadataModel",
                                               "You cannot create a MetadataModel from QML.");
+    qmlRegisterUncreatableType<AttachedFiltersModel>("com.moviemator.qml", 1, 0, "AttachedFiltersModel",
+                                              "You cannot create a AttachedFiltersModel from QML.");
     qmlRegisterType<ColorPickerItem>("MovieMator.Controls", 1, 0, "ColorPickerItem");
     qmlRegisterType<ColorWheelItem>("MovieMator.Controls", 1, 0, "ColorWheelItem");
     registerTimelineItems();
