@@ -28,9 +28,21 @@ ColorProducerWidget::ColorProducerWidget(QWidget *parent) :
     ui(new Ui::ColorProducerWidget)
 {
     ui->setupUi(this);
-    Util::setColorsToHighlight(ui->label_2);
+//    Util::setColorsToHighlight(ui->label_2);
     ui->preset->saveDefaultPreset(*getPreset());
     ui->preset->loadPresets();
+
+    ui->label_2->setStyleSheet("background-color:rgb(82,82,82);");
+    ui->line->setStyleSheet("color:black;");
+    ui->colorButton->setStyleSheet("QPushButton{"
+                                   "border-radius:3px;border:1px solid;border-color:black;"
+                                   "background-color:rgb(100,100,100);color:rgb(225,225,225);}"
+                                   );
+
+//    ui->colorButton->setStyleSheet("QPushButton{background-color:rgb(100,100,100);"
+//                                   "border-radius:3px;border:1px;border-color:black;border-style:outset;}"
+//                                   "QPushButton:pressed{border-style:inset;}");
+
 }
 
 ColorProducerWidget::~ColorProducerWidget()
