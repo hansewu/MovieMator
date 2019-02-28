@@ -182,6 +182,15 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             return result;
         }
         break;
+    case ThumbnailRole: {
+            QVariant result;
+            const QmlMetadata* meta = m_metaList[index.row()];
+            if (meta) {
+                result = meta->thumbnail();
+            }
+            return result;
+        }
+        break;
     default:
         break;
     }
@@ -208,6 +217,7 @@ QHash<int, QByteArray> AttachedFiltersModel::roleNames() const {
     QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
     roles[Qt::CheckStateRole] = "checkState";
     roles[TypeDisplayRole] = "typeDisplay";
+    roles[ThumbnailRole] = "thumbnail";
     return roles;
 }
 

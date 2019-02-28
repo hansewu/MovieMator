@@ -40,7 +40,8 @@ class AttachedFiltersModel : public QAbstractListModel
 
 public:
     enum ModelRoles {
-        TypeDisplayRole = Qt::UserRole + 1
+        TypeDisplayRole = Qt::UserRole + 1,
+        ThumbnailRole,
     };
 
     enum AttachedMetadataFilter {

@@ -74,7 +74,7 @@ void FilterController::loadFilterMetadata() {
                 // Check if mlt_service is available.
                 if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
 
-                    QString thumbnail = getFilterImageSourcePath(meta->name());
+                    QString thumbnail = getFilterThumbnailPath(meta->name(), meta->isAudio());
                     meta->setThumbnail(thumbnail);
 //                    LOG_DEBUG() << "added filter" << meta->name();
                     meta->loadSettings();
@@ -230,7 +230,7 @@ void FilterController::loadFrei0rFilterMetadata() {
                 // Check if mlt_service is available.
                 if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
 //                    LOG_DEBUG() << "added filter 2" << meta->name();
-                    QString thumbnail = getFilterImageSourcePath(meta->name());
+                    QString thumbnail = getFilterThumbnailPath(meta->name(), meta->isAudio());
                     meta->setThumbnail(thumbnail);
 
                     meta->loadSettings();
@@ -288,7 +288,7 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
     return meta;
 }
 
-QString FilterController::getFilterImageSourcePath(QString filterName)
+QString FilterController::getFilterThumbnailPath(QString filterName, bool isAudio)
 {
     const QMap<QString, QString> filterNameMap = {
         {"Common", "常用"},
@@ -337,6 +337,9 @@ QString FilterController::getFilterImageSourcePath(QString filterName)
     QFile file(path);
     if(!file.exists())
         imageSourcePath         = "qrc:///icons/filters/Common.jpg";
+
+    if(isAudio == true)
+        imageSourcePath         = "qrc:///icons/filters/Audio.jpg";
 
     return imageSourcePath;
 }
@@ -390,10 +393,7 @@ void FilterController::updateFilterDock()
         QString filterType = getFilterType(metadataModel->filterType());
         strcpy(filterInfos[nIndex].type, filterType.toStdString().c_str());
 
-        QString imageSourcePath = metadataModel->thumbnail();//getFilterImageSourcePath(metadataModel->name());
-        if(metadataModel->isAudio() == true)
-            imageSourcePath         = "qrc:///icons/filters/Audio.jpg";
-
+        QString imageSourcePath = metadataModel->thumbnail();
         strcpy(filterInfos[nIndex].imageSourcePath, imageSourcePath.toStdString().c_str());
 
         bool bVisible = true;
