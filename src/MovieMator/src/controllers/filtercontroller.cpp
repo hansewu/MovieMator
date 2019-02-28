@@ -324,18 +324,24 @@ QString FilterController::getFilterImageSourcePath(QString filterName, QString f
             if(iter.value() == filterName)
                 filterName = iter.key();
 
-            if(iter.value() == filterType)
-                filterType = iter.key();
+//            if(iter.value() == filterType)
+//                filterType = iter.key();
         }
     }
 
     QString imageSourcePath     = "qrc:///icons/filters/" + filterName  + ".jpg";
-    if(filterType == "Common")
-        imageSourcePath         = "qrc:///icons/filters/Common.jpg";
 
-    std::string string = serviceName.toStdString();
-    if(string.find("frei0r") != std::string::npos )
-        imageSourcePath         = "qrc:///icons/filters/Common.jpg";
+    QString path = imageSourcePath.right(imageSourcePath.length() - 3);
+    QFile file(path);
+    if(!file.exists())
+           imageSourcePath         = "qrc:///icons/filters/Common.jpg";
+
+//    if(filterType == "Common")
+//        imageSourcePath         = "qrc:///icons/filters/Common.jpg";
+//
+//    std::string string = serviceName.toStdString();
+//    if(string.find("frei0r") != std::string::npos )
+//        imageSourcePath         = "qrc:///icons/filters/Common.jpg";
 
     return imageSourcePath;
 }
