@@ -31,8 +31,29 @@ ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
     m_tempProducer(0)
 {
     ui->setupUi(this);
-    Util::setColorsToHighlight(ui->filenameLabel);
+//    Util::setColorsToHighlight(ui->filenameLabel);
     ui->cancelButton->setHidden(true);
+
+    ui->line->setStyleSheet("color:black;");
+    ui->line_2->setStyleSheet("color:black");
+    ui->filenameLabel->setStyleSheet("background-color:rgb(82,82,82);");
+
+    QString editStyle= "QLineEdit {border:1px;border-radius:3px;background-color:rgb(82,82,82);}";
+    ui->heightLineEdit->setStyleSheet(editStyle);
+    ui->widthLineEdit->setStyleSheet(editStyle);
+    QString spinStyle = "QSpinBox {background-color:rgb(82,82,82);color:rgb(225,225,225);}";
+    ui->aspectDenSpinBox->setStyleSheet(spinStyle);
+    ui->aspectNumSpinBox->setStyleSheet(spinStyle);
+    ui->durationSpinBox->setStyleSheet(spinStyle);
+    ui->repeatSpinBox->setStyleSheet(spinStyle);
+
+
+    QString buttonStyle = "QPushButton{"
+                          "border-radius:3px;border:1px solid;border-color:black;"
+                          "background-color:rgb(100,100,100);color:rgb(225,225,225);}";
+    ui->resetButton->setStyleSheet(buttonStyle);
+    ui->defaultDurationButton->setStyleSheet(buttonStyle);
+    ui->okButton->setStyleSheet(buttonStyle);
 }
 
 ImageProducerWidget::~ImageProducerWidget()

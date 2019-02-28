@@ -38,7 +38,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     , m_previewMovie(0)
 {
     ui->setupUi(this);
-    Util::setColorsToHighlight(ui->label_2);
+//    Util::setColorsToHighlight(ui->label_2);
 
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {
@@ -75,14 +75,31 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     }
 
     m_durationSpinBox = new TimeSpinBox(this);
+    m_durationSpinBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     m_durationSpinBox->setToolTip(tr("Transition Duration"));
     m_durationSpinBox->setEnabled(true);
     m_durationSpinBox->setKeyboardTracking(false);
     ui->horizontalLayout_5->addWidget(m_durationSpinBox);
-    ui->horizontalLayout_5->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding));
+//    ui->horizontalLayout_5->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding));
     m_durationSpinBox->blockSignals(true);
     m_durationSpinBox->setValue(m_producer.get_length());
     m_durationSpinBox->blockSignals(false);
+
+    ui->label_2->setStyleSheet("background-color:rgb(82,82,82);");
+    ui->line->setStyleSheet("color:black;");
+    ui->line_2->setStyleSheet("color:black;");
+    QString style = "background-color:rgb(82,82,82);color:rgb(225,225,225);";
+    ui->lumaCombo->setStyleSheet(style);
+    ui->softnessSpinner->setStyleSheet(style);
+    ui->mixSpinner->setStyleSheet(style);
+    ui->invertCheckBox->setStyleSheet("QCheckBox::indicator:unchecked{border-radius:3px;" + style + "}");
+    m_durationSpinBox->setStyleSheet(style);
+    QString strStyle = "QSlider::sub-page:horizontal{background:rgb(15,114,103);border-radius: 4px}";
+    strStyle.append("QSlider::groove:horizontal{background:'grey';height:4px;border-radius: 4px;}");
+    strStyle.append("QSlider::handle:horizontal{background:'white';width:5px;height:15px;margin: -5px 0px -5px 0px;border-radius: 2px}");
+    ui->softnessSlider->setStyleSheet(strStyle);
+    ui->mixSlider->setStyleSheet(strStyle);
+
 
     connect(m_durationSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(setTransitionDuration(int)));
 //    connect(m_durationSpinBox, SIGNAL(editingFinished()), this, SLOT(setTransitionDuration(int)));

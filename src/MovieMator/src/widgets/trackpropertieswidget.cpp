@@ -33,10 +33,31 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer& track, QWidget *pare
     m_track(track)
 {
     ui->setupUi(this);
-    Util::setColorsToHighlight(ui->nameLabel);
+//    Util::setColorsToHighlight(ui->nameLabel);
     ui->nameLabel->setText(tr("Track: %1").arg(track.get(kTrackNameProperty)));
     ui->blendModeLabel->hide();
     ui->blendModeCombo->hide();
+
+    ui->nameLabel->setStyleSheet("background-color:rgb(82,82,82);");
+    ui->blendModeCombo->setStyleSheet("QComboBox {background-color:rgb(82,82,82);color:rgb(225,225,225);}");
+
+//    ui->blendModeCombo->setStyleSheet("QComboBox {\
+//                                      border: 1px solid black;\
+//                                      border-radius: 3px;\
+//                                      padding: 1px 2px 1px 2px;\
+//                                      min-width: 9em;\
+//                                      }"
+//                                      "QComboBox::drop-down { \
+//                                      subcontrol-origin: padding; \
+//                                      subcontrol-position: top right;\
+//                                      width: 20px;\
+//                                      border-left-width: 1px;\
+//                                      border-left-color: rgb(82,82,82);\
+//                                      border-left-style: solid;\
+//                                      border-top-right-radius: 3px; \
+//                                      border-bottom-right-radius: 3px;\
+//                                      }");
+
 
     if (track.get(kVideoTrackProperty))
     {

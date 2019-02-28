@@ -31,6 +31,13 @@ ServicePresetWidget::ServicePresetWidget(QWidget *parent) :
     m_widgetName(parent->objectName())
 {
     ui->setupUi(this);
+
+    ui->presetCombo->setStyleSheet("QComboBox {background-color:rgb(82,82,82);color:rgb(225,225,225);}");
+    QString buttonStyle = "QPushButton{"
+                          "border-radius:3px;border:1px solid;border-color:black;"
+                          "background-color:rgb(100,100,100);color:rgb(225,225,225);}";
+    ui->deletePresetButton->setStyleSheet(buttonStyle);
+    ui->savePresetButton->setStyleSheet(buttonStyle);
 }
 
 ServicePresetWidget::~ServicePresetWidget()

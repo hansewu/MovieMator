@@ -39,8 +39,21 @@ AvformatProducerSimpleWidget::AvformatProducerSimpleWidget(QWidget *parent)
     , m_tempProducer(0)
 {
     ui->setupUi(this);
-    Util::setColorsToHighlight(ui->filenameLabel);
+//    Util::setColorsToHighlight(ui->filenameLabel);
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
+
+    ui->filenameLabel->setStyleSheet("background-color:rgb(82,82,82);");
+    ui->line->setStyleSheet("color:black;");
+    QString spinStyle = "background-color:rgb(82,82,82);color:rgb(225,225,225);";
+    ui->endPointSpinBox->setStyleSheet(spinStyle);
+    ui->startPointSpinBox->setStyleSheet(spinStyle);
+    ui->speedSpinBox->setStyleSheet(spinStyle);
+    QString buttonStyle = "QPushButton{"
+                          "border-radius:3px;border:1px solid;border-color:black;"
+                          "background-color:rgb(100,100,100);color:rgb(225,225,225);}";
+    ui->resetButton->setStyleSheet(buttonStyle);
+    ui->okButton->setStyleSheet(buttonStyle);
+    ui->advanced->setStyleSheet(buttonStyle);
 }
 
 AvformatProducerSimpleWidget::~AvformatProducerSimpleWidget()

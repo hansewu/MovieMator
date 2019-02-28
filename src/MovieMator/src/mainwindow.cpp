@@ -616,7 +616,7 @@ MainWindow::MainWindow()
     m_propertiesDock->setWindowModality(Qt::WindowModal);
     m_propertiesDock->setObjectName("propertiesDock");
     m_propertiesDock->setWindowIcon(ui->actionProperties->icon());
-    m_propertiesDock->setMinimumWidth(300);
+    m_propertiesDock->setMinimumWidth(350);
     m_propertiesDock->setStyleSheet(".QWidget {background-color: rgb(53,53,53)}");
     QScrollArea* scroll = new QScrollArea;
     scroll->setWidgetResizable(true);
@@ -4323,7 +4323,7 @@ void MainWindow::addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QI
 {
     dock->setFeatures(QDockWidget::NoDockWidgetFeatures);
     dock->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    dock->setMinimumSize(300, 272);
+    dock->setMinimumSize(350, 272);
     dock->setTitleBarWidget(new QWidget());
 
     m_propertiesDockContainer->addDock(dock, tabButtonTitle, tabButtonNormalIcon, tabButtonAcitveIcon);
