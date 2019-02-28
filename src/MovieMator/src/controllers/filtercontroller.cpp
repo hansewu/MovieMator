@@ -73,6 +73,9 @@ void FilterController::loadFilterMetadata() {
             if (meta) {
                 // Check if mlt_service is available.
                 if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
+
+                    QString thumbnail = getFilterImageSourcePath(meta->name());
+                    meta->setThumbnail(thumbnail);
 //                    LOG_DEBUG() << "added filter" << meta->name();
                     meta->loadSettings();
                     meta->setPath(subdir);
@@ -227,6 +230,8 @@ void FilterController::loadFrei0rFilterMetadata() {
                 // Check if mlt_service is available.
                 if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
 //                    LOG_DEBUG() << "added filter 2" << meta->name();
+                    QString thumbnail = getFilterImageSourcePath(meta->name());
+                    meta->setThumbnail(thumbnail);
 
                     meta->loadSettings();
                     meta->setPath(subdir);
@@ -283,7 +288,7 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
     return meta;
 }
 
-QString FilterController::getFilterImageSourcePath(QString filterName, QString filterType, QString serviceName)
+QString FilterController::getFilterImageSourcePath(QString filterName)
 {
     const QMap<QString, QString> filterNameMap = {
         {"Common", "常用"},
@@ -323,9 +328,6 @@ QString FilterController::getFilterImageSourcePath(QString filterName, QString f
         {
             if(iter.value() == filterName)
                 filterName = iter.key();
-
-//            if(iter.value() == filterType)
-//                filterType = iter.key();
         }
     }
 
@@ -334,14 +336,7 @@ QString FilterController::getFilterImageSourcePath(QString filterName, QString f
     QString path = imageSourcePath.right(imageSourcePath.length() - 3);
     QFile file(path);
     if(!file.exists())
-           imageSourcePath         = "qrc:///icons/filters/Common.jpg";
-
-//    if(filterType == "Common")
-//        imageSourcePath         = "qrc:///icons/filters/Common.jpg";
-//
-//    std::string string = serviceName.toStdString();
-//    if(string.find("frei0r") != std::string::npos )
-//        imageSourcePath         = "qrc:///icons/filters/Common.jpg";
+        imageSourcePath         = "qrc:///icons/filters/Common.jpg";
 
     return imageSourcePath;
 }
@@ -395,7 +390,7 @@ void FilterController::updateFilterDock()
         QString filterType = getFilterType(metadataModel->filterType());
         strcpy(filterInfos[nIndex].type, filterType.toStdString().c_str());
 
-        QString imageSourcePath = getFilterImageSourcePath(metadataModel->name(), metadataModel->filterType(), metadataModel->mlt_service());
+        QString imageSourcePath = metadataModel->thumbnail();//getFilterImageSourcePath(metadataModel->name());
         if(metadataModel->isAudio() == true)
             imageSourcePath         = "qrc:///icons/filters/Audio.jpg";
 

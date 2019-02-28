@@ -529,6 +529,8 @@ void AttachedFiltersModel::setFilter(AttachedMetadataFilter filter)
 
 bool AttachedFiltersModel::isVisible(int row) const
 {
+    if(row < 0) return false;
+
     QmlMetadata* meta = m_metaList.at(row);
     if (m_filter == AudioFilter && !meta->isAudio()) return false;
     if (m_filter == VideoFilter && meta->isAudio()) return false;

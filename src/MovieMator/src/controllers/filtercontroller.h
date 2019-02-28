@@ -92,7 +92,7 @@ private:
     void getFrei0rParamInfo(Mlt::Filter *filter, int index, f0r_param_info_t &info);
 
     void updateFilterDock();
-    QString getFilterImageSourcePath(QString filterName, QString filterType, QString serviceName);
+    QString getFilterImageSourcePath(QString filterName);
     QString getFilterType(QString filterType);
 
     QFuture<void> m_future;
