@@ -38,6 +38,7 @@
 #include <filterdockinterface.h>
 #include <audiofilterdockinterface.h>
 #include "mainwindow.h"
+#include "util.h"
 
 FilterController::FilterController(QObject* parent) : QObject(parent),
  m_metadataModel(this),
@@ -113,7 +114,8 @@ void FilterController::loadFrei0rFilterMetadata() {
     subdir.setNameFilters(QStringList("meta*.qml"));
     foreach (QString fileName, subdir.entryList())
     {
-        QString filePath = qApp->applicationDirPath() + "/../Resources/frei0r.txt";
+        QString filePath = Util::resourcesPath() + "/filters/frei0r.txt";
+
         std::map<QString, QString> filterTypes;
         readFilterTypeFromFile(filePath, filterTypes);
 
