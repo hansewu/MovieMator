@@ -1177,6 +1177,7 @@ void Player::ZoomChanged(int index)
 
 void Player::toggleFullScreen()
 {
+#ifndef Q_OS_WIN
     if (isFullScreen())
     {
         this->showNormal();
@@ -1190,6 +1191,7 @@ void Player::toggleFullScreen()
         this->showFullScreen();
         setFocus();
     }
+#endif
 }
 
 void Player::keyPressEvent(QKeyEvent *event)
