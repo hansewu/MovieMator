@@ -281,8 +281,13 @@
         <file>timeline/timeline-toolbar-fit-n.png</file>
         <file>timeline/timeline-toolbar-fit-p.png</file>
         <file>filters/icon/filter_remove.png</file>
-        <file>filters/icon/filter_remove-a.png</file>
         <file>filters/icon/filter_select.png</file>
         <file>filters/icon/filter_select-a.png</file>
+        <file>filters/icon/filter_select2-a.png</file>
+        <file>filters/icon/filter_select2-on.png</file>
+        <file>filters/icon/filter_select2.png</file>
+        <file>filters/icon/tab_btn-a.png</file>
+        <file>filters/icon/tab_btn.png</file>
+        <file>filters/icon/filter_remove-on.png</file>
     </qresource>
 </RCC>
