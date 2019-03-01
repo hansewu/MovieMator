@@ -55,22 +55,22 @@
 <context>
     <name>AttachedFilters</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="76"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="122"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="160"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="86"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="136"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="175"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="197"/>
         <source>Video</source>
         <translation type="unfinished">视频</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="115"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="206"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="221"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="129"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="228"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="250"/>
         <source>Audio</source>
         <translation type="unfinished">音频</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="357"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="396"/>
         <source>Remove selected filter</source>
         <translation type="unfinished">删除选中的滤镜</translation>
     </message>
@@ -248,52 +248,55 @@ Please select a clip!</source>
         <translation type="unfinished">表格</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="142"/>
+        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="175"/>
+        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="178"/>
         <source>Start Point</source>
         <translation type="unfinished">开始时间点</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="190"/>
+        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="241"/>
+        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="244"/>
         <source>End Point</source>
         <translation type="unfinished">结束时间点</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="85"/>
+        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="97"/>
+        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="100"/>
         <source>Speed</source>
         <translation type="unfinished">速度</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="254"/>
+        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="320"/>
         <source>Advanced</source>
         <translation type="unfinished">高级</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="299"/>
+        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="371"/>
         <source>Reset</source>
         <translation type="unfinished">重置</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="331"/>
+        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="409"/>
         <source>Apply</source>
         <translation type="unfinished">应用</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="355"/>
+        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="433"/>
         <source>Show in Folder</source>
         <translation type="unfinished">在文件夹中显示</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="360"/>
+        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="438"/>
         <source>Copy Full File Path</source>
         <translation type="unfinished">复制文件全路径</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="365"/>
+        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="443"/>
         <source>More Information...</source>
         <translation type="unfinished">更多信息</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="370"/>
+        <location filename="../src/widgets/avformatproducersimplewidget.ui" line="448"/>
         <source>Start Integrity Check Job</source>
         <translation type="unfinished">开始检查</translation>
     </message>
@@ -701,12 +704,12 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished">颜色</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.ui" line="141"/>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="133"/>
         <source>Color...</source>
         <translation type="unfinished">颜色</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.ui" line="154"/>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="146"/>
         <source>#00000000</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1829,72 +1832,76 @@ with the framebuffer object extension.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="92"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="101"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="104"/>
         <source>Resolution</source>
         <translation type="unfinished">分辨率</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="144"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="171"/>
         <source>x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="178"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="250"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="253"/>
         <source>Duration</source>
         <translation type="unfinished">时长</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="266"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="378"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="381"/>
         <source>Pixel aspect ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="327"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="457"/>
         <source>:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="383"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="554"/>
         <source>Image sequence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="390"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="586"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="589"/>
         <source>Repeat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="420"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="628"/>
         <source> frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="442"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="668"/>
         <source>per picture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="248"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="332"/>
         <source>Make the current duration value the default value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="251"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="335"/>
         <source>Set Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="483"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="737"/>
         <source>Reset</source>
         <translation type="unfinished">重置</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="509"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="775"/>
         <source>Cancel</source>
         <translation type="unfinished">取消</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="522"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="800"/>
         <source>Apply</source>
         <translation type="unfinished">应用</translation>
     </message>
@@ -1903,12 +1910,12 @@ with the framebuffer object extension.</source>
         <translation type="obsolete">确定</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="218"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="225"/>
         <source>Getting length of image sequence...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="226"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="233"/>
         <source>Reloading image sequence...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1926,13 +1933,13 @@ with the framebuffer object extension.</source>
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;This is not a project created with &lt;/span&gt;MovieMator&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Video&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Editor&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt; Pro.  &lt;/span&gt;MovieMator&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Video&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Editor &lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;Pro can not access this &lt;/span&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;mmp file because of the limitation of Apple sandbox. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;This is not a project created with &lt;/span&gt;MovieMator&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Video&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Editor&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt; Pro.  &lt;/span&gt;MovieMator&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Video&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Editor &lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;Pro can not access this &lt;/span&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;mmp file because of the limitation of Apple sandbox. &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;PingFang SC&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;If you would like to open this mmp file,  please go to following official url and download the MovieMator Pro without limitation of Apple sandbox: &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;If you would like to open this mmp file,  please go to following official url and download the MovieMator Pro without limitation of Apple sandbox: &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;PingFang SC&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;http://www.macvideostudio.com/download/video-editor-moviemator-pro.dmg&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;After installation, send email to us (market@effectmatrix.com) to get a free license. &lt;/span&gt; &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;After installation, send email to us (market@effectmatrix.com) to get a free license. &lt;/span&gt; &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2170,7 +2177,7 @@ the list. This does not stop a currently running job. Right-
         <translation type="unfinished">关键帧</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="99"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="96"/>
         <source>Enable Key Frames</source>
         <translation type="unfinished">开启关键帧</translation>
     </message>
@@ -2180,22 +2187,22 @@ the list. This does not stop a currently running job. Right-
         <translation type="unfinished">自动增加关键帧</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="173"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="180"/>
         <source>Add key frame</source>
         <translation type="unfinished">增加关键帧</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="195"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="213"/>
         <source>Remove key frame</source>
         <translation type="unfinished">移除关键帧</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="272"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="323"/>
         <source>Confirm Removing Keyframes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="273"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="324"/>
         <source>This will remove all keyframes.&lt;p&gt;Do you still want to do this?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2208,7 +2215,7 @@ the list. This does not stop a currently running job. Right-
         <translation type="obsolete">移除关键帧</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="226"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="256"/>
         <source>Prev key frame</source>
         <translation type="unfinished">上一帧</translation>
     </message>
@@ -2217,7 +2224,7 @@ the list. This does not stop a currently running job. Right-
         <translation type="obsolete">上一帧</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="251"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="292"/>
         <source>Next key frame</source>
         <translation type="unfinished">下一帧</translation>
     </message>
@@ -2270,172 +2277,172 @@ the list. This does not stop a currently running job. Right-
         <translation type="unfinished">转场</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="254"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="98"/>
         <source>Video</source>
         <translation type="unfinished">视频</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="129"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="132"/>
         <source>Dissolve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="134"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="137"/>
         <source>Cut</source>
         <translation type="unfinished">裁剪</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="139"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="142"/>
         <source>Bar Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="144"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="147"/>
         <source>Bar Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="149"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="152"/>
         <source>Barn Door Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="154"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="157"/>
         <source>Barn Door Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="159"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="162"/>
         <source>Barn Door Diagonal SW-NE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="164"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="167"/>
         <source>Barn Door Diagonal NW-SE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="169"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="172"/>
         <source>Diagonal Top Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="174"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="177"/>
         <source>Diagonal Top Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="179"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="182"/>
         <source>Matrix Waterfall Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="184"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="187"/>
         <source>Matrix Waterfall Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="189"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="192"/>
         <source>Matrix Snake Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="194"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="197"/>
         <source>Matrix Snake Parallel Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="199"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="202"/>
         <source>Matrix Snake Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="204"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="207"/>
         <source>Matrix Snake Parallel Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="209"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="212"/>
         <source>Barn V Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="214"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="217"/>
         <source>Iris Circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="219"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="222"/>
         <source>Double Iris</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="224"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="227"/>
         <source>Iris Box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="229"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="232"/>
         <source>Box Bottom Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="234"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="237"/>
         <source>Box Bottom Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="239"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="242"/>
         <source>Box Right Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="244"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="247"/>
         <source>Clock Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="98"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="288"/>
         <source>Swap the appearance of the A and B clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="101"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="291"/>
         <source>Invert Wipe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="354"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="570"/>
         <source>Audio</source>
         <translation type="unfinished">音频</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="276"/>
-        <location filename="../src/widgets/lumamixtransition.ui" line="448"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="269"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="643"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="292"/>
-        <location filename="../src/widgets/lumamixtransition.cpp" line="238"/>
-        <location filename="../src/widgets/lumamixtransition.cpp" line="243"/>
-        <location filename="../src/widgets/lumamixtransition.cpp" line="257"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="306"/>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="270"/>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="275"/>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="289"/>
         <source>Softness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="317"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="331"/>
         <source>Change the softness of the edge of the wipe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="339"/>
-        <location filename="../src/widgets/lumamixtransition.ui" line="424"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="371"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="546"/>
         <source> %</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="369"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="473"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
 fixed mixing level, or choose only clip A&apos;s
@@ -2443,40 +2450,40 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="375"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="479"/>
         <source>Mix:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="385"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="489"/>
         <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="414"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="518"/>
         <source>B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="283"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="668"/>
         <source>Duration</source>
         <translation type="unfinished">时长</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="469"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="451"/>
         <source>Automatically fade-out the audio of clip A
 and fade-in the audio of clip B over the
 duration of the transition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="474"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="456"/>
         <source>Cross-fade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.cpp" line="50"/>
-        <location filename="../src/widgets/lumamixtransition.cpp" line="240"/>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="272"/>
         <source>Position</source>
         <translation type="unfinished">位置</translation>
     </message>
@@ -2486,12 +2493,12 @@ duration of the transition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.cpp" line="249"/>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="281"/>
         <source>Open File</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.cpp" line="250"/>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="282"/>
         <source>Images (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4977,42 +4984,42 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">表格</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.ui" line="40"/>
+        <location filename="../src/widgets/servicepresetwidget.ui" line="53"/>
         <source>Preset</source>
         <translation type="unfinished">预设</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.ui" line="72"/>
+        <location filename="../src/widgets/servicepresetwidget.ui" line="108"/>
         <source>Save</source>
         <translation type="unfinished">保存</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.ui" line="91"/>
+        <location filename="../src/widgets/servicepresetwidget.ui" line="133"/>
         <source>Delete</source>
         <translation type="unfinished">删除</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="83"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="103"/>
         <source>(defaults)</source>
         <translation type="unfinished">(默认)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="90"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="110"/>
         <source>Save Preset</source>
         <translation type="unfinished">保存预设</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="91"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="111"/>
         <source>Name:</source>
         <translation type="unfinished">名称</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="142"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="162"/>
         <source>Delete Preset</source>
         <translation type="unfinished">删除预设</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="143"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="163"/>
         <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished">确定要删除%1吗？</translation>
     </message>
@@ -5554,7 +5561,8 @@ shifting following clips to the right (V)</source>
         <translation type="unfinished">表格</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.ui" line="80"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="101"/>
+        <location filename="../src/widgets/trackpropertieswidget.ui" line="104"/>
         <source>Blend mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5564,87 +5572,87 @@ shifting following clips to the right (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="67"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="71"/>
         <source>Over</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="68"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="72"/>
         <source>Add</source>
         <translation type="unfinished">增加</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="69"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="73"/>
         <source>Saturate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="70"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="74"/>
         <source>Multiply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="71"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="75"/>
         <source>Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="72"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="76"/>
         <source>Overlay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="73"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="77"/>
         <source>Darken</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="74"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="78"/>
         <source>Dodge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="75"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="79"/>
         <source>Burn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="76"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="80"/>
         <source>Hard Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="77"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="81"/>
         <source>Soft Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="78"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="82"/>
         <source>Difference</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="79"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="83"/>
         <source>Exclusion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="80"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="84"/>
         <source>HSL Hue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="81"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="85"/>
         <source>HSL Saturation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="82"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="86"/>
         <source>HSL Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="83"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="87"/>
         <source>HSL Luminosity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6133,7 +6141,7 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>filterview</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/filterview.qml" line="146"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/filterview.qml" line="147"/>
         <source>Nothing selected</source>
         <translation type="unfinished"></translation>
     </message>
