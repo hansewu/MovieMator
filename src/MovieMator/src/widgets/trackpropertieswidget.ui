@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
-    <number>12</number>
+    <number>16</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -62,6 +62,9 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="blendModeLayout">
+     <property name="spacing">
+      <number>8</number>
+     </property>
      <property name="leftMargin">
       <number>12</number>
      </property>
@@ -71,10 +74,31 @@
      <item>
       <widget class="QLabel" name="blendModeLabel">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="baseSize">
+        <size>
+         <width>60</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Blend mode</string>
        </property>
        <property name="text">
         <string>Blend mode</string>
@@ -86,6 +110,12 @@
      </item>
      <item>
       <widget class="QComboBox" name="blendModeCombo">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
        <property name="maxVisibleItems">
         <number>20</number>
        </property>

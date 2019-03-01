@@ -37,23 +37,30 @@ ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
     ui->line->setStyleSheet("color:black;");
     ui->line_2->setStyleSheet("color:black");
     ui->filenameLabel->setStyleSheet("background-color:rgb(82,82,82);");
-
-    QString editStyle= "QLineEdit {border:1px;border-radius:3px;background-color:rgb(82,82,82);}";
+    QString editStyle= "QLineEdit{border:1px;border-radius:3px;background-color:rgb(82,82,82);padding-left:4px;}";
     ui->heightLineEdit->setStyleSheet(editStyle);
     ui->widthLineEdit->setStyleSheet(editStyle);
-    QString spinStyle = "QSpinBox {background-color:rgb(82,82,82);color:rgb(225,225,225);}";
-    ui->aspectDenSpinBox->setStyleSheet(spinStyle);
-    ui->aspectNumSpinBox->setStyleSheet(spinStyle);
-    ui->durationSpinBox->setStyleSheet(spinStyle);
-    ui->repeatSpinBox->setStyleSheet(spinStyle);
-
-
     QString buttonStyle = "QPushButton{"
                           "border-radius:3px;border:1px solid;border-color:black;"
                           "background-color:rgb(100,100,100);color:rgb(225,225,225);}";
     ui->resetButton->setStyleSheet(buttonStyle);
     ui->defaultDurationButton->setStyleSheet(buttonStyle);
     ui->okButton->setStyleSheet(buttonStyle);
+    ui->cancelButton->setStyleSheet(buttonStyle);
+    QString spinBoxStyle = "QSpinBox{padding-left:4px;background-color:rgb(82,82,82);color:rgb(225,225,225);border:1px solid black;border-radius:4px;}";
+    spinBoxStyle.append("QSpinBox::up-button{subcontrol-origin:border;subcontrol-position:top right;width:22px;border:none;}");
+    spinBoxStyle.append("QSpinBox::up-arrow{image:url(:/icons/light/8x8/up.png);width:8px;height:8px;}");
+    spinBoxStyle.append("QSpinBox::down-button{subcontrol-origin:border;subcontrol-position:bottom right;width:20px;border:none;border-top-width:0;}");
+    spinBoxStyle.append("QSpinBox::down-arrow{image:url(:/icons/light/8x8/down.png);width:8px;height:8px;}");
+    ui->aspectDenSpinBox->setStyleSheet(spinBoxStyle);
+    ui->aspectNumSpinBox->setStyleSheet(spinBoxStyle);
+    ui->durationSpinBox->setStyleSheet(spinBoxStyle);
+    ui->repeatSpinBox->setStyleSheet(spinBoxStyle);
+    ui->sequenceCheckBox->setStyleSheet("QCheckBox {spacing: 8px;}"
+                                        "QCheckBox::indicator:unchecked {image: url(:/icons/light/14x14/key.png);}"
+                                        "QCheckBox::indicator:checked {image: url(:/icons/light/14x14/key_on.png);}"
+                                        );
+
 }
 
 ImageProducerWidget::~ImageProducerWidget()

@@ -215,6 +215,12 @@
         <file>light/32x32/remove_keyframe_disable.png</file>
         <file>light/32x32/add_keyframe_disable.png</file>
         <file>light/32x32/add_keyframe-on.png</file>
+        <file>light/8x8/down.png</file>
+        <file>light/8x8/up.png</file>
+        <file>light/12x12/spot.png</file>
+        <file>light/12x12/spot_on.png</file>
+        <file>light/14x14/key.png</file>
+        <file>light/14x14/key_on.png</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>

@@ -32,12 +32,32 @@ ServicePresetWidget::ServicePresetWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->presetCombo->setStyleSheet("QComboBox {background-color:rgb(82,82,82);color:rgb(225,225,225);}");
     QString buttonStyle = "QPushButton{"
                           "border-radius:3px;border:1px solid;border-color:black;"
                           "background-color:rgb(100,100,100);color:rgb(225,225,225);}";
     ui->deletePresetButton->setStyleSheet(buttonStyle);
     ui->savePresetButton->setStyleSheet(buttonStyle);
+    ui->presetCombo->setStyleSheet("QComboBox {\
+                                  background-color:rgb(82,82,82); \
+                                  color:rgb(225,225,225); \
+                                  border: 1px solid black;\
+                                  border-radius: 4px;\
+                                  }"
+                                  "QComboBox::drop-down { \
+                                  subcontrol-origin: padding; \
+                                  subcontrol-position: top right;\
+                                  width: 15px;\
+                                  border-left-width: 1px;\
+                                  border-left-color: rgb(82,82,82);\
+                                  border-left-style: solid;\
+                                  border-top-right-radius: 4px; \
+                                  border-bottom-right-radius: 4px;\
+                                  }"
+                                  "QComboBox::down-arrow {\
+                                  image: url(:/icons/light/8x8/down.png);\
+                                  }"
+                                  "QComboBox::donw-arrow:on {top:1px;left:1px;}"
+                                  "QComboBox QAbstractItemView {border: none;}");
 }
 
 ServicePresetWidget::~ServicePresetWidget()

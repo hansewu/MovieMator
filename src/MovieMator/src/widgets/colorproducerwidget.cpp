@@ -38,11 +38,6 @@ ColorProducerWidget::ColorProducerWidget(QWidget *parent) :
                                    "border-radius:3px;border:1px solid;border-color:black;"
                                    "background-color:rgb(100,100,100);color:rgb(225,225,225);}"
                                    );
-
-//    ui->colorButton->setStyleSheet("QPushButton{background-color:rgb(100,100,100);"
-//                                   "border-radius:3px;border:1px;border-color:black;border-style:outset;}"
-//                                   "QPushButton:pressed{border-style:inset;}");
-
 }
 
 ColorProducerWidget::~ColorProducerWidget()

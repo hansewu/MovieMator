@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>368</width>
-    <height>380</height>
+    <width>296</width>
+    <height>430</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
-    <number>12</number>
+    <number>16</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -24,6 +24,9 @@
     <number>0</number>
    </property>
    <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -57,7 +60,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <property name="spacing">
-      <number>12</number>
+      <number>16</number>
      </property>
      <property name="leftMargin">
       <number>12</number>
@@ -67,6 +70,9 @@
      </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>8</number>
+       </property>
        <item>
         <widget class="QLabel" name="speedLabel">
          <property name="sizePolicy">
@@ -81,6 +87,15 @@
            <height>0</height>
           </size>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Speed</string>
+         </property>
          <property name="text">
           <string>Speed</string>
          </property>
@@ -91,11 +106,20 @@
        </item>
        <item>
         <widget class="QDoubleSpinBox" name="speedSpinBox">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="focusPolicy">
           <enum>Qt::StrongFocus</enum>
          </property>
+         <property name="frame">
+          <bool>true</bool>
+         </property>
          <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
          <property name="accelerated">
           <bool>true</bool>
@@ -124,10 +148,13 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <property name="spacing">
+        <number>8</number>
+       </property>
        <item>
         <widget class="QLabel" name="startPointLabel">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -137,6 +164,15 @@
            <width>88</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Start Point</string>
          </property>
          <property name="text">
           <string>Start Point</string>
@@ -148,11 +184,17 @@
        </item>
        <item>
         <widget class="TimeSpinBox" name="startPointSpinBox">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="focusPolicy">
           <enum>Qt::StrongFocus</enum>
          </property>
          <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
          <property name="readOnly">
           <bool>true</bool>
@@ -172,10 +214,13 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>8</number>
+       </property>
        <item>
         <widget class="QLabel" name="endPointLabel">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -185,6 +230,15 @@
            <width>88</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>End Point</string>
          </property>
          <property name="text">
           <string>End Point</string>
@@ -196,6 +250,12 @@
        </item>
        <item>
         <widget class="TimeSpinBox" name="endPointSpinBox">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="focusPolicy">
           <enum>Qt::StrongFocus</enum>
          </property>
@@ -203,7 +263,7 @@
           <bool>true</bool>
          </property>
          <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
          <property name="readOnly">
           <bool>true</bool>
@@ -246,8 +306,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>93</width>
-           <height>28</height>
+           <width>128</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>128</width>
+           <height>24</height>
           </size>
          </property>
          <property name="text">
@@ -291,8 +357,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>93</width>
-           <height>28</height>
+           <width>128</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>128</width>
+           <height>24</height>
           </size>
          </property>
          <property name="text">
@@ -323,8 +395,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>93</width>
-           <height>28</height>
+           <width>128</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>128</width>
+           <height>24</height>
           </size>
          </property>
          <property name="text">

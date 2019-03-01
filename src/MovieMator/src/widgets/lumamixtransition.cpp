@@ -85,22 +85,6 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     m_durationSpinBox->setValue(m_producer.get_length());
     m_durationSpinBox->blockSignals(false);
 
-    ui->label_2->setStyleSheet("background-color:rgb(82,82,82);");
-    ui->line->setStyleSheet("color:black;");
-    ui->line_2->setStyleSheet("color:black;");
-    QString style = "background-color:rgb(82,82,82);color:rgb(225,225,225);";
-    ui->lumaCombo->setStyleSheet(style);
-    ui->softnessSpinner->setStyleSheet(style);
-    ui->mixSpinner->setStyleSheet(style);
-    ui->invertCheckBox->setStyleSheet("QCheckBox::indicator:unchecked{border-radius:3px;" + style + "}");
-    m_durationSpinBox->setStyleSheet(style);
-    QString strStyle = "QSlider::sub-page:horizontal{background:rgb(15,114,103);border-radius: 4px}";
-    strStyle.append("QSlider::groove:horizontal{background:'grey';height:4px;border-radius: 4px;}");
-    strStyle.append("QSlider::handle:horizontal{background:'white';width:5px;height:15px;margin: -5px 0px -5px 0px;border-radius: 2px}");
-    ui->softnessSlider->setStyleSheet(strStyle);
-    ui->mixSlider->setStyleSheet(strStyle);
-
-
     connect(m_durationSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(setTransitionDuration(int)));
 //    connect(m_durationSpinBox, SIGNAL(editingFinished()), this, SLOT(setTransitionDuration(int)));
 
@@ -117,6 +101,54 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     }
 #endif
 
+    ui->label_2->setStyleSheet("background-color:rgb(82,82,82);");
+    ui->line->setStyleSheet("color:black;");
+    ui->line_2->setStyleSheet("color:black;");
+    QString sliderStyle = "QSlider::sub-page:horizontal{background:rgb(15,114,103);border-radius: 4px}";
+    sliderStyle.append("QSlider::groove:horizontal{background:'grey';height:4px;border-radius: 4px;}");
+    sliderStyle.append("QSlider::handle:horizontal{background:'white';width:5px;height:15px;margin: -5px 0px -5px 0px;border-radius: 2px}");
+    ui->softnessSlider->setStyleSheet(sliderStyle);
+    ui->mixSlider->setStyleSheet(sliderStyle);
+    QString spinBoxStyle = "QSpinBox {padding-left:4px;background-color:rgb(82,82,82);color:rgb(225,225,225);border:1px solid black;border-radius:4px;}";
+    spinBoxStyle.append("QSpinBox::up-button {subcontrol-origin:border;subcontrol-position:top right;width:22px;border:none;}");
+    spinBoxStyle.append("QSpinBox::up-arrow {image: url(:/icons/light/8x8/up.png);width:8px;height:8px;}");
+    spinBoxStyle.append("QSpinBox::down-button {subcontrol-origin: border;subcontrol-position: bottom right;width: 20px;border: none;border-top-width: 0;}");
+    spinBoxStyle.append("QSpinBox::down-arrow {image: url(:/icons/light/8x8/down.png);width: 8px; height: 8px;}");
+    ui->mixSpinner->setStyleSheet(spinBoxStyle);
+    ui->softnessSpinner->setStyleSheet(spinBoxStyle);
+    m_durationSpinBox->setStyleSheet(spinBoxStyle);
+    ui->invertCheckBox->setStyleSheet("QCheckBox {spacing: 8px;}"
+                                        "QCheckBox::indicator:unchecked {image: url(:/icons/light/14x14/key.png);}"
+                                        "QCheckBox::indicator:checked {image: url(:/icons/light/14x14/key_on.png);}"
+                                        );
+    QString radioButtonStyle = "QRadioButton {spacing: 8px;}"
+                               "QRadioButton::indicator:unchecked {image: url(:/icons/light/12x12/spot.png);}"
+                               "QRadioButton::indicator:checked {image: url(:/icons/light/12x12/spot_on.png);}";
+    ui->crossfadeRadioButton->setStyleSheet(radioButtonStyle);
+    ui->mixRadioButton->setStyleSheet(radioButtonStyle);
+    ui->lumaCombo->setStyleSheet("QComboBox {\
+                                  background-color:rgb(82,82,82); \
+                                  color:rgb(225,225,225); \
+                                  border: 1px solid black;\
+                                  border-radius: 4px;\
+                                  padding: 1px 2px 1px 2px;\
+                                  min-width: 9em;\
+                                  }"
+                                  "QComboBox::drop-down { \
+                                  subcontrol-origin: padding; \
+                                  subcontrol-position: top right;\
+                                  width: 20px;\
+                                  border-left-width: 1px;\
+                                  border-left-color: rgb(82,82,82);\
+                                  border-left-style: solid;\
+                                  border-top-right-radius: 4px; \
+                                  border-bottom-right-radius: 4px;\
+                                  }"
+                                  "QComboBox::down-arrow {\
+                                  image: url(:/icons/light/8x8/down.png);\
+                                  }"
+                                  "QComboBox::donw-arrow:on {top:3px;left:3px;}"
+                                  "QComboBox QAbstractItemView {border: none;}");
 }
 
 LumaMixTransition::~LumaMixTransition()

@@ -39,25 +39,29 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer& track, QWidget *pare
     ui->blendModeCombo->hide();
 
     ui->nameLabel->setStyleSheet("background-color:rgb(82,82,82);");
-    ui->blendModeCombo->setStyleSheet("QComboBox {background-color:rgb(82,82,82);color:rgb(225,225,225);}");
-
-//    ui->blendModeCombo->setStyleSheet("QComboBox {\
-//                                      border: 1px solid black;\
-//                                      border-radius: 3px;\
-//                                      padding: 1px 2px 1px 2px;\
-//                                      min-width: 9em;\
-//                                      }"
-//                                      "QComboBox::drop-down { \
-//                                      subcontrol-origin: padding; \
-//                                      subcontrol-position: top right;\
-//                                      width: 20px;\
-//                                      border-left-width: 1px;\
-//                                      border-left-color: rgb(82,82,82);\
-//                                      border-left-style: solid;\
-//                                      border-top-right-radius: 3px; \
-//                                      border-bottom-right-radius: 3px;\
-//                                      }");
-
+    ui->blendModeCombo->setStyleSheet("QComboBox {\
+                                      background-color:rgb(82,82,82); \
+                                      color:rgb(225,225,225); \
+                                      border: 1px solid black;\
+                                      border-radius: 4px;\
+                                      padding: 1px 2px 1px 2px;\
+                                      min-width: 9em;\
+                                      }"
+                                      "QComboBox::drop-down { \
+                                      subcontrol-origin: padding; \
+                                      subcontrol-position: top right;\
+                                      width: 20px;\
+                                      border-left-width: 1px;\
+                                      border-left-color: rgb(82,82,82);\
+                                      border-left-style: solid;\
+                                      border-top-right-radius: 4px; \
+                                      border-bottom-right-radius: 4px;\
+                                      }"
+                                      "QComboBox::down-arrow {\
+                                      image: url(:/icons/light/8x8/down.png);\
+                                      }"
+                                      "QComboBox::donw-arrow:on {top:3px;left:3px;}"
+                                      "QComboBox QAbstractItemView {border: none;}");
 
     if (track.get(kVideoTrackProperty))
     {
