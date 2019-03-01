@@ -280,5 +280,9 @@
         <file>timeline/timeline-toolbar-fit-d.png</file>
         <file>timeline/timeline-toolbar-fit-n.png</file>
         <file>timeline/timeline-toolbar-fit-p.png</file>
+        <file>filters/icon/filter_remove.png</file>
+        <file>filters/icon/filter_remove-a.png</file>
+        <file>filters/icon/filter_select.png</file>
+        <file>filters/icon/filter_select-a.png</file>
     </qresource>
 </RCC>
