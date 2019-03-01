@@ -196,6 +196,25 @@
         <file>filters/Vignette.jpg</file>
         <file>light/32x32/size-fit-1-a.png</file>
         <file>light/32x32/size-fit-1.png</file>
+        <file>filters/icon/filter_select2-a.png</file>
+        <file>filters/icon/filter_select2-on.png</file>
+        <file>filters/icon/filter_select2.png</file>
+        <file>filters/icon/tab_btn-a.png</file>
+        <file>filters/icon/tab_btn.png</file>
+        <file>filters/icon/filter_remove-on.png</file>
+        <file>filters/icon/filter_remove.png</file>
+        <file>filters/icon/filter_select-a.png</file>
+        <file>filters/icon/filter_select.png</file>
+        <file>light/32x32/key-a.png</file>
+        <file>light/32x32/key.png</file>
+        <file>light/32x32/next_keyframe-on.png</file>
+        <file>light/32x32/previous_keyframe-on.png</file>
+        <file>light/32x32/add_keyframe.png</file>
+        <file>light/32x32/remove_keyframe-on.png</file>
+        <file>light/32x32/remove_keyframe.png</file>
+        <file>light/32x32/remove_keyframe_disable.png</file>
+        <file>light/32x32/add_keyframe_disable.png</file>
+        <file>light/32x32/add_keyframe-on.png</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>
@@ -280,14 +299,5 @@
         <file>timeline/timeline-toolbar-fit-d.png</file>
         <file>timeline/timeline-toolbar-fit-n.png</file>
         <file>timeline/timeline-toolbar-fit-p.png</file>
-        <file>filters/icon/filter_remove.png</file>
-        <file>filters/icon/filter_select.png</file>
-        <file>filters/icon/filter_select-a.png</file>
-        <file>filters/icon/filter_select2-a.png</file>
-        <file>filters/icon/filter_select2-on.png</file>
-        <file>filters/icon/filter_select2.png</file>
-        <file>filters/icon/tab_btn-a.png</file>
-        <file>filters/icon/tab_btn.png</file>
-        <file>filters/icon/filter_remove-on.png</file>
     </qresource>
 </RCC>
