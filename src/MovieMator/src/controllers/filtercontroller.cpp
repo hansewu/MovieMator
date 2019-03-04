@@ -135,6 +135,9 @@ void FilterController::loadFrei0rFilterMetadata() {
             if (meta)
             {
                 std::map<QString, QString>::iterator iter = filterTypes.find(libName.mid(0, libName.length() - 3));
+#ifdef Q_OS_WIN
+                iter       = filterTypes.find(libName.mid(0, libName.length() - 4));
+#endif
                 if (iter != filterTypes.end())
                 {
                     QString filterType = iter->second;

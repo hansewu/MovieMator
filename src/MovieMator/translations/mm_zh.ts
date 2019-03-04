@@ -1852,7 +1852,7 @@ with the framebuffer object extension.</source>
         <location filename="../src/widgets/imageproducerwidget.ui" line="378"/>
         <location filename="../src/widgets/imageproducerwidget.ui" line="381"/>
         <source>Pixel aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">像素分辨率</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="457"/>
@@ -1862,23 +1862,23 @@ with the framebuffer object extension.</source>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="554"/>
         <source>Image sequence</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">图像序列</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="586"/>
         <location filename="../src/widgets/imageproducerwidget.ui" line="589"/>
         <source>Repeat</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">重复</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="628"/>
         <source> frames</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">帧</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="668"/>
         <source>per picture</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">每张图片</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="332"/>
@@ -1888,7 +1888,7 @@ with the framebuffer object extension.</source>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="335"/>
         <source>Set Default</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">设为默认</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="737"/>
@@ -1933,13 +1933,13 @@ with the framebuffer object extension.</source>
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;This is not a project created with &lt;/span&gt;MovieMator&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Video&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Editor&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt; Pro.  &lt;/span&gt;MovieMator&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Video&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Editor &lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;Pro can not access this &lt;/span&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;mmp file because of the limitation of Apple sandbox. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;This is not a project created with &lt;/span&gt;MovieMator&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Video&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Editor&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt; Pro.  &lt;/span&gt;MovieMator&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Video&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;Editor &lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;Pro can not access this &lt;/span&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;mmp file because of the limitation of Apple sandbox. &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;PingFang SC&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;If you would like to open this mmp file,  please go to following official url and download the MovieMator Pro without limitation of Apple sandbox: &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;PingFang SC&apos;;&quot;&gt;If you would like to open this mmp file,  please go to following official url and download the MovieMator Pro without limitation of Apple sandbox: &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;PingFang SC&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;http://www.macvideostudio.com/download/video-editor-moviemator-pro.dmg&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;After installation, send email to us (market@effectmatrix.com) to get a free license. &lt;/span&gt; &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;;&quot;&gt;After installation, send email to us (market@effectmatrix.com) to get a free license. &lt;/span&gt; &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2409,7 +2409,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="291"/>
         <source>Invert Wipe</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">反向擦除</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="570"/>
@@ -2428,7 +2428,7 @@ the list. This does not stop a currently running job. Right-
         <location filename="../src/widgets/lumamixtransition.cpp" line="275"/>
         <location filename="../src/widgets/lumamixtransition.cpp" line="289"/>
         <source>Softness</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">柔和度</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="331"/>
@@ -2452,7 +2452,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="479"/>
         <source>Mix:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">混音</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="489"/>
@@ -2479,7 +2479,7 @@ duration of the transition.</source>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="456"/>
         <source>Cross-fade</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">交叉淡入淡出</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.cpp" line="50"/>
@@ -5564,7 +5564,7 @@ shifting following clips to the right (V)</source>
         <location filename="../src/widgets/trackpropertieswidget.ui" line="101"/>
         <location filename="../src/widgets/trackpropertieswidget.ui" line="104"/>
         <source>Blend mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">混合模式</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="37"/>
