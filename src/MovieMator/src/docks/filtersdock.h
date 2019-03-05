@@ -79,15 +79,22 @@ public slots:
 protected:
     bool event(QEvent *event);
 
+private:
+    QQmlContext* getRootContext();
+    QQuickItem* getRootObject();
+    void resetQquickWidget();
+    void resetQquickView();
+
 private slots:
     void resetQview();
 
 private:
-//    QQuickWidget m_qview;
     int m_position;
     QmlFilter *m_qmlFilter;
+
     QQuickView m_quickView;
     QWidget *m_containerView;
+    QQuickWidget m_qview;
 };
 
 #endif // FILTERSDOCK_H
