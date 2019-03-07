@@ -308,7 +308,7 @@ void RecentDock::on_comboBox_activated(const QString &arg1)
 
 void RecentDock::on_listView_activated(const QModelIndex &index)
 {
-    if (!m_currentListView) {
+    if (!m_currentListView || m_currentListView->model()->rowCount()<=0 || !m_currentIndex.isValid()) {
         return;
     }
 
@@ -374,6 +374,8 @@ void RecentDock::on_actionRemove_triggered()
         Settings.setRecent(m_recent);
         model->remove(row);
 
+        m_currentIndex = m_currentListView->currentIndex();
+
         if(model->rowCount()==0)
         {
             for(int i=0; i<num; i++){
@@ -404,6 +406,8 @@ void RecentDock::on_actionRemoveAll_triggered()
         m_imageArray[i]->setVisible(false);
         m_listviewList->at(i)->setVisible(false);
     }
+
+    m_currentIndex = m_currentListView->currentIndex();
 
     ui->comboBox->clear();
     m_map.clear();
