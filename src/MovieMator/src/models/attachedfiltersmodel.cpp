@@ -85,9 +85,9 @@ QmlMetadata* AttachedFiltersModel::getMetadata(int row) const
 void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
 {
 //    Q_ASSERT(!producer || !m_producer || (producer->get_parent() != m_producer->get_parent()));
-    if (!producer || !m_producer || (producer->get_parent() != m_producer->get_parent())) {
+//    if (!producer || !m_producer || (producer->get_parent() != m_producer->get_parent())) {
         reset(producer);
-    }
+//    }
 }
 
 QString AttachedFiltersModel::producerTitle() const
