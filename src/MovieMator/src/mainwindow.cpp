@@ -453,11 +453,13 @@ MainWindow::MainWindow()
     connect(m_filtersDock, SIGNAL(currentFilterRequested(int)), m_filterController, SLOT(setCurrentFilter(int)), Qt::QueuedConnection);
 
     connect(ui->actionFilters, SIGNAL(triggered()), this, SLOT(onFiltersDockTriggered()));
-    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_filtersDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
+//    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_filtersDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
+     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_filtersDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)));
 //    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_configurationDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
     //MovieMator Pro
 //#ifdef MOVIEMATOR_PRO
-    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_timelineDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
+//     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_timelineDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
+    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_timelineDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)));
 //#endif
     //End
     connect(m_filterController, SIGNAL(currentFilterAboutToChange()), m_filtersDock, SLOT(clearCurrentFilter()));
@@ -569,7 +571,8 @@ MainWindow::MainWindow()
  //   connect(videoWidget, SIGNAL(frameDisplayed(const SharedFrame&)), m_scopeController, SLOT(onFrameDisplayed(const SharedFrame&)));
 
     //connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), videoWidget, SLOT(setCurrentFilter(QObject*, QmlMetadata*)), Qt::QueuedConnection);
-    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), this, SLOT(setCurrentFilterForVideoWidget(QObject*, QmlMetadata*)), Qt::QueuedConnection);
+//    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), this, SLOT(setCurrentFilterForVideoWidget(QObject*, QmlMetadata*)), Qt::QueuedConnection);
+     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), this, SLOT(setCurrentFilterForVideoWidget(QObject*, QmlMetadata*)));
     connect(m_filterController, SIGNAL(currentFilterAboutToChange()), videoWidget, SLOT(setBlankScene()));
 
     readWindowSettings();
