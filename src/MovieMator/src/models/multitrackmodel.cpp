@@ -2045,7 +2045,7 @@ void MultitrackModel::removeTransition(int trackIndex, int clipIndex)
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
-//        clearMixReferences(trackIndex, clipIndex);
+        clearMixReferences(trackIndex, clipIndex);
         if(!isTransition(playlist, clipIndex))
             return;
 
