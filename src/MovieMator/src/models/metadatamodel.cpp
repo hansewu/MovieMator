@@ -190,6 +190,9 @@ bool MetadataModel::isVisible(int row) const
 
 void MetadataModel::setIsClipProducer(bool isClipProducer)
 {
+    if(isClipProducer == m_isClipProducer){
+        return ;
+    }
     beginResetModel();
     m_isClipProducer = isClipProducer;
     endResetModel();
