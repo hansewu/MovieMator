@@ -440,7 +440,7 @@ bool AttachedFiltersModel::move(int fromRow, int toRow, bool bFromUndo)
 
     int toRowOld = toRow;
 
-    if (fromRow < 0 || toRow < 0)
+    if (fromRow < 0 || toRow < 0 || fromRow > m_metaList.length() || toRow >  m_metaList.length())
     {
         return false;
     }
