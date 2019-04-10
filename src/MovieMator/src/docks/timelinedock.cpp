@@ -1782,6 +1782,11 @@ int TimelineDock::getCurrentClipParentLength()
             Mlt::Playlist playlist(*track);
 
             QScopedPointer<Mlt::ClipInfo> clipInfo(playlist.clip_info(clipIndex));
+            if(!clipInfo)
+            {
+                qDebug() << "clipInfo" << clipInfo << "clipIndex" << clipIndex << "trackIndex" << trackIndex;
+                return -1;
+            }
             Mlt::Producer *testproducer = clipInfo->producer;
             int in = testproducer->get_in();
             int out = testproducer->get_out();
