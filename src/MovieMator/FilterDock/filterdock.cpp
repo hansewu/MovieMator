@@ -50,6 +50,8 @@ FilterDock::~FilterDock()
 
 void FilterDock::resetQview()
 {
+    Q_ASSERT(&m_qview);
+    if(!(&m_qview)) return;
     QDir viewPath = QmlUtilities::qmlDir();
     viewPath.cd("views");
     viewPath.cd("filter");
@@ -67,6 +69,12 @@ void FilterDock::resetQview()
 
 int FilterDock::updateFilters(Filter_Info * filterInfos, int nFilterCount)
 {
+    Q_ASSERT(filterInfos);
+    if(!filterInfos) return 1;
+    Q_ASSERT(m_pFilterInfo);
+    if(!m_pFilterInfo) return 1;
+    Q_ASSERT(&m_qview);
+    if(!(&m_qview)) return 1;
     if(m_pFilterInfo) {delete m_pFilterInfo; m_pFilterInfo = NULL;}
 
     m_pFilterInfo = new FiltersInfo();
@@ -100,6 +108,10 @@ void FilterDock::addFilterItem(int index)
 
 void FiltersInfo::addFilterItemInfo(FilterItemInfo *filterInfo)
 {
+    Q_ASSERT(filterInfo);
+    if(!filterInfo) return;
+    Q_ASSERT(&m_filterInfoList);
+    if(!(&m_filterInfoList)) return;
     m_filterInfoList.append(filterInfo);
 }
 
@@ -120,6 +132,10 @@ void FilterDock_destroyModule()
 
 int setFiltersInfo(Filter_Info * filterInfos, int nFilterCount)
 {
+    Q_ASSERT(filterInfos);
+    if(!filterInfos) return 1;
+    Q_ASSERT(ftDocInstance);
+    if(!ftDocInstance) return 1;
     ftDocInstance->updateFilters(filterInfos, nFilterCount);
 
     return 0;

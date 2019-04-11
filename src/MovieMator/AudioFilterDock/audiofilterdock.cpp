@@ -68,6 +68,8 @@ AudioFilterDock::~AudioFilterDock()
 
 void AudioFilterDock::resetQview()
 {
+    Q_ASSERT(&m_qview);
+    if(!(&m_qview)) return;
     QDir viewPath = QmlUtilities::qmlDir();
     viewPath.cd("views");
     viewPath.cd("filter");
@@ -85,6 +87,11 @@ void AudioFilterDock::resetQview()
 
 int AudioFilterDock::updateAudioFilters(AudioFilter_Info * AudioFilterInfos, int nAudioFilterCount)
 {
+
+    Q_ASSERT(AudioFilterInfos);
+    if(!AudioFilterInfos) return 1;
+    Q_ASSERT(&m_qview);
+    if(!(&m_qview)) return 1;
     if(m_pAudioFilterInfo) {delete m_pAudioFilterInfo; m_pAudioFilterInfo = NULL;}
 
     m_pAudioFilterInfo = new AudioFiltersInfo();
@@ -118,6 +125,10 @@ void AudioFilterDock::addAudioFilterItem(int index)
 
 void AudioFiltersInfo::addAudioFilterItemInfo(AudioFilterItemInfo *AudioFilterInfo)
 {
+    Q_ASSERT(&m_AudioFilterInfoList);
+    if(!(&m_AudioFilterInfoList)) return;
+    Q_ASSERT(AudioFilterInfo);
+    if(!AudioFilterInfo) return;
     m_AudioFilterInfoList.append(AudioFilterInfo);
 }
 
@@ -138,6 +149,10 @@ void AudioFilterDock_destroyModule()
 
 int setAudioFiltersInfo(AudioFilter_Info * AudioFilterInfos, int nAudioFilterCount)
 {
+    Q_ASSERT(ftDocInstance);
+    if(!ftDocInstance) return 1;
+    Q_ASSERT(AudioFilterInfos);
+    if(!AudioFilterInfos) return 1;
     ftDocInstance->updateAudioFilters(AudioFilterInfos, nAudioFilterCount);
 
     return 0;
