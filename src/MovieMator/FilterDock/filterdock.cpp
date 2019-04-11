@@ -40,7 +40,7 @@ FilterDock::FilterDock(MainInterface *main, QWidget *parent):
 
     QmlUtilities::setCommonProperties(m_qview.rootContext());
 
-    updateFilters(NULL, 0);
+    createFilterDockPage();
 }
 
 FilterDock::~FilterDock()
@@ -67,14 +67,27 @@ void FilterDock::resetQview()
     m_qview.setSource(source);
 }
 
+int FilterDock::createFilterDockPage()
+{
+    Q_ASSERT(&m_qview);
+    if(!(&m_qview)) return 1;
+
+    qmlRegisterType<FilterItemInfo>("FilterItemInfo", 1, 0, "FilterItemInfo");
+
+    m_qview.rootContext()->setContextProperty("filtersInfo", m_pFilterInfo);
+    m_qview.rootContext()->setContextProperty("filtersResDock", this);
+
+    resetQview();
+    return 0;
+}
+
 int FilterDock::updateFilters(Filter_Info * filterInfos, int nFilterCount)
 {
     Q_ASSERT(filterInfos);
     if(!filterInfos) return 1;
-    Q_ASSERT(m_pFilterInfo);
-    if(!m_pFilterInfo) return 1;
     Q_ASSERT(&m_qview);
     if(!(&m_qview)) return 1;
+
     if(m_pFilterInfo) {delete m_pFilterInfo; m_pFilterInfo = NULL;}
 
     m_pFilterInfo = new FiltersInfo();
@@ -89,16 +102,10 @@ int FilterDock::updateFilters(Filter_Info * filterInfos, int nFilterCount)
 
         m_pFilterInfo->addFilterItemInfo(filterInfo);
     }
-
-    qmlRegisterType<FilterItemInfo>("FilterItemInfo", 1, 0, "FilterItemInfo");
-
-    m_qview.rootContext()->setContextProperty("filtersInfo", m_pFilterInfo);
-    m_qview.rootContext()->setContextProperty("filtersResDock", this);
-
-    resetQview();
-
     return 0;
 }
+
+
 
 void FilterDock::addFilterItem(int index)
 {
@@ -137,6 +144,7 @@ int setFiltersInfo(Filter_Info * filterInfos, int nFilterCount)
     Q_ASSERT(ftDocInstance);
     if(!ftDocInstance) return 1;
     ftDocInstance->updateFilters(filterInfos, nFilterCount);
+    ftDocInstance->createFilterDockPage();
 
     return 0;
 }
