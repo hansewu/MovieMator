@@ -136,10 +136,24 @@ EffectDock::~EffectDock()
 
 void EffectDock::resizeEvent(QResizeEvent *event)
 {
+    Q_ASSERT(m_imageList);
+    if(!m_imageList)
+    {
+        return;
+    }
     for(EffectListView *listView : *m_imageList)
     {
+        Q_ASSERT(listView);
+        if(!listView)
+        {
+            continue;
+        }
         listView->setFixedWidth(ui->scrollArea->width() -5);
         int wSize = listView->gridSize().width();
+        if(wSize<=0)
+        {
+            continue;
+        }
         int hSize = listView->gridSize().height();
         int width = listView->size().width();
         int columns = width/wSize<1 ? 1: width/wSize;
@@ -305,6 +319,11 @@ void EffectDock::replaceImage(QString effectFile, QString imageFile)
         {
             domNodeResource.setNodeValue(imageFile);
             domNodeHash.setNodeValue(Util::getFileHash(imageFile));
+            Q_ASSERT(m_mainWindow);
+            if(!m_mainWindow)
+            {
+                return;
+            }
             m_effectFile = m_mainWindow->createFileWithXMLForDragAndDrop(doc.toString());
             return;
         }
@@ -313,12 +332,24 @@ void EffectDock::replaceImage(QString effectFile, QString imageFile)
 
 void EffectDock::setMimeDataForDrag()
 {
+    Q_ASSERT(m_effectFile);
+    Q_ASSERT(m_mainWindow);
+    Q_ASSERT(m_mimeData);
+    if(!m_effectFile || !m_mainWindow || !m_mimeData)
+    {
+        return;
+    }
     m_mimeData->setData(m_mainWindow->getXMLMimeTypeForDragDrop(), m_mainWindow->getXmlForDragDrop(m_effectFile).toUtf8());
     m_mimeData->setText(QString::number(m_mainWindow->getPlayTime(m_effectFile)));
 }
 
 void EffectDock::createEffectFile()
 {
+    Q_ASSERT(m_effectList);
+    if(!m_effectList)
+    {
+        return;
+    }
     QString effectFile;
     QString imageFile;
     int comboIndex = ui->comboBox->currentIndex();
@@ -327,7 +358,7 @@ void EffectDock::createEffectFile()
 //        m_effectFile = m_effectList->at(comboIndex);
         effectFile = m_effectList->at(comboIndex);
     }
-    if(m_currentListView && m_currentIndex.isValid() )
+    if(m_currentListView && m_currentIndex.isValid() && m_mainWindow)
     {
         m_effectFile = qobject_cast<EffectListModel*>(m_currentListView->model())->fileAt(m_currentIndex.row());
         imageFile = m_mainWindow->getFileName(m_effectFile);
@@ -345,6 +376,11 @@ void EffectDock::createEffectFile()
 
 void EffectDock::createImageFileList(QFileInfoList &fileList, QString folderName)
 {
+    Q_ASSERT(m_mainWindow);
+    if(!m_mainWindow)
+    {
+        return;
+    }
     EffectListModel *model = new EffectListModel(m_mainWindow, this);
     for(int i=0; i<fileList.count(); i++)
     {
@@ -355,7 +391,12 @@ void EffectDock::createImageFileList(QFileInfoList &fileList, QString folderName
 }
 
 void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName)
-{
+{   Q_ASSERT(model);
+    Q_ASSERT(m_imageList);
+    if(!model || !m_imageList)
+    {
+        return;
+    }
     EffectListView *listView = new EffectListView();
     QLabel *label = new QLabel(itemName, this);
     label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -397,8 +438,18 @@ void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName
 
 void EffectDock::on_listView_pressed(const QModelIndex &)
 {
+    Q_ASSERT(m_imageList);
+    if(!m_imageList)
+    {
+        return;
+    }
     for(EffectListView *listView : *m_imageList)
     {
+        Q_ASSERT(listView);
+        if(!listView)
+        {
+            continue;
+        }
         if(listView->hasFocus())
         {
             if(m_currentListView && m_currentListView!=listView)
@@ -415,7 +466,9 @@ void EffectDock::on_listView_pressed(const QModelIndex &)
 
 void EffectDock::on_listView_clicked(const QModelIndex &)
 {
-    if(m_effectFile)
+//    Q_ASSERT(m_effectFile);   // 不能加，默认下可以为空，也就是不播放文件
+    Q_ASSERT(m_mainWindow);
+    if(m_effectFile && m_mainWindow)
     {
         m_mainWindow->playFile(m_effectFile);
     }
@@ -423,7 +476,9 @@ void EffectDock::on_listView_clicked(const QModelIndex &)
 
 void EffectDock::on_listView_customContextMenuRequested(const QPoint &pos)
 {
-    if(m_currentIndex.isValid() && m_currentListView->indexAt(pos)==m_currentIndex)
+    Q_ASSERT(m_currentIndex.isValid());
+    Q_ASSERT(m_currentListView);
+    if(m_currentIndex.isValid() && m_currentListView && m_currentListView->indexAt(pos)==m_currentIndex)
     {
         QMenu menu(this);
         menu.addAction(ui->actionAddToTimeline);
@@ -433,7 +488,9 @@ void EffectDock::on_listView_customContextMenuRequested(const QPoint &pos)
 
 void EffectDock::on_actionAddToTimeline_triggered()
 {
-    if(m_effectFile)
+    Q_ASSERT(m_effectFile);
+    Q_ASSERT(m_mainWindow);
+    if(m_effectFile && m_mainWindow)
     {
         m_mainWindow->addToTimeLine(m_effectFile);
     }
@@ -441,7 +498,11 @@ void EffectDock::on_actionAddToTimeline_triggered()
 
 void EffectDock::on_comboBox_activated(int index)
 {
-    if(index>=0 && index<ui->comboBox->count() && m_effectFile)
+    Q_ASSERT(index>=0);
+    Q_ASSERT(index<ui->comboBox->count());
+    Q_ASSERT(m_mainWindow);
+//    Q_ASSERT(m_effectFile);     // 不能加，默认下可以为空，不播放文件
+    if(index>=0 && index<ui->comboBox->count() && m_effectFile && m_mainWindow)
     {
         m_mainWindow->playFile(m_effectFile);
     }
@@ -449,6 +510,8 @@ void EffectDock::on_comboBox_activated(int index)
 
 void EffectDock::on_comboBox_currentIndexChanged(int index)
 {
+    Q_ASSERT(index>=0);
+    Q_ASSERT(index<ui->comboBox->count());
     if(index>=0 && index<ui->comboBox->count())
     {
         createEffectFile();
