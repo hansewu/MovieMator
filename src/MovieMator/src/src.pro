@@ -121,7 +121,8 @@ SOURCES += main.cpp\
     maininterface.cpp \
     containerdock.cpp \
     widgets/avformatproducersimplewidget.cpp \
-    templateeidtor.cpp
+    templateeidtor.cpp \
+    commands/abstractcommand.cpp
     maininterface.cpp
 
 HEADERS  += mainwindow.h \
@@ -239,7 +240,8 @@ HEADERS  += mainwindow.h \
     containerdock.h \
     widgets/avformatproducersimplewidget.h \
     templateeidtor.h \
-    eccregister/CEccRegister.h
+    eccregister/CEccRegister.h \
+    commands/abstractcommand.h
 
 mac {
     SOURCES += securitybookmark/SecurityBookmark.mm \
