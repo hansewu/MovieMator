@@ -88,6 +88,7 @@ void TextlistDock::loadTextMetadata() {
 
 void TextlistDock::addTextMetadata(QmlMetadata* textmeta)
 {
+    Q_ASSERT(textmeta);
     m_model.addTextMetadata(textmeta);
 }
 
@@ -97,17 +98,19 @@ void TextlistDock::addTextToTimeline(int index)
 
    // qDebug()<<"text index is " << index;
     QmlMetadata *meta = m_model.get(index);
-
+    Q_ASSERT(meta);
 //    m_attachedTextModel.add(meta);
 
     Mlt::Producer *producer;
 
     Mlt::Filter* mltfilter = new Mlt::Filter(MLT.profile(), meta->mlt_service().toUtf8().constData());
+    Q_ASSERT(mltfilter);
     mltfilter->set(kShotcutFilterProperty, meta->uniqueId().toUtf8().constData());
 
 
 
     QmlFilter *qmlFilter = new QmlFilter(mltfilter, meta);
+    Q_ASSERT(qmlFilter);
     qmlFilter->setIsNew(true);
 
 
@@ -129,6 +132,7 @@ void TextlistDock::addTextToTimeline(int index)
 
 
     producer = new Mlt::Producer(MLT.profile(), NULL, "noise");
+    Q_ASSERT(producer);
     producer->attach(*mltfilter);
 
     producer->set("meta.fx_cut", 1);
@@ -147,6 +151,8 @@ void TextlistDock::addTextToTimeline(int index)
 
 QmlMetadata *TextlistDock::metadataForService(Mlt::Service *service)
 {
+    Q_ASSERT(service);
+
     QmlMetadata* meta = 0;
     int rowCount = m_model.rowCount();
     QString uniqueId = service->get(kShotcutFilterProperty);
@@ -158,6 +164,7 @@ QmlMetadata *TextlistDock::metadataForService(Mlt::Service *service)
 
     for (int i = 0; i < rowCount; i++) {
         QmlMetadata* tmpMeta = m_model.get(i);
+        Q_ASSERT(tmpMeta);
         if (tmpMeta->uniqueId() == uniqueId) {
             meta = tmpMeta;
             break;
@@ -170,11 +177,13 @@ QmlMetadata *TextlistDock::metadataForService(Mlt::Service *service)
 
 void TextlistDock::showTextSettingWidget(Mlt::Producer *textProcucer)
 {
+    Q_ASSERT(textProcucer);
 //    int trackIndex = 2;
 //    Mlt::Producer *producer = producerForClip(trackIndex, textclipIndex);
 
     Mlt::Filter *filter = textProcucer->filter(0);
     QmlMetadata *metadata = metadataForService(filter);
+    Q_ASSERT(metadata);
     QmlFilter *qmlFilter = new QmlFilter(filter, metadata);
  //   qmlFilter->setIsNew(true);
     m_filterSettingsView.rootContext()->setContextProperty("filter", qmlFilter);

@@ -70,6 +70,8 @@ QmlUtilities::QmlUtilities(QObject *parent) :
 
 void QmlUtilities::setCommonProperties(QQmlContext* context)
 {
+    Q_ASSERT(context);
+
     context->setContextProperty("settings", &ShotcutSettings::singleton());
     context->setContextProperty("application", &QmlApplication::singleton());
 //    context->setContextProperty("profile", &QmlProfile::singleton());
@@ -102,6 +104,9 @@ QQmlEngine * QmlUtilities::sharedEngine()
         s_engine = new QQmlEngine;
 //        s_engine->setImportPathList(QStringList());
     }
+
+    Q_ASSERT(s_engine);
+
     return s_engine;
 }
 

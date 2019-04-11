@@ -42,12 +42,14 @@ MediaClipModel::~MediaClipModel()
 
 void MediaClipModel::setPlaylistModel(PlaylistModel *model)
 {
+    Q_ASSERT(model);
     m_playlistModel = model;
 
 }
 
 QVariant MediaClipModel::data(const QModelIndex &index, int role) const
 {
+    Q_ASSERT(m_playlistModel);
     if(!index.isValid()) return QVariant();
 
 

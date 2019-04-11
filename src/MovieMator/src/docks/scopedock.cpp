@@ -42,6 +42,9 @@ ScopeDock::ScopeDock(ScopeController* scopeController, ScopeWidget* scopeWidget)
 
 void ScopeDock::resizeEvent(QResizeEvent* e)
 {
+    Q_ASSERT(e);
+    Q_ASSERT(m_scopeWidget);
+
     if (width() > height()) {
         m_scopeWidget->setOrientation(Qt::Horizontal);
     } else {
@@ -52,6 +55,9 @@ void ScopeDock::resizeEvent(QResizeEvent* e)
 
 void ScopeDock::onActionToggled(bool checked)
 {
+    Q_ASSERT(m_scopeController);
+    Q_ASSERT(m_scopeWidget);
+
     if(checked) {
         connect(m_scopeController, SIGNAL(newFrame(const SharedFrame&)), m_scopeWidget, SLOT(onNewFrame(const SharedFrame&)));
     } else {

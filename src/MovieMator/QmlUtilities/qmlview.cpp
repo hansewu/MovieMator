@@ -27,5 +27,7 @@ QmlView::QmlView(QWindow* qview)
 
 QPoint QmlView::pos()
 {
+    Q_ASSERT(m_qview);
+
     return m_qview->mapToGlobal(QPoint(0,0));
 }

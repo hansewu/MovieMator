@@ -62,7 +62,6 @@ AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
 
 bool AttachedFiltersModel::isReady()
 {
-    Q_ASSERT(m_producer);
     return m_producer;
 }
 
