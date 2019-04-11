@@ -84,6 +84,7 @@ public:
     ~AudioFilterDock();
 
     int updateAudioFilters(AudioFilter_Info * AudioFilterInfos, int nAudioFilterCount);
+    int createAudioFilterDockPage();
     void resetQview();
 
     Q_INVOKABLE void addAudioFilterItem(int index);

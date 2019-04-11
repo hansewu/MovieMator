@@ -58,7 +58,7 @@ AudioFilterDock::AudioFilterDock(MainInterface *main, QWidget *parent):
 
     QmlUtilities::setCommonProperties(m_qview.rootContext());
 
-    updateAudioFilters(NULL, 0);
+    createAudioFilterDockPage();
 }
 
 AudioFilterDock::~AudioFilterDock()
@@ -85,6 +85,19 @@ void AudioFilterDock::resetQview()
     m_qview.setSource(source);
 }
 
+int AudioFilterDock::createAudioFilterDockPage()
+{
+    Q_ASSERT(&m_qview);
+    if(!(&m_qview)) return 1;
+    qmlRegisterType<AudioFilterItemInfo>("AudioFilterItemInfo", 1, 0, "AudioFilterItemInfo");
+
+    m_qview.rootContext()->setContextProperty("AudioFiltersInfo", m_pAudioFilterInfo);
+    m_qview.rootContext()->setContextProperty("AudioFiltersResDock", this);
+
+    resetQview();
+    return 0;
+}
+
 int AudioFilterDock::updateAudioFilters(AudioFilter_Info * AudioFilterInfos, int nAudioFilterCount)
 {
 
@@ -92,6 +105,7 @@ int AudioFilterDock::updateAudioFilters(AudioFilter_Info * AudioFilterInfos, int
     if(!AudioFilterInfos) return 1;
     Q_ASSERT(&m_qview);
     if(!(&m_qview)) return 1;
+
     if(m_pAudioFilterInfo) {delete m_pAudioFilterInfo; m_pAudioFilterInfo = NULL;}
 
     m_pAudioFilterInfo = new AudioFiltersInfo();
@@ -106,13 +120,6 @@ int AudioFilterDock::updateAudioFilters(AudioFilter_Info * AudioFilterInfos, int
 
         m_pAudioFilterInfo->addAudioFilterItemInfo(AudioFilterInfo);
     }
-
-    qmlRegisterType<AudioFilterItemInfo>("AudioFilterItemInfo", 1, 0, "AudioFilterItemInfo");
-
-    m_qview.rootContext()->setContextProperty("AudioFiltersInfo", m_pAudioFilterInfo);
-    m_qview.rootContext()->setContextProperty("AudioFiltersResDock", this);
-
-    resetQview();
 
     return 0;
 }
@@ -154,6 +161,7 @@ int setAudioFiltersInfo(AudioFilter_Info * AudioFilterInfos, int nAudioFilterCou
     Q_ASSERT(AudioFilterInfos);
     if(!AudioFilterInfos) return 1;
     ftDocInstance->updateAudioFilters(AudioFilterInfos, nAudioFilterCount);
+    ftDocInstance->createAudioFilterDockPage();
 
     return 0;
 }

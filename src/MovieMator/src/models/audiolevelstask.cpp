@@ -105,6 +105,8 @@ bool AudioLevelsTask::operator==(AudioLevelsTask &b)
     if (!m_producers.isEmpty() && !b.m_producers.isEmpty()) {
         Mlt::Producer* a_producer = m_producers.first().first;
         Mlt::Producer* b_producer = b.m_producers.first().first;
+        Q_ASSERT(a_producer);
+        Q_ASSERT(b_producer);
         return !qstrcmp(a_producer->get("resource"), b_producer->get("resource"));
     }
     return false;
@@ -113,6 +115,7 @@ bool AudioLevelsTask::operator==(AudioLevelsTask &b)
 Mlt::Producer* AudioLevelsTask::tempProducer()
 {
     if (!m_tempProducer) {
+        Q_ASSERT(m_producers.first().first);
         QString service = m_producers.first().first->get("mlt_service");
         if (service == "avformat-novalidate")
             service = "avformat";
@@ -120,6 +123,7 @@ Mlt::Producer* AudioLevelsTask::tempProducer()
             service = "xml-nogl";
         m_tempProducer = new Mlt::Producer(m_profile, service.toUtf8().constData(),
             m_producers.first().first->get("resource"));
+        Q_ASSERT(m_tempProducer);
         if (m_tempProducer->is_valid()) {
             Mlt::Filter channels(m_profile, "audiochannels");
             Mlt::Filter converter(m_profile, "audioconvert");

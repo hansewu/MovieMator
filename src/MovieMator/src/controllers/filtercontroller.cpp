@@ -183,7 +183,7 @@ void FilterController::loadFrei0rFilterMetadata() {
                             mlt_properties param_pro = (mlt_properties) mlt_properties_get_data( params, mlt_properties_get_name(params, nIndex), NULL );
 
                             QmlKeyframesParameter * param = new QmlKeyframesParameter();
-
+                            Q_ASSERT(param);
                             QString parmType = QString::fromUtf8(mlt_properties_get(param_pro, "type"));
                             if (parmType == "boolean")
                             {
@@ -253,6 +253,8 @@ void FilterController::loadFrei0rFilterMetadata() {
 
 void FilterController::getFrei0rPluginInfo(Mlt::Filter *filter, f0r_plugin_info_t &info)
 {
+    Q_ASSERT(filter);
+
     mlt_service service = filter->get_service();
     mlt_properties prop = MLT_SERVICE_PROPERTIES(service);
 
@@ -264,6 +266,8 @@ void FilterController::getFrei0rPluginInfo(Mlt::Filter *filter, f0r_plugin_info_
 
 void FilterController::getFrei0rParamInfo(Mlt::Filter *filter, int index, f0r_param_info_t &info)
 {
+    Q_ASSERT(filter);
+
     mlt_service service = filter->get_service();
     mlt_properties prop = MLT_SERVICE_PROPERTIES(service);
     void (*f0r_get_param_info)(f0r_param_info_t*, int) = (void (*)(f0r_param_info_t*, int))mlt_properties_get_data( prop, "f0r_get_param_info" ,NULL);
@@ -273,6 +277,8 @@ void FilterController::getFrei0rParamInfo(Mlt::Filter *filter, int index, f0r_pa
 
 QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
 {
+    Q_ASSERT(service);
+
     QmlMetadata* meta = 0;
     int rowCount = m_metadataModel.rowCount();
     QString uniqueId = service->get(kShotcutFilterProperty);
@@ -284,6 +290,7 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
 
     for (int i = 0; i < rowCount; i++) {
         QmlMetadata* tmpMeta = m_metadataModel.get(i);
+        Q_ASSERT(tmpMeta);
         if (tmpMeta->uniqueId() == uniqueId) {
             meta = tmpMeta;
             break;
@@ -392,7 +399,7 @@ void FilterController::updateFilterDock()
     for (int nIndex = 0; nIndex < nFilterCount; nIndex++)
     {
         QmlMetadata* metadataModel          = m_metadataModel.get(nIndex);
-
+        Q_ASSERT(metadataModel);
         strcpy(filterInfos[nIndex].name, metadataModel->name().toStdString().c_str());
 
         QString filterType = getFilterType(metadataModel->filterType());
@@ -462,11 +469,11 @@ void FilterController::setProducer(Mlt::Producer *producer)
 
 void FilterController::setCurrentFilter(int attachedIndex)
 {
-    if (attachedIndex > m_attachedModel.rowCount()) {
-        return;
+    if (attachedIndex >= m_attachedModel.rowCount()) {
+       return;
     }
 
-    Q_ASSERT(attachedIndex <= m_attachedModel.rowCount());
+    Q_ASSERT(attachedIndex < m_attachedModel.rowCount());
 
     if (attachedIndex == m_currentFilterIndex) {
         return;
@@ -474,11 +481,13 @@ void FilterController::setCurrentFilter(int attachedIndex)
     m_currentFilterIndex = attachedIndex;
 
     QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
+    Q_ASSERT(meta);
     QmlFilter* filter = 0;
     if (meta) {
         Mlt::Filter* mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
-
+        Q_ASSERT(mltFilter);
         filter = new QmlFilter(mltFilter, meta);
+        Q_ASSERT(filter);
 
     }
 
@@ -489,18 +498,22 @@ void FilterController::setCurrentFilter(int attachedIndex)
 
 void FilterController::refreshCurrentFilter(Mlt::Filter *filter)
 {
+    Q_ASSERT(filter);
+
     if(m_currentFilterIndex == -1) return;
 
     QmlFilter *qmlFilter = m_currentFilter.data();
     if(!qmlFilter) return;
 
     Mlt::Filter* mltFilter = qmlFilter->getMltFilter();
+    Q_ASSERT(mltFilter);
     if(mltFilter->get_filter() != filter->get_filter())
     {
         return;
     }
 
     QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
+    Q_ASSERT(meta);
  /*   QmlFilter* qfilter = 0;
     if (meta)
     {
@@ -522,6 +535,7 @@ void FilterController::refreshKeyFrame(Mlt::Filter *filter, const QVector<key_fr
     if(!qmlFilter) return;
 
     Mlt::Filter* mltFilter = qmlFilter->getMltFilter();
+    Q_ASSERT(mltFilter);
     if(mltFilter->get_filter() != filter->get_filter())
     {
         return;
@@ -552,10 +566,16 @@ void FilterController::handleAttachedRowsRemoved(const QModelIndex&, int first, 
 
 void FilterController::handleAttachedRowsInserted(const QModelIndex&, int first, int)
 {
+    Q_ASSERT(first >= 0);
+    Q_ASSERT(first < m_attachedModel.rowCount());
+
     m_currentFilterIndex = first;
     Mlt::Filter* mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
     QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
+    Q_ASSERT(mltFilter);
+    Q_ASSERT(meta);
     QmlFilter* filter = new QmlFilter(mltFilter, meta);
+    Q_ASSERT(filter);
     filter->setIsNew(true);
     emit currentFilterAboutToChange();
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
@@ -564,6 +584,7 @@ void FilterController::handleAttachedRowsInserted(const QModelIndex&, int first,
 
 void FilterController::handleAttachDuplicateFailed(int index)
 {
+    Q_ASSERT(index >= 0);
     Q_ASSERT(index < m_attachedModel.rowCount());
 
     const QmlMetadata* meta = m_attachedModel.getMetadata(index);
@@ -659,12 +680,15 @@ void FilterController::addTextFilter()
 
 QmlMetadata *FilterController::metadataForUniqueId(const char *uniqueId)
 {
+    Q_ASSERT(uniqueId);
+
     QmlMetadata* meta = 0;
     int rowCount = m_metadataModel.rowCount();
     QString qstrUniqueId(uniqueId);
 
     for (int i = 0; i < rowCount; i++) {
         QmlMetadata* tmpMeta = m_metadataModel.get(i);
+        Q_ASSERT(tmpMeta);
         if (tmpMeta->uniqueId() == qstrUniqueId) {
             meta = tmpMeta;
             break;
@@ -676,6 +700,8 @@ QmlMetadata *FilterController::metadataForUniqueId(const char *uniqueId)
 
 void FilterController::addFilter(int nFilterIndex)
 {
+//    Q_ASSERT(nFilterIndex >= 0);
+
     MAIN.onShowFilterDock();
     int nCurrentFilter = nFilterIndex;
     if(nCurrentFilter == -1)
@@ -696,6 +722,9 @@ void FilterController::addFilter(const QString &filterID)
 
 void FilterController::removeFilter(int row)
 {
+    Q_ASSERT(row >= 0);
+    Q_ASSERT(row < m_attachedModel.rowCount());
+
     m_attachedModel.remove(row);
 }
 

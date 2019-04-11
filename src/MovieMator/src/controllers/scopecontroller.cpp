@@ -44,8 +44,14 @@ ScopeController::ScopeController(QMainWindow* mainWindow, QMenu* menu)
 
 template<typename ScopeTYPE> void ScopeController::createScopeDock(QMainWindow* mainWindow, QMenu* menu)
 {
+    Q_ASSERT(mainWindow);
+    Q_ASSERT(menu);
+
     ScopeWidget* scopeWidget = new ScopeTYPE();
     ScopeDock* scopeDock = new ScopeDock(this, scopeWidget);
+
+    Q_ASSERT(scopeWidget);
+    Q_ASSERT(scopeDock);
     scopeDock->hide();
     menu->addAction(scopeDock->toggleViewAction());
     mainWindow->addDockWidget(Qt::RightDockWidgetArea, scopeDock);

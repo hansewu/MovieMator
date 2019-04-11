@@ -82,6 +82,7 @@ public:
     ~FilterDock();
 
     int updateFilters(Filter_Info * filterInfos, int nFilterCount);
+    int createFilterDockPage();
     void resetQview();
 
     Q_INVOKABLE void addFilterItem(int index);

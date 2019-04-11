@@ -99,7 +99,7 @@ MultitrackModel::~MultitrackModel()
 
 int MultitrackModel::rowCount(const QModelIndex &parent) const
 {
-    Q_ASSERT(m_tractor);
+//    Q_ASSERT(m_tractor);
     if (!m_tractor)
         return 0;
     if (parent.isValid()) {
@@ -736,7 +736,7 @@ void MultitrackModel::setTrackHeight(int height)
 
 double MultitrackModel::scaleFactor() const
 {
-    Q_ASSERT(m_tractor);
+//    Q_ASSERT(m_tractor);
 
     double result = m_tractor? m_tractor->get_double(kTimelineScaleProperty) : 0;
     return (result > 0)? result : (qPow(1.0, 3.0) + 0.01);
@@ -744,7 +744,7 @@ double MultitrackModel::scaleFactor() const
 
 void MultitrackModel::setScaleFactor(double scale)
 {
-    Q_ASSERT(m_tractor);
+//    Q_ASSERT(m_tractor);
 
     if (m_tractor) {
         m_tractor->set(kTimelineScaleProperty, scale);
