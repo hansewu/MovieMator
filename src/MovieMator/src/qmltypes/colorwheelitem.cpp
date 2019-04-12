@@ -131,6 +131,8 @@ QColor ColorWheelItem::colorForPoint(const QPoint &point)
 
 void ColorWheelItem::mousePressEvent(QMouseEvent *event)
 {
+    Q_ASSERT(event);
+
     if(event->button() == Qt::LeftButton) {
         m_lastPoint = event->pos();
         if (m_wheelRegion.contains(m_lastPoint)) {
@@ -150,6 +152,8 @@ void ColorWheelItem::mousePressEvent(QMouseEvent *event)
 
 void ColorWheelItem::mouseMoveEvent(QMouseEvent *event)
 {
+    Q_ASSERT(event);
+
     updateCursor(event->pos());
 
     if (!m_isMouseDown) return;
@@ -165,6 +169,8 @@ void ColorWheelItem::mouseMoveEvent(QMouseEvent *event)
 
 void ColorWheelItem::mouseReleaseEvent(QMouseEvent *event)
 {
+    Q_ASSERT(event);
+
     qDebug()<<"ColorWheelItem::mouseReleaseEvent begins";
     if(event->button() == Qt::LeftButton) {
         m_isMouseDown = false;
@@ -176,11 +182,14 @@ void ColorWheelItem::mouseReleaseEvent(QMouseEvent *event)
 
 void ColorWheelItem::hoverMoveEvent(QHoverEvent * event)
 {
+    Q_ASSERT(event);
     updateCursor(event->pos());
 }
 
 void ColorWheelItem::paint(QPainter *painter)
 {
+    Q_ASSERT(painter);
+
     QSize size( width(), height() );
 
     if( m_size != size ) {

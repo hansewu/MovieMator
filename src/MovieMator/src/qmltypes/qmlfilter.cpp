@@ -356,11 +356,13 @@ void QmlFilter::anim_set(QString name, QString value)
 
 void QmlFilter::resetProperty(const QString& name)
 {
+    if (!m_filter) return;
     m_filter->clear(name.toUtf8().constData());
 }
 
 void QmlFilter::loadPresets()
 {
+//    Q_ASSERT(m_presets);
     m_presets.clear();
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
     if (dir.cd("presets")) {
@@ -378,6 +380,7 @@ void QmlFilter::loadPresets()
 
 int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
 {
+    Q_ASSERT(m_filter);
     Mlt::Properties properties;
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
 
@@ -410,8 +413,10 @@ void QmlFilter::deletePreset(const QString &name)
 
 void QmlFilter::analyze(bool isAudio)
 {
-    Mlt::Service service(mlt_service(m_filter->get_data("service")));
+    Q_ASSERT(m_filter);
 
+    Mlt::Service service(mlt_service(m_filter->get_data("service")));
+    Q_ASSERT(service.is_valid());
     // get temp filename for input xml
     QTemporaryFile tmp;
 
@@ -466,6 +471,7 @@ void QmlFilter::analyze(bool isAudio)
     AbstractTask* task = new MeltTask(tmpTarget.fileName(), dom.toString(2));
     if (task) {
         AnalyzeDelegate* delegate = new AnalyzeDelegate(m_filter);
+        Q_ASSERT(delegate);
         connect(task, &AbstractTask::finished, delegate, &AnalyzeDelegate::onAnalyzeFinished);
         connect(task, &AbstractTask::finished, this, &QmlFilter::analyzeFinished);
         QFileInfo info(QString::fromUtf8(service.get("resource")));
@@ -497,9 +503,11 @@ void QmlFilter::getHash()
 
 int QmlFilter::producerIn() const
 {
+    Q_ASSERT(m_filter);
     // Every attached filter has a service property that points to the service to
     // which it is attached.
     Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
+    Q_ASSERT(producer.is_valid());
     if (producer.get(kFilterInProperty))
         // Shots on the timeline will set the producer to the cut parent.
         // However, we want time-based filters such as fade in/out to use
@@ -511,7 +519,9 @@ int QmlFilter::producerIn() const
 
 int QmlFilter::producerOut() const
 {
+    Q_ASSERT(m_filter);
     Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
+    Q_ASSERT(producer.is_valid());
     if (producer.get(kFilterOutProperty))
         // Shots on the timeline will set the producer to the cut parent.
         // However, we want time-based filters such as fade in/out to use
@@ -526,16 +536,18 @@ void QmlFilter::setInAndOut(int in, int out)
     if (out < in) {
         return;
     }
-
+    Q_ASSERT(m_filter);
     if (m_filter->get_int("in") == 0 && m_filter->get_int("out") == 0)
         m_filter->set_in_and_out(in, out);
 }
 
 double QmlFilter::producerAspect() const
 {
+    Q_ASSERT(m_filter);
     // Every attached filter has a service property that points to the service to
     // which it is attached.
     Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
+    Q_ASSERT(producer.is_valid());
     if (producer.get(kHeightProperty)) {
         double sar = 1.0;
         if (producer.get(kAspectDenProperty)) {
@@ -549,9 +561,11 @@ double QmlFilter::producerAspect() const
 
 double QmlFilter::mediaHeight() const
 {
+    Q_ASSERT(m_filter);
     // Every attached filter has a service property that points to the service to
     // which it is attached.
     Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
+    Q_ASSERT(producer.is_valid());
     if (producer.get(kHeightProperty))
         return QString(producer.get(kHeightProperty)).toDouble();
 
@@ -560,9 +574,11 @@ double QmlFilter::mediaHeight() const
 
 double QmlFilter::mediaWidth() const
 {
+    Q_ASSERT(m_filter);
     // Every attached filter has a service property that points to the service to
     // which it is attached.
     Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
+    Q_ASSERT(producer.is_valid());
     if (producer.get(kWidthProperty))
         return QString(producer.get(kWidthProperty)).toDouble();
 
@@ -571,6 +587,7 @@ double QmlFilter::mediaWidth() const
 
 void QmlFilter::preset(const QString &name)
 {
+    Q_ASSERT(m_filter);
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
 
     if (!dir.cd("presets") || !dir.cd(objectNameOrService()))
@@ -582,6 +599,7 @@ void QmlFilter::preset(const QString &name)
 
 QString QmlFilter::objectNameOrService()
 {
+    Q_ASSERT(m_metadata);
     return m_metadata->objectName().isEmpty()? m_metadata->mlt_service() : m_metadata->objectName();
 }
 
@@ -589,6 +607,7 @@ QString QmlFilter::objectNameOrService()
 
 double QmlFilter::getPreKeyFrameNumInParent(double currentKeyFrame)
 {
+    Q_ASSERT(MAIN.timelineDock());
     currentKeyFrame = MAIN.timelineDock()->getPositionOnParentProducer(currentKeyFrame);
     int keyFrameCount = m_keyFrameList.count();
     bool bExist = false;
@@ -631,6 +650,8 @@ double QmlFilter::getPreKeyFrameNumInParent(double currentKeyFrame)
 
 double QmlFilter::getPreKeyFrameNum(double currentKeyFrame)
 {
+    Q_ASSERT(MAIN.timelineDock());
+
     double nFrameInParent = getPreKeyFrameNumInParent(currentKeyFrame);
 
     int nPositionInClip = MAIN.timelineDock()->getPositionOnClip(nFrameInParent);
@@ -646,6 +667,7 @@ double QmlFilter::getPreKeyFrameNum(double currentKeyFrame)
 
 double QmlFilter::getNextKeyFrameNum(double currentKeyFrame)
 {
+    Q_ASSERT(MAIN.timelineDock());
     currentKeyFrame = MAIN.timelineDock()->getPositionOnParentProducer(currentKeyFrame);
 //    double frameInParent = MAIN.timelineDock()->getPositionOnParentProducer(currentKeyFrame);
 //    if (m_filter)
@@ -819,6 +841,9 @@ void QmlFilter::setKeyFrameParaValue(double frame, QString key, QString value)
 
 void QmlFilter::removeAllKeyFrame()
 {
+    Q_ASSERT(m_metadata);
+    Q_ASSERT(m_metadata->keyframes());
+
     int paramCount = m_metadata->keyframes()->parameterCount();
     for (int i = 0; i < paramCount; i++)
     {
@@ -838,6 +863,9 @@ void QmlFilter::removeAllKeyFrame(QString name)
 
 void QmlFilter::removeKeyFrameParaValue(double frame)
 {
+    Q_ASSERT(m_metadata);
+    Q_ASSERT(m_metadata->keyframes());
+
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
 //    if(m_metadata)
 //    {
@@ -885,7 +913,7 @@ void QmlFilter::removeKeyFrameParaValue(double frame)
 
 void QmlFilter::combineAllKeyFramePara()
 {
-
+    Q_ASSERT(m_filter);
     if(m_metadata)
     {
         int keyFrameCount = m_keyFrameList.count();
@@ -1000,6 +1028,7 @@ void QmlFilter::combineAllKeyFramePara()
 
 bool QmlFilter::bKeyFrame(double frame)
 {
+    Q_ASSERT(MAIN.timelineDock());
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     int keyFrameCount = m_keyFrameList.count();
     if(keyFrameCount == 0)
@@ -1020,10 +1049,12 @@ bool QmlFilter::bKeyFrame(double frame)
 
 bool QmlFilter::bHasPreKeyFrame(double frame)
 {
+    Q_ASSERT(MAIN.timelineDock());
 //    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     double frameInParent = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     if (m_filter)
     {
+        Q_ASSERT(m_metadata);
         int paramCount = m_metadata->keyframes()->parameterCount();
         if (paramCount <= 0) return false;
         QString name = m_metadata->keyframes()->parameter(0)->property();
@@ -1052,10 +1083,12 @@ bool QmlFilter::bHasPreKeyFrame(double frame)
 
 bool QmlFilter::bHasNextKeyFrame(double frame)
 {
+    Q_ASSERT(MAIN.timelineDock());
 //    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     double frameInParent = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     if (m_filter)
     {
+        Q_ASSERT(m_metadata);
         int paramCount = m_metadata->keyframes()->parameterCount();
         if (paramCount <= 0) return false;
         QString name = m_metadata->keyframes()->parameter(0)->property();
@@ -1087,6 +1120,7 @@ bool QmlFilter::bHasNextKeyFrame(double frame)
 
 double QmlFilter::getKeyFrameParaDoubleValue(double frame, QString key)
 {
+    Q_ASSERT(MAIN.timelineDock());
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
 //    if(m_filter)
 //    {
@@ -1118,6 +1152,7 @@ double QmlFilter::getKeyFrameParaDoubleValue(double frame, QString key)
 
 QRectF QmlFilter::getKeyFrameParaRectValue(double frame, QString key)
 {
+    Q_ASSERT(MAIN.timelineDock());
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     int keyFrameCount = m_keyFrameList.count();
     if(keyFrameCount == 0) {
@@ -1142,6 +1177,7 @@ QRectF QmlFilter::getKeyFrameParaRectValue(double frame, QString key)
 
 QString QmlFilter::getKeyFrameParaValue(double frame, QString key)
 {
+    Q_ASSERT(MAIN.timelineDock());
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
 //    if(m_metadata)
 //        return m_metadata->getKeyFrameParaValue(frame, key);
@@ -1246,6 +1282,8 @@ int QmlFilter::getKeyFrameNumber()
     int nCount = m_keyFrameList.count();
     if(nCount <= 0)
     {
+        Q_ASSERT(m_metadata);
+        Q_ASSERT(m_metadata->keyframes());
         int paramCount = m_metadata->keyframes()->parameterCount();
         if (paramCount <= 0) return nCount;
         QString name = m_metadata->keyframes()->parameter(0)->property();
@@ -1286,6 +1324,8 @@ AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter* filter)
 
 void AnalyzeDelegate::onAnalyzeFinished(AbstractTask *job, bool isSuccess)
 {
+    Q_ASSERT(job);
+    Q_ASSERT(m_filter.is_valid());
     QString fileName = job->objectName();
 
     if (isSuccess) {
