@@ -480,8 +480,9 @@ void FilterController::setCurrentFilter(int attachedIndex)
     }
     m_currentFilterIndex = attachedIndex;
 
-    QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
-    Q_ASSERT(meta);
+    QmlMetadata* meta = 0;
+    if(m_currentFilterIndex >= 0)
+        meta = m_attachedModel.getMetadata(m_currentFilterIndex);
     QmlFilter* filter = 0;
     if (meta) {
         Mlt::Filter* mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);

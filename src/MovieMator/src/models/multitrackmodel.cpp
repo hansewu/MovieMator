@@ -2150,6 +2150,7 @@ void MultitrackModel::clearMixReferences(int trackIndex, int clipIndex)
         Q_ASSERT(playlist.is_valid());
         Q_ASSERT(clipIndex - 1 < playlist.count());
 
+        if(clipIndex - 1 < 0) return;  //转场如果当前是第0个clip，退出，这种情况不需要clearMixReferences。
         QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex - 1));
         Q_ASSERT(producer);
         if (producer && producer->is_valid()) {
@@ -2162,6 +2163,7 @@ void MultitrackModel::clearMixReferences(int trackIndex, int clipIndex)
                 producer->set("mix_in", NULL, 0);
                 producer->set("mix_out", NULL, 0);
             }
+            if(clipIndex + 1 >= playlist.count()) return;  //转场如果当前是最后一个clip，退出，这种情况不需要clearMixReferences。
             producer.reset(playlist.get_clip(clipIndex + 1));
             if (producer && producer->is_valid()) {
                 producer->set("mix_in", NULL, 0);
