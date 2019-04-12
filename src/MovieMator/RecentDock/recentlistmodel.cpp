@@ -229,6 +229,7 @@ void RecentListModel::remove(int row)
 void RecentListModel::clear()
 {
     Q_ASSERT(m_recentList);
+//    Q_ASSERT(rowCount());   // 不需要加，元素个数rowCount()允许为0
     if (m_recentList && rowCount()) {
         beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
         m_recentList->clear();

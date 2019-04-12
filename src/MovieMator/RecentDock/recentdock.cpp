@@ -497,6 +497,7 @@ void RecentDock::on_actionRemove_triggered()
                 {
                     m_flag[i] = false;
                     m_currentListView->setVisible(false);
+                    Q_ASSERT(m_labelArray[i]);
                     if(m_labelArray[i])
                     {
                         m_labelArray[i]->setVisible(false);
@@ -504,6 +505,7 @@ void RecentDock::on_actionRemove_triggered()
                         m_map.remove(m_map.key(itemName));
                         ui->comboBox->removeItem(ui->comboBox->findText(itemName));
                     }
+                    Q_ASSERT(m_imageArray[i]);
                     if(m_imageArray[i])
                     {
                         m_imageArray[i]->setVisible(false);
