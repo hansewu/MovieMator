@@ -420,6 +420,9 @@ MainWindow::MainWindow()
     connect(m_timelineDock->model(), SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_timelineDock->model(), SIGNAL(created()), SLOT(onMultitrackCreated()));
     connect(m_timelineDock->model(), SIGNAL(closed()), SLOT(onMultitrackClosed()));
+    //sll：modify放在一个地方建立连接，保证数据操作及更新都在界面更新之前
+    connect(m_timelineDock->model(), SIGNAL(modified()), m_timelineDock, SLOT(clearSelectionIfInvalid()));
+    connect(m_timelineDock->model(), SIGNAL(modified()), m_timelineDock->model(), SLOT(adjustBackgroundDuration()));
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(onMultitrackModified()));
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(updateAutoSave()));
     connect(m_timelineDock->model(), SIGNAL(durationChanged()), SLOT(onMultitrackDurationChanged()));
@@ -1985,7 +1988,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 int newIndex = m_timelineDock->selection().first() - 1;
                 if (newIndex < 0)
                     break;
-                m_timelineDock->setSelection(QList<int>() << newIndex);
+                m_timelineDock->setSelection(QList<int>() << newIndex, m_timelineDock->currentTrack());
                 m_navigationPosition = m_timelineDock->centerOfClip(m_timelineDock->currentTrack(), newIndex);
             }
         } else {
@@ -2000,7 +2003,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 int newIndex = m_timelineDock->selection().first() + 1;
                 if (newIndex >= m_timelineDock->clipCount(-1))
                     break;
-                m_timelineDock->setSelection(QList<int>() << newIndex);
+                m_timelineDock->setSelection(QList<int>() << newIndex, m_timelineDock->currentTrack());
                 m_navigationPosition = m_timelineDock->centerOfClip(m_timelineDock->currentTrack(), newIndex);
             }
         } else {
@@ -2056,7 +2059,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_D:
         if (event->modifiers() & Qt::ControlModifier)
-            m_timelineDock->setSelection();
+            m_timelineDock->setSelection(QList<int>(), m_timelineDock->currentTrack());
         else
             handled = false;
         break;
@@ -2178,7 +2181,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 
             if (newClipIndex >= 0) {
                 newClipIndex = qMin(newClipIndex, m_timelineDock->clipCount(m_timelineDock->currentTrack()) - 1);
-                m_timelineDock->setSelection(QList<int>() << newClipIndex);
+                m_timelineDock->setSelection(QList<int>() << newClipIndex, m_timelineDock->currentTrack() - 1);
             }
 
         } /*else if (m_playlistDock->isVisible()) {
@@ -2206,7 +2209,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 
             if (newClipIndex >= 0) {
                 newClipIndex = qMin(newClipIndex, m_timelineDock->clipCount(m_timelineDock->currentTrack()) - 1);
-                m_timelineDock->setSelection(QList<int>() << newClipIndex);
+                m_timelineDock->setSelection(QList<int>() << newClipIndex, m_timelineDock->currentTrack() - 1);
             }
 
         } /*else if (m_playlistDock->isVisible()) {
@@ -2512,7 +2515,7 @@ void MainWindow::onProducerOpened()
             m_player->enableTab(Player::ProjectTabIndex);
             m_player->switchToTab(Player::ProjectTabIndex);
             if (m_timelineDock->model()->trackList().count() > 0)
-                m_timelineDock->setSelection(QList<int>() << 0);
+                m_timelineDock->setSelection(QList<int>() << 0, m_timelineDock->currentTrack());
             else
                 m_timelineDock->selectMultitrack();
         }

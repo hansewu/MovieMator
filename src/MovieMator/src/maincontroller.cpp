@@ -281,7 +281,7 @@ int MainController::getStartPositionOfClip(int trackIndex, int clipIndex)
 void MainController::setClipSpeed(int trackIndex, int clipIndex, double speed)
 {
     MAIN.timelineDock()->setCurrentTrack(trackIndex);
-    MAIN.timelineDock()->setSelection(QList<int>() << clipIndex);
+    MAIN.timelineDock()->setSelection(QList<int>() << clipIndex, trackIndex);
     m_multitrackModel.setClipSpeed(trackIndex, clipIndex, speed);
 }
 
@@ -289,7 +289,7 @@ void MainController::addFilter(int trackIndex, int clipIndex, const QString &fil
 {
     MAIN.showFilterDock();
     MAIN.timelineDock()->setCurrentTrack(trackIndex);
-    MAIN.timelineDock()->setSelection(QList<int>() << clipIndex);
+    MAIN.timelineDock()->setSelection(QList<int>() << clipIndex, trackIndex);
     MAIN.filterController()->addFilter(filterID);
     qApp->processEvents();
 }
@@ -305,14 +305,14 @@ void MainController::removeFilter(int trackIndex, int clipIndex, int row)
 void MainController::copyClip(int trackIndex, int clipIndex)
 {
     MAIN.timelineDock()->setCurrentTrack(trackIndex);
-    MAIN.timelineDock()->setSelection(QList<int>() << clipIndex);
+    MAIN.timelineDock()->setSelection(QList<int>() << clipIndex, trackIndex);
     MAIN.on_actionCopy_triggered();
 }
 
 void MainController::cutClip(int trackIndex, int clipIndex)
 {
     MAIN.timelineDock()->setCurrentTrack(trackIndex);
-    MAIN.timelineDock()->setSelection(QList<int>() << clipIndex);
+    MAIN.timelineDock()->setSelection(QList<int>() << clipIndex, trackIndex);
     MAIN.on_actionCut_triggered();
 }
 
