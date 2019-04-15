@@ -56,11 +56,14 @@ SharedFrame& SharedFrame::operator=(const SharedFrame& other)
 
 bool SharedFrame::is_valid() const
 {
+    Q_ASSERT(d);
     return d->f.is_valid();
 }
 
 Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
 {
+    Q_ASSERT(d);
+    Q_ASSERT(d->f.is_valid());
     // TODO: Consider moving this implementation into MLT.
     // It could be added to mlt_frame as an alternative to:
     //     mlt_frame mlt_frame_clone( mlt_frame self, int is_deep );
@@ -133,41 +136,71 @@ Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
 
 int SharedFrame::get_int(const char *name) const
 {
+    Q_ASSERT(name);
+
+    Q_ASSERT(d);
+    Q_ASSERT(d->f.is_valid());
+
     return d->f.get_int(name);
 }
 
 int64_t SharedFrame::get_int64(const char *name) const
 {
+    Q_ASSERT(name);
+
+    Q_ASSERT(d);
+    Q_ASSERT(d->f.is_valid());
+
     return d->f.get_int64(name);
 }
 
 double SharedFrame::get_double(const char *name) const
 {
+    Q_ASSERT(name);
+
+    Q_ASSERT(d);
+    Q_ASSERT(d->f.is_valid());
+
     return d->f.get_double(name);
 }
 
 int SharedFrame::get_position() const
 {
+    Q_ASSERT(d);
+    Q_ASSERT(d->f.is_valid());
+
     return d->f.get_position();
 }
 
 mlt_image_format SharedFrame::get_image_format() const
 {
+    Q_ASSERT(d);
+    Q_ASSERT(d->f.is_valid());
+
     return (mlt_image_format)d->f.get_int( "format" );
 }
 
 int SharedFrame::get_image_width() const
 {
+    Q_ASSERT(d);
+    Q_ASSERT(d->f.is_valid());
+
     return d->f.get_int( "width" );
 }
 
 int SharedFrame::get_image_height() const
 {
+    Q_ASSERT(d);
+    Q_ASSERT(d->f.is_valid());
+
     return d->f.get_int( "height" );
 }
 
 const uint8_t* SharedFrame::get_image() const
 {
+    Q_ASSERT(d);
+    Q_ASSERT(d->f.is_valid());
+
     mlt_image_format format = get_image_format();
     int width = get_image_width();
     int height = get_image_height();
@@ -176,26 +209,41 @@ const uint8_t* SharedFrame::get_image() const
 
 mlt_audio_format SharedFrame::get_audio_format() const
 {
+    Q_ASSERT(d);
+    Q_ASSERT(d->f.is_valid());
+
     return (mlt_audio_format)d->f.get_int( "audio_format" );
 }
 
 int SharedFrame::get_audio_channels() const
 {
+    Q_ASSERT(d);
+    Q_ASSERT(d->f.is_valid());
+
     return d->f.get_int( "audio_channels" );
 }
 
 int SharedFrame::get_audio_frequency() const
 {
+    Q_ASSERT(d);
+    Q_ASSERT(d->f.is_valid());
+
     return d->f.get_int( "audio_frequency" );
 }
 
 int SharedFrame::get_audio_samples() const
 {
+    Q_ASSERT(d);
+    Q_ASSERT(d->f.is_valid());
+
     return d->f.get_int( "audio_samples" );
 }
 
 const int16_t* SharedFrame::get_audio() const
 {
+    Q_ASSERT(d);
+    Q_ASSERT(d->f.is_valid());
+
     mlt_audio_format format = get_audio_format();
     int frequency = get_audio_frequency();
     int channels = get_audio_channels();

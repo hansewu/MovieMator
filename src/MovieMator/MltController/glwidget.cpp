@@ -177,11 +177,14 @@ void GLWidget::initializeGL()
         // at the time that RenderThread is created.
         // See this Qt bug for more info: https://bugreports.qt.io/browse/QTBUG-44677
         m_shareContext = new QOpenGLContext;
+        Q_ASSERT(m_shareContext);
         m_shareContext->setFormat(quickWindow()->openglContext()->format());
         m_shareContext->setShareContext(quickWindow()->openglContext());
         m_shareContext->create();
     }
     m_frameRenderer = new FrameRenderer(quickWindow()->openglContext(), &m_offscreenSurface);
+    Q_ASSERT(m_frameRenderer);
+    Q_ASSERT(quickWindow()->openglContext());
     quickWindow()->openglContext()->makeCurrent(quickWindow());
 
     connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), this, SIGNAL(frameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
@@ -232,6 +235,8 @@ void GLWidget::resizeGL(int width, int height)
 
 void GLWidget::resizeEvent(QResizeEvent* event)
 {
+    Q_ASSERT(event);
+
     QQuickWidget::resizeEvent(event);
     resizeGL(event->size().width(), event->size().height());
 }
@@ -239,6 +244,7 @@ void GLWidget::resizeEvent(QResizeEvent* event)
 void GLWidget::createShader()
 {
     m_shader = new QOpenGLShaderProgram;
+    Q_ASSERT(m_shader);
     m_shader->addShaderFromSourceCode(QOpenGLShader::Vertex,
                                      "uniform highp mat4 projection;"
                                      "uniform highp mat4 modelView;"
@@ -296,10 +302,14 @@ void GLWidget::createShader()
 
 static void uploadTextures(QOpenGLContext* context, SharedFrame& frame, GLuint texture[])
 {
+    Q_ASSERT(context);
+    Q_ASSERT(frame.is_valid());
+
     int width = frame.get_image_width();
     int height = frame.get_image_height();
     const uint8_t* image = frame.get_image();
     QOpenGLFunctions* f = context->functions();
+    Q_ASSERT(f);
 
     // Upload each plane of YUV to a texture.
     if (texture[0])
@@ -391,6 +401,7 @@ void GLWidget::paintGL()
     }
 
     // Init shader program.
+    Q_ASSERT(m_shader);
     m_shader->bind();
     if (m_glslManager) {
         m_shader->setUniformValue(m_textureLocation[0], 0);
@@ -464,6 +475,8 @@ void GLWidget::paintGL()
 
 void GLWidget::mousePressEvent(QMouseEvent* event)
 {
+    Q_ASSERT(event);
+
     QQuickWidget::mousePressEvent(event);
     if (event->isAccepted()) return;
     if (event->button() == Qt::LeftButton)
@@ -474,6 +487,8 @@ void GLWidget::mousePressEvent(QMouseEvent* event)
 
 void GLWidget::mouseMoveEvent(QMouseEvent* event)
 {
+    Q_ASSERT(event);
+
     QQuickWidget::mouseMoveEvent(event);
     if (event->isAccepted()) return;
     if (event->modifiers() == Qt::ShiftModifier && m_producer) {
@@ -488,6 +503,8 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
         return;
     QDrag *drag = new QDrag(this);
     QMimeData *mimeData = new QMimeData;
+    Q_ASSERT(drag);
+    Q_ASSERT(mimeData);
     mimeData->setData(MLT.MltXMLMimeType(), MLT.XML().toUtf8());
     drag->setMimeData(mimeData);
     mimeData->setText(QString::number(MLT.producer()->get_playtime()));
@@ -502,6 +519,8 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
 
 void GLWidget::keyPressEvent(QKeyEvent* event)
 {
+    Q_ASSERT(event);
+
     QQuickWidget::keyPressEvent(event);
     if (event->isAccepted()) return;
 //    MAIN.keyPressEvent(event);
@@ -519,12 +538,14 @@ void GLWidget::createThread(RenderThread **thread, thread_function_t function, v
     }
 #endif
     (*thread) = new RenderThread(function, data, m_shareContext, &m_offscreenSurface);
+    Q_ASSERT((*thread));
     (*thread)->start();
 }
 
 static void onThreadCreate(mlt_properties owner, GLWidget* self,
     RenderThread** thread, int* priority, thread_function_t function, void* data )
 {
+    Q_ASSERT(self);
     Q_UNUSED(owner)
     Q_UNUSED(priority)
     self->createThread(thread, function, data);
@@ -560,6 +581,7 @@ void GLWidget::startGlsl()
 
 static void onThreadStarted(mlt_properties owner, GLWidget* self)
 {
+    Q_ASSERT(self);
     Q_UNUSED(owner)
     self->startGlsl();
 }
@@ -576,6 +598,7 @@ void GLWidget::stopGlsl()
 
 static void onThreadStopped(mlt_properties owner, GLWidget* self)
 {
+    Q_ASSERT(self);
     Q_UNUSED(owner)
     self->stopGlsl();
 }
@@ -603,6 +626,7 @@ int GLWidget::reconfigure(bool isMulti)
     if (!m_consumer || !m_consumer->is_valid()) {
         if (serviceName.isEmpty()) {
             m_consumer = new Mlt::FilteredConsumer(profile(), "sdl_audio");
+            Q_ASSERT(m_consumer);
             if (m_consumer->is_valid())
                 serviceName = "sdl_audio";
             else
@@ -613,6 +637,7 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer = new Mlt::FilteredConsumer(profile(), "multi");
         else
             m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toLatin1().constData());
+        Q_ASSERT(m_consumer);
 
         delete m_threadStartEvent;
         m_threadStartEvent = 0;
@@ -744,6 +769,7 @@ void GLWidget::updateTexture(GLuint yName, GLuint uName, GLuint vName)
 void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
 {
 
+    Q_ASSERT(self);
      Mlt::Frame frame(frame_ptr);
 
 
@@ -819,6 +845,7 @@ FrameRenderer::FrameRenderer(QOpenGLContext* shareContext, QSurface* surface)
     m_displayTexture[0] = m_displayTexture[1] = m_displayTexture[2] = 0;
     if (Settings.playerGPU() || shareContext->supportsThreadedOpenGL()) {
         m_context = new QOpenGLContext;
+        Q_ASSERT(m_context);
         m_context->setFormat(shareContext->format());
         m_context->setShareContext(shareContext);
         m_context->create();
@@ -933,6 +960,7 @@ void FrameRenderer::cleanup()
 {
     LOG_DEBUG() << "begin";
     if (m_renderTexture[0] && m_renderTexture[1] && m_renderTexture[2]) {
+        Q_ASSERT(m_context);
         m_context->makeCurrent(m_surface);
         m_context->functions()->glDeleteTextures(3, m_renderTexture);
         if (m_displayTexture[0] && m_displayTexture[1] && m_displayTexture[2])

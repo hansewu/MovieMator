@@ -54,6 +54,7 @@ Controller::Controller()
     m_repo = Mlt::Factory::init();
  //   mlt_register_qtmodule( mlt_factory_repository() );
     m_profile = new Mlt::Profile("atsc_720p_24");
+    Q_ASSERT(m_profile);
     updateAvformatCaching(0);
     LOG_DEBUG() << "end";
 }
@@ -111,11 +112,13 @@ int Controller::open(const QString &url)
     {
         qDebug()<<"open GPU";
         m_producer = new Mlt::Producer(profile(), "abnormal", url.toUtf8().constData());
+        Q_ASSERT(m_producer);
     }
     else
     {
         qDebug()<<"no gpu";
         m_producer = new Mlt::Producer(profile(), url.toUtf8().constData());
+        Q_ASSERT(m_producer);
         //    QString xml = MLT.XML(m_producer);
          //   LOG_DEBUG()<<xml;
 //            for(int index=0; index < tmpplaylist.count(); index++)
@@ -153,6 +156,7 @@ int Controller::open(const QString &url)
             // Reload with correct FPS or with Movit normalizing filters attached.
             delete m_producer;
             m_producer = new Mlt::Producer(profile(), url.toUtf8().constData());
+            Q_ASSERT(m_producer);
         }
         // Convert avformat to avformat-novalidate so that XML loads faster.
         if (!qstrcmp(m_producer->get("mlt_service"), "avformat")) {
@@ -180,6 +184,7 @@ bool Controller::openXML(const QString &filename)
     bool error = true;
     close();
     Producer* producer = new Mlt::Producer(profile(), "xml", filename.toUtf8().constData());
+    Q_ASSERT(producer);
     if (producer->is_valid()) {
         double fps = profile().fps();
         if (!profile().is_explicit()) {
@@ -190,6 +195,7 @@ bool Controller::openXML(const QString &filename)
             // reopen with the correct fps
             delete producer;
             producer = new Mlt::Producer(profile(), "xml", filename.toUtf8().constData());
+            Q_ASSERT(producer);
         }
         producer->set(kShotcutVirtualClip, 1);
         producer->set("resource", filename.toUtf8().constData());
@@ -202,6 +208,8 @@ bool Controller::openXML(const QString &filename)
 
 void Controller::close()
 {
+    Q_ASSERT(m_profile);
+
     LOG_DEBUG() << "begin";
     if (m_profile->is_explicit()) {
         pause();
@@ -316,6 +324,7 @@ void Controller::onJackStopped(int position)
 {
     if (m_producer) {
         if (m_producer->get_speed() != 0) {
+            Q_ASSERT(m_consumer);
             Event *event = m_consumer->setup_wait_for("consumer-sdl-paused");
             int result = m_producer->set_speed(0);
             if (result == 0 && m_consumer->is_valid() && !m_consumer->is_stopped())
@@ -335,6 +344,7 @@ bool Controller::enableJack(bool enable)
 		return true;
 	if (enable && !m_jackFilter) {
 		m_jackFilter = new Mlt::Filter(profile(), "jackrack");
+        Q_ASSERT(m_jackFilter);
 		if (m_jackFilter->is_valid()) {
 			m_consumer->attach(*m_jackFilter);
 			m_consumer->set("audio_off", 1);
@@ -432,6 +442,7 @@ void Controller::refreshConsumer(bool scrubAudio)
 
 void Controller::saveXML(const QString& filename, Service* service, bool withRelativePaths)
 {
+    Q_ASSERT(m_producer);
     LOG_DEBUG() << "begin";
     Consumer c(profile(), "xml", filename.toUtf8().constData());
     Service s(service? service->get_service() : m_producer->get_service());
@@ -474,6 +485,8 @@ void Controller::saveXML(const QString& filename, Service* service, bool withRel
 
 QString Controller::XML(Service* service)
 {
+    Q_ASSERT(m_producer);
+
     LOG_DEBUG() << "begin";
     static const char* propertyName = "string";
     Consumer c(profile(), "xml", propertyName);
@@ -531,6 +544,7 @@ int Controller::consumerChanged()
 
 void Controller::setProfile(const QString& profile_name)
 {
+    Q_ASSERT(m_profile);
     LOG_DEBUG() << "setting to profile" << (profile_name.isEmpty()? "Automatic" : profile_name);
     if (!profile_name.isEmpty()) {
         Mlt::Profile tmp(profile_name.toLatin1().constData());
@@ -797,7 +811,9 @@ void Controller::updateAvformatCaching(int trackCount)
 
 bool Controller::isAudioFilter(const QString &name)
 {
+    Q_ASSERT(m_repo);
     QScopedPointer<Properties> metadata(m_repo->metadata(filter_type, name.toLatin1().constData()));
+    Q_ASSERT(metadata);
     if (metadata->is_valid()) {
         Properties tags(metadata->get_data("tags"));
         if (tags.is_valid()) {
@@ -827,6 +843,7 @@ int Controller::realTime() const
 
 void Controller::setImageDurationFromDefault(Service* service) const
 {
+    Q_ASSERT(m_profile);
     if (service && service->is_valid()) {
         if (isImageProducer(service)) {
             service->set("ttl", 1);
@@ -839,17 +856,20 @@ void Controller::setImageDurationFromDefault(Service* service) const
 
 QUuid Controller::uuid(Mlt::Properties &properties) const
 {
+    Q_ASSERT(properties.is_valid());
     return QUuid(properties.get(kUuidProperty));
 }
 
 void Controller::setUuid(Mlt::Properties &properties, QUuid uid) const
 {
+    Q_ASSERT(properties.is_valid());
     properties.set(kUuidProperty,
             (uid.toByteArray() + '\n').data());
 }
 
 QUuid Controller::ensureHasUuid(Mlt::Properties& properties) const
 {
+    Q_ASSERT(properties.is_valid());
     if (properties.get(kUuidProperty)) {
         return uuid(properties);
     } else {
@@ -861,6 +881,8 @@ QUuid Controller::ensureHasUuid(Mlt::Properties& properties) const
 
 void Controller::copyFilters(Producer& fromProducer, Producer& toProducer)
 {
+    Q_ASSERT(fromProducer.is_valid());
+    Q_ASSERT(toProducer.is_valid());
     LOG_DEBUG() << "begin";
     int count = fromProducer.filter_count();
     for (int i = 0; i < count; i++) {
@@ -879,6 +901,7 @@ void Controller::setSavedProducer(Mlt::Producer* producer)
 
 QString Controller::getHash(Mlt::Properties& properties) const
 {
+    Q_ASSERT(properties.is_valid());
     QString hash = properties.get(kShotcutHashProperty);
     if (hash.isEmpty()) {
         QString service = properties.get("mlt_service");
