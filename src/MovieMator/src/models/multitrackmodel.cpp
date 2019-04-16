@@ -87,7 +87,7 @@ MultitrackModel::MultitrackModel(QObject *parent)
     , m_tractor(0)
     , m_isMakingTransition(false)
 {
-    connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));
+//    connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));//sll:将modify放在mainwindow中建立连接，防止界面更新与数据操作顺序问题
     connect(this, SIGNAL(reloadRequested()), SLOT(reload()), Qt::QueuedConnection);
 }
 

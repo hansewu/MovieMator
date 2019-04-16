@@ -80,6 +80,7 @@ AutoSaveFile* AutoSaveFile::getFile(const QString &filename)
 
     if (info.exists()) {
         result = new AutoSaveFile(filename);
+        Q_ASSERT(result);
         result->setFileName(info.filePath());
         result->m_managedFileNameChanged = false;
     }

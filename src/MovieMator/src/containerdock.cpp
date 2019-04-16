@@ -102,7 +102,10 @@ ContainerDock::ContainerDock(TAB_POSITION tabPosition, QWidget *parent)
 
 void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
 {
+    Q_ASSERT(dock);
+    Q_ASSERT(widget());
     QGridLayout *gLayout = (QGridLayout *)widget()->layout();
+    Q_ASSERT(gLayout);
     if (m_tabPostion == TabPosition_Left)
         gLayout->addWidget(dock,0,1,1,1);
     else if (m_tabPostion == TabPosition_Bottom)
@@ -165,6 +168,7 @@ void ContainerDock::showDock(QDockWidget *dock)
     if(!m_docks.contains(dock))
         return;
 
+    Q_ASSERT(dock);
     if (dock->isVisible())
         return;
 

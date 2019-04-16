@@ -487,6 +487,7 @@ void Player::retranslateUi(QWidget* widget)
 
 void Player::setIn(int pos)
 {
+    Q_ASSERT(m_scrubber);
     m_scrubber->setInPoint(pos);
     if (pos >= 0 && pos > m_previousOut)
         setOut(m_duration - 1);
@@ -494,6 +495,7 @@ void Player::setIn(int pos)
 
 void Player::setOut(int pos)
 {
+    Q_ASSERT(m_scrubber);
     m_scrubber->setOutPoint(pos);
     if (pos >= 0 && pos < m_previousIn)
         setIn(0);
@@ -501,11 +503,13 @@ void Player::setOut(int pos)
 
 void Player::setMarkers(const QList<int> &markers)
 {
+    Q_ASSERT(m_scrubber);
     m_scrubber->setMarkers(markers);
 }
 
 QSize Player::videoSize() const
 {
+    Q_ASSERT(m_videoWidget);
     return m_videoWidget->size();
 }
 
@@ -666,6 +670,7 @@ void Player::postProducerOpened()
 void Player::onMeltedUnitOpened()
 {
     m_isMeltedPlaying = -1; // unknown
+    Q_ASSERT(MLT.producer());
     m_duration = MLT.producer()->get_length();
     m_isSeekable = true;
     MLT.producer()->set("ignore_points", 1);
