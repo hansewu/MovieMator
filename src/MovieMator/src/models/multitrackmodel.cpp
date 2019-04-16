@@ -307,7 +307,7 @@ QModelIndex MultitrackModel::index(int row, int column, const QModelIndex &paren
 //    Q_ASSERT(row >= 0);
 //    Q_ASSERT(row < m_trackList.size());
 //    Q_ASSERT(m_tractor);
-    if(!m_tractor) return;
+    if(!m_tractor) return QModelIndex();
 
     if (column > 0)
         return QModelIndex();
