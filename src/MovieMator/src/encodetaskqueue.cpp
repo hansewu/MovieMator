@@ -39,7 +39,7 @@ EncodeTaskQueue& EncodeTaskQueue::singleton(QObject *parent){
 
 void EncodeTaskQueue::addTask(AbstractTask *task)
 {
-
+    Q_ASSERT(task);
     int row = rowCount();
     QList<QStandardItem*> items;
     items << new QStandardItem(task->label());
@@ -94,6 +94,7 @@ void EncodeTaskQueue::cleanup()
 
 AbstractTask *EncodeTaskQueue::taskFromIndex(const QModelIndex &index) const
 {
+    Q_ASSERT(index.row() < m_tasks.size());
     return m_tasks.at(index.row());
 }
 
@@ -127,12 +128,14 @@ void EncodeTaskQueue::stopTasks()
 void EncodeTaskQueue::onProgressUpdated(QModelIndex index, uint percent)
 {
     QStandardItem* item = itemFromIndex(index);
+    Q_ASSERT(item);
     if (item)
         item->setText(QString("%1%").arg(percent));
 }
 
 void EncodeTaskQueue::onFinished(AbstractTask *task, bool isSuccess)
 {
+    Q_ASSERT(task);
     QStandardItem* item = itemFromIndex(task->modelIndex());
     if (item) {
         if (isSuccess)

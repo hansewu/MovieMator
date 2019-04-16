@@ -61,6 +61,7 @@ void AppendCommand::redo_impl()
     LOG_DEBUG() << "trackIndex" << m_trackIndex;
     m_undoHelper.recordBeforeState();
     Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    Q_ASSERT(producer.is_valid());
     m_model.appendClip(m_trackIndex, producer);
     m_undoHelper.recordAfterState();
 }
@@ -88,6 +89,7 @@ void InsertCommand::redo_impl()
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    Q_ASSERT(clip.is_valid());
     m_model.insertClip(m_trackIndex, clip, m_position);
     m_undoHelper.recordAfterState();
 }
@@ -115,6 +117,7 @@ void OverwriteCommand::redo_impl()
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    Q_ASSERT(clip.is_valid());
     m_playlistXml = m_model.overwrite(m_trackIndex, clip, m_position);
     m_undoHelper.recordAfterState();
 }
@@ -354,6 +357,10 @@ void TrimClipInCommand::undo_impl()
 bool TrimClipInCommand::mergeWith(const AbstractCommand *other)
 {
     const TrimClipInCommand* that = static_cast<const TrimClipInCommand*>(other);
+    Q_ASSERT(that);
+    if (!that) {
+        return false;
+    }
     if (that->id() != id() || that->m_trackIndex != m_trackIndex || (that->m_clipIndex != m_clipIndex && that->m_clipIndex != m_originalClipIndex))
         return false;
     m_undoHelper.recordAfterState();
@@ -391,6 +398,10 @@ void TrimClipOutCommand::undo_impl()
 bool TrimClipOutCommand::mergeWith(const AbstractCommand *other)
 {
     const TrimClipOutCommand* that = static_cast<const TrimClipOutCommand*>(other);
+    Q_ASSERT(that);
+    if (!that) {
+        return false;
+    }
     if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
         return false;
     m_undoHelper.recordAfterState();
@@ -447,6 +458,10 @@ void FadeInCommand::undo_impl()
 bool FadeInCommand::mergeWith(const AbstractCommand *other)
 {
     const FadeInCommand* that = static_cast<const FadeInCommand*>(other);
+    Q_ASSERT(that);
+    if (!that) {
+        return false;
+    }
     if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
         return false;
     m_duration = static_cast<const FadeInCommand*>(other)->m_duration;
@@ -479,6 +494,10 @@ void FadeOutCommand::undo_impl()
 bool FadeOutCommand::mergeWith(const AbstractCommand *other)
 {
     const FadeOutCommand* that = static_cast<const FadeOutCommand*>(other);
+    Q_ASSERT(that);
+    if (!that) {
+        return false;
+    }
     if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
         return false;
     m_duration = static_cast<const FadeOutCommand*>(other)->m_duration;
@@ -559,6 +578,10 @@ void TrimTransitionInCommand::undo_impl()
 bool TrimTransitionInCommand::mergeWith(const AbstractCommand *other)
 {
     const TrimTransitionInCommand* that = static_cast<const TrimTransitionInCommand*>(other);
+    Q_ASSERT(that);
+    if (!that) {
+        return false;
+    }
     if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
         return false;
     m_delta += static_cast<const TrimTransitionInCommand*>(other)->m_delta;
@@ -597,6 +620,10 @@ void TrimTransitionOutCommand::undo_impl()
 bool TrimTransitionOutCommand::mergeWith(const AbstractCommand *other)
 {
     const TrimTransitionOutCommand* that = static_cast<const TrimTransitionOutCommand*>(other);
+    Q_ASSERT(that);
+    if (!that) {
+        return false;
+    }
     if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
         return false;
     m_delta += static_cast<const TrimTransitionOutCommand*>(other)->m_delta;
@@ -634,6 +661,10 @@ void AddTransitionByTrimInCommand::undo_impl()
 bool AddTransitionByTrimInCommand::mergeWith(const AbstractCommand *other)
 {
     const AddTransitionByTrimInCommand* that = static_cast<const AddTransitionByTrimInCommand*>(other);
+    Q_ASSERT(that);
+    if (!that) {
+        return false;
+    }
     if (that->id() != id() || that->m_trackIndex != m_trackIndex ||
         (that->m_clipIndex != m_clipIndex && m_clipIndex != that->m_clipIndex - 1))
         return false;
@@ -671,6 +702,10 @@ void AddTransitionByTrimOutCommand::undo_impl()
 bool AddTransitionByTrimOutCommand::mergeWith(const AbstractCommand *other)
 {
     const AddTransitionByTrimOutCommand* that = static_cast<const AddTransitionByTrimOutCommand*>(other);
+    Q_ASSERT(that);
+    if (!that) {
+        return false;
+    }
     if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
         return false;
     return true;
@@ -748,8 +783,14 @@ RemoveTrackCommand::RemoveTrackCommand(MultitrackModel& model, int trackIndex, A
         setText(QObject::tr("Remove video track"));
 
     // Save track XML.
+    Q_ASSERT(m_trackIndex >= 0);
+    Q_ASSERT(m_trackIndex < m_model.trackList().size());
     int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
+    Q_ASSERT(m_model.tractor());
+    Q_ASSERT(m_model.tractor()->multitrack());
     QScopedPointer<Mlt::Producer> producer(m_model.tractor()->multitrack()->track(mlt_index));
+    Q_ASSERT(producer);
+    Q_ASSERT(producer->is_valid());
     if (producer && producer->is_valid()) {
         m_xml = MLT.XML(producer.data());
         m_trackName = QString::fromUtf8(producer->get(kTrackNameProperty));
@@ -772,16 +813,26 @@ void RemoveTrackCommand::undo_impl()
 
     // Restore track from XML.
     Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    Q_ASSERT(producer.is_valid());
     Mlt::Playlist playlist(producer);
+    Q_ASSERT(playlist.is_valid());
     m_model.appendFromPlaylist(&playlist, m_trackIndex);
 
     // Re-attach filters.
     int n = playlist.filter_count();
     if (n > 0) {
+        Q_ASSERT(m_trackIndex >= 0);
+        Q_ASSERT(m_trackIndex < m_model.trackList().size());
         int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
+        Q_ASSERT(m_model.tractor());
+        Q_ASSERT(m_model.tractor()->multitrack());
         QScopedPointer<Mlt::Producer> producer(m_model.tractor()->multitrack()->track(mlt_index));
+        Q_ASSERT(producer);
+        Q_ASSERT(producer->is_valid());
         for (int i = 0; i < n; ++i) {
             QScopedPointer<Mlt::Filter> filter(playlist.filter(i));
+            Q_ASSERT(filter);
+            Q_ASSERT(filter->is_valid());
             if (filter && filter->is_valid())
                 producer->attach(*filter);
         }
@@ -838,6 +889,8 @@ void UpdateCommand::redo_impl()
     if (!m_isFirstRedo)
         m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xmlAfter.toUtf8().constData());
+    Q_ASSERT(clip.is_valid());
+    Q_ASSERT(m_timeline.model());
 //    m_timeline.model()->liftClip(m_trackIndex, m_clipIndex);
 //    m_timeline.model()->overwrite(m_trackIndex, clip, m_position, false);
     m_timeline.model()->removeClip(m_trackIndex, m_clipIndex);
@@ -961,6 +1014,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name, double from_valu
 {
     m_bFirstExec = true;
     LOG_DEBUG() << "FilterCommand: " <<  name;
+    Q_ASSERT(filter);
     m_filter = new Mlt::Filter(filter->get_filter());
     m_keyName   = name;
 
@@ -987,6 +1041,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  int from_value,
 : AbstractCommand(parent)
 {
     m_bFirstExec = true;
+    Q_ASSERT(filter);
     m_filter = new Mlt::Filter(filter->get_filter());
     m_keyName   = name;
     m_from_value    = QVariant(from_value);
@@ -997,6 +1052,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QString from_va
 : AbstractCommand(parent)
 {
     m_bFirstExec = true;
+    Q_ASSERT(filter);
     m_filter = new Mlt::Filter(filter->get_filter());
     m_keyName   = name;
     m_from_value    = QVariant(from_value);
@@ -1007,6 +1063,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_val
 : AbstractCommand(parent)
 {
     m_bFirstExec = true;
+    Q_ASSERT(filter);
     m_filter = new Mlt::Filter(filter->get_filter());
     m_keyName   = name;
     m_from_value = QVariant(from_value);
@@ -1044,6 +1101,11 @@ int FilterCommand::transitionValue(QVariant &varFrom, QVariant &varTo, Mlt::Filt
 
     int found_key = which_rotate_command(name);
     if(found_key < 0 )  return -2;
+
+    Q_ASSERT(filter);
+    if (!filter) {
+        return -1;
+    }
 
     double value_from[5], value_to[5];
     for(int i=0; i<5; i++)
@@ -1093,10 +1155,18 @@ int FilterCommand::transitionValue(QVariant &varFrom, QVariant &varTo, Mlt::Filt
 
 bool FilterCommand::mergeWith(const AbstractCommand *other)
 {
+    Q_ASSERT(other);
+    if (!other) {
+        return false;
+    }
     if (other->id() != id()) // make sure other is also an AppendText command
               return false;
 
     const FilterCommand *other_command =  static_cast<const FilterCommand*>(other);
+    Q_ASSERT(other_command);
+    if (!other_command) {
+        return false;
+    }
     if(other_command->m_filter->get_filter() != m_filter->get_filter()|| m_keyName.isEmpty())
         return false;
 
@@ -1183,6 +1253,7 @@ KeyFrameCommand::KeyFrameCommand(Mlt::Filter* filter, const QVector<key_frame_it
 ,m_to_value(to_value)
 {
     m_bFirstExec    = true;
+    Q_ASSERT(filter);
     m_filter        = new Mlt::Filter(filter->get_filter());
 
     m_execTime.start();
@@ -1215,10 +1286,15 @@ void KeyFrameCommand::undo_impl()
 
 bool KeyFrameCommand::mergeWith(const AbstractCommand *other)
 {
+    Q_ASSERT(other);
+    if (!other) {
+        return false;
+    }
     if (other->id() != id()) // make sure other is also an AppendText command
               return false;
 
     const KeyFrameCommand *other_command =  static_cast<const KeyFrameCommand*>(other);
+    Q_ASSERT(other_command);
     if(other_command->m_filter->get_filter() != m_filter->get_filter())
     {
             return false;
@@ -1232,12 +1308,13 @@ bool KeyFrameCommand::mergeWith(const AbstractCommand *other)
 
 void KeyFrameCommand::set_value(const QVector<key_frame_item>  &value)
 {
+    Q_ASSERT(MAIN.filterController());
     MAIN.filterController()->refreshKeyFrame(m_filter, value);
 }
 
 void KeyFrameCommand::notify()
 {
-
+    Q_ASSERT(MAIN.filterController());
     MAIN.filterController()->refreshCurrentFilter(m_filter);
     MLT.refreshConsumer();
 
@@ -1263,6 +1340,8 @@ void FilterAttachCommand::redo_impl()
         return;
     }
 
+    Q_ASSERT(MAIN.filterController());
+
     if(m_bAdd)
     {
         MAIN.filterController()->attachedModel()->add(m_meta, true);
@@ -1276,6 +1355,8 @@ void FilterAttachCommand::redo_impl()
 
 void FilterAttachCommand::undo_impl()
 {
+    Q_ASSERT(MAIN.filterController());
+
     if(m_bAdd)
     {
         MAIN.filterController()->attachedModel()->remove(m_rowIndex, true);
@@ -1316,11 +1397,15 @@ void FilterMoveCommand::redo_impl()
         m_bFirstExec = false;
         return;
     }
+    Q_ASSERT(MAIN.filterController());
+    Q_ASSERT(MAIN.filterController()->attachedModel());
     MAIN.filterController()->attachedModel()->move(m_rowIndexFrom, m_rowIndexTo, true);
 }
 
 void FilterMoveCommand::undo_impl()
 {
+    Q_ASSERT(MAIN.filterController());
+    Q_ASSERT(MAIN.filterController()->attachedModel());
     MAIN.filterController()->attachedModel()->move(m_rowIndexTo, m_rowIndexFrom, true);
 }
 
@@ -1349,11 +1434,13 @@ void ClipsSelectCommand::redo_impl()
         return;
     }
 
+    Q_ASSERT(MAIN.timelineDock());
     MAIN.timelineDock()->setSelection(m_newSelection, m_newTrackIndex, m_bNewIsMultitrack, true);
 }
 
 void ClipsSelectCommand::undo_impl()
 {
+    Q_ASSERT(MAIN.timelineDock());
     MAIN.timelineDock()->setSelection(m_oldSelection, m_oldTrackIndex, m_bOldIsMultitrack, true);
 }
 

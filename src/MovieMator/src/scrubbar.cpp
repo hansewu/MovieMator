@@ -119,7 +119,7 @@ void ScrubBar::setMarkers(const QList<int> &list)
 void ScrubBar::mousePressEvent(QMouseEvent * event)
 {
 
-
+    Q_ASSERT(event);
      int x = event->x() - margin;
 //     int in = m_in * m_scale;
 //     int out = m_out * m_scale;
@@ -170,6 +170,7 @@ void ScrubBar::mouseReleaseEvent(QMouseEvent * event)
 
 void ScrubBar::mouseMoveEvent(QMouseEvent * event)
 {
+    Q_ASSERT(event);
     int x = event->x() - margin;
     int pos = CLAMP(x / m_scale, 0, m_max);
 

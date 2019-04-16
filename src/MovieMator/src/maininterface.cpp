@@ -38,6 +38,8 @@ MainInterface& MainInterface::singleton()
 FILE_HANDLE MainInterface::openFile(QString filepath)
 {
     Mlt::Producer *producer = new Mlt::Producer(MLT.profile(), filepath.toUtf8().constData());
+    Q_ASSERT(producer);
+    Q_ASSERT(producer->is_valid());
     if (producer->is_valid()) {
         MLT.setImageDurationFromDefault(producer);
         //if (filepath.endsWith(".mlt"))
@@ -68,7 +70,9 @@ int MainInterface::playFile(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
     Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
-    if (!producer->is_valid())
+    Q_ASSERT(producer);
+    Q_ASSERT(producer->is_valid());
+    if (!producer || !producer->is_valid())
         return -1;
 
     QString xml = MLT.XML(producer);
@@ -85,7 +89,9 @@ void MainInterface::showProperties(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
     Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
-    if (!producer->is_valid())
+    Q_ASSERT(producer);
+    Q_ASSERT(producer->is_valid());
+    if (!producer || !producer->is_valid())
         return;
 
     QString xml = MLT.XML(producer);
@@ -102,6 +108,7 @@ int MainInterface::addToTimeLine(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
     Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
+    Q_ASSERT(producer->is_valid());
     if (!producer->is_valid())
         return -1;
 
@@ -245,6 +252,10 @@ const QString& MainInterface::getXMLMimeTypeForDragDrop()
 FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
 {
     Mlt::Producer *producer = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+    Q_ASSERT(producer);
+    if (!producer) {
+        return 0;
+    }
     if (!producer->is_valid())
     {
         delete producer;

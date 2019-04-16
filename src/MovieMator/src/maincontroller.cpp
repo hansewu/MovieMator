@@ -111,6 +111,8 @@ int MainController::appendToTimelineFromPath(int trackIndex, const QString &path
     }
 
     Mlt::Producer *p = new Mlt::Producer(MLT.profile(), path.toUtf8().constData());
+    Q_ASSERT(p);
+    Q_ASSERT(p->is_valid());
     if (p->is_valid()) {
         //if (path.endsWith(".mlt"))
         //    p->set(kShotcutVirtualClip, 1);
@@ -156,15 +158,21 @@ void MainController::removeTrack(int trackIndex)
 
 void MainController::splitClip(int trackIndex, int clipIndex, int position)
 {
+    Q_ASSERT(clipIndex >= 0 && trackIndex >= 0);
     if (trackIndex < 0 || clipIndex < 0)
         return;
     if (clipIndex >= 0 && trackIndex >= 0) {
+        Q_ASSERT(trackIndex < m_multitrackModel.trackList().size());
         int i = m_multitrackModel.trackList().at(trackIndex).mlt_index;
+        Q_ASSERT(m_multitrackModel.tractor());
         QScopedPointer<Mlt::Producer> track(m_multitrackModel.tractor()->track(i));
+        Q_ASSERT(track);
         if (track) {
             Mlt::Playlist playlist(*track);
+            Q_ASSERT(playlist.is_valid());
             if (!m_multitrackModel.isTransition(playlist, clipIndex)) {
                 QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+                Q_ASSERT(info);
                 if (info && position >= info->start + 2 && position < info->start + info->frame_count - 1 - 2) {
                     MAIN.undoStack()->push(
                         new Timeline::SplitCommand(m_multitrackModel, trackIndex, clipIndex, position));
@@ -178,11 +186,17 @@ void MainController::splitClip(int trackIndex, int clipIndex, int position)
 Mlt::ClipInfo *MainController::getClipInfo(int trackIndex, int clipIndex)
 {
     Mlt::ClipInfo* result = 0;
+    Q_ASSERT(clipIndex >= 0 && trackIndex >= 0);
     if (clipIndex >= 0 && trackIndex >= 0) {
+        Q_ASSERT(trackIndex < m_multitrackModel.trackList().size());
         int i = m_multitrackModel.trackList().at(trackIndex).mlt_index;
+        Q_ASSERT(m_multitrackModel.tractor());
         QScopedPointer<Mlt::Producer> track(m_multitrackModel.tractor()->track(i));
+        Q_ASSERT(track);
         if (track) {
             Mlt::Playlist playlist(*track);
+            Q_ASSERT(playlist.is_valid());
+            Q_ASSERT(clipIndex < playlist.count());
             result = playlist.clip_info(clipIndex);
         }
     }
@@ -196,7 +210,10 @@ void MainController::setTransitionDuration(int trackIndex, int clipIndex, int du
 
 Mlt::Transition *MainController::getTransition(Mlt::Producer *producer, const QString &name)
 {
+    Q_ASSERT(producer);
     QScopedPointer<Mlt::Service> service(producer->producer());
+    Q_ASSERT(service);
+    Q_ASSERT(service->is_valid());
     while (service && service->is_valid()) {
         if (service->type() == transition_type) {
             Mlt::Transition transition(*service);
@@ -213,18 +230,25 @@ Mlt::Transition *MainController::getTransition(Mlt::Producer *producer, const QS
 
 void MainController::setTransitionType(int trackIndex, int clipIndex, int transitionIndex)
 {
+    Q_ASSERT(m_multitrackModel.trackList().count());
     if (!m_multitrackModel.trackList().count())
         return;
 
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0 && transitionIndex >= 0);
 
+    Q_ASSERT(trackIndex < m_multitrackModel.trackList().size());
     int i = m_multitrackModel.trackList().at(trackIndex).mlt_index;
+    Q_ASSERT(m_multitrackModel.tractor());
     QScopedPointer<Mlt::Producer> track(m_multitrackModel.tractor()->track(i));
+    Q_ASSERT(track);
 
     Mlt::Producer *producer = 0;
     if (track) {
         Mlt::Playlist playlist(*track);
+        Q_ASSERT(playlist.is_valid());
+        Q_ASSERT(clipIndex < playlist.count());
         Mlt::ClipInfo* i = playlist.clip_info(clipIndex);
+        Q_ASSERT(i);
         if (i) {
             producer = i->producer;
         }
@@ -234,6 +258,8 @@ void MainController::setTransitionType(int trackIndex, int clipIndex, int transi
         return;
 
     QScopedPointer<Mlt::Transition> transition(getTransition(producer, "luma"));
+    Q_ASSERT(transition);
+    Q_ASSERT(transition->is_valid());
 
     if (transition && transition->is_valid()) {
         if (transitionIndex == 0) {
@@ -257,15 +283,22 @@ void MainController::setTransitionType(int trackIndex, int clipIndex, int transi
 void MainController::addTransition(int trackIndex, int clipIndex, double duration)
 {
 
+    Q_ASSERT(trackIndex >= 0);
+    Q_ASSERT(clipIndex >= 0);
+    Q_ASSERT(trackIndex < m_multitrackModel.trackList().size());
     const Track& track = m_multitrackModel.trackList().value(trackIndex);
 
 
     int i = m_multitrackModel.trackList().at(trackIndex).mlt_index;
 
     int clipStart = 0;
+    Q_ASSERT(m_multitrackModel.tractor());
     QScopedPointer<Mlt::Producer> trackProducer(m_multitrackModel.tractor()->track(i));
+    Q_ASSERT(trackProducer);
     if (trackProducer) {
         Mlt::Playlist playlist(*trackProducer);
+        Q_ASSERT(playlist.is_valid());
+        Q_ASSERT(clipIndex < playlist.count());
         clipStart = playlist.clip_start(clipIndex);
         if (m_multitrackModel.addTransitionValid(trackIndex, trackIndex, clipIndex, clipStart + duration * MLT.profile().fps() ))
                 MAIN.undoStack()->push(
@@ -280,6 +313,7 @@ int MainController::getStartPositionOfClip(int trackIndex, int clipIndex)
 
 void MainController::setClipSpeed(int trackIndex, int clipIndex, double speed)
 {
+    Q_ASSERT(MAIN.timelineDock());
     MAIN.timelineDock()->setCurrentTrack(trackIndex);
     MAIN.timelineDock()->setSelection(QList<int>() << clipIndex, trackIndex);
     m_multitrackModel.setClipSpeed(trackIndex, clipIndex, speed);
@@ -287,6 +321,7 @@ void MainController::setClipSpeed(int trackIndex, int clipIndex, double speed)
 
 void MainController::addFilter(int trackIndex, int clipIndex, const QString &filterID)
 {
+    Q_ASSERT(MAIN.timelineDock());
     MAIN.showFilterDock();
     MAIN.timelineDock()->setCurrentTrack(trackIndex);
     MAIN.timelineDock()->setSelection(QList<int>() << clipIndex, trackIndex);
@@ -299,11 +334,13 @@ void MainController::removeFilter(int trackIndex, int clipIndex, int row)
 //    MAIN.showFilterDock();
 //    MAIN.timelineDock()->setCurrentTrack(trackIndex);
 //    MAIN.timelineDock()->setSelection(QList<int>() << clipIndex);
+    Q_ASSERT(MAIN.filterController());
     MAIN.filterController()->removeFilter(row);
 }
 
 void MainController::copyClip(int trackIndex, int clipIndex)
 {
+    Q_ASSERT(MAIN.timelineDock());
     MAIN.timelineDock()->setCurrentTrack(trackIndex);
     MAIN.timelineDock()->setSelection(QList<int>() << clipIndex, trackIndex);
     MAIN.on_actionCopy_triggered();
@@ -311,6 +348,7 @@ void MainController::copyClip(int trackIndex, int clipIndex)
 
 void MainController::cutClip(int trackIndex, int clipIndex)
 {
+    Q_ASSERT(MAIN.timelineDock());
     MAIN.timelineDock()->setCurrentTrack(trackIndex);
     MAIN.timelineDock()->setSelection(QList<int>() << clipIndex, trackIndex);
     MAIN.on_actionCut_triggered();
@@ -318,6 +356,7 @@ void MainController::cutClip(int trackIndex, int clipIndex)
 
 void MainController::pasteClip(int trackIndex, int position)
 {
+    Q_ASSERT(MAIN.timelineDock());
     MAIN.timelineDock()->setCurrentTrack(trackIndex);
     MAIN.timelineDock()->setPosition(position);
     MAIN.on_actionPaste_triggered();
@@ -333,16 +372,19 @@ void MainController::setProfile(const QString &name)
 
 void MainController::undo()
 {
+    Q_ASSERT(MAIN.undoStack());
     MAIN.undoStack()->undo();
 }
 
 void MainController::redo()
 {
+    Q_ASSERT(MAIN.undoStack());
     MAIN.undoStack()->redo();
 }
 
 void MainController::exportFile(const QString &path)
 {
+    Q_ASSERT(MAIN.encodeDock());
     MAIN.encodeDock()->enqueueMelt(path, -1);
 }
 

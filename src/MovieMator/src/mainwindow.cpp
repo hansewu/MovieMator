@@ -775,6 +775,11 @@ void MainWindow::onTimelineClipSelected()
     // Synchronize navigation position with timeline selection.
     TimelineDock * t = m_timelineDock;
 
+    Q_ASSERT(t);
+    if (!t) {
+        return;
+    }
+
     if (t->selection().isEmpty())
         return;
 
@@ -793,6 +798,8 @@ void MainWindow::onAddAllToTimeline(Mlt::Playlist* playlist)
     // We stop the player because of a bug on Windows that results in some
     // strange memory leak when using Add All To Timeline, more noticeable
     // with (high res?) still image files.
+    Q_ASSERT(m_player);
+    Q_ASSERT(m_timelineDock);
     if (MLT.isSeekable())
         m_player->pause();
     else
@@ -1107,7 +1114,9 @@ void MainWindow::setupSettingsMenu()
 
 QAction* MainWindow::addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name)
 {
+    Q_ASSERT(actionGroup);
     QAction* action = new QAction(desc, this);
+    Q_ASSERT(action);
     action->setCheckable(true);
     action->setData(name);
     actionGroup->addAction(action);
@@ -1116,6 +1125,11 @@ QAction* MainWindow::addProfile(QActionGroup* actionGroup, const QString& desc, 
 
 void MainWindow::open(Mlt::Producer* producer)
 {
+    Q_ASSERT(producer);
+    if (!producer) {
+        return;
+    }
+
     if (!producer->is_valid())
         showStatusMessage(tr("Failed to open "));
     else if (producer->get_int("error"))
@@ -1287,6 +1301,7 @@ bool MainWindow::checkAutoSave(QString &url)
 
 void MainWindow::stepLeftBySeconds(int sec)
 {
+    Q_ASSERT(m_player);
     m_player->seek(m_player->position() + sec * qRound(MLT.profile().fps()));
 }
 
@@ -1352,6 +1367,7 @@ void MainWindow::setProfile(const QString &profile_name)
 
 static void autosaveTask(MainWindow* p)
 {
+    Q_ASSERT(p);
     LOG_DEBUG() << "running";
     p->doAutosave();
 }
@@ -1370,6 +1386,7 @@ void MainWindow::updateAutoSave()
 
 static void openFileTask(MainWindow *p, QString url, const Mlt::Properties* properties)
 {
+    Q_ASSERT(p);
     LOG_DEBUG() << "Open project";
     p->open1(url, properties);
     emit p->hideProgressDialog();
@@ -1487,6 +1504,8 @@ void MainWindow::open1(QString url, const Mlt::Properties *properties)
 {
     if (!MLT.open(url)) {
         Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
+        Q_ASSERT(props);
+        Q_ASSERT(props->is_valid());
         if (props && props->is_valid())
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
         m_player->setPauseAfterOpen(!MLT.isClip());
@@ -1617,6 +1636,7 @@ void MainWindow::openFiles(const QStringList &list)
 
 void MainWindow::openCut(Mlt::Producer* producer)
 {
+    Q_ASSERT(producer);
     //播放列表双击播放文件和右键播放，需要把这一句屏蔽
 //    m_player->setPauseAfterOpen(true);
     open(producer);
@@ -1625,6 +1645,8 @@ void MainWindow::openCut(Mlt::Producer* producer)
 
 void MainWindow::showStatusMessage(QAction* action, int timeoutSeconds)
 {
+    Q_ASSERT(action);
+    Q_ASSERT(m_player);
     // This object takes ownership of the passed action.
     // This version does not currently log its message.
     m_statusBarAction.reset(action);
@@ -1969,6 +1991,8 @@ void MainWindow::on_actionAbout_TVE_triggered()
 
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
+    Q_ASSERT(event);
+
     bool handled = true;
 
 
@@ -2333,6 +2357,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 
 void MainWindow::keyReleaseEvent(QKeyEvent* event)
 {
+    Q_ASSERT(event);
     if (event->key() == Qt::Key_K)
         m_isKKeyPressed = false;
     else
@@ -2343,6 +2368,10 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event)
 
 bool MainWindow::eventFilter(QObject* target, QEvent* event)
 {
+    Q_ASSERT(event);
+    if (!event) {
+        return false;
+    }
     if (event->type() == QEvent::Wheel)
     {
     //    const QMetaObject *mobj = target->metaObject();
@@ -2393,12 +2422,15 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
 {
+    Q_ASSERT(event);
     event->acceptProposedAction();
 }
 
 void MainWindow::dropEvent(QDropEvent *event)
 {
+    Q_ASSERT(event);
     const QMimeData *mimeData = event->mimeData();
+    Q_ASSERT(mimeData);
 
     if (mimeData->hasFormat("application/x-qabstractitemmodeldatalist")) {
         QByteArray encoded = mimeData->data("application/x-qabstractitemmodeldatalist");
@@ -2434,6 +2466,7 @@ void MainWindow::dropEvent(QDropEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
+    Q_ASSERT(event);
     if (continueJobsRunning() && continueModified()) {
 //        if (!m_htmlEditor || m_htmlEditor->close())
         {
@@ -2796,11 +2829,13 @@ void MainWindow::onFiltersDockTriggered(bool checked)
 void MainWindow::onPlaylistCreated()
 {
     if (!playlist() || playlist()->count() == 0) return;
+    Q_ASSERT(m_player);
     m_player->enableTab(Player::ProjectTabIndex, true);
 }
 
 void MainWindow::onPlaylistLoaded()
 {
+    Q_ASSERT(m_player);
     updateMarkers();
     m_player->enableTab(Player::ProjectTabIndex, true);
 }
@@ -3017,6 +3052,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
     QWidget* advancedW = 0; //视频高级属性
     QScrollArea* advancedScrollArea = (QScrollArea*) m_propertiesDock->widget(); //视频高级属性
 
+//    Q_ASSERT(producer);//会有空的调用
+//    Q_ASSERT(producer->is_valid());
     if (!producer || !producer->is_valid()
             || producer->get("moviemator:imageName")) {
         if (scrollArea->widget())
@@ -3430,6 +3467,7 @@ void MainWindow::on_actionGPU_triggered(bool checked)
 
 void MainWindow::onExternalTriggered(QAction *action)
 {
+    Q_ASSERT(action);
     LOG_DEBUG() << action->data().toString();
     bool isExternal = !action->data().toString().isEmpty();
     Settings.setPlayerExternal(action->data().toString());
@@ -3480,6 +3518,7 @@ void MainWindow::onExternalTriggered(QAction *action)
 
 void MainWindow::onKeyerTriggered(QAction *action)
 {
+    Q_ASSERT(action);
     LOG_DEBUG() << action->data().toString();
     MLT.videoWidget()->setProperty("keyer", action->data());
     MLT.consumerChanged();
@@ -3488,6 +3527,7 @@ void MainWindow::onKeyerTriggered(QAction *action)
 
 void MainWindow::onProfileTriggered(QAction *action)
 {
+    Q_ASSERT(action);
     Settings.setPlayerProfile(action->data().toString());
     setProfile(action->data().toString());
     MLT.restart();
@@ -3719,6 +3759,7 @@ void MainWindow::onPlayerTabIndexChanged(int index)
 
 void MainWindow::onUpgradeCheckFinished(QNetworkReply* reply)
 {
+    Q_ASSERT(reply);
     if (!reply->error()) {
         QByteArray response = reply->readAll();
         LOG_DEBUG() << "response: " << response;
@@ -4317,6 +4358,7 @@ void MainWindow::initParentDockForPropteriesDock()
 
 void MainWindow::addResourceDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
 {
+    Q_ASSERT(dock);
     dock->setFeatures(QDockWidget::NoDockWidgetFeatures);
     dock->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     dock->setMinimumSize(300, 272);
@@ -4327,6 +4369,7 @@ void MainWindow::addResourceDock(QDockWidget *dock, QString tabButtonTitle, QIco
 
 void MainWindow::addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
 {
+    Q_ASSERT(dock);
     dock->setFeatures(QDockWidget::NoDockWidgetFeatures);
     dock->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     dock->setMinimumSize(410, 272);
@@ -4535,6 +4578,7 @@ void MainWindow::onExportTemplate()
 //加载模板信息
 void MainWindow::loadTemplateInfo(Mlt::Producer *producer)
 {
+    Q_ASSERT(producer);
     if (!producer || !producer->is_valid())
     {
        m_templateEditor->setProducer(0);
