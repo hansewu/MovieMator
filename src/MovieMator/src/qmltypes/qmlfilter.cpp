@@ -919,14 +919,15 @@ void QmlFilter::combineAllKeyFramePara()
         int keyFrameCount = m_keyFrameList.count();
         if(keyFrameCount>0)
         {
-            key_frame_item para1 = m_keyFrameList.at(0);
-            int paraCount = para1.paraMap.keys().count();
+//            key_frame_item para1 = m_keyFrameList.at(0);
+//            int paraCount = para1.paraMap.keys().count();
 
 //           QVector<QString> str(paraCount);
            for(int index=0; index<keyFrameCount; index++)
           {
                key_frame_item para = m_keyFrameList.at(index);
               // paraCount = para.paraMap.keys().count();
+               int paraCount = para.paraMap.keys().count();
               for(int keyIndex=0; keyIndex<paraCount; keyIndex++)
               {
 
@@ -936,7 +937,8 @@ void QmlFilter::combineAllKeyFramePara()
                //duration = filter.out - filter.in + 1;应该等于没有split的producer长度
                int duration = MAIN.timelineDock()->getCurrentClipParentLength();
 
-                QString key = para1.paraMap.keys().at(keyIndex);
+//                QString key = para1.paraMap.keys().at(keyIndex);
+                QString key = para.paraMap.keys().at(keyIndex);
                 QString value = para.paraMap.values().at(keyIndex);
 
 
