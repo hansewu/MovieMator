@@ -464,7 +464,7 @@ void RecentDock::on_listView_customContextMenuRequested(const QPoint &pos)
 void RecentDock::on_actionRemove_triggered()
 {
     Q_ASSERT(m_currentListView);
-    Q_ASSERT(m_currentIndex.isValid());
+//    Q_ASSERT(m_currentIndex.isValid());//当list为空时，点击toolbar上的remove会出现m_currentIndex无效
     if(!m_currentListView || !m_currentIndex.isValid())
     {
         return;
@@ -650,5 +650,10 @@ void RecentDock_add(QString filePath)
 void RecentDock_remove(QString filePath)
 {
     instance->remove(filePath);
+}
+
+//删除选中项
+void RecentDock_removeSelectedItem() {
+    instance->on_actionRemove_triggered();
 }
 

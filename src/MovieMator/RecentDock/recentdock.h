@@ -75,9 +75,12 @@ private:
 
     QMap<int, QString> m_map;
 
+public slots:
+    void on_actionRemove_triggered();
+
 private slots:
     void on_lineEdit_textChanged(const QString& search);
-    void on_actionRemove_triggered();
+//    void on_actionRemove_triggered();
     void on_actionRemoveAll_triggered();
     void on_actionPlay_triggered();
     void on_actionProperties_triggered();
