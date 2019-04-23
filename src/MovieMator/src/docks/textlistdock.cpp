@@ -24,7 +24,7 @@
 #include <qmlutilities.h>
 #include "qmltypes/qmltextmetadata.h"
 #include "shotcut_mlt_properties.h"
-#include <commands/playlistcommands.h>
+//#include <commands/playlistcommands.h>
 #include <QMenu>
 #include <Logger.h>
 #include <QUrl>

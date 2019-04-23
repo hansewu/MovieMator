@@ -51,7 +51,7 @@
 #include "docks/encodedock.h"
 #include "docks/jobsdock.h"
 #include "jobqueue.h"
-#include <playlistdock.h>
+//#include <playlistdock.h>
 #include "glwidget.h"
 #include "mvcp/meltedserverdock.h"
 #include "mvcp/meltedplaylistdock.h"
@@ -71,7 +71,7 @@
 #include "qmltypes/mmqmlutilities.h"
 #include <qmlapplication.h>
 #include "autosavefile.h"
-#include <commands/playlistcommands.h>
+//#include <commands/playlistcommands.h>
 #include "shotcut_mlt_properties.h"
 #include "widgets/avfoundationproducerwidget.h"
 #include "dialogs/textviewerdialog.h"
@@ -94,14 +94,12 @@
 #include "docks/encodetaskdock.h"
 #include "encodetaskqueue.h"
 #include "dialogs/invalidprojectdialog.h"
-#include <configurationdock.h>
+//#include <configurationdock.h>
 #include "maininterface.h"
 #include <recentdockinterface.h>
 #include <filterdockinterface.h>
 #include <audiofilterdockinterface.h>
-#include <templatedockinterface.h>
 #include <effectdockinterface.h>
-#include <templateeditordockinterface.h>
 #include "containerdock.h"
 #include "templateeidtor.h"
 #include <util.h>
@@ -1532,63 +1530,63 @@ void MainWindow::open1(QString url, const Mlt::Properties *properties)
 }
 
 
-class AppendTask : public QRunnable
-{
-public:
-    AppendTask(PlaylistModel* model, const QStringList& filenames)
-        : QRunnable()
-        , model(model)
-        , filenames(filenames)
-    {
-    }
-    void run()
-    {
-        foreach (QString filename, filenames) {
-            QStringList splitList = filename.split(".");
-            QString lastStr = splitList.last();
+//class AppendTask : public QRunnable
+//{
+//public:
+//    AppendTask(PlaylistModel* model, const QStringList& filenames)
+//        : QRunnable()
+//        , model(model)
+//        , filenames(filenames)
+//    {
+//    }
+//    void run()
+//    {
+//        foreach (QString filename, filenames) {
+//            QStringList splitList = filename.split(".");
+//            QString lastStr = splitList.last();
 
-#if SHARE_VERSION
-#else
-            if (filename.endsWith(".vob", Qt::CaseInsensitive) || filename.endsWith(".m4p", Qt::CaseInsensitive))
-            {
-//                QMessageBox dialog(QMessageBox::NoIcon,
-//                                   qApp->applicationName(),
-//                                   tr("For reasons of copyright protection, you can not import vob or m4p files"),
-//                                   QMessageBox::Ok,
-//                                   this);
-//        #if MOVIEMATOR_PRO
-//                dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//        #else
-//                dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//        #endif
-//                dialog.setWindowModality(QmlApplication::dialogModality());
-//                dialog.setDefaultButton(QMessageBox::Ok);
-//                int r = dialog.exec();
-                continue;
-            }
-#endif
+//#if SHARE_VERSION
+//#else
+//            if (filename.endsWith(".vob", Qt::CaseInsensitive) || filename.endsWith(".m4p", Qt::CaseInsensitive))
+//            {
+////                QMessageBox dialog(QMessageBox::NoIcon,
+////                                   qApp->applicationName(),
+////                                   tr("For reasons of copyright protection, you can not import vob or m4p files"),
+////                                   QMessageBox::Ok,
+////                                   this);
+////        #if MOVIEMATOR_PRO
+////                dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+////        #else
+////                dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+////        #endif
+////                dialog.setWindowModality(QmlApplication::dialogModality());
+////                dialog.setDefaultButton(QMessageBox::Ok);
+////                int r = dialog.exec();
+//                continue;
+//            }
+//#endif
 
-            if(lastStr.compare("mmp") )
-            {
-            Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
-            if (p.is_valid()) {
-                // Convert avformat to avformat-novalidate so that XML loads faster.
-                if (!qstrcmp(p.get("mlt_service"), "avformat")) {
-                    p.set("mlt_service", "avformat-novalidate");
-                    p.set("mute_on_pause", 0);
-                }
-                MLT.setImageDurationFromDefault(&p);
-                MLT.getHash(p);
-                MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.XML(&p)));
-            }
-            }
-        }
-        emit MAIN.hideProgressDialog();
-    }
-private:
-    PlaylistModel* model;
-    const QStringList& filenames;
-};
+//            if(lastStr.compare("mmp") )
+//            {
+//            Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
+//            if (p.is_valid()) {
+//                // Convert avformat to avformat-novalidate so that XML loads faster.
+//                if (!qstrcmp(p.get("mlt_service"), "avformat")) {
+//                    p.set("mlt_service", "avformat-novalidate");
+//                    p.set("mute_on_pause", 0);
+//                }
+//                MLT.setImageDurationFromDefault(&p);
+//                MLT.getHash(p);
+//                MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.XML(&p)));
+//            }
+//            }
+//        }
+//        emit MAIN.hideProgressDialog();
+//    }
+//private:
+//    PlaylistModel* model;
+//    const QStringList& filenames;
+//};
 
 
 
@@ -2935,8 +2933,8 @@ void MainWindow::updateMarkers()
 
 void MainWindow::updateThumbnails()
 {
-    if (Settings.playlistThumbnails() != "hidden")
-        m_playlistDock->model()->refreshThumbnails();
+//    if (Settings.playlistThumbnails() != "hidden")
+//        m_playlistDock->model()->refreshThumbnails();
 }
 
 void MainWindow::on_actionUndo_triggered()
@@ -3740,8 +3738,8 @@ void MainWindow::on_actionClose_triggered()
     if (MAIN.continueModified()) {
         LOG_DEBUG() << "";
 
-        if (playlist())
-            m_playlistDock->model()->close();
+//        if (playlist())
+//            m_playlistDock->model()->close();
         if (multitrack())
             m_timelineDock->model()->close();
         else
@@ -4578,17 +4576,17 @@ void MainWindow::onExportTemplate()
 //加载模板信息
 void MainWindow::loadTemplateInfo(Mlt::Producer *producer)
 {
-    Q_ASSERT(producer);
-    if (!producer || !producer->is_valid())
-    {
-       m_templateEditor->setProducer(0);
-       return;
-    }
-    QString resource(producer->get("resource"));
-    QString service(producer->get("mlt_service"));
-    if (service == "xml" || service == "xml-string")
-        m_templateEditor->setProducer(producer);
-    else
-        m_templateEditor->setProducer(0);
+//    Q_ASSERT(producer);
+//    if (!producer || !producer->is_valid())
+//    {
+//       m_templateEditor->setProducer(0);
+//       return;
+//    }
+//    QString resource(producer->get("resource"));
+//    QString service(producer->get("mlt_service"));
+//    if (service == "xml" || service == "xml-string")
+//        m_templateEditor->setProducer(producer);
+//    else
+//        m_templateEditor->setProducer(0);
 }
 

@@ -308,8 +308,8 @@ int MainInterface::replaceFileInTemplate(int index, FILE_HANDLE destFile)
     Mlt::Producer *producer = (Mlt::Producer *)destFile;
     if (!producer->is_valid())
         return -1;
-    TemplateEidtor *templateEditor = MAIN.templateEditor();
-    templateEditor->replaceFileInTemplate(index, producer);
+//    TemplateEidtor *templateEditor = MAIN.templateEditor();
+//    templateEditor->replaceFileInTemplate(index, producer);
     return 0;
 }
 
@@ -317,8 +317,9 @@ int MainInterface::replaceFileInTemplate(int index, FILE_HANDLE destFile)
 // 返回值：成功返回0，失败返回-1
 FILE_HANDLE MainInterface::resetFileInTemplate(int index)
 {
-    TemplateEidtor *templateEditor = MAIN.templateEditor();
-    return templateEditor->resetFileToTemplateDefault(index);
+//    TemplateEidtor *templateEditor = MAIN.templateEditor();
+//    return templateEditor->resetFileToTemplateDefault(index);
+    return NULL;
 }
 
 //功能：返回xml的mimetype；实现拖放时使用。

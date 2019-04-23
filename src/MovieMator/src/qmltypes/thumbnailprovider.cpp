@@ -20,7 +20,7 @@
 #include <QQuickImageProvider>
 #include <QCryptographicHash>
 #include "mltcontroller.h"
-#include "models/playlistmodel.h"
+//#include "models/playlistmodel.h"
 #include "database.h"
 
 #include <Logger.h>
@@ -103,8 +103,8 @@ QImage ThumbnailProvider::makeThumbnail(Mlt::Producer &producer, int frameNumber
     Mlt::Filter scaler(m_profile, "swscale");
     Mlt::Filter padder(m_profile, "resize");
     Mlt::Filter converter(m_profile, "avcolor_space");
-    int height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
-    int width = PlaylistModel::THUMBNAIL_WIDTH * 2;
+    int height = 45 * 2;//PlaylistModel::THUMBNAIL_HEIGHT * 2;
+    int width  = 80 * 2;//PlaylistModel::THUMBNAIL_WIDTH * 2;
 
     if (!requestedSize.isEmpty()) {
         width = requestedSize.width();
