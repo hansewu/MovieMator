@@ -1659,6 +1659,7 @@ void MainWindow::removeVideo()
 //   m_textManagerWidget->addTextToTimeline(NULL);
 //   m_textlistDock->addTextToTimeline(NULL);
 //   m_playlistDock->on_removeButton_clicked();
+    RecentDock_removeSelectedItem();
 }
 
 
