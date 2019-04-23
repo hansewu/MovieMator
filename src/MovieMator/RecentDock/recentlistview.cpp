@@ -77,7 +77,7 @@ void RecentListView::mouseMoveEvent(QMouseEvent* event)
     Q_ASSERT(proxyModel);
     RecentListModel *viewModel = proxyModel ? qobject_cast<RecentListModel*>(proxyModel->sourceModel()) : nullptr;
     Q_ASSERT(viewModel);
-    if(viewModel)
+    if(viewModel && (selectedIndexes().count() > 0))
     {
         int row = proxyModel->mapToSource(selectedIndexes().first()).row();
         QMimeData *mimeData = viewModel->mimeData(row);

@@ -38,9 +38,9 @@ MainInterface& MainInterface::singleton()
 FILE_HANDLE MainInterface::openFile(QString filepath)
 {
     Mlt::Producer *producer = new Mlt::Producer(MLT.profile(), filepath.toUtf8().constData());
-    Q_ASSERT(producer);
-    Q_ASSERT(producer->is_valid());
-    if (producer->is_valid()) {
+//    Q_ASSERT(producer);
+//    Q_ASSERT(producer->is_valid());
+    if (producer && producer->is_valid()) {
         MLT.setImageDurationFromDefault(producer);
         //if (filepath.endsWith(".mlt"))
         //    producer->set(kShotcutVirtualClip, 1);

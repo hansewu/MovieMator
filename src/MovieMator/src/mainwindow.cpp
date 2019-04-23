@@ -1504,8 +1504,8 @@ void MainWindow::open1(QString url, const Mlt::Properties *properties)
 {
     if (!MLT.open(url)) {
         Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
-        Q_ASSERT(props);
-        Q_ASSERT(props->is_valid());
+//        Q_ASSERT(props);
+//        Q_ASSERT(props->is_valid());
         if (props && props->is_valid())
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
         m_player->setPauseAfterOpen(!MLT.isClip());

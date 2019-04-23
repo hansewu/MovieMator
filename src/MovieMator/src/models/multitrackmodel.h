@@ -114,6 +114,7 @@ public:
     int addVideoTrack();
     int addFilterTrack();
     int addTextTrack();
+    void renumberOtherTracks(const Track& track);
     void removeTrack(int trackIndex);
     void load();
     Q_INVOKABLE void reload(bool asynchronous = false);

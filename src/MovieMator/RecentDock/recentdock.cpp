@@ -64,7 +64,7 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
         if(!s.endsWith(".mmp") && !s.endsWith(".xml") && !s.endsWith(".mlt"))
         {
             FILE_HANDLE fileHandle = m_mainWindow->openFile(s);
-            Q_ASSERT(fileHandle);
+//            Q_ASSERT(fileHandle);     // 如果文件名s被改过了就无法打开
             if(fileHandle)
             {
                 if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_VIDEO) {
