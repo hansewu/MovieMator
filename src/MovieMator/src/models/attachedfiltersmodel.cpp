@@ -313,13 +313,15 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
 
 void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
 {
-    Q_ASSERT(meta);
-    Q_ASSERT(m_producer);
     if (MAIN.timelineDock()->selection().isEmpty() )
     {
         QMessageBox::warning(NULL, tr("Tips"), tr("Tips\n\nTo apply the filter, please first select the clip by clicking on it on the timeline."), QMessageBox::Ok);
         return;
     }
+
+    Q_ASSERT(meta);
+    Q_ASSERT(m_producer);
+
 
     if (!m_producer || !m_producer->is_valid())
         return;
