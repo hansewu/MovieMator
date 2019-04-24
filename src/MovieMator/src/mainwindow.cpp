@@ -127,8 +127,10 @@
 #if SHARE_VERSION
 
 #if MOVIEMATOR_PRO
-const QString g_homePage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
-const QString g_buynowPage = "http://www.macvideostudio.com/purchase/moviemator-video-editor-pro.html";
+//const QString g_homePage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
+//const QString g_buynowPage = "http://www.macvideostudio.com/purchase/moviemator-video-editor-pro.html";
+const QString g_homePage = QObject::tr("http://moviemator.net");
+const QString g_buynowPage = QObject::tr("http://moviemator.net/buynow.html");
 #else
 const QString g_homePage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
 const QString g_buynowPage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
@@ -3932,7 +3934,7 @@ void MainWindow::onHelpButtonTriggered()
 //    dir.cd("Resources");
 //    QString pdfPath = dir.path().append("/MovieMator-Free-Mac-Video-Editor-User-Guide.pdf");
 //    QDesktopServices::openUrl(QUrl::fromLocalFile(pdfPath));
-    QDesktopServices::openUrl(QUrl(tr("http://www.macvideostudio.com/mac-movie-video-editor-MovieMator-guide.html")));
+    QDesktopServices::openUrl(QUrl(tr("http://www.macvideostudio.com/quickly-start-movie-video-editing-mac.html")));
 
 //    QUrl url("http://www.macvideostudio.com/tutorial/MovieMator-Free-Mac-Video-Editor-User-Guide.pdf");
 }
@@ -4216,7 +4218,8 @@ void MainWindow::on_activateButton_clicked()
 
 void MainWindow::on_buynowButton_clicked()
 {
-    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/purchase/buy-video-editor-moviemator-pro.html"));
+//    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/purchase/buy-video-editor-moviemator-pro.html"));
+    QDesktopServices::openUrl(QUrl(tr("http://moviemator.net/buynow.html")));
 }
 
 int MainWindow::showRegistrationTipDialog()
@@ -4269,7 +4272,8 @@ void MainWindow::showUpgradeToProPromptDialog()
 void MainWindow::upgradeToProVersion()
 {
 #ifdef SHARE_VERSION
-    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/purchase/buy-video-editor-moviemator-pro.html"));
+//    QDesktopServices::openUrl(QUrl("http://www.macvideostudio.com/purchase/buy-video-editor-moviemator-pro.html"));
+    QDesktopServices::openUrl(QUrl(tr("http://moviemator.net/buynow.html")));
 #else
     QString language = QLocale::system().name();
     if (language == "zh_CN")
@@ -4323,7 +4327,7 @@ void MainWindow::on_actionGet_Total_Video_Player_triggered()
 
 void MainWindow::on_actionTutorial_triggered()
 {
-    QDesktopServices::openUrl(QUrl(tr("http://www.macvideostudio.com/mac-movie-video-editor-MovieMator-guide.html")));
+    QDesktopServices::openUrl(QUrl(tr("http://www.macvideostudio.com/quickly-start-movie-video-editing-mac.html")));
 }
 
 void MainWindow::setCurrentFilterForVideoWidget(QObject* filter, QmlMetadata* meta)
