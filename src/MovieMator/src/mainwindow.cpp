@@ -2967,7 +2967,8 @@ void MainWindow::on_actionFacebook_triggered()
 
 void MainWindow::on_actionHomePage_triggered()
 {
-    QDesktopServices::openUrl(QUrl(g_homePage));
+//    QDesktopServices::openUrl(QUrl(g_homePage));
+    QDesktopServices::openUrl(QUrl(tr("http://moviemator.net")));
 }
 
 
