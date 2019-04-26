@@ -3093,7 +3093,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
                 connect(w, SIGNAL(producerChanged(Mlt::Producer*)), m_timelineDock, SLOT(onProducerChanged(Mlt::Producer*)));
         }
         scrollArea->setWidget(w);
-        onProducerChanged();
+        //onProducerChanged();
     } else if (scrollArea->widget()) {
         scrollArea->widget()->deleteLater();
     }
@@ -3108,7 +3108,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
                 connect(advancedW, SIGNAL(producerChanged(Mlt::Producer*)), m_timelineDock, SLOT(onProducerChanged(Mlt::Producer*)));
         }
         advancedScrollArea->setWidget(advancedW);
-        onProducerChanged();
+        //onProducerChanged();
     } else if (advancedScrollArea->widget()) {
         advancedScrollArea->widget()->deleteLater();
     }

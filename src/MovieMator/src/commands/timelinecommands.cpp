@@ -1343,6 +1343,7 @@ ClipsSelectCommand::ClipsSelectCommand(QList<int> newSelection, int newTrackInde
 
 void ClipsSelectCommand::redo_impl()
 {
+    LOG_DEBUG() << "newTrackIndex: " << m_newTrackIndex << "newSelection" << m_newSelection;
     if(m_bFirstExec)//第一次自动执行不调用，外部已经执行
     {
         m_bFirstExec = false;
