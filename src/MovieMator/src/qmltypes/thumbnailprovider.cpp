@@ -20,7 +20,7 @@
 #include <QQuickImageProvider>
 #include <QCryptographicHash>
 #include "mltcontroller.h"
-#include "models/playlistmodel.h"
+//#include "models/playlistmodel.h"
 #include "database.h"
 
 #include <Logger.h>
@@ -33,6 +33,8 @@ ThumbnailProvider::ThumbnailProvider()
 
 QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize)
 {
+    Q_ASSERT(size);
+
     QImage result;
 
     // id is [hash]/mlt_service/resource#frameNumber
@@ -44,6 +46,7 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
         QString resource = id.section('/', 2);
         int frameNumber = id.mid(index + 1).toInt();
         Mlt::Properties properties;
+        Q_ASSERT(properties.is_valid());
 
         // Scale the frameNumber to ThumbnailProvider profile's fps.
         frameNumber = qRound(frameNumber / MLT.profile().fps() * m_profile.fps());
@@ -95,11 +98,13 @@ QString ThumbnailProvider::cacheKey(Mlt::Properties& properties, const QString& 
 
 QImage ThumbnailProvider::makeThumbnail(Mlt::Producer &producer, int frameNumber, const QSize& requestedSize)
 {
+    Q_ASSERT(producer.is_valid());
+
     Mlt::Filter scaler(m_profile, "swscale");
     Mlt::Filter padder(m_profile, "resize");
     Mlt::Filter converter(m_profile, "avcolor_space");
-    int height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
-    int width = PlaylistModel::THUMBNAIL_WIDTH * 2;
+    int height = 45 * 2;//PlaylistModel::THUMBNAIL_HEIGHT * 2;
+    int width  = 80 * 2;//PlaylistModel::THUMBNAIL_WIDTH * 2;
 
     if (!requestedSize.isEmpty()) {
         width = requestedSize.width();

@@ -114,6 +114,7 @@ public:
     int addVideoTrack();
     int addFilterTrack();
     int addTextTrack();
+    void renumberOtherTracks(const Track& track);
     void removeTrack(int trackIndex);
     void load();
     Q_INVOKABLE void reload(bool asynchronous = false);
@@ -219,7 +220,7 @@ private:
     void getAudioLevels();
     void addBlackTrackIfNeeded();
     void convertOldDoc();
-    Mlt::Transition* getTransition(const QString& name, int trackIndex) const;
+    Mlt::Transition* getTransition(const QString& name, int mltIndex) const;
     Mlt::Filter* getFilter(const QString& name, int trackIndex) const;
     Mlt::Filter* getFilter(const QString& name, Mlt::Service* service) const;
     void removeBlankPlaceholder(Mlt::Playlist& playlist, int trackIndex);

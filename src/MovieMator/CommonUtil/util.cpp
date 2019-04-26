@@ -38,6 +38,7 @@ QString Util::baseName(const QString &filePath)
 
 void Util::setColorsToHighlight(QWidget* widget, QPalette::ColorRole role)
 {
+    Q_ASSERT(widget);
     QPalette palette = widget->palette();
     palette.setColor(role, palette.color(palette.Highlight));
     palette.setColor(role == QPalette::Button ? QPalette::ButtonText : QPalette::WindowText,

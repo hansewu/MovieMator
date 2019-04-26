@@ -42,6 +42,9 @@ RECENTDOCKSHARED_EXPORT void RecentDock_add(QString filePath);
 //删除文件
 RECENTDOCKSHARED_EXPORT void RecentDock_remove(QString filePath);
 
+//删除选中项
+RECENTDOCKSHARED_EXPORT void RecentDock_removeSelectedItem();
+
 
 
 #endif // RECENTDOCK_H

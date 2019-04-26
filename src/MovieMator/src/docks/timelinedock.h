@@ -75,7 +75,7 @@ public:
 
     void makeTracksShorter();
     void makeTracksTaller();
-    void setSelection(QList<int> selection = QList<int>(), int trackIndex = -1, bool isMultitrack = false, bool bFromUndo = false);
+    Q_INVOKABLE void setSelection(QList<int> selection = QList<int>(), int trackIndex = -1, bool isMultitrack = false, bool bFromUndo = false);
     QList<int> selection() const;
     void saveAndClearSelection();
     void restoreSelection();

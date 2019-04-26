@@ -45,7 +45,7 @@ QVariant MetadataModel::data(const QModelIndex &index, int role) const
     Q_ASSERT(index.row() < metaCount);
 
     QmlMetadata* meta = m_list.at(index.row());
-
+    Q_ASSERT(meta);
     if(meta) {
         switch(role) {
             case Qt::DisplayRole:
@@ -99,6 +99,8 @@ bool MetadataModel::setData(const QModelIndex &index, const QVariant &value, int
         case FavoriteRole:
         {
             QmlMetadata* meta = m_list.at(index.row());
+            Q_ASSERT(meta);
+            if(!meta) break;
             meta->setIsFavorite(value.value<bool>());
             emit(dataChanged(index, index));
             break;
@@ -133,6 +135,9 @@ Qt::ItemFlags MetadataModel::flags(const QModelIndex &index) const
 
 void MetadataModel::add(QmlMetadata* data)
 {
+    Q_ASSERT(data);
+    if(!data) return;
+
     int i = 0;
 //    for( i = 0; i < m_list.size(); i++ ) {
 //        if (m_list[i]->name().toLower() > data->name().toLower() ) {
@@ -178,6 +183,9 @@ void MetadataModel::setFilter(MetadataFilter filter)
 bool MetadataModel::isVisible(int row) const
 {
     QmlMetadata* meta = m_list.at(row);
+    Q_ASSERT(meta);
+    if(!meta) return false;
+
     if (meta->isHidden()) return false;
     if (meta->needsGPU() && !Settings.playerGPU()) return false;
     if (!meta->needsGPU() && Settings.playerGPU() && !meta->gpuAlt().isEmpty()) return false;

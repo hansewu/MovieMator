@@ -116,6 +116,7 @@ void FileSaveDialog::open()
 
     m_parentWindow = window;
 
+    Q_ASSERT(m_options);
     m_options->setFileMode(QFileDialogOptions::AnyFile);
     m_options->setAcceptMode(QFileDialogOptions::AcceptSave);
     m_options->setWindowTitle(title());
@@ -158,6 +159,7 @@ void FileSaveDialog::open()
     #endif
 #endif
 
+    Q_ASSERT(m_dlgHelper);
     m_dlgHelper->setOptions(m_options);
     m_dlgHelper->setFilter(); // applyOptions();
 
@@ -171,6 +173,7 @@ void FileSaveDialog::close()
 {
     if (!valid()) return;
 
+    Q_ASSERT(m_dlgHelper);
     m_dlgHelper->hide();
     m_visible = false;
 }
@@ -179,6 +182,7 @@ void FileSaveDialog::accept()
 {
     if (!valid()) return;
 
+    Q_ASSERT(m_dlgHelper);
     m_dlgHelper->hide();
 
     QList<QUrl> selectedUrls = m_dlgHelper->selectedFiles();
@@ -194,6 +198,7 @@ void FileSaveDialog::reject()
 {
     if (!valid()) return;
 
+    Q_ASSERT(m_dlgHelper);
     m_dlgHelper->hide();
     emit rejected();
 }

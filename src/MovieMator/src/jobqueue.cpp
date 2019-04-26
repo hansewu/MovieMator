@@ -48,6 +48,7 @@ void JobQueue::cleanup()
 
 AbstractJob* JobQueue::add(AbstractJob* job)
 {
+    Q_ASSERT(job);
     int row = rowCount();
     QList<QStandardItem*> items;
     items << new QStandardItem(job->label());
@@ -75,6 +76,7 @@ void JobQueue::onProgressUpdated(QModelIndex index, uint percent)
 
 void JobQueue::onFinished(AbstractJob* job, bool isSuccess)
 {
+    Q_ASSERT(job);
     QStandardItem* item = itemFromIndex(job->modelIndex());
     if (item) {
         if (isSuccess)

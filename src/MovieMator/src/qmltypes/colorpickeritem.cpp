@@ -40,6 +40,8 @@ public:
 
     bool eventFilter(QObject *, QEvent *event)
     {
+        Q_ASSERT(event);
+        Q_ASSERT(m_selector);
     //    qDebug()<<"eventFilter begins";
         switch (event->type()) {
         case QEvent::MouseButtonPress:
@@ -78,6 +80,7 @@ void ScreenSelector::startSelection()
     m_selectionInProgress = false;
     if (!m_eventFilter)
         m_eventFilter = new EventFilter(this);
+    Q_ASSERT(m_eventFilter);
     QApplication::instance()->installEventFilter(m_eventFilter);
     grabMouse();
     grabKeyboard();
@@ -86,6 +89,7 @@ void ScreenSelector::startSelection()
 
 bool ScreenSelector::onMousePressEvent(QMouseEvent *event)
 {
+    Q_ASSERT(event);
     if (event->button() == Qt::LeftButton && !m_selectionInProgress) {
         m_selectionInProgress = true;
         show();
@@ -97,6 +101,7 @@ bool ScreenSelector::onMousePressEvent(QMouseEvent *event)
 
 bool ScreenSelector::onMouseMoveEvent(QMouseEvent *event)
 {
+    Q_ASSERT(event);
     if (m_selectionInProgress) {
         m_selectionRect.setWidth(event->globalX() - m_selectionRect.x());
         m_selectionRect.setHeight(event->globalY() - m_selectionRect.y());
@@ -114,6 +119,7 @@ bool ScreenSelector::onMouseMoveEvent(QMouseEvent *event)
 
 bool ScreenSelector::onMouseReleaseEvent(QMouseEvent *event)
 {
+    Q_ASSERT(event);
   //  qDebug()<<"ScreenSelector::onMouseReleaseEvent begin";
     if(event->button() == Qt::LeftButton && m_selectionInProgress == true ) {
         release();
@@ -127,6 +133,7 @@ bool ScreenSelector::onMouseReleaseEvent(QMouseEvent *event)
 
 bool ScreenSelector::onKeyPressEvent(QKeyEvent* event)
 {
+    Q_ASSERT(event);
     if (event->key() == Qt::Key_Escape)
         release();
     event->accept();
@@ -147,8 +154,10 @@ void ScreenSelector::grabColor()
 {
     m_selectionRect = m_selectionRect.normalized();
     QDesktopWidget* desktop = QApplication::desktop();
+    Q_ASSERT(desktop);
     int screenNum = desktop->screenNumber(m_selectionRect.topLeft());
     QScreen* screen = QGuiApplication::screens()[screenNum];
+    Q_ASSERT(screen);
     QPixmap screenGrab = screen->grabWindow(desktop->winId(),
         m_selectionRect.x(), m_selectionRect.y(), m_selectionRect.width(), m_selectionRect.height());
     QImage image = screenGrab.toImage();

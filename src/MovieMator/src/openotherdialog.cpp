@@ -110,6 +110,8 @@ Mlt::Producer* OpenOtherDialog::producer(Mlt::Profile& profile) const
 
 void OpenOtherDialog::load(Mlt::Producer* producer)
 {
+    Q_ASSERT(producer);
+    Q_ASSERT(producer->is_valid());
     if (producer && producer->is_valid()) {
         QString service(producer->get("mlt_service"));
         QString resource(MLT.resource());
@@ -152,6 +154,7 @@ void OpenOtherDialog::selectTreeWidget(const QString& s)
 {
     for (int j = 0; j < ui->treeWidget->topLevelItemCount(); j++) {
         QTreeWidgetItem* group = ui->treeWidget->topLevelItem(j);
+        Q_ASSERT(group);
         for (int i = 0; i < group->childCount(); i++) {
             if (group->child(i)->text(0) == s) {
                 ui->treeWidget->setCurrentItem(group->child(i));
@@ -163,6 +166,7 @@ void OpenOtherDialog::selectTreeWidget(const QString& s)
 
 void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem*)
 {
+    Q_ASSERT(current);
     if (current->data(0, Qt::UserRole).isValid()) {
         QString currentData(current->data(0, Qt::UserRole).toString());
         for (int i = 0; i < ui->methodTabWidget->count(); i++) {

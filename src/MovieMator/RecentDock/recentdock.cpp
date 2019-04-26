@@ -64,6 +64,7 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
         if(!s.endsWith(".mmp") && !s.endsWith(".xml") && !s.endsWith(".mlt"))
         {
             FILE_HANDLE fileHandle = m_mainWindow->openFile(s);
+//            Q_ASSERT(fileHandle);     // 如果文件名s被改过了就无法打开
             if(fileHandle)
             {
                 if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_VIDEO) {
@@ -169,8 +170,18 @@ RecentDock::~RecentDock()
 
 void RecentDock::resizeEvent(QResizeEvent* event)
 {
+    Q_ASSERT(m_listviewList);
+    if(!m_listviewList)
+    {
+        return;
+    }
     for(RecentListView *listView : *m_listviewList)
     {
+        Q_ASSERT(listView);
+        if(!listView)
+        {
+            continue;
+        }
         if(qobject_cast<RecentListModel*>(qobject_cast<QSortFilterProxyModel*>(listView->model())->sourceModel())->rowCount()<1)
 //        if(qobject_cast<QSortFilterProxyModel*>(listView->model())->rowCount()<1)      // 可以过滤
         {
@@ -181,6 +192,11 @@ void RecentDock::resizeEvent(QResizeEvent* event)
         listView->setVisible(true);
         listView->setFixedWidth(ui->scrollArea->width()-5);
         int wSize = listView->gridSize().width()/* +5*/;
+        Q_ASSERT(wSize);
+        if(wSize<=0)
+        {
+            continue;
+        }
         int hSize = listView->gridSize().height();
         int width = listView->size().width();
         int columns = width/wSize<1 ? 1 : width/wSize;
@@ -194,6 +210,11 @@ void RecentDock::resizeEvent(QResizeEvent* event)
 
 void RecentDock::add(const QString &s)
 {
+    Q_ASSERT(m_modelList);
+    if(!m_modelList)
+    {
+        return;
+    }
     if (s.startsWith(QDir::tempPath()))
         return;
     if (m_recent.contains(s))
@@ -204,21 +225,37 @@ void RecentDock::add(const QString &s)
         return;
 
     FILE_HANDLE fileHandle = m_mainWindow->openFile(s);
+    Q_ASSERT(fileHandle);
     if(fileHandle)
     {
         int index = 0;
         FILE_TYPE file_type = m_mainWindow->getFileType(fileHandle);
         if (file_type == FILE_TYPE_VIDEO) {
+            Q_ASSERT(m_modelList->at(0));
+            if(!m_modelList->at(0))
+            {
+                return;
+            }
             m_modelList->at(0)->insert(fileHandle, 0);
             m_recent.prepend(s);
             m_flag[0] = true;
             index = 0;
         } else if (file_type == FILE_TYPE_AUDIO) {
+            Q_ASSERT(m_modelList->at(1));
+            if(!m_modelList->at(1))
+            {
+                return;
+            }
             m_modelList->at(1)->insert(fileHandle, 0);
             m_recent.prepend(s);
             m_flag[1] = true;
             index = 1;
         } else if (file_type == FILE_TYPE_IMAGE) {
+            Q_ASSERT(m_modelList->at(2));
+            if(!m_modelList->at(2))
+            {
+                return;
+            }
             m_modelList->at(2)->insert(fileHandle, 0);
             m_recent.prepend(s);
             m_flag[2] = true;
@@ -231,6 +268,13 @@ void RecentDock::add(const QString &s)
         {
            if(m_flag[i])
            {
+               Q_ASSERT(m_listviewList->at(i));
+               Q_ASSERT(m_labelArray[i]);
+               Q_ASSERT(m_imageArray[i]);
+               if(!m_listviewList->at(i) || !m_labelArray[i] || !m_imageArray[i])
+               {
+                   return;
+               }
                ui->comboBox->addItem(m_itemNames[i]);
                m_map.insert(ui->comboBox->count()-1, m_itemNames[i]);
                m_listviewList->at(i)->setVisible(true);
@@ -259,8 +303,18 @@ QString RecentDock::remove(const QString &s)
     Settings.setRecent(m_recent);
 
     bool flag = false;
+    Q_ASSERT(m_modelList);
+    if(!m_modelList)
+    {
+        return Util::baseName(s);
+    }
     for(RecentListModel *model : *m_modelList)
     {
+        Q_ASSERT(model);
+        if(!model)
+        {
+            continue;
+        }
         for(int i=0; i<model->rowCount(); i++)
         {
             if(QString::compare(s, model->fileName(i))==0)
@@ -285,8 +339,14 @@ void RecentDock::on_lineEdit_textChanged(const QString& search)
 {
     for(int i=0; i<num; i++)
     {
+        Q_ASSERT(m_proxyArray[i]);
+        if(!m_proxyArray[i])
+        {
+            continue;
+        }
         m_proxyArray[i]->setFilterFixedString(search);
     }
+    Q_ASSERT(m_currentListView);
     if(m_currentListView)
     {
         m_currentListView->clearSelection();
@@ -298,6 +358,11 @@ void RecentDock::on_comboBox_activated(const QString &arg1)
 {
     for(int i=m_map.key(arg1); i<num; i++)
     {
+        Q_ASSERT(m_labelArray[i]);
+        if(!m_labelArray[i])
+        {
+            continue;
+        }
         if(m_labelArray[i]->text()==arg1)
         {
             ui->scrollArea->verticalScrollBar()->setValue(m_labelArray[i]->y());
@@ -308,23 +373,43 @@ void RecentDock::on_comboBox_activated(const QString &arg1)
 
 void RecentDock::on_listView_activated(const QModelIndex &index)
 {
+//    Q_ASSERT(m_currentListView);  // 不能加，默认下可以为空，不播放文件
     if (!m_currentListView || m_currentListView->model()->rowCount()<=0 || !m_currentIndex.isValid()) {
         return;
     }
 
     QSortFilterProxyModel *proxyModel = qobject_cast<QSortFilterProxyModel*>(m_currentListView->model());
+    Q_ASSERT(proxyModel);
     RecentListModel *model = proxyModel ? qobject_cast<RecentListModel*>(proxyModel->sourceModel()) : nullptr;
+    Q_ASSERT(model);
     if(model)
     {
         FILE_HANDLE fileHandle = model->fileAt(proxyModel->mapToSource(m_currentIndex).row());
+        Q_ASSERT(fileHandle);
+        Q_ASSERT(m_mainWindow);
+        if(!fileHandle || !m_mainWindow)
+        {
+            return;
+        }
         m_mainWindow->playFile(fileHandle);
     }
 }
 
 void RecentDock::on_listView_pressed(const QModelIndex &index)
 {
+    Q_ASSERT(m_listviewList);
+    if(!m_listviewList)
+    {
+        return;
+    }
     for(RecentListView *listView : *m_listviewList)
     {
+        Q_ASSERT(listView);
+        if(!listView)
+        {
+            continue;
+        }
+        Q_ASSERT(index.isValid());
         if(index.isValid() && index==listView->currentIndex())
         {
             if(m_currentListView && m_currentListView!=listView)
@@ -340,13 +425,23 @@ void RecentDock::on_listView_pressed(const QModelIndex &index)
 
 void RecentDock::on_listView_clicked(const QModelIndex &index)
 {
+    Q_ASSERT(m_currentListView);
+    Q_ASSERT(m_currentIndex.isValid());
     if(m_currentIndex.isValid() && m_currentListView && index==m_currentIndex)
     {
         QSortFilterProxyModel *proxyModel = qobject_cast<QSortFilterProxyModel*>(m_currentListView->model());
+        Q_ASSERT(proxyModel);
         RecentListModel *model = proxyModel ? qobject_cast<RecentListModel*>(proxyModel->sourceModel()) : nullptr;
+        Q_ASSERT(model);
         if(model)
         {
             FILE_HANDLE fileHandle = model->fileAt(proxyModel->mapToSource(m_currentIndex).row());
+            Q_ASSERT(fileHandle);
+            Q_ASSERT(m_mainWindow);
+            if(!fileHandle || !m_mainWindow)
+            {
+                return;
+            }
             m_mainWindow->playFile(fileHandle);
         }
     }
@@ -354,6 +449,8 @@ void RecentDock::on_listView_clicked(const QModelIndex &index)
 
 void RecentDock::on_listView_customContextMenuRequested(const QPoint &pos)
 {
+    Q_ASSERT(m_currentListView);
+    Q_ASSERT(m_currentIndex.isValid());
     if(m_currentIndex.isValid() && m_currentListView->indexAt(pos).isValid())
     {
         QMenu menu(this);
@@ -366,8 +463,25 @@ void RecentDock::on_listView_customContextMenuRequested(const QPoint &pos)
 
 void RecentDock::on_actionRemove_triggered()
 {
+    Q_ASSERT(m_currentListView);
+//    Q_ASSERT(m_currentIndex.isValid());//当list为空时，点击toolbar上的remove会出现m_currentIndex无效
+    if(!m_currentListView || !m_currentIndex.isValid())
+    {
+        return;
+    }
+
     QSortFilterProxyModel *proxyModel = qobject_cast<QSortFilterProxyModel*>(m_currentListView->model());
+    Q_ASSERT(proxyModel);
+    if(!proxyModel)
+    {
+        return;
+    }
     RecentListModel *model = qobject_cast<RecentListModel*>(proxyModel->sourceModel());
+    Q_ASSERT(model);
+    if(!model)
+    {
+        return;
+    }
     int row = proxyModel->mapToSource(m_currentIndex).row();
     if(m_recent.removeOne(model->fileName(row)))
     {
@@ -383,11 +497,19 @@ void RecentDock::on_actionRemove_triggered()
                 {
                     m_flag[i] = false;
                     m_currentListView->setVisible(false);
-                    m_labelArray[i]->setVisible(false);
-                    m_imageArray[i]->setVisible(false);
-                    QString itemName = m_labelArray[i]->text();
-                    m_map.remove(m_map.key(itemName));
-                    ui->comboBox->removeItem(ui->comboBox->findText(itemName));
+                    Q_ASSERT(m_labelArray[i]);
+                    if(m_labelArray[i])
+                    {
+                        m_labelArray[i]->setVisible(false);
+                        QString itemName = m_labelArray[i]->text();
+                        m_map.remove(m_map.key(itemName));
+                        ui->comboBox->removeItem(ui->comboBox->findText(itemName));
+                    }
+                    Q_ASSERT(m_imageArray[i]);
+                    if(m_imageArray[i])
+                    {
+                        m_imageArray[i]->setVisible(false);
+                    }
                     break;
                 }
             }
@@ -398,13 +520,35 @@ void RecentDock::on_actionRemove_triggered()
 
 void RecentDock::on_actionRemoveAll_triggered()
 {
+    Q_ASSERT(m_modelList);
+    Q_ASSERT(m_listviewList);
+    if(!m_modelList || !m_listviewList)
+    {
+        return;
+    }
     for(int i=0; i<num; i++)
     {
         m_flag[i] = false;
-        m_modelList->at(i)->clear();
-        m_labelArray[i]->setVisible(false);
-        m_imageArray[i]->setVisible(false);
-        m_listviewList->at(i)->setVisible(false);
+        Q_ASSERT(m_modelList->at(i));
+        if(m_modelList->at(i))
+        {
+            m_modelList->at(i)->clear();
+        }
+        Q_ASSERT(m_labelArray[i]);
+        if(m_labelArray[i])
+        {
+            m_labelArray[i]->setVisible(false);
+        }
+        Q_ASSERT(m_imageArray[i]);
+        if(m_imageArray[i])
+        {
+            m_imageArray[i]->setVisible(false);
+        }
+        Q_ASSERT(m_listviewList->at(i));
+        if(m_listviewList->at(i))
+        {
+            m_listviewList->at(i)->setVisible(false);
+        }
     }
 
     m_currentIndex = m_currentListView->currentIndex();
@@ -418,6 +562,11 @@ void RecentDock::on_actionRemoveAll_triggered()
 
 void RecentDock::on_actionPlay_triggered()
 {
+    Q_ASSERT(m_currentIndex.isValid());
+    if(!m_currentIndex.isValid())
+    {
+        return;
+    }
     on_listView_activated(m_currentIndex);
 }
 
@@ -437,6 +586,7 @@ void RecentDock::on_RecentDock_visibilityChanged(bool visible)
 
 QList<FILE_HANDLE> RecentDock::getSelected()
 {
+    Q_ASSERT(m_currentListView);
     QList<FILE_HANDLE> selected;
     if(m_currentListView)
     {
@@ -444,9 +594,23 @@ QList<FILE_HANDLE> RecentDock::getSelected()
 
         foreach(QModelIndex index, selectedIndexes)
         {
+            Q_ASSERT(index.isValid());
+            if(!index.isValid())
+            {
+                continue;
+            }
             QModelIndex sourceIndex = qobject_cast<QSortFilterProxyModel*>(m_currentListView->model())->mapToSource(index);
+            Q_ASSERT(sourceIndex.isValid());
+            if(!sourceIndex.isValid())
+            {
+                continue;
+            }
             FILE_HANDLE fileHandle = qobject_cast<RecentListModel*>(qobject_cast<QSortFilterProxyModel*>(m_currentListView->model())->sourceModel())->fileAt(sourceIndex.row());
-
+            Q_ASSERT(fileHandle);
+            if(!fileHandle)
+            {
+                continue;
+            }
             selected.append(fileHandle);
         }
     }
@@ -486,5 +650,10 @@ void RecentDock_add(QString filePath)
 void RecentDock_remove(QString filePath)
 {
     instance->remove(filePath);
+}
+
+//删除选中项
+void RecentDock_removeSelectedItem() {
+    instance->on_actionRemove_triggered();
 }
 

@@ -23,7 +23,7 @@
 #include <QAbstractListModel>
 #include "mltcontroller.h"
 #include "MltPlaylist.h"
-#include "models/playlistmodel.h"
+//#include "models/playlistmodel.h"
 
 class MediaClipModel : public QAbstractListModel
 {
@@ -67,7 +67,7 @@ public slots:
 private:
     typedef QList<media_clipInfo *> MediaClipList;
     MediaClipList m_videolist;
-    PlaylistModel *m_playlistModel;
+//    PlaylistModel *m_playlistModel;
 //    Mlt::Playlist* m_videolist;
 //    Mlt::Playlist* m_audiolist;
 //    Mlt::Playlist* m_imagelist;

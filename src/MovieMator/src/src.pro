@@ -92,7 +92,6 @@ SOURCES += main.cpp\
     widgets/trackpropertieswidget.cpp \
     widgets/timelinepropertieswidget.cpp \
     widgets/filterwidget.cpp \
-    models/mediaclipmodel.cpp \
     jobs/ffprobejob.cpp \
     jobs/ffmpegjob.cpp \
     dialogs/unlinkedfilesdialog.cpp \
@@ -121,7 +120,7 @@ SOURCES += main.cpp\
     maininterface.cpp \
     containerdock.cpp \
     widgets/avformatproducersimplewidget.cpp \
-    templateeidtor.cpp \
+#    templateeidtor.cpp \
     commands/abstractcommand.cpp
     maininterface.cpp
 
@@ -207,7 +206,6 @@ HEADERS  += mainwindow.h \
     widgets/trackpropertieswidget.h \
     widgets/timelinepropertieswidget.h \
     widgets/filterwidget.h \
-    models/mediaclipmodel.h \
     jobs/ffprobejob.h \
     jobs/ffmpegjob.h \
     dialogs/unlinkedfilesdialog.h \
@@ -239,7 +237,7 @@ HEADERS  += mainwindow.h \
     maininterface.h \
     containerdock.h \
     widgets/avformatproducersimplewidget.h \
-    templateeidtor.h \
+#    templateeidtor.h \
     eccregister/CEccRegister.h \
     commands/abstractcommand.h
 
@@ -316,35 +314,28 @@ TRANSLATIONS += \
 
 INCLUDEPATH = ../CuteLogger/include ../mvcp ../RecentDock ../FilterDock ../CommonUtil ../MltController ../QmlUtilities
 INCLUDEPATH += ../AudioFilterDock
-INCLUDEPATH += ../PlaylistDock ../ConfigurationDock
-INCLUDEPATH += ../TemplateDock ../TemplateEditorDock
 INCLUDEPATH += ../EffectDock ../EffectDock
 INCLUDEPATH += ../include
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
         LIBS += -L../CuteLogger/debug -L../mvcp/debug -L../RecentDock/debug -L../FilterDock/debug -L../CommonUtil/debug -L../MltController/debug
-        LIBS += -L../QmlUtilities/debug -L../PlaylistDock/debug -L../ConfigurationDock/debug
-        LIBS += -L../TemplateDock/debug -L../TemplateEditorDock/debug
+        LIBS += -L../QmlUtilities/debug
         LIBS += -L../EffectDock/debug
         LIBS += -L../AudioFilterDock/debug
     } else {
         LIBS += -L../CuteLogger/release -L../mvcp/release -L../RecentDock/release -L../FilterDock/release -L../CommonUtil/release -L../MltController/release
-        LIBS += -L../QmlUtilities/release -L../PlaylistDock/release -L../ConfigurationDock/release
-        LIBS += -L../TemplateDock/release -L../TemplateEditorDock/release
+        LIBS += -L../QmlUtilities/release
         LIBS += -L../EffectDock/release
         LIBS += -L../AudioFilterDock/release
     }
 } else {
     LIBS += -L../CuteLogger -L../mvcp -L../RecentDock -L../FilterDock -L../CommonUtil -L../MltController -L../QmlUtilities #-L../mm
-    LIBS += -L../PlaylistDock -L../ConfigurationDock
-    LIBS += -L../TemplateDock -L../TemplateEditorDock
     LIBS += -L../EffectDock
     LIBS += -L../AudioFilterDock
 }
 
-LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lFilterDock -lAudioFilterDock -lCommonUtil -lMltController -lQmlUtilities -lPlaylistDock -lConfigurationDock
-LIBS += -lTemplateEditorDock
+LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lFilterDock -lAudioFilterDock -lCommonUtil -lMltController -lQmlUtilities
 LIBS += -lEffectDock
 
 
@@ -456,7 +447,7 @@ isEmpty(MOVIEMATOR_VERSION) {
      win32:MOVIEMATOR_VERSION = adhoc
 }
 #DEFINES += MOVIEMATOR_VERSION=\\\"$$MOVIEMATOR_VERSION\\\"
-DEFINES += MOVIEMATOR_VERSION=\\\"2.5.6\\\"
+DEFINES += MOVIEMATOR_VERSION=\\\"2.5.6.5\\\"
 
 
 unix:!mac:isEmpty(PREFIX) {

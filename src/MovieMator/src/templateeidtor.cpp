@@ -43,6 +43,7 @@ int TemplateEidtor::setProducer(Mlt::Producer *producer)
 
     QList<FILE_HANDLE> replaceableClipList;
 
+    Q_ASSERT(m_templateProducer && m_templateProducer->is_valid());
     if (m_templateProducer && m_templateProducer->is_valid())
     {
         char resource[512];
@@ -180,6 +181,7 @@ FILE_HANDLE TemplateEidtor::resetFileToTemplateDefault(int index)
     //create a new producer from template file
     char *templateFile = m_templateProducer->get("resource");
     Mlt::Producer *tractorProducer = new Mlt::Producer(MLT.profile(), templateFile);
+    Q_ASSERT(tractorProducer && tractorProducer->is_valid());
     if (!tractorProducer || !tractorProducer->is_valid())
         return 0;
     tractorProducer->set("resource", "<tractor>");
@@ -191,6 +193,7 @@ FILE_HANDLE TemplateEidtor::resetFileToTemplateDefault(int index)
     {
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipInfo.clipIndex));
+        Q_ASSERT(info);
         if (info)
         {
             int ret = replaceFileInTemplate(index, info->producer);

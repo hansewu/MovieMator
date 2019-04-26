@@ -198,6 +198,8 @@ QQmlListProperty<QmlKeyframesParameter> QmlKeyframesMetadata::parameters()
 
 void QmlKeyframesMetadata::appendParameter(QmlKeyframesParameter *param)
 {
+    Q_ASSERT(param);
+
     m_parameters.append(param);
 }
 
@@ -208,6 +210,9 @@ int QmlKeyframesMetadata::paramCount() const
 
 QmlKeyframesParameter *QmlKeyframesMetadata::paramAt(int idx) const
 {
+    Q_ASSERT(idx >= 0);
+    Q_ASSERT(idx < m_parameters.count());
+
     return m_parameters.at(idx);
 }
 
@@ -218,21 +223,30 @@ void QmlKeyframesMetadata::clearParameter()
 
 void QmlKeyframesMetadata::appendParameter(QQmlListProperty<QmlKeyframesParameter> *paramsList, QmlKeyframesParameter * param)
 {
+    Q_ASSERT(paramsList);
+    Q_ASSERT(param);
+
     reinterpret_cast< QmlKeyframesMetadata* >(paramsList->data)->appendParameter(param);
 }
 
 int QmlKeyframesMetadata::paramCount(QQmlListProperty<QmlKeyframesParameter> *list)
 {
+    Q_ASSERT(list);
+
     return reinterpret_cast<QmlKeyframesMetadata *>(list->data)->paramCount();
 }
 
 QmlKeyframesParameter *QmlKeyframesMetadata::paramAt(QQmlListProperty<QmlKeyframesParameter> *list,int idx)
 {
+    Q_ASSERT(list);
+
     return reinterpret_cast<QmlKeyframesMetadata *>(list->data)->paramAt(idx);
 }
 
 void QmlKeyframesMetadata::clearParameter(QQmlListProperty<QmlKeyframesParameter> *list)
 {
+    Q_ASSERT(list);
+
     reinterpret_cast<QmlKeyframesMetadata *>(list->data)->clearParameter();
 }
 

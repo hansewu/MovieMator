@@ -40,6 +40,7 @@ public:
 
     void paint(QPainter *painter)
     {
+        Q_ASSERT(painter);
         QLinearGradient gradient(0, 0, 0, height());
         gradient.setColorAt(0, m_colorA);
         gradient.setColorAt(1, m_colorB);
@@ -80,6 +81,8 @@ class TimelinePlayhead : public QQuickPaintedItem
 {
     void paint(QPainter *painter)
     {
+        Q_ASSERT(painter);
+
         QPainterPath path;
         path.moveTo(width(), 0);
         path.lineTo(width() / 2.0, height());
@@ -98,6 +101,8 @@ public:
     }
     void paint(QPainter *painter)
     {
+        Q_ASSERT(painter);
+
         QPainterPath path;
         path.moveTo(0, 0);
         path.lineTo(width(), 0);
@@ -127,7 +132,7 @@ public:
     {
         //clock_t begin, duration;
 
-
+        Q_ASSERT(painter);
         QVariantList data = m_audioLevels.toList();
 
         if (data.isEmpty())

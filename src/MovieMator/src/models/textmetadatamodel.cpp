@@ -44,7 +44,7 @@ QVariant TextMetadataModel::data(const QModelIndex &index, int role) const
     Q_ASSERT(index.row() < m_list.size());
     QVariant result;
     QmlMetadata* meta = m_list.at(index.row());
-
+    Q_ASSERT(meta);
     if(meta) {
         switch(role) {
             case Qt::DisplayRole:
@@ -96,6 +96,8 @@ Qt::ItemFlags TextMetadataModel::flags(const QModelIndex &index) const
 
 void TextMetadataModel::addTextMetadata(QmlMetadata* data)
 {
+    Q_ASSERT(data);
+
     int i = 0;
     for( i = 0; i < m_list.size(); i++ ) {
         if (m_list[i]->name().toLower() > data->name().toLower() ) {

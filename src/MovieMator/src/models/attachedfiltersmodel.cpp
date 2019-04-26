@@ -67,6 +67,8 @@ bool AttachedFiltersModel::isReady()
 
 Mlt::Filter* AttachedFiltersModel::getFilter(int row) const
 {
+    Q_ASSERT(m_producer);
+
     Mlt::Filter* result = 0;
     if (m_producer && m_producer->is_valid() && row < m_mltIndexMap.count() && row >= 0) {
         result = m_producer->filter(m_mltIndexMap[row]);
@@ -84,6 +86,9 @@ QmlMetadata* AttachedFiltersModel::getMetadata(int row) const
 
 void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
 {
+    Q_ASSERT(producer);
+
+    if (!producer) return;
 //    Q_ASSERT(!producer || !m_producer || (producer->get_parent() != m_producer->get_parent()));
 //    if (!producer || !m_producer || (producer->get_parent() != m_producer->get_parent())) {
         reset(producer);
@@ -92,7 +97,8 @@ void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
 
 QString AttachedFiltersModel::producerTitle() const
 {
- //   Q_ASSERT(m_producer && m_producer->is_valid());
+//    Q_ASSERT(m_producer);
+//    Q_ASSERT(m_producer->is_valid());
 
     if (m_producer && m_producer->is_valid()) {
         if (m_producer->get(kShotcutTransitionProperty))
@@ -113,6 +119,9 @@ QString AttachedFiltersModel::producerTitle() const
 
 bool AttachedFiltersModel::isProducerSelected() const
 {
+//    Q_ASSERT(m_producer);
+    if(!m_producer) return false;
+
     return !m_producer.isNull();
 }
 
@@ -134,6 +143,7 @@ Qt::ItemFlags AttachedFiltersModel::flags(const QModelIndex &index) const
 
 QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
 {
+    Q_ASSERT(m_producer);
  //   Q_ASSERT(!m_producer || !m_producer->is_valid()
    //          || index.row() >= m_producer->filter_count());
 
@@ -153,6 +163,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             } else {
                 // Fallback is raw mlt_service name
                 Mlt::Filter* filter = getFilter(index.row());
+                Q_ASSERT(filter);
                 if (filter && filter->is_valid() && filter->get("mlt_service")) {
                     result = QString::fromUtf8(filter->get("mlt_service"));
                 }
@@ -162,6 +173,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
         }
     case Qt::CheckStateRole: {
             Mlt::Filter* filter = getFilter(index.row());
+            Q_ASSERT(filter);
             QVariant result = Qt::Unchecked;
             if (filter && filter->is_valid() && !filter->get_int("disable"))
                 result = Qt::Checked;
@@ -172,6 +184,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
     case TypeDisplayRole: {
             QVariant result;
             const QmlMetadata* meta = m_metaList[index.row()];
+            Q_ASSERT(meta);
             if (meta && meta->isAudio()) {
                 result = tr("Audio");
             } else if (meta && meta->needsGPU()) {
@@ -185,6 +198,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
     case ThumbnailRole: {
             QVariant result;
             const QmlMetadata* meta = m_metaList[index.row()];
+            Q_ASSERT(meta);
             if (meta) {
                 result = meta->thumbnail();
             }
@@ -228,6 +242,8 @@ Qt::DropActions AttachedFiltersModel::supportedDropActions() const
 
 bool AttachedFiltersModel::insertRows(int row, int , const QModelIndex &)
 {
+    Q_ASSERT(m_producer);
+    Q_ASSERT(m_producer->is_valid());
     if (m_producer && m_producer->is_valid()) {
         if (m_dropRow == -1)
             m_dropRow = row;
@@ -239,6 +255,7 @@ bool AttachedFiltersModel::insertRows(int row, int , const QModelIndex &)
 
 bool AttachedFiltersModel::removeRows(int row, int , const QModelIndex &parent)
 {
+     Q_ASSERT(m_producer);
     if (m_producer && m_producer->is_valid() && m_dropRow >= 0 && row != m_dropRow) {
         bool result = moveRows(parent, row, 1, parent, m_dropRow);
         m_dropRow = -1;
@@ -252,6 +269,7 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
 {
     Q_ASSERT(m_producer);
     Q_ASSERT(m_producer->is_valid());
+    Q_ASSERT(m_event);
     Q_ASSERT(sourceParent == destinationParent);
     Q_ASSERT(count == 1);
 
@@ -301,12 +319,17 @@ void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
         return;
     }
 
+    Q_ASSERT(meta);
+    Q_ASSERT(m_producer);
+
+
     if (!m_producer || !m_producer->is_valid())
         return;
 
     if (!meta->allowMultiple()) {
         for (int i = 0; i < m_metaList.count(); i++) {
             const QmlMetadata* attachedMeta = m_metaList[i];
+             Q_ASSERT(attachedMeta);
             if (attachedMeta && meta->uniqueId() == attachedMeta->uniqueId()) {
                 emit duplicateAddFailed(i);
                 return;
@@ -317,7 +340,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
     int insertIndex = -1;
     int mltIndex = -1;
     Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), meta->mlt_service().toUtf8().constData());
-
+    Q_ASSERT(filter);
     Q_ASSERT(filter->is_valid());
 
     if (filter->is_valid()) {
@@ -393,6 +416,10 @@ void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
 
 void AttachedFiltersModel::remove(int row, bool bFromUndo)
 {
+    Q_ASSERT(m_producer);
+    Q_ASSERT(m_producer->is_valid());
+    Q_ASSERT(m_event);
+
     if (row >= m_metaList.count()) {
         LOG_WARNING() << "Invalid index:" << row;
         return;
@@ -416,6 +443,7 @@ void AttachedFiltersModel::remove(int row, bool bFromUndo)
     }
 
     QmlMetadata *metaData = (m_metaList.at(row));
+    Q_ASSERT(metaData);
     m_metaList.removeAt(row);
 
     endRemoveRows();
@@ -461,7 +489,9 @@ bool AttachedFiltersModel::move(int fromRow, int toRow, bool bFromUndo)
 
 void AttachedFiltersModel::reset(Mlt::Producer* producer)
 {
-
+    Q_ASSERT(producer);
+//    Q_ASSERT(m_producer);
+//    Q_ASSERT(m_event);
 
     beginResetModel();
     m_event.reset();
@@ -481,15 +511,19 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
    //  Q_ASSERT(producer && producer->is_valid());
     if (m_producer && m_producer->is_valid()) {
         Mlt::Event* event = m_producer->listen("service-changed", this, (mlt_listener)AttachedFiltersModel::producerChanged);
+        Q_ASSERT(event);
         m_event.reset(event);
         int count = m_producer->filter_count();
         for (int i = 0; i < count; i++) {
             Mlt::Filter* filter = m_producer->filter(i);
+            Q_ASSERT(filter);
             if (filter && filter->is_valid() && !filter->get_int("_loader")) {
                 QmlMetadata* newMeta = MAIN.filterController()->metadataForService(filter);
+                Q_ASSERT(newMeta);
                 int newIndex = m_metaList.count();
                 for (int j = newIndex - 1; j >= 0; j--) {
                     const QmlMetadata* prevMeta = m_metaList[j];
+                    Q_ASSERT(prevMeta);
                     if (sortIsLess(prevMeta, newMeta)) {
                         newIndex = j;
                     } else {
@@ -542,6 +576,8 @@ bool AttachedFiltersModel::isVisible(int row) const
     if(row < 0) return false;
 
     QmlMetadata* meta = m_metaList.at(row);
+    Q_ASSERT(meta);
+    if(!meta) return false;
     if (m_filter == AudioFilter && !meta->isAudio()) return false;
     if (m_filter == VideoFilter && meta->isAudio()) return false;
     return true;

@@ -76,6 +76,8 @@ bool Database::upgradeVersion1()
 
 void Database::doJob(DatabaseJob * job)
 {
+    Q_ASSERT(job);
+    Q_ASSERT(m_commitTimer);
     if (!m_commitTimer->isActive())
         QSqlDatabase::database().transaction();
     m_commitTimer->start();
@@ -132,6 +134,7 @@ bool Database::putThumbnail(const QString& hash, const QImage& image)
 
 void Database::submitAndWaitForJob(DatabaseJob * job)
 {
+    Q_ASSERT(job);
     job->completed = false;
     m_mutex.lock();
     m_jobs.append(job);
@@ -186,6 +189,7 @@ void Database::run()
     db.open();
 
     m_commitTimer = new QTimer();
+    Q_ASSERT(m_commitTimer);
     m_commitTimer->setSingleShot(true);
     m_commitTimer->setInterval(5000);
     connect(m_commitTimer, SIGNAL(timeout()),

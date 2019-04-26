@@ -83,6 +83,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     c.stop();
 
     Mlt::Properties* p = new Mlt::Properties(c.get_data("f"));
+    Q_ASSERT(p);
     ui->formatCombo->blockSignals(true);
     for (int i = 0; i < p->count(); i++)
         ui->formatCombo->addItem(p->get(i));
@@ -92,6 +93,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     ui->formatCombo->blockSignals(false);
 
     p = new Mlt::Properties(c.get_data("acodec"));
+    Q_ASSERT(p);
     for (int i = 0; i < p->count(); i++)
         ui->audioCodecCombo->addItem(p->get(i));
     delete p;
@@ -99,6 +101,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     ui->audioCodecCombo->insertItem(0, tr("Default for format"));
 
     p = new Mlt::Properties(c.get_data("vcodec"));
+    Q_ASSERT(p);
     for (int i = 0; i < p->count(); i++)
         ui->videoCodecCombo->addItem(p->get(i));
     delete p;
@@ -411,10 +414,14 @@ QStandardItem* EncodeDock::getTreeParentItem(const QString &text)
 
 void EncodeDock::loadPresets()
 {
+    Q_ASSERT(m_presets);
+
     QStandardItemModel* sourceModel = (QStandardItemModel*) m_presetsModel.sourceModel();
+    Q_ASSERT(sourceModel);
     sourceModel->clear();
 
     QStandardItem* parentItem = new QStandardItem(tr("Custom"));
+    Q_ASSERT(parentItem);
     parentItem->setData(0, Qt::UserRole + 2);
     sourceModel->invisibleRootItem()->appendRow(parentItem);
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
@@ -422,6 +429,7 @@ void EncodeDock::loadPresets()
         QStringList entries = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
         foreach (QString name, entries) {
             QStandardItem* item = new QStandardItem(name);
+            Q_ASSERT(item);
             item->setData(name);
             parentItem->appendRow(item);
         }
@@ -476,6 +484,7 @@ void EncodeDock::loadPresets()
                     if (preset.get("meta.preset.name"))
                         name = QString::fromUtf8(preset.get("meta.preset.name"));
                     QStandardItem* item = new QStandardItem(name);
+                    Q_ASSERT(item);
                     item->setData(QString(m_presets->get_name(j)));
                     item->setData(indexInCategory, Qt::UserRole + 2);
                     if (preset.get("meta.preset.note"))
@@ -701,6 +710,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
     if (Registration.registrationType() == Registration_None)
     {
         textFilter = new Mlt::Filter(MLT.profile(), "dynamictext");
+        Q_ASSERT(textFilter);
         textFilter->set("argument", "MovieMator Video Editor Pro\nwww.macvideostudio.com");
         textFilter->set("family", "Arial");
         textFilter->set("fgcolour", 255.0, 255.0, 255.0, 255.0);
@@ -791,8 +801,10 @@ void EncodeDock::runMelt(const QString& target, int realtime)
             QString xml = MLT.XML(info->producer);
             QScopedPointer<Mlt::Producer> producer(
                 new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData()));
+            Q_ASSERT(producer);
             producer->set_in_and_out(info->frame_in, info->frame_out);
             m_immediateJob = createMeltJob(producer.data(), target, realtime);
+            Q_ASSERT(m_immediateJob);
             if (m_immediateJob) {
                 m_immediateJob->setIsStreaming(true);
                 connect(m_immediateJob, SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
@@ -804,6 +816,7 @@ void EncodeDock::runMelt(const QString& target, int realtime)
         }
     }
     m_immediateJob = createMeltJob(service, target, realtime);
+    Q_ASSERT(m_immediateJob);
     if (m_immediateJob) {
         m_immediateJob->setIsStreaming(true);
         connect(m_immediateJob, SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
@@ -826,6 +839,7 @@ void EncodeDock::enqueueMelt(const QString& target, int realtime)
                 QString xml = MLT.XML(info->producer);
                 QScopedPointer<Mlt::Producer> producer(
                     new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData()));
+                Q_ASSERT(producer);
                 producer->set_in_and_out(info->frame_in, info->frame_out);
                 QString filename = QString("%1/%2-%3.%4").arg(fi.path()).arg(fi.baseName())
                                                          .arg(i + 1, digits, 10, QChar('0')).arg(fi.completeSuffix());
@@ -859,6 +873,7 @@ void EncodeDock::encode(const QString& target)
 {
     bool isMulti = true;
     Mlt::Producer* producer = new Mlt::Producer(MLT.producer());
+    Q_ASSERT(producer);
     double volume = MLT.volume();
     MLT.closeConsumer();
     MLT.close();
@@ -1015,6 +1030,8 @@ Mlt::Service *EncodeDock::fromProducer() const
 
 static double getBufferSize(Mlt::Properties& preset, const char* property)
 {
+    Q_ASSERT(preset.is_valid());
+    Q_ASSERT(property);
     double size = preset.get_double(property);
     const QString& s = preset.get(property);
     // evaluate suffix
@@ -1026,6 +1043,8 @@ static double getBufferSize(Mlt::Properties& preset, const char* property)
 
 void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
 {
+    Q_ASSERT(m_profiles);
+
     if (!index.parent().isValid())
         return;
     QString name = m_presetsModel.data(index, Qt::UserRole + 1).toString();
@@ -1034,6 +1053,7 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
         if (m_presetsModel.data(index.parent()).toString() == tr("Custom")) {
             ui->removePresetButton->setEnabled(true);
             preset = new Mlt::Properties();
+            Q_ASSERT(preset);
             QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
             if (dir.cd("presets") && dir.cd("encode"))
                 preset->load(dir.absoluteFilePath(name).toLatin1().constData());
@@ -1041,6 +1061,7 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
         else {
             ui->removePresetButton->setEnabled(false);
             preset = new Mlt::Properties((mlt_properties) m_presets->get_data(name.toLatin1().constData()));
+            Q_ASSERT(preset);
         }
         if (preset->is_valid()) {
             QStringList textParts = name.split('/');
@@ -1053,6 +1074,7 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
                 if (m_profiles->get_data(folder.toLatin1().constData())) {
                     // only set these fields if the folder is a profile
                     Mlt::Profile p(folder.toLatin1().constData());
+                    Q_ASSERT(p.is_valid());
                     ui->widthSpinner->setValue(p.width());
                     ui->heightSpinner->setValue(p.height());
                     ui->aspectNumSpinner->setValue(p.display_aspect_num());
@@ -1185,6 +1207,7 @@ void EncodeDock::on_encodeButton_clicked()
 
 void EncodeDock::onProfileChanged()
 {
+    Q_ASSERT(MLT.profile().is_valid());
     int width = MLT.profile().width();
     int height = MLT.profile().height();
     double sar = MLT.profile().sar();
@@ -1281,6 +1304,7 @@ void EncodeDock::on_streamButton_clicked()
 void EncodeDock::on_addPresetButton_clicked()
 {
     Mlt::Properties* data = collectProperties(0);
+    Q_ASSERT(data);
     AddEncodePresetDialog dialog(this);
     QStringList ls;
 
@@ -1364,6 +1388,7 @@ void EncodeDock::on_removePresetButton_clicked()
 
 void EncodeDock::onFinished(AbstractJob* job, bool isSuccess)
 {
+    Q_ASSERT(job);
     Q_UNUSED(isSuccess)
     if (!MLT.isSeekable())
         ui->encodeButton->setText(tr("Capture File"));
@@ -1513,6 +1538,7 @@ void EncodeDock::on_closeButton_clicked()
 
 void EncodeDock::setCurrentPreset(Mlt::Properties *preset)
 {
+    Q_ASSERT(preset);
     if (preset != m_currentPreset)
     {
         if (m_currentPreset)

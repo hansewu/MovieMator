@@ -74,11 +74,18 @@ void RecentListView::mouseMoveEvent(QMouseEvent* event)
     QDrag drag(this);
 
     QSortFilterProxyModel *proxyModel = qobject_cast<QSortFilterProxyModel*>(model());
+    Q_ASSERT(proxyModel);
     RecentListModel *viewModel = proxyModel ? qobject_cast<RecentListModel*>(proxyModel->sourceModel()) : nullptr;
-    if(viewModel)
+    Q_ASSERT(viewModel);
+    if(viewModel && (selectedIndexes().count() > 0))
     {
         int row = proxyModel->mapToSource(selectedIndexes().first()).row();
         QMimeData *mimeData = viewModel->mimeData(row);
+        Q_ASSERT(mimeData);
+        if(!mimeData)
+        {
+            return;
+        }
         QImage thumbnail = viewModel->thumbnail(row);
 
         drag.setMimeData(mimeData);

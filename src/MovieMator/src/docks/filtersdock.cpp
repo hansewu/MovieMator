@@ -160,6 +160,8 @@ void FiltersDock::resetQview() {
 
 void FiltersDock::resetQquickView()
 {
+    Q_ASSERT(m_quickView.engine());
+
     LOG_DEBUG() << "begin";
     if (m_quickView.status() != QQuickView::Null) {
         QObject* root = m_quickView.rootObject();
@@ -192,6 +194,8 @@ void FiltersDock::resetQquickView()
 
 void FiltersDock::resetQquickWidget()
 {
+    Q_ASSERT(m_qview.engine());
+
     LOG_DEBUG() << "begin";
     if (m_qview.status() != QQuickWidget::Null) {
         QObject* root = m_qview.rootObject();

@@ -40,6 +40,12 @@ EffectListView::~EffectListView()
 
 void EffectListView::setMimeData(QMimeData *mimeData, const QString &mimeType)
 {
+    Q_ASSERT(mimeData);
+    Q_ASSERT(m_mimeData);
+    if(!mimeData || !m_mimeData)
+    {
+        return;
+    }
     m_mimeData->setData(mimeType, mimeData->data(mimeType));
     m_mimeData->setText(mimeData->text());
     m_mimeType = mimeType;
@@ -86,6 +92,8 @@ void EffectListView::mouseMoveEvent(QMouseEvent* event)
     QDrag drag(this);
 
     EffectListModel *viewModel = static_cast<EffectListModel *>(model());
+    Q_ASSERT(viewModel);
+    Q_ASSERT(m_mimeData);
     if(viewModel && m_mimeData)
     {
         QMimeData *mimeData = new QMimeData;
