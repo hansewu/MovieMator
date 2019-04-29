@@ -362,6 +362,10 @@ QStringList PlaylistModel::mimeTypes() const
 
 QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
 {
+    if (indexes.count() <= 0) {
+        return nullptr;
+    }
+
     Q_ASSERT(indexes.first().row() < m_playlist->count());
 
     QMimeData *mimeData = new QMimeData;

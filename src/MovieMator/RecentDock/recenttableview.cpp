@@ -72,7 +72,7 @@ void RecentTableView::mouseMoveEvent(QMouseEvent* event)
     // QSortFilterProxyModel对象的 sourceModel才是 RecentlistModel对象
     QSortFilterProxyModel *proxyModel = static_cast<QSortFilterProxyModel *>(model());
     RecentTableModel *recentlistModel = proxyModel ? static_cast<RecentTableModel *>(proxyModel->sourceModel()) : nullptr;
-    if(recentlistModel)
+    if(recentlistModel && (selectedIndexes().count() > 0))
     {
         // 在过滤的时候获得正确的 model id
         QModelIndex first = selectedIndexes().first();

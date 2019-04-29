@@ -80,6 +80,10 @@ QVariant TemplateListModel::data(const QModelIndex &index, int role) const
 
 QMimeData *TemplateListModel::mimeData(const QModelIndexList &indexes) const
 {
+    if (indexes.count() <= 0) {
+        return nullptr;
+    }
+
     Q_ASSERT(indexes.first().row() < m_templateList->count());
 
     QMimeData *mimeData = new QMimeData;
