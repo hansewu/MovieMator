@@ -46,6 +46,8 @@
 
 #include <time.h>
 
+#include "CrashHandler/CrashHandler.h"
+
 #ifdef Q_OS_WIN
 extern "C"
 {
@@ -406,6 +408,8 @@ int main(int argc, char **argv)
     setenv("QT_DEVICE_PIXEL_RATIO", "auto", 1);
 //    setenv("QT_SCALE_FACTOR", "2", 1);
     Application a(argc, argv);
+
+    CrashManager::CrashHandler::instance()->Init(QDir::tempPath());
 
 //   MMSplashScreen splash(QPixmap(":/splash.png"));
 //    splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom, Qt::white);

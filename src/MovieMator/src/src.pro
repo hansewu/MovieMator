@@ -120,6 +120,7 @@ SOURCES += main.cpp\
     maininterface.cpp \
     containerdock.cpp \
     widgets/avformatproducersimplewidget.cpp \
+    CrashHandler/CrashHandler.cpp \
 #    templateeidtor.cpp \
     commands/abstractcommand.cpp
     maininterface.cpp
@@ -239,7 +240,8 @@ HEADERS  += mainwindow.h \
     widgets/avformatproducersimplewidget.h \
 #    templateeidtor.h \
     eccregister/CEccRegister.h \
-    commands/abstractcommand.h
+    commands/abstractcommand.h \
+    CrashHandler/CrashHandler.h
 
 mac {
     SOURCES += securitybookmark/SecurityBookmark.mm \
@@ -316,6 +318,7 @@ INCLUDEPATH = ../CuteLogger/include ../mvcp ../RecentDock ../FilterDock ../Commo
 INCLUDEPATH += ../AudioFilterDock
 INCLUDEPATH += ../EffectDock ../EffectDock
 INCLUDEPATH += ../include
+INCLUDEPATH += ../Breakpad/breakpad/src
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
@@ -323,20 +326,24 @@ debug_and_release {
         LIBS += -L../QmlUtilities/debug
         LIBS += -L../EffectDock/debug
         LIBS += -L../AudioFilterDock/debug
+        LIBS += -L../Breakpad/debug
     } else {
         LIBS += -L../CuteLogger/release -L../mvcp/release -L../RecentDock/release -L../FilterDock/release -L../CommonUtil/release -L../MltController/release
         LIBS += -L../QmlUtilities/release
         LIBS += -L../EffectDock/release
         LIBS += -L../AudioFilterDock/release
+        LIBS += -L../Breakpad/release
     }
 } else {
     LIBS += -L../CuteLogger -L../mvcp -L../RecentDock -L../FilterDock -L../CommonUtil -L../MltController -L../QmlUtilities #-L../mm
     LIBS += -L../EffectDock
     LIBS += -L../AudioFilterDock
+    LIBS += -L../Breakpad
 }
 
 LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lFilterDock -lAudioFilterDock -lCommonUtil -lMltController -lQmlUtilities
 LIBS += -lEffectDock
+LIBS += -lBreakpad
 
 
 
