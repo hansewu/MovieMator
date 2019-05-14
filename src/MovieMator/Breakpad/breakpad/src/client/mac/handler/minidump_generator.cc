@@ -200,6 +200,36 @@ string MinidumpGenerator::UniqueNameInDirectory(const string &dir,
   return path;
 }
 
+string MinidumpGenerator::UniqueNameInDirectory(const string &dir,
+                                                string *unique_name,
+                                                const string &mm_ver) {
+  CFUUIDRef uuid = CFUUIDCreate(NULL);
+  CFStringRef uuid_cfstr = CFUUIDCreateString(NULL, uuid);
+  CFRelease(uuid);
+  string file_name(ConvertToString(uuid_cfstr));
+  CFRelease(uuid_cfstr);
+  string path(dir);
+
+  // Ensure that the directory (if non-empty) has a trailing slash so that
+  // we can append the file name and have a valid pathname.
+  if (!dir.empty()) {
+    if (dir.at(dir.size() - 1) != '/')
+      path.append(1, '/');
+  }
+
+  path.append(file_name);
+
+  path.append("-");
+  path.append(mm_ver);
+
+  path.append(".dmp");
+
+  if (unique_name)
+    *unique_name = file_name;
+
+  return path;
+}
+
 bool MinidumpGenerator::Write(const char *path) {
   WriteStreamFN writers[] = {
     &MinidumpGenerator::WriteThreadListStream,

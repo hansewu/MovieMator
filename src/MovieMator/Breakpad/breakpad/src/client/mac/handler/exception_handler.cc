@@ -248,6 +248,36 @@ ExceptionHandler::ExceptionHandler(const string &dump_path,
   Setup(install_handler);
 }
 
+ExceptionHandler::ExceptionHandler(const string &dump_path,
+                                   FilterCallback filter,
+                                   MinidumpCallback callback,
+                                   void* callback_context,
+                                   bool install_handler,
+                                   const char* port_name,
+                                   const string &mm_version)
+    : dump_path_(),
+      filter_(filter),
+      callback_(callback),
+      callback_context_(callback_context),
+      directCallback_(NULL),
+      handler_thread_(NULL),
+      handler_port_(MACH_PORT_NULL),
+      previous_(NULL),
+      installed_exception_handler_(false),
+      is_in_teardown_(false),
+      last_minidump_write_result_(false),
+      use_minidump_write_mutex_(false),
+      mm_ver(mm_version){
+  // This will update to the ID and C-string pointers
+  set_dump_path(dump_path);
+  MinidumpGenerator::GatherSystemInformation();
+#if !TARGET_OS_IPHONE
+  if (port_name)
+    crash_generation_client_.reset(new CrashGenerationClient(port_name));
+#endif
+  Setup(install_handler);
+}
+
 // special constructor if we want to bypass minidump writing and
 // simply get a callback with the exception information
 ExceptionHandler::ExceptionHandler(DirectCallback callback,
@@ -809,8 +839,10 @@ bool ExceptionHandler::SendMessageToHandlerThread(
 }
 
 void ExceptionHandler::UpdateNextID() {
-  next_minidump_path_ =
-    (MinidumpGenerator::UniqueNameInDirectory(dump_path_, &next_minidump_id_));
+//  next_minidump_path_ =
+//    (MinidumpGenerator::UniqueNameInDirectory(dump_path_, &next_minidump_id_));
+    next_minidump_path_ =
+      (MinidumpGenerator::UniqueNameInDirectory(dump_path_, &next_minidump_id_, mm_ver));
 
   next_minidump_path_c_ = next_minidump_path_.c_str();
   next_minidump_id_c_ = next_minidump_id_.c_str();

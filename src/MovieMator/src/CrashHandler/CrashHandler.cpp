@@ -34,8 +34,6 @@
 
 #include <QDebug>
 
-//#include "version.h"
-
 #if defined(Q_OS_MAC)
 
 #include <string.h>
@@ -182,7 +180,7 @@ namespace CrashManager
 
 #else
 
-    bool launcher(const char* program, const char* path)
+    bool launcher(const char* program, const char* path, const char* path2)
     {
         // TODO launcher
         //	if(!GlobalHandlerPrivate::reporter_.isEmpty()) {
@@ -212,7 +210,7 @@ namespace CrashManager
 
 
 
-                execl(program,program, path,(char*) 0 ); /* Execute the program */
+                execl(program,program, path, path2, (char*) 0 ); /* Execute the program */
                 std::cerr << "Uh-Oh! execl() failed!";
                 /* execl doesn't return unless there's an error */
                 //qApp->quit();
@@ -297,14 +295,24 @@ namespace CrashManager
         launcher(wpath);
 #elif defined(Q_OS_MAC)
 
-        char* path;
-
-         strcpy (path,_dump_dir);
-         strcat (path,"/");
-         strcat (path,_minidump_id);
-         strcat (path,".dmp");
-
-         launcher(CrashHandlerPrivate::reporter_,path);
+        char* path = new char;      // 这里不初始化的话，Release下程序会卡死，Debug下不会
+        
+        strcpy (path,_dump_dir);   // 这里往下都会卡住
+        strcat (path,"/");
+        strcat (path,_minidump_id);
+        //         strcat (path,".dmp");
+        // 拼接 MovieMator版本号
+        strcat(path, "-");
+        QString str = MOVIEMATOR_VERSION;
+        strcat(path, str.toStdString().data());
+        strcat(path, ".dmp");
+        
+        char* path2 = new char;
+        QDir dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+        QString logPath = dir.path() + "/moviemator-log.txt";
+        strcat(path2, logPath.toStdString().data());
+        
+        launcher(CrashHandlerPrivate::reporter_,path,path2);
 
 
 #endif
@@ -343,6 +351,7 @@ namespace CrashManager
                     );
 #elif defined(Q_OS_MAC)
         std::string pathAsStr = dumpPath.toStdString();
+        std::string mm_ver = MOVIEMATOR_VERSION;
         pHandler = new google_breakpad::ExceptionHandler(
                     pathAsStr,
                     /*FilterCallback*/ 0,
@@ -350,7 +359,8 @@ namespace CrashManager
                     /*context*/
                     0,
                     true,
-                    NULL
+                    NULL,
+                    mm_ver
                     );
 #endif
 

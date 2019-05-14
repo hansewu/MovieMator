@@ -24,6 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 mac {
     QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/
+    QMAKE_LFLAGS	+= -framework Cocoa
 }
 
 win32 {

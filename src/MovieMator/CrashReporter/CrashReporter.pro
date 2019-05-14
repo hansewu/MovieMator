@@ -26,6 +26,13 @@ DEFINES += CRASHREPORTER_SUBMIT_URL=\\\"http://192.168.1.181/upload/upload.php\\
 
 mac {
     QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/
+
+    LIBS += "-framework Cocoa"
+
+    QMAKE_LFLAGS += -Wl,/usr/lib/libcrypto.0.9.8.dylib
+#    INCLUDEPATH += /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7
+#    LIBS += -F/System/Library/Frameworks -framework Python
+    QMAKE_RPATHDIR += @executable_path/qt_lib/lib
 }
 
 win32 {

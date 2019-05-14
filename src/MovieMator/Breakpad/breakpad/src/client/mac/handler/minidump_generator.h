@@ -90,6 +90,7 @@ class MinidumpGenerator {
   // Return <dir>/<unique_name>.dmp
   // Sets |unique_name| (if requested) to the unique name for the minidump
   static string UniqueNameInDirectory(const string &dir, string *unique_name);
+  static string UniqueNameInDirectory(const string &dir, string *unique_name, const string &mm_ver);
 
   // Write out the minidump into |path|
   // All of the components of |path| must exist and be writable
