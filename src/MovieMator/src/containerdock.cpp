@@ -63,6 +63,16 @@ ContainerDock::ContainerDock(TAB_POSITION tabPosition, QWidget *parent)
         tabButtonLayout->addStretch();
         m_tabBtnWidget->setLayout(tabButtonLayout);
     }
+    else if (m_tabPostion == TabPosition_Top)
+    {
+        m_tabBtnWidget->setStyleSheet(".QWidget{background-color: rgb(82,82,82);border-radius:5px}");
+        m_tabBtnWidget->setFixedHeight(33);
+        QHBoxLayout *tabButtonLayout = new QHBoxLayout();
+        tabButtonLayout->setSpacing(0);
+        tabButtonLayout->setContentsMargins(0,0,0,0);
+        tabButtonLayout->addStretch();
+        m_tabBtnWidget->setLayout(tabButtonLayout);
+    }
 
 
 
@@ -93,6 +103,8 @@ ContainerDock::ContainerDock(TAB_POSITION tabPosition, QWidget *parent)
         gLayout->addWidget(m_tabBtnWidget,0,0,1,1);
     else if (m_tabPostion == TabPosition_Bottom)
         gLayout->addWidget(m_tabBtnWidget, 1,0,1,1);
+    else if (m_tabPostion == TabPosition_Top)
+        gLayout->addWidget(m_tabBtnWidget, 0,1,1,1);
 
     layoutWidget->setLayout(gLayout);
 
@@ -110,6 +122,8 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
         gLayout->addWidget(dock,0,1,1,1);
     else if (m_tabPostion == TabPosition_Bottom)
         gLayout->addWidget(dock,0,0,1,1);
+    else if (m_tabPostion == TabPosition_Top)
+        gLayout->addWidget(dock,1,1,1,1);
 
     if (m_docks.count() > 0)
         dock->hide();
@@ -145,6 +159,13 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
         vLayout->insertWidget(vLayout->count()-1,button);
     }
     else if (m_tabPostion == TabPosition_Bottom)
+    {
+        button->setFixedSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        QHBoxLayout *hLayout = (QHBoxLayout *)m_tabBtnWidget->layout();
+        hLayout->insertWidget(hLayout->count()-1,button);
+    }
+    else if (m_tabPostion == TabPosition_Top)
     {
         button->setFixedSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);

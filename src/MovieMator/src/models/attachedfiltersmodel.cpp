@@ -575,6 +575,7 @@ bool AttachedFiltersModel::isVisible(int row) const
 {
     if(row < 0) return false;
 
+    if(m_metaList.count() <= row) return false;
     QmlMetadata* meta = m_metaList.at(row);
     Q_ASSERT(meta);
     if(!meta) return false;

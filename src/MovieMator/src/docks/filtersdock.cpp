@@ -41,7 +41,7 @@
 #include "mltcontroller.h"
 #include "mainwindow.h"
 
-FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent) :
+FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel,bool isvideo, QWidget *parent) :
     QDockWidget(tr("Filters"), parent),
     m_quickView(QmlUtilities::sharedEngine(), qobject_cast<QWindow *>(this)),
     m_qview(QmlUtilities::sharedEngine(), this)
@@ -52,6 +52,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
     setMinimumWidth(300);
+    setIsVideo(isvideo);
 
 #ifdef Q_OS_WIN
     m_containerView = QWidget::createWindowContainer(&m_quickView, this);
@@ -67,6 +68,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     this->getRootContext()->setContextProperty("metadatamodel", metadataModel);
     this->getRootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
     this->getRootContext()->setContextProperty("filterDock", this);
+    this->getRootContext()->setContextProperty("isVideo", isVideo());
 
     setCurrentFilter(0, 0, -1);
 //    connect(&m_quickView, SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
@@ -92,12 +94,12 @@ QQuickItem* FiltersDock::getRootObject() {
 #endif
 }
 
-void FiltersDock::clearCurrentFilter()
+void FiltersDock::clearCurrentFilter(int index)
 {
     MLT.pause();
     disconnect(this, SIGNAL(positionChanged()), 0, 0);
     this->getRootContext()->setContextProperty("metadata", 0);
-    QMetaObject::invokeMethod(this->getRootObject(), "clearCurrentFilter");
+    QMetaObject::invokeMethod(this->getRootObject(), "clearCurrentFilter", Q_ARG(QVariant, QVariant(index)));
     disconnect(this, SIGNAL(changed()));
     m_qmlFilter = NULL;
 }

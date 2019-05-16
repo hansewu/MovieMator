@@ -50,7 +50,7 @@ protected:
     void timerEvent(QTimerEvent*);
 
 signals:
-    void currentFilterAboutToChange();
+    void currentFilterAboutToChange(int index);
     void currentFilterChanged(QObject* filter, QmlMetadata* meta, int index);
     void statusChanged(QString);
 
