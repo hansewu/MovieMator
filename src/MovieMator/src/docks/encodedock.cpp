@@ -76,6 +76,9 @@ EncodeDock::EncodeDock(QWidget *parent) :
 
     // populate the combos
     Mlt::Consumer c(MLT.profile(), "avformat");
+    Q_ASSERT(c.is_valid());
+    if (c.is_valid())
+    {
     c.set("f", "list");
     c.set("acodec", "list");
     c.set("vcodec", "list");
@@ -109,7 +112,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     ui->videoCodecCombo->insertItem(0, tr("Default for format"));
 
     on_resetButton_clicked();
-
+    }
 
     ui->streamButton->hide();
 
