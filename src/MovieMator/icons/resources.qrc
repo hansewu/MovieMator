@@ -221,6 +221,11 @@
         <file>light/12x12/spot_on.png</file>
         <file>light/14x14/key.png</file>
         <file>light/14x14/key_on.png</file>
+        <file>light/32x32/arrow_1.png</file>
+        <file>light/32x32/arrow_1on.png</file>
+        <file>light/32x32/arrow_2.png</file>
+        <file>light/32x32/arrow_2on.png</file>
+        <file>light/32x32/icon.jpg</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>
