@@ -32,7 +32,7 @@ ColorProducerWidget::ColorProducerWidget(QWidget *parent) :
     ui->preset->saveDefaultPreset(*getPreset());
     ui->preset->loadPresets();
 
-    ui->label_2->setStyleSheet("background-color:rgb(82,82,82);");
+    ui->label_2->setStyleSheet("background-color:rgb(46,46,46);");
     ui->line->setStyleSheet("color:black;");
     ui->colorButton->setStyleSheet("QPushButton{"
                                    "border-radius:3px;border:1px solid;border-color:black;"
