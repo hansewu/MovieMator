@@ -33,7 +33,7 @@ CrashReporterWidget::CrashReporterWidget(QWidget *parent) :
     ui->info->clear();
     ui->btnClose->hide();
 
-    setWindowTitle("CrashReporter");
+    setWindowTitle(tr("CrashReporter"));
 
     //Move the dialog away from the center
     setGeometry(0,0,this->width(),this->height());
@@ -124,7 +124,7 @@ void CrashReporterWidget::on_btnSendReport_clicked()
     connect(worker, SIGNAL(on_execution_finished(HttpRequestWorker*)), this, SLOT(handle_result(HttpRequestWorker*)));
     worker->execute(m_input);
 
-    ui->info->setText("Sending...");
+    ui->info->setText(tr("Sending..."));
     ui->btnSendReport->setEnabled(false);
 }
 
@@ -136,10 +136,10 @@ void CrashReporterWidget::on_btnClose_clicked()
 void CrashReporterWidget::handle_result(HttpRequestWorker *worker) {
     if (worker->error_type == QNetworkReply::NoError) {
         // communication was successful
-        ui->info->setText("Send successfully.");
+        ui->info->setText(tr("Send successfully."));
         ui->btnSendReport->hide();
         ui->btnClose->show();
-
+        ui->desc->appendPlainText(worker->response);
         // 重启 Moviemator
         if(ui->restartCheckBox->isChecked())
         {
@@ -161,8 +161,9 @@ void CrashReporterWidget::handle_result(HttpRequestWorker *worker) {
     }
     else {
         // an error occurred
-        ui->info->setText("Sending failed.");
+        ui->info->setText(tr("Sending failed."));
         ui->btnSendReport->setEnabled(true);
+        ui->desc->appendPlainText(worker->response);
     }
 }
 
