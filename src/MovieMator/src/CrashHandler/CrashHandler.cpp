@@ -295,7 +295,7 @@ namespace CrashManager
         launcher(wpath);
 #elif defined(Q_OS_MAC)
 
-        char* path = new char;      // 这里不初始化的话，Release下程序会卡死，Debug下不会
+        char path[256]={0};      // 这里不初始化的话，Release下程序会卡死，Debug下不会
         
         strcpy (path,_dump_dir);   // 这里往下都会卡住
         strcat (path,"/");
@@ -307,7 +307,7 @@ namespace CrashManager
         strcat(path, str.toStdString().data());
         strcat(path, ".dmp");
         
-        char* path2 = new char;
+        char path2[256]={0};
         QDir dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
         QString logPath = dir.path() + "/moviemator-log.txt";
         strcat(path2, logPath.toStdString().data());
