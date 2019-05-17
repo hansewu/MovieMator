@@ -3152,12 +3152,15 @@ int MultitrackModel::addVideoTrack()
     // Add the composite transition.
     Mlt::Transition composite(MLT.profile(), Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend");
     if (!composite.is_valid())
-    qDebug() << "composite is invalid!";
-    composite.set("disable", 1);
-    foreach (Track t, m_trackList) {
-        if (t.type == VideoTrackType) {
-            composite.set("disable", 0);
-            break;
+        qDebug() << "composite is invalid!";
+    else
+    {
+        composite.set("disable", 1);
+        foreach (Track t, m_trackList) {
+            if (t.type == VideoTrackType) {
+                composite.set("disable", 0);
+                break;
+            }
         }
     }
 
@@ -3170,7 +3173,9 @@ int MultitrackModel::addVideoTrack()
             last_mlt_index = t.mlt_index;
         }
     }
-    m_tractor->plant_transition(composite, last_mlt_index, i);
+    if (composite.is_valid())
+        m_tractor->plant_transition(composite, last_mlt_index, i);
+
 
 
     // Add the shotcut logical video track.
