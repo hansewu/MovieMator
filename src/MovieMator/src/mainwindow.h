@@ -175,6 +175,7 @@ private:
     QActionGroup* m_externalGroup;
     QActionGroup* m_keyerGroup;
     FiltersDock* m_filtersDock;
+    FiltersDock* m_filtersDock2;
     FilterController* m_filterController;
     ScopeController* m_scopeController;
     QMenu* m_customProfileMenu;
@@ -282,6 +283,7 @@ public slots:
     void createMultitrackModelIfNeeded();
 
     void showFilterDock();
+    void showAudioFilterDock();
 
     void onJobsDockTriggered(bool);
     void onPropertiesDockTriggered(bool checked = true);
@@ -297,6 +299,7 @@ public slots:
     void showPlaylistDock();
     void showRecentDock();
     void onShowFilterDock();
+    void onShowAudioFilterDock();
 
     void setCurrentTrack(int trackIndex);
 

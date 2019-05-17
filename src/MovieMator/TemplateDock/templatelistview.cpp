@@ -56,7 +56,7 @@ void TemplateListView::mouseMoveEvent(QMouseEvent* event)
     QDrag drag(this);
 
     TemplateListModel *viewModel = static_cast<TemplateListModel *>(model());
-    if(viewModel)
+    if(viewModel && (selectedIndexes().count() > 0))
     {
         QModelIndex first = selectedIndexes().first();
         QMimeData *mimeData = viewModel->mimeData(selectedIndexes());

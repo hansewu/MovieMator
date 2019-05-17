@@ -80,6 +80,9 @@ void PlaylistTable::mouseMoveEvent(QMouseEvent* event)
     QMimeData *mimeData = playlistModel->mimeData(selectedIndexes());
     drag.setMimeData(mimeData);
 
+    if (selectedIndexes().count() <= 0) {
+        return;
+    }
     QImage thumbnail = playlistModel->thumbnail(selectedIndexes().first().row());
     drag.setPixmap(QPixmap::fromImage(thumbnail));
     drag.setHotSpot(QPoint(0, 0));

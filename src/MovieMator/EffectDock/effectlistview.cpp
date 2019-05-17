@@ -94,7 +94,7 @@ void EffectListView::mouseMoveEvent(QMouseEvent* event)
     EffectListModel *viewModel = static_cast<EffectListModel *>(model());
     Q_ASSERT(viewModel);
     Q_ASSERT(m_mimeData);
-    if(viewModel && m_mimeData)
+    if(viewModel && m_mimeData && (selectedIndexes().count() > 0))
     {
         QMimeData *mimeData = new QMimeData;
         mimeData->setData(m_mimeType, m_mimeData->data(m_mimeType));

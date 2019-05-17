@@ -195,6 +195,60 @@ Mlt::Producer * AvformatProducerSimpleWidget::createProducer(Mlt::Profile& profi
     return p;
 }
 
+void AvformatProducerSimpleWidget::adjustProducer(Mlt::Producer* newProducer) {
+    Q_ASSERT(newProducer);
+    Q_ASSERT(newProducer->is_valid());
+    Q_ASSERT(m_tempProducer);
+    Q_ASSERT(m_tempProducer->is_valid());
+    if (!newProducer || !newProducer->is_valid() || !m_tempProducer || !m_tempProducer->is_valid()) {
+        return;
+    }
+
+    double oldSpeed = GetSpeedFromProducer(m_tempProducer);
+    double newSpeed = GetSpeedFromProducer(newProducer);
+    double speedRatio = oldSpeed / newSpeed;
+
+    Mlt::Producer& oldProducerWithParent = m_tempProducer->parent();
+    Q_ASSERT(oldProducerWithParent.is_valid());
+    if (!oldProducerWithParent.is_valid()) {
+        return;
+    }
+
+    int oldLength = oldProducerWithParent.get_length();
+    int newLength = qRound(oldLength * speedRatio);
+
+    newProducer->set("length", newLength);
+    newProducer->set_in_and_out(qMin(qRound(oldProducerWithParent.get_in() * speedRatio), newLength - 1),
+                                qMin(qRound(oldProducerWithParent.get_out() * speedRatio), newLength - 1));
+
+    adjustInAndOutOfFilter(newProducer, newLength, speedRatio);//更新新的Producer上滤镜的入点、出点
+
+    //TODO：更新关键帧信息
+
+    //TODO：更新转场信息
+}
+
+void AvformatProducerSimpleWidget::adjustInAndOutOfFilter(Mlt::Producer* newProducer, int newLength, double speedRatio) {
+    Q_ASSERT(newProducer);
+    Q_ASSERT(newProducer->is_valid());
+
+    if (!newProducer || !newProducer->is_valid()) {
+        return;
+    }
+
+    int n = newProducer->filter_count();
+    for (int j = 0; j < n; j++) {
+        QScopedPointer<Mlt::Filter> filter(newProducer->filter(j));
+        Q_ASSERT(filter);
+        Q_ASSERT(filter->is_valid());
+        if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+            int in = qMin(qRound(m_tempProducer->get_in() * speedRatio), newLength - 1);
+            int out = qMin(qRound(m_tempProducer->get_out() * speedRatio), newLength - 1);
+            filter->set_in_and_out(in, out);
+        }
+    }
+}
+
 void AvformatProducerSimpleWidget::on_advanced_clicked()
 {
     MAIN.onPropertiesDockTriggered(true);
@@ -204,6 +258,7 @@ void AvformatProducerSimpleWidget::on_okButton_clicked()
 {
     double speed = ui->speedSpinBox->value();
     Mlt::Producer *producer = createProducer(MLT.profile(), m_tempProducer, speed);
+    adjustProducer(producer);//调节Producer属性（包括Producer入点出点，滤镜入点出点，转场，关键帧）
 
     //使用用tempProducer发送producerChanged消息
     if (producer->get_int(kMultitrackItemProperty)) {

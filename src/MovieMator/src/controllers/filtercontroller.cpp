@@ -492,7 +492,7 @@ void FilterController::setCurrentFilter(int attachedIndex)
 
     }
 
-    emit currentFilterAboutToChange();
+    emit currentFilterAboutToChange(m_currentFilterIndex);
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
     m_currentFilter.reset(filter);
 }
@@ -578,7 +578,7 @@ void FilterController::handleAttachedRowsInserted(const QModelIndex&, int first,
     QmlFilter* filter = new QmlFilter(mltFilter, meta);
     Q_ASSERT(filter);
     filter->setIsNew(true);
-    emit currentFilterAboutToChange();
+    emit currentFilterAboutToChange(m_currentFilterIndex);
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
     m_currentFilter.reset(filter);
 }
@@ -703,12 +703,16 @@ void FilterController::addFilter(int nFilterIndex)
 {
 //    Q_ASSERT(nFilterIndex >= 0);
 
-    MAIN.onShowFilterDock();
     int nCurrentFilter = nFilterIndex;
     if(nCurrentFilter == -1)
         nCurrentFilter = getCurrentSelectedFilterIndex();
 
     QmlMetadata *meta = m_metadataModel.get(nCurrentFilter);
+
+    if(!meta->isAudio())
+        MAIN.onShowFilterDock();
+    else
+        MAIN.onShowAudioFilterDock();
 
     if (meta)
         m_attachedModel.add(meta);

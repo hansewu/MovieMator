@@ -41,7 +41,7 @@ class FiltersDock : public QDockWidget
     Q_OBJECT
     Q_PROPERTY(QRect dockPosition READ dockPosition NOTIFY dockPositionChanged)
 public:
-    explicit FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent = 0);
+    explicit FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel,bool isvideo, QWidget *parent = 0);
     int position() const { return m_position; }
 
 //    Q_INVOKABLE int getCurrentPosition();
@@ -58,6 +58,9 @@ public:
     void setExtraQmlContextProperty(QString name, QObject *object);
     QRect dockPosition();
 
+    bool isVideo() const { return m_isvideo; }
+    void setIsVideo(bool isvideo) { m_isvideo = isvideo; }
+
 signals:
     void currentFilterRequested(int attachedIndex);
     void changed(); /// Notifies when a filter parameter changes.
@@ -69,7 +72,7 @@ signals:
     void currentFilterChanged(); //current fiter changed
 
 public slots:
-    void clearCurrentFilter();
+    void clearCurrentFilter(int index);
     void setCurrentFilter(QObject* filter, QmlMetadata* meta, int index);
     void setFadeInDuration(int duration);
     void setFadeOutDuration(int duration);
@@ -95,6 +98,7 @@ private:
     QQuickView m_quickView;
     QWidget *m_containerView;
     QQuickWidget m_qview;
+    bool m_isvideo;
 };
 
 #endif // FILTERSDOCK_H

@@ -69,6 +69,8 @@ private:
 
     void reopen(Mlt::Producer* p);
     Mlt::Producer * createProducer(Mlt::Profile&, Mlt::Producer*, double speed);  // 创建一个m_producer的拷贝
+    void adjustProducer(Mlt::Producer *newProducer);
+    void adjustInAndOutOfFilter(Mlt::Producer *newProducer, int newLength, double speedRatio);
 };
 
 #endif // AVFORMATPRODUCERSIMPLEWIDGET_H
