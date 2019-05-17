@@ -159,6 +159,8 @@ void FilterController::loadFrei0rFilterMetadata() {
                 mlt_repository repository   = mlt_factory_repository();
                 mlt_properties metadata     = mlt_repository_metadata( repository, filter_type, mlt_service_s.toUtf8().constData());
 
+                if (metadata)
+                {
                 QString producerType = QString::fromUtf8(mlt_properties_get( metadata, "type"));
                 if (producerType == "filter")         //frei0r只开放出filter的库
                     meta->setType(QmlMetadata::Filter);
@@ -172,8 +174,8 @@ void FilterController::loadFrei0rFilterMetadata() {
                 meta->set_mlt_service(mlt_service_s);
                 meta->keyframes()->clearParameter();
                 //parameters info
-                if ( metadata )
-                {
+                //if ( metadata )
+                //{
                     mlt_properties params = (mlt_properties) mlt_properties_get_data(metadata, "parameters", NULL);
                     if ( params )
                     {
@@ -230,7 +232,7 @@ void FilterController::loadFrei0rFilterMetadata() {
                             meta->keyframes()->appendParameter(param);
                         }
                     }
-                }
+                //}
 
                 // Check if mlt_service is available.
                 if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
@@ -242,6 +244,7 @@ void FilterController::loadFrei0rFilterMetadata() {
                     meta->setPath(subdir);
                     meta->setParent(0);
                     addMetadata(meta);
+                }
                 }
             } else if (!meta) {
                 LOG_WARNING() << component.errorString();
