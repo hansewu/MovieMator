@@ -253,6 +253,11 @@ void UndoHelper::undoChanges()
 
                 if (m_model.isTransition(playlist, currentIndex))
                 {
+                    //获取原转场后面的原clip
+                    int currentClipUuidIndex = m_insertedOrder.indexOf(uid);
+                    QUuid nextClipUuid = m_insertedOrder.at(currentClipUuidIndex + 1);
+                    const Info& nextInfo = m_state[nextClipUuid];
+                    Mlt::Producer nextClip(MLT.profile(), "xml-string", nextInfo.xml.toUtf8().constData());
 
 //                    mlt_service_type type = restoredClip.type();
                     Mlt::Tractor tractor(restoredClip);
@@ -260,7 +265,8 @@ void UndoHelper::undoChanges()
                     QScopedPointer<Mlt::Producer> clip2(tractor.track(1));
 //                    mlt_properties_debug(clip1->get_properties(), "123456------------", stderr);
                     Mlt::Producer *trackA = playlist.get_clip(currentIndex - 1)->parent().cut(clip1->get_in(), clip1->get_out());
-                    Mlt::Producer *trackB = playlist.get_clip(currentIndex + 1)->parent().cut(clip2->get_in(), clip2->get_out());
+//                    Mlt::Producer *trackB = playlist.get_clip(currentIndex + 1)->parent().cut(clip2->get_in(), clip2->get_out());
+                    Mlt::Producer *trackB = nextClip.cut(clip2->get_in(), clip2->get_out());//用原转场后面的原clip恢复转场中的trackB，而不是当前时间线上转场后面的clip
 //                    tractor.set_track(*playlist.get_clip(currentIndex - 1), 0);
 //                    tractor.set_track(*playlist.get_clip(currentIndex + 1), 1);
                     tractor.set_track(*trackA, 0);

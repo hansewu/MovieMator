@@ -258,7 +258,7 @@ void AvformatProducerSimpleWidget::on_okButton_clicked()
 {
     double speed = ui->speedSpinBox->value();
     Mlt::Producer *producer = createProducer(MLT.profile(), m_tempProducer, speed);
-    adjustProducer(producer);//调节Producer属性（包括Producer入点出点，滤镜入点出点，转场，关键帧）
+//    adjustProducer(producer);//调节Producer属性（包括Producer入点出点，滤镜入点出点，转场，关键帧）
 
     //使用用tempProducer发送producerChanged消息
     if (producer->get_int(kMultitrackItemProperty)) {

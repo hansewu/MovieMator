@@ -430,6 +430,7 @@ public:
     UpdateCommand(TimelineDock& timeline, int trackIndex, int clipIndex, int position,
         AbstractCommand * parent = 0);
     void setXmlAfter(const QString& xml) { m_xmlAfter = xml; }
+    void setSpeedChanged(bool isSpeedChanged) {m_isSpeedChanged = isSpeedChanged;}
     void redo_impl();
     void undo_impl();
 private:
@@ -439,6 +440,7 @@ private:
     int m_position;
     QString m_xmlAfter;
     bool m_isFirstRedo;
+    bool m_isSpeedChanged;
     UndoHelper m_undoHelper;
 };
 

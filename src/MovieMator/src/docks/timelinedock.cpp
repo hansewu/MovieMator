@@ -658,36 +658,81 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
 
     QString service = after->get("mlt_service");
     if (service == "avformat" || service == "avformat-novalidate" || service == "timewarp") {
-            Q_ASSERT(trackIndex < m_model.trackList().size());
-            int i = m_model.trackList().at(trackIndex).mlt_index;
-            Q_ASSERT(m_model.tractor());
-            if (!m_model.tractor()) {
-                return;
-            }
-            QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
-            Q_ASSERT(track);
-            if (track) {
-                // Ensure the new XML has same in/out point as selected clip by making
-                // a copy of the changed producer and copying the in/out from timeline.
-                Mlt::Playlist playlist(*track);
-                int clipIndex = selection().first();
-                Q_ASSERT(playlist.is_valid());
-                QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
-                Q_ASSERT(info);
-                if (info) {
-                    Q_ASSERT(info->producer);
-                    if (!info->producer) {
-                        return;
-                    }
-                    double oldSpeed = qstrcmp("timewarp", info->producer->get("mlt_service")) ? 1.0 : info->producer->get_double("warp_speed");
-                    double newSpeed = qstrcmp("timewarp", after->get("mlt_service")) ? 1.0 : after->get_double("warp_speed");
-                    Q_ASSERT(newSpeed);
-                    double speedRatio = oldSpeed / newSpeed;
+        Q_ASSERT(trackIndex < m_model.trackList().size());
+        int i = m_model.trackList().at(trackIndex).mlt_index;
+        Q_ASSERT(m_model.tractor());
+        if (!m_model.tractor()) {
+            return;
+        }
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        Q_ASSERT(track);
+        if (track) {
+            // Ensure the new XML has same in/out point as selected clip by making
+            // a copy of the changed producer and copying the in/out from timeline.
+            Mlt::Playlist playlist(*track);
+            int clipIndex = selection().first();
+            Q_ASSERT(playlist.is_valid());
+            QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+            Q_ASSERT(info);
+            if (info) {
+                Q_ASSERT(info->producer);
+                if (!info->producer) {
+                    return;
+                }
 
-                    int length = qRound(info->length * speedRatio);
-                    after->set("length", length);
-                    after->set_in_and_out(qMin(qRound(info->frame_in * speedRatio), length - 1),
-                                         qMin(qRound(info->frame_out * speedRatio), length - 1));
+                double oldSpeed = qstrcmp("timewarp", info->producer->get("mlt_service")) ? 1.0 : info->producer->get_double("warp_speed");
+                double newSpeed = qstrcmp("timewarp", after->get("mlt_service")) ? 1.0 : after->get_double("warp_speed");
+                double speedRatio = oldSpeed / newSpeed;
+
+                //计算Producer的入点出点
+                int length = qRound(info->length * speedRatio);
+                int in = qRound(info->frame_in * speedRatio);
+                int out = qRound(info->frame_out * speedRatio);
+
+                //有转场的情况下，重新调节Producer的入点出点
+                bool hasPreviousTransition = m_model.isTransition(playlist, clipIndex - 1);
+                bool hasNextTransition = m_model.isTransition(playlist, clipIndex + 1);
+                if (hasPreviousTransition || hasNextTransition) {
+                    QScopedPointer<Mlt::ClipInfo> previousTransitionClipInfo(nullptr);
+                    QScopedPointer<Mlt::ClipInfo> nextTransitionClipInfo(nullptr);
+                    if (hasPreviousTransition) {
+                        previousTransitionClipInfo.reset(playlist.clip_info(clipIndex - 1));
+                    }
+                    if (hasNextTransition) {
+                        nextTransitionClipInfo.reset(playlist.clip_info(clipIndex + 1));
+                    }
+
+                    int previousTransitionDuration = 0;
+                    int nextTransitionDuration = 0;
+                    if (hasPreviousTransition && hasNextTransition) {//clip前后都有转场
+                        previousTransitionDuration = previousTransitionClipInfo->frame_count;
+                        nextTransitionDuration = nextTransitionClipInfo->frame_count;
+                    } else if (hasPreviousTransition) {//clip前面有转场，后面没有
+                        previousTransitionDuration = previousTransitionClipInfo->frame_count;
+                    } else if (hasNextTransition) {//clip后面有转场，前面没有
+                        nextTransitionDuration = nextTransitionClipInfo->frame_count;
+                    }
+
+                    in = qRound((info->frame_in - previousTransitionDuration) * speedRatio);
+                    out = qRound((info->frame_out + nextTransitionDuration) * speedRatio);
+
+                    m_updateCommand->setSpeedChanged(true);
+                }
+
+                //设置Producer入点出点
+                after->set("length", length);
+                after->set_in_and_out(qMin(in, length - 1), qMin(out, length - 1));
+
+                //调节滤镜的入点出点
+                int filterCount = after->filter_count();
+                for (int index = 0; index < filterCount; index++) {
+                    QScopedPointer<Mlt::Filter> filter(after->filter(index));
+                    if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                        int in = qMin(qRound(filter->get_in() * speedRatio), length - 1);
+                        int out = qMin(qRound(filter->get_out() * speedRatio), length - 1);
+                        filter->set_in_and_out(in, out);
+                    }
+                }
             }
         }
     }

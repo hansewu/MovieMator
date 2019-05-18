@@ -315,6 +315,7 @@ void MoveClipCommand::redo_impl()
 {
     LOG_DEBUG() << "fromTrack" << m_fromTrackIndex << "toTrack" << m_toTrackIndex;
     m_undoHelper.recordBeforeState();
+    MAIN.timelineDock()->setCurrentTrack(m_toTrackIndex);
     m_model.moveClip(m_fromTrackIndex, m_toTrackIndex, m_fromClipIndex, m_toStart);
     m_undoHelper.recordAfterState();
     qDebug()<<"redo ends";
@@ -323,6 +324,7 @@ void MoveClipCommand::redo_impl()
 void MoveClipCommand::undo_impl()
 {
     LOG_DEBUG() << "fromTrack" << m_fromTrackIndex << "toTrack" << m_toTrackIndex;
+    MAIN.timelineDock()->setCurrentTrack(m_fromTrackIndex);
     m_undoHelper.undoChanges();
 }
 
@@ -877,6 +879,7 @@ UpdateCommand::UpdateCommand(TimelineDock& timeline, int trackIndex, int clipInd
     , m_clipIndex(clipIndex)
     , m_position(position)
     , m_isFirstRedo(true)
+    , m_isSpeedChanged(false)
     , m_undoHelper(*timeline.model())
 {
     setText(QObject::tr("Change clip properties"));
@@ -894,7 +897,12 @@ void UpdateCommand::redo_impl()
 //    m_timeline.model()->liftClip(m_trackIndex, m_clipIndex);
 //    m_timeline.model()->overwrite(m_trackIndex, clip, m_position, false);
     m_timeline.model()->removeClip(m_trackIndex, m_clipIndex);
-    m_timeline.model()->insertClip(m_trackIndex, clip, m_position);
+    int newClipIndex = m_timeline.model()->insertClip(m_trackIndex, clip, m_position);
+
+    //更新转场信息
+    if (m_isSpeedChanged) {
+        m_timeline.model()->updateTransition(m_trackIndex, newClipIndex);
+    }
     m_undoHelper.recordAfterState();
 }
 

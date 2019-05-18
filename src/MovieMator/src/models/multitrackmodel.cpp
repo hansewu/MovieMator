@@ -1250,6 +1250,107 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int posi
     return MLT.XML(&result);
 }
 
+void MultitrackModel::updateTransition(int trackIndex, int clipIndex) {
+    Q_ASSERT(trackIndex >= 0);
+    Q_ASSERT(trackIndex < m_trackList.size());
+    Q_ASSERT(clipIndex >= 0);
+
+    Q_ASSERT(m_tractor);
+
+    int mltTrackIndex = m_trackList.at(trackIndex).mlt_index;
+
+    Q_ASSERT(m_tractor->track(mltTrackIndex));
+
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(mltTrackIndex));
+    Q_ASSERT(track);
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        Q_ASSERT(playlist.is_valid());
+        Q_ASSERT(clipIndex < playlist.count());
+
+        QScopedPointer<Mlt::ClipInfo> previousTransitionClipInfo(nullptr);
+        QScopedPointer<Mlt::ClipInfo> nextTransitionClipInfo(nullptr);
+        if (isTransition(playlist, clipIndex - 1)) {
+            previousTransitionClipInfo.reset(playlist.clip_info(clipIndex - 1));
+        }
+        if (isTransition(playlist, clipIndex + 1)) {
+            nextTransitionClipInfo.reset(playlist.clip_info(clipIndex + 1));
+        }
+        if (previousTransitionClipInfo || nextTransitionClipInfo) {
+            int previousTransitionDuration = 0;
+            int nextTransitionDuration = 0;
+            if (previousTransitionClipInfo && nextTransitionClipInfo) {//clip前后都有转场
+                previousTransitionDuration = previousTransitionClipInfo->frame_count;
+                nextTransitionDuration = nextTransitionClipInfo->frame_count;
+            } else if (previousTransitionClipInfo) {//clip前面有转场，后面没有
+                previousTransitionDuration = previousTransitionClipInfo->frame_count;
+            } else if (nextTransitionClipInfo) {//clip后面有转场，前面没有
+                nextTransitionDuration = nextTransitionClipInfo->frame_count;
+            }
+
+            //当调节速度后的clip长度小于转场时，删除转场
+            QScopedPointer<Mlt::ClipInfo> clipInfo(playlist.clip_info(clipIndex));
+            Q_ASSERT(clipInfo);
+            if (clipInfo->frame_count <= previousTransitionDuration && clipInfo->frame_count <= nextTransitionDuration) {
+                removeTransition(trackIndex, clipIndex - 1);
+                removeTransition(trackIndex, clipIndex + 1);
+                return;
+            } else if (clipInfo->frame_count <= previousTransitionDuration) {
+                removeTransition(trackIndex, clipIndex - 1);
+                updateTransition(trackIndex, clipIndex - 1);
+                return;
+            } else if (clipInfo->frame_count <= nextTransitionDuration) {
+                removeTransition(trackIndex, clipIndex + 1);
+                updateTransition(trackIndex, clipIndex);
+                return;
+            }
+
+            QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIndex));
+            Q_ASSERT(clip);
+            Q_ASSERT(clip->is_valid());
+            Mlt::Producer *outTrack = clip->cut(clip->get_in(), clip->get_in() + previousTransitionDuration);
+            if (previousTransitionClipInfo && outTrack && outTrack->is_valid()) {
+                Mlt::Tractor tractor(*previousTransitionClipInfo->producer);
+                tractor.set_track(*outTrack, 1);
+            }
+            Mlt::Producer *inTrack = clip->cut(clip->get_out() - nextTransitionDuration, clip->get_out());
+            if (nextTransitionClipInfo && inTrack && inTrack->is_valid()) {
+                Mlt::Tractor tractor(*nextTransitionClipInfo->producer);
+                tractor.set_track(*inTrack, 0);
+            }
+
+            int newIn = clip->get_in() + previousTransitionDuration;
+            int newOut = clip->get_out() - nextTransitionDuration;
+            int newLength = clip->get_length();
+            clip->set_in_and_out(qMin(newIn, newLength - 1), qMin(newOut, newLength - 1));
+
+            QUuid previousTransitionUuid = QUuid::createUuid();
+            QUuid nextTransitionUuid = QUuid::createUuid();
+            if (previousTransitionClipInfo && nextTransitionClipInfo) {//clip前后都有转场
+                addMixReferences(trackIndex, clipIndex - 1);
+                addMixReferences(trackIndex, clipIndex + 1);
+                MLT.setUuid(*(playlist.get_clip(clipIndex - 1)), previousTransitionUuid);
+                MLT.setUuid(*(playlist.get_clip(clipIndex + 1)), nextTransitionUuid);
+            } else if (previousTransitionClipInfo) {//clip前面有转场，后面没有
+                addMixReferences(trackIndex, clipIndex - 1);
+                MLT.setUuid(*(playlist.get_clip(clipIndex - 1)), previousTransitionUuid);
+            } else if (nextTransitionClipInfo) {//clip后面有转场，前面没有
+                addMixReferences(trackIndex, clipIndex + 1);
+                MLT.setUuid(*(playlist.get_clip(clipIndex + 1)), nextTransitionUuid);
+            }
+
+            playlist.resize_clip(clipIndex, newIn, newOut);
+            QModelIndex modelIndex = createIndex(clipIndex, 0, static_cast<quintptr>(trackIndex));
+            QVector<int> roles;
+            roles << DurationRole;
+            roles << OutPointRole;
+            emit dataChanged(modelIndex, modelIndex, roles);
+            AudioLevelsTask::start(clip->parent(), this, modelIndex);
+            emit modified();
+        }
+    }
+}
+
 int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int position)
 {
     Q_ASSERT(checkClip(clip));
@@ -2249,7 +2350,7 @@ void MultitrackModel::removeTransition(int trackIndex, int clipIndex)
     if (track) {
         Mlt::Playlist playlist(*track);
         Q_ASSERT(playlist.is_valid());
-        clearMixReferences(trackIndex, clipIndex);
+//        clearMixReferences(trackIndex, clipIndex);
         if(!isTransition(playlist, clipIndex))
             return;
 
@@ -3483,11 +3584,11 @@ void MultitrackModel::removeRegion(int trackIndex, int position, int length)
 
 bool MultitrackModel::isTransition(Mlt::Playlist &playlist, int clipIndex) const
 {
-    Q_ASSERT(clipIndex >= 0);
-    Q_ASSERT(clipIndex < playlist.count());
+//    Q_ASSERT(clipIndex >= 0);
+//    Q_ASSERT(clipIndex < playlist.count());
 
     QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
-    Q_ASSERT(producer);
+//    Q_ASSERT(producer);
     if (producer && producer->parent().get(kShotcutTransitionProperty))
         return true;
     return false;
