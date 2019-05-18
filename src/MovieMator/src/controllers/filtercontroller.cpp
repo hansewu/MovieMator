@@ -254,29 +254,29 @@ void FilterController::loadFrei0rFilterMetadata() {
 
 }
 
-void FilterController::getFrei0rPluginInfo(Mlt::Filter *filter, f0r_plugin_info_t &info)
-{
-    Q_ASSERT(filter);
+//void FilterController::getFrei0rPluginInfo(Mlt::Filter *filter, f0r_plugin_info_t &info)
+//{
+//    Q_ASSERT(filter);
 
-    mlt_service service = filter->get_service();
-    mlt_properties prop = MLT_SERVICE_PROPERTIES(service);
+//    mlt_service service = filter->get_service();
+//    mlt_properties prop = MLT_SERVICE_PROPERTIES(service);
 
-    if(!prop) return;
+//    if(!prop) return;
 
-    void (*f0r_get_plugin_info)(f0r_plugin_info_t*) = (void (*)(f0r_plugin_info_t*))mlt_properties_get_data( prop, "f0r_get_plugin_info" ,NULL);
-    f0r_get_plugin_info(&info);
-}
+//    void (*f0r_get_plugin_info)(f0r_plugin_info_t*) = (void (*)(f0r_plugin_info_t*))mlt_properties_get_data( prop, "f0r_get_plugin_info" ,NULL);
+//    f0r_get_plugin_info(&info);
+//}
 
-void FilterController::getFrei0rParamInfo(Mlt::Filter *filter, int index, f0r_param_info_t &info)
-{
-    Q_ASSERT(filter);
+//void FilterController::getFrei0rParamInfo(Mlt::Filter *filter, int index, f0r_param_info_t &info)
+//{
+//    Q_ASSERT(filter);
 
-    mlt_service service = filter->get_service();
-    mlt_properties prop = MLT_SERVICE_PROPERTIES(service);
-    void (*f0r_get_param_info)(f0r_param_info_t*, int) = (void (*)(f0r_param_info_t*, int))mlt_properties_get_data( prop, "f0r_get_param_info" ,NULL);
+//    mlt_service service = filter->get_service();
+//    mlt_properties prop = MLT_SERVICE_PROPERTIES(service);
+//    void (*f0r_get_param_info)(f0r_param_info_t*, int) = (void (*)(f0r_param_info_t*, int))mlt_properties_get_data( prop, "f0r_get_param_info" ,NULL);
 
-    f0r_get_param_info(&info, index);
-}
+//    f0r_get_param_info(&info, index);
+//}
 
 QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
 {
