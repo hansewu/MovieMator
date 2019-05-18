@@ -77,7 +77,7 @@ public slots:
     void setFadeInDuration(int duration);
     void setFadeOutDuration(int duration);
     void onChangePosition();
-
+    void onSelectedTabChanged(bool visible);
 
 protected:
     bool event(QEvent *event);

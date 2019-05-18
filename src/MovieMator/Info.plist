@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
         <string>MovieMator Video Editor Pro</string>
 	<key>CFBundleShortVersionString</key>
-        <string>2.5.6.5</string>
+        <string>2.5.7</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
