@@ -75,6 +75,8 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
 //    connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
     resetQview();
 
+    connect(this,SIGNAL(visibilityChanged(bool)),SLOT(onSelectedTabChanged(bool)));
+
     LOG_DEBUG() << "end";
 }
 
@@ -272,6 +274,12 @@ void FiltersDock::setExtraQmlContextProperty(QString name, QObject *object)
 QRect FiltersDock::dockPosition()
 {
     return this->geometry();
+}
+
+void FiltersDock::onSelectedTabChanged(bool visible)
+{
+    if(visible)
+        QMetaObject::invokeMethod(this->getRootObject(), "reChooseFilter");
 }
 
 
