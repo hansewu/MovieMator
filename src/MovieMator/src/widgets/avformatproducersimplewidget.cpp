@@ -42,7 +42,7 @@ AvformatProducerSimpleWidget::AvformatProducerSimpleWidget(QWidget *parent)
 //    Util::setColorsToHighlight(ui->filenameLabel);
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
 
-    ui->filenameLabel->setStyleSheet("background-color:rgb(82,82,82);");
+    ui->filenameLabel->setStyleSheet("background-color:rgb(46,46,46);");
     ui->line->setStyleSheet("color:black;");
     QString buttonStyle = "QPushButton{"
                           "border-radius:3px;border:1px solid;border-color:black;"

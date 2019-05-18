@@ -36,7 +36,7 @@ ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
 
     ui->line->setStyleSheet("color:black;");
     ui->line_2->setStyleSheet("color:black");
-    ui->filenameLabel->setStyleSheet("background-color:rgb(82,82,82);");
+    ui->filenameLabel->setStyleSheet("background-color:rgb(46,46,46);");
     QString editStyle= "QLineEdit{border:1px;border-radius:3px;background-color:rgb(82,82,82);padding-left:4px;}";
     ui->heightLineEdit->setStyleSheet(editStyle);
     ui->widthLineEdit->setStyleSheet(editStyle);

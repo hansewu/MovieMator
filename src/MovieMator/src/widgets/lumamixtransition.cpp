@@ -101,7 +101,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     }
 #endif
 
-    ui->label_2->setStyleSheet("background-color:rgb(82,82,82);");
+    ui->label_2->setStyleSheet("background-color:rgb(46,46,46);");
     ui->line->setStyleSheet("color:black;");
     ui->line_2->setStyleSheet("color:black;");
     QString sliderStyle = "QSlider::sub-page:horizontal{background:rgb(15,114,103);border-radius: 4px}";
