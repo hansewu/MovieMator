@@ -89,10 +89,11 @@ void JobsDock::on_treeView_customContextMenuRequested(const QPoint &pos)
 
 void JobsDock::on_actionStopJob_triggered()
 {
-    QModelIndex index = ui->treeView->currentIndex();
-    if (!index.isValid()) return;
-    AbstractJob* job = JOBS.jobFromIndex(index);
-    if (job) job->stop();
+//    QModelIndex index = ui->treeView->currentIndex();
+//    if (!index.isValid()) return;
+//    AbstractJob* job = JOBS.jobFromIndex(index);
+//    if (job) job->stop();
+    JOBS.stopJobs();
 }
 
 void JobsDock::on_actionViewLog_triggered()
