@@ -38,7 +38,7 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer& track, QWidget *pare
     ui->blendModeLabel->hide();
     ui->blendModeCombo->hide();
 
-    ui->nameLabel->setStyleSheet("background-color:rgb(82,82,82);");
+    ui->nameLabel->setStyleSheet("background-color:rgb(46,46,46);");
     ui->blendModeCombo->setStyleSheet("QComboBox {\
                                       background-color:rgb(82,82,82); \
                                       color:rgb(225,225,225); \

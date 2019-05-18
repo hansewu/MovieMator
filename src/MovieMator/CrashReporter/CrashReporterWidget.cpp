@@ -33,6 +33,9 @@ CrashReporterWidget::CrashReporterWidget(QWidget *parent) :
     ui->info->clear();
     ui->btnClose->hide();
 
+    ui->restartCheckBox->setChecked(false);
+    ui->restartCheckBox->setVisible(false);
+
     setWindowTitle(tr("CrashReporter"));
 
     //Move the dialog away from the center
