@@ -3578,7 +3578,9 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     if (type == VideoTrackType) {
         // Add the composite transition.
         Mlt::Transition composite(MLT.profile(), Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend");
-        m_tractor->plant_transition(composite, last_mlt_index, i);
+        Q_ASSERT(composite.is_valid());
+        if (composite.is_valid())
+            m_tractor->plant_transition(composite, last_mlt_index, i);
     }
 
     // Add the shotcut logical video track.
