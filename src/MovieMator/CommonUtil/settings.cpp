@@ -297,7 +297,8 @@ void ShotcutSettings::setPlayerProgressive(bool b)
 
 bool ShotcutSettings::playerRealtime() const
 {
-    return settings.value("player/realtime", true).toBool();
+    return true;
+    //return settings.value("player/realtime", true).toBool();
 }
 
 void ShotcutSettings::setPlayerRealtime(bool b)
