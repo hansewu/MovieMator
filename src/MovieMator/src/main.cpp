@@ -469,8 +469,10 @@ int main(int argc, char **argv)
     copyTextFilterPresetFile();
 
     QDir appDir(qApp->applicationDirPath());
+#if defined(Q_OS_MAC)
     appDir.cdUp();
     appDir.cd("Resources");
+#endif
     appDir.cd("share");
     appDir.cd("mlt");
     setenv("MLT_DATA", appDir.path().toUtf8().constData(), 1);

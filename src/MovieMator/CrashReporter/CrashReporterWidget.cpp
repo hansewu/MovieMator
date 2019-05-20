@@ -33,9 +33,6 @@ CrashReporterWidget::CrashReporterWidget(QWidget *parent) :
     ui->info->clear();
     ui->btnClose->hide();
 
-    ui->restartCheckBox->setChecked(false);
-    ui->restartCheckBox->setVisible(false);
-
     setWindowTitle(tr("CrashReporter"));
 
     //Move the dialog away from the center
@@ -142,7 +139,7 @@ void CrashReporterWidget::handle_result(HttpRequestWorker *worker) {
         ui->info->setText(tr("Send successfully."));
         ui->btnSendReport->hide();
         ui->btnClose->show();
-        ui->desc->appendPlainText(worker->response);
+
         // 重启 Moviemator
         if(ui->restartCheckBox->isChecked())
         {
@@ -166,7 +163,6 @@ void CrashReporterWidget::handle_result(HttpRequestWorker *worker) {
         // an error occurred
         ui->info->setText(tr("Sending failed."));
         ui->btnSendReport->setEnabled(true);
-        ui->desc->appendPlainText(worker->response);
     }
 }
 
