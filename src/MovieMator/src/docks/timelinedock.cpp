@@ -2004,8 +2004,7 @@ int TimelineDock::getPositionInCurrentClip()
     if ( selection().count() > 0)
     {
         int clipIndex = selection().first();
-
-        Q_ASSERT(trackIndex >= 0);
+//        Q_ASSERT(trackIndex >= 0);
         Q_ASSERT(trackIndex < m_model.trackList().length());
         if((trackIndex < 0) || (trackIndex >= m_model.trackList().length())) return position;
         int mlt_index = m_model.trackList().at(trackIndex).mlt_index;
@@ -2042,7 +2041,7 @@ int TimelineDock::getCurrentClipLength()
     if ( selection().count() > 0)
     {
         int clipIndex = selection().first();
-        Q_ASSERT(trackIndex >= 0);
+//        Q_ASSERT(trackIndex >= 0);
         Q_ASSERT(trackIndex < m_model.trackList().length());
         if((trackIndex < 0) || (trackIndex >= m_model.trackList().length())) return -1;
         int mlt_index = m_model.trackList().at(trackIndex).mlt_index;
@@ -2143,7 +2142,7 @@ int TimelineDock::getPositionOnParentProducer(int position)
         int clipIndex = selection().first();
 //        int trackIndex = currentTrack();//需要使用和clip统一的track
         int trackIndex = selectedTrack();
-        Q_ASSERT(trackIndex >= 0);
+//        Q_ASSERT(trackIndex >= 0);
         Q_ASSERT(trackIndex < m_model.trackList().length());
         if((trackIndex < 0) || (trackIndex >= m_model.trackList().length())) {
             return -1;
@@ -2177,7 +2176,7 @@ int TimelineDock::getPositionOnClip(int position)
 //    int trackIndex = currentTrack();//需要使用和clip统一的track
     int trackIndex = selectedTrack();
     int ret = -1;
-    if (selection().count() > 0)
+    if (selection().count() > 0 && trackIndex != -1)
     {
         int clipIndex = selection().first();
         Q_ASSERT(trackIndex >= 0);
