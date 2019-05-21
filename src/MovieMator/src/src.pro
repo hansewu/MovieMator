@@ -488,3 +488,4 @@ DISTFILES += \
     ../translations/mm_zh.qm
 
 
+include(../win32debug.pri)

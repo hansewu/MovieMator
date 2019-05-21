@@ -51,3 +51,5 @@ OTHER_FILES += \
     Doxyfile \
     LICENSE.LGPL \
     CMakeLists.txt
+
+include(../win32debug.pri)
