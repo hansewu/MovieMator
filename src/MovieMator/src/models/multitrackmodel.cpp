@@ -3204,9 +3204,13 @@ int MultitrackModel::addAudioTrack()
 
     // Get the new, logical audio-only index.
     int a = 0;
+    int max = 0;
     foreach (Track t, m_trackList) {
-        if (t.type == AudioTrackType)
+        if (t.type == AudioTrackType){
             ++a;
+            if(t.nameNumber > max)
+                max = t.nameNumber;
+        }
     }
 
     // Add the shotcut logical audio track.
@@ -3214,7 +3218,8 @@ int MultitrackModel::addAudioTrack()
     t.mlt_index = i;
     t.type = AudioTrackType;
     t.number = a++;
-    QString trackName = QString("A%1").arg(a);
+    t.nameNumber = ++max;
+    QString trackName = QString("A%1").arg(max);
     playlist.set(kTrackNameProperty, trackName.toUtf8().constData());
     beginInsertRows(QModelIndex(), m_trackList.count(), m_trackList.count());
     m_trackList.append(t);
