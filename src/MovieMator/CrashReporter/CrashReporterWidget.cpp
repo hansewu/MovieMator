@@ -33,8 +33,6 @@ CrashReporterWidget::CrashReporterWidget(QWidget *parent) :
     ui->info->clear();
     ui->btnClose->hide();
 
-    setWindowTitle(tr("CrashReporter"));
-
     //Move the dialog away from the center
     setGeometry(0,0,this->width(),this->height());
     int i = 0;
@@ -48,7 +46,7 @@ CrashReporterWidget::CrashReporterWidget(QWidget *parent) :
     move( screen.center() - rect().center() );
 
     setWindowFlags(Qt::WindowStaysOnTopHint);   // 总在最前
-    setWindowFlags(windowFlags() &~ Qt::WindowMinMaxButtonsHint);   //禁止最大和最小化
+    setWindowFlags(windowFlags() & ~Qt::WindowMinMaxButtonsHint);   //禁止最大和最小化
 
     m_input = new HttpRequestInput(CRASHREPORTER_SUBMIT_URL, "POST");
 
