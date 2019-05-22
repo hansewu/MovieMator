@@ -66,3 +66,5 @@ unix {
 
 FORMS += \
     effectdock.ui
+
+include(../win32debug.pri)

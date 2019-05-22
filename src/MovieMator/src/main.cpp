@@ -409,7 +409,9 @@ int main(int argc, char **argv)
 //    setenv("QT_SCALE_FACTOR", "2", 1);
     Application a(argc, argv);
 
+#if defined (QT_NO_DEBUG)
     CrashManager::CrashHandler::instance()->Init(QDir::tempPath());
+#endif
 
 //   MMSplashScreen splash(QPixmap(":/splash.png"));
 //    splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom, Qt::white);

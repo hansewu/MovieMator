@@ -92,3 +92,6 @@ mac {
 
 FORMS += \
     playlistdock.ui
+
+
+include(../win32debug.pri)

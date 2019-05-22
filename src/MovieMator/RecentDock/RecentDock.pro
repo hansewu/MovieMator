@@ -80,3 +80,6 @@ unix {
 
 FORMS += \
     recentdock.ui
+
+
+include(../win32debug.pri)

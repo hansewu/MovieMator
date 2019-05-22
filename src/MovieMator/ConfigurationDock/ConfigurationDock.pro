@@ -58,3 +58,5 @@ unix {
 mac {
     QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/
 }
+
+include(../win32debug.pri)

@@ -61,3 +61,4 @@ FORMS += \
     filterdock.ui
 
 
+include(../win32debug.pri)

@@ -62,3 +62,5 @@ unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+
+include(../win32debug.pri)
