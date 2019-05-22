@@ -103,7 +103,7 @@ public:
     Q_INVOKABLE void setKeyFrameParaRectValue(double frame, QString key, const QRectF& rect, double opacity = 1.0);
     Q_INVOKABLE void removeKeyFrameParaValue(double frame);
 
-    void removeAllKeyFrame();
+    Q_INVOKABLE void removeAllKeyFrame();
 
     Q_INVOKABLE void removeAllKeyFrame(QString name);
     Q_INVOKABLE QString getKeyFrameParaValue(double frame, QString key);
