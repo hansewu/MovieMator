@@ -201,8 +201,6 @@
         <file>filters/icon/filter_select2.png</file>
         <file>filters/icon/tab_btn-a.png</file>
         <file>filters/icon/tab_btn.png</file>
-        <file>filters/icon/filter_remove-on.png</file>
-        <file>filters/icon/filter_remove.png</file>
         <file>filters/icon/filter_select-a.png</file>
         <file>filters/icon/filter_select.png</file>
         <file>light/32x32/key-a.png</file>
@@ -226,6 +224,9 @@
         <file>light/32x32/arrow_2.png</file>
         <file>light/32x32/arrow_2on.png</file>
         <file>light/32x32/icon.jpg</file>
+        <file>filters/Audio.png</file>
+        <file>filters/icon/filter_remove-on.png</file>
+        <file>filters/icon/filter_remove.png</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>
