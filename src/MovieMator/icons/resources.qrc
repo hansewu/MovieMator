@@ -227,6 +227,26 @@
         <file>filters/Audio.png</file>
         <file>filters/icon/filter_remove-on.png</file>
         <file>filters/icon/filter_remove.png</file>
+        <file>filters/B.jpg</file>
+        <file>filters/bw0r.jpg</file>
+        <file>filters/Cartoon.jpg</file>
+        <file>filters/Color Distance.jpg</file>
+        <file>filters/colortap.jpg</file>
+        <file>filters/dither.jpg</file>
+        <file>filters/Equaliz0r.jpg</file>
+        <file>filters/G.jpg</file>
+        <file>filters/K-Means Clustering.jpg</file>
+        <file>filters/Luminance.jpg</file>
+        <file>filters/NDVI filter.jpg</file>
+        <file>filters/Nikon D90 Stairstepping fix.jpg</file>
+        <file>filters/pixeliz0r.jpg</file>
+        <file>filters/primaries.jpg</file>
+        <file>filters/R.jpg</file>
+        <file>filters/sigmoidaltransfer.jpg</file>
+        <file>filters/Sobel.jpg</file>
+        <file>filters/threelay0r.jpg</file>
+        <file>filters/Twolay0r.jpg</file>
+        <file>filters/White Balance (LMS space).jpg</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>
