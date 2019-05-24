@@ -66,6 +66,5 @@ HEADERS  += \
 FORMS += \
     CrashReporterWidget.ui
 
-
 RESOURCES += \
-    ../icons/resources.qrc
+    ../icons/crashreporter.qrc
