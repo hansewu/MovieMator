@@ -57,11 +57,13 @@ QMAKE_LFLAGS +=  -std=c++11
 SOURCES += \
     CrashReporterWidget.cpp \
     HttpRequestWorker.cpp \
-    main.cpp
+    main.cpp \
+    desccontentedit.cpp
 
 HEADERS  += \
     CrashReporterWidget.h \
     HttpRequestWorker.h \
+    desccontentedit.h
 
 FORMS += \
     CrashReporterWidget.ui

@@ -149,7 +149,7 @@ You may leave your Email address and tell us more detailed information about the
     </widget>
    </item>
    <item>
-    <widget class="QTextEdit" name="desc">
+    <widget class="DescContentEdit" name="desc">
      <property name="placeholderText">
       <string>Detailed Information about how the problem occurred (optional)</string>
      </property>
@@ -250,6 +250,13 @@ You may leave your Email address and tell us more detailed information about the
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DescContentEdit</class>
+   <extends>QTextEdit</extends>
+   <header>desccontentedit.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>btnSendReport</tabstop>
   <tabstop>restartCheckBox</tabstop>
