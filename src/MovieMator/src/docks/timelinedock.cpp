@@ -634,6 +634,9 @@ void TimelineDock::removeTrack()
 //        MAIN.undoStack()->push(
 //                new Timeline::RemoveTrackCommand(m_model, currentTrack()));
         MAINCONTROLLER.removeTrack(trackIndex);
+
+    if(trackIndex > 0)
+        setCurrentTrack(trackIndex-1);
 }
 
 void TimelineDock::onProducerChanged(Mlt::Producer* after)
