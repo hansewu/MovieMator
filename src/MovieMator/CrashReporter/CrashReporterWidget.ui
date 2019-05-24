@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>538</width>
+    <width>602</width>
     <height>410</height>
    </rect>
   </property>
@@ -18,13 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>538</width>
+    <width>602</width>
     <height>410</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>538</width>
+    <width>602</width>
     <height>410</height>
    </size>
   </property>
@@ -34,46 +34,97 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>10</number>
-   </property>
-   <property name="leftMargin">
-    <number>15</number>
-   </property>
-   <property name="topMargin">
-    <number>15</number>
-   </property>
-   <property name="rightMargin">
-    <number>15</number>
-   </property>
-   <property name="bottomMargin">
-    <number>15</number>
-   </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QLabel" name="label_2">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Sorry! MovieMator Video Editor Pro quit unexpectedly.
-To help us locate the problem and fix it, please click &quot;Send to EffectMatrix&quot; to submit the report to EffectMatrix. 
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>80</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Sorry! MovieMator quit unexpectedly</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>82</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>To help us locate the problem and fix it, please click &quot;Send to EffectMatrix&quot; to submit the report to EffectMatrix. 
 You may leave your Email address and tell us more detailed information about the problem if you hope to hear from us with further solutions.
 </string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="QLineEdit" name="email">

@@ -67,3 +67,5 @@ FORMS += \
     CrashReporterWidget.ui
 
 
+RESOURCES += \
+    ../icons/resources.qrc
