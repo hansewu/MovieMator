@@ -30,6 +30,9 @@ CrashReporterWidget::CrashReporterWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setWindowIcon(QIcon(":/icons/moviemator-logo-64.png"));
+    ui->label->setPixmap(QPixmap(QString::fromUtf8(":/icons/moviemator-logo-64.png")));
+
     ui->info->clear();
     ui->btnClose->hide();
 
