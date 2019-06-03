@@ -33,6 +33,13 @@
 #include <QMap>
 #include <QQmlListProperty>
 
+/*!
+  \class QmlKeyframesParameter
+
+  QmlKeyframesParameter is a wrapper around the metadata for a keyframe parameter of the filter.
+  QmlKeyframesParameter provides access to the parameter propertied and data.
+
+*/
 class QMLUTILITIESSHARED_EXPORT QmlKeyframesParameter : public QObject
 {
     Q_OBJECT
@@ -55,54 +62,173 @@ class QMLUTILITIESSHARED_EXPORT QmlKeyframesParameter : public QObject
 public:
     explicit QmlKeyframesParameter(QObject* parent = 0);
 
+    /** Get the parameter display name, used for displaying on the interface.
+     *
+     * \return a QString value
+     */
     QString name() const { return m_name; }
+
+    /** Set the parameter display name, used for displaying on the interface.
+     *
+     * \param name the property display name
+     */
     void setName(const QString &name) {m_name = name;};
+
+    /** Get the property name of the parameter.
+     *
+     * \return a QString value
+     */
     QString property() const { return m_property; }
+
+    /** Set the property name of the parameter.
+     *
+     * \param name the property name
+     */
     void setProperty(const QString &property) {m_property = property;};
+
+    /** did not use*/
     bool isSimple() const { return m_isSimple; }
+    /** did not use*/
     void setIsSimple(const bool isSimple) {m_isSimple = isSimple;};
+    /** did not use*/
     bool isCurve() const { return m_isCurve; }
+    /** did not use*/
     void setIsCurve(const bool isCurve) {m_isCurve = isCurve;};
+
+    /** Get the minimum value for the parameter.
+     *
+     * \return a double value
+     */
     double minimum() const { return m_minimum; }
+
+    /** Set a minimum value for the parameter.
+     *
+     * \param minimum the minimum value
+     */
     void setMinimum(const double minimum) {m_minimum = minimum;};
+
+    /** Get the maximum value for the parameter.
+     *
+     * \return a double value
+     */
     double maximum() const { return m_maximum; }
+
+    /** Set a maximum value for the parameter.
+     *
+     * \param maximum the minimum value
+     */
     void setMaximum(const double maximum) {m_maximum = maximum;};
 
+    /** Get the explanation string of the parameter.
+     *
+     * \return an explanation string
+     */
     QString explanation() const { return m_explanation; }
+
+    /** Set an explanation string for the parameter.
+     *
+     * \param explanation an explanation string
+     */
     void setExplanation(const QString &explanation) {m_explanation = explanation;};
 
+    /** Get the object name of the control that displays the parameter.
+     *
+     * \return a QString string
+     */
     QString objectName() const { return m_objectName; }
+
+    /** Set the object name of the control that displays the parameter.
+     *
+     * \param objectName a QString string
+     */
     void setObjectName(const QString &objectName) {m_objectName = objectName;};
+
+    /** Get the type of the control that displays the parameter.
+     *
+     * \return a QString string
+     */
     QString controlType() const { return m_controlType; }
+
+    /** Set the type of the control that displays the parameter.
+     *
+     * \param controlType a QString string
+     */
     void setControlType(const QString &controlType) {m_controlType = controlType;};
+
+    /** Get the type of the parameter, int,string,rect,double.
+     *
+     * \return a QString string
+     */
     QString paraType() const { return m_paraType; }
+
+    /** Set the type of the parameter, int,string,rect,double.
+     *
+     * \param paraType a QString string
+     */
     void setParaType(const QString &paraType) {m_paraType = paraType;};
+
+    /** Get the default value for the parameter.
+     *
+     * \return a QString value
+     */
     QString defaultValue() const { return m_defaultValue; }
+
+    /** Set a default value for parameter.
+     *
+     * \param defaultValue the default value
+     */
     void setDefaultValue(const QString &defaultValue) {m_defaultValue = defaultValue;};
+
+    /** Get the value for the parameter.
+     *
+     * \return a QString value
+     */
     QString value() const { return m_value; }
+
+    /** Set a value for parameter.
+     *
+     * \param value the value
+     */
     void setValue(const QString &value) {m_value = value;};
+
+    /** Get the formula for calculating the parameter's interface value.
+     *
+     * \return a QList<QString> value
+     */
     QList<QString> factorFunc() const { return m_factorFunc; }
+
+    /** Set the formula for calculating the parameter‘s interface value.
+     *
+     * \param factorFunc the formula for calculating the property‘s interface value
+     */
     void setFactorFunc(const QList<QString> &factorFunc) {m_factorFunc.append(factorFunc);};
 signals:
-    void changed();
+    void changed();   /** did not use*/
 
 private:
-    QString m_name;
-    QString m_property;
-    bool m_isSimple;
-    bool m_isCurve;
-    double m_minimum;
-    double m_maximum;
+    QString m_name;         /** the display name of the parameter*/
+    QString m_property;     /** the property name of the parameter*/
+    bool m_isSimple;        /** did not use*/
+    bool m_isCurve;         /** did not use*/
+    double m_minimum;       /** the minimum value of the parameter*/
+    double m_maximum;       /** the maximum value of the parameter*/
 
-    QString m_explanation;
-    QString m_objectName;
-    QString m_controlType;
-    QString m_paraType;
-    QString m_defaultValue;
-    QString m_value;
-    QList<QString> m_factorFunc;
+    QString m_explanation;  /** An explanation string of the parameter*/
+    QString m_objectName;   /** the object name of the control that displays the parameter*/
+    QString m_controlType;  /** the type of the control that displays the parameter*/
+    QString m_paraType;     /** the type of the parameter, int,string,rect,double*/
+    QString m_defaultValue; /** the default value of the parameter*/
+    QString m_value;        /** the value of the parameter*/
+    QList<QString> m_factorFunc;    /** the formula for calculating the parameter's interface value*/
 };
 
+/*!
+  \class QmlKeyframesMetadata
+
+  QmlKeyframesMetadata is a wrapper around the metadata for all keyframe parameters of the filter.
+  QmlKeyframesMetadata provides access to the keyframe propertied and data.
+
+*/
 class QMLUTILITIESSHARED_EXPORT QmlKeyframesMetadata : public QObject
 {
     Q_OBJECT
@@ -119,39 +245,117 @@ class QMLUTILITIESSHARED_EXPORT QmlKeyframesMetadata : public QObject
 public:
     explicit QmlKeyframesMetadata(QObject *parent = 0);
 
-    bool allowTrim() const { return m_allowTrim; }
+    bool allowTrim() const { return m_allowTrim; }              /** did not use*/
+
+    /** A Boolean value that indicates whether the animation can support in. did not use.
+     *
+     * \return true the animation can support in, otherwise, false
+     */
     bool allowAnimateIn() const { return m_allowAnimateIn; }
+
+    /** A Boolean value that indicates whether the animation can support out. did not use.
+     *
+     * \return true the animation can support out, otherwise, false
+     */
     bool allowAnimateOut() const { return m_allowAnimateOut; }
+
+    /** Get the properties of the filter.
+     *
+     * \return a QList<QString> value
+     */
     QList<QString> simpleProperties() const { return m_simpleProperties; }
 
 //    QQmlListProperty<QmlKeyframesParameter> parameters() { return QQmlListProperty<QmlKeyframesParameter>(this, m_parameters); }
-
+    /** Get the parameters of the filter, QmlKeyframesParameter.
+     * the parameter is QmlKeyframesParameter object
+     * \return a QQmlListProperty<QmlKeyframesParameter> value
+     */
     QQmlListProperty<QmlKeyframesParameter> parameters();
+
+    /** Get the paramter number of the filter.
+     *
+     * \return an integer value
+     */
     int parameterCount() const { return m_parameters.count(); }
+
+    /** Get the keyframes parameter info for the N-th parameter.
+     *
+     * \param index the N-th parameter (0 based)
+     * \return The QmlKeyframesParameter value, the parameter info
+     */
     QmlKeyframesParameter *parameter(int index) const { return m_parameters[index]; }
+
+    /** Check the version number. did not use
+     * If the version number is less than the minimum supported version number, the animation function can not support the in and out.
+     * \param version the current version
+     */
     void checkVersion(const QString& version);
+
+    /** Disable animation in and out. did not use
+     * If the version number is less than the minimum supported version number, the animation function can not support the in and out.
+     */
     void setDisabled();
 
+    /** Append a parameter to the end of the keyframe parameter list.
+     * the type of the parameter is QmlKeyframesParameter
+     * \param param will be added to the end of the keyframe parameter list
+     */
     void appendParameter(QmlKeyframesParameter * param);
+
+    /** Get the paramter number of the filter.
+     *
+     * \return an integer value
+     */
     int paramCount() const;
+
+    /** Get the keyframes parameter info for the N-th parameter.
+     *
+     * \param index the N-th parameter (0 based)
+     * \return The QmlKeyframesParameter value, the parameter info
+     */
     QmlKeyframesParameter *paramAt(int idx) const;
+
+    /** Clear the filter's parameter list.
+     *
+     */
     void clearParameter();
 
 signals:
-    void changed();
+    void changed();             /** did not use*/
 
 private:
-    bool m_allowTrim;
-    bool m_allowAnimateIn;
-    bool m_allowAnimateOut;
-    QList<QmlKeyframesParameter *> m_parameters;
-    QList<QString> m_simpleProperties;
-    QString m_minimumVersion;
-    bool m_enabled;
+    bool m_allowTrim;           /** did not use*/
+    bool m_allowAnimateIn;      /** A Boolean value that indicates whether the animation can support in*/
+    bool m_allowAnimateOut;     /** A Boolean value that indicates whether the animation can support out*/
+    QList<QmlKeyframesParameter *> m_parameters;    /** the parameters of the filter*/
+    QList<QString> m_simpleProperties;              /** the properties of the filter*/
+    QString m_minimumVersion;                       /** the minumum version, the animation can support in and out */
+    bool m_enabled;             /** did not use*/
 
+    /** Append a parameter to the end of the parameter list.
+     * the type of the parameter is QmlKeyframesParameter
+     * \param paramsList the parameter list
+     * \param param will be added to the end of the parameter list
+     */
     static void appendParameter(QQmlListProperty<QmlKeyframesParameter> *paramsList, QmlKeyframesParameter * param);
+
+    /** Get the paramter list number.
+     *
+     * \param paramsList the parameter list
+     * \return an integer value
+     */
     static int paramCount(QQmlListProperty<QmlKeyframesParameter> *);
+
+    /** Get the parameter info for the N-th parameter.
+     *
+     * \param idx the N-th parameter (0 based)
+     * \return The QmlKeyframesParameter value, the parameter info
+     */
     static QmlKeyframesParameter *paramAt(QQmlListProperty<QmlKeyframesParameter> *,int idx);
+
+    /** Clear the parameter list.
+     *
+     */
     static void clearParameter(QQmlListProperty<QmlKeyframesParameter> *);
 
 };
