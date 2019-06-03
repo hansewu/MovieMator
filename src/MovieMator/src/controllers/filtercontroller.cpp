@@ -354,7 +354,7 @@ QString FilterController::getFilterThumbnailPath(QString filterName, bool isAudi
         imageSourcePath         = "qrc:///icons/filters/Common.jpg";
 
     if(isAudio == true)
-        imageSourcePath         = "qrc:///icons/filters/Audio.jpg";
+        imageSourcePath         = "qrc:///icons/filters/Audio.png";
 
     return imageSourcePath;
 }

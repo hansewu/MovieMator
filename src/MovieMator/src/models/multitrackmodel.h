@@ -45,7 +45,6 @@ typedef struct {
     TrackType type;
     int number;
     int mlt_index;
-    int nameNumber;
 } Track;
 
 typedef QList<Track> TrackList;
