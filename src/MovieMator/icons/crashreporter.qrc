@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>moviemator-logo-64.png</file>
+    </qresource>
+</RCC>
