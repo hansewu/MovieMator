@@ -50,6 +50,7 @@ enum {
     UndoIdUpdate
 };
 
+//拓展连接clip
 class AppendCommand : public AbstractCommand
 {
 public:
@@ -63,6 +64,7 @@ private:
     UndoHelper m_undoHelper;
 };
 
+//插入clip
 class InsertCommand : public AbstractCommand
 {
 public:
@@ -78,6 +80,7 @@ private:
     UndoHelper m_undoHelper;
 };
 
+//覆盖clip
 class OverwriteCommand : public AbstractCommand
 {
 public:
@@ -93,6 +96,7 @@ private:
     UndoHelper m_undoHelper;
 };
 
+//选中高亮clip
 class LiftCommand : public AbstractCommand
 {
 public:
@@ -108,6 +112,7 @@ private:
     TimelineDock &m_timeline;
 };
 
+//移除clip
 class RemoveCommand : public AbstractCommand
 {
 public:
@@ -123,6 +128,7 @@ private:
     TimelineDock& m_timeline;
 };
 
+//设置轨道名字
 class NameTrackCommand : public AbstractCommand
 {
 public:
@@ -136,6 +142,7 @@ private:
     QString m_oldName;
 };
 
+//设置声音是否可听见
 class MuteTrackCommand : public AbstractCommand
 {
 public:
@@ -148,6 +155,7 @@ private:
     bool m_oldValue;
 };
 
+//隐藏轨道上的片段
 class HideTrackCommand : public AbstractCommand
 {
 public:
@@ -173,6 +181,7 @@ private:
     Qt::CheckState m_oldValue;
 };
 
+//锁定轨道
 class LockTrackCommand : public AbstractCommand
 {
 public:
@@ -186,6 +195,7 @@ private:
     bool m_oldValue;
 };
 
+//拖动clip
 class MoveClipCommand : public AbstractCommand
 {
 public:
@@ -239,6 +249,7 @@ private:
     UndoHelper m_undoHelper;
 };
 
+//切分
 class SplitCommand : public AbstractCommand
 {
 public:
@@ -252,6 +263,7 @@ private:
     int m_position;
 };
 
+//淡入
 class FadeInCommand : public AbstractCommand
 {
 public:
@@ -269,6 +281,7 @@ private:
     int m_previous;
 };
 
+//淡出
 class FadeOutCommand : public AbstractCommand
 {
 public:
@@ -286,6 +299,7 @@ private:
     int m_previous;
 };
 
+//添加转场
 class AddTransitionCommand : public AbstractCommand
 {
 public:
@@ -369,6 +383,7 @@ private:
     bool m_notify;
 };
 
+//添加轨道
 class AddTrackCommand: public AbstractCommand
 {
 public:
@@ -382,6 +397,7 @@ private:
     TrackType m_trackType;
 };
 
+//插入轨道
 class InsertTrackCommand : public AbstractCommand
 {
 public:
@@ -394,6 +410,7 @@ private:
     TrackType m_trackType;
 };
 
+//移除轨道
 class RemoveTrackCommand : public AbstractCommand
 {
 public:
@@ -424,6 +441,7 @@ private:
     QString m_oldMode;
 };
 
+//更新
 class UpdateCommand : public AbstractCommand
 {
 public:
@@ -445,7 +463,7 @@ private:
 };
 
 
-
+//移除转场
 class RemoveTransitionCommand: public AbstractCommand
 {
 public:
@@ -461,7 +479,7 @@ private:
     UndoHelper m_undoHelper;
 };
 
-
+//移除clip上的转场
 class RemoveTransitionsOnClipCommand: public AbstractCommand
 {
 public:
@@ -476,6 +494,7 @@ private:
     UndoHelper m_undoHelper;
 };
 
+//拖动文件插入到时间线上
 class MoveInsertClipCommand:public AbstractCommand
 {
 public:
@@ -508,7 +527,7 @@ private:
 };
 
 
-
+//滤镜参数设置
 class FilterCommand: public AbstractCommand
 {
 
@@ -539,7 +558,7 @@ protected:
     bool      m_bFirstExec;
 };
 
-
+//关键帧
 class KeyFrameCommand: public AbstractCommand
 {
 
@@ -565,7 +584,7 @@ protected:
 };
 
 
-
+//选择添加滤镜
 class FilterAttachCommand: public AbstractCommand
 {
 
@@ -588,6 +607,7 @@ protected:
     bool            m_bFirstExec;
 };
 
+//移动已选滤镜
 class FilterMoveCommand: public AbstractCommand
 {
 
@@ -608,7 +628,7 @@ protected:
     bool            m_bFirstExec;
 };
 
-
+//选择clip
 class ClipsSelectCommand: public AbstractCommand
 {
 
