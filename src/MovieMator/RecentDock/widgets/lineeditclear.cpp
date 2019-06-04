@@ -37,7 +37,7 @@ LineEditClear::LineEditClear(QWidget *parent)
     clearButton->setStyleSheet("QToolButton { border: none; padding: 0px; }");
     clearButton->hide();
     connect(clearButton, SIGNAL(clicked()), this, SLOT(clear()));
-    connect(this, SIGNAL(textChanged(const QString&)), this, SLOT(updateCloseButton(const QString&)));
+    connect(this, SIGNAL(textChanged(const QString&)), this, SLOT(onTextChanged(const QString&)));
     int frameWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth);
 //    setStyleSheet(QString("QLineEdit { padding-right: %1px; } ").arg(clearButton->sizeHint().width() + frameWidth + 1));
 //    setStyleSheet("QLineEdit {padding-right: 20px; background-image: url(:/icons/light/32x32/search-icon.png); background-repeat: norepeat; background-position: center; border: 1px; border-radius: 3px; background-color: rgb(50,50,50) ; }");
@@ -55,7 +55,7 @@ void LineEditClear::resizeEvent(QResizeEvent *)
                       (rect().bottom() + 1 - sz.height())/2);
 }
 
-void LineEditClear::updateCloseButton(const QString& text)
+void LineEditClear::onTextChanged(const QString& text)
 {
     clearButton->setVisible(!text.isEmpty());
 

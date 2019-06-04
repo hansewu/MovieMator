@@ -49,7 +49,7 @@ protected:
 private slots:
     // 切换 lineEdit中的清除按钮样式
     // 并切换 lineEdit的样式
-    void updateCloseButton(const QString &text);
+    void onTextChanged(const QString &text);
 
 private:
     // 清除 lineEdit内容按钮

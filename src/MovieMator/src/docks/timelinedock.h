@@ -77,6 +77,7 @@ public:
     int clipIndexAtPosition(int trackIndex, int position);
     // 通过设定 trackIndex和 clipIndex的值来检查在位置 position处有没有剪辑
     // 主要是传值给 trackIndex和 clipIndex
+    // assignIndexsByPosition()
     void chooseClipAtPosition(int position, int * trackIndex, int * clipIndex);
     // 设定轨道 currentTrack为当前轨道（传递给 qml使用）
     void setCurrentTrack(int currentTrack);
@@ -121,9 +122,9 @@ public:
     // 当前选中的是否含有多个轨道
     Q_INVOKABLE bool isMultitrackSelected() const { return m_selection.isMultitrackSelected; }
     // 选中的轨道的序号
-    Q_INVOKABLE int selectedTrack() const { return m_selection.selectedTrack; }
-    // 选中的剪辑是否为空
-    Q_INVOKABLE bool selectedAClip() const {return !m_selection.selectedClips.isEmpty();}
+    Q_INVOKABLE int selectedTrackIndex() const { return m_selection.selectedTrack; }
+    // 选中的剪辑是否为空    
+    Q_INVOKABLE bool isAClipSelected() const {return !m_selection.selectedClips.isEmpty();} // selectedAClip()
     // 选中轨道 trackIndex在位置 position处的剪辑
     void selectClipAtPosition(int trackIndex, int position);
     // 获取当前轨道选中剪辑的位置（播放游标-剪辑起始位置）
