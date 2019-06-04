@@ -28,6 +28,7 @@
 
 class QmlMetadata;
 
+//存放已加载到moviemator中的所有滤镜的元数据类
 class MetadataModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -36,6 +37,7 @@ class MetadataModel : public QAbstractListModel
 
 public:
 
+    //定义model中数据的类型
     enum ModelRoles {
         NameRole = Qt::UserRole + 1,
         HiddenRole,
@@ -50,6 +52,7 @@ public:
         FilterTypeDisplayRole,
     };
 
+    //定义已加载的率类型的枚举类型
     enum MetadataFilter {
         NoFilter,
         FavoritesFilter,
@@ -59,6 +62,7 @@ public:
 
     explicit MetadataModel(QObject *parent = 0);
 
+    //重写基类QAbstractListModel的方法，进行model中的数据操作
     // Implement QAbstractListModel
     Q_INVOKABLE int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role) const;
@@ -67,10 +71,15 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
     // Direct access to QmlMetadata
+    //添加一个滤镜的QmlMetadata到model的末尾
     void add(QmlMetadata* data);
+    //获取model中的第index个滤镜的元数据
     Q_INVOKABLE QmlMetadata* get(int index) const;
+    //获取当前filter的类型（音频、视频、喜爱的滤镜）
     MetadataFilter filter() const { return m_filter; }
+    //设置当前filter的类型
     void setFilter(MetadataFilter);
+    //获取model中的第row个滤镜是否可见
     Q_INVOKABLE bool isVisible(int row) const;
     void setIsClipProducer(bool isClipProducer);
 
@@ -78,8 +87,11 @@ signals:
     void filterChanged();
 
 private:
+    //定义一个存放QmlMetadata对象指针的list类型
     typedef QList<QmlMetadata*> MetadataList;
+    //存放已加载到moviemator中的所有滤镜的元数据
     MetadataList m_list;
+    //当前滤镜的类型
     MetadataFilter m_filter;
     bool m_isClipProducer;
 };
