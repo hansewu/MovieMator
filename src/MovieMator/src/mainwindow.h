@@ -181,12 +181,13 @@ private:
     //配置显示视频的widget，即预览视频的widget
     void configureVideoWidget();
     //设置当前主窗口左上边标题栏中显示的工程文件名为filename
+    //命名修改——做了不止一件事：设置当前的文件名；设置窗口的标题，因该分成两个函数setCurrentFile和setWindowTitle
     void setCurrentFile(const QString &filename);
     //改变当前播放及consumer的扫描方法
     void changeDeinterlacer(bool checked, const char* method);
     //改变插值方法
     void changeInterpolation(bool checked, const char* method);
-    //检测url对应的自动保存文件
+    //检测url对应文件是否已经存在自动保存文件
     bool checkAutoSave(QString &url);
     //使播放进度向后退sec秒
     void stepLeftBySeconds(int sec);
@@ -195,11 +196,11 @@ private:
 
     Ui::MainWindow* ui;//主窗口UI
     Player* m_player;//播放器
-    QDockWidget* m_propertiesDock;//属性dock
-    QDockWidget* m_simplePropertiesDock;//右侧属性dock（选中clip时的属性）
+    QDockWidget* m_propertiesDock;//属性dock，目前已经弃用
+    QDockWidget* m_simplePropertiesDock;//右侧属性dock中的clip属性dock
     QDockWidget* m_recentDock;//左侧文件列表dock
-    QDockWidget* m_filterDock;//左侧视频滤镜列表dock
-    QDockWidget* m_audiofilterDock;//左侧音频滤镜列表dock
+    QDockWidget* m_resourceVideoFilterDock;//左侧视频滤镜列表dock
+    QDockWidget* m_resourceAudioFilterDock;//左侧音频滤镜列表dock
     QDockWidget* m_templateDock;//左侧模板dock，暂时无用
     QDockWidget* m_effectDock;//左侧贴图列表dock
     QDockWidget* m_templateEditorDock;//右侧模板编辑dock，暂时无用
@@ -216,8 +217,8 @@ private:
     QActionGroup* m_profileGroup;//profile所有菜单的操作
     QActionGroup* m_externalGroup;
     QActionGroup* m_keyerGroup;
-    FiltersDock* m_filtersDock;//右侧属性中的视频滤镜分类dock，即显示已添加的视频滤镜
-    FiltersDock* m_filtersDock2;//右侧属性中的音频滤镜分类dock，即显示已添加的音频滤镜
+    FiltersDock* m_propertiesVideoFilterDock;//右侧属性中的视频滤镜分类dock，即显示已添加的视频滤镜。
+    FiltersDock* m_propertiesAudioFilterDock;//右侧属性中的音频滤镜分类dock，即显示已添加的音频滤镜。
     FilterController* m_filterController;
     ScopeController* m_scopeController;
     QMenu* m_customProfileMenu;//自定义profil菜单
@@ -234,7 +235,7 @@ private:
     QScopedPointer<QAction> m_statusBarAction;
 //    QNetworkAccessManager m_network;
 
-    //一下没有用到
+    //以下没有用到
     //xjp add for managing resource
     QTabWidget  *m_tabForResource;
     QQuickWidget *m_quickWidgetForMedia;
@@ -247,7 +248,7 @@ private:
 //    TextlistDock *m_textlistDock;
     QDockWidget *m_textDock;
 
-    //一下是工具栏上的而按钮
+    //以下是工具栏上的按钮
     QToolButton *m_addButton;
     QToolButton *m_removeButton;
     QToolButton *m_undoButton;
@@ -329,8 +330,8 @@ public slots:
     void onShuttle(float x);
     void createMultitrackModelIfNeeded();//如果时间线对应的tractor不存在则创建
 
-    void showFilterDock();//显示视频滤镜列表dock
-    void showAudioFilterDock();//显示音频滤镜列表dock
+    void showFilterDock();//显示右侧属性中已添加的视频滤镜dock，目前已弃用
+    void showAudioFilterDock();//显示右侧属性中已添加的音频滤镜dock，目前已弃用
 
     void onJobsDockTriggered(bool);//显示导出文件进度列表dock
     void onPropertiesDockTriggered(bool checked = true);//显示属性面板
@@ -345,8 +346,8 @@ public slots:
 
     void showPlaylistDock();//空函数无用
     void showRecentDock();//显示左侧文件列表dock
-    void onShowFilterDock();//显示右侧属性中已添加的视频滤镜dock
-    void onShowAudioFilterDock();//显示右侧属性中已添加的音频滤镜的dock
+    void onShowPropertiesVideoFilterDock();//显示右侧属性中已添加的视频滤镜dock
+    void onShowPropertiesAudioFilterDock();//显示右侧属性中已添加的音频滤镜的dock
 
     void setCurrentTrack(int trackIndex);//设置时间线上当前的track为第trackIndex个
 

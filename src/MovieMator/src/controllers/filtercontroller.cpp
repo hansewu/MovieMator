@@ -713,9 +713,9 @@ void FilterController::addFilter(int nFilterIndex)
     QmlMetadata *meta = m_metadataModel.get(nCurrentFilter);
 
     if(!meta->isAudio())
-        MAIN.onShowFilterDock();
+        MAIN.onShowPropertiesVideoFilterDock();
     else
-        MAIN.onShowAudioFilterDock();
+        MAIN.onShowPropertiesAudioFilterDock();
 
     if (meta)
         m_attachedModel.add(meta);
