@@ -24,21 +24,32 @@
 class EffectListView : public QListView
 {
 public:
+    // 构造函数
     EffectListView(QWidget *parent = nullptr);
+    // 析构函数
     ~EffectListView();
+    // 给 m_mimeData设置数据 mimeData，mime类型为 mimeType
+    // 这个是在拖放时使用的
     void setMimeData(QMimeData *mimeData, const QString &mimeType);
 
+    // 按键事件
     void keyPressEvent(QKeyEvent*);
 
 protected:
+    // 鼠标按下事件
     void mousePressEvent(QMouseEvent *);
+    // 鼠标移动事件（拖放）
     void mouseMoveEvent(QMouseEvent *);
 
 private:
+    // 鼠标左键按下时的起点（拖动用）
     QPoint m_dragStart;
+    // listView能否被拖动
     bool m_canStartDrag;
 
+    // 保存动画文件的 mimeData，供拖放使用
     QMimeData *m_mimeData;
+    // 保存动画文件 mimeData类型
     QString m_mimeType;
 };
 

@@ -29,24 +29,34 @@
 #include <QLineEdit>
 
 class QToolButton;
-
+// 搜索框（自定义的 LineEdit）
 class LineEditClear : public QLineEdit
 {
     Q_OBJECT
 
 public:
+    // 构造函数
     LineEditClear(QWidget *parent = 0);
+    // 设定 lineEdit的样式表为 defaultStyleSheet
+    // 设置 m_defaultStyleSheet为 defaultStyleSheet
+    // 设置 m_editingStyleSheet为 editingStyleSheet
     void setStyleSheets(const QString &defaultStyleSheet, const QString &editingStyleSheet);
 
 protected:
+    // 样式表的大小变化事件
     void resizeEvent(QResizeEvent *);
 
 private slots:
+    // 切换 lineEdit中的清除按钮样式
+    // 并切换 lineEdit的样式
     void updateCloseButton(const QString &text);
 
 private:
+    // 清除 lineEdit内容按钮
     QToolButton *clearButton;
+    // 默认样式表
     QString m_defaultStyleSheet;
+    // 编辑 lineEdit内容时的样式表
     QString m_editingStyleSheet;
 };
 

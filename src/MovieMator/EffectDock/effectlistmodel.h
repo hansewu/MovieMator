@@ -28,26 +28,41 @@ class EffectListModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
+    // 缩略图宽度
     static const int THUMBNAIL_WIDTH = 80;      // 100;
+    // 缩略图高度
     static const int THUMBNAIL_HEIGHT = 60;     // 70;
 
+    // 构造函数
     explicit EffectListModel(MainInterface *main=nullptr, QObject *parent=nullptr);
+    // 析构函数
     ~EffectListModel();
 
+    // model的行数
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    // model的列数
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    // model的数据模型
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    // model的 mimeData
     QMimeData *mimeData(const QModelIndexList &indexes) const;
+    // model的序号
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
+    // model的父项
     QModelIndex parent(const QModelIndex &child) const;
 
+    // 给 model添加数据 fileHandle
     void append(FILE_HANDLE fileHandle);
 
+    // row行的文件（第 row个数据的内容）
     FILE_HANDLE fileAt(int row) const;
+    // row行的缩略图（第 row个数据的缩略图）
     QImage thumbnail(int row) const;
 
 private:
+    // model的 list
     QList<FILE_HANDLE> *m_effectList;
+    // 主界面
     MainInterface *m_mainWindow;
 };
 
