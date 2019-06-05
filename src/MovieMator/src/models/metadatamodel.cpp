@@ -172,11 +172,11 @@ QmlMetadata* MetadataModel::get(int index) const
     return 0;
 }
 
-void MetadataModel::setFilter(MetadataFilter filter)
+void MetadataModel::setMetadataFilterType(MetadataFilterType type)
 {
     beginResetModel();
-    m_filter = filter;
-    emit filterChanged();
+    m_metadataFilterType = type;
+    emit metadataFilterTypeChanged();
     endResetModel();
 }
 
@@ -189,9 +189,9 @@ bool MetadataModel::isVisible(int row) const
     if (meta->isHidden()) return false;
     if (meta->needsGPU() && !Settings.playerGPU()) return false;
     if (!meta->needsGPU() && Settings.playerGPU() && !meta->gpuAlt().isEmpty()) return false;
-    if (m_filter == FavoritesFilter && !meta->isFavorite()) return false;
-    if (m_filter == AudioFilter && !meta->isAudio()) return false;
-    if (m_filter == VideoFilter && meta->isAudio()) return false;
+    if (m_metadataFilterType == FavoritesFilter && !meta->isFavorite()) return false;
+    if (m_metadataFilterType == AudioFilter && !meta->isAudio()) return false;
+    if (m_metadataFilterType == VideoFilter && meta->isAudio()) return false;
     if (meta->isClipOnly() && !m_isClipProducer) return false;
     return true;
 }
