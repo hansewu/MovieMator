@@ -445,29 +445,29 @@ MainWindow::MainWindow()
 
     LOG_DEBUG() << "FilterController";
     m_filterController = new FilterController(this);
-    m_filtersDock = new FiltersDock(m_filterController->metadataModel(), m_filterController->attachedModel(),true, this);
-    m_filtersDock->setExtraQmlContextProperty("mainwindow", this);
-    m_filtersDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
-    m_filtersDock->setTitleBarWidget(new QWidget());
-    m_filtersDock->setMinimumSize(520,272);
+    m_propertiesVideoFilterDock = new FiltersDock(m_filterController->metadataModel(), m_filterController->attachedModel(),true, this);
+    m_propertiesVideoFilterDock->setExtraQmlContextProperty("mainwindow", this);
+    m_propertiesVideoFilterDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
+    m_propertiesVideoFilterDock->setTitleBarWidget(new QWidget());
+    m_propertiesVideoFilterDock->setMinimumSize(520,272);
 
-    m_filtersDock2 = new FiltersDock(m_filterController->metadataModel(), m_filterController->attachedModel(),false, this);
-    m_filtersDock2->setExtraQmlContextProperty("mainwindow", this);
-    m_filtersDock2->setFeatures(QDockWidget::NoDockWidgetFeatures);
-    m_filtersDock2->setTitleBarWidget(new QWidget());
-    m_filtersDock2->setMinimumSize(520,272);
-
-
+    m_propertiesAudioFilterDock = new FiltersDock(m_filterController->metadataModel(), m_filterController->attachedModel(),false, this);
+    m_propertiesAudioFilterDock->setExtraQmlContextProperty("mainwindow", this);
+    m_propertiesAudioFilterDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
+    m_propertiesAudioFilterDock->setTitleBarWidget(new QWidget());
+    m_propertiesAudioFilterDock->setMinimumSize(520,272);
 
 
 
-    connect(m_filtersDock, SIGNAL(currentFilterRequested(int)), m_filterController, SLOT(setCurrentFilter(int)), Qt::QueuedConnection);
-    connect(m_filtersDock2, SIGNAL(currentFilterRequested(int)), m_filterController, SLOT(setCurrentFilter(int)), Qt::QueuedConnection);
+
+
+    connect(m_propertiesVideoFilterDock, SIGNAL(currentFilterRequested(int)), m_filterController, SLOT(setCurrentFilter(int)), Qt::QueuedConnection);
+    connect(m_propertiesAudioFilterDock, SIGNAL(currentFilterRequested(int)), m_filterController, SLOT(setCurrentFilter(int)), Qt::QueuedConnection);
 
     connect(ui->actionFilters, SIGNAL(triggered()), this, SLOT(onFiltersDockTriggered()));
 //    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_filtersDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
-     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_filtersDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)));
-     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_filtersDock2, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)));
+     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_propertiesVideoFilterDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)));
+     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_propertiesAudioFilterDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)));
 //    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_configurationDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
     //MovieMator Pro
 //#ifdef MOVIEMATOR_PRO
@@ -475,19 +475,19 @@ MainWindow::MainWindow()
     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_timelineDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)));
 //#endif
     //End
-    connect(m_filterController, SIGNAL(currentFilterAboutToChange(int)), m_filtersDock, SLOT(clearCurrentFilter(int)));
-    connect(m_filterController, SIGNAL(currentFilterAboutToChange(int)), m_filtersDock2, SLOT(clearCurrentFilter(int)));
+    connect(m_filterController, SIGNAL(currentFilterAboutToChange(int)), m_propertiesVideoFilterDock, SLOT(clearCurrentFilter(int)));
+    connect(m_filterController, SIGNAL(currentFilterAboutToChange(int)), m_propertiesAudioFilterDock, SLOT(clearCurrentFilter(int)));
     connect(this, SIGNAL(producerOpened()), m_filterController, SLOT(setProducer()));
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
 
     connect(m_filterController->attachedModel(), SIGNAL(changed()), SLOT(onFilterModelChanged()));
-    connect(m_filtersDock, SIGNAL(changed()), SLOT(onFilterModelChanged()));
-    connect(m_filtersDock2, SIGNAL(changed()), SLOT(onFilterModelChanged()));
+    connect(m_propertiesVideoFilterDock, SIGNAL(filterParameterChanged()), SLOT(onFilterModelChanged()));
+    connect(m_propertiesAudioFilterDock, SIGNAL(filterParameterChanged()), SLOT(onFilterModelChanged()));
     connect(m_filterController, SIGNAL(statusChanged(QString)), this, SLOT(showStatusMessage(QString)));
-    connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filtersDock, SLOT(setFadeInDuration(int)));
-    connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filtersDock2, SLOT(setFadeInDuration(int)));
-    connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filtersDock, SLOT(setFadeOutDuration(int)));
-    connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filtersDock2, SLOT(setFadeOutDuration(int)));
+    connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_propertiesVideoFilterDock, SLOT(setFadeInDuration(int)));
+    connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_propertiesAudioFilterDock, SLOT(setFadeInDuration(int)));
+    connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_propertiesVideoFilterDock, SLOT(setFadeOutDuration(int)));
+    connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_propertiesAudioFilterDock, SLOT(setFadeOutDuration(int)));
     connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
 
     connect(m_timelineDock, SIGNAL(addPositionAndSize()), m_filterController, SLOT(addPositionAndSizeFilter()));
@@ -505,20 +505,20 @@ MainWindow::MainWindow()
 
     connect(m_timelineDock, SIGNAL(addVolume()), m_filterController, SLOT(addVolumeFilter()));
     connect(m_timelineDock, SIGNAL(addText()), m_filterController, SLOT(addTextFilter()));
-    connect(m_timelineDock, SIGNAL(filterAdded()), this, SLOT(onShowFilterDock()));
-    connect(m_timelineDock, SIGNAL(filterAdded()), this, SLOT(onShowAudioFilterDock()));
-    connect(m_timelineDock, SIGNAL(showFilterDock()), this, SLOT(onShowFilterDock()));
-    connect(m_timelineDock, SIGNAL(showFilterDock()), this, SLOT(onShowAudioFilterDock()));
+    connect(m_timelineDock, SIGNAL(filterAdded()), this, SLOT(onShowPropertiesVideoFilterDock()));
+    connect(m_timelineDock, SIGNAL(filterAdded()), this, SLOT(onShowPropertiesAudioFilterDock()));
+    connect(m_timelineDock, SIGNAL(showFilterDock()), this, SLOT(onShowPropertiesVideoFilterDock()));
+    connect(m_timelineDock, SIGNAL(showFilterDock()), this, SLOT(onShowPropertiesAudioFilterDock()));
 
 
 //#ifdef MOVIEMATOR_PRO
-    connect(m_filtersDock, SIGNAL(changePosition(int)), m_timelineDock, SLOT(changePostionFromFilter(int)));
-    connect(m_filtersDock2, SIGNAL(changePosition(int)), m_timelineDock, SLOT(changePostionFromFilter(int)));
+    connect(m_propertiesVideoFilterDock, SIGNAL(changePosition(int)), m_timelineDock, SLOT(changePostionFromFilter(int)));
+    connect(m_propertiesAudioFilterDock, SIGNAL(changePosition(int)), m_timelineDock, SLOT(changePostionFromFilter(int)));
 
-    connect(m_timelineDock,SIGNAL(positionChangedForKeyFrame(int)), m_filtersDock,SLOT(setCurrentClipFrameFromTimeline(int)));
-    connect(m_timelineDock,SIGNAL(positionChangedForKeyFrame(int)), m_filtersDock2,SLOT(setCurrentClipFrameFromTimeline(int)));
-    connect(m_timelineDock, SIGNAL(positionChanged()), m_filtersDock, SLOT(onChangePosition()));
-    connect(m_timelineDock, SIGNAL(positionChanged()), m_filtersDock2, SLOT(onChangePosition()));
+    connect(m_timelineDock,SIGNAL(positionChangedForKeyFrame(int)), m_propertiesVideoFilterDock,SLOT(setCurrentClipFrameFromTimeline(int)));
+    connect(m_timelineDock,SIGNAL(positionChangedForKeyFrame(int)), m_propertiesAudioFilterDock,SLOT(setCurrentClipFrameFromTimeline(int)));
+    connect(m_timelineDock, SIGNAL(positionChanged()), m_propertiesVideoFilterDock, SLOT(onChangePosition()));
+    connect(m_timelineDock, SIGNAL(positionChanged()), m_propertiesAudioFilterDock, SLOT(onChangePosition()));
 //    connect(m_timelineDock, SIGNAL(positionChanged()), m_filtersDock, SIGNAL(positionChanged()));
 //#endif
 
@@ -554,8 +554,8 @@ MainWindow::MainWindow()
     connect(ui->actionEncode, SIGNAL(triggered()), this, SLOT(onEncodeTriggered()));
   //  connect(m_encodeDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onEncodeTriggered(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_player, SLOT(onCaptureStateChanged(bool)));
-    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_filtersDock, SLOT(setDisabled(bool)));
-    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_filtersDock2, SLOT(setDisabled(bool)));
+    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_propertiesVideoFilterDock, SLOT(setDisabled(bool)));
+    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_propertiesAudioFilterDock, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionOpen, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionOpenOther, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionExit, SLOT(setDisabled(bool)));
@@ -623,11 +623,11 @@ MainWindow::MainWindow()
     m_recentDock = RecentDock_initModule(&MainInterface::singleton());//new RecentDock();
     addResourceDock(m_recentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file-highlight.png"));
 
-    m_filterDock = FilterDock_initModule(&MainInterface::singleton());
-    addResourceDock(m_filterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
+    m_resourceVideoFilterDock = FilterDock_initModule(&MainInterface::singleton());
+    addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
 
-    m_audiofilterDock = AudioFilterDock_initModule(&MainInterface::singleton());
-    addResourceDock(m_audiofilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
+    m_resourceAudioFilterDock = AudioFilterDock_initModule(&MainInterface::singleton());
+    addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
 
 
     //模板资源管理界面Dock
@@ -659,10 +659,10 @@ MainWindow::MainWindow()
     addPropertiesDock(m_simplePropertiesDock, tr("Properties"), QIcon(":/icons/light/32x32/show-properties.png"), QIcon(":/icons/light/32x32/show-properties-highlight.png"));
 
 
-    m_filtersDock->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);
-    addPropertiesDock(m_filtersDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
-    m_filtersDock2->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);
-    addPropertiesDock(m_filtersDock2, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
+    m_propertiesVideoFilterDock->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);
+    addPropertiesDock(m_propertiesVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
+    m_propertiesAudioFilterDock->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);
+    addPropertiesDock(m_propertiesAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
 
     //替换模板文件界面Dock
     //m_templateEditorDock = TemplateEditorDock_initModule(&MainInterface::singleton());
@@ -3963,13 +3963,13 @@ void MainWindow::onHelpButtonTriggered()
 //    QUrl url("http://www.macvideostudio.com/tutorial/MovieMator-Free-Mac-Video-Editor-User-Guide.pdf");
 }
 
-void MainWindow::onShowFilterDock()
+void MainWindow::onShowPropertiesVideoFilterDock()
 {
-    m_propertiesDockContainer->showDock(m_filtersDock);
+    m_propertiesDockContainer->showDock(m_propertiesVideoFilterDock);
 }
-void MainWindow::onShowAudioFilterDock()
+void MainWindow::onShowPropertiesAudioFilterDock()
 {
-    m_propertiesDockContainer->showDock(m_filtersDock2);
+    m_propertiesDockContainer->showDock(m_propertiesAudioFilterDock);
 }
 
 
@@ -4225,12 +4225,12 @@ void MainWindow::showFilterDock()
 {
 //    m_playlistDock->hide();
 //    m_recentDock->hide();
-    m_filtersDock->show();
+    m_propertiesVideoFilterDock->show();
 //    m_filtersDock->raise();
 }
 void MainWindow::showAudioFilterDock()
 {
-    m_filtersDock2->show();
+    m_propertiesAudioFilterDock->show();
 }
 
 void MainWindow::showLoadProgress()

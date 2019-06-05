@@ -354,7 +354,7 @@ QString FilterController::getFilterThumbnailPath(QString filterName, bool isAudi
         imageSourcePath         = "qrc:///icons/filters/Common.jpg";
 
     if(isAudio == true)
-        imageSourcePath         = "qrc:///icons/filters/Audio.jpg";
+        imageSourcePath         = "qrc:///icons/filters/Audio.png";
 
     return imageSourcePath;
 }
@@ -713,9 +713,9 @@ void FilterController::addFilter(int nFilterIndex)
     QmlMetadata *meta = m_metadataModel.get(nCurrentFilter);
 
     if(!meta->isAudio())
-        MAIN.onShowFilterDock();
+        MAIN.onShowPropertiesVideoFilterDock();
     else
-        MAIN.onShowAudioFilterDock();
+        MAIN.onShowPropertiesAudioFilterDock();
 
     if (meta)
         m_attachedModel.add(meta);

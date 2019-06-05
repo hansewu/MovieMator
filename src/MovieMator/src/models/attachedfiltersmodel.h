@@ -29,6 +29,7 @@
 
 class QmlMetadata;
 
+//存储已添加到producer上的filter元数据类
 class AttachedFiltersModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -44,6 +45,7 @@ public:
         ThumbnailRole,
     };
 
+    //添加到AttachedFiltersModel中的filter的类型
     enum AttachedMetadataFilter {
         NoFilter,
         VideoFilter,
@@ -52,14 +54,22 @@ public:
 
     explicit AttachedFiltersModel(QObject *parent = 0);
 
+    //是否可以对AttachedFiltersModel中的滤镜操作（添加、删除等）
     bool isReady();
+    //获取第row个filter
     Mlt::Filter* getFilter(int row) const;
+    //从MetadataList中获取第row个QmlMetadata
     QmlMetadata* getMetadata(int row) const;
+
+    //目前没有实质作用，直接调用的是reset函数
     void setProducer(Mlt::Producer* producer = 0);
+    //获取当前producer的标题，
     QString producerTitle() const;
+    //判断producer是否被选中
     bool isProducerSelected() const;
 
     // QAbstractListModel Implementation
+    //重写基类QAbstractListModel的方法，进行model中的数据操作（删除、插入、移动等）
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QVariant data(const QModelIndex &index, int role) const;
@@ -71,35 +81,58 @@ public:
     bool moveRows(const QModelIndex & sourceParent, int sourceRow, int count, const QModelIndex & destinationParent, int destinationRow);
     QScopedPointer<Mlt::Producer> m_producer;
 
+    //获取已添加的filter元数据的类型（视频滤镜、音频滤镜或其他）
     AttachedMetadataFilter filter() const { return m_filter; }
+    //设置filter的类型
     void setFilter(AttachedMetadataFilter);
+    //检测第row个滤镜是否可见
     Q_INVOKABLE bool isVisible(int row) const;
 signals:
+    //当m_metaList中的数据发生变化时（添加、删除、移动等），发出此信号
     void changed();
+    //暂未使用
     void readyChanged();
+    //重复添加滤镜失败后发出此信号
     void duplicateAddFailed(int index);
+    //轨道的标题发生改变时发出此信号，暂未使用
     void trackTitleChanged();
+    //producer选中状态发生改变时发出此信号，暂未使用
     void isProducerSelectedChanged();
+    //filter的类型发生改变时发出此信号
     void filterChanged();
 
 public slots:
+    //添加filter到m_metaList中，通过QmlMetadata创建新的filter设置到当前的producer上，并将meta保存到m_metaList中，
+    //如果是非unod、redo过来的操作则不添加添加滤镜操作到undostack。暂无信号接收处理，直接处理手动操作即undo、redo操作。
     void add(QmlMetadata* meta, bool bFromUndo = false);
+    //移除已添加到m_metaList中的第row个滤镜，暂无信号接收处理，目前只处理qml来的手动操作即undo、redo的移除滤镜操作
     void remove(int row, bool bFromUndo = false);
+    //移动已添加到m_metaList中的第toRow个滤镜到fromRow位置，目前只处理qml来的手动操作即undo、redo的移除滤镜操作
     bool move(int fromRow, int toRow, bool bFromUndo = false);
 
 private:
+    //此函数为空函数，暂未使用—
     static void producerChanged(mlt_properties owner, AttachedFiltersModel* model);
+    //当前的producer发生改变时，重置attachedfiltersmodel
     void reset(Mlt::Producer *producer = 0);
 
+    //拖拽的filter的索引
     int m_dropRow;
+    //移除的filter的索引
     int m_removeRow;
 
+    //当对producer上的filter进行添加、删除、移动操作时，需要使用此事件进行加锁
     QScopedPointer<Mlt::Event> m_event;
+    //定义一个存放QmlMetadata类型对象的list类型
     typedef QList<QmlMetadata*> MetadataList;
+    //用于存放已添加到当家producer上的所有滤镜的源数据信息
     MetadataList m_metaList;
+    //定义一个存放int类型数据的list类型
     typedef QList<int> IndexMap;
+    //用于存放已添加到producer中的滤镜对应在mlt中的索引
     IndexMap m_mltIndexMap;
 
+    //当前filter的类型
     AttachedMetadataFilter m_filter;
 };
 

@@ -24,16 +24,23 @@
 class RecentListView : public QListView
 {
 public:
+    // 构造函数
     RecentListView(QWidget *parent = nullptr);
+    // 键盘按下事件
     void keyPressEvent(QKeyEvent*);
+    // 获取被选中的多个 model
     QModelIndexList getSelected();
 
 protected:
+    // 鼠标按下事件
     void mousePressEvent(QMouseEvent *);
+    // 鼠标移动事件（拖动）
     void mouseMoveEvent(QMouseEvent *);
 
 private:
+    // 鼠标左键按下时的起点（拖动用）
     QPoint m_dragStart;
+    // listView能否被拖动
     bool m_canStartDrag;
 };
 

@@ -538,7 +538,7 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
                 if (templateFlag == "template") {
                     char* filter_name = filter->get("moviemator:filter");
                     if (QString(filter_name) == "affineSizePosition") {
-                        MAIN.onShowFilterDock();
+                        MAIN.onShowPropertiesVideoFilterDock();
                         MAIN.timelineDock()->selectSizeAndPositionFilter(newIndex);
 //                        selectIndex = newIndex;
                     }

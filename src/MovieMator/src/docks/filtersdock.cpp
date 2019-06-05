@@ -102,7 +102,7 @@ void FiltersDock::clearCurrentFilter(int index)
     disconnect(this, SIGNAL(positionChanged()), 0, 0);
     this->getRootContext()->setContextProperty("metadata", 0);
     QMetaObject::invokeMethod(this->getRootObject(), "clearCurrentFilter", Q_ARG(QVariant, QVariant(index)));
-    disconnect(this, SIGNAL(changed()));
+    disconnect(this, SIGNAL(filterParameterChanged()));
     m_qmlFilter = NULL;
 }
 
@@ -116,7 +116,8 @@ void FiltersDock::setCurrentFilter(QObject* filter, QmlMetadata* meta, int index
     if (qmlFilter)
     {
      //   qDebug()<<"filter m_path is "<<filter->path();
-        connect(qmlFilter, SIGNAL(filterPropertyValueChanged()), SIGNAL(changed()));
+
+        connect(qmlFilter, SIGNAL(filterPropertyValueChanged()), SIGNAL(filterParameterChanged()));
     }
     m_qmlFilter = qmlFilter;
 

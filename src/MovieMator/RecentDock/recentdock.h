@@ -45,51 +45,84 @@ class RecentDock : public QDockWidget
     Q_OBJECT
 
 public:
+    // 构造函数
     explicit RecentDock(MainInterface *main = 0, QWidget *parent = 0);
+    // 析构函数
     ~RecentDock();
+    // listView等的个数（Video、Audio、Image）
     static const int num = 3;
 
 public slots:
+    // 添加文件到对应类型的 listView中，并添加到历史记录里
     void add(const QString&);
+    // 移除文件 s，并从历史记录中删除
     QString remove(const QString& s);
+    // 获取选中的多个文件
     QList<FILE_HANDLE> getSelected();
 
 private:
+    // 界面大小改变事件
     void resizeEvent(QResizeEvent* event);
 
 private:
+    // 界面 ui
     Ui::RecentDock *ui;
+    // 历史记录（Settings.recent()）
     QStringList m_recent;
+    // 主界面
     MainInterface *m_mainWindow;
 
+    // 当前被选中的 listView项
     QModelIndex m_currentIndex;
+    // 当前激活的列表（Videos/Audios/Images）
     RecentListView *m_currentListView;
 
+    // 历史文件列表的列表
+    // 每个类型的文件存放在一个列表里，这些列表又存放在一个列表里
     QList<RecentListView*> *m_listviewList;
+    // 文件列表模型的列表，同上
     QList<RecentListModel*> *m_modelList;
+    // 过滤器模型
     QSortFilterProxyModel *m_proxyArray[num];
+    // 显示 Videos、Audios、Images的标签
     QLabel *m_labelArray[num];
+    // 显示 Videos、Audios、Images标题的后面分割线
     QLabel *m_imageArray[num];
+    // 文件是哪种类型
     bool m_flag[num] = {false};
+    // 标签 m_labeleArray[]要显示的标题
     const QString m_itemNames[num] = {tr("Videos"), tr("Audios"), tr("Images")};
 
+    // 标题与对应的下拉列表序号
     QMap<int, QString> m_map;
 
 public slots:
+    // listView右键菜单 actionRemove触发的槽函数
     void on_actionRemove_triggered();
 
 private slots:
+    // 响应搜索框 lineEdit内容变化的槽函数
     void on_lineEdit_textChanged(const QString& search);
 //    void on_actionRemove_triggered();
+    // listView右键菜单 actionRemoveAll触发的槽函数
     void on_actionRemoveAll_triggered();
+    // listview右键菜单 actionPlay触发的槽函数
     void on_actionPlay_triggered();
+    // listView右键菜单 actionProperties触发的槽函数
+    // 【无内容】
     void on_actionProperties_triggered();
+    // 响应下拉列表 comboBox项被激活的槽函数
     void on_comboBox_activated(const QString &arg1);
+    // RecentDock可见（切换到 RecentDock）的槽函数
     void on_RecentDock_visibilityChanged(bool visible);
 
+    // listView被激活的槽函数
     void on_listView_activated(const QModelIndex &index);
+    // 按下 listView的槽函数
     void on_listView_pressed(const QModelIndex &index);
+    // 单击 listView的槽函数
     void on_listView_clicked(const QModelIndex &index);
+    // listView右键菜单的槽函数
     void on_listView_customContextMenuRequested(const QPoint &pos);
 };
 

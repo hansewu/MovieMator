@@ -365,6 +365,7 @@ private:
 //   QMap<QString, QString> paraMap;
 //};
 
+//filter qml数据的基本结构
 class QMLUTILITIESSHARED_EXPORT QmlMetadata : public QObject
 {
     Q_OBJECT
@@ -399,6 +400,7 @@ public:
     };
 
     explicit QmlMetadata(QObject *parent = 0);
+    //加载设置信息，主要是喜好分类信息——需要修改
     void loadSettings();
 
     PluginType type() const { return m_type; }
@@ -407,6 +409,7 @@ public:
     void setName(const QString&);
     QString mlt_service() const { return m_mlt_service; }
     void set_mlt_service(const QString&);
+    //获取唯一的标识id
     QString uniqueId() const;
     bool needsGPU() const { return m_needsGPU; }
     void setNeedsGPU(bool);
@@ -416,7 +419,9 @@ public:
     void setVuiFileName(const QString&);
     QDir path() const { return m_path; }
     void setPath(const QDir& path);
+    //获取qml文件的路径
     QUrl qmlFilePath() const;
+    //获取辅助在预览窗口上qml文件的路径——需要修改
     QUrl vuiFilePath() const;
     bool isAudio() const { return m_isAudio; }
     void setIsAudio(bool isAudio);
@@ -438,36 +443,38 @@ public:
     bool freeVersion() const { return m_freeVersion; }
     bool isGpuCompatible() const { return m_isGpuCompatible; }
     void setIsGpuCompatible(bool isCompatible) { m_isGpuCompatible = isCompatible; }
+    //获取关键帧元数据
     QmlKeyframesMetadata* keyframes() { return &m_keyframes; }
 
     QString filterType() const { return m_filterType; }
     void setFilterType(const QString&);
 
 signals:
+    //qmlmetadata中的数据发生改变时发送此信号——需要优化
     void changed();
 
 private:
-    PluginType m_type;
+    PluginType m_type;//producer类型（转场、filter、producer）——需要修改
 
-    QString m_name;
-    QString m_mlt_service;
-    bool m_needsGPU;
-    QString m_qmlFileName;
-    QString m_vuiFileName;
-    QDir m_path;
-    bool m_isAudio;
-    bool m_isHidden;
-    bool m_isFavorite;
+    QString m_name;//滤镜名
+    QString m_mlt_service;//mlt service
+    bool m_needsGPU;//是否需要GPU
+    QString m_qmlFileName;//qml文件名，即ui.qml
+    QString m_vuiFileName;//显示在预览窗口上的qml的文件名，即vui.qml
+    QDir m_path;//filter对应的qml文件的目录
+    bool m_isAudio;//是否音频滤镜
+    bool m_isHidden;//是否隐藏
+    bool m_isFavorite;//是否时喜爱的filter
     QString m_gpuAlt;
     bool m_allowMultiple;
     bool m_isClipOnly;
-    QString m_thumbnail;
-    bool m_needsProVersion;
-    bool m_freeVersion;
+    QString m_thumbnail;//缩略图路径
+    bool m_needsProVersion;//是否需要Pro版
+    bool m_freeVersion;//是否是free版
     bool m_isGpuCompatible;
-    QmlKeyframesMetadata m_keyframes;
+    QmlKeyframesMetadata m_keyframes;//关键帧元数据
 //   QVector<key_frame_item> m_keyFrameList;
-    QString m_filterType;
+    QString m_filterType;//滤镜类型
 };
 
 #endif // QMLMETADATA_H

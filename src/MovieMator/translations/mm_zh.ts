@@ -552,7 +552,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="886"/>
         <source>Cut</source>
-        <translation type="unfinished">裁剪</translation>
+        <translation type="unfinished">剪切</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="900"/>
@@ -563,17 +563,17 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="912"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="967"/>
         <source>Remove</source>
-        <translation type="unfinished">移除</translation>
+        <translation type="unfinished">删除</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="921"/>
         <source>Ripple Delete</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">删除并关闭空隙</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="934"/>
         <source>Split At Playhead (S)</source>
-        <translation type="unfinished">在播放头处切割</translation>
+        <translation type="unfinished">在游标处分割</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="957"/>
@@ -595,7 +595,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <name>Clip 2</name>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">裁剪</translation>
+        <translation type="obsolete">剪切</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -603,7 +603,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     </message>
     <message>
         <source>Split At Playhead (S)</source>
-        <translation type="obsolete">在播放头处切割</translation>
+        <translation type="obsolete">在游标处分割</translation>
     </message>
     <message>
         <source>Properties</source>

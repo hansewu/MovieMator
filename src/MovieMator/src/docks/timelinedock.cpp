@@ -634,6 +634,9 @@ void TimelineDock::removeTrack()
 //        MAIN.undoStack()->push(
 //                new Timeline::RemoveTrackCommand(m_model, currentTrack()));
         MAINCONTROLLER.removeTrack(trackIndex);
+
+    if(trackIndex > 0)
+        setCurrentTrack(trackIndex-1);
 }
 
 void TimelineDock::onProducerChanged(Mlt::Producer* after)
@@ -1999,7 +2002,7 @@ void TimelineDock::setCurrentFilter(QObject *filter, QmlMetadata *meta, int inde
 int TimelineDock::getPositionInCurrentClip()
 {
 //    int trackIndex = currentTrack();//需要使用和clip统一的track
-    int trackIndex = selectedTrack();
+    int trackIndex = selectedTrackIndex();
     int position = -1;
     if ( selection().count() > 0)
     {
@@ -2036,7 +2039,7 @@ int TimelineDock::getPositionInCurrentClip()
 int TimelineDock::getCurrentClipLength()
 {
 //    int trackIndex = currentTrack();//需要使用和clip统一的track
-    int trackIndex = selectedTrack();
+    int trackIndex = selectedTrackIndex();
     int length = -1;
     if ( selection().count() > 0)
     {
@@ -2066,7 +2069,7 @@ int TimelineDock::getCurrentClipLength()
 int TimelineDock::getCurrentClipParentLength()
 {
 //    int trackIndex = currentTrack();//需要使用和clip统一的track
-    int trackIndex = selectedTrack();
+    int trackIndex = selectedTrackIndex();
     int length = -1;
     if ( selection().count() > 0)
     {
@@ -2112,7 +2115,7 @@ int TimelineDock::getCurrentClipParentLength()
 void TimelineDock::seekToKeyFrame(int position)
 {
 //    int trackIndex = currentTrack();//需要使用和clip统一的track
-    int trackIndex = selectedTrack();
+    int trackIndex = selectedTrackIndex();
     if ( selection().count() > 0)
     {
         int clipIndex = selection().first();
@@ -2141,7 +2144,7 @@ int TimelineDock::getPositionOnParentProducer(int position)
     {
         int clipIndex = selection().first();
 //        int trackIndex = currentTrack();//需要使用和clip统一的track
-        int trackIndex = selectedTrack();
+        int trackIndex = selectedTrackIndex();
 //        Q_ASSERT(trackIndex >= 0);
         Q_ASSERT(trackIndex < m_model.trackList().length());
         if((trackIndex < 0) || (trackIndex >= m_model.trackList().length())) {
@@ -2174,7 +2177,7 @@ int TimelineDock::getPositionOnParentProducer(int position)
 int TimelineDock::getPositionOnClip(int position)
 {
 //    int trackIndex = currentTrack();//需要使用和clip统一的track
-    int trackIndex = selectedTrack();
+    int trackIndex = selectedTrackIndex();
     int ret = -1;
     if (selection().count() > 0 && trackIndex != -1)
     {
