@@ -116,7 +116,7 @@ void FiltersDock::setCurrentFilter(QObject* filter, QmlMetadata* meta, int index
     if (qmlFilter)
     {
      //   qDebug()<<"filter m_path is "<<filter->path();
-        connect(qmlFilter, SIGNAL(changed()), SIGNAL(changed()));
+        connect(qmlFilter, SIGNAL(filterPropertyValueChanged()), SIGNAL(changed()));
     }
     m_qmlFilter = qmlFilter;
 
