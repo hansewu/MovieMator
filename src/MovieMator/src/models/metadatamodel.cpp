@@ -27,7 +27,7 @@
 
 MetadataModel::MetadataModel(QObject *parent)
     : QAbstractListModel(parent)
-    , m_filter(FavoritesFilter)
+    , m_metadataFilterType(FavoritesFilter)
     , m_isClipProducer(true)
 {
 }
