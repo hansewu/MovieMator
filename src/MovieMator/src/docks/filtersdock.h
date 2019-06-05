@@ -72,19 +72,19 @@ signals:
     //添加滤镜后发出的信号
     void currentFilterRequested(int attachedIndex);
     //当filter的参数发生变化时发出此信号
-    void changed(); /// Notifies when a filter parameter changes.
-    //转发时间线上位置发生变化的信号
+    void filterParameterChanged(); /// Notifies when a filter parameter changes.
+    //时间线上位置发生变化时发出此信号给filter对应的qml，使其做相应的更新
     void positionChanged();
 //#ifdef MOVIEMATOR_PRO
     void changePosition(int position);
 //#endif
     //filtersdock的位置变化时发出此信号，通知qml
     void dockPositionChanged();
-    //filtersdock中的当前的filter发生改变时发出此信号
+    //filtersdock中的当前选中的filter发生改变时发出此信号，通知qml相应的处理（更新关键帧等）
     void currentFilterChanged(); //current fiter changed
 
 public slots:
-    //清除当前的filter，主要时清除filter的元数据，及清除与qml的连接
+    //清除当前的filter，主要时清除filter的元数据，及清除与qml的连接，清除对应滤镜的参数显示
     void clearCurrentFilter(int index);
     //设置当前的filter及其元数据，主要是给qml设置，并通知更新
     void setCurrentFilter(QObject* filter, QmlMetadata* meta, int index);
@@ -92,9 +92,9 @@ public slots:
     void setFadeInDuration(int duration);
     //设置淡出时长，设置给qml
     void setFadeOutDuration(int duration);
-    //接收timeline发送的位置改变信号（positionChanged），并转发
+    //接收timeline发送的位置改变信号（positionChanged），并转发给filter相关的qml
     void onChangePosition();
-    //接收filtersdock发生可见变化信号，并通知qml重新选中滤镜
+    //接收filtersdock发生可见变化信号，并通知qml重新选中滤镜，切换dock时调用
     void onSelectedTabChanged(bool visible);
 
 protected:

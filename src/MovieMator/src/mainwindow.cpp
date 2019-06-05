@@ -481,8 +481,8 @@ MainWindow::MainWindow()
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
 
     connect(m_filterController->attachedModel(), SIGNAL(changed()), SLOT(onFilterModelChanged()));
-    connect(m_propertiesVideoFilterDock, SIGNAL(changed()), SLOT(onFilterModelChanged()));
-    connect(m_propertiesAudioFilterDock, SIGNAL(changed()), SLOT(onFilterModelChanged()));
+    connect(m_propertiesVideoFilterDock, SIGNAL(filterParameterChanged()), SLOT(onFilterModelChanged()));
+    connect(m_propertiesAudioFilterDock, SIGNAL(filterParameterChanged()), SLOT(onFilterModelChanged()));
     connect(m_filterController, SIGNAL(statusChanged(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_propertiesVideoFilterDock, SLOT(setFadeInDuration(int)));
     connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_propertiesAudioFilterDock, SLOT(setFadeInDuration(int)));
