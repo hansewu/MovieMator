@@ -4262,8 +4262,7 @@ void MultitrackModel::setClipSpeed(int trackIndex, int clipIndex, double speed)
         Q_ASSERT(clip);
         if(!clip) return;
 
-        double a = GetSpeedFromProducer(clip);
-        if (fabs(a - speed) < 0.00001)
+        if (fabs(GetSpeedFromProducer(clip) - speed) < 0.00001)
         {
             Mlt::Producer *newProducer = producer(clip, MLT.profile(), speed);
             Q_ASSERT(newProducer);
