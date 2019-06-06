@@ -57,7 +57,7 @@ class QmlFilter : public QObject
     Q_PROPERTY(QStringList presets READ presets NOTIFY presetsChanged)
     Q_PROPERTY(int producerIn READ producerIn)
     Q_PROPERTY(int producerOut READ producerOut)
-    Q_PROPERTY(double producerAspect READ producerAspect)
+//    Q_PROPERTY(double producerAspect READ producerAspect)
     Q_PROPERTY(double mediaWidth READ mediaWidth)
     Q_PROPERTY(double mediaHeight READ mediaHeight)
     Q_PROPERTY(int keyframeNumber READ cache_getKeyFrameNumber NOTIFY keyframeNumberChanged)
@@ -265,7 +265,7 @@ public:
      *
      * \return the image aspect ratio
      */
-    double producerAspect() const;
+    Q_INVOKABLE double producerAspect() const;
 
     /** Get the horizontal resolution of the video.
     *

@@ -643,6 +643,7 @@ double QmlFilter::cache_getPreKeyFrameNumInParent(double currentKeyFrame)
         return -1;
     }
 
+    return -1.0;
 }
 
 
@@ -931,8 +932,8 @@ void QmlFilter::syncCacheToProject()
               for(int keyIndex=0; keyIndex<paraCount; keyIndex++)
               {
 
-               int out = m_filter->get_out();// producerOut();
-               int in = m_filter->get_in();//producerIn();
+//               int out = m_filter->get_out();// producerOut();
+//               int in = m_filter->get_in();//producerIn();
 //               int duration = out - in + 1;
                //duration = filter.out - filter.in + 1;应该等于没有split的producer长度
                int duration = MAIN.timelineDock()->getCurrentClipParentLength();
@@ -1191,7 +1192,7 @@ QString QmlFilter::cache_getKeyFrameParaValue(double frame, QString key)
     else
     {
         int keyLength = key.size();
-        int keySize = key.length();
+//        int keySize = key.length();
         QString subKey = key.right(keyLength-5);
         for(int index=0; index < keyFrameCount; index++)
         {
