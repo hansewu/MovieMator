@@ -139,6 +139,7 @@ LiftClipCommand::LiftClipCommand(MultitrackModel &model, TimelineDock &timeline,
     , m_timeline(timeline)
 {
     setText(QObject::tr("Lift from track"));
+    Q_UNUSED(m_timeline);
 }
 
 void LiftClipCommand::redo_impl()
@@ -168,6 +169,7 @@ RemoveClipCommand::RemoveClipCommand(MultitrackModel &model, TimelineDock& timel
     , m_timeline(timeline)
 {
     setText(QObject::tr("Remove from track"));
+    Q_UNUSED(m_timeline);
 }
 
 void RemoveClipCommand::redo_impl()
