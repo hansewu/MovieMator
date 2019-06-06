@@ -43,21 +43,21 @@
 class QMLUTILITIESSHARED_EXPORT QmlKeyframesParameter : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString name MEMBER m_name NOTIFY changed)
-    Q_PROPERTY(QString property MEMBER m_property NOTIFY changed)
+    Q_PROPERTY(QString name MEMBER m_name NOTIFY parameterChanged)
+    Q_PROPERTY(QString property MEMBER m_property NOTIFY parameterChanged)
     /// If isSimple this parameter cannot use full keyframes while simple is in use.
-    Q_PROPERTY(bool isSimple MEMBER m_isSimple NOTIFY changed)
-    Q_PROPERTY(bool isCurve MEMBER m_isCurve NOTIFY changed)
-    Q_PROPERTY(double minimum MEMBER m_minimum NOTIFY changed)
-    Q_PROPERTY(double maximum MEMBER m_maximum NOTIFY changed)
+    Q_PROPERTY(bool isSimple MEMBER m_isSimple NOTIFY parameterChanged)
+    Q_PROPERTY(bool isCurve MEMBER m_isCurve NOTIFY parameterChanged)
+    Q_PROPERTY(double minimum MEMBER m_minimum NOTIFY parameterChanged)
+    Q_PROPERTY(double maximum MEMBER m_maximum NOTIFY parameterChanged)
 
-    Q_PROPERTY(QString explanation MEMBER m_explanation NOTIFY changed)
-    Q_PROPERTY(QString objectName MEMBER m_objectName NOTIFY changed)
-    Q_PROPERTY(QString controlType MEMBER m_controlType NOTIFY changed)
-    Q_PROPERTY(QString paraType MEMBER m_paraType NOTIFY changed)
-    Q_PROPERTY(QString defaultValue MEMBER m_defaultValue NOTIFY changed)
-    Q_PROPERTY(QString value MEMBER m_value NOTIFY changed)
-    Q_PROPERTY(QList<QString> factorFunc MEMBER m_factorFunc NOTIFY changed)
+    Q_PROPERTY(QString explanation MEMBER m_explanation NOTIFY parameterChanged)
+    Q_PROPERTY(QString objectName MEMBER m_objectName NOTIFY parameterChanged)
+    Q_PROPERTY(QString controlType MEMBER m_controlType NOTIFY parameterChanged)
+    Q_PROPERTY(QString paraType MEMBER m_paraType NOTIFY parameterChanged)
+    Q_PROPERTY(QString defaultValue MEMBER m_defaultValue NOTIFY parameterChanged)
+    Q_PROPERTY(QString value MEMBER m_value NOTIFY parameterChanged)
+    Q_PROPERTY(QList<QString> factorFunc MEMBER m_factorFunc NOTIFY parameterChanged)
 
 public:
     explicit QmlKeyframesParameter(QObject* parent = 0);
@@ -203,7 +203,7 @@ public:
      */
     void setFactorFunc(const QList<QString> &factorFunc) {m_factorFunc.append(factorFunc);};
 signals:
-    void changed();   /** did not use*/
+    void parameterChanged();   /** did not use*/
 
 private:
     QString m_name;         /** the display name of the parameter*/
@@ -232,15 +232,15 @@ private:
 class QMLUTILITIESSHARED_EXPORT QmlKeyframesMetadata : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(bool allowTrim MEMBER m_allowTrim NOTIFY changed)
-    Q_PROPERTY(bool allowAnimateIn MEMBER m_allowAnimateIn NOTIFY changed)
-    Q_PROPERTY(bool allowAnimateOut MEMBER m_allowAnimateOut NOTIFY changed)
-    Q_PROPERTY(QQmlListProperty<QmlKeyframesParameter> parameters READ parameters NOTIFY changed)
+    Q_PROPERTY(bool allowTrim MEMBER m_allowTrim NOTIFY keyframesMetadataChanged)
+    Q_PROPERTY(bool allowAnimateIn MEMBER m_allowAnimateIn NOTIFY keyframesMetadataChanged)
+    Q_PROPERTY(bool allowAnimateOut MEMBER m_allowAnimateOut NOTIFY keyframesMetadataChanged)
+    Q_PROPERTY(QQmlListProperty<QmlKeyframesParameter> parameters READ parameters NOTIFY keyframesMetadataChanged)
     /// simpleProperties identifies a list of properties whose keyframe position must be updated when trimming.
-    Q_PROPERTY(QList<QString> simpleProperties MEMBER m_simpleProperties NOTIFY changed)
-    Q_PROPERTY(QString minimumVersion MEMBER m_minimumVersion NOTIFY changed)
-    Q_PROPERTY(bool enabled MEMBER m_enabled NOTIFY changed)
-    Q_PROPERTY(int parameterCount READ parameterCount NOTIFY changed)
+    Q_PROPERTY(QList<QString> simpleProperties MEMBER m_simpleProperties NOTIFY keyframesMetadataChanged)
+    Q_PROPERTY(QString minimumVersion MEMBER m_minimumVersion NOTIFY keyframesMetadataChanged)
+    Q_PROPERTY(bool enabled MEMBER m_enabled NOTIFY keyframesMetadataChanged)
+    Q_PROPERTY(int parameterCount READ parameterCount NOTIFY keyframesMetadataChanged)
 
 public:
     explicit QmlKeyframesMetadata(QObject *parent = 0);
@@ -321,7 +321,7 @@ public:
     void clearParameter();
 
 signals:
-    void changed();             /** did not use*/
+    void keyframesMetadataChanged();             /** did not use*/
 
 private:
     bool m_allowTrim;           /** did not use*/
