@@ -52,7 +52,7 @@ AudioFilterDock::AudioFilterDock(MainInterface *main, QWidget *parent):
   m_qview(QmlUtilities::sharedEngine(), this)
 {
     m_mainWindow = main;
-    m_pAudioFilterInfo = NULL;
+    m_pAudioFilterInfo = nullptr;
     m_qview.setFocusPolicy(Qt::StrongFocus);
     setWidget(&m_qview);
 
@@ -63,13 +63,13 @@ AudioFilterDock::AudioFilterDock(MainInterface *main, QWidget *parent):
 
 AudioFilterDock::~AudioFilterDock()
 {
-    if(m_pAudioFilterInfo) {delete m_pAudioFilterInfo; m_pAudioFilterInfo = NULL;}
+    if(m_pAudioFilterInfo) {delete m_pAudioFilterInfo; m_pAudioFilterInfo = nullptr;}
 }
 
 void AudioFilterDock::resetQview()
 {
-    Q_ASSERT(&m_qview);
-    if(!(&m_qview)) return;
+//    Q_ASSERT(&m_qview);
+//    if(!(&m_qview)) return;
     QDir viewPath = QmlUtilities::qmlDir();
     viewPath.cd("views");
     viewPath.cd("filter");
@@ -87,8 +87,8 @@ void AudioFilterDock::resetQview()
 
 int AudioFilterDock::createAudioFilterDockPage()
 {
-    Q_ASSERT(&m_qview);
-    if(!(&m_qview)) return 1;
+//    Q_ASSERT(&m_qview);
+//    if(!(&m_qview)) return 1;
     qmlRegisterType<AudioFilterItemInfo>("AudioFilterItemInfo", 1, 0, "AudioFilterItemInfo");
 
     m_qview.rootContext()->setContextProperty("AudioFiltersInfo", m_pAudioFilterInfo);
@@ -103,10 +103,10 @@ int AudioFilterDock::updateAudioFilters(AudioFilter_Info * AudioFilterInfos, int
 
     Q_ASSERT(AudioFilterInfos);
     if(!AudioFilterInfos) return 1;
-    Q_ASSERT(&m_qview);
-    if(!(&m_qview)) return 1;
+//    Q_ASSERT(&m_qview);
+//    if(!(&m_qview)) return 1;
 
-    if(m_pAudioFilterInfo) {delete m_pAudioFilterInfo; m_pAudioFilterInfo = NULL;}
+    if(m_pAudioFilterInfo) {delete m_pAudioFilterInfo; m_pAudioFilterInfo = nullptr;}
 
     m_pAudioFilterInfo = new AudioFiltersInfo();
     for(int i = 0; i < nAudioFilterCount; i++)
@@ -132,18 +132,18 @@ void AudioFilterDock::addAudioFilterItem(int index)
 
 void AudioFiltersInfo::addAudioFilterItemInfo(AudioFilterItemInfo *AudioFilterInfo)
 {
-    Q_ASSERT(&m_AudioFilterInfoList);
-    if(!(&m_AudioFilterInfoList)) return;
+//    Q_ASSERT(&m_AudioFilterInfoList);
+//    if(!(&m_AudioFilterInfoList)) return;
     Q_ASSERT(AudioFilterInfo);
     if(!AudioFilterInfo) return;
     m_AudioFilterInfoList.append(AudioFilterInfo);
 }
 
 
-static AudioFilterDock *ftDocInstance = 0;
+static AudioFilterDock *ftDocInstance = nullptr;
 QDockWidget *AudioFilterDock_initModule(MainInterface *main)
 {
-    if (ftDocInstance == NULL)
+    if (ftDocInstance == nullptr)
         ftDocInstance = new AudioFilterDock(main);
 
     return ftDocInstance;

@@ -39,7 +39,7 @@ RegistrationDialog::~RegistrationDialog()
 
 void RegistrationDialog::on_buynowButton_clicked()
 {
-    MAIN.on_buynowButton_clicked();
+    MAIN.onBuynowButton_clicked();
     close();
 }
 

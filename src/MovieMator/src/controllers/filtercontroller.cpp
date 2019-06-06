@@ -80,7 +80,7 @@ void FilterController::loadFilterMetadata() {
 //                    LOG_DEBUG() << "added filter" << meta->name();
                     meta->loadSettings();
                     meta->setPath(subdir);
-                    meta->setParent(0);
+                    meta->setParent(nullptr);
                     addMetadata(meta);
                 }
             } else if (!meta) {
@@ -176,13 +176,13 @@ void FilterController::loadFrei0rFilterMetadata() {
                 //parameters info
                 //if ( metadata )
                 //{
-                    mlt_properties params = (mlt_properties) mlt_properties_get_data(metadata, "parameters", NULL);
+                    mlt_properties params = static_cast<mlt_properties>(mlt_properties_get_data(metadata, "parameters", nullptr));
                     if ( params )
                     {
                         int n = mlt_properties_count( params );
                         for ( int nIndex = 0; nIndex < n; nIndex++ )
                         {
-                            mlt_properties param_pro = (mlt_properties) mlt_properties_get_data( params, mlt_properties_get_name(params, nIndex), NULL );
+                            mlt_properties param_pro = static_cast<mlt_properties>(mlt_properties_get_data( params, mlt_properties_get_name(params, nIndex), nullptr ));
 
                             QmlKeyframesParameter * param = new QmlKeyframesParameter();
                             Q_ASSERT(param);
@@ -242,7 +242,7 @@ void FilterController::loadFrei0rFilterMetadata() {
 
                     meta->loadSettings();
                     meta->setPath(subdir);
-                    meta->setParent(0);
+                    meta->setParent(nullptr);
                     addMetadata(meta);
                 }
                 }
@@ -282,7 +282,7 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
 {
     Q_ASSERT(service);
 
-    QmlMetadata* meta = 0;
+    QmlMetadata* meta = nullptr;
     int rowCount = m_metadataModel.rowCount();
     QString uniqueId = service->get(kShotcutFilterProperty);
 
@@ -483,10 +483,10 @@ void FilterController::setCurrentFilter(int attachedIndex)
     }
     m_currentFilterIndex = attachedIndex;
 
-    QmlMetadata* meta = 0;
+    QmlMetadata* meta = nullptr;
     if(m_currentFilterIndex >= 0)
         meta = m_attachedModel.getMetadata(m_currentFilterIndex);
-    QmlFilter* filter = 0;
+    QmlFilter* filter = nullptr;
     if (meta) {
         Mlt::Filter* mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
         Q_ASSERT(mltFilter);
@@ -686,7 +686,7 @@ QmlMetadata *FilterController::metadataForUniqueId(const char *uniqueId)
 {
     Q_ASSERT(uniqueId);
 
-    QmlMetadata* meta = 0;
+    QmlMetadata* meta = nullptr;
     int rowCount = m_metadataModel.rowCount();
     QString qstrUniqueId(uniqueId);
 

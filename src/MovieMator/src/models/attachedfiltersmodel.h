@@ -52,7 +52,7 @@ public:
         AudioFilter
     };
 
-    explicit AttachedFiltersModel(QObject *parent = 0);
+    explicit AttachedFiltersModel(QObject *parent = nullptr);
 
     //是否可以对AttachedFiltersModel中的滤镜操作（添加、删除等）
     bool isReady();
@@ -62,7 +62,7 @@ public:
     QmlMetadata* getMetadata(int row) const;
 
     //目前没有实质作用，直接调用的是reset函数
-    void setProducer(Mlt::Producer* producer = 0);
+    void setProducer(Mlt::Producer* producer = nullptr);
     //获取当前producer的标题，
     QString producerTitle() const;
     //判断producer是否被选中
@@ -114,7 +114,7 @@ private:
     //此函数为空函数，暂未使用—
     static void producerChanged(mlt_properties owner, AttachedFiltersModel* model);
     //当前的producer发生改变时，重置attachedfiltersmodel
-    void reset(Mlt::Producer *producer = 0);
+    void reset(Mlt::Producer *producer = nullptr);
 
     //拖拽的filter的索引
     int m_dropRow;

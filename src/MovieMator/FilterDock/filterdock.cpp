@@ -34,7 +34,7 @@ FilterDock::FilterDock(MainInterface *main, QWidget *parent):
   m_qview(QmlUtilities::sharedEngine(), this)
 {
     m_mainWindow = main;
-    m_pFilterInfo = NULL;
+    m_pFilterInfo = nullptr;
     m_qview.setFocusPolicy(Qt::StrongFocus);
     setWidget(&m_qview);
 
@@ -45,13 +45,13 @@ FilterDock::FilterDock(MainInterface *main, QWidget *parent):
 
 FilterDock::~FilterDock()
 {
-    if(m_pFilterInfo) {delete m_pFilterInfo; m_pFilterInfo = NULL;}
+    if(m_pFilterInfo) {delete m_pFilterInfo; m_pFilterInfo = nullptr;}
 }
 
 void FilterDock::resetQview()
 {
-    Q_ASSERT(&m_qview);
-    if(!(&m_qview)) return;
+//    Q_ASSERT(&m_qview);
+//    if(!(&m_qview)) return;
     QDir viewPath = QmlUtilities::qmlDir();
     viewPath.cd("views");
     viewPath.cd("filter");
@@ -69,8 +69,8 @@ void FilterDock::resetQview()
 
 int FilterDock::createFilterDockPage()
 {
-    Q_ASSERT(&m_qview);
-    if(!(&m_qview)) return 1;
+//    Q_ASSERT(&m_qview);
+//    if(!(&m_qview)) return 1;
 
     qmlRegisterType<FilterItemInfo>("FilterItemInfo", 1, 0, "FilterItemInfo");
 
@@ -85,10 +85,10 @@ int FilterDock::updateFilters(Filter_Info * filterInfos, int nFilterCount)
 {
     Q_ASSERT(filterInfos);
     if(!filterInfos) return 1;
-    Q_ASSERT(&m_qview);
-    if(!(&m_qview)) return 1;
+//    Q_ASSERT(&m_qview);
+//    if(!(&m_qview)) return 1;
 
-    if(m_pFilterInfo) {delete m_pFilterInfo; m_pFilterInfo = NULL;}
+    if(m_pFilterInfo) {delete m_pFilterInfo; m_pFilterInfo = nullptr;}
 
     m_pFilterInfo = new FiltersInfo();
     for(int i = 0; i < nFilterCount; i++)
@@ -117,16 +117,16 @@ void FiltersInfo::addFilterItemInfo(FilterItemInfo *filterInfo)
 {
     Q_ASSERT(filterInfo);
     if(!filterInfo) return;
-    Q_ASSERT(&m_filterInfoList);
-    if(!(&m_filterInfoList)) return;
+//    Q_ASSERT(&m_filterInfoList);
+//    if(!(&m_filterInfoList)) return;
     m_filterInfoList.append(filterInfo);
 }
 
 
-static FilterDock *ftDocInstance = 0;
+static FilterDock *ftDocInstance = nullptr;
 QDockWidget *FilterDock_initModule(MainInterface *main)
 {
-    if (ftDocInstance == NULL)
+    if (ftDocInstance == nullptr)
         ftDocInstance = new FilterDock(main);
 
     return ftDocInstance;

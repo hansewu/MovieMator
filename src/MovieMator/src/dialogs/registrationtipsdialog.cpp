@@ -33,13 +33,13 @@ RegistrationTipsDialog::~RegistrationTipsDialog()
 
 void RegistrationTipsDialog::on_registerButton_clicked()
 {
-    MAIN.on_activateButton_clicked();
+    MAIN.onActivateButton_clicked();
     this->done(100);
 }
 
 void RegistrationTipsDialog::on_buynowButton_clicked()
 {
-    MAIN.on_buynowButton_clicked();
+    MAIN.onBuynowButton_clicked();
     this->done(101);
 }
 

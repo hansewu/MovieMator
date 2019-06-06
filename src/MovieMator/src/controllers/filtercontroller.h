@@ -40,7 +40,7 @@ class FilterController : public QObject
     Q_OBJECT
 
 public:
-    explicit FilterController(QObject* parent = 0);
+    explicit FilterController(QObject* parent = nullptr);
     //获取已加载的所有filter的元数据
     MetadataModel* metadataModel();
     //获取已添加到producer上的所有filter的元数据
@@ -64,7 +64,7 @@ signals:
 
 public slots:
     //接收时间线选中producer的消息（selected），并将选中的producer传递给AttachedFiltersModel
-    void setProducer(Mlt::Producer *producer = 0);
+    void setProducer(Mlt::Producer *producer = nullptr);
     //接收filtersdock发送的信号（currentFilterRequested），并设置当前设置filter为第attachedIndex个filter
     void setCurrentFilter(int attachedIndex);
 

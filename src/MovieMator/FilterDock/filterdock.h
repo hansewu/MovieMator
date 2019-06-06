@@ -36,7 +36,7 @@ class FilterItemInfo : public QObject
 
 public:
 
-    explicit FilterItemInfo(QObject *parent = NULL){}
+    explicit FilterItemInfo(QObject *parent = nullptr){Q_UNUSED(parent);}
 
     Q_INVOKABLE QString filterType() const { return m_filterType; }
     Q_INVOKABLE void setFilterType(const QString strType){m_filterType = strType;}
@@ -78,7 +78,7 @@ class FILTERDOCKSHARED_EXPORT FilterDock: public QDockWidget
     Q_OBJECT
 
 public:
-    explicit FilterDock(MainInterface *main=0, QWidget *parent = 0);
+    explicit FilterDock(MainInterface *main=nullptr, QWidget *parent = nullptr);
     ~FilterDock();
 
     int updateFilters(Filter_Info * filterInfos, int nFilterCount);

@@ -308,8 +308,8 @@ public slots:
     bool isCompatibleWithGpuMode(MltXmlChecker& checker);
     bool isXmlRepaired(MltXmlChecker& checker, QString& fileName);//修改工程文件xml
     void updateAutoSave();//开启自动保存工程文件
-    void open(QString url, const Mlt::Properties* = 0);//打开文件
-    void open1(QString url, const Mlt::Properties * = 0);
+    void open(QString url, const Mlt::Properties* = nullptr);//打开文件
+    void open1(QString url, const Mlt::Properties * = nullptr);
     void openVideo();//打开多选文件
     void openCut(Mlt::Producer* producer);//打开producer
     void showStatusMessage(QAction* action, int timeoutSeconds = 5);//显示状态信息
@@ -356,8 +356,8 @@ public slots:
     void showLoadProgress();//显示加载文件进度，未使用
 
     int showRegistrationTipDialog();//显示注册提示窗口
-    void on_buynowButton_clicked();
-    void on_activateButton_clicked();
+    void onBuynowButton_clicked();
+    void onActivateButton_clicked();
 
     void updateWindowTitle();//更新窗口标题（更新显示的工程文件名）
 
@@ -508,7 +508,7 @@ private slots:
 
     void on_actionExecute_Python_triggered();
 
-    void on_clearButtonForTest_clicked();
+    void onClearButtonForTest_clicked();
     void on_actionGet_Total_Video_Converter_Pro_triggered();
     void on_actionGet_Total_Video_Player_triggered();
     void on_actionTutorial_triggered();

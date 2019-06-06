@@ -42,15 +42,13 @@ class FiltersDock : public QDockWidget
     Q_OBJECT
     Q_PROPERTY(QRect dockPosition READ dockPosition NOTIFY dockPositionChanged)
 public:
-    explicit FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel,bool isvideo, QWidget *parent = 0);
+    explicit FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel,bool isvideo, QWidget *parent = nullptr);
     int position() const { return m_position; }
 
 //    Q_INVOKABLE int getCurrentPosition();
 //#ifdef MOVIEMATOR_PRO
-    Q_PROPERTY(int position READ position WRITE setPosition);
+    Q_PROPERTY(int position READ position WRITE setPosition)
     void setPosition(int position);
-    //接收时间线发送的positionChangedForKeyFrame信号，并保存当前位置，并发出位置改变的信号
-    void setCurrentClipFrameFromTimeline(int position);
 //#endif
     Q_PROPERTY(bool proVersion READ proVersion)
     //获取是否Pro版
@@ -96,6 +94,8 @@ public slots:
     void onChangePosition();
     //接收filtersdock发生可见变化信号，并通知qml重新选中滤镜，切换dock时调用
     void onSelectedTabChanged(bool visible);
+    //接收时间线发送的positionChangedForKeyFrame信号，并保存当前位置，并发出位置改变的信号
+    void setCurrentClipFrameFromTimeline(int position);
 
 protected:
     //重写QDockWidget的event函数，目前未作任何处理

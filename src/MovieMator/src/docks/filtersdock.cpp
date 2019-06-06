@@ -70,7 +70,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     this->getRootContext()->setContextProperty("filterDock", this);
     this->getRootContext()->setContextProperty("isVideo", isVideo());
 
-    setCurrentFilter(0, 0, -1);
+    setCurrentFilter(nullptr, nullptr, -1);
 //    connect(&m_quickView, SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
 //    connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
     resetQview();
@@ -99,16 +99,16 @@ QQuickItem* FiltersDock::getRootObject() {
 void FiltersDock::clearCurrentFilter(int index)
 {
     MLT.pause();
-    disconnect(this, SIGNAL(positionChanged()), 0, 0);
-    this->getRootContext()->setContextProperty("metadata", 0);
+    disconnect(this, SIGNAL(positionChanged()), nullptr, nullptr);
+    this->getRootContext()->setContextProperty("metadata", nullptr);
     QMetaObject::invokeMethod(this->getRootObject(), "clearCurrentFilter", Q_ARG(QVariant, QVariant(index)));
     disconnect(this, SIGNAL(filterParameterChanged()));
-    m_qmlFilter = NULL;
+    m_qmlFilter = nullptr;
 }
 
 void FiltersDock::setCurrentFilter(QObject* filter, QmlMetadata* meta, int index)
 {
-    QmlFilter *qmlFilter = (QmlFilter *)filter;
+    QmlFilter *qmlFilter = qobject_cast<QmlFilter*>(filter);
     this->getRootContext()->setContextProperty("filter", qmlFilter);
     this->getRootContext()->setContextProperty("metadata", meta);
     QMetaObject::invokeMethod(this->getRootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));

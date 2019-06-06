@@ -60,7 +60,7 @@ public:
         AudioFilter
     };
 
-    explicit MetadataModel(QObject *parent = 0);
+    explicit MetadataModel(QObject *parent = nullptr);
 
     //重写基类QAbstractListModel的方法，进行model中的数据操作
     // Implement QAbstractListModel

@@ -37,8 +37,8 @@ class AudioFilterItemInfo : public QObject
 
 public:
 
-    explicit AudioFilterItemInfo(QObject *parent = NULL){}
-    ~AudioFilterItemInfo(){};
+    explicit AudioFilterItemInfo(QObject *parent = nullptr){Q_UNUSED(parent);}
+    ~AudioFilterItemInfo(){}
 
     Q_INVOKABLE QString AudioFilterType() const { return m_AudioFilterType; }
     Q_INVOKABLE void setAudioFilterType(const QString strType){m_AudioFilterType = strType;}
@@ -80,7 +80,7 @@ class AUDIOFILTERDOCKSHARED_EXPORT AudioFilterDock: public QDockWidget
     Q_OBJECT
 
 public:
-    explicit AudioFilterDock(MainInterface *main=0, QWidget *parent = 0);
+    explicit AudioFilterDock(MainInterface *main=nullptr, QWidget *parent = nullptr);
     ~AudioFilterDock();
 
     int updateAudioFilters(AudioFilter_Info * AudioFilterInfos, int nAudioFilterCount);

@@ -69,7 +69,7 @@ Mlt::Filter* AttachedFiltersModel::getFilter(int row) const
 {
     Q_ASSERT(m_producer);
 
-    Mlt::Filter* result = 0;
+    Mlt::Filter* result = nullptr;
     if (m_producer && m_producer->is_valid() && row < m_mltIndexMap.count() && row >= 0) {
         result = m_producer->filter(m_mltIndexMap[row]);
     }
@@ -81,7 +81,7 @@ QmlMetadata* AttachedFiltersModel::getMetadata(int row) const
     if (row < m_metaList.count() && row >= 0) {
         return m_metaList[row];
     }
-    return 0;
+    return nullptr;
 }
 
 void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
@@ -180,7 +180,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             delete filter;
             return result;
         }
-        break;
+//        break;
     case TypeDisplayRole: {
             QVariant result;
             const QmlMetadata* meta = m_metaList[index.row()];
@@ -194,7 +194,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             }
             return result;
         }
-        break;
+//        break;
     case ThumbnailRole: {
             QVariant result;
             const QmlMetadata* meta = m_metaList[index.row()];
@@ -204,7 +204,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             }
             return result;
         }
-        break;
+//        break;
     default:
         break;
     }
@@ -315,7 +315,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
 {
     if (MAIN.timelineDock()->selection().isEmpty() )
     {
-        QMessageBox::warning(NULL, tr("Tips"), tr("Tips\n\nTo apply the filter, please first select the clip by clicking on it on the timeline."), QMessageBox::Ok);
+        QMessageBox::warning(nullptr, tr("Tips"), tr("Tips\n\nTo apply the filter, please first select the clip by clicking on it on the timeline."), QMessageBox::Ok);
         return;
     }
 
@@ -510,7 +510,7 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
 
    //  Q_ASSERT(producer && producer->is_valid());
     if (m_producer && m_producer->is_valid()) {
-        Mlt::Event* event = m_producer->listen("service-changed", this, (mlt_listener)AttachedFiltersModel::producerChanged);
+        Mlt::Event* event = m_producer->listen("service-changed", this, reinterpret_cast<mlt_listener>(AttachedFiltersModel::producerChanged));
         Q_ASSERT(event);
         m_event.reset(event);
         int count = m_producer->filter_count();
@@ -559,6 +559,7 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
 
 void AttachedFiltersModel::producerChanged(mlt_properties, AttachedFiltersModel* model)
 {
+    Q_UNUSED(model);
 //    model->reset(model->m_producer.data());
 }
 
