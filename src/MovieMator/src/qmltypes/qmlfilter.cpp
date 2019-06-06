@@ -1018,6 +1018,9 @@ void QmlFilter::syncCacheToProject()
                 }
              }
           }
+
+           MLT.refreshConsumer();
+           emit filterPropertyValueChanged();
         }
 
     }
