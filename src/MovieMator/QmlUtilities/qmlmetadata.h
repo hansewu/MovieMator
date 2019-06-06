@@ -60,7 +60,7 @@ class QMLUTILITIESSHARED_EXPORT QmlKeyframesParameter : public QObject
     Q_PROPERTY(QList<QString> factorFunc MEMBER m_factorFunc NOTIFY parameterChanged)
 
 public:
-    explicit QmlKeyframesParameter(QObject* parent = 0);
+    explicit QmlKeyframesParameter(QObject* parent = nullptr);
 
     /** Get the parameter display name, used for displaying on the interface.
      *
@@ -72,7 +72,7 @@ public:
      *
      * \param name the property display name
      */
-    void setName(const QString &name) {m_name = name;};
+    void setName(const QString &name) {m_name = name;}
 
     /** Get the property name of the parameter.
      *
@@ -84,16 +84,16 @@ public:
      *
      * \param name the property name
      */
-    void setProperty(const QString &property) {m_property = property;};
+    void setProperty(const QString &property) {m_property = property;}
 
     /** did not use*/
     bool isSimple() const { return m_isSimple; }
     /** did not use*/
-    void setIsSimple(const bool isSimple) {m_isSimple = isSimple;};
+    void setIsSimple(const bool isSimple) {m_isSimple = isSimple;}
     /** did not use*/
     bool isCurve() const { return m_isCurve; }
     /** did not use*/
-    void setIsCurve(const bool isCurve) {m_isCurve = isCurve;};
+    void setIsCurve(const bool isCurve) {m_isCurve = isCurve;}
 
     /** Get the minimum value for the parameter.
      *
@@ -105,7 +105,7 @@ public:
      *
      * \param minimum the minimum value
      */
-    void setMinimum(const double minimum) {m_minimum = minimum;};
+    void setMinimum(const double minimum) {m_minimum = minimum;}
 
     /** Get the maximum value for the parameter.
      *
@@ -117,7 +117,7 @@ public:
      *
      * \param maximum the minimum value
      */
-    void setMaximum(const double maximum) {m_maximum = maximum;};
+    void setMaximum(const double maximum) {m_maximum = maximum;}
 
     /** Get the explanation string of the parameter.
      *
@@ -129,7 +129,7 @@ public:
      *
      * \param explanation an explanation string
      */
-    void setExplanation(const QString &explanation) {m_explanation = explanation;};
+    void setExplanation(const QString &explanation) {m_explanation = explanation;}
 
     /** Get the object name of the control that displays the parameter.
      *
@@ -141,7 +141,7 @@ public:
      *
      * \param objectName a QString string
      */
-    void setObjectName(const QString &objectName) {m_objectName = objectName;};
+    void setObjectName(const QString &objectName) {m_objectName = objectName;}
 
     /** Get the type of the control that displays the parameter.
      *
@@ -153,7 +153,7 @@ public:
      *
      * \param controlType a QString string
      */
-    void setControlType(const QString &controlType) {m_controlType = controlType;};
+    void setControlType(const QString &controlType) {m_controlType = controlType;}
 
     /** Get the type of the parameter, int,string,rect,double.
      *
@@ -165,7 +165,7 @@ public:
      *
      * \param paraType a QString string
      */
-    void setParaType(const QString &paraType) {m_paraType = paraType;};
+    void setParaType(const QString &paraType) {m_paraType = paraType;}
 
     /** Get the default value for the parameter.
      *
@@ -177,7 +177,7 @@ public:
      *
      * \param defaultValue the default value
      */
-    void setDefaultValue(const QString &defaultValue) {m_defaultValue = defaultValue;};
+    void setDefaultValue(const QString &defaultValue) {m_defaultValue = defaultValue;}
 
     /** Get the value for the parameter.
      *
@@ -189,7 +189,7 @@ public:
      *
      * \param value the value
      */
-    void setValue(const QString &value) {m_value = value;};
+    void setValue(const QString &value) {m_value = value;}
 
     /** Get the formula for calculating the parameter's interface value.
      *
@@ -201,7 +201,7 @@ public:
      *
      * \param factorFunc the formula for calculating the property‘s interface value
      */
-    void setFactorFunc(const QList<QString> &factorFunc) {m_factorFunc.append(factorFunc);};
+    void setFactorFunc(const QList<QString> &factorFunc) {m_factorFunc.append(factorFunc);}
 signals:
     void parameterChanged();   /** did not use*/
 
@@ -243,7 +243,7 @@ class QMLUTILITIESSHARED_EXPORT QmlKeyframesMetadata : public QObject
     Q_PROPERTY(int parameterCount READ parameterCount NOTIFY keyframesMetadataChanged)
 
 public:
-    explicit QmlKeyframesMetadata(QObject *parent = 0);
+    explicit QmlKeyframesMetadata(QObject *parent = nullptr);
 
     bool allowTrim() const { return m_allowTrim; }              /** did not use*/
 
@@ -399,7 +399,7 @@ public:
         Transition
     };
 
-    explicit QmlMetadata(QObject *parent = 0);
+    explicit QmlMetadata(QObject *parent = nullptr);
     //加载设置信息，主要是喜好分类信息——需要修改
     void loadSettings();
 

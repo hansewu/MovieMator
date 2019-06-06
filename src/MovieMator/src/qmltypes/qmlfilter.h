@@ -37,7 +37,7 @@ class AbstractTask;
 
 struct key_frame_item
 {
-   double keyFrame;
+   int keyFrame;
    QMap<QString, QString> paraMap;
 };
 
@@ -63,7 +63,7 @@ class QmlFilter : public QObject
     Q_PROPERTY(int keyframeNumber READ cache_getKeyFrameNumber NOTIFY keyframeNumberChanged)
 
 public:
-    explicit QmlFilter(Mlt::Filter* mltFilter, /*const*/ QmlMetadata* metadata, QObject *parent = 0);
+    explicit QmlFilter(Mlt::Filter* mltFilter, /*const*/ QmlMetadata* metadata, QObject *parent = nullptr);
     ~QmlFilter();
 
     /** A Boolean value that indicates whether the filter is new.
@@ -76,13 +76,13 @@ public:
      *
      * \param isNew the filter is new or not
      */
-    void setIsNew(bool isNew) { m_isNew = isNew; };
+    void setIsNew(bool isNew) { m_isNew = isNew; }
 
     /** Get the filter.
      *
      * \return a Mlt::Filter value
      */
-    Mlt::Filter *getMltFilter() {return m_filter;};
+    Mlt::Filter *getMltFilter() {return m_filter;}
 
     /** Update the filter’s all key frames to the value specified by listKeyFrame.
      * Sync cache data to project
@@ -302,7 +302,7 @@ public:
      * \param frame the frame number
      * \param value QString value
      */
-    Q_INVOKABLE void cache_setKeyFrameParaValue(double frame, QString key, QString value);
+    Q_INVOKABLE void cache_setKeyFrameParaValue(int frame, QString key, QString value);
 
     /** Set a QRectF value associated to the name at a frame position to cached data.
      *
@@ -311,13 +311,13 @@ public:
      * \param rect QRectF value
      * \param opacity the opacity value
      */
-    Q_INVOKABLE void cache_setKeyFrameParaRectValue(double frame, QString key, const QRectF& rect, double opacity = 1.0);
+    Q_INVOKABLE void cache_setKeyFrameParaRectValue(int frame, QString key, const QRectF& rect, double opacity = 1.0);
 
     /** Remove the keyframe at the specified position.
      *
      * \param frame the frame number in the clip of the animation node to remove
      */
-    Q_INVOKABLE void removeKeyFrameParaValue(double frame);
+    Q_INVOKABLE void removeKeyFrameParaValue(int frame);
 
     /** Remove all the key frames of filter.
      *
@@ -336,7 +336,7 @@ public:
      * \param frame the frame number
      * \return the property's string value or "" if it does not exist
      */
-    Q_INVOKABLE QString cache_getKeyFrameParaValue(double frame, QString key);
+    Q_INVOKABLE QString cache_getKeyFrameParaValue(int frame, QString key);
 
     /** Get a double value by name at a frame position from cached data.
      *
@@ -344,7 +344,7 @@ public:
      * \param frame the frame number
      * \return the property's double value or -1 if it does not exist
      */
-    Q_INVOKABLE double cache_getKeyFrameParaDoubleValue(double frame, QString key);
+    Q_INVOKABLE double cache_getKeyFrameParaDoubleValue(int frame, QString key);
 
     /** Get a QRectF value by name at a frame position from cached data.
      *
@@ -352,21 +352,21 @@ public:
      * \param frame the frame number
      * \return the property's QRectF value or QRectF() if it does not exist
      */
-    Q_INVOKABLE QRectF cache_getKeyFrameParaRectValue(double frame, QString key);
+    Q_INVOKABLE QRectF cache_getKeyFrameParaRectValue(int frame, QString key);
 
     /** Get the keyfame at the previous following of the point from cached data.
      *
      * \param currentKeyFrame the frame number at which to start looking for the previous animation node
      * \return the integer keyframe, -1 if not found or not in the clip
      */
-    Q_INVOKABLE double cache_getPreKeyFrameNum(double currentKeyFrame);
+    Q_INVOKABLE int cache_getPreKeyFrameNum(int currentKeyFrame);
 
     /** Get the keyfame at the next following of the point from cached data.
      *
      * \param currentKeyFrame the frame number at which to start looking for the next animation node
      * \return the integer keyframe, -1 if not found or not in the clip
      */
-    Q_INVOKABLE double cache_getNextKeyFrameNum(double currentKeyFrame);
+    Q_INVOKABLE int cache_getNextKeyFrameNum(int currentKeyFrame);
 
     /** Sync all keyfame cache to project.
      *
@@ -378,21 +378,21 @@ public:
      * \param frame the frame number in the clip
      * \return true if this is a key frame, false if not a key frame
      */
-    Q_INVOKABLE bool cache_bKeyFrame(double frame);
+    Q_INVOKABLE bool cache_bKeyFrame(int frame);
 
     /** Get a boolean of whether there is a previous frame at the position or not.
      *
      * \param frame the frame number at which to start looking for the previous animation node
      * \return true if there is a previous frame, false if not a previous frame at the position
      */
-    Q_INVOKABLE bool bHasPreKeyFrame(double frame);
+    Q_INVOKABLE bool bHasPreKeyFrame(int frame);
 
     /** Get a boolean of whether there is a next frame at the position or not.
      *
      * \param frame the frame number at which to start looking for the next animation node
      * \return true if there is a next frame, false if not a previous frame at the position
      */
-    Q_INVOKABLE bool bHasNextKeyFrame(double frame);
+    Q_INVOKABLE bool bHasNextKeyFrame(int frame);
 
     /** Get the number of keyframes from cache data.
      *
@@ -443,7 +443,7 @@ public:
      * \param index the N-th keyframe (0 based) in this animation
      * \return the property'double value or 0 if it does not exist
      */
-    Q_INVOKABLE float getKeyValueOnProjectOnIndex(int index, QString name);
+    Q_INVOKABLE double getKeyValueOnProjectOnIndex(int index, QString name);
 
     /** Get a QString value by name at a frame position.
      *
@@ -451,7 +451,7 @@ public:
      * \param key the property to get
      * \return the property'QString value or QString() if it does not exist
      */
-    Q_INVOKABLE QString getAnimStringValue(double frame, QString key);
+    Q_INVOKABLE QString getAnimStringValue(int frame, QString key);
 
     /** Get an integer associated to the name at a frame position.
      *
@@ -459,7 +459,7 @@ public:
      * \param key the property to get
      * \return the property'integer value or -1 if not found
      */
-    Q_INVOKABLE int getAnimIntValue(double frame, QString key);
+    Q_INVOKABLE int getAnimIntValue(int frame, QString key);
 
     /** Get a double associated to the name at a frame position.
      *
@@ -467,7 +467,7 @@ public:
      * \param key the property to get
      * \return the property'double value or -1.0 if not found
      */
-    Q_INVOKABLE double getAnimDoubleValue(double frame, QString key);
+    Q_INVOKABLE double getAnimDoubleValue(int frame, QString key);
 
     /** Get a QRectF associated to the name at a frame position.
      *
@@ -475,7 +475,7 @@ public:
      * \param key the property to get
      * \return the property'QRectF value or QRectF(0.0, 0.0, 0.0, 0.0) if not found
      */
-    Q_INVOKABLE QRectF getAnimRectValue(double frame, QString key);
+    Q_INVOKABLE QRectF getAnimRectValue(int frame, QString key);
 
     /** Remove the keyframe at the specified position.
      *
@@ -496,7 +496,7 @@ public:
      *
      * \param bEnableAnimation the animation is enable or not
      */
-    Q_INVOKABLE void setEnableAnimation(bool bEnableAnimation) { m_bEnableAnimation = bEnableAnimation; };
+    Q_INVOKABLE void setEnableAnimation(bool bEnableAnimation) { m_bEnableAnimation = bEnableAnimation; }
 
     /** A Boolean value that indicates whether the auto add keyframes function is on.
      *
@@ -508,7 +508,7 @@ public:
      *
      * \param bAutoAddKeyFrame enables the Auto add keyframes function or not
      */
-    Q_INVOKABLE void setAutoAddKeyFrame(bool bAutoAddKeyFrame) { m_bAutoAddKeyFrame = bAutoAddKeyFrame; };
+    Q_INVOKABLE void setAutoAddKeyFrame(bool bAutoAddKeyFrame) { m_bAutoAddKeyFrame = bAutoAddKeyFrame; }
 
 public slots:
     /** Load a properties preset.
@@ -562,7 +562,7 @@ private:
      * \param currentKeyFrame the frame number at which to start looking for the previous animation node
      * \return the integer keyframe in parent clip, -1 if not found
      */
-    double cache_getPreKeyFrameNumInParent(double currentKeyFrame);
+    int cache_getPreKeyFrameNumInParent(int currentKeyFrame);
 
 
     QVector<key_frame_item> m_cacheKeyFrameList; /** Cache data for keyframes*/

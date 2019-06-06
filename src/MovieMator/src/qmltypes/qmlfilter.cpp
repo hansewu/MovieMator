@@ -120,21 +120,21 @@ void QmlFilter::removeAnimationKeyFrame(int nFrame, QString name)
     }
 }
 
-float QmlFilter::getKeyValueOnProjectOnIndex(int index, QString name)
+double QmlFilter::getKeyValueOnProjectOnIndex(int index, QString name)
 {
     if (m_filter)
     {
         int nKeyFrame = getAnimation(name).key_get_frame(index);
         if (nKeyFrame >= 0)
         {
-            float fKeyFrameValue = m_filter->anim_get_double(name.toUtf8().constData(), nKeyFrame, 0);
+            double fKeyFrameValue = m_filter->anim_get_double(name.toUtf8().constData(), nKeyFrame, 0);
             return fKeyFrameValue;
         }
         else
-            return 0;
+            return 0.0;
     }
     else
-        return 0;
+        return 0.0;
 }
 
 QString QmlFilter::getStringKeyValueOnProjectOnIndex(int index, QString name)
@@ -303,6 +303,9 @@ bool isValidRect(QRectF &rect)
 void QmlFilter::set(QString name, double x, double y, double width, double height, double opacity,
                     int position, mlt_keyframe_type keyframeType)
 {
+    Q_UNUSED(position);
+    Q_UNUSED(keyframeType);
+
     if (!m_filter) return;
     mlt_rect rect = m_filter->get_rect(name.toUtf8().constData());
     if (!m_filter->get(name.toUtf8().constData()) || x != rect.x || y != rect.y
@@ -423,7 +426,7 @@ void QmlFilter::analyze(bool isAudio)
     tmp.open();
     tmp.close();
 
-    m_filter->set("results", NULL, 0);
+    m_filter->set("results", nullptr, 0);
     int disable = m_filter->get_int("disable");
     m_filter->set("disable", 0);
     MLT.saveXML(tmp.fileName(), &service, false);
@@ -605,7 +608,7 @@ QString QmlFilter::objectNameOrService()
 
 //#ifdef MOVIEMATOR_PRO
 
-double QmlFilter::cache_getPreKeyFrameNumInParent(double currentKeyFrame)
+int QmlFilter::cache_getPreKeyFrameNumInParent(int currentKeyFrame)
 {
     Q_ASSERT(MAIN.timelineDock());
     currentKeyFrame = MAIN.timelineDock()->getPositionOnParentProducer(currentKeyFrame);
@@ -649,11 +652,11 @@ double QmlFilter::cache_getPreKeyFrameNumInParent(double currentKeyFrame)
 
 
 
-double QmlFilter::cache_getPreKeyFrameNum(double currentKeyFrame)
+int QmlFilter::cache_getPreKeyFrameNum(int currentKeyFrame)
 {
     Q_ASSERT(MAIN.timelineDock());
 
-    double nFrameInParent = cache_getPreKeyFrameNumInParent(currentKeyFrame);
+    int nFrameInParent = cache_getPreKeyFrameNumInParent(currentKeyFrame);
 
     int nPositionInClip = MAIN.timelineDock()->getPositionOnClip(nFrameInParent);
 
@@ -666,7 +669,7 @@ double QmlFilter::cache_getPreKeyFrameNum(double currentKeyFrame)
 }
 
 
-double QmlFilter::cache_getNextKeyFrameNum(double currentKeyFrame)
+int QmlFilter::cache_getNextKeyFrameNum(int currentKeyFrame)
 {
     Q_ASSERT(MAIN.timelineDock());
     currentKeyFrame = MAIN.timelineDock()->getPositionOnParentProducer(currentKeyFrame);
@@ -710,13 +713,13 @@ double QmlFilter::cache_getNextKeyFrameNum(double currentKeyFrame)
     return -1;
 }
 
-void QmlFilter::cache_setKeyFrameParaRectValue(double frame, QString key, const QRectF& rect, double opacity)
+void QmlFilter::cache_setKeyFrameParaRectValue(int frame, QString key, const QRectF& rect, double opacity)
 {
     QString sValue = QString("%1 %2 %3 %4 %5").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height()).arg(opacity);
     cache_setKeyFrameParaValue(frame, key, sValue);
 }
 
-void QmlFilter::cache_setKeyFrameParaValue(double frame, QString key, QString value)
+void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value)
 {
     if(frame < 0) return;
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
@@ -862,7 +865,7 @@ void QmlFilter::removeAllKeyFrame(QString name)
     }
 }
 
-void QmlFilter::removeKeyFrameParaValue(double frame)
+void QmlFilter::removeKeyFrameParaValue(int frame)
 {
     Q_ASSERT(m_metadata);
     Q_ASSERT(m_metadata->keyframes());
@@ -1029,7 +1032,7 @@ void QmlFilter::syncCacheToProject()
 }
 
 
-bool QmlFilter::cache_bKeyFrame(double frame)
+bool QmlFilter::cache_bKeyFrame(int frame)
 {
     Q_ASSERT(MAIN.timelineDock());
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
@@ -1050,11 +1053,11 @@ bool QmlFilter::cache_bKeyFrame(double frame)
 }
 
 
-bool QmlFilter::bHasPreKeyFrame(double frame)
+bool QmlFilter::bHasPreKeyFrame(int frame)
 {
     Q_ASSERT(MAIN.timelineDock());
 //    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
-    double frameInParent = MAIN.timelineDock()->getPositionOnParentProducer(frame);
+    int frameInParent = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     if (m_filter)
     {
         Q_ASSERT(m_metadata);
@@ -1084,11 +1087,11 @@ bool QmlFilter::bHasPreKeyFrame(double frame)
 
 }
 
-bool QmlFilter::bHasNextKeyFrame(double frame)
+bool QmlFilter::bHasNextKeyFrame(int frame)
 {
     Q_ASSERT(MAIN.timelineDock());
 //    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
-    double frameInParent = MAIN.timelineDock()->getPositionOnParentProducer(frame);
+    int frameInParent = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     if (m_filter)
     {
         Q_ASSERT(m_metadata);
@@ -1121,7 +1124,7 @@ bool QmlFilter::bHasNextKeyFrame(double frame)
 
 }
 
-double QmlFilter::cache_getKeyFrameParaDoubleValue(double frame, QString key)
+double QmlFilter::cache_getKeyFrameParaDoubleValue(int frame, QString key)
 {
     Q_ASSERT(MAIN.timelineDock());
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
@@ -1153,7 +1156,7 @@ double QmlFilter::cache_getKeyFrameParaDoubleValue(double frame, QString key)
 
 }
 
-QRectF QmlFilter::cache_getKeyFrameParaRectValue(double frame, QString key)
+QRectF QmlFilter::cache_getKeyFrameParaRectValue(int frame, QString key)
 {
     Q_ASSERT(MAIN.timelineDock());
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
@@ -1178,7 +1181,7 @@ QRectF QmlFilter::cache_getKeyFrameParaRectValue(double frame, QString key)
     return QRectF();
 }
 
-QString QmlFilter::cache_getKeyFrameParaValue(double frame, QString key)
+QString QmlFilter::cache_getKeyFrameParaValue(int frame, QString key)
 {
     Q_ASSERT(MAIN.timelineDock());
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
@@ -1208,7 +1211,7 @@ QString QmlFilter::cache_getKeyFrameParaValue(double frame, QString key)
 
 }
 
-QString QmlFilter::getAnimStringValue(double frame, QString key)
+QString QmlFilter::getAnimStringValue(int frame, QString key)
 {
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     if(m_filter)
@@ -1220,7 +1223,7 @@ QString QmlFilter::getAnimStringValue(double frame, QString key)
     return QString();
 }
 
-int QmlFilter::getAnimIntValue(double frame, QString key)
+int QmlFilter::getAnimIntValue(int frame, QString key)
 {
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     if(m_filter)
@@ -1231,7 +1234,7 @@ int QmlFilter::getAnimIntValue(double frame, QString key)
     return -1;
 }
 
-double QmlFilter::getAnimDoubleValue(double frame, QString key)
+double QmlFilter::getAnimDoubleValue(int frame, QString key)
 {
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     if(m_filter)
@@ -1242,7 +1245,7 @@ double QmlFilter::getAnimDoubleValue(double frame, QString key)
     return -1.0;
 }
 
-QRectF QmlFilter::getAnimRectValue(double frame, QString key)
+QRectF QmlFilter::getAnimRectValue(int frame, QString key)
 {
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     if (!m_filter) return QRectF();
@@ -1321,7 +1324,7 @@ void QmlFilter::refreshKeyFrame(const QVector<key_frame_item> &listKeyFrame)
 //#endif
 
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter* filter)
-    : QObject(0)
+    : QObject(nullptr)
     , m_filter(*filter)
 {}
 
