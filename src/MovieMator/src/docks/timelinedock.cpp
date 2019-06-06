@@ -71,7 +71,7 @@ void TimelineDock::filterScrollChild(QObject* parent)
         //if(QString(parent->objectName()).contains(QString("qt_scrollarea_viewport")))
           //  ((QWidget *)parent)->installEventFilter(this);
         if(QString(mobj->className()) == QString("QScrollBar"))
-                    ((QObject *)parent)->installEventFilter(this);
+                    (qobject_cast<QObject *>(parent))->installEventFilter(this);
 
     }
  //   else
@@ -89,11 +89,11 @@ TimelineDock::TimelineDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::TimelineDock),
     m_quickView(QmlUtilities::sharedEngine(), this),
+    m_model(MAINCONTROLLER.multitrackModel()),
     m_position(-1),
-    m_updateCommand(0),
+    m_updateCommand(nullptr),
     m_ignoreNextPositionChange(false),
-    m_filterSettingsView(QmlUtilities::sharedEngine(), 0),
-    m_model(MAINCONTROLLER.multitrackModel())
+    m_filterSettingsView(QmlUtilities::sharedEngine(), nullptr)
 {
     LOG_DEBUG() << "begin";
     m_selection.selectedTrack = -1;
@@ -174,7 +174,7 @@ QString TimelineDock::timecode(int frames)
 
 Mlt::ClipInfo *TimelineDock::getClipInfo(int trackIndex, int clipIndex)
 {
-    Mlt::ClipInfo* result = 0;
+    Mlt::ClipInfo* result = nullptr;
     Q_ASSERT(clipIndex >= 0);
     Q_ASSERT(trackIndex >= 0);
     if (clipIndex >= 0 && trackIndex >= 0) {
@@ -202,7 +202,7 @@ Mlt::ClipInfo *TimelineDock::getClipInfo(int trackIndex, int clipIndex)
 
 Mlt::Producer *TimelineDock::producerForClip(int trackIndex, int clipIndex)
 {
-    Mlt::Producer* result = 0;
+    Mlt::Producer* result = nullptr;
     Q_ASSERT(trackIndex >= 0);
     Q_ASSERT(clipIndex >= 0);
     if (trackIndex < 0 || clipIndex < 0) {
@@ -367,6 +367,7 @@ void TimelineDock::resetZoom()
 //wzq
 void TimelineDock::wheelEvent(QWheelEvent * event)
 {
+    Q_UNUSED(event)
 /*    if(event->delta() > 0)
     {
         if (isVisible()) {
@@ -447,7 +448,7 @@ void TimelineDock::setSelection(QList<int> newSelection, int trackIndex, bool is
 
         //MovieMator Pro
 //#ifdef MOVIEMATOR_PRO
-        setCurrentFilter(NULL, 0,0);
+        setCurrentFilter(nullptr, nullptr,0);
 //#endif
         //end
 
@@ -456,7 +457,7 @@ void TimelineDock::setSelection(QList<int> newSelection, int trackIndex, bool is
         if (!m_selection.selectedClips.isEmpty())
             emitSelectedFromSelection();
         else
-            emit selected(0);
+            emit selected(nullptr);
     }
 
 }
@@ -515,6 +516,9 @@ void TimelineDock::selectClipAtPosition(int trackIndex, int position)
 
 int TimelineDock::centerOfClip(int trackIndex, int clipIndex)
 {
+    Q_UNUSED(trackIndex)
+    Q_UNUSED(clipIndex)
+    return 0;
 //    Mlt::ClipInfo * clip = getClipInfo(trackIndex, clipIndex);
 //    Q_ASSERT(clip);
 //    int centerOfClip = clip->start + clip->frame_count / 2;
@@ -748,7 +752,7 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
     if (!command) {
         return;
     }
-    m_updateCommand = 0;
+    m_updateCommand = nullptr;
     MAIN.undoStack()->push(command);
 
     //setSelection(originSelection);
@@ -782,7 +786,7 @@ void TimelineDock::onShowFrame(const SharedFrame& frame)
 {
     if (m_ignoreNextPositionChange) {
         m_ignoreNextPositionChange = false;
-    } else if ((void*) MLT.producer()->get_producer() == (void*) MAIN.multitrack()->get_producer()) {
+    } else if (static_cast<void*>(MLT.producer()->get_producer()) == static_cast<void*>(MAIN.multitrack()->get_producer())) {
      //if ( MLT.isMultitrack() && (MLT.producer()->get_speed() != 0) ) {//加此判断解决点击clip有时指针不跳的问题
         if (frame.get_position() < MLT.producer()->get_playtime()) {
             m_position = frame.get_position();
@@ -812,7 +816,7 @@ void TimelineDock::append(int trackIndex)
     if (MLT.isSeekableClip() || MLT.savedProducer()) {
         MAIN.undoStack()->push(
         new Timeline::AppendClipCommand(m_model, trackIndex,
-                MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
+                MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer())));
     }
     selectClipUnderPlayhead();
 
@@ -1005,7 +1009,7 @@ void TimelineDock::emitSelectedFromSelection()
         if (m_model.tractor())
             selectMultitrack();
         else
-            emit selected(0);
+            emit selected(nullptr);
         return;
     }
 
@@ -1109,6 +1113,10 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
 
 void TimelineDock::addFilterClipCommand(int TrackIndex, int clipIndex, QString strFromXml, QString strToXml)
 {
+    Q_UNUSED(TrackIndex)
+    Q_UNUSED(clipIndex)
+    Q_UNUSED(strFromXml)
+    Q_UNUSED(strToXml)
  //   MAIN.undoStack()->push(new Timeline::FilterClipCommand(m_model, TrackIndex, clipIndex, strFromXml, strToXml));
 }
 
@@ -1159,7 +1167,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml)
     }
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
         QString xmlToUse = !xml.isEmpty()? xml
-            : MLT.XML(MLT.isClip()? 0 : MLT.savedProducer());
+            : MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer());
         if (position < 0)
             position = m_position;
         MAIN.undoStack()->push(
@@ -1178,7 +1186,7 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
     }
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
         QString xmlToUse = !xml.isEmpty()? xml
-            : MLT.XML(MLT.isClip()? 0 : MLT.savedProducer());
+            : MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer());
         if (position < 0)
             position = m_position;
         MAIN.undoStack()->push(
@@ -1823,6 +1831,7 @@ int TimelineDock::removeTransitionOnClip(int trackIndex, int clipIndex)
                     {
 
                         int position = playlist.clip_start(clipIndex - 1);
+                        Q_UNUSED(position)
 //                        MAIN.undoStack()->push(
 //                                    new Timeline::RemoveTransitionCommand(m_model, trackIndex, clipIndex - 1, clipIndex - 1, position)
 //                                    );
@@ -1836,6 +1845,7 @@ int TimelineDock::removeTransitionOnClip(int trackIndex, int clipIndex)
                     if (m_model.isTransition(playlist, clipIndex + 1))
                     {
                         int position = playlist.clip_start(clipIndex + 1);
+                        Q_UNUSED(position)
 //                        MAIN.undoStack()->push(
 //                                    new Timeline::RemoveTransitionCommand(m_model, trackIndex, clipIndex + 1, clipIndex + 1, position)
 //                                    );
@@ -1920,9 +1930,9 @@ void TimelineDock::addTransitionOnClipAfterAppend()
         int clipIndex = playlist.count() - 1;
         clipStart = playlist.clip_start(clipIndex);
         if (trackNumber == 0 && trackType == VideoTrackType)
-            if (m_model.addTransitionValid(trackIndex, trackIndex, clipIndex, clipStart - MLT.profile().fps()))
+            if (m_model.addTransitionValid(trackIndex, trackIndex, clipIndex, clipStart - int(MLT.profile().fps())))
                 MAIN.undoStack()->push(
-                    new Timeline::AddTransitionCommand(m_model, trackIndex, clipIndex, clipStart - MLT.profile().fps()));
+                    new Timeline::AddTransitionCommand(m_model, trackIndex, clipIndex, clipStart - int(MLT.profile().fps())));
     }
 }
 
@@ -1992,6 +2002,8 @@ void TimelineDock::changePostionFromFilter(int position)
 
 void TimelineDock::setCurrentFilter(QObject *filter, QmlMetadata *meta, int index)
 {
+    Q_UNUSED(meta)
+    Q_UNUSED(index)
     Q_ASSERT(m_quickView.rootContext());
 
     m_quickView.rootContext()->setContextProperty("currentFilter", filter);
@@ -2209,10 +2221,12 @@ int TimelineDock::getPositionOnClip(int position)
 
 int TimelineDock::timeToFrames(QString timecode)
 {
+    // 宏定义警告，无法消除
 #if MOVIEMATOR_FREE
     if (MAIN.multitrack())
         return MAIN.multitrack()->time_to_frames(timecode.toUtf8().constData());
 #endif
+    Q_UNUSED(timecode)
     return 0;
 }
 
