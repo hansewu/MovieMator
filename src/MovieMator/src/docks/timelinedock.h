@@ -34,7 +34,7 @@ namespace Ui {
 class TimelineDock;
 }
 namespace Timeline {
-class UpdateCommand;
+class UpdateClipCommand;
 }
 
 class TimelineDock : public QDockWidget
@@ -427,7 +427,7 @@ private:
     // 播放游标位置（从 clipIndexAtPlayhead中可知）
     int m_position;
     // updateCommand
-    Timeline::UpdateCommand* m_updateCommand;
+    Timeline::UpdateClipCommand* m_updateCommand;
     // 是否忽略下一个位置变化？？？
     bool m_ignoreNextPositionChange;
     // 保存选中的轨道、剪辑、是否选中了多个轨道等信息

@@ -94,7 +94,7 @@ public:
         IsAnimStickerRole
     };
 
-    explicit MultitrackModel(QObject *parent = 0);
+    explicit MultitrackModel(QObject *parent = nullptr);
     ~MultitrackModel();
 
     Mlt::Tractor* tractor() const { return m_tractor; }

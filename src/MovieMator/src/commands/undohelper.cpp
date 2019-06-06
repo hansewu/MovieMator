@@ -201,7 +201,7 @@ void UndoHelper::undoChanges()
 
             if (clipCurrentlyAt != info.oldClipIndex) {
                 UNDOLOG << "moving from" << clipCurrentlyAt << "to" << currentIndex;
-                QModelIndex modelIndex = m_model.createIndex(clipCurrentlyAt, 0, info.oldTrackIndex);
+                QModelIndex modelIndex = m_model.createIndex(clipCurrentlyAt, 0, quintptr(info.oldTrackIndex));
                 m_model.beginMoveRows(modelIndex.parent(), clipCurrentlyAt, clipCurrentlyAt, modelIndex.parent(), currentIndex);
                 playlist.move(clipCurrentlyAt, currentIndex);
                 m_model.endMoveRows();
@@ -210,7 +210,7 @@ void UndoHelper::undoChanges()
 
         /* Removed clips are reinserted using their stored XML */
         if (info.changes & Removed) {
-            QModelIndex modelIndex = m_model.createIndex(currentIndex, 0, info.oldTrackIndex);
+            QModelIndex modelIndex = m_model.createIndex(currentIndex, 0, quintptr(info.oldTrackIndex));
             m_model.beginInsertRows(modelIndex.parent(), currentIndex, currentIndex);
             if (info.isBlank) {
                 playlist.insert_blank(currentIndex, info.frame_out);
@@ -301,7 +301,7 @@ void UndoHelper::undoChanges()
             UNDOLOG << "resizing clip at" << currentIndex;
             playlist.resize_clip(currentIndex, info.frame_in, info.frame_out);
 
-            QModelIndex modelIndex = m_model.createIndex(currentIndex, 0, info.oldTrackIndex);
+            QModelIndex modelIndex = m_model.createIndex(currentIndex, 0, quintptr(info.oldTrackIndex));
             QVector<int> roles;
             roles << MultitrackModel::DurationRole;
             emit m_model.dataChanged(modelIndex, modelIndex, roles);
@@ -334,11 +334,11 @@ void UndoHelper::undoChanges()
                 UNDOLOG << "Removing clip at" << i;
                 m_model.beginRemoveRows(m_model.index(trackIndex), i, i);
                 if (clip->parent().get_data("mlt_mix"))
-                    clip->parent().set("mlt_mix", NULL, 0);
+                    clip->parent().set("mlt_mix", nullptr, 0);
                 if (clip->get_data("mix_in"))
-                    clip->set("mix_in", NULL, 0);
+                    clip->set("mix_in", nullptr, 0);
                 if (clip->get_data("mix_out"))
-                    clip->set("mix_out", NULL, 0);
+                    clip->set("mix_out", nullptr, 0);
                 playlist.remove(i);
                 m_model.endRemoveRows();
             }

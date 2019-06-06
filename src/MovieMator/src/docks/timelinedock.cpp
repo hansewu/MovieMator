@@ -743,7 +743,7 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
     QString xmlAfter = MLT.XML(after);
     m_updateCommand->setXmlAfter(xmlAfter);
     setSelection(QList<int>(), trackIndex); // clearing selection prevents a crash
-    Timeline::UpdateCommand* command = m_updateCommand;
+    Timeline::UpdateClipCommand* command = m_updateCommand;
     Q_ASSERT(command);
     if (!command) {
         return;
@@ -811,7 +811,7 @@ void TimelineDock::append(int trackIndex)
     }
     if (MLT.isSeekableClip() || MLT.savedProducer()) {
         MAIN.undoStack()->push(
-        new Timeline::AppendCommand(m_model, trackIndex,
+        new Timeline::AppendClipCommand(m_model, trackIndex,
                 MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
     }
     selectClipUnderPlayhead();
@@ -871,7 +871,7 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
         MAIN.undoStack()->beginMacro("Remove from track");
         int newClipIndex = removeTransitionOnClipWithUndo(trackIndex, clipIndex);
         MAIN.undoStack()->push(
-            new Timeline::RemoveCommand(m_model, *this, trackIndex, newClipIndex, xml));
+            new Timeline::RemoveClipCommand(m_model, *this, trackIndex, newClipIndex, xml));
         MAIN.undoStack()->endMacro();
     }
 }
@@ -905,7 +905,7 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
         int newClipIndex = removeTransitionOnClipWithUndo(trackIndex, clipIndex);
         QString xml = MLT.XML(clip.data());
         MAIN.undoStack()->push(
-            new Timeline::LiftCommand(m_model, *this, trackIndex, newClipIndex, xml));
+            new Timeline::LiftClipCommand(m_model, *this, trackIndex, newClipIndex, xml));
 
         MAIN.undoStack()->endMacro();
 
@@ -1023,7 +1023,7 @@ void TimelineDock::emitSelectedFromSelection()
     Q_ASSERT(info->producer->is_valid());
     if (info && info->producer && info->producer->is_valid()) {
         delete m_updateCommand;
-        m_updateCommand = new Timeline::UpdateCommand(*this, trackIndex, clipIndex, info->start);
+        m_updateCommand = new Timeline::UpdateClipCommand(*this, trackIndex, clipIndex, info->start);
         // We need to set these special properties so time-based filters
         // can get information about the cut while still applying filters
         // to the cut parent.
@@ -1163,7 +1163,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml)
         if (position < 0)
             position = m_position;
         MAIN.undoStack()->push(
-            new Timeline::InsertCommand(m_model, trackIndex, position, xmlToUse));
+            new Timeline::InsertClipCommand(m_model, trackIndex, position, xmlToUse));
          selectClipUnderPlayhead();
     }
 }
@@ -1182,7 +1182,7 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
         if (position < 0)
             position = m_position;
         MAIN.undoStack()->push(
-            new Timeline::OverwriteCommand(m_model, trackIndex, position, xmlToUse));
+            new Timeline::OverwriteClipCommand(m_model, trackIndex, position, xmlToUse));
         selectClipUnderPlayhead();
     }
 }
@@ -1764,7 +1764,7 @@ void TimelineDock::appendFromPath(int trackIndex, const QString &path)
 //                MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(&p), insertNextAt++));
 
         MAIN.undoStack()->push(
-            new Timeline::AppendCommand(m_model, trackIndex,
+            new Timeline::AppendClipCommand(m_model, trackIndex,
                 MLT.XML(p)));
         selectClipUnderPlayhead();
 

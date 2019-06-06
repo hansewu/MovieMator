@@ -7,7 +7,7 @@
 class AbstractCommand : public QUndoCommand
 {
 public:
-    AbstractCommand(QUndoCommand * parent = 0);
+    AbstractCommand(QUndoCommand * parent = nullptr);
     void redo();
     void undo();
 

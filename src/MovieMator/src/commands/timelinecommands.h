@@ -51,10 +51,10 @@ enum {
 };
 
 //拓展连接clip
-class AppendCommand : public AbstractCommand
+class AppendClipCommand : public AbstractCommand
 {
 public:
-    AppendCommand(MultitrackModel& model, int trackIndex, const QString& xml, AbstractCommand * parent = 0);
+    AppendClipCommand(MultitrackModel& model, int trackIndex, const QString& xml, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -65,10 +65,10 @@ private:
 };
 
 //插入clip
-class InsertCommand : public AbstractCommand
+class InsertClipCommand : public AbstractCommand
 {
 public:
-    InsertCommand(MultitrackModel& model, int trackIndex, int position, const QString &xml, AbstractCommand * parent = 0);
+    InsertClipCommand(MultitrackModel& model, int trackIndex, int position, const QString &xml, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -81,10 +81,10 @@ private:
 };
 
 //覆盖clip
-class OverwriteCommand : public AbstractCommand
+class OverwriteClipCommand : public AbstractCommand
 {
 public:
-    OverwriteCommand(MultitrackModel& model, int trackIndex, int position, const QString &xml, AbstractCommand * parent = 0);
+    OverwriteClipCommand(MultitrackModel& model, int trackIndex, int position, const QString &xml, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -97,10 +97,10 @@ private:
 };
 
 //选中高亮clip
-class LiftCommand : public AbstractCommand
+class LiftClipCommand : public AbstractCommand
 {
 public:
-    LiftCommand(MultitrackModel& model, TimelineDock &timeline, int trackIndex, int clipIndex, const QString &xml, AbstractCommand * parent = 0);
+    LiftClipCommand(MultitrackModel& model, TimelineDock &timeline, int trackIndex, int clipIndex, const QString &xml, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -113,10 +113,10 @@ private:
 };
 
 //移除clip
-class RemoveCommand : public AbstractCommand
+class RemoveClipCommand : public AbstractCommand
 {
 public:
-    RemoveCommand(MultitrackModel& model, TimelineDock& timeline, int trackIndex, int clipIndex, const QString &xml, AbstractCommand * parent = 0);
+    RemoveClipCommand(MultitrackModel& model, TimelineDock& timeline, int trackIndex, int clipIndex, const QString &xml, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -132,7 +132,7 @@ private:
 class NameTrackCommand : public AbstractCommand
 {
 public:
-    NameTrackCommand(MultitrackModel& model, int trackIndex, const QString& name, AbstractCommand * parent = 0);
+    NameTrackCommand(MultitrackModel& model, int trackIndex, const QString& name, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -146,7 +146,7 @@ private:
 class MuteTrackCommand : public AbstractCommand
 {
 public:
-    MuteTrackCommand(MultitrackModel& model, int trackIndex, AbstractCommand * parent = 0);
+    MuteTrackCommand(MultitrackModel& model, int trackIndex, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -159,7 +159,7 @@ private:
 class HideTrackCommand : public AbstractCommand
 {
 public:
-    HideTrackCommand(MultitrackModel& model, int trackIndex, AbstractCommand * parent = 0);
+    HideTrackCommand(MultitrackModel& model, int trackIndex, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -171,7 +171,7 @@ private:
 class CompositeTrackCommand : public AbstractCommand
 {
 public:
-    CompositeTrackCommand(MultitrackModel& model, int trackIndex, Qt::CheckState value, AbstractCommand * parent = 0);
+    CompositeTrackCommand(MultitrackModel& model, int trackIndex, Qt::CheckState value, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -185,7 +185,7 @@ private:
 class LockTrackCommand : public AbstractCommand
 {
 public:
-    LockTrackCommand(MultitrackModel& model, int trackIndex, bool value, AbstractCommand * parent = 0);
+    LockTrackCommand(MultitrackModel& model, int trackIndex, bool value, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -199,7 +199,7 @@ private:
 class MoveClipCommand : public AbstractCommand
 {
 public:
-    MoveClipCommand(MultitrackModel& model, int fromTrackIndex, int toTrackIndex, int clipIndex, int position, AbstractCommand * parent = 0);
+    MoveClipCommand(MultitrackModel& model, int fromTrackIndex, int toTrackIndex, int clipIndex, int position, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -215,11 +215,12 @@ private:
 class TrimClipInCommand : public AbstractCommand
 {
 public:
-    TrimClipInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool ripple, AbstractCommand * parent = 0);
+    TrimClipInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool ripple, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 protected:
     int id() const { return UndoIdTrimClipIn; }
+    using AbstractCommand::mergeWith;
     bool mergeWith(const AbstractCommand *other);
 private:
     MultitrackModel& m_model;
@@ -234,11 +235,12 @@ private:
 class TrimClipOutCommand : public AbstractCommand
 {
 public:
-    TrimClipOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool ripple, AbstractCommand * parent = 0);
+    TrimClipOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool ripple, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 protected:
     int id() const { return UndoIdTrimClipOut; }
+    using AbstractCommand::mergeWith;
     bool mergeWith(const AbstractCommand *other);
 private:
     MultitrackModel& m_model;
@@ -253,7 +255,7 @@ private:
 class SplitCommand : public AbstractCommand
 {
 public:
-    SplitCommand(MultitrackModel& model, int trackIndex, int clipIndex, int position, AbstractCommand * parent = 0);
+    SplitCommand(MultitrackModel& model, int trackIndex, int clipIndex, int position, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -267,11 +269,12 @@ private:
 class FadeInCommand : public AbstractCommand
 {
 public:
-    FadeInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int duration, AbstractCommand * parent = 0);
+    FadeInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int duration, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 protected:
     int id() const { return UndoIdFadeIn; }
+    using AbstractCommand::mergeWith;
     bool mergeWith(const AbstractCommand *other);
 private:
     MultitrackModel& m_model;
@@ -285,11 +288,12 @@ private:
 class FadeOutCommand : public AbstractCommand
 {
 public:
-    FadeOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int duration, AbstractCommand * parent = 0);
+    FadeOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int duration, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 protected:
     int id() const { return UndoIdFadeOut; }
+    using AbstractCommand::mergeWith;
     bool mergeWith(const AbstractCommand *other);
 private:
     MultitrackModel& m_model;
@@ -303,7 +307,7 @@ private:
 class AddTransitionCommand : public AbstractCommand
 {
 public:
-    AddTransitionCommand(MultitrackModel& model, int trackIndex, int clipIndex, int position, AbstractCommand * parent = 0);
+    AddTransitionCommand(MultitrackModel& model, int trackIndex, int clipIndex, int position, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -318,11 +322,12 @@ private:
 class TrimTransitionInCommand : public AbstractCommand
 {
 public:
-    TrimTransitionInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, AbstractCommand * parent = 0);
+    TrimTransitionInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 protected:
     int id() const { return UndoIdTrimTransitionIn; }
+    using AbstractCommand::mergeWith;
     bool mergeWith(const AbstractCommand *other);
 private:
     MultitrackModel& m_model;
@@ -335,11 +340,12 @@ private:
 class TrimTransitionOutCommand : public AbstractCommand
 {
 public:
-    TrimTransitionOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, AbstractCommand * parent = 0);
+    TrimTransitionOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 protected:
     int id() const { return UndoIdTrimTransitionOut; }
+    using AbstractCommand::mergeWith;
     bool mergeWith(const AbstractCommand *other);
 private:
     MultitrackModel& m_model;
@@ -352,11 +358,12 @@ private:
 class AddTransitionByTrimInCommand : public AbstractCommand
 {
 public:
-    AddTransitionByTrimInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, AbstractCommand * parent = 0);
+    AddTransitionByTrimInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 protected:
     int id() const { return UndoIdAddTransitionByTrimIn; }
+    using AbstractCommand::mergeWith;
     bool mergeWith(const AbstractCommand *other);
 private:
     MultitrackModel& m_model;
@@ -369,11 +376,12 @@ private:
 class AddTransitionByTrimOutCommand : public AbstractCommand
 {
 public:
-    AddTransitionByTrimOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, AbstractCommand * parent = 0);
+    AddTransitionByTrimOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 protected:
     int id() const { return UndoIdAddTransitionByTrimOut; }
+    using AbstractCommand::mergeWith;
     bool mergeWith(const AbstractCommand *other);
 private:
     MultitrackModel& m_model;
@@ -387,7 +395,7 @@ private:
 class AddTrackCommand: public AbstractCommand
 {
 public:
-    AddTrackCommand(MultitrackModel& model, TrackType trackType, AbstractCommand* parent = 0);
+    AddTrackCommand(MultitrackModel& model, TrackType trackType, AbstractCommand* parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -401,7 +409,7 @@ private:
 class InsertTrackCommand : public AbstractCommand
 {
 public:
-    InsertTrackCommand(MultitrackModel& model, int trackIndex, AbstractCommand* parent = 0);
+    InsertTrackCommand(MultitrackModel& model, int trackIndex, AbstractCommand* parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -414,7 +422,7 @@ private:
 class RemoveTrackCommand : public AbstractCommand
 {
 public:
-    RemoveTrackCommand(MultitrackModel& model, int trackIndex, AbstractCommand* parent = 0);
+    RemoveTrackCommand(MultitrackModel& model, int trackIndex, AbstractCommand* parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -429,7 +437,7 @@ class ChangeBlendModeCommand : public QObject, public AbstractCommand
 {
     Q_OBJECT
 public:
-    ChangeBlendModeCommand(Mlt::Transition& transition, const QString& propertyName, const QString& mode, AbstractCommand* parent = 0);
+    ChangeBlendModeCommand(Mlt::Transition& transition, const QString& propertyName, const QString& mode, AbstractCommand* parent = nullptr);
     void redo_impl();
     void undo_impl();
 signals:
@@ -442,11 +450,11 @@ private:
 };
 
 //更新
-class UpdateCommand : public AbstractCommand
+class UpdateClipCommand : public AbstractCommand
 {
 public:
-    UpdateCommand(TimelineDock& timeline, int trackIndex, int clipIndex, int position,
-        AbstractCommand * parent = 0);
+    UpdateClipCommand(TimelineDock& timeline, int trackIndex, int clipIndex, int position,
+        AbstractCommand * parent = nullptr);
     void setXmlAfter(const QString& xml) { m_xmlAfter = xml; }
     void setSpeedChanged(bool isSpeedChanged) {m_isSpeedChanged = isSpeedChanged;}
     void redo_impl();
@@ -467,7 +475,7 @@ private:
 class RemoveTransitionCommand: public AbstractCommand
 {
 public:
-    RemoveTransitionCommand(MultitrackModel &model, int trackIndex, int clipIndex, int transitionIndex, int position, AbstractCommand *parent = 0);
+    RemoveTransitionCommand(MultitrackModel &model, int trackIndex, int clipIndex, int transitionIndex, int position, AbstractCommand *parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -483,14 +491,14 @@ private:
 class RemoveTransitionsOnClipCommand: public AbstractCommand
 {
 public:
-    RemoveTransitionsOnClipCommand(MultitrackModel &model, TimelineDock &timeline, int trackIndex, int clipIndex, AbstractCommand *parent = 0);
+    RemoveTransitionsOnClipCommand(MultitrackModel &model, TimelineDock &timeline, int trackIndex, int clipIndex, AbstractCommand *parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
     MultitrackModel &m_model;
+    TimelineDock &m_timeline;
     int m_trackIndex;
     int m_clipIndex;
-    TimelineDock &m_timeline;
     UndoHelper m_undoHelper;
 };
 
@@ -498,7 +506,7 @@ private:
 class MoveInsertClipCommand:public AbstractCommand
 {
 public:
-    MoveInsertClipCommand(MultitrackModel &model, int fromTrack, int toTrack, int clipIndex, int position, AbstractCommand *parent = 0);
+    MoveInsertClipCommand(MultitrackModel &model, int fromTrack, int toTrack, int clipIndex, int position, AbstractCommand *parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -514,7 +522,7 @@ private:
 class FilterClipCommand : public AbstractCommand
 {
 public:
-    FilterClipCommand(MultitrackModel& model, int TrackIndex, int clipIndex, QString strFromXml, QString strToXml, AbstractCommand * parent = 0);
+    FilterClipCommand(MultitrackModel& model, int TrackIndex, int clipIndex, QString strFromXml, QString strToXml, AbstractCommand * parent = nullptr);
     void redo_impl();
     void undo_impl();
 private:
@@ -532,16 +540,17 @@ class FilterCommand: public AbstractCommand
 {
 
 public:
-    FilterCommand(Mlt::Filter* filter, QString name,  double from_value, double to_value, AbstractCommand * parent= 0);
-    FilterCommand(Mlt::Filter* filter, QString name,  int from_value, int to_value, AbstractCommand * parent= 0);
-    FilterCommand(Mlt::Filter* filter, QString name,  QString from_value, QString to_value, AbstractCommand * parent= 0);
-    FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, AbstractCommand * parent= 0);
+    FilterCommand(Mlt::Filter* filter, QString name,  double from_value, double to_value, AbstractCommand * parent= nullptr);
+    FilterCommand(Mlt::Filter* filter, QString name,  int from_value, int to_value, AbstractCommand * parent= nullptr);
+    FilterCommand(Mlt::Filter* filter, QString name,  QString from_value, QString to_value, AbstractCommand * parent= nullptr);
+    FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, AbstractCommand * parent= nullptr);
 
     ~FilterCommand();
     void redo_impl();
     void undo_impl();
 protected:
     int id() const { return UndoIdFilterCommand; }
+    using AbstractCommand::mergeWith;
     bool mergeWith(const AbstractCommand *other);
 
     int transitionValue(QVariant &varFrom, QVariant &varTo, Mlt::Filter* filter, QString name,  double from_value, double to_value);
@@ -563,12 +572,13 @@ class KeyFrameCommand: public AbstractCommand
 {
 
 public:
-    KeyFrameCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item>  &to_value, AbstractCommand * parent= 0);
+    KeyFrameCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item>  &to_value, AbstractCommand * parent= nullptr);
     ~KeyFrameCommand();
     void redo_impl();
     void undo_impl();
 protected:
     int id() const { return UndoIdKeyFrameCommand; }
+    using AbstractCommand::mergeWith;
     bool mergeWith(const AbstractCommand *other);
     void set_value(const QVector<key_frame_item>  &value);
     void notify();
@@ -589,7 +599,7 @@ class FilterAttachCommand: public AbstractCommand
 {
 
 public:
-    FilterAttachCommand( QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, AbstractCommand * parent= 0);
+    FilterAttachCommand( QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, AbstractCommand * parent= nullptr);
    // ~FilterAttachCommand();
     void redo_impl();
     void undo_impl();
@@ -612,7 +622,7 @@ class FilterMoveCommand: public AbstractCommand
 {
 
 public:
-    FilterMoveCommand(int rowIndexFrom, int rowIndexTo, AbstractCommand * parent= 0);
+    FilterMoveCommand(int rowIndexFrom, int rowIndexTo, AbstractCommand * parent= nullptr);
  //   ~FilterMoveCommand();
     void redo_impl();
     void undo_impl();
@@ -635,7 +645,7 @@ class ClipsSelectCommand: public AbstractCommand
 public:
     ClipsSelectCommand(QList<int> newSelection, int newTrackIndex, bool isNewMultitrack,
                        QList<int> oldSelection, int oldTrackIndex, bool isOldMultitrack,
-                       AbstractCommand * parent= 0);
+                       AbstractCommand * parent= nullptr);
 
     void redo_impl();
     void undo_impl();

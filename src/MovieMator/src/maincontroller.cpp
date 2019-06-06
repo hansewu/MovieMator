@@ -130,7 +130,7 @@ int MainController::appendToTimelineFromPath(int trackIndex, const QString &path
         qApp->processEvents();
 
         MAIN.undoStack()->push(
-            new Timeline::AppendCommand(m_multitrackModel, trackIndex,
+            new Timeline::AppendClipCommand(m_multitrackModel, trackIndex,
                 MLT.XML(p)));
 //        selectClipUnderPlayhead();
         MAIN.timelineDock()->selectClipUnderPlayhead();

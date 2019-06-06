@@ -45,7 +45,7 @@ Q_DECLARE_METATYPE(MY_ROTATE_COMMAND);
 
 namespace Timeline {
 
-AppendCommand::AppendCommand(MultitrackModel &model, int trackIndex, const QString &xml, AbstractCommand *parent)
+AppendClipCommand::AppendClipCommand(MultitrackModel &model, int trackIndex, const QString &xml, AbstractCommand *parent)
     : AbstractCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
@@ -56,7 +56,7 @@ AppendCommand::AppendCommand(MultitrackModel &model, int trackIndex, const QStri
 }
 
 
-void AppendCommand::redo_impl()
+void AppendClipCommand::redo_impl()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex;
     m_undoHelper.recordBeforeState();
@@ -66,13 +66,13 @@ void AppendCommand::redo_impl()
     m_undoHelper.recordAfterState();
 }
 
-void AppendCommand::undo_impl()
+void AppendClipCommand::undo_impl()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex;
     m_undoHelper.undoChanges();
 }
 
-InsertCommand::InsertCommand(MultitrackModel &model, int trackIndex,
+InsertClipCommand::InsertClipCommand(MultitrackModel &model, int trackIndex,
     int position, const QString &xml, AbstractCommand *parent)
     : AbstractCommand(parent)
     , m_model(model)
@@ -84,7 +84,7 @@ InsertCommand::InsertCommand(MultitrackModel &model, int trackIndex,
     setText(QObject::tr("Insert into track"));
 }
 
-void InsertCommand::redo_impl()
+void InsertClipCommand::redo_impl()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     m_undoHelper.recordBeforeState();
@@ -94,13 +94,13 @@ void InsertCommand::redo_impl()
     m_undoHelper.recordAfterState();
 }
 
-void InsertCommand::undo_impl()
+void InsertClipCommand::undo_impl()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     m_undoHelper.undoChanges();
 }
 
-OverwriteCommand::OverwriteCommand(MultitrackModel &model, int trackIndex,
+OverwriteClipCommand::OverwriteClipCommand(MultitrackModel &model, int trackIndex,
     int position, const QString &xml, AbstractCommand *parent)
     : AbstractCommand(parent)
     , m_model(model)
@@ -112,7 +112,7 @@ OverwriteCommand::OverwriteCommand(MultitrackModel &model, int trackIndex,
     setText(QObject::tr("Overwrite onto track"));
 }
 
-void OverwriteCommand::redo_impl()
+void OverwriteClipCommand::redo_impl()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     m_undoHelper.recordBeforeState();
@@ -122,13 +122,13 @@ void OverwriteCommand::redo_impl()
     m_undoHelper.recordAfterState();
 }
 
-void OverwriteCommand::undo_impl()
+void OverwriteClipCommand::undo_impl()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     m_undoHelper.undoChanges();
 }
 
-LiftCommand::LiftCommand(MultitrackModel &model, TimelineDock &timeline, int trackIndex,
+LiftClipCommand::LiftClipCommand(MultitrackModel &model, TimelineDock &timeline, int trackIndex,
     int clipIndex, const QString &xml, AbstractCommand *parent)
     : AbstractCommand(parent)
     , m_model(model)
@@ -141,7 +141,7 @@ LiftCommand::LiftCommand(MultitrackModel &model, TimelineDock &timeline, int tra
     setText(QObject::tr("Lift from track"));
 }
 
-void LiftCommand::redo_impl()
+void LiftClipCommand::redo_impl()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex;
     m_undoHelper.recordBeforeState();
@@ -151,13 +151,13 @@ void LiftCommand::redo_impl()
     m_undoHelper.recordAfterState();
 }
 
-void LiftCommand::undo_impl()
+void LiftClipCommand::undo_impl()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex;
     m_undoHelper.undoChanges();
 }
 
-RemoveCommand::RemoveCommand(MultitrackModel &model, TimelineDock& timeline, int trackIndex,
+RemoveClipCommand::RemoveClipCommand(MultitrackModel &model, TimelineDock& timeline, int trackIndex,
     int clipIndex, const QString &xml, AbstractCommand *parent)
     : AbstractCommand(parent)
     , m_model(model)
@@ -170,7 +170,7 @@ RemoveCommand::RemoveCommand(MultitrackModel &model, TimelineDock& timeline, int
     setText(QObject::tr("Remove from track"));
 }
 
-void RemoveCommand::redo_impl()
+void RemoveClipCommand::redo_impl()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex;
     m_undoHelper.recordBeforeState();
@@ -180,7 +180,7 @@ void RemoveCommand::redo_impl()
     m_undoHelper.recordAfterState();
 }
 
-void RemoveCommand::undo_impl()
+void RemoveClipCommand::undo_impl()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex;
     m_undoHelper.undoChanges();
@@ -871,7 +871,7 @@ void ChangeBlendModeCommand::undo_impl()
     }
 }
 
-UpdateCommand::UpdateCommand(TimelineDock& timeline, int trackIndex, int clipIndex,
+UpdateClipCommand::UpdateClipCommand(TimelineDock& timeline, int trackIndex, int clipIndex,
     int position, AbstractCommand* parent)
     : AbstractCommand(parent)
     , m_timeline(timeline)
@@ -886,7 +886,7 @@ UpdateCommand::UpdateCommand(TimelineDock& timeline, int trackIndex, int clipInd
     m_undoHelper.recordBeforeState();
 }
 
-void UpdateCommand::redo_impl()
+void UpdateClipCommand::redo_impl()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
     if (!m_isFirstRedo)
@@ -906,7 +906,7 @@ void UpdateCommand::redo_impl()
     m_undoHelper.recordAfterState();
 }
 
-void UpdateCommand::undo_impl()
+void UpdateClipCommand::undo_impl()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
     m_undoHelper.undoChanges();
@@ -1233,7 +1233,7 @@ void FilterCommand::set_value(QVariant value)
     {
         QRectF rectF = value.toRectF();
 
-        m_filter->set(m_keyName.toUtf8().constData(), (double)rectF.left(), (double)rectF.top(), (double)rectF.width(), (double)rectF.height(), 1.0);
+        m_filter->set(m_keyName.toUtf8().constData(), double(rectF.left()), double(rectF.top()), double(rectF.width()), double(rectF.height()), 1.0);
     }
 
 }
