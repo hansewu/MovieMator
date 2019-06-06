@@ -34,7 +34,7 @@ class RegistrationChecker : public QObject
     Q_PROPERTY(RegistrationType registrationType READ registrationType WRITE setRegistrationType)
 
 public:
-    explicit RegistrationChecker(QObject *parent = 0);
+    explicit RegistrationChecker(QObject *parent = nullptr);
 //    ~RegistrationChecker();
 
     static RegistrationChecker& singleton();

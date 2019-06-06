@@ -47,7 +47,7 @@ FILE_HANDLE MainInterface::openFile(QString filepath)
     }
     else {
         delete producer;
-        producer = 0;
+        producer = nullptr;
     }
     return producer;
 }
@@ -69,7 +69,7 @@ FILE_HANDLE MainInterface::getCurrentOpenedFile()
 int MainInterface::playFile(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
-    Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
+    Mlt::Producer *producer = static_cast<Mlt::Producer*>(fileHandle);    //(Mlt::Producer *)fileHandle;
     Q_ASSERT(producer);
     Q_ASSERT(producer->is_valid());
     if (!producer || !producer->is_valid())
@@ -88,7 +88,7 @@ int MainInterface::playFile(FILE_HANDLE fileHandle)
 void MainInterface::showProperties(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
-    Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
+    Mlt::Producer *producer = static_cast<Mlt::Producer*>(fileHandle);  // (Mlt::Producer *)fileHandle;
     Q_ASSERT(producer);
     Q_ASSERT(producer->is_valid());
     if (!producer || !producer->is_valid())
@@ -107,7 +107,7 @@ void MainInterface::showProperties(FILE_HANDLE fileHandle)
 int MainInterface::addToTimeLine(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
-    Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
+    Mlt::Producer *producer = static_cast<Mlt::Producer*>(fileHandle);  //(Mlt::Producer *)fileHandle;
     Q_ASSERT(producer->is_valid());
     if (!producer->is_valid())
         return -1;
@@ -135,7 +135,7 @@ static void deleteQImage(QImage* image)
 QImage MainInterface::getThumbnail(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
-    Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
+    Mlt::Producer *producer = static_cast<Mlt::Producer*>(fileHandle);  //(Mlt::Producer *)fileHandle;
     if (!producer->is_valid())
         return QImage();
 
@@ -145,13 +145,13 @@ QImage MainInterface::getThumbnail(FILE_HANDLE fileHandle)
     QImage image;
     if (producer->get_data(kThumbnailInProperty))
     {
-        QImage* thumb = (QImage*)producer->get_data(kThumbnailInProperty);
+        QImage* thumb = static_cast<QImage*>(producer->get_data(kThumbnailInProperty));    //(QImage*)producer->get_data(kThumbnailInProperty);
         image = *thumb;
     }
     else
     {
         image = MLT.image(*producer, in, THUMBNAIL_WIDTH*2, THUMBNAIL_HEIGHT*2);
-        producer->set(kThumbnailInProperty, new QImage(image), 0, (mlt_destructor) deleteQImage, nullptr);
+        producer->set(kThumbnailInProperty, new QImage(image), 0, reinterpret_cast<mlt_destructor>(&deleteQImage), nullptr);  // (mlt_destructor) deleteQImage
     }
 
     return image;
@@ -160,7 +160,7 @@ QImage MainInterface::getThumbnail(FILE_HANDLE fileHandle)
 QString MainInterface::getFileName(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
-    Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
+    Mlt::Producer *producer = static_cast<Mlt::Producer*>(fileHandle);  //(Mlt::Producer *)fileHandle;
     if (!producer->is_valid())
         return QString();
 
@@ -172,7 +172,7 @@ FILE_TYPE MainInterface::getFileType(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
     FILE_TYPE result = FILE_TYPE_NONE;
-    Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
+    Mlt::Producer *producer = static_cast<Mlt::Producer*>(fileHandle);  //(Mlt::Producer *)fileHandle;
     if (!producer->is_valid()) {
         return result;
     }
@@ -202,7 +202,7 @@ FILE_TYPE MainInterface::getFileType(FILE_HANDLE fileHandle)
 QString MainInterface::getDuration(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
-    Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
+    Mlt::Producer *producer = static_cast<Mlt::Producer*>(fileHandle);  //(Mlt::Producer *)fileHandle;
     if (!producer->is_valid())
         return QString("");
     return producer->get_length_time();
@@ -211,7 +211,7 @@ QString MainInterface::getDuration(FILE_HANDLE fileHandle)
 int MainInterface::getPlayTime(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
-    Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
+    Mlt::Producer *producer = static_cast<Mlt::Producer*>(fileHandle);  //(Mlt::Producer *)fileHandle;
     if (!producer->is_valid())
         return -1;
     return producer->get_playtime();
@@ -221,7 +221,7 @@ int MainInterface::getPlayTime(FILE_HANDLE fileHandle)
 QSize MainInterface::getWidthHeight(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
-    Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
+    Mlt::Producer *producer = static_cast<Mlt::Producer*>(fileHandle);  //(Mlt::Producer *)fileHandle;
     if (!producer->is_valid())
         return QSize();
 
@@ -234,7 +234,7 @@ QSize MainInterface::getWidthHeight(FILE_HANDLE fileHandle)
 QString MainInterface::getXmlForDragDrop(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
-    Mlt::Producer *producer = (Mlt::Producer *)fileHandle;
+    Mlt::Producer *producer = static_cast<Mlt::Producer*>(fileHandle);  //(Mlt::Producer *)fileHandle;
     if (!producer->is_valid())
         return QString();
 
@@ -254,12 +254,12 @@ FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
     Mlt::Producer *producer = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
     Q_ASSERT(producer);
     if (!producer) {
-        return 0;
+        return nullptr;
     }
     if (!producer->is_valid())
     {
         delete producer;
-        producer = 0;
+        producer = nullptr;
     }
 
     QString resource(producer->get("moviemator:template"));
@@ -286,10 +286,10 @@ FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
         QString imageHStr(producer->get("moviemator:imageH"));
         int imageW = imageWStr.toInt();
         int imageH = imageHStr.toInt();
-        double x = ((double)MLT.profile().width() - (double)imageW) / 2 / (double)MLT.profile().width();
-        double y = ((double)MLT.profile().height() - (double)imageH) / 2 / (double)MLT.profile().height();
-        double w = (double)imageW / (double)MLT.profile().width();
-        double h = (double)imageH / (double)MLT.profile().height();
+        double x = (double(MLT.profile().width()) - double(imageW)) / 2 / double(MLT.profile().width());
+        double y = (double(MLT.profile().height()) - double(imageH)) / 2 / double(MLT.profile().height());
+        double w = double(imageW) / double(MLT.profile().width());
+        double h = double(imageH) / double(MLT.profile().height());
         sizeAndPositionFilter->set("transition.rect_anim_relative", x, y, w, h);
         sizeAndPositionFilter->set("transition.valign", "top");
         sizeAndPositionFilter->set("transition.halign", "left");
@@ -304,8 +304,9 @@ FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
 // 返回值：成功返回0，失败返回-1
 int MainInterface::replaceFileInTemplate(int index, FILE_HANDLE destFile)
 {
+    Q_UNUSED(index)
     Q_ASSERT(destFile);
-    Mlt::Producer *producer = (Mlt::Producer *)destFile;
+    Mlt::Producer *producer = static_cast<Mlt::Producer*>(destFile);  //(Mlt::Producer *)destFile;
     if (!producer->is_valid())
         return -1;
 //    TemplateEidtor *templateEditor = MAIN.templateEditor();
@@ -317,9 +318,10 @@ int MainInterface::replaceFileInTemplate(int index, FILE_HANDLE destFile)
 // 返回值：成功返回0，失败返回-1
 FILE_HANDLE MainInterface::resetFileInTemplate(int index)
 {
+    Q_UNUSED(index)
 //    TemplateEidtor *templateEditor = MAIN.templateEditor();
 //    return templateEditor->resetFileToTemplateDefault(index);
-    return NULL;
+    return nullptr;
 }
 
 //功能：返回xml的mimetype；实现拖放时使用。

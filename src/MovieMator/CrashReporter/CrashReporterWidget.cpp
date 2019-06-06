@@ -98,9 +98,9 @@ void CrashReporterWidget::setInputData()
     m_input->add_var("desc", ui->desc->toPlainText());
     // "dmp-file"和 "log-file"供 php中 $_FILES使用的
     // 发送 dump文件
-    m_input->add_file("dmp-file", _dmpPath, NULL, "binary/octet-stream");
+    m_input->add_file("dmp-file", _dmpPath, nullptr, "binary/octet-stream");
     // 发送 log文件
-    m_input->add_file("log-file", _logPath, NULL, "binary/octet-stream");
+    m_input->add_file("log-file", _logPath, nullptr, "binary/octet-stream");
 }
 
 void CrashReporterWidget::changeEvent(QEvent *e)

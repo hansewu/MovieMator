@@ -37,7 +37,7 @@ RegistrationChecker::RegistrationChecker(QObject *parent) : QObject(parent)
 
 RegistrationChecker& RegistrationChecker::singleton()
 {
-    static RegistrationChecker *instance = 0;
+    static RegistrationChecker *instance = nullptr;
     if (!instance)
     {
         instance = new RegistrationChecker;

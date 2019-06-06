@@ -36,7 +36,7 @@ class LineEditClear : public QLineEdit
 
 public:
     // 构造函数
-    LineEditClear(QWidget *parent = 0);
+    LineEditClear(QWidget *parent = nullptr);
     // 设定 lineEdit的样式表为 defaultStyleSheet
     // 设置 m_defaultStyleSheet为 defaultStyleSheet
     // 设置 m_editingStyleSheet为 editingStyleSheet

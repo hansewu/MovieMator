@@ -28,7 +28,7 @@ class AutoSaveFile : public QFile
 {
     Q_OBJECT
 public:
-    explicit AutoSaveFile(const QString &filename, QObject *parent = 0);
+    explicit AutoSaveFile(const QString &filename, QObject *parent = nullptr);
     ~AutoSaveFile();
 
     QString managedFileName() const { return m_managedFile; }

@@ -37,7 +37,7 @@ class ScrubBar : public QSlider//QWidget
     };
 
 public:
-    explicit ScrubBar(QSlider *parent = 0);
+    explicit ScrubBar(QSlider *parent = nullptr);
 
     virtual void mousePressEvent(QMouseEvent * event);
     virtual void mouseReleaseEvent(QMouseEvent * event);

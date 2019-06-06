@@ -36,10 +36,10 @@ public:
         COLUMN_COUNT
     };
 
-    explicit EncodeTaskQueue(QObject *parent = 0);
+    explicit EncodeTaskQueue(QObject *parent = nullptr);
     ~EncodeTaskQueue();
 
-    static EncodeTaskQueue& singleton(QObject* parent = 0);
+    static EncodeTaskQueue& singleton(QObject* parent = nullptr);
 
     void addTask(AbstractTask *task);
     void cleanup();

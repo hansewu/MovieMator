@@ -24,13 +24,15 @@
 #include <QtWidgets>
 
 static const int margin = 0;        /// left and right margins
-static const int selectionSize = 5; /// the height of the top bar
+// 使用的地方被注释了，消除警告
+//static const int selectionSize = 5; /// the height of the top bar
 #ifndef CLAMP
 #define CLAMP(x, min, max) (((x) < (min))? (min) : ((x) > (max))? (max) : (x))
 #endif
 
 ScrubBar::ScrubBar(QSlider *parent)
     : QSlider(parent)
+    , m_cursorPosition(0)
     , m_head(-1)
     , m_scale(-1)
     , m_fps(25)
@@ -39,7 +41,6 @@ ScrubBar::ScrubBar(QSlider *parent)
     , m_out(-1)
     , m_activeControl(CONTROL_NONE)
     , m_timecodeWidth(0)
-    ,m_cursorPosition(0)
 {
     setMouseTracking(true);
  //   setMinimumHeight(/*fontMetrics().height() +*/ selectionSize);
@@ -62,8 +63,8 @@ void ScrubBar::setScale(int maximum)
     }
     m_max = maximum;
     /// m_scale is the pixels per frame ratio
-    m_scale = (double) (width() - 2 * margin) / (double) maximum;
-    if (m_scale == 0) m_scale = -1;
+    m_scale = double(width() - 2 * margin) / double(maximum);
+    if(qFuzzyIsNull(m_scale)) m_scale = -1;   //if (m_scale == 0)
     m_secondsPerTick = qRound(double(m_timecodeWidth * 1.8) / m_scale / m_fps);
     if (m_secondsPerTick > 3600)
         // force to a multiple of one hour
@@ -124,7 +125,7 @@ void ScrubBar::mousePressEvent(QMouseEvent * event)
 //     int in = m_in * m_scale;
 //     int out = m_out * m_scale;
 //     int head = m_head * m_scale;
-     int pos = CLAMP(x / m_scale, 0, m_max);
+     int pos = CLAMP(int(x / m_scale), 0, m_max);
 
      if (event->button() == Qt::LeftButton)
      {
@@ -172,7 +173,7 @@ void ScrubBar::mouseMoveEvent(QMouseEvent * event)
 {
     Q_ASSERT(event);
     int x = event->x() - margin;
-    int pos = CLAMP(x / m_scale, 0, m_max);
+    int pos = CLAMP(int(x / m_scale), 0, m_max);
 
     if (event->buttons() & Qt::LeftButton) {
         if (m_activeControl == CONTROL_IN)
@@ -180,7 +181,7 @@ void ScrubBar::mouseMoveEvent(QMouseEvent * event)
         else if (m_activeControl == CONTROL_OUT)
             setOutPoint(pos);
         else if (m_activeControl == CONTROL_HEAD) {
-            const int head = m_head * m_scale;
+            const int head = int(m_head * m_scale);
             const int offset = height() / 2;
             const int x = head;
             const int w = qAbs(x - head);
@@ -196,7 +197,7 @@ bool ScrubBar::onSeek(int value)
     if (m_activeControl != CONTROL_HEAD)
         m_head = value;
     int oldPos = m_cursorPosition;
-    m_cursorPosition = value * m_scale;
+    m_cursorPosition = int(value * m_scale);
     const int offset = height() / 2;
     const int x = qMin(oldPos, m_cursorPosition);
     const int w = qAbs(oldPos - m_cursorPosition);

@@ -74,7 +74,7 @@ bool AutoSaveFile::open(OpenMode openmode)
 
 AutoSaveFile* AutoSaveFile::getFile(const QString &filename)
 {
-    AutoSaveFile* result = 0;
+    AutoSaveFile* result = nullptr;
     QDir appDir(path());
     QFileInfo info(appDir.absolutePath(), hashName(filename) + extension);
 

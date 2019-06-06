@@ -37,7 +37,7 @@
 #include <framework/mlt_log.h>
 #include "securitybookmark/transport_security_bookmark.h"
 #include <qmlutilities.h>
- #include <QQmlEngine>
+#include <QQmlEngine>
 #include <QProcess>
 #include <registrationchecker.h>
 
@@ -52,13 +52,14 @@
 extern "C"
 {
     // Inform the driver we could make use of the discrete gpu
+// 不会消除的警告
     __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
     __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
 #endif
 
 
-static MMSplashScreen *g_splash = NULL;
+static MMSplashScreen *g_splash = nullptr;
 
 static void mlt_log_handler(void *service, int mlt_level, const char *format, va_list args)
 {
@@ -95,7 +96,7 @@ static void mlt_log_handler(void *service, int mlt_level, const char *format, va
         return;
     }
     QString message;
-    mlt_properties properties = service? MLT_SERVICE_PROPERTIES((mlt_service) service) : NULL;
+    mlt_properties properties = service? MLT_SERVICE_PROPERTIES(static_cast<mlt_service>(service)) : nullptr;
     if (properties) {
         char *mlt_type = mlt_properties_get(properties, "mlt_type");
         char *service_name = mlt_properties_get(properties, "mlt_service");
@@ -117,6 +118,7 @@ static void mlt_log_handler(void *service, int mlt_level, const char *format, va
     Logger::write(cuteLoggerLevel, __FILE__, __LINE__, "MLT", message);
 }
 
+// 字节对齐及外联虚函数警告，还不会消除
 class Application : public QApplication
 {
 public:
@@ -416,6 +418,7 @@ int main(int argc, char **argv)
 //   MMSplashScreen splash(QPixmap(":/splash.png"));
 //    splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
 //    splash.show();
+// 宏定义警告，不消除
 #if MOVIEMATOR_FREE
     g_splash = new MMSplashScreen(QPixmap(":/splash-free.png"));
 #else
@@ -523,7 +526,7 @@ int main(int argc, char **argv)
 
     g_splash->finish(a.mainWindow);
     delete g_splash;
-    g_splash = NULL;
+    g_splash = nullptr;
 
     if (!a.resourceArg.isEmpty())
         a.mainWindow->open(a.resourceArg);

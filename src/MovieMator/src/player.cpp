@@ -44,7 +44,7 @@ Player::Player(QWidget *parent)
     , m_zoomToggleFactor(Settings.playerZoom() == 0.0f? 1.0f : Settings.playerZoom())
     , m_pauseAfterOpen(false)
     , m_monitorScreen(-1)
-    , m_currentTransport(0)
+    , m_currentTransport(nullptr)
 {
 //    this->setFrameStyle(QFrame::Box | QFrame::Raised);
 //    this->setLineWidth(2);
@@ -708,7 +708,8 @@ void Player::onDurationChanged()
     m_scrubber->setMarkers(QList<int>());
 //    m_progressBar->setRange(0, m_duration);
     m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(QString(MLT.producer()->get_length_time())));
-    if (MLT.producer()->get_speed() == 0)
+    if(qFuzzyIsNull(MLT.producer()->get_speed()))
+//    if (MLT.producer()->get_speed() == 0)
         seek(m_position);
     else if (m_position >= m_duration)
         seek(m_duration - 1);
@@ -960,26 +961,26 @@ void Player::adjustScrollBars(float horizontal, float vertical)
 {
     if (MLT.profile().width() * m_zoomToggleFactor > m_videoWidget->width()) {
         m_horizontalScroll->setPageStep(m_videoWidget->width());
-        m_horizontalScroll->setMaximum(MLT.profile().width() * m_zoomToggleFactor
+        m_horizontalScroll->setMaximum(int(MLT.profile().width() * m_zoomToggleFactor)
                                        - m_horizontalScroll->pageStep());
         m_horizontalScroll->setValue(qRound(horizontal * m_horizontalScroll->maximum()));
         emit m_horizontalScroll->valueChanged(m_horizontalScroll->value());
         m_horizontalScroll->show();
     } else {
-        int max = MLT.profile().width() * m_zoomToggleFactor - m_videoWidget->width();
+        int max = int(MLT.profile().width() * m_zoomToggleFactor) - m_videoWidget->width();
         emit m_horizontalScroll->valueChanged(qRound(0.5 * max));
         m_horizontalScroll->hide();
     }
 
     if (MLT.profile().height() * m_zoomToggleFactor > m_videoWidget->height()) {
         m_verticalScroll->setPageStep(m_videoWidget->height());
-        m_verticalScroll->setMaximum(MLT.profile().height() * m_zoomToggleFactor
+        m_verticalScroll->setMaximum(int(MLT.profile().height() * m_zoomToggleFactor)
                                      - m_verticalScroll->pageStep());
         m_verticalScroll->setValue(qRound(vertical * m_verticalScroll->maximum()));
         emit m_verticalScroll->valueChanged(m_verticalScroll->value());
         m_verticalScroll->show();
     } else {
-        int max = MLT.profile().height() * m_zoomToggleFactor - m_videoWidget->height();
+        int max = int(MLT.profile().height() * m_zoomToggleFactor) - m_videoWidget->height();
         emit m_verticalScroll->valueChanged(qRound(0.5 * max));
         m_verticalScroll->hide();
     }
@@ -1020,7 +1021,7 @@ void Player::setPauseAfterOpen(bool pause)
 
 Player::TabIndex Player::tabIndex() const
 {
-    return (TabIndex)m_tabs->currentIndex();
+    return static_cast<TabIndex>(m_tabs->currentIndex());   //(TabIndex)m_tabs->currentIndex();
 }
 
 //----------------------------------------------------------------------------
@@ -1049,7 +1050,7 @@ static inline float IEC_dB ( float fScale )
 void Player::onVolumeChanged(int volume)
 {
     const double gain = setVolume(volume);
-    emit showStatusMessage(QString("%L1 dB").arg(IEC_dB(gain)));
+    emit showStatusMessage(QString("%L1 dB").arg(double(IEC_dB(float(gain)))));
     Settings.setPlayerVolume(volume);
     Settings.setPlayerMuted(false);
     if(volume == 0)
@@ -1100,7 +1101,7 @@ void Player::onMuteButtonToggled(bool checked)
         m_muteButton->setIconSize(QSize(32,32));
     } else {
         MLT.setVolume(m_savedVolume);
-        m_volumeSlider->setValue(m_savedVolume*100);
+        m_volumeSlider->setValue(int(m_savedVolume*100));
      //   m_muteButton->setIcon(QIcon(":/icons/light/32x32/player-volume.png"));
          m_muteButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/player-volume.png)}");
         m_muteButton->setFlat(true);
@@ -1212,5 +1213,6 @@ void Player::keyPressEvent(QKeyEvent *event)
 
 void Player::mouseDoubleClickEvent(QMouseEvent *event)
 {
+    Q_UNUSED(event)
     toggleFullScreen();
 }

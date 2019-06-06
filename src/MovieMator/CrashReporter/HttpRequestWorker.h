@@ -85,7 +85,7 @@ class HttpRequestWorker : public QObject {
         QString error_str;
 
         // 构造函数
-        explicit HttpRequestWorker(QObject *parent = 0);
+        explicit HttpRequestWorker(QObject *parent = nullptr);
 
         // 将本地内容转换成 http的发送内容
         QString http_attribute_encode(QString attribute_name, QString input);

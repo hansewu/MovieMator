@@ -46,7 +46,7 @@ class RecentDock : public QDockWidget
 
 public:
     // 构造函数
-    explicit RecentDock(MainInterface *main = 0, QWidget *parent = 0);
+    explicit RecentDock(MainInterface *main = nullptr, QWidget *parent = nullptr);
     // 析构函数
     ~RecentDock();
     // listView等的个数（Video、Audio、Image）
@@ -117,13 +117,13 @@ private slots:
     void on_RecentDock_visibilityChanged(bool visible);
 
     // listView被激活的槽函数
-    void on_listView_activated(const QModelIndex &index);
+    void onListviewActivated(const QModelIndex &index);
     // 按下 listView的槽函数
-    void on_listView_pressed(const QModelIndex &index);
+    void onListviewPressed(const QModelIndex &index);
     // 单击 listView的槽函数
-    void on_listView_clicked(const QModelIndex &index);
+    void onListviewClicked(const QModelIndex &index);
     // listView右键菜单的槽函数
-    void on_listView_customContextMenuRequested(const QPoint &pos);
+    void onListviewCustomContextMenuRequested(const QPoint &pos);
 };
 
 #endif // RECENTDOCK_H

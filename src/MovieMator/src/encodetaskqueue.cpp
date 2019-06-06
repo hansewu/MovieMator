@@ -31,8 +31,8 @@ EncodeTaskQueue::~EncodeTaskQueue()
 }
 
 EncodeTaskQueue& EncodeTaskQueue::singleton(QObject *parent){
-    static EncodeTaskQueue *instance = 0;
-    if (instance == 0)
+    static EncodeTaskQueue *instance = nullptr;
+    if (instance == nullptr)
         instance = new EncodeTaskQueue(parent);
     return *instance;
 }

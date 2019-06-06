@@ -36,7 +36,7 @@ class OpenOtherDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit OpenOtherDialog(QWidget *parent = 0);
+    explicit OpenOtherDialog(QWidget *parent = nullptr);
     ~OpenOtherDialog();
     
     Mlt::Producer* producer(Mlt::Profile&) const;

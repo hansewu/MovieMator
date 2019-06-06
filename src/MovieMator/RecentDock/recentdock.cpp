@@ -90,7 +90,7 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
         image->setScaledContents(true);
         image->setPixmap(QPixmap(":/icons/light/32x32/line.png"));
         image->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        QHBoxLayout *box = new QHBoxLayout(this);
+        QHBoxLayout *box = new QHBoxLayout();
         box->addWidget(label);
         box->addWidget(image);
         QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel;
@@ -110,9 +110,11 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
                     "QListView::item:selected{background-color:rgb(192,72,44);color:rgb(255,255,255);}"
                     "QListView{background-color:transparent;color:rgb(214,214,214);}");
 
-        connect(listView, SIGNAL(pressed(const QModelIndex&)), this, SLOT(on_listView_pressed(const QModelIndex&)));
-        connect(listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(on_listView_clicked(const QModelIndex&)));
-        connect(listView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(on_listView_customContextMenuRequested(const QPoint&)));
+        connect(listView, SIGNAL(pressed(const QModelIndex&)), this, SLOT(onListviewPressed(const QModelIndex&)));
+        connect(listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(onListviewClicked(const QModelIndex&)));
+        connect(listView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(onListviewCustomContextMenuRequested(const QPoint&)));
+
+
 
         label->setVisible(false);
         image->setVisible(false);
@@ -371,8 +373,9 @@ void RecentDock::on_comboBox_activated(const QString &arg1)
     }
 }
 
-void RecentDock::on_listView_activated(const QModelIndex &index)
+void RecentDock::onListviewActivated(const QModelIndex &index)
 {
+    Q_UNUSED(index);
 //    Q_ASSERT(m_currentListView);  // 不能加，默认下可以为空，不播放文件
     if (!m_currentListView || m_currentListView->model()->rowCount()<=0 || !m_currentIndex.isValid()) {
         return;
@@ -395,7 +398,7 @@ void RecentDock::on_listView_activated(const QModelIndex &index)
     }
 }
 
-void RecentDock::on_listView_pressed(const QModelIndex &index)
+void RecentDock::onListviewPressed(const QModelIndex &index)
 {
     Q_ASSERT(m_listviewList);
     if(!m_listviewList)
@@ -423,7 +426,7 @@ void RecentDock::on_listView_pressed(const QModelIndex &index)
     }
 }
 
-void RecentDock::on_listView_clicked(const QModelIndex &index)
+void RecentDock::onListviewClicked(const QModelIndex &index)
 {
     Q_ASSERT(m_currentListView);
     Q_ASSERT(m_currentIndex.isValid());
@@ -447,7 +450,7 @@ void RecentDock::on_listView_clicked(const QModelIndex &index)
     }
 }
 
-void RecentDock::on_listView_customContextMenuRequested(const QPoint &pos)
+void RecentDock::onListviewCustomContextMenuRequested(const QPoint &pos)
 {
     Q_ASSERT(m_currentListView);
     Q_ASSERT(m_currentIndex.isValid());
@@ -567,7 +570,7 @@ void RecentDock::on_actionPlay_triggered()
     {
         return;
     }
-    on_listView_activated(m_currentIndex);
+    onListviewActivated(m_currentIndex);
 }
 
 void RecentDock::on_actionProperties_triggered()
@@ -578,7 +581,7 @@ void RecentDock::on_actionProperties_triggered()
 void RecentDock::on_RecentDock_visibilityChanged(bool visible)
 {
     if (visible) {
-        on_listView_activated(QModelIndex());
+        onListviewActivated(QModelIndex());
 
         resizeEvent(nullptr);   // 切换dock后listView大小会变化
     }
@@ -617,13 +620,13 @@ QList<FILE_HANDLE> RecentDock::getSelected()
     return selected;
 }
 
-static RecentDock *instance = 0;
+static RecentDock *instance = nullptr;
 //初始化模块
 //参数，main 主程序接口对象
 //返回界面对象
 QDockWidget *RecentDock_initModule(MainInterface *main)
 {
-    if (instance == NULL)
+    if (instance == nullptr)
         instance = new RecentDock(main);
     return instance;
 }

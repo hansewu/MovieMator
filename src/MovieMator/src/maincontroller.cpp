@@ -19,7 +19,7 @@
 //#include <PythonQt.h>
 #include "maincontroller.h"
 #include "mainwindow.h"
-#include "Docks/timelinedock.h"
+#include "docks/timelinedock.h"
 #include <QUndoStack>
 #include "commands/timelinecommands.h"
 #include "models/multitrackmodel.h"
@@ -32,7 +32,7 @@
 
 
 
-static MainController *g_mainController = NULL;
+static MainController *g_mainController = nullptr;
 MainController::MainController(QObject *parent) : QObject(parent)
 {
 
@@ -63,6 +63,7 @@ int MainController::initPythonQt()
 
 void MainController::evalFile(const QString &file)
 {
+    Q_UNUSED(file)
   //  PythonQtObjectPtr  mainContext = PythonQt::self()->getMainModule();
   //  mainContext.evalFile(file);
 }
@@ -185,7 +186,7 @@ void MainController::splitClip(int trackIndex, int clipIndex, int position)
 
 Mlt::ClipInfo *MainController::getClipInfo(int trackIndex, int clipIndex)
 {
-    Mlt::ClipInfo* result = 0;
+    Mlt::ClipInfo* result = nullptr;
     Q_ASSERT(clipIndex >= 0 && trackIndex >= 0);
     if (clipIndex >= 0 && trackIndex >= 0) {
         Q_ASSERT(trackIndex < m_multitrackModel.trackList().size());
@@ -224,7 +225,7 @@ Mlt::Transition *MainController::getTransition(Mlt::Producer *producer, const QS
         }
         service.reset(service->producer());
     }
-    return 0;
+    return nullptr;
 }
 
 
@@ -242,7 +243,7 @@ void MainController::setTransitionType(int trackIndex, int clipIndex, int transi
     QScopedPointer<Mlt::Producer> track(m_multitrackModel.tractor()->track(i));
     Q_ASSERT(track);
 
-    Mlt::Producer *producer = 0;
+    Mlt::Producer *producer = nullptr;
     if (track) {
         Mlt::Playlist playlist(*track);
         Q_ASSERT(playlist.is_valid());
@@ -287,6 +288,7 @@ void MainController::addTransition(int trackIndex, int clipIndex, double duratio
     Q_ASSERT(clipIndex >= 0);
     Q_ASSERT(trackIndex < m_multitrackModel.trackList().size());
     const Track& track = m_multitrackModel.trackList().value(trackIndex);
+    Q_UNUSED(track)
 
 
     int i = m_multitrackModel.trackList().at(trackIndex).mlt_index;
@@ -300,9 +302,9 @@ void MainController::addTransition(int trackIndex, int clipIndex, double duratio
         Q_ASSERT(playlist.is_valid());
         Q_ASSERT(clipIndex < playlist.count());
         clipStart = playlist.clip_start(clipIndex);
-        if (m_multitrackModel.addTransitionValid(trackIndex, trackIndex, clipIndex, clipStart + duration * MLT.profile().fps() ))
+        if (m_multitrackModel.addTransitionValid(trackIndex, trackIndex, clipIndex, clipStart + int(duration * MLT.profile().fps()) ))
                 MAIN.undoStack()->push(
-                    new Timeline::AddTransitionCommand(m_multitrackModel, trackIndex, clipIndex, clipStart + duration* MLT.profile().fps() ));
+                    new Timeline::AddTransitionCommand(m_multitrackModel, trackIndex, clipIndex, clipStart + int(duration* MLT.profile().fps()) ));
     }
 }
 
@@ -331,6 +333,8 @@ void MainController::addFilter(int trackIndex, int clipIndex, const QString &fil
 
 void MainController::removeFilter(int trackIndex, int clipIndex, int row)
 {
+    Q_UNUSED(trackIndex)
+    Q_UNUSED(clipIndex)
 //    MAIN.showFilterDock();
 //    MAIN.timelineDock()->setCurrentTrack(trackIndex);
 //    MAIN.timelineDock()->setSelection(QList<int>() << clipIndex);

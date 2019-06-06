@@ -34,7 +34,7 @@ JobQueue::JobQueue(QObject *parent) :
 
 JobQueue& JobQueue::singleton(QObject* parent)
 {
-    static JobQueue* instance = 0;
+    static JobQueue* instance = nullptr;
     if (!instance)
         instance = new JobQueue(parent);
     return *instance;

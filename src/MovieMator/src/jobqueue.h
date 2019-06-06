@@ -37,7 +37,7 @@ protected:
 
 
 public:
-    static JobQueue& singleton(QObject* parent = 0);
+    static JobQueue& singleton(QObject* parent = nullptr);
     void cleanup();
     AbstractJob* add(AbstractJob *job);
     AbstractJob* jobFromIndex(const QModelIndex& index) const;

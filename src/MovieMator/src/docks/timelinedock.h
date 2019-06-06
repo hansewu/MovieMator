@@ -47,7 +47,7 @@ class TimelineDock : public QDockWidget
 
 public:
     // 构造函数
-    explicit TimelineDock(QWidget *parent = 0);
+    explicit TimelineDock(QWidget *parent = nullptr);
  //   explicit TimelineDock(const QString &title, QWidget *parent = 0, Qt::WindowFlags flags = 0);
     // 析构函数
     ~TimelineDock();

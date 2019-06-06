@@ -34,7 +34,7 @@ class MainInterface
 public:
     static MainInterface& singleton();
 //    MainInterface();
-//    virtual ~MainInterface(){}
+    virtual ~MainInterface(){}  // 有虚函数就需要虚析构函数，用来消除警告
     //功能：播放文件。
     //参数：filepath文件路径。
      //返回： NULL 失败，其他 成功

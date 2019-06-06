@@ -36,11 +36,11 @@
 #endif
 
 
-
-static int alignWidth(int width)
-{
-    return (width + 7) / 8 * 8;
-}
+// 没有使用到，消除警告
+//static int alignWidth(int width)
+//{
+//    return (width + 7) / 8 * 8;
+//}
 static bool isMltClass(const QStringRef& name)
 {
     return name == "profile" || name == "producer" ||

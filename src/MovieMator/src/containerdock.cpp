@@ -116,7 +116,7 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
 {
     Q_ASSERT(dock);
     Q_ASSERT(widget());
-    QGridLayout *gLayout = (QGridLayout *)widget()->layout();
+    QGridLayout *gLayout = qobject_cast<QGridLayout*>(widget()->layout());    //(QGridLayout *)widget()->layout();
     Q_ASSERT(gLayout);
     if (m_tabPostion == TabPosition_Left)
         gLayout->addWidget(dock,0,1,1,1);
@@ -155,21 +155,21 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
     {
         button->setFixedSize(BUTTON_WIDTH_SQUARE, BUTTON_HEIGHT_SQUARE);
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        QVBoxLayout *vLayout = (QVBoxLayout *)m_tabBtnWidget->layout();
+        QVBoxLayout *vLayout = qobject_cast<QVBoxLayout*>(m_tabBtnWidget->layout());    //(QVBoxLayout *)m_tabBtnWidget->layout();
         vLayout->insertWidget(vLayout->count()-1,button);
     }
     else if (m_tabPostion == TabPosition_Bottom)
     {
         button->setFixedSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        QHBoxLayout *hLayout = (QHBoxLayout *)m_tabBtnWidget->layout();
+        QHBoxLayout *hLayout = qobject_cast<QHBoxLayout *>(m_tabBtnWidget->layout()); // (QHBoxLayout *)m_tabBtnWidget->layout();
         hLayout->insertWidget(hLayout->count()-1,button);
     }
     else if (m_tabPostion == TabPosition_Top)
     {
         button->setFixedSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        QHBoxLayout *hLayout = (QHBoxLayout *)m_tabBtnWidget->layout();
+        QHBoxLayout *hLayout = qobject_cast<QHBoxLayout*>(m_tabBtnWidget->layout());    //(QHBoxLayout *)m_tabBtnWidget->layout();
         hLayout->insertWidget(hLayout->count()-1,button);
     }
 

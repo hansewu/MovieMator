@@ -31,7 +31,7 @@ class CrashReporterWidget : public QWidget
 
     public:
         // 构造函数
-        explicit CrashReporterWidget(QWidget *parent = 0);
+        explicit CrashReporterWidget(QWidget *parent = nullptr);
         // 析构函数
         ~CrashReporterWidget();
 

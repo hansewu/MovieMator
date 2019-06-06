@@ -51,10 +51,10 @@ EncodeDock::EncodeDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::EncodeDock),
     m_presets(Mlt::Repository::presets()),
-    m_immediateJob(0),
+    m_immediateJob(nullptr),
     m_profiles(Mlt::Profile::list()),
     m_isDefaultSettings(true),
-    m_currentPreset(0)
+    m_currentPreset(nullptr)
 {
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
@@ -222,7 +222,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
                 ui->aspectDenSpinner->setValue(16);
                 break;
             default:
-                ui->aspectNumSpinner->setValue(dar * 1000);
+                ui->aspectNumSpinner->setValue(int(dar * 1000));
                 ui->aspectDenSpinner->setValue(1000);
                 break;
             }
@@ -401,8 +401,8 @@ void EncodeDock::onProducerOpened()
 QStandardItem* EncodeDock::getTreeParentItem(const QString &text)
 {
     int i = 0;
-    QStandardItem *parentItem = NULL;
-    QStandardItemModel* sourceModel = (QStandardItemModel*) m_presetsModel.sourceModel();
+    QStandardItem *parentItem = nullptr;
+    QStandardItemModel* sourceModel = qobject_cast<QStandardItemModel*>(m_presetsModel.sourceModel());//(QStandardItemModel*) m_presetsModel.sourceModel();
 
     int rowCount = sourceModel->invisibleRootItem()->rowCount();
     for (i = 0; i < rowCount; i++)
@@ -412,14 +412,14 @@ QStandardItem* EncodeDock::getTreeParentItem(const QString &text)
         if (itemText.compare(text) == 0)
             return parentItem;
     }
-    return NULL;
+    return nullptr;
 }
 
 void EncodeDock::loadPresets()
 {
     Q_ASSERT(m_presets);
 
-    QStandardItemModel* sourceModel = (QStandardItemModel*) m_presetsModel.sourceModel();
+    QStandardItemModel* sourceModel = qobject_cast<QStandardItemModel*>(m_presetsModel.sourceModel());   //(QStandardItemModel*) m_presetsModel.sourceModel()
     Q_ASSERT(sourceModel);
     sourceModel->clear();
 
@@ -445,7 +445,7 @@ void EncodeDock::loadPresets()
         for (int j = 0; j < m_presets->count(); j++) {
             QString name(m_presets->get_name(j));
             if (name.startsWith(prefix)) {
-                Mlt::Properties preset((mlt_properties) m_presets->get_data(name.toLatin1().constData()));
+                Mlt::Properties preset(static_cast<mlt_properties>(m_presets->get_data(name.toLatin1().constData())));  // (mlt_properties) m_presets->get_data(name.toLatin1().constData())
                 if (preset.get_int("meta.preset.hidden"))
                     continue;
 
@@ -463,7 +463,7 @@ void EncodeDock::loadPresets()
                         // if the path is a profile name, then change it to "preset (profile)"
                         QString category = textParts.at(0);
                         parentItem = this->getTreeParentItem(category);
-                        if (parentItem == NULL)
+                        if (parentItem == nullptr)
                         {
                             parentItem = new QStandardItem(category);
                             sourceModel->invisibleRootItem()->appendRow(parentItem);
@@ -709,7 +709,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
 #if SHARE_VERSION
 #if MOVIEMATOR_PRO
     //加水印
-    Mlt::Filter* textFilter;
+    Mlt::Filter* textFilter = nullptr;
     if (Registration.registrationType() == Registration_None)
     {
         textFilter = new Mlt::Filter(MLT.profile(), "dynamictext");
@@ -1028,7 +1028,7 @@ Mlt::Service *EncodeDock::fromProducer() const
         return MAIN.multitrack();
     }
 
-    return 0;
+    return nullptr;
 }
 
 static double getBufferSize(Mlt::Properties& preset, const char* property)
@@ -1063,7 +1063,7 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
         }
         else {
             ui->removePresetButton->setEnabled(false);
-            preset = new Mlt::Properties((mlt_properties) m_presets->get_data(name.toLatin1().constData()));
+            preset = new Mlt::Properties(static_cast<mlt_properties>(m_presets->get_data(name.toLatin1().constData())));    //(mlt_properties) m_presets->get_data(name.toLatin1().constData())
             Q_ASSERT(preset);
         }
         if (preset->is_valid()) {
@@ -1216,7 +1216,7 @@ void EncodeDock::onProfileChanged()
     double sar = MLT.profile().sar();
 
 
-    int dar_numerator = width * sar;
+    int dar_numerator = width * int(sar);
     int dar_denominator = height;
 
 
@@ -1396,7 +1396,7 @@ void EncodeDock::onFinished(AbstractJob* job, bool isSuccess)
     if (!MLT.isSeekable())
         ui->encodeButton->setText(tr("Capture File"));
     ui->streamButton->setText(tr("Stream"));
-    m_immediateJob = 0;
+    m_immediateJob = nullptr;
     delete job;
     emit captureStateChanged(false);
     ui->encodeButton->setDisabled(false);        
@@ -1522,7 +1522,7 @@ void EncodeDock::on_videoBufferDurationChanged()
 {
     QString vb = ui->videoBitrateCombo->currentText();
     vb.replace('k', "").replace('M', "000");
-    double duration = (double)ui->videoBufferSizeSpinner->value() * 8.0 / vb.toDouble();
+    double duration = /*(double)*/ui->videoBufferSizeSpinner->value() * 8.0 / vb.toDouble();
     QString label = QString(tr("KiB (%1s)")).arg(duration);
     ui->videoBufferSizeSuffixLabel->setText(label);
 }
@@ -1547,7 +1547,7 @@ void EncodeDock::setCurrentPreset(Mlt::Properties *preset)
         if (m_currentPreset)
         {
             delete m_currentPreset;
-            m_currentPreset = NULL;
+            m_currentPreset = nullptr;
         }
         m_currentPreset = preset;
     }

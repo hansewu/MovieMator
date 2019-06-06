@@ -405,7 +405,7 @@ void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName
     image->setScaledContents(true);     // 可以让图片随 label拉伸
     image->setPixmap(QPixmap(":/icons/light/32x32/line.png"));
 
-    QHBoxLayout *box = new QHBoxLayout(this);
+    QHBoxLayout *box = new QHBoxLayout();
     box->addWidget(label);
     box->addWidget(image);
 
@@ -431,12 +431,12 @@ void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName
                 "QListView::item:selected{background-color:rgb(192,72,44); color:rgb(255,255,255);}"
                 "QListView{background-color:transparent;color:rgb(214,214,214);}");
 
-    connect(listView, SIGNAL(pressed(const QModelIndex&)), this, SLOT(on_listView_pressed(const QModelIndex&)));
-    connect(listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(on_listView_clicked(const QModelIndex&)));
-    connect(listView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(on_listView_customContextMenuRequested(const QPoint&)));
+    connect(listView, SIGNAL(pressed(const QModelIndex&)), this, SLOT(onListviewPressed(const QModelIndex&)));
+    connect(listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(onListviewClicked(const QModelIndex&)));
+    connect(listView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(onListviewCustomContextMenuRequested(const QPoint&)));
 }
 
-void EffectDock::on_listView_pressed(const QModelIndex &)
+void EffectDock::onListviewPressed(const QModelIndex &)
 {
     Q_ASSERT(m_imageList);
     if(!m_imageList)
@@ -464,7 +464,7 @@ void EffectDock::on_listView_pressed(const QModelIndex &)
     }
 }
 
-void EffectDock::on_listView_clicked(const QModelIndex &)
+void EffectDock::onListviewClicked(const QModelIndex &)
 {
 //    Q_ASSERT(m_effectFile);   // 不能加，默认下可以为空，也就是不播放文件
     Q_ASSERT(m_mainWindow);
@@ -474,7 +474,7 @@ void EffectDock::on_listView_clicked(const QModelIndex &)
     }
 }
 
-void EffectDock::on_listView_customContextMenuRequested(const QPoint &pos)
+void EffectDock::onListviewCustomContextMenuRequested(const QPoint &pos)
 {
     Q_ASSERT(m_currentIndex.isValid());
     Q_ASSERT(m_currentListView);
@@ -534,7 +534,7 @@ void EffectDock::on_comboBox_2_activated(int index)
 void EffectDock::on_EffectDock_visibilityChanged(bool visible)
 {
     if (visible) {
-        on_listView_clicked(QModelIndex());
+        onListviewClicked(QModelIndex());
 
         resizeEvent(nullptr);   // 切换dock后listView大小会随dock变化
     }

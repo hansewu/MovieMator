@@ -19,7 +19,7 @@
 #include "abstractproducerwidget.h"
 
 AbstractProducerWidget::AbstractProducerWidget()
-    : m_producer(0)
+    : m_producer(nullptr)
 {
 }
 
@@ -31,7 +31,7 @@ AbstractProducerWidget::~AbstractProducerWidget()
 void AbstractProducerWidget::setProducer(Mlt::Producer* aProducer)
 {
     delete m_producer;
-    m_producer = 0;
+    m_producer = nullptr;
     if (aProducer) {
         loadPreset(*aProducer);
         m_producer = new Mlt::Producer(aProducer);

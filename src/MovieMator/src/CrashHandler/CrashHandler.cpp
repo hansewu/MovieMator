@@ -47,7 +47,7 @@
 
 #elif defined(Q_OS_WIN)
 
-#include "Tchar.h"
+#include "tchar.h"      // "Tchar.h"
 #include "client/windows/handler/exception_handler.h"
 
 #endif
@@ -64,7 +64,7 @@ namespace CrashManager
         public:
             CrashHandlerPrivate()
             {
-                pHandler = NULL;
+                pHandler = nullptr;
             }
 
             ~CrashHandlerPrivate()
@@ -81,7 +81,7 @@ namespace CrashManager
 
     };
 
-    google_breakpad::ExceptionHandler* CrashHandlerPrivate::pHandler = NULL;
+    google_breakpad::ExceptionHandler* CrashHandlerPrivate::pHandler = nullptr;
     bool CrashHandlerPrivate::bReportCrashesToSystem = false;
     char CrashHandlerPrivate::reporter_[1024] = {0};
     char CrashHandlerPrivate::reporterArguments_[8*1024] = {0};
@@ -102,9 +102,12 @@ namespace CrashManager
 
         PROCESS_INFORMATION pi = {};
 
-        if ( !CreateProcess(NULL, program , 0, FALSE, 0,
+        // !CreateProcess(NULL, program , 0, FALSE, 0,
+        // CREATE_DEFAULT_ERROR_MODE | CREATE_NO_WINDOW | DETACHED_PROCESS,
+        // 0, 0, &si, &pi) )
+        if ( !CreateProcess(nullptr, program , nullptr, nullptr, 0,
                             CREATE_DEFAULT_ERROR_MODE | CREATE_NO_WINDOW | DETACHED_PROCESS,
-                            0, 0, &si, &pi) )
+                            nullptr, nullptr, &si, &pi) )
         {
             std::cerr << "CreateProcess failed (" << GetLastError() << ").\n";
         }
@@ -151,7 +154,7 @@ namespace CrashManager
 
          We will do something like this
           LPTSTR szCmdline[] = _tcsdup(TEXT("\"C:\\Program Files\\MyApp\" -L -S"));
-          CreateProcess(NULL, szCmdline, /*...* /);
+          CreateProcess(NULL, szCmdline, / *...* /);
 
         LPCTSTR lpApplicationName = program; // The program to be executed
 
@@ -323,19 +326,19 @@ namespace CrashManager
     void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath)
     {
         //if already init then skip rest
-        if ( pHandler != NULL )
+        if ( pHandler != nullptr )
             return;
 
 #if defined(Q_OS_WIN)
-        std::wstring pathAsStr = (const wchar_t*)dumpPath.utf16();
+        std::wstring pathAsStr = dumpPath.toStdWString();   //(const wchar_t*)dumpPath.utf16();
         std::string mmVer = MOVIEMATOR_VERSION;
 
         pHandler = new google_breakpad::ExceptionHandler(
                     pathAsStr,
-                    /*FilterCallback*/ 0,
+                    /*FilterCallback*/ nullptr,
                     DumpCallback,
                     /*context*/
-                    0,
+                    nullptr,
                     true,
                     mmVer);
 #elif defined(Q_OS_LINUX)

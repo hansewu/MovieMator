@@ -9,7 +9,7 @@
 class DescContentEdit : public QTextEdit
 {
 public:
-    DescContentEdit(QWidget *parent = 0);
+    DescContentEdit(QWidget *parent = nullptr);
     ~DescContentEdit();
 
 protected:

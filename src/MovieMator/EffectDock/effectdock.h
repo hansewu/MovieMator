@@ -73,11 +73,11 @@ private:
 
 private slots:
     // 响应 listView按下的槽函数
-    void on_listView_pressed(const QModelIndex&);
+    void onListviewPressed(const QModelIndex&);
     // 响应 listView单击的槽函数
-    void on_listView_clicked(const QModelIndex&);
+    void onListviewClicked(const QModelIndex&);
     // 响应 listView右键菜单的槽函数
-    void on_listView_customContextMenuRequested(const QPoint&);
+    void onListviewCustomContextMenuRequested(const QPoint&);
     // 响应 listView右键菜单 actionAddToTimeline的槽函数
     void on_actionAddToTimeline_triggered();
     // 响应 comboBox（动画列表）的选项被激活的槽函数

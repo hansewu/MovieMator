@@ -52,7 +52,7 @@ class EncodeDock : public QDockWidget
 
 public:
     // 构造函数
-    explicit EncodeDock(QWidget *parent = 0);
+    explicit EncodeDock(QWidget *parent = nullptr);
     // 析构函数
     ~EncodeDock();
 

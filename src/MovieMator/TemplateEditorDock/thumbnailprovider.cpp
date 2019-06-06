@@ -11,6 +11,7 @@ ThumbnailProvider::ThumbnailProvider(MainInterface *main)
 
 QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize)
 {
+    Q_UNUSED(requestedSize);
     int width = 100;
     int height = 56;
 
