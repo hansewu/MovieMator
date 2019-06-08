@@ -42,6 +42,8 @@ ConfigurationDock::ConfigurationDock(QWidget *parent) : QDockWidget (tr("Configu
 
 void ConfigurationDock::setCurrentFilter(QObject* filter, QmlMetadata* meta, int index)
 {
+    Q_UNUSED(filter);
+    Q_UNUSED(meta);
 //    m_qview.rootContext()->setContextProperty("filter", filter);
 //    m_qview.rootContext()->setContextProperty("metadata", meta);
 //    m_qview.setSource(meta->qmlFilePath());

@@ -43,11 +43,11 @@ struct DatabaseJob {
     {}
 };
 
-static Database* instance = 0;
+static Database* instance = nullptr;
 
 Database::Database(QObject *parent) :
     QThread(parent)
-    , m_commitTimer(0)
+    , m_commitTimer(nullptr)
 {
 }
 
@@ -164,7 +164,7 @@ void Database::shutdown()
     QString connection = QSqlDatabase::database().connectionName();
     QSqlDatabase::database().close();
     QSqlDatabase::removeDatabase(connection);
-    instance = 0;
+    instance = nullptr;
 }
 
 void Database::deleteOldThumbnails()
@@ -212,7 +212,7 @@ void Database::run()
     LOG_DEBUG() << "Database version is" << version;
 
     while (true) {
-        DatabaseJob * newJob = 0;
+        DatabaseJob * newJob = nullptr;
         m_mutex.lock();
         if (m_jobs.isEmpty())
             m_waitForNewJob.wait(&m_mutex, 1000);

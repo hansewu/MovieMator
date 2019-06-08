@@ -900,9 +900,11 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
         bool leftBlank = false;
         if (clipIndex > 0 && isBlank(trackIndex, clipIndex - 1))
             leftBlank = true;
+        Q_UNUSED(leftBlank);
         bool rightBlank = false;
         if (clipIndex <  clipCount(trackIndex) - 1 && isBlank(trackIndex, clipIndex + 1))
             rightBlank = true;
+        Q_UNUSED(rightBlank);
 
         MAIN.undoStack()->beginMacro(tr("Lift from track"));
 

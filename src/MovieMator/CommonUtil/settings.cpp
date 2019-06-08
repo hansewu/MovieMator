@@ -26,7 +26,7 @@
 
 ShotcutSettings &ShotcutSettings::singleton()
 {
-    static ShotcutSettings* instance = 0;
+    static ShotcutSettings* instance = nullptr;
     if (!instance) {
         instance = new ShotcutSettings;
 //        LOG_DEBUG() << "language" << instance->language();

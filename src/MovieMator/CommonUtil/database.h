@@ -34,10 +34,10 @@ class QTimer;
 class COMMONUTILSHARED_EXPORT Database : public QThread
 {
     Q_OBJECT
-    explicit Database(QObject *parent = 0);
+    explicit Database(QObject *parent = nullptr);
 
 public:
-    static Database& singleton(QWidget* parent = 0);
+    static Database& singleton(QWidget* parent = nullptr);
 
     bool upgradeVersion1();
     bool putThumbnail(const QString& hash, const QImage& image);

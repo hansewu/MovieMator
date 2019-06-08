@@ -31,7 +31,7 @@ class CONFIGURATIONDOCKSHARED_EXPORT ConfigurationDock : public QDockWidget
 
     Q_PROPERTY(QRect dockPosition READ dockPosition NOTIFY dockPositionChanged)
 public:
-    explicit ConfigurationDock(QWidget *parent = 0);
+    explicit ConfigurationDock(QWidget *parent = nullptr);
     QRect dockPosition();
 
 public slots:
