@@ -58,7 +58,7 @@ class MLTCONTROLLERSHARED_EXPORT GLWidget : public QQuickWidget, public Controll
     Q_PROPERTY(QPoint offset READ offset NOTIFY offsetChanged)
 
 public:
-    GLWidget(QObject *parent = 0);
+    GLWidget(QObject *parent = nullptr);
     ~GLWidget();
 
     void createThread(RenderThread** thread, thread_function_t function, void* data);
@@ -69,7 +69,7 @@ public:
 
     void play(double speed = 1.0) {
         Controller::play(speed);
-        if (speed == 0) emit paused();
+        if (qFuzzyIsNull(speed)) emit paused();
         else emit playing();
     }
     void seek(int position) {

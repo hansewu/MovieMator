@@ -36,7 +36,7 @@
 
 namespace Mlt {
 
-static Controller* instance = 0;
+static Controller* instance = nullptr;
 const QString XmlMimeType("application/mlt+xml");
 
 static int alignWidth(int width)
@@ -45,9 +45,9 @@ static int alignWidth(int width)
 }
 
 Controller::Controller()
-    : m_producer(0)
-    , m_consumer(0)
-    , m_jackFilter(0)
+    : m_producer(nullptr)
+    , m_consumer(nullptr)
+    , m_jackFilter(nullptr)
     , m_volume(1.0)
 {
     LOG_DEBUG() << "begin";
@@ -74,7 +74,7 @@ Controller::~Controller()
     close();
     closeConsumer();
     delete m_profile;
-    m_profile = NULL;
+    m_profile = nullptr;
 }
 
 void Controller::destroy()
@@ -152,7 +152,7 @@ int Controller::open(const QString &url)
             profile().from_producer(*m_producer);
             profile().set_width(alignWidth(profile().width()));
         }
-        if (profile().fps() != fps || (Settings.playerGPU() && !profile().is_explicit())) {
+        if (!qFuzzyCompare(profile().fps(), fps) || (Settings.playerGPU() && !profile().is_explicit())) {
             // Reload with correct FPS or with Movit normalizing filters attached.
             delete m_producer;
             m_producer = new Mlt::Producer(profile(), url.toUtf8().constData());
@@ -172,7 +172,7 @@ int Controller::open(const QString &url)
     }
     else {
         delete m_producer;
-        m_producer = 0;
+        m_producer = nullptr;
         error = 1;
     }
     return error;
@@ -191,7 +191,7 @@ bool Controller::openXML(const QString &filename)
             profile().from_producer(*producer);
             profile().set_width(alignWidth(profile().width()));
         }
-        if (profile().fps() != fps) {
+        if (!qFuzzyCompare(profile().fps(), fps)) {
             // reopen with the correct fps
             delete producer;
             producer = new Mlt::Producer(profile(), "xml", filename.toUtf8().constData());
@@ -220,7 +220,7 @@ void Controller::close()
         setSavedProducer(m_producer);
     }
     delete m_producer;
-    m_producer = 0;
+    m_producer = nullptr;
 
     LOG_DEBUG() << "end";
 }
@@ -231,9 +231,9 @@ void Controller::closeConsumer()
     if (m_consumer)
         m_consumer->stop();
     delete m_consumer;
-    m_consumer = 0;
+    m_consumer = nullptr;
     delete m_jackFilter;
-    m_jackFilter = 0;
+    m_jackFilter = nullptr;
     LOG_DEBUG() << "end";
 }
 
@@ -266,7 +266,7 @@ void Controller::play(double speed)
 void Controller::pause()
 {
     LOG_DEBUG() << "begin";
-    if (m_producer && m_producer->get_speed() != 0) {
+    if (m_producer && !qFuzzyIsNull(m_producer->get_speed())) {
         if (!Settings.playerGPU())
         if (m_consumer && m_consumer->is_valid()) {
             // Disable real_time behavior and buffering for frame accurate seeking.
@@ -302,7 +302,7 @@ void Controller::stop()
 void Controller::on_jack_started(mlt_properties, void* object, mlt_position *position)
 {
     if (object && position)
-        ((Controller*) object)->onJackStarted(*position);
+        (static_cast<Controller*>(object))->onJackStarted(*position);
 }
 
 void Controller::onJackStarted(int position)
@@ -317,13 +317,13 @@ void Controller::onJackStarted(int position)
 void Controller::on_jack_stopped(mlt_properties, void* object, mlt_position *position)
 {
     if (object && position)
-        ((Controller*) object)->onJackStopped(*position);
+        (static_cast<Controller*>(object))->onJackStopped(*position);
 }
 
 void Controller::onJackStopped(int position)
 {
     if (m_producer) {
-        if (m_producer->get_speed() != 0) {
+        if (!qFuzzyIsNull(m_producer->get_speed())) {
             Q_ASSERT(m_consumer);
             Event *event = m_consumer->setup_wait_for("consumer-sdl-paused");
             int result = m_producer->set_speed(0);
@@ -349,20 +349,20 @@ bool Controller::enableJack(bool enable)
 			m_consumer->attach(*m_jackFilter);
 			m_consumer->set("audio_off", 1);
 			if (isSeekable()) {
-				m_jackFilter->listen("jack-started", this, (mlt_listener) on_jack_started);
-				m_jackFilter->listen("jack-stopped", this, (mlt_listener) on_jack_stopped);
+                m_jackFilter->listen("jack-started", this, reinterpret_cast<mlt_listener>(on_jack_started));
+                m_jackFilter->listen("jack-stopped", this, reinterpret_cast<mlt_listener>(on_jack_stopped));
 			}
 		}
 		else {
 			delete m_jackFilter;
-			m_jackFilter = 0;
+            m_jackFilter = nullptr;
 			return false;
 		}
 	}
 	else if (!enable && m_jackFilter) {
 		m_consumer->detach(*m_jackFilter);
 		delete m_jackFilter;
-		m_jackFilter = 0;
+        m_jackFilter = nullptr;
 		m_consumer->set("audio_off", 0);
 		m_consumer->stop();
 		m_consumer->start();
@@ -376,7 +376,7 @@ void Controller::setVolume(double volume, bool muteOnPause)
     m_volume = volume;
 
     // Keep the consumer muted when paused
-    if (muteOnPause && m_producer && m_producer->get_speed() == 0) {
+    if (muteOnPause && m_producer && qFuzzyIsNull(m_producer->get_speed())) {
         volume = 0.0;
     }
 
@@ -407,7 +407,7 @@ void Controller::seek(int position)
     if (m_producer) {
         // Always pause before seeking (if not already paused).
         if (!Settings.playerGPU())
-        if (m_consumer && m_consumer->is_valid() && m_producer->get_speed() != 0) {
+        if (m_consumer && m_consumer->is_valid() && !qFuzzyIsNull(m_producer->get_speed())) {
             // Disable real_time behavior and buffering for frame accurate seeking.
             m_consumer->set("real_time", -1);
             m_consumer->set("buffer", 0);
@@ -525,12 +525,12 @@ int Controller::consumerChanged()
     LOG_DEBUG() << "begin";
     int error = 0;
     if (m_consumer) {
-        bool jackEnabled = m_jackFilter != 0;
+        bool jackEnabled = m_jackFilter != nullptr;
         m_consumer->stop();
         delete m_consumer;
-        m_consumer = 0;
+        m_consumer = nullptr;
         delete m_jackFilter;
-        m_jackFilter= 0;
+        m_jackFilter= nullptr;
         error = reconfigure(false);
         if (m_consumer) {
             enableJack(jackEnabled);
@@ -723,7 +723,7 @@ void Controller::setOut(int out)
 void Controller::restart()
 {
     if (!m_consumer) return;
-    if (m_producer && m_producer->is_valid() && m_producer->get_speed() != 0) {
+    if (m_producer && m_producer->is_valid() && !qFuzzyIsNull(m_producer->get_speed())) {
         // Update the real_time property if not paused.
         m_consumer->set("real_time", realTime());
     }
@@ -766,7 +766,7 @@ QImage Controller::image(Mlt::Frame* frame, int width, int height)
         const uchar *image = frame->get_image(format, width, height);
         if (image) {
             QImage temp(width, height, QImage::Format_ARGB32);
-            memcpy(temp.scanLine(0), image, width * height * 4);
+            memcpy(temp.scanLine(0), image, size_t(width * height * 4));
             result = temp.rgbSwapped();
         }
     } else {
@@ -806,7 +806,7 @@ QImage Controller::image(Producer& producer, int frameNumber, int width, int hei
 void Controller::updateAvformatCaching(int trackCount)
 {
     int i = QThread::idealThreadCount() + trackCount;
-    mlt_service_cache_set_size(NULL, "producer_avformat", qMax(4, i));
+    mlt_service_cache_set_size(nullptr, "producer_avformat", qMax(4, i));
 }
 
 bool Controller::isAudioFilter(const QString &name)

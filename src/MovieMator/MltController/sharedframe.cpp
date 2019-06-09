@@ -20,9 +20,9 @@
 class FrameData : public QSharedData
 {
 public:
-    FrameData() : f((mlt_frame)0) {};
-    FrameData(Mlt::Frame& frame) : f(frame) {};
-    ~FrameData() {};
+    FrameData() : f(static_cast<mlt_frame>(nullptr)) {}
+    FrameData(Mlt::Frame& frame) : f(frame) {}
+    ~FrameData() {}
 
     Mlt::Frame f;
 private:
@@ -68,13 +68,13 @@ Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
     // It could be added to mlt_frame as an alternative to:
     //     mlt_frame mlt_frame_clone( mlt_frame self, int is_deep );
     // It could also be added to Mlt::Frame as a const function.
-    void* data = 0;
-    void* copy = 0;
+    void* data = nullptr;
+    void* copy = nullptr;
     int size = 0;
-    Mlt::Frame cloneFrame(mlt_frame_init( NULL ));
+    Mlt::Frame cloneFrame(mlt_frame_init( nullptr ));
     cloneFrame.inherit(d->f);
-    cloneFrame.set("_producer", d->f.get_data("_producer", size), 0, NULL, NULL);
-    cloneFrame.set("movit.convert", d->f.get_data("movit.convert", size), 0, NULL, NULL);
+    cloneFrame.set("_producer", d->f.get_data("_producer", size), 0, nullptr, nullptr);
+    cloneFrame.set("movit.convert", d->f.get_data("movit.convert", size), 0, nullptr, nullptr);
     cloneFrame.get_frame()->convert_image = d->f.get_frame()->convert_image;
     cloneFrame.get_frame()->convert_audio = d->f.get_frame()->convert_audio;
 
@@ -86,7 +86,7 @@ Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
                                          get_audio_channels());
         }
         copy = mlt_pool_alloc(size);
-        memcpy(copy, data, size);
+        memcpy(copy, data, size_t(size));
         cloneFrame.set("audio", copy, size, mlt_pool_release);
     } else {
         cloneFrame.set("audio", 0);
@@ -103,10 +103,10 @@ Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
             size = mlt_image_format_size(get_image_format(),
                                          get_image_width(),
                                          get_image_height(),
-                                         0);
+                                         nullptr);
         }
         copy = mlt_pool_alloc(size);
-        memcpy(copy, data, size);
+        memcpy(copy, data, size_t(size));
         cloneFrame.set("image", copy, size, mlt_pool_release);
     } else {
         cloneFrame.set("image", 0);
@@ -122,7 +122,7 @@ Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
             size = get_image_width() * get_image_height();
         }
         copy = mlt_pool_alloc(size);
-        memcpy(copy, data, size);
+        memcpy(copy, data, size_t(size));
         cloneFrame.set("alpha", copy, size, mlt_pool_release);
     } else {
         cloneFrame.set("alpha", 0);
@@ -177,7 +177,7 @@ mlt_image_format SharedFrame::get_image_format() const
     Q_ASSERT(d);
     Q_ASSERT(d->f.is_valid());
 
-    return (mlt_image_format)d->f.get_int( "format" );
+    return static_cast<mlt_image_format>(d->f.get_int( "format" ));
 }
 
 int SharedFrame::get_image_width() const
@@ -204,7 +204,7 @@ const uint8_t* SharedFrame::get_image() const
     mlt_image_format format = get_image_format();
     int width = get_image_width();
     int height = get_image_height();
-    return (uint8_t*)d->f.get_image(format, width, height, 0);
+    return static_cast<uint8_t*>(d->f.get_image(format, width, height, 0));
 }
 
 mlt_audio_format SharedFrame::get_audio_format() const
@@ -212,7 +212,7 @@ mlt_audio_format SharedFrame::get_audio_format() const
     Q_ASSERT(d);
     Q_ASSERT(d->f.is_valid());
 
-    return (mlt_audio_format)d->f.get_int( "audio_format" );
+    return static_cast<mlt_audio_format>(d->f.get_int( "audio_format" ));
 }
 
 int SharedFrame::get_audio_channels() const
@@ -248,5 +248,5 @@ const int16_t* SharedFrame::get_audio() const
     int frequency = get_audio_frequency();
     int channels = get_audio_channels();
     int samples = get_audio_samples();
-    return (int16_t*)d->f.get_audio(format, frequency, channels, samples);
+    return static_cast<int16_t*>(d->f.get_audio(format, frequency, channels, samples));
 }

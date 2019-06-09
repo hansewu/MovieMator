@@ -62,7 +62,7 @@ protected:
     virtual int reconfigure(bool isMulti) = 0;
 
 public:
-    static Controller& singleton(QObject *parent = 0);
+    static Controller& singleton(QObject *parent = nullptr);
     virtual ~Controller();
     static void destroy();
 
@@ -84,8 +84,8 @@ public:
     void onWindowResize();
     virtual void seek(int position);
     void refreshConsumer(bool scrubAudio = false);
-    void saveXML(const QString& filename, Service* service = 0, bool withRelativePaths = true);
-    QString XML(Service* service = 0);
+    void saveXML(const QString& filename, Service* service = nullptr, bool withRelativePaths = true);
+    QString XML(Service* service = nullptr);
     int consumerChanged();
     void setProfile(const QString& profile_name);
     QString resource() const;

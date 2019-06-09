@@ -63,20 +63,20 @@ static ClientWaitSync_fp ClientWaitSync = 0;
 using namespace Mlt;
 
 GLWidget::GLWidget(QObject *parent)
-    : QQuickWidget(QmlUtilities::sharedEngine(), (QWidget*) parent)
+    : QQuickWidget(QmlUtilities::sharedEngine(), qobject_cast<QWidget*>(parent))
     , Controller()
-    , m_shader(0)
-    , m_glslManager(0)
+    , m_shader(nullptr)
+    , m_glslManager(nullptr)
     , m_initSem(0)
     , m_isInitialized(false)
-    , m_threadStartEvent(0)
-    , m_threadStopEvent(0)
-    , m_threadCreateEvent(0)
-    , m_threadJoinEvent(0)
-    , m_frameRenderer(0)
+    , m_threadStartEvent(nullptr)
+    , m_threadStopEvent(nullptr)
+    , m_threadCreateEvent(nullptr)
+    , m_threadJoinEvent(nullptr)
+    , m_frameRenderer(nullptr)
     , m_zoom(0.0f)
     , m_offset(QPoint(0, 0))
-    , m_shareContext(0)
+    , m_shareContext(nullptr)
 {
     LOG_DEBUG() << "begin";
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
@@ -99,7 +99,7 @@ GLWidget::GLWidget(QObject *parent)
         m_glslManager = new Filter(profile(), "glsl.manager");
     if ((m_glslManager && !m_glslManager->is_valid())) {
         delete m_glslManager;
-        m_glslManager = 0;
+        m_glslManager = nullptr;
     }
 
     connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(initializeGL()), Qt::DirectConnection);
@@ -141,16 +141,16 @@ void GLWidget::initializeGL()
     Q_ASSERT(m_offscreenSurface.isValid());
 
     initializeOpenGLFunctions();
-    LOG_INFO() << "OpenGL vendor" << QString::fromUtf8((const char*) glGetString(GL_VENDOR));
-    LOG_INFO() << "OpenGL renderer" << QString::fromUtf8((const char*) glGetString(GL_RENDERER));
+    LOG_INFO() << "OpenGL vendor" << QString::fromUtf8(reinterpret_cast<const char*>(glGetString(GL_VENDOR)));
+    LOG_INFO() << "OpenGL renderer" << QString::fromUtf8(reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
     LOG_INFO() << "OpenGL threaded?" << quickWindow()->openglContext()->supportsThreadedOpenGL();
     LOG_INFO() << "OpenGL ES?" << quickWindow()->openglContext()->isOpenGLES();
 
     if (m_glslManager && quickWindow()->openglContext()->isOpenGLES()) {
         delete m_glslManager;
-        m_glslManager = 0;
+        m_glslManager = nullptr;
         // Need to destroy MLT global reference to prevent filters from trying to use GPU.
-        mlt_properties_set_data(mlt_global_properties(), "glslManager", NULL, 0, NULL, NULL);
+        mlt_properties_set_data(mlt_global_properties(), "glslManager", nullptr, 0, nullptr, nullptr);
         emit gpuNotSupported();
     }
 
@@ -206,12 +206,12 @@ void GLWidget::setBlankScene()
 void GLWidget::resizeGL(int width, int height)
 {
     int x, y, w, h;
-    double this_aspect = (double) width / height;
+    double this_aspect = double(width / height);
     double video_aspect = profile().dar();
 
     // Special case optimisation to negate odd effect of sample aspect ratio
     // not corresponding exactly with image resolution.
-    if ((int) (this_aspect * 1000) == (int) (video_aspect * 1000))
+    if (int(this_aspect * 1000) == int(video_aspect * 1000))
     {
         w = width;
         h = height;
@@ -220,11 +220,11 @@ void GLWidget::resizeGL(int width, int height)
     else if (height * video_aspect > width)
     {
         w = width;
-        h = width / video_aspect;
+        h = int(width / video_aspect);
     }
     else
     {
-        w = height * video_aspect;
+        w = int(height * video_aspect);
         h = height;
     }
     x = (width - w) / 2;
@@ -510,7 +510,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
     mimeData->setText(QString::number(MLT.producer()->get_playtime()));
     if (m_frameRenderer && !m_glslManager && m_frameRenderer->getDisplayFrame().is_valid()) {
         Mlt::Frame displayFrame(m_frameRenderer->getDisplayFrame().clone(false, true));
-        QImage displayImage = MLT.image(&displayFrame, 45 * MLT.profile().dar(), 45).scaledToHeight(45);
+        QImage displayImage = MLT.image(&displayFrame, int(45 * MLT.profile().dar()), 45).scaledToHeight(45);
         drag->setPixmap(QPixmap::fromImage(displayImage));
     }
     drag->setHotSpot(QPoint(0, 0));
@@ -568,9 +568,9 @@ void GLWidget::startGlsl()
         m_glslManager->fire_event("init glsl");
         if (!m_glslManager->get_int("glsl_supported")) {
             delete m_glslManager;
-            m_glslManager = 0;
+            m_glslManager = nullptr;
             // Need to destroy MLT global reference to prevent filters from trying to use GPU.
-            mlt_properties_set_data(mlt_global_properties(), "glslManager", NULL, 0, NULL, NULL);
+            mlt_properties_set_data(mlt_global_properties(), "glslManager", nullptr, 0, nullptr, nullptr);
             emit gpuNotSupported();
         }
         else {
@@ -640,20 +640,20 @@ int GLWidget::reconfigure(bool isMulti)
         Q_ASSERT(m_consumer);
 
         delete m_threadStartEvent;
-        m_threadStartEvent = 0;
+        m_threadStartEvent = nullptr;
         delete m_threadStopEvent;
-        m_threadStopEvent = 0;
+        m_threadStopEvent = nullptr;
 
         delete m_threadCreateEvent;
-        m_threadCreateEvent = m_consumer->listen("consumer-thread-create", this, (mlt_listener) onThreadCreate);
+        m_threadCreateEvent = m_consumer->listen("consumer-thread-create", this, reinterpret_cast<mlt_listener>(onThreadCreate));
         delete m_threadJoinEvent;
-        m_threadJoinEvent = m_consumer->listen("consumer-thread-join", this, (mlt_listener) onThreadJoin);
+        m_threadJoinEvent = m_consumer->listen("consumer-thread-join", this, reinterpret_cast<mlt_listener>(onThreadJoin));
     }
     if (m_consumer->is_valid()) {
         // Connect the producer to the consumer - tell it to "run" later
         m_consumer->connect(*m_producer);
         // Make an event handler for when a frame's image should be displayed
-        m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
+        m_consumer->listen("consumer-frame-show", this, reinterpret_cast<mlt_listener>(on_frame_show));
         m_consumer->set("real_time", MLT.realTime());
         m_consumer->set("mlt_image_format", "yuv422");
         m_consumer->set("color_trc", Settings.playerGamma().toLatin1().constData());
@@ -694,9 +694,9 @@ int GLWidget::reconfigure(bool isMulti)
         }
         if (m_glslManager) {
             if (!m_threadStartEvent)
-                m_threadStartEvent = m_consumer->listen("consumer-thread-started", this, (mlt_listener) onThreadStarted);
+                m_threadStartEvent = m_consumer->listen("consumer-thread-started", this, reinterpret_cast<mlt_listener>(onThreadStarted));
             if (!m_threadStopEvent)
-                m_threadStopEvent = m_consumer->listen("consumer-thread-stopped", this, (mlt_listener) onThreadStopped);
+                m_threadStopEvent = m_consumer->listen("consumer-thread-stopped", this, reinterpret_cast<mlt_listener>(onThreadStopped));
             if (!serviceName.startsWith("decklink") && !isMulti)
                 m_consumer->set("mlt_image_format", "glsl");
         } else {
@@ -714,8 +714,8 @@ int GLWidget::reconfigure(bool isMulti)
 
 QPoint GLWidget::offset() const
 {
-    return QPoint(m_offset.x() - (MLT.profile().width()  * m_zoom -  width()) / 2,
-                  m_offset.y() - (MLT.profile().height() * m_zoom - height()) / 2);
+    return QPoint(int(m_offset.x() - (MLT.profile().width()  * m_zoom -  width()) / 2),
+                  int(m_offset.y() - (MLT.profile().height() * m_zoom - height()) / 2));
 }
 
 void GLWidget::onFrameDisplayed(const SharedFrame &frame)
@@ -798,6 +798,7 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
 
 void GLWidget::setCommonProperties(QQmlContext* context)
 {
+    Q_UNUSED(context);
     QmlUtilities::setCommonProperties(rootContext());
     rootContext()->setContextProperty("profile", &QmlProfile::singleton());
 }
@@ -805,10 +806,10 @@ void GLWidget::setCommonProperties(QQmlContext* context)
 
 
 RenderThread::RenderThread(thread_function_t function, void *data, QOpenGLContext *context, QSurface* surface)
-    : QThread(0)
+    : QThread(nullptr)
     , m_function(function)
     , m_data(data)
-    , m_context(0)
+    , m_context(nullptr)
     , m_surface(surface)
 {
     if (context) {
@@ -833,12 +834,12 @@ void RenderThread::run()
 }
 
 FrameRenderer::FrameRenderer(QOpenGLContext* shareContext, QSurface* surface)
-     : QThread(0)
+     : QThread(nullptr)
      , m_semaphore(3)
-     , m_context(0)
+     , m_context(nullptr)
      , m_surface(surface)
      , m_previousMSecs(QDateTime::currentMSecsSinceEpoch())
-     , m_gl32(0)
+     , m_gl32(nullptr)
 {
     Q_ASSERT(shareContext);
     m_renderTexture[0] = m_renderTexture[1] = m_renderTexture[2] = 0;
@@ -883,11 +884,11 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
         if (Settings.playerGPU()) {
             frame.set("movit.convert.use_texture", 1);
             mlt_image_format format = mlt_image_glsl_texture;
-            const GLuint* textureId = (GLuint*) frame.get_image(format, width, height);
+            const GLuint* textureId = reinterpret_cast<const GLuint*>(frame.get_image(format, width, height));
 
             m_context->makeCurrent(m_surface);
 #ifdef USE_GL_SYNC
-            GLsync sync = (GLsync) frame.get_data("movit.convert.fence");
+            GLsync sync = static_cast<GLsync>(frame.get_data("movit.convert.fence"));
             if (sync) {
 #ifdef Q_OS_WIN
                 // On Windows, use QOpenGLFunctions_3_2_Core instead of getProcAddress.
@@ -935,7 +936,7 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
 
         // Throttle the frequency of frameDisplayed signals to prevent them from
         // interfering with timely and smooth video updates.
-        int elapsedMSecs = QDateTime::currentMSecsSinceEpoch() - m_previousMSecs;
+        int elapsedMSecs = int(QDateTime::currentMSecsSinceEpoch() - m_previousMSecs);
         if (elapsedMSecs >= FRAMEDISPLAYED_MIN_MS) {
             m_previousMSecs = QDateTime::currentMSecsSinceEpoch();
             // The frame is now done being modified and can be shared with the rest
