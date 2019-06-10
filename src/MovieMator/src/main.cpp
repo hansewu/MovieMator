@@ -411,7 +411,8 @@ int main(int argc, char **argv)
 //    setenv("QT_SCALE_FACTOR", "2", 1);
     Application a(argc, argv);
 
-#if defined (QT_NO_DEBUG)
+
+#if defined (QT_NO_DEBUG) && defined (SHARE_VERSION) //appstore版本不使用
     CrashManager::CrashHandler::instance()->Init(QDir::tempPath());
 #endif
 
