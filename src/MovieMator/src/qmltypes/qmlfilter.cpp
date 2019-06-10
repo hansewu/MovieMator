@@ -939,7 +939,7 @@ void QmlFilter::syncCacheToProject()
 //               int in = m_filter->get_in();//producerIn();
 //               int duration = out - in + 1;
                //duration = filter.out - filter.in + 1;应该等于没有split的producer长度
-               int duration = MAIN.timelineDock()->getCurrentClipParentLength();
+               int duration = m_filter->get_length();//MAIN.timelineDock()->getCurrentClipParentLength();
 
 //                QString key = para1.paraMap.keys().at(keyIndex);
                 QString key = para.paraMap.keys().at(keyIndex);
@@ -960,7 +960,8 @@ void QmlFilter::syncCacheToProject()
                 if (paraType == "double")
                 {
                     if (!animation.is_valid() || !animation.is_key(para.keyFrame)
-                            || value.toDouble() != m_filter->anim_get_double(key.toUtf8().constData(), para.keyFrame, duration)) {
+                            || value.toDouble() != m_filter->anim_get_double(key.toUtf8().constData(), para.keyFrame, duration))
+                    {
                         m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), para.keyFrame, duration, mlt_keyframe_linear);
 //                        MLT.refreshConsumer();
 //                        emit filterPropertyValueChanged();
@@ -1002,7 +1003,8 @@ void QmlFilter::syncCacheToProject()
                         rect.w = width;
                         rect.h = height;
                         rect.o = opacity;
-                        m_filter->anim_set(key.toUtf8().constData(), rect, para.keyFrame, duration, mlt_keyframe_smooth);
+
+                        m_filter->anim_set(key.toUtf8().constData(), rect, para.keyFrame, duration); //, mlt_keyframe_smooth); mlt_keyframe_smooth 可能有问题，在颜色显示时很明显  https://github.com/hansewu/MovieMator/issues/271
 //                        MLT.refreshConsumer();
 //                        emit filterPropertyValueChanged();
                     }
