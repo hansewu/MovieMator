@@ -203,7 +203,7 @@ QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInf
     return result;
 }
 
-void EffectDock::replaceImage(QString effectFile, QString imageFile)
+void EffectDock::resetImage(QString effectFile, QString imageFile)
 {
     // 替换 XML内容
     QFile file(effectFile);
@@ -219,43 +219,6 @@ void EffectDock::replaceImage(QString effectFile, QString imageFile)
         return;
     }
     file.close();
-
-//    QDomNodeList tractorNodeList = doc.elementsByTagName("tractor");
-//    QDomElement tractorDomElement = tractorNodeList.at(0).toElement();
-
-//    //添加动画名
-//    QDomElement animation = doc.createElement("property");
-//    animation.setAttribute("name","moviemator:animationName");
-//    QString animationName = Util::baseName(effectFile).split(".")[0];
-//    QString itemName = getTranslationStr(animationName, m_animationNameTranslateInfo);
-//    QDomText animationNameDom = doc.createTextNode(itemName);
-//    animation.appendChild(animationNameDom);
-//    tractorDomElement.appendChild(animation);
-
-//    //添加图片名
-//    QDomElement image = doc.createElement("property");
-//    image.setAttribute("name","moviemator:imageName");
-//    QString imageName = Util::baseName(imageFile).split(".")[0];
-//    QDomText imageNameDom = doc.createTextNode(imageName);
-//    image.appendChild(imageNameDom);
-//    tractorDomElement.appendChild(image);
-
-//    //添加图片宽
-//    QDomElement imageW = doc.createElement("property");
-//    imageW.setAttribute("name","moviemator:imageW");
-//    QPixmap pixmap = QPixmap(imageFile);
-//    int width = pixmap.width();
-//    QDomText imageWDom = doc.createTextNode(QString::number(width));
-//    imageW.appendChild(imageWDom);
-//    tractorDomElement.appendChild(imageW);
-
-//    //添加图片宽
-//    QDomElement imageH = doc.createElement("property");
-//    imageH.setAttribute("name","moviemator:imageH");
-//    int height = pixmap.height();
-//    QDomText imageHDom = doc.createTextNode(QString::number(height));
-//    imageH.appendChild(imageHDom);
-//    tractorDomElement.appendChild(imageH);
 
     QDomNodeList nodeList = doc.elementsByTagName("producer");
     bool flagResource = false;
@@ -290,6 +253,35 @@ void EffectDock::replaceImage(QString effectFile, QString imageFile)
 
         QDomNode domNodeResource;
         QDomNode domNodeHash;
+        QDomNode domNodeRect;
+        QDomNode domNodedistort;
+
+        // 设置size滤镜参数
+        if(imageFile.contains("frame")){
+            QDomNodeList filterList = domElement.elementsByTagName("filter");
+            for(int k=0; k<filterList.count(); k++)
+            {
+                QDomElement filter = filterList.at(k).toElement();
+                if(filter.text().contains("affineSizePosition")){
+                    QDomNodeList propertyList = filter.elementsByTagName("property");
+                    for(int m=0; m<propertyList.count(); m++)
+                    {
+                        QDomElement prop = propertyList.at(m).toElement();
+                        if(prop.attribute("name").contains("transition.distort")){
+                            domNodedistort = prop.toElement().firstChild();
+                            domNodedistort.setNodeValue("1");
+                        }
+                        if(prop.attribute("name").contains("transition.rect_anim_relative")){
+                            domNodeRect = prop.toElement().firstChild();
+                            domNodeRect.setNodeValue("0.0 0.0 1.0 1.0 1");
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        // 设置图片路径
         QDomNodeList elementList = domElement.elementsByTagName("property");
         for(int j=0; j<elementList.count(); j++)
         {
@@ -315,6 +307,7 @@ void EffectDock::replaceImage(QString effectFile, QString imageFile)
                 continue;
             }
         }
+
         if(flagResource && flagHash)
         {
             domNodeResource.setNodeValue(imageFile);
@@ -365,7 +358,7 @@ void EffectDock::createEffectFile()
     }
     if(!effectFile.isEmpty() && !imageFile.isEmpty())
     {
-        replaceImage(effectFile, imageFile);
+        resetImage(effectFile, imageFile);
     }
     if(m_effectFile && m_currentListView)
     {

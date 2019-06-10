@@ -53,8 +53,8 @@ protected:
     void resizeEvent(QResizeEvent *event);
 
 private:
-    // 使用图片 imageFile替换动画 effectFile中的图片
-    void replaceImage(QString effectFile, QString imageFile);
+    // 使用图片 imageFile替换动画 effectFile中的图片,并根据类型设置sizeandposition滤镜参数
+    void resetImage(QString effectFile, QString imageFile);
     // 存放拖动动画的 MimeData
     void setMimeDataForDrag();
     // 根据动画和图片的下拉列表内容（选中即确定）创建动画文件
