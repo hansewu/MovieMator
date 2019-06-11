@@ -4637,3 +4637,7 @@ void MainWindow::loadTemplateInfo(Mlt::Producer *producer)
 //        m_templateEditor->setProducer(0);
 }
 
+void MainWindow::on_actionNewProject_triggered()
+{
+    on_actionClose_triggered();
+}
