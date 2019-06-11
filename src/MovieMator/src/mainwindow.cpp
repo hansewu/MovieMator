@@ -4447,6 +4447,8 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 
 void MainWindow::resizePlayer()
 {
+    if (!m_player || !m_propertiesDockContainer || !m_resourceDockContainer || !m_timelineDock)
+        return;
     QSize playerSize = m_player->videoSize();
     QSize propertiesDockSize = m_propertiesDockContainer->size();
     QSize resourceDockSize = m_resourceDockContainer->size();
