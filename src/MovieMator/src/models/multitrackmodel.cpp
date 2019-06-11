@@ -735,9 +735,9 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
 
         Mlt::Playlist playlist(*track);
         Q_ASSERT(playlist.is_valid());
-        Q_ASSERT(clipIndex < playlist.count());
+        //Q_ASSERT(clipIndex < playlist.count()); //此处不能加assert，因为是循环遍历所有轨道，不是选中的轨道。代码逻辑不够清晰。
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
-        Q_ASSERT(info);
+        //Q_ASSERT(info);
         //when not rippling, never touch the other tracks
         if (trackIndex != i && (!ripple || !Settings.timelineRippleAllTracks()))
             continue;
