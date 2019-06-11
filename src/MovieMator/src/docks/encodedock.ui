@@ -63,7 +63,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_20" stretch="3,4">
         <property name="spacing">
-         <number>-1</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
          <number>6</number>
@@ -117,8 +117,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>395</width>
-             <height>384</height>
+             <width>397</width>
+             <height>387</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1478,7 +1478,7 @@ in temporal compression</string>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <property name="spacing">
-         <number>-1</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
          <number>6</number>

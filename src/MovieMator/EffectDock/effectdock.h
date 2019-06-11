@@ -70,6 +70,8 @@ private:
     void readJsonFile(QString filePath, QJsonObject &jsonObj);
     // 根据字符串 srcStr从 translationInfo中寻获取对应的翻译内容
     QString getTranslationStr(QString srcStr, QJsonObject translationInfo);
+    // 根据字符串 srcStr从 propertyInfo中寻获取对应的翻译内容
+    QString getImageClassType(QString srcStr, QJsonObject propertyInfo);
 
 private slots:
     // 响应 listView按下的槽函数
@@ -114,6 +116,8 @@ private:
     QJsonObject m_animationNameTranslateInfo;
     // 图片文件名称翻译信息
     QJsonObject m_imageClassNameTranslateInfo;
+    // 图片文件名称翻译信息
+    QJsonObject m_imageClassPropertyInfo;
 };
 
 #endif // EFFECTDOCK_H

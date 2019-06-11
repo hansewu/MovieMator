@@ -130,6 +130,10 @@ private slots:
     void on_closeButton_clicked();
 
 
+    void on_widthSpinner_valueChanged(int arg1);
+
+    void on_heightSpinner_valueChanged(int arg1);
+
 private:
     // 码率控制
     enum {

@@ -55,6 +55,7 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
 
     readJsonFile(templateDir + "animation_name_translation_info.json", m_animationNameTranslateInfo);
     readJsonFile(templateDir + "imageclass_name_translation_info.json", m_imageClassNameTranslateInfo);
+    readJsonFile(templateDir + "imageclass_property_info.json", m_imageClassPropertyInfo);
 
     // 特效文件列表
     QDir effectDir(templateDir+"Effects");
@@ -185,6 +186,20 @@ void EffectDock::readJsonFile(QString filePath, QJsonObject &jsonObj) {
     jsonObj = jsonDoc.object();
 }
 
+QString EffectDock::getImageClassType(QString srcStr, QJsonObject propertyInfo){
+    QString result = "";
+    if (propertyInfo.isEmpty()) {
+        return result;
+    }
+
+    if (propertyInfo.contains(srcStr)) {
+        QJsonObject subObj = propertyInfo.value(srcStr).toObject();
+        result = subObj.value("type").toString();
+    }
+
+    return result;
+}
+
 QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInfo) {
     if (translationInfo.isEmpty()) {
         return srcStr;
@@ -256,8 +271,12 @@ void EffectDock::resetImage(QString effectFile, QString imageFile)
         QDomNode domNodeRect;
         QDomNode domNodedistort;
 
+        QDir path = QDir(imageFile);
+        path.cdUp();
+        QString className = path.dirName();
+
         // 设置size滤镜参数
-        if(imageFile.contains("frame")){
+        if(getImageClassType(className,m_imageClassPropertyInfo) == "A"){
             QDomNodeList filterList = domElement.elementsByTagName("filter");
             for(int k=0; k<filterList.count(); k++)
             {
@@ -274,6 +293,30 @@ void EffectDock::resetImage(QString effectFile, QString imageFile)
                         if(prop.attribute("name").contains("transition.rect_anim_relative")){
                             domNodeRect = prop.toElement().firstChild();
                             domNodeRect.setNodeValue("0.0 0.0 1.0 1.0 1");
+                        }
+                    }
+                    break;
+                }
+            }
+        }else if(getImageClassType(className,m_imageClassPropertyInfo) == "B"){
+            QDomNodeList filterList = domElement.elementsByTagName("filter");
+            for(int k=0; k<filterList.count(); k++)
+            {
+                QDomElement filter = filterList.at(k).toElement();
+                if(filter.text().contains("affineSizePosition")){
+                    QDomNodeList propertyList = filter.elementsByTagName("property");
+                    for(int m=0; m<propertyList.count(); m++)
+                    {
+                        QDomElement prop = propertyList.at(m).toElement();
+                        if(prop.attribute("name").contains("transition.distort")){
+                            domNodedistort = prop.toElement().firstChild();
+                            domNodedistort.setNodeValue("0");
+                        }
+                        if(prop.attribute("name").contains("transition.rect_anim_relative")){
+                            domNodeRect = prop.toElement().firstChild();
+                            QString value = prop.toElement().text();
+                            QString newValue = value.split(" ")[0] + " " + value.split(" ")[1] + " " + "0.25 0.25 1";
+                            domNodeRect.setNodeValue(newValue);
                         }
                     }
                     break;
