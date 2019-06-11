@@ -1552,3 +1552,23 @@ void EncodeDock::setCurrentPreset(Mlt::Properties *preset)
         m_currentPreset = preset;
     }
 }
+
+void EncodeDock::on_widthSpinner_valueChanged(int arg1)
+{
+    //输出分辨率的宽禁止输入奇数
+    int value = arg1;
+    if (value % 2) {
+        value = value - 1;
+    }
+    ui->widthSpinner->setValue(value);
+}
+
+void EncodeDock::on_heightSpinner_valueChanged(int arg1)
+{
+    //输出分辨率的高禁止输入奇数
+    int value = arg1;
+    if (value % 2) {
+        value = value - 1;
+    }
+    ui->heightSpinner->setValue(value);
+}
