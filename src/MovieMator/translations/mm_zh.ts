@@ -3955,7 +3955,7 @@ Invalid Time Code!</source>
     <message>
         <location filename="../src/models/multitrackmodel.cpp" line="3948"/>
         <source>&lt;p&gt;The time code of the file cannot be read. Please convert it to MP4 before adding the file. &lt;/p&gt;&lt;p&gt;Recommend:&lt;a href=&quot;http://www.effectmatrix.com/total-video-converter&quot;&gt;Total Video Converter&lt;/a&gt;&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;p&gt;文件的时间码无法读取，可以转换成mp4格式后再导入. &lt;/p&gt;&lt;p&gt;推荐:&lt;a href=&quot;http://www.effectmatrix.com/total-video-converter&quot;&gt;Total Video Converter&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
