@@ -55,21 +55,19 @@
 <context>
     <name>AttachedFilters</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="44"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="45"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="284"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="394"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="54"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="55"/>
         <source>Video</source>
         <translation type="unfinished">视频</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="46"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="326"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="54"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="56"/>
         <source>Audio</source>
         <translation type="unfinished">音频</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="463"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="406"/>
         <source>Remove selected filter</source>
         <translation type="unfinished">删除选中的滤镜</translation>
     </message>
@@ -550,45 +548,102 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>Clip</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="886"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1075"/>
+        <source>Split</source>
+        <translation type="unfinished">切分</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1086"/>
+        <source>Insert</source>
+        <translation type="unfinished">插入</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1097"/>
+        <source>Append</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1111"/>
+        <source>Delete</source>
+        <translation type="unfinished">删除</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1136"/>
         <source>Cut</source>
         <translation type="unfinished">剪切</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="900"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1152"/>
         <source>Copy</source>
         <translation type="unfinished">复制</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="912"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="967"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1163"/>
+        <source>Paste</source>
+        <translation type="unfinished">粘贴</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1178"/>
+        <source>New Video Track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1189"/>
+        <source>New Audio Track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1200"/>
+        <source>Delete Track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1214"/>
+        <source>Zoom to Fit</source>
+        <translation type="unfinished">缩放到合适</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1222"/>
+        <source>Add Filter</source>
+        <translation type="unfinished">添加滤镜</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1231"/>
+        <source>Hide</source>
+        <translation type="unfinished">隐藏</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1241"/>
+        <source>Mute</source>
+        <translation type="unfinished">静音</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1264"/>
         <source>Remove</source>
         <translation type="unfinished">删除</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="921"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1122"/>
         <source>Ripple Delete</source>
         <translation type="unfinished">删除并关闭空隙</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="934"/>
         <source>Split At Playhead (S)</source>
-        <translation type="unfinished">在游标处分割</translation>
+        <translation type="obsolete">在游标处分割</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="957"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1253"/>
         <source>Properties</source>
         <translation type="unfinished">属性</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="957"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1253"/>
         <source>Transition Settings</source>
         <translation type="unfinished">转场设置</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="978"/>
         <source>Text Settings</source>
-        <translation type="unfinished">文字设置</translation>
+        <translation type="obsolete">文字设置</translation>
     </message>
 </context>
 <context>
@@ -698,17 +753,17 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished">表格</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.ui" line="56"/>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="59"/>
         <source>Color</source>
         <translation type="unfinished">颜色</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.ui" line="133"/>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="136"/>
         <source>Color...</source>
         <translation type="unfinished">颜色</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.ui" line="146"/>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="149"/>
         <source>#00000000</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1359,7 +1414,7 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1504"/>
-        <location filename="../src/docks/encodedock.cpp" line="1367"/>
+        <location filename="../src/docks/encodedock.cpp" line="1370"/>
         <source>Delete Preset</source>
         <translation type="unfinished">删除预设</translation>
     </message>
@@ -1390,9 +1445,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1587"/>
-        <location filename="../src/docks/encodedock.cpp" line="1268"/>
-        <location filename="../src/docks/encodedock.cpp" line="1275"/>
-        <location filename="../src/docks/encodedock.cpp" line="1395"/>
+        <location filename="../src/docks/encodedock.cpp" line="1271"/>
+        <location filename="../src/docks/encodedock.cpp" line="1278"/>
+        <location filename="../src/docks/encodedock.cpp" line="1398"/>
         <source>Stream</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1403,88 +1458,88 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1601"/>
-        <location filename="../src/docks/encodedock.cpp" line="1149"/>
+        <location filename="../src/docks/encodedock.cpp" line="1152"/>
         <source>Export File</source>
         <translation type="unfinished">导出文件</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="92"/>
+        <location filename="../src/docks/encodedock.cpp" line="95"/>
         <source>Automatic from extension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="101"/>
-        <location filename="../src/docks/encodedock.cpp" line="109"/>
+        <location filename="../src/docks/encodedock.cpp" line="104"/>
+        <location filename="../src/docks/encodedock.cpp" line="112"/>
         <source>Default for format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="362"/>
+        <location filename="../src/docks/encodedock.cpp" line="365"/>
         <source>Timeline</source>
         <translation type="unfinished">时间线</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="364"/>
+        <location filename="../src/docks/encodedock.cpp" line="367"/>
         <source>Playlist</source>
         <translation type="unfinished">播放列表</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="366"/>
+        <location filename="../src/docks/encodedock.cpp" line="369"/>
         <source>Each Playlist Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="374"/>
-        <location filename="../src/docks/encodedock.cpp" line="383"/>
+        <location filename="../src/docks/encodedock.cpp" line="377"/>
+        <location filename="../src/docks/encodedock.cpp" line="386"/>
         <source>Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="423"/>
-        <location filename="../src/docks/encodedock.cpp" line="1053"/>
+        <location filename="../src/docks/encodedock.cpp" line="426"/>
+        <location filename="../src/docks/encodedock.cpp" line="1056"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1128"/>
+        <location filename="../src/docks/encodedock.cpp" line="1131"/>
         <source>Stop Capture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1130"/>
-        <location filename="../src/docks/encodedock.cpp" line="1149"/>
-        <location filename="../src/docks/encodedock.cpp" line="1394"/>
+        <location filename="../src/docks/encodedock.cpp" line="1133"/>
+        <location filename="../src/docks/encodedock.cpp" line="1152"/>
+        <location filename="../src/docks/encodedock.cpp" line="1397"/>
         <source>Capture File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1149"/>
+        <location filename="../src/docks/encodedock.cpp" line="1152"/>
         <source>*.%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1263"/>
-        <location filename="../src/docks/encodedock.cpp" line="1284"/>
+        <location filename="../src/docks/encodedock.cpp" line="1266"/>
+        <location filename="../src/docks/encodedock.cpp" line="1287"/>
         <source>Stop Stream</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1276"/>
+        <location filename="../src/docks/encodedock.cpp" line="1279"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1316"/>
+        <location filename="../src/docks/encodedock.cpp" line="1319"/>
         <source>Add Export Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1368"/>
+        <location filename="../src/docks/encodedock.cpp" line="1371"/>
         <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1523"/>
+        <location filename="../src/docks/encodedock.cpp" line="1526"/>
         <source>KiB (%1s)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1609,17 +1664,17 @@ in temporal compression</source>
 <context>
     <name>FilterConfigView</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FilterConfigView.qml" line="132"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FilterConfigView.qml" line="138"/>
         <source>Nothing selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FilterConfigView.qml" line="144"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FilterConfigView.qml" line="151"/>
         <source>Add a filter</source>
         <translation type="unfinished">添加一个滤镜</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FilterConfigView.qml" line="160"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FilterConfigView.qml" line="168"/>
         <source>Remove selected filter</source>
         <translation type="unfinished">删除选中的滤镜</translation>
     </message>
@@ -1627,7 +1682,7 @@ in temporal compression</source>
 <context>
     <name>FilterController</name>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="171"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="173"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1636,7 +1691,7 @@ in temporal compression</source>
         <translation type="obsolete">常用</translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="593"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="596"/>
         <source>Only one %1 filter is allowed.</source>
         <translation type="unfinished">仅允许一个%1滤镜</translation>
     </message>
@@ -1708,13 +1763,13 @@ in temporal compression</source>
 <context>
     <name>FiltersUI</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FiltersUI.qml" line="83"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FiltersUI.qml" line="106"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FiltersUI.qml" line="84"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FiltersUI.qml" line="107"/>
         <source>All</source>
         <translation type="unfinished">全部</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FiltersUI.qml" line="300"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FiltersUI.qml" line="299"/>
         <source>Filters</source>
         <translation type="unfinished">滤镜</translation>
     </message>
@@ -2121,17 +2176,17 @@ the list. This does not stop a currently running job. Right-
         <translation type="unfinished">移除</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.cpp" line="105"/>
+        <location filename="../src/docks/jobsdock.cpp" line="106"/>
         <source>Job Log</source>
         <translation type="unfinished">任务日志</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.cpp" line="181"/>
+        <location filename="../src/docks/jobsdock.cpp" line="182"/>
         <source>Tips</source>
         <translation type="unfinished">提示</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.cpp" line="182"/>
+        <location filename="../src/docks/jobsdock.cpp" line="183"/>
         <source>The jobs will be stop, continue to close?</source>
         <translation type="unfinished">任务将会被停止，继续关闭吗？</translation>
     </message>
@@ -2147,7 +2202,7 @@ the list. This does not stop a currently running job. Right-
         <translation type="obsolete">关键帧</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrame.qml" line="71"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrame.qml" line="75"/>
         <source>Auto set as key frame at postion</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2171,37 +2226,41 @@ the list. This does not stop a currently running job. Right-
         <translation type="obsolete">移除关键帧</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="73"/>
         <source>Key Frame</source>
+        <translation type="obsolete">关键帧</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="110"/>
+        <source>KeyFrame</source>
         <translation type="unfinished">关键帧</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="96"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="140"/>
         <source>Enable Key Frames</source>
         <translation type="unfinished">开启关键帧</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="140"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="184"/>
         <source>Auto Add Key Frames</source>
         <translation type="unfinished">自动增加关键帧</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="180"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="224"/>
         <source>Add key frame</source>
         <translation type="unfinished">增加关键帧</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="213"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="257"/>
         <source>Remove key frame</source>
         <translation type="unfinished">移除关键帧</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="323"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="365"/>
         <source>Confirm Removing Keyframes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="324"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="366"/>
         <source>This will remove all keyframes.&lt;p&gt;Do you still want to do this?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2214,7 +2273,7 @@ the list. This does not stop a currently running job. Right-
         <translation type="obsolete">移除关键帧</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="256"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="300"/>
         <source>Prev key frame</source>
         <translation type="unfinished">上一帧</translation>
     </message>
@@ -2223,7 +2282,7 @@ the list. This does not stop a currently running job. Right-
         <translation type="obsolete">上一帧</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="292"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="336"/>
         <source>Next key frame</source>
         <translation type="unfinished">下一帧</translation>
     </message>
@@ -2505,7 +2564,7 @@ duration of the transition.</source>
 <context>
     <name>MainController</name>
     <message>
-        <location filename="../src/maincontroller.cpp" line="92"/>
+        <location filename="../src/maincontroller.cpp" line="93"/>
         <source>For reasons of copyright protection, you can not import vob or m4p files</source>
         <translation type="unfinished">因为版权保护，不支持导入vob和m4p文件</translation>
     </message>
@@ -2514,9 +2573,9 @@ duration of the transition.</source>
     <name>MainWindow</name>
     <message>
         <location filename="../src/mainwindow.ui" line="26"/>
-        <location filename="../src/mainwindow.cpp" line="692"/>
-        <location filename="../src/mainwindow.cpp" line="699"/>
-        <location filename="../src/mainwindow.cpp" line="1892"/>
+        <location filename="../src/mainwindow.cpp" line="715"/>
+        <location filename="../src/mainwindow.cpp" line="722"/>
+        <location filename="../src/mainwindow.cpp" line="1915"/>
         <source>MovieMator Video Editor</source>
         <translation type="unfinished">剪大师</translation>
     </message>
@@ -2526,82 +2585,82 @@ duration of the transition.</source>
         <translation type="unfinished">文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="88"/>
+        <location filename="../src/mainwindow.ui" line="89"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">编辑</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="96"/>
+        <location filename="../src/mainwindow.ui" line="97"/>
         <source>&amp;Help</source>
         <translation>帮助</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="116"/>
+        <location filename="../src/mainwindow.ui" line="117"/>
         <source>Settings</source>
         <translation type="unfinished">设置</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="120"/>
+        <location filename="../src/mainwindow.ui" line="121"/>
         <source>Deinterlacer</source>
         <translation type="unfinished">反交错</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="129"/>
+        <location filename="../src/mainwindow.ui" line="130"/>
         <source>Interpolation</source>
         <translation type="unfinished">变形</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="138"/>
+        <location filename="../src/mainwindow.ui" line="139"/>
         <source>Video Mode</source>
         <translation type="unfinished">视频模式</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="144"/>
+        <location filename="../src/mainwindow.ui" line="145"/>
         <source>External Monitor</source>
         <translation type="unfinished">外部监视</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="150"/>
+        <location filename="../src/mainwindow.ui" line="151"/>
         <source>Gamma</source>
         <translation type="unfinished">Gamma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="157"/>
+        <location filename="../src/mainwindow.ui" line="158"/>
         <source>Display Method</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="166"/>
+        <location filename="../src/mainwindow.ui" line="167"/>
         <source>Language</source>
         <translation type="unfinished">语言</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="199"/>
+        <location filename="../src/mainwindow.ui" line="200"/>
         <source>&amp;Open File...</source>
         <translation type="unfinished">打开文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="202"/>
+        <location filename="../src/mainwindow.ui" line="203"/>
         <source>Open a video, audio, image or project file</source>
         <translation type="unfinished">打开视频、音频、图片或mmp工程文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="205"/>
+        <location filename="../src/mainwindow.ui" line="206"/>
         <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="216"/>
+        <location filename="../src/mainwindow.ui" line="217"/>
         <source>E&amp;xit</source>
         <translation type="unfinished">退出</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="219"/>
+        <location filename="../src/mainwindow.ui" line="220"/>
         <source>Quit the application</source>
         <translation type="unfinished">退出程序</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="222"/>
+        <location filename="../src/mainwindow.ui" line="223"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2614,434 +2673,444 @@ duration of the transition.</source>
         <translation type="obsolete">关于MovieMator Video Editor Pro</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="227"/>
+        <location filename="../src/mainwindow.ui" line="228"/>
         <source>&amp;About MovieMator Video Editor Pro</source>
         <translation type="unfinished">关于MovieMator Video Editor Pro</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="247"/>
+        <location filename="../src/mainwindow.ui" line="248"/>
         <source>Open Other...</source>
         <translation type="unfinished">打开其他...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="250"/>
+        <location filename="../src/mainwindow.ui" line="251"/>
         <source>Open a device, stream or generator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="253"/>
+        <location filename="../src/mainwindow.ui" line="254"/>
         <source>Ctrl+Shift+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="271"/>
+        <location filename="../src/mainwindow.ui" line="272"/>
         <source>&amp;Save</source>
         <translation type="unfinished">保存</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="274"/>
+        <location filename="../src/mainwindow.ui" line="275"/>
         <source>Save project</source>
         <translation type="unfinished">保存工程</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="277"/>
+        <location filename="../src/mainwindow.ui" line="278"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="288"/>
+        <location filename="../src/mainwindow.ui" line="289"/>
         <source>Save &amp;As...</source>
         <translation type="unfinished">另存为</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="291"/>
+        <location filename="../src/mainwindow.ui" line="292"/>
         <source>Save project to a different MLT XML file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="294"/>
+        <location filename="../src/mainwindow.ui" line="295"/>
         <source>Ctrl+Shift+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="306"/>
+        <location filename="../src/mainwindow.ui" line="307"/>
         <source>Export</source>
         <translation type="unfinished">导出</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="309"/>
+        <location filename="../src/mainwindow.ui" line="310"/>
         <source>Show the Export panel</source>
         <translation type="unfinished">显示导出窗口</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="321"/>
+        <location filename="../src/mainwindow.ui" line="322"/>
         <source>&amp;Undo</source>
         <translation type="unfinished">撤销</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="336"/>
+        <location filename="../src/mainwindow.ui" line="337"/>
         <source>&amp;Redo</source>
         <translation type="unfinished">重做</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="348"/>
+        <location filename="../src/mainwindow.ui" line="349"/>
         <source>Forum</source>
         <translation type="unfinished">论坛</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="356"/>
+        <location filename="../src/mainwindow.ui" line="357"/>
         <source>FAQ...</source>
         <translation type="unfinished">常见问题</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="368"/>
-        <location filename="../src/mainwindow.cpp" line="3185"/>
+        <location filename="../src/mainwindow.ui" line="369"/>
+        <location filename="../src/mainwindow.cpp" line="3209"/>
         <source>Enter Full Screen</source>
         <translation type="unfinished">进入全屏模式</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="371"/>
+        <location filename="../src/mainwindow.ui" line="372"/>
         <source>Ctrl+Shift+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="380"/>
+        <location filename="../src/mainwindow.ui" line="381"/>
         <source>Peak Meter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="383"/>
+        <location filename="../src/mainwindow.ui" line="384"/>
         <source>Show or hide the audio peak meter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="395"/>
-        <location filename="../src/mainwindow.cpp" line="619"/>
-        <location filename="../src/mainwindow.cpp" line="638"/>
+        <location filename="../src/mainwindow.ui" line="396"/>
+        <location filename="../src/mainwindow.cpp" line="640"/>
+        <location filename="../src/mainwindow.cpp" line="659"/>
         <source>Properties</source>
         <translation type="unfinished">属性</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="407"/>
+        <location filename="../src/mainwindow.ui" line="408"/>
         <source>Recent</source>
         <translation type="unfinished">当前</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="419"/>
+        <location filename="../src/mainwindow.ui" line="420"/>
         <source>Playlist</source>
         <translation type="unfinished">播放列表</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="431"/>
-        <location filename="../src/mainwindow.cpp" line="506"/>
+        <location filename="../src/mainwindow.ui" line="432"/>
+        <location filename="../src/mainwindow.cpp" line="526"/>
         <source>History</source>
         <translation type="unfinished">历史</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="443"/>
+        <location filename="../src/mainwindow.ui" line="444"/>
         <source>Full Screen</source>
         <translation type="unfinished">全屏</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="457"/>
+        <location filename="../src/mainwindow.ui" line="458"/>
         <source>Realtime (frame dropping)</source>
         <translation type="unfinished">实时（丢帧）</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="468"/>
+        <location filename="../src/mainwindow.ui" line="469"/>
         <source>Progressive</source>
         <translation type="unfinished">逐行</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="479"/>
+        <location filename="../src/mainwindow.ui" line="480"/>
         <source>GPU Processing (experimental)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="493"/>
+        <location filename="../src/mainwindow.ui" line="494"/>
         <source>One Field (fast)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="501"/>
+        <location filename="../src/mainwindow.ui" line="502"/>
         <source>Linear Blend (fast)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="509"/>
+        <location filename="../src/mainwindow.ui" line="510"/>
         <source>YADIF - temporal only (good)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="517"/>
+        <location filename="../src/mainwindow.ui" line="518"/>
         <source>YADIF - temporal + spatial (best)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="528"/>
+        <location filename="../src/mainwindow.ui" line="529"/>
         <source>Nearest Neighbor (fast)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="536"/>
+        <location filename="../src/mainwindow.ui" line="537"/>
         <source>Bilinear (good)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="544"/>
+        <location filename="../src/mainwindow.ui" line="545"/>
         <source>Bicubic (better)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="552"/>
+        <location filename="../src/mainwindow.ui" line="553"/>
         <source>Hyper/Lanczos (best)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="563"/>
-        <location filename="../src/mainwindow.ui" line="739"/>
+        <location filename="../src/mainwindow.ui" line="564"/>
+        <location filename="../src/mainwindow.ui" line="740"/>
         <source>Automatic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="574"/>
+        <location filename="../src/mainwindow.ui" line="575"/>
         <source>None</source>
         <translation type="unfinished">无</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="582"/>
+        <location filename="../src/mainwindow.ui" line="583"/>
         <source>Use JACK Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="594"/>
+        <location filename="../src/mainwindow.ui" line="595"/>
         <source>Filters</source>
         <translation type="unfinished">滤镜</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="597"/>
+        <location filename="../src/mainwindow.ui" line="598"/>
         <source>Modify the video image or audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="605"/>
+        <location filename="../src/mainwindow.ui" line="606"/>
         <source>Add...</source>
         <translation type="unfinished">添加</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="613"/>
+        <location filename="../src/mainwindow.ui" line="614"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="616"/>
+        <location filename="../src/mainwindow.ui" line="617"/>
         <source>Use the user or platform style, colors, and icons.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="624"/>
+        <location filename="../src/mainwindow.ui" line="625"/>
         <source>Fusion Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="632"/>
+        <location filename="../src/mainwindow.ui" line="633"/>
         <source>Fusion Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="637"/>
+        <location filename="../src/mainwindow.ui" line="638"/>
         <source>Tutorials...</source>
         <translation type="unfinished">教程</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="652"/>
+        <location filename="../src/mainwindow.ui" line="653"/>
         <source>Timeline</source>
         <translation type="unfinished">时间线</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="660"/>
-        <location filename="../src/mainwindow.ui" line="663"/>
+        <location filename="../src/mainwindow.ui" line="661"/>
+        <location filename="../src/mainwindow.ui" line="664"/>
         <source>Restore Default Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="671"/>
+        <location filename="../src/mainwindow.ui" line="672"/>
         <source>Show Title Bars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="679"/>
+        <location filename="../src/mainwindow.ui" line="680"/>
         <source>Show Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="684"/>
+        <location filename="../src/mainwindow.ui" line="685"/>
         <source>Upgrade...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="692"/>
+        <location filename="../src/mainwindow.ui" line="693"/>
         <source>Open MLT XML As Clip...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="695"/>
+        <location filename="../src/mainwindow.ui" line="696"/>
         <source>Open a MLT XML project file as a virtual clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="706"/>
+        <location filename="../src/mainwindow.ui" line="707"/>
         <source>sRGB (computer)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="714"/>
+        <location filename="../src/mainwindow.ui" line="715"/>
         <source>Rec. 709 (TV)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="725"/>
+        <location filename="../src/mainwindow.ui" line="726"/>
         <source>Scrub Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="763"/>
+        <location filename="../src/mainwindow.ui" line="764"/>
         <source>Software (Mesa)</source>
         <extracomment>Do not translate &quot;Mesa&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="768"/>
+        <location filename="../src/mainwindow.ui" line="769"/>
         <source>Application Log...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="776"/>
+        <location filename="../src/mainwindow.ui" line="777"/>
         <source>Project</source>
         <translation type="unfinished">工程</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="784"/>
+        <location filename="../src/mainwindow.ui" line="785"/>
         <source>Player</source>
         <translation type="unfinished">播放器</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="792"/>
+        <location filename="../src/mainwindow.ui" line="793"/>
         <source>User Interface</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="801"/>
+        <location filename="../src/mainwindow.ui" line="802"/>
         <source>Close</source>
         <translation type="unfinished">关闭</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="804"/>
+        <location filename="../src/mainwindow.ui" line="805"/>
         <source>Ctrl+W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="819"/>
+        <location filename="../src/mainwindow.ui" line="820"/>
         <source>Cu&amp;t</source>
         <translation type="unfinished">剪切</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="822"/>
+        <location filename="../src/mainwindow.ui" line="823"/>
         <source>Ctrl+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="834"/>
+        <location filename="../src/mainwindow.ui" line="835"/>
         <source>&amp;Copy</source>
         <translation type="unfinished">复制</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="837"/>
+        <location filename="../src/mainwindow.ui" line="838"/>
         <source>Ctrl+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="849"/>
+        <location filename="../src/mainwindow.ui" line="850"/>
         <source>&amp;Paste</source>
         <translation type="unfinished">粘贴</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="852"/>
+        <location filename="../src/mainwindow.ui" line="853"/>
         <source>Ctrl+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="857"/>
+        <location filename="../src/mainwindow.ui" line="858"/>
         <source>Export EDL...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="869"/>
-        <location filename="../src/mainwindow.cpp" line="4024"/>
+        <location filename="../src/mainwindow.ui" line="870"/>
+        <location filename="../src/mainwindow.cpp" line="4101"/>
         <source>Remove</source>
         <translation type="unfinished">删除</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="872"/>
+        <location filename="../src/mainwindow.ui" line="873"/>
         <source>remove media files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="881"/>
-        <location filename="../src/mainwindow.cpp" line="4063"/>
+        <location filename="../src/mainwindow.ui" line="882"/>
+        <location filename="../src/mainwindow.cpp" line="4140"/>
         <source>Feedback</source>
         <translation type="unfinished">反馈</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="884"/>
+        <location filename="../src/mainwindow.ui" line="885"/>
         <source>send us your suggestions</source>
         <translation type="unfinished">将您的问题或建议发送给我们</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="889"/>
+        <location filename="../src/mainwindow.ui" line="890"/>
         <source>Facebook</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="897"/>
+        <location filename="../src/mainwindow.ui" line="898"/>
         <source>Home Page</source>
         <translation type="unfinished">官网</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="902"/>
-        <location filename="../src/mainwindow.cpp" line="4089"/>
+        <location filename="../src/mainwindow.ui" line="903"/>
+        <location filename="../src/mainwindow.cpp" line="4166"/>
         <source>Buy a License Code</source>
         <translation type="unfinished">购买注册码</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="907"/>
+        <location filename="../src/mainwindow.ui" line="908"/>
         <source>Enter License Code</source>
         <translation type="unfinished">输入注册码</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="912"/>
+        <location filename="../src/mainwindow.ui" line="913"/>
         <source>Execute Python</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="920"/>
+        <location filename="../src/mainwindow.ui" line="921"/>
         <source>English</source>
         <translation type="unfinished">英文</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="925"/>
+        <location filename="../src/mainwindow.ui" line="926"/>
         <source>Chinese</source>
         <translation type="unfinished">中文</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="930"/>
+        <location filename="../src/mainwindow.ui" line="931"/>
         <source>Get Total Video Converter Pro</source>
         <translation type="unfinished">获取Total Video Converter Pro</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="935"/>
+        <location filename="../src/mainwindow.ui" line="936"/>
         <source>Get Total Video Player</source>
         <translation type="unfinished">获取 超级播霸Total Video Player</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="946"/>
+        <source>&amp;New Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="949"/>
+        <source>Ctrl+N</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="214"/>
@@ -3068,87 +3137,87 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="682"/>
+        <location filename="../src/mainwindow.cpp" line="705"/>
         <source>MovieMator Video Editor Pro (Unregistered)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="684"/>
+        <location filename="../src/mainwindow.cpp" line="707"/>
         <source>MovieMator Video Editor Pro (Personal)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="688"/>
-        <location filename="../src/mainwindow.cpp" line="690"/>
-        <location filename="../src/mainwindow.cpp" line="697"/>
+        <location filename="../src/mainwindow.cpp" line="711"/>
+        <location filename="../src/mainwindow.cpp" line="713"/>
+        <location filename="../src/mainwindow.cpp" line="720"/>
         <source>MovieMator Video Editor Pro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="872"/>
+        <location filename="../src/mainwindow.cpp" line="895"/>
         <source>Non-Broadcast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="883"/>
+        <location filename="../src/mainwindow.cpp" line="906"/>
         <source>DVD Widescreen NTSC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="884"/>
+        <location filename="../src/mainwindow.cpp" line="907"/>
         <source>DVD Widescreen PAL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="889"/>
+        <location filename="../src/mainwindow.cpp" line="912"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="908"/>
+        <location filename="../src/mainwindow.cpp" line="931"/>
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="939"/>
+        <location filename="../src/mainwindow.cpp" line="962"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="942"/>
+        <location filename="../src/mainwindow.cpp" line="965"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="945"/>
+        <location filename="../src/mainwindow.cpp" line="968"/>
         <source>External</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="962"/>
+        <location filename="../src/mainwindow.cpp" line="985"/>
         <source>DeckLink Keyer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1134"/>
-        <location filename="../src/mainwindow.cpp" line="1136"/>
-        <location filename="../src/mainwindow.cpp" line="3673"/>
+        <location filename="../src/mainwindow.cpp" line="1157"/>
+        <location filename="../src/mainwindow.cpp" line="1159"/>
+        <location filename="../src/mainwindow.cpp" line="3743"/>
         <source>Failed to open </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1162"/>
+        <location filename="../src/mainwindow.cpp" line="1185"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1215"/>
+        <location filename="../src/mainwindow.cpp" line="1238"/>
         <source>Repairing the project failed.</source>
         <translation type="unfinished">修复工程失败</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1227"/>
+        <location filename="../src/mainwindow.cpp" line="1250"/>
         <source>MovieMator noticed some problems in your project.
 Do you want MovieMator to try to repair it?
 
@@ -3157,34 +3226,41 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1268"/>
+        <location filename="../src/mainwindow.cpp" line="1291"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1406"/>
+        <location filename="../src/mainwindow.cpp" line="1429"/>
         <source>For reasons of copyright protection, you can not import vob or m4p files</source>
         <translation type="unfinished">因为版权保护，不支持导入vob和m4p文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2971"/>
+        <location filename="../src/mainwindow.cpp" line="2995"/>
         <source>http://moviemator.net</source>
         <translation type="unfinished">http://jiandashi.com</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3938"/>
-        <location filename="../src/mainwindow.cpp" line="4331"/>
+        <location filename="../src/mainwindow.cpp" line="3562"/>
+        <source>You must restart MovieMator to change the video mode.
+Do you want to change video mode now?</source>
+        <translation type="unfinished">您必须重启程序以完成视频模式更改。
+是否现在重启程序？</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4009"/>
+        <location filename="../src/mainwindow.cpp" line="4412"/>
         <source>http://www.macvideostudio.com/quickly-start-movie-video-editing-mac.html</source>
         <translation type="unfinished">http://www.jiandashi.com/shipinbianji-quick-guide.html</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4223"/>
-        <location filename="../src/mainwindow.cpp" line="4277"/>
+        <location filename="../src/mainwindow.cpp" line="4304"/>
+        <location filename="../src/mainwindow.cpp" line="4358"/>
         <source>http://moviemator.net/buynow.html</source>
         <translation type="unfinished">http://jiandashi.com/buynow.html</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4568"/>
+        <location filename="../src/mainwindow.cpp" line="4652"/>
         <source>Template (*.mlt)</source>
         <translation type="unfinished">http://jiandashi.com/buynow.html</translation>
     </message>
@@ -3205,29 +3281,29 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation type="obsolete">&lt;h1&gt;MovieMator Video Editor %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;产品主页: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;MovieMator Video Editor&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2019 effectmatrix, Inc&lt;/p&gt;&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1603"/>
-        <location filename="../src/mainwindow.cpp" line="3653"/>
+        <location filename="../src/mainwindow.cpp" line="1626"/>
+        <location filename="../src/mainwindow.cpp" line="3723"/>
         <source>Open File</source>
         <translation type="unfinished">打开文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1875"/>
-        <location filename="../src/mainwindow.cpp" line="1877"/>
-        <location filename="../src/mainwindow.cpp" line="1879"/>
-        <location filename="../src/mainwindow.cpp" line="1881"/>
-        <location filename="../src/mainwindow.cpp" line="1883"/>
-        <location filename="../src/mainwindow.cpp" line="1885"/>
-        <location filename="../src/mainwindow.cpp" line="1890"/>
-        <location filename="../src/mainwindow.cpp" line="1892"/>
+        <location filename="../src/mainwindow.cpp" line="1898"/>
+        <location filename="../src/mainwindow.cpp" line="1900"/>
+        <location filename="../src/mainwindow.cpp" line="1902"/>
+        <location filename="../src/mainwindow.cpp" line="1904"/>
+        <location filename="../src/mainwindow.cpp" line="1906"/>
+        <location filename="../src/mainwindow.cpp" line="1908"/>
+        <location filename="../src/mainwindow.cpp" line="1913"/>
+        <location filename="../src/mainwindow.cpp" line="1915"/>
         <source>%1[*] - %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="230"/>
-        <location filename="../src/mainwindow.ui" line="233"/>
-        <location filename="../src/mainwindow.cpp" line="745"/>
-        <location filename="../src/mainwindow.cpp" line="1929"/>
-        <location filename="../src/mainwindow.cpp" line="1960"/>
+        <location filename="../src/mainwindow.ui" line="231"/>
+        <location filename="../src/mainwindow.ui" line="234"/>
+        <location filename="../src/mainwindow.cpp" line="768"/>
+        <location filename="../src/mainwindow.cpp" line="1952"/>
+        <location filename="../src/mainwindow.cpp" line="1983"/>
         <source>About MovieMator Video Editor Pro</source>
         <translation type="unfinished">关于MovieMator Video Editor Pro</translation>
     </message>
@@ -3236,84 +3312,83 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation type="obsolete">关于MovieMator Free Mac Video Editor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="747"/>
-        <location filename="../src/mainwindow.cpp" line="1943"/>
-        <location filename="../src/mainwindow.cpp" line="1974"/>
+        <location filename="../src/mainwindow.cpp" line="770"/>
+        <location filename="../src/mainwindow.cpp" line="1966"/>
+        <location filename="../src/mainwindow.cpp" line="1997"/>
         <source>About MovieMator Video Editor</source>
         <translation type="unfinished">关于剪大师</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2583"/>
-        <location filename="../src/mainwindow.cpp" line="2616"/>
+        <location filename="../src/mainwindow.cpp" line="2606"/>
+        <location filename="../src/mainwindow.cpp" line="2639"/>
         <source>Saved %1</source>
         <translation type="unfinished">保存 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2593"/>
+        <location filename="../src/mainwindow.cpp" line="2616"/>
         <source>Save MMP</source>
         <translation type="unfinished">保存MMP</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2593"/>
+        <location filename="../src/mainwindow.cpp" line="2616"/>
         <source>MMP (*.mmp)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2608"/>
+        <location filename="../src/mainwindow.cpp" line="2631"/>
         <source>Unable to save empty file, but saved its name for future.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="633"/>
+        <location filename="../src/mainwindow.cpp" line="654"/>
         <source>Simple Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="642"/>
         <source>Filter</source>
-        <translation type="unfinished">滤镜</translation>
+        <translation type="obsolete">滤镜</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1930"/>
-        <location filename="../src/mainwindow.cpp" line="1961"/>
+        <location filename="../src/mainwindow.cpp" line="1953"/>
+        <location filename="../src/mainwindow.cpp" line="1984"/>
         <source>&lt;h1&gt;MovieMator Video Editor Pro %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=%2&gt;MovieMator Video Editor Pro&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2019 effectmatrix, Inc&lt;/p&gt;&lt;p&gt;Based on Shotcut v16.06 Copyright &amp;copy; 2011-2016 Meltytech, LLC.&lt;/p&gt;&lt;p&gt;Licensed under the GNU General Public License v3.0&lt;/p&gt;&lt;/small&gt;&lt;small&gt;&lt;p /&gt;&lt;p&gt;&lt;a href=&quot;http://www.moviemator.net/develop/third-party.html&quot;&gt;Related Information&lt;/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;mailto:market@effectmatrix.com&quot;&gt;Feedback&lt;/a&gt;&lt;/p&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1944"/>
-        <location filename="../src/mainwindow.cpp" line="1975"/>
+        <location filename="../src/mainwindow.cpp" line="1967"/>
+        <location filename="../src/mainwindow.cpp" line="1998"/>
         <source>&lt;h1&gt;MovieMator Video Editor %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=%2&gt;MovieMator Video Editor&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2019 effectmatrix, Inc&lt;/p&gt;&lt;p&gt;Based on Shotcut v16.06 Copyright &amp;copy; 2011-2016 Meltytech, LLC.&lt;/p&gt;&lt;p&gt;Licensed under the GNU General Public License v3.0&lt;/p&gt;&lt;/small&gt;&lt;small&gt;&lt;p /&gt;&lt;p&gt;&lt;a href=&quot;http://www.moviemator.net/develop/third-party.html&quot;&gt;Related Information&lt;/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;mailto:market@effectmatrix.com&quot;&gt;Feedback&lt;/a&gt;&lt;/p&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2627"/>
+        <location filename="../src/mainwindow.cpp" line="2650"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished">工程已修改，要保存吗?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2659"/>
+        <location filename="../src/mainwindow.cpp" line="2682"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation type="unfinished">还有任务没有完成，确定退出吗?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2724"/>
+        <location filename="../src/mainwindow.cpp" line="2747"/>
         <source>To export video, you must add one or more files to timeline.</source>
         <translation type="unfinished">要导出视频，需要拖放至少一个文件到时间线</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3188"/>
+        <location filename="../src/mainwindow.cpp" line="3212"/>
         <source>Exit Full Screen</source>
         <translation type="unfinished">退出全屏</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3201"/>
+        <location filename="../src/mainwindow.cpp" line="3225"/>
         <source>GPU Processing is not supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3373"/>
+        <location filename="../src/mainwindow.cpp" line="3398"/>
         <source>You must restart MovieMator to switch to the new language.
 Do you want to change language now?</source>
         <translation type="unfinished"></translation>
@@ -3325,101 +3400,103 @@ Do you want to restart now?</source>
 现在重启吗?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="686"/>
+        <location filename="../src/mainwindow.cpp" line="709"/>
         <source>MovieMator Video Editor Pro (Business)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1602"/>
+        <location filename="../src/mainwindow.cpp" line="1625"/>
         <source>All supported files(*.mmp *.png *.bmp *.tiff *.jpeg *.gif *.jpg *.3gp *.3gp2 *.3g2 *.3gpp *.a52  *.avi *.asf  *.ac3 *.aac *.au *.aiff *.aif *.ape *.amr *.caf *.cda *.dat *.divx *.dsm *.dv *.dts *.dvr-ms *.flac  *.fli  *.flc *.flv *.f4v *.gif *.ifo *.m4r *.mp2 *.mp3 *.mmf *.mp4 *.mov *.mpg *.mpeg *.m1v *.mpeg1 *.mpeg2 *.m2a *.mp1  *.m2p *.m2v *.mpv *.mpa *.mpeg4*.mod *.m2ts *.mts *.m4v *.m4a *.mxf *.mkv *.mka *.ogg *.ogv*.ogm *.oga *.qt *.rmvb *.rm *.ra *.ram *.tod  *.ts *.vob *.wma *.wav *.wmv *.webm *.wtv)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4568"/>
+        <location filename="../src/mainwindow.cpp" line="4652"/>
         <source>Save Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3443"/>
+        <location filename="../src/mainwindow.cpp" line="3468"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="603"/>
+        <location filename="../src/mainwindow.cpp" line="624"/>
         <source>File</source>
         <translation type="unfinished">文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="606"/>
+        <location filename="../src/mainwindow.cpp" line="627"/>
+        <location filename="../src/mainwindow.cpp" line="663"/>
         <source>Video Filter</source>
         <translation type="unfinished">视频滤镜</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="609"/>
+        <location filename="../src/mainwindow.cpp" line="630"/>
+        <location filename="../src/mainwindow.cpp" line="665"/>
         <source>Audio Filter</source>
         <translation type="unfinished">音频滤镜</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="617"/>
+        <location filename="../src/mainwindow.cpp" line="638"/>
         <source>Stickers</source>
         <translation type="unfinished">贴图</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3452"/>
+        <location filename="../src/mainwindow.cpp" line="3477"/>
         <source>You must restart MovieMator to switch using GPU processing.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3654"/>
+        <location filename="../src/mainwindow.cpp" line="3724"/>
         <source>MMP (*.mmp);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3714"/>
+        <location filename="../src/mainwindow.cpp" line="3784"/>
         <source>You must restart MovieMator to change the display method.
 Do you want to restart now?</source>
         <translation type="unfinished">要修改显示模式，需要重启MovieMator
 现在重启吗?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3736"/>
+        <location filename="../src/mainwindow.cpp" line="3806"/>
         <source>Application Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3772"/>
+        <location filename="../src/mainwindow.cpp" line="3843"/>
         <source>MovieMator version %1 is available! Click here to get it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3776"/>
+        <location filename="../src/mainwindow.cpp" line="3847"/>
         <source>You are running the latest version of MovieMator.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3786"/>
+        <location filename="../src/mainwindow.cpp" line="3857"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3836"/>
+        <location filename="../src/mainwindow.cpp" line="3907"/>
         <source>Export EDL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3836"/>
+        <location filename="../src/mainwindow.cpp" line="3907"/>
         <source>EDL (*.edl)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3877"/>
+        <location filename="../src/mainwindow.cpp" line="3948"/>
         <source>A JavaScript error occurred during export.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3880"/>
+        <location filename="../src/mainwindow.cpp" line="3951"/>
         <source>Failed to open export-edl.js</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3428,103 +3505,103 @@ Do you want to restart now?</source>
         <translation type="obsolete">http://www.macvideostudio.com/mac-shipinbianji-guide.html</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4019"/>
+        <location filename="../src/mainwindow.cpp" line="4096"/>
         <source>Open a video, audio or image file</source>
         <translation type="unfinished">打开一个视频，视频或图片</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4019"/>
+        <location filename="../src/mainwindow.cpp" line="4096"/>
         <source>Open</source>
         <translation type="unfinished">打开文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4024"/>
+        <location filename="../src/mainwindow.cpp" line="4101"/>
         <source>Remove media files</source>
         <translation type="unfinished">删除媒体文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4031"/>
+        <location filename="../src/mainwindow.cpp" line="4108"/>
         <source>Undo</source>
         <translation type="unfinished">撤销</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4038"/>
+        <location filename="../src/mainwindow.cpp" line="4115"/>
         <source>Redo</source>
         <translation type="unfinished">重做</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4045"/>
+        <location filename="../src/mainwindow.cpp" line="4122"/>
         <source>Save Project</source>
         <translation type="unfinished">保存工程</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4051"/>
+        <location filename="../src/mainwindow.cpp" line="4128"/>
         <source>Export video, audio or image file</source>
         <translation type="unfinished">导出视频，音频或图片</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4051"/>
+        <location filename="../src/mainwindow.cpp" line="4128"/>
         <source>Export Video</source>
         <translation type="unfinished">导出视频</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4057"/>
+        <location filename="../src/mainwindow.cpp" line="4134"/>
         <source>Tutorials</source>
         <translation type="unfinished">教程</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="940"/>
-        <location filename="../src/mainwindow.cpp" line="4057"/>
+        <location filename="../src/mainwindow.ui" line="941"/>
+        <location filename="../src/mainwindow.cpp" line="4134"/>
         <source>Tutorial</source>
         <translation type="unfinished">教程</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4063"/>
+        <location filename="../src/mainwindow.cpp" line="4140"/>
         <source>Send us your suggestions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4084"/>
+        <location filename="../src/mainwindow.cpp" line="4161"/>
         <source>Enter Licensse Code</source>
         <translation type="unfinished">输入注册码</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4084"/>
+        <location filename="../src/mainwindow.cpp" line="4161"/>
         <source>Register</source>
         <translation type="unfinished">注册</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4089"/>
+        <location filename="../src/mainwindow.cpp" line="4166"/>
         <source>Buy Now</source>
         <translation type="unfinished">立即购买</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4099"/>
+        <location filename="../src/mainwindow.cpp" line="4176"/>
         <source>Upgrade to Pro version</source>
         <translation type="unfinished">升级到专业版</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4099"/>
+        <location filename="../src/mainwindow.cpp" line="4176"/>
         <source>Upgrade</source>
         <translation type="unfinished">升级</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4104"/>
+        <location filename="../src/mainwindow.cpp" line="4181"/>
         <source>Get Total Video Converter Pro - a great video converter and dvd burner</source>
         <translation type="unfinished">获取“超级转霸Total Video Converter Pro” - 强大的视频转换和DVD刻录功能</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4104"/>
+        <location filename="../src/mainwindow.cpp" line="4181"/>
         <source>Great Converter &amp; DVD Burner</source>
         <translation type="unfinished">视频转换 &amp; DVD刻录</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4243"/>
+        <location filename="../src/mainwindow.cpp" line="4324"/>
         <source>Execute Python File</source>
         <translation type="unfinished">执行Python文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4243"/>
+        <location filename="../src/mainwindow.cpp" line="4324"/>
         <source>Python File (*.py)</source>
         <translation type="unfinished">Python文件(*.py)</translation>
     </message>
@@ -3870,11 +3947,15 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MultitrackModel</name>
     <message>
-        <location filename="../src/models/multitrackmodel.cpp" line="4142"/>
         <source>Failed to Add Clip
 Invalid Time Code!</source>
-        <translation type="unfinished">添加片段失败
+        <translation type="obsolete">添加片段失败
 无效的时间码!</translation>
+    </message>
+    <message>
+        <location filename="../src/models/multitrackmodel.cpp" line="3948"/>
+        <source>&lt;p&gt;The time code of the file cannot be read. Please convert it to MP4 before adding the file. &lt;/p&gt;&lt;p&gt;Recommend:&lt;a href=&quot;http://www.effectmatrix.com/total-video-converter&quot;&gt;Total Video Converter&lt;/a&gt;&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4242,8 +4323,8 @@ Invalid Time Code!</source>
         <location filename="../src/player.cpp" line="455"/>
         <location filename="../src/player.cpp" line="564"/>
         <location filename="../src/player.cpp" line="596"/>
-        <location filename="../src/player.cpp" line="742"/>
-        <location filename="../src/player.cpp" line="868"/>
+        <location filename="../src/player.cpp" line="743"/>
+        <location filename="../src/player.cpp" line="869"/>
         <source>Play</source>
         <translation type="unfinished">播放</translation>
     </message>
@@ -4252,17 +4333,17 @@ Invalid Time Code!</source>
         <location filename="../src/player.cpp" line="562"/>
         <location filename="../src/player.cpp" line="565"/>
         <location filename="../src/player.cpp" line="597"/>
-        <location filename="../src/player.cpp" line="743"/>
-        <location filename="../src/player.cpp" line="869"/>
-        <location filename="../src/player.cpp" line="873"/>
+        <location filename="../src/player.cpp" line="744"/>
+        <location filename="../src/player.cpp" line="870"/>
+        <location filename="../src/player.cpp" line="874"/>
         <source>Start playback (L)</source>
         <translation type="unfinished">开始播放(L)</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="460"/>
         <location filename="../src/player.cpp" line="537"/>
-        <location filename="../src/player.cpp" line="737"/>
-        <location filename="../src/player.cpp" line="879"/>
+        <location filename="../src/player.cpp" line="738"/>
+        <location filename="../src/player.cpp" line="880"/>
         <source>Pause</source>
         <translation type="unfinished">暂停</translation>
     </message>
@@ -4270,9 +4351,9 @@ Invalid Time Code!</source>
         <location filename="../src/player.cpp" line="462"/>
         <location filename="../src/player.cpp" line="535"/>
         <location filename="../src/player.cpp" line="538"/>
-        <location filename="../src/player.cpp" line="738"/>
-        <location filename="../src/player.cpp" line="880"/>
-        <location filename="../src/player.cpp" line="884"/>
+        <location filename="../src/player.cpp" line="739"/>
+        <location filename="../src/player.cpp" line="881"/>
+        <location filename="../src/player.cpp" line="885"/>
         <source>Pause playback (K)</source>
         <translation type="unfinished">暂停播放</translation>
     </message>
@@ -4437,44 +4518,44 @@ Invalid Time Code!</source>
 <context>
     <name>Preset</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="93"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="100"/>
         <source>Save</source>
         <translation type="unfinished">保存</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="99"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="106"/>
         <source>Delete</source>
         <translation type="unfinished">删除</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="109"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="116"/>
         <source>Save Preset</source>
         <translation type="unfinished">保存预设</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="123"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="133"/>
         <source>Name:</source>
         <translation type="unfinished">名称</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="145"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="180"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="155"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="190"/>
         <source>OK</source>
         <translation type="unfinished">确定</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="150"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="191"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="160"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="201"/>
         <source>Cancel</source>
         <translation type="unfinished">取消</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="162"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="172"/>
         <source>Delete Preset</source>
         <translation type="unfinished">删除预设</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="171"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="181"/>
         <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished">你确定要删除 %1吗？</translation>
     </message>
@@ -4653,135 +4734,135 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">从轨道提升</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="170"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="171"/>
         <source>Remove from track</source>
         <translation type="unfinished">从轨道删除</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="198"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="200"/>
         <source>Change track name</source>
         <translation type="unfinished">修改轨道名字</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="219"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="221"/>
         <source>Toggle track mute</source>
         <translation type="unfinished">轨道静音开关</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="240"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="242"/>
         <source>Toggle track hidden</source>
         <translation type="unfinished">轨道隐藏开关</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="262"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="264"/>
         <source>Change track compositing</source>
         <translation type="unfinished">改变混合轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="284"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="286"/>
         <source>Lock track</source>
         <translation type="unfinished">锁定轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="311"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="992"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="313"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1002"/>
         <source>Move clip</source>
         <translation type="unfinished">移动片段</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="339"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="343"/>
         <source>Trim clip in point</source>
         <translation type="unfinished">裁剪片段入点</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="380"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="384"/>
         <source>Trim clip out point</source>
         <translation type="unfinished">裁剪片段出点</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="420"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="424"/>
         <source>Split clip</source>
         <translation type="unfinished">切割片段</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="444"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="448"/>
         <source>Adjust fade in</source>
         <translation type="unfinished">调整渐入</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="480"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="484"/>
         <source>Adjust fade out</source>
         <translation type="unfinished">调整渐出</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="516"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="641"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="682"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="520"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="645"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="686"/>
         <source>Add transition</source>
         <translation type="unfinished">增加转场</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="557"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="561"/>
         <source>Trim transition in point</source>
         <translation type="unfinished">裁剪转场入点</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="599"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="603"/>
         <source>Trim transition out point</source>
         <translation type="unfinished">裁剪转场出点</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="720"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="724"/>
         <source>Add video track</source>
         <translation type="unfinished">增加视频轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="722"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="726"/>
         <source>Add audio track</source>
         <translation type="unfinished">增加音频轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="724"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="728"/>
         <source>Add filter track</source>
         <translation type="unfinished">增加滤镜轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="726"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="730"/>
         <source>Add text track</source>
         <translation type="unfinished">增加文字轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="757"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="761"/>
         <source>Insert audio track</source>
         <translation type="unfinished">插入音频轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="759"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="763"/>
         <source>Insert video track</source>
         <translation type="unfinished">插入视频轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="781"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="785"/>
         <source>Remove audio track</source>
         <translation type="unfinished">删除音频轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="783"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="787"/>
         <source>Remove video track</source>
         <translation type="unfinished">删除视频轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="848"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="852"/>
         <source>Change track blend mode</source>
         <translation type="unfinished">修改轨道混合模式</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="882"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="887"/>
         <source>Change clip properties</source>
         <translation type="unfinished">修改片段属性</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="918"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="928"/>
         <source>Remove transition</source>
         <translation type="unfinished">删除转场</translation>
     </message>
@@ -4824,12 +4905,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QmlFilter</name>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="399"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="402"/>
         <source>(defaults)</source>
         <translation type="unfinished">(默认)</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="478"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="481"/>
         <source>Analyze %1</source>
         <translation type="unfinished">分析%1</translation>
     </message>
@@ -5175,7 +5256,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SizePositionVUI</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionVUI.qml" line="74"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionVUI.qml" line="76"/>
         <source>Auto set as key frame at postion</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5244,27 +5325,27 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">增加到轨道</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="855"/>
+        <location filename="../src/docks/timelinedock.cpp" line="909"/>
         <source>Lift from track</source>
         <translation type="unfinished">从轨道提升</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1188"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1246"/>
         <source>You cannot split a transition.</source>
         <translation type="unfinished">不能切割转场</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1671"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1729"/>
         <source>For reasons of copyright protection, you can not import vob or m4p files</source>
         <translation type="unfinished">因为版权保护，不支持导入vob和m4p文件</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2233"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2296"/>
         <source>Save Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2233"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2296"/>
         <source>Template (*.mlt)</source>
         <translation type="unfinished">http://jiandashi.com/buynow.html</translation>
     </message>
@@ -5334,82 +5415,82 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TimelineToolbar</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="90"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="99"/>
         <source>Menu</source>
         <translation type="unfinished">菜单</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="110"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="120"/>
         <source>Append</source>
         <translation type="unfinished">追加</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="121"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="131"/>
         <source>Insert</source>
         <translation type="unfinished">插入</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="132"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="143"/>
         <source>Delete</source>
         <translation type="unfinished">删除</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="144"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="156"/>
         <source>Split</source>
         <translation type="unfinished">切分</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="173"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="186"/>
         <source>Toggle snapping</source>
         <translation type="unfinished">拍照开关</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="183"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="196"/>
         <source>Scrub while dragging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="194"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="207"/>
         <source>Ripple trim and drop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="195"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="208"/>
         <source>Ripple</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="206"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="220"/>
         <source>Change the position and size of the clip</source>
         <translation type="unfinished">修改片段的位置和大小</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="207"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="221"/>
         <source>Resize</source>
         <translation type="unfinished">改变大小</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="224"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="239"/>
         <source>Rotate clip</source>
         <translation type="unfinished">旋转片段</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="225"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="240"/>
         <source>Rotate</source>
         <translation type="unfinished">旋转</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="242"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="258"/>
         <source>Crop clip</source>
         <translation type="unfinished">裁剪片段</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="243"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="259"/>
         <source>Crop</source>
         <translation type="unfinished">裁剪</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="385"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="402"/>
         <source>Zoom to Fit</source>
         <translation type="unfinished">缩放到合适</translation>
     </message>
@@ -5422,101 +5503,101 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">渐出</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="296"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="297"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="312"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="313"/>
         <source>Volume</source>
         <translation type="unfinished">音量</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="313"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="330"/>
         <source>Add Text</source>
         <translation type="unfinished">添加文字</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="330"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="347"/>
         <source>Add Filter</source>
         <translation type="unfinished">添加滤镜</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="358"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="375"/>
         <source>Transition Settings</source>
         <translation type="unfinished">转场设置</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="507"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="532"/>
         <source>Display a menu of additional actions</source>
         <translation type="unfinished">显示更多操作的菜单</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="515"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="540"/>
         <source>Cut - Copy the current clip to the Source
 player and ripple delete it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="528"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="553"/>
         <source>Copy - Copy the current clip to the Source player (C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="541"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="566"/>
         <source>Paste - Insert clip into the current track
 shifting following clips to the right (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="553"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="578"/>
         <source>Append to the current track (A)</source>
         <translation type="unfinished">追加到当前轨道(A)</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="569"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="594"/>
         <source>Remove current clip</source>
         <translation type="unfinished">删除当前片段</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="589"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="614"/>
         <source>Insert clip into the current track
 shifting following clips to the right (V)</source>
         <translation type="unfinished">在当前轨道插入片段，且后面的视频右移</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="609"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="634"/>
         <source>Split At Playhead (S)</source>
         <translation type="unfinished">在当前播放指针指向的时间点切割</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="621"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="646"/>
         <source>Change clip&apos;s position and size</source>
         <translation type="unfinished">改变片段的位置和大小</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="701"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="728"/>
         <source>Zoom out timeline</source>
         <translation type="unfinished">缩小时间线</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="716"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="741"/>
         <source>Zoom in timeline</source>
         <translation type="unfinished">放大时间线</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="729"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="754"/>
         <source>Add text to video</source>
         <translation type="unfinished">给视频添加文字效果</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="741"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="768"/>
         <source>Add filter to video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="756"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="782"/>
         <source>Set the transition property</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="772"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="799"/>
         <source>Show all clips</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5562,17 +5643,17 @@ shifting following clips to the right (V)</source>
 <context>
     <name>TrackHead</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TrackHead.qml" line="267"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TrackHead.qml" line="189"/>
         <source>Mute</source>
         <translation type="unfinished">静音</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TrackHead.qml" line="305"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TrackHead.qml" line="227"/>
         <source>Hide</source>
         <translation type="unfinished">隐藏</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TrackHead.qml" line="358"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TrackHead.qml" line="280"/>
         <source>Lock track</source>
         <translation type="unfinished">锁定轨道</translation>
     </message>
@@ -6124,7 +6205,7 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>YFKeyFrame</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/YFKeyFrame.qml" line="335"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/YFKeyFrame.qml" line="361"/>
         <source>Auto set as key frame at postion</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6165,7 +6246,7 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>filterview</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/filterview.qml" line="153"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/filterview.qml" line="201"/>
         <source>Nothing selected</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6181,32 +6262,32 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="236"/>
+        <location filename="../src/main.cpp" line="240"/>
         <source>Fill the screen with the MovieMator window.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="240"/>
+        <location filename="../src/main.cpp" line="244"/>
         <source>Use GPU processing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="243"/>
+        <location filename="../src/main.cpp" line="247"/>
         <source>A file to open.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="247"/>
+        <location filename="../src/main.cpp" line="251"/>
         <source>Execute Python file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="248"/>
+        <location filename="../src/main.cpp" line="252"/>
         <source>python</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="418"/>
+        <location filename="../src/main.cpp" line="428"/>
         <source>Loading plugins...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6230,6 +6311,36 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/meta.qml" line="17"/>
         <source>Text</source>
         <translation type="unfinished">文字</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="72"/>
+        <source>transition fix_rotate_x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="78"/>
+        <source>transition scale_x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="84"/>
+        <source>transition scale_aspect_ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="91"/>
+        <source>transition ox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="97"/>
+        <source>transition oy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="103"/>
+        <source>transparent alpha</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/meta.qml" line="14"/>
@@ -6470,37 +6581,31 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished">高光</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="27"/>
         <source>Position / Size</source>
-        <translation type="unfinished">位置/大小</translation>
+        <translation type="obsolete">位置/大小</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="33"/>
         <source>Text Color</source>
-        <translation type="unfinished">文字颜色</translation>
+        <translation type="obsolete">文字颜色</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="39"/>
         <source>Outline Color</source>
-        <translation type="unfinished">轮廓颜色</translation>
+        <translation type="obsolete">轮廓颜色</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="45"/>
         <source>Outline</source>
-        <translation type="unfinished">轮廓</translation>
+        <translation type="obsolete">轮廓</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="51"/>
         <source>Background Color</source>
-        <translation type="unfinished">背景颜色</translation>
+        <translation type="obsolete">背景颜色</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="57"/>
         <source>Pad</source>
-        <translation type="unfinished">边距</translation>
+        <translation type="obsolete">边距</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="63"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="65"/>
         <source>Letter Spaceing</source>
         <translation type="unfinished">字间距</translation>
     </message>
@@ -7009,53 +7114,89 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="552"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="574"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="694"/>
         <source>Append</source>
         <translation type="unfinished">新增</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="552"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="574"/>
         <source>Insert</source>
         <translation type="unfinished">插入</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="618"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="642"/>
         <source>Add Audio Track</source>
         <translation type="unfinished">增加音频轨道</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="627"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="651"/>
         <source>Add Video Track</source>
         <translation type="unfinished">增加视频轨道</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="636"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="660"/>
         <source>Insert Track</source>
         <translation type="unfinished">插入轨道</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="645"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="669"/>
         <source>Remove Track</source>
         <translation type="unfinished">删除轨道</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="684"/>
+        <source>Split</source>
+        <translation type="unfinished">切分</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="705"/>
+        <source>Paste</source>
+        <translation type="unfinished">粘贴</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="716"/>
+        <source>New Video Track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="726"/>
+        <source>New Audio Track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="736"/>
+        <source>Delete Track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="746"/>
+        <source>Hide</source>
+        <translation type="unfinished">隐藏</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="755"/>
+        <source>Mute</source>
+        <translation type="unfinished">静音</translation>
     </message>
 </context>
 <context>
     <name>ui</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_balance/ui.qml" line="53"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_balance/ui.qml" line="45"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_pan/ui.qml" line="60"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_pan/ui.qml" line="67"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/ui.qml" line="201"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1148"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1321"/>
         <source>Left</source>
         <translation type="unfinished">左</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_balance/ui.qml" line="63"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_balance/ui.qml" line="54"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_pan/ui.qml" line="61"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_pan/ui.qml" line="75"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/ui.qml" line="218"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1166"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1339"/>
         <source>Right</source>
         <translation type="unfinished">右</translation>
     </message>
@@ -7074,7 +7215,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/ui.qml" line="129"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/contrast/ui.qml" line="89"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/ui.qml" line="88"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="694"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="830"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/grain/ui.qml" line="79"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="62"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sepia/ui.qml" line="56"/>
@@ -7131,7 +7272,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_basstreble/ui.qml" line="230"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1191"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1364"/>
         <source>Middle</source>
         <translation type="unfinished">中间</translation>
     </message>
@@ -7167,7 +7308,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="101"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_2p/ui.qml" line="75"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_2p/ui.qml" line="60"/>
         <source>Target Loudness</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7247,7 +7388,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1157"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1330"/>
         <source>Center</source>
         <translation type="unfinished">中</translation>
     </message>
@@ -7258,13 +7399,13 @@ the screen capture to SDI/HDMI in this mode.</source>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/ui.qml" line="167"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1182"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1355"/>
         <source>Top</source>
         <translation type="unfinished">上</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/ui.qml" line="184"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1201"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1374"/>
         <source>Bottom</source>
         <translation type="unfinished">下</translation>
     </message>
@@ -7289,96 +7430,126 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="obsolete">底部字幕</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="723"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="863"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="86"/>
         <source>Text</source>
         <translation type="unfinished">文字</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="776"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="916"/>
         <source>Insert field</source>
         <translation type="unfinished">插入文字</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="791"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="931"/>
         <source>Timecode</source>
         <translation type="unfinished">时间码</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="792"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="932"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
         <translation type="unfinished">帧 #</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="793"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="933"/>
         <source>File date</source>
         <translation type="unfinished">文件日期</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="794"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="934"/>
         <source>File name</source>
         <translation type="unfinished">文件名称</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="817"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="957"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="100"/>
         <source>Font</source>
         <translation type="unfinished">字体</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="898"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1030"/>
         <source>Normal</source>
         <translation type="unfinished">普通</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="899"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1031"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="155"/>
         <source>Bold</source>
         <translation type="unfinished">粗体</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="900"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1032"/>
         <source>Light</source>
         <comment>thin font stroke</comment>
         <translation type="unfinished">细体</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="964"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1050"/>
+        <source>Shear X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1076"/>
+        <source>Shadow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1082"/>
+        <source>Distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1104"/>
+        <source>Angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1146"/>
         <source>Outline</source>
         <translation type="unfinished">轮廓</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="993"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1166"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="96"/>
         <source>Thickness</source>
         <translation type="unfinished">宽度</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1021"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1194"/>
         <source>Background</source>
         <translation type="unfinished">背景</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1050"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1223"/>
         <source>Padding</source>
         <translation type="unfinished">边距</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1085"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1258"/>
         <source>Position</source>
         <translation type="unfinished">位置</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1113"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1286"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="202"/>
         <source>Size</source>
         <translation type="unfinished">大小</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1142"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1315"/>
         <source>X fit</source>
         <translation type="unfinished">水平适合</translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1392"/>
+        <source>Position Animation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1555"/>
+        <source>Transparent</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Y fit</source>
@@ -7390,7 +7561,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1176"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1349"/>
         <source>Vertical fit</source>
         <translation type="unfinished">垂直适应</translation>
     </message>
@@ -7547,7 +7718,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_gain/ui.qml" line="55"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_gain/ui.qml" line="54"/>
         <source>Gain</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7600,7 +7771,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished">点击“分析”以应用该滤镜</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_2p/ui.qml" line="99"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_2p/ui.qml" line="81"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/ui.qml" line="222"/>
         <source>Analyze</source>
         <translation type="unfinished">分析</translation>
@@ -7752,6 +7923,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished">透明度</translation>
     </message>
     <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1424"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="80"/>
         <source>Rotation</source>
         <translation type="unfinished">旋转</translation>
@@ -7761,22 +7933,31 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="obsolete">°</translation>
     </message>
     <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1435"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="90"/>
         <source> °</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1448"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="100"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="149"/>
         <source>Scale</source>
         <translation type="unfinished">缩放</translation>
     </message>
     <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1478"/>
+        <source>Aspect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1505"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="127"/>
         <source>X offset</source>
         <translation type="unfinished">X向偏移</translation>
     </message>
     <message>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1529"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="145"/>
         <source>Y offset</source>
         <translation type="unfinished">Y向偏移</translation>
@@ -8033,17 +8214,17 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished">中       </translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="328"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="653"/>
         <source>Auto set as key frame at postion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="790"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="930"/>
         <source>default</source>
         <translation type="unfinished">默认</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="917"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1126"/>
         <source>Letter Spaceing</source>
         <translation type="unfinished">字间距</translation>
     </message>
@@ -8226,7 +8407,7 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>vui</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/vui.qml" line="122"/>
+        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/vui.qml" line="140"/>
         <source>Auto set as key frame at postion</source>
         <translation type="unfinished"></translation>
     </message>
