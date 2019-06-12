@@ -315,8 +315,10 @@ void EffectDock::resetImage(QString effectFile, QString imageFile)
                         if(prop.attribute("name").contains("transition.rect_anim_relative")){
                             domNodeRect = prop.toElement().firstChild();
                             QString value = prop.toElement().text();
-                            QString newValue = value.split(" ")[0] + " " + value.split(" ")[1] + " " + "0.25 0.25 1";
-                            domNodeRect.setNodeValue(newValue);
+                            if(!value.contains("~=")){
+                                QString newValue = value.split(" ")[0] + " " + value.split(" ")[1] + " " + "0.25 0.25 1";
+                                domNodeRect.setNodeValue(newValue);
+                            }
                         }
                     }
                     break;
