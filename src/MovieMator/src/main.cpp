@@ -569,14 +569,20 @@ int main(int argc, char **argv)
 
     int result = a.exec();
 
-//    if (EXIT_RESTART == result) {
-//        LOG_DEBUG() << "restarting app";
-//        QProcess* restart = new QProcess;
-//        restart->start(a.applicationFilePath(), QStringList());
-//        restart->waitForReadyRead();
-//        restart->waitForFinished(10000);
-//        result = EXIT_SUCCESS;
-//    }
+    if (EXIT_RESTART == result) {
+        LOG_DEBUG() << "restarting app";
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+        ::qputenv("LIBGL_ALWAYS_SOFTWARE",
+            Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL && !Settings.playerGPU()
+            ? "1" : "0");
+#endif
+        QProcess* restart = new QProcess;
+        QStringList args = a.arguments();
+        if (!args.isEmpty())
+            args.removeFirst();
+        restart->start(a.applicationFilePath(), args, QIODevice::NotOpen);
+        result = EXIT_SUCCESS;
+}
 
     return result;
 }

@@ -3555,9 +3555,53 @@ void MainWindow::onKeyerTriggered(QAction *action)
 void MainWindow::onProfileTriggered(QAction *action)
 {
     Q_ASSERT(action);
-    Settings.setPlayerProfile(action->data().toString());
-    setProfile(action->data().toString());
-    MLT.restart();
+
+    //need restart
+    QMessageBox dialog(QMessageBox::Information,
+                       qApp->applicationName(),
+                       tr("You must restart MovieMator to change the video mode.\n"
+                          "Do you want to change video mode now?"),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+#if MOVIEMATOR_PRO
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+#else
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    if (dialog.exec() == QMessageBox::Yes) {
+        if (continueModified())
+        {
+            m_exitCode = EXIT_RESTART;
+            //close project
+            if (multitrack())
+                m_timelineDock->model()->close();
+            //set profile
+            Settings.setPlayerProfile(action->data().toString());
+            QApplication::closeAllWindows();
+            return;
+        }
+    }
+
+
+    //discard changes
+    {
+        QList<QAction*> actionList = m_profileGroup->actions();
+        //qDebug()<<action->data()<<",checked:"<<action->isChecked();
+        QString curProfile = Settings.playerProfile();
+        for(int index =0; index < actionList.size(); index++)
+        {
+            QAction *tempAction = actionList.at(index);
+            //qDebug()<<tempAction->data()<<",checked:"<<tempAction->isChecked();
+
+            if(tempAction->data() == curProfile)
+            {
+                tempAction->setChecked(true);
+            }
+        }
+    }
 }
 
 void MainWindow::onProfileChanged()
