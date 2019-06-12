@@ -550,17 +550,17 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1075"/>
         <source>Split</source>
-        <translation type="unfinished">切分</translation>
+        <translation type="unfinished">切割</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1086"/>
         <source>Insert</source>
-        <translation type="unfinished">插入</translation>
+        <translation type="unfinished">插入资源</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1097"/>
         <source>Append</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">追加资源</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1111"/>
@@ -585,17 +585,17 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1178"/>
         <source>New Video Track</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">增加视频轨道</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1189"/>
         <source>New Audio Track</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">增加音频轨道</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1200"/>
         <source>Delete Track</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">删除轨道</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1214"/>
@@ -610,12 +610,12 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1231"/>
         <source>Hide</source>
-        <translation type="unfinished">隐藏</translation>
+        <translation type="unfinished">轨道关闭视频</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1241"/>
         <source>Mute</source>
-        <translation type="unfinished">静音</translation>
+        <translation type="unfinished">轨道关闭音频</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1264"/>
@@ -3105,7 +3105,7 @@ duration of the transition.</source>
     <message>
         <location filename="../src/mainwindow.ui" line="946"/>
         <source>&amp;New Project</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">新建工程</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="949"/>
@@ -7117,7 +7117,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="574"/>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="694"/>
         <source>Append</source>
-        <translation type="unfinished">新增</translation>
+        <translation type="unfinished">追加资源</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="574"/>
@@ -7147,7 +7147,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="684"/>
         <source>Split</source>
-        <translation type="unfinished">切分</translation>
+        <translation type="unfinished">切割</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="705"/>
@@ -7157,27 +7157,27 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="716"/>
         <source>New Video Track</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">增加视频轨道</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="726"/>
         <source>New Audio Track</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">增加音频轨道</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="736"/>
         <source>Delete Track</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">删除轨道</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="746"/>
         <source>Hide</source>
-        <translation type="unfinished">隐藏</translation>
+        <translation type="unfinished">轨道关闭视频</translation>
     </message>
     <message>
         <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="755"/>
         <source>Mute</source>
-        <translation type="unfinished">静音</translation>
+        <translation type="unfinished">轨道关闭音频</translation>
     </message>
 </context>
 <context>
