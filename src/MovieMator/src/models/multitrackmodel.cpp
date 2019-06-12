@@ -3942,7 +3942,12 @@ bool MultitrackModel::checkClip(Mlt::Producer &clip)
     int len = clip.get_length();
     if (len <= 0)
     {
-        QMessageBox dialog(QMessageBox::Critical, qApp->applicationName(), tr("Failed to Add Clip\nInvalid Time Code!"), QMessageBox::Ok, &(MAIN));
+//        QMessageBox dialog(QMessageBox::Critical, qApp->applicationName(), tr("Failed to Add Clip\nInvalid Time Code!"), QMessageBox::Ok, &(MAIN));
+        QMessageBox dialog(QMessageBox::Critical,
+                           qApp->applicationName(),
+                           tr("<p>The time code of the file cannot be read. Please convert it to MP4 before adding the file. </p>"
+                              "<p>Recommend:<a href=\"http://www.effectmatrix.com/total-video-converter\">Total Video Converter</a></p>"),
+                           QMessageBox::Ok, &(MAIN));
 #if MOVIEMATOR_PRO
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
 #else
