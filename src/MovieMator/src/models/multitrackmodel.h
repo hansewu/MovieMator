@@ -145,7 +145,7 @@ signals:
     void created();
     void loaded();
     void closed();
-    void modified();
+    void modified(bool needRefresh);
     void seeked(int position);
     void trackHeightChanged();
     void scaleFactorChanged();
