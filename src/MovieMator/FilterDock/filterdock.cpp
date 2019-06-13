@@ -112,6 +112,10 @@ void FilterDock::addFilterItem(int index)
     m_mainWindow->addFilter(index);
 }
 
+void FilterDock::previewFilter(int index)
+{
+    m_mainWindow->previewFilter(index);
+}
 
 void FiltersInfo::addFilterItemInfo(FilterItemInfo *filterInfo)
 {

@@ -226,7 +226,6 @@ void EffectDock::resetImage(QString effectFile, QString imageFile)
     {
         return;
     }
-
     QDomDocument doc;
     if(!doc.setContent(&file))
     {
@@ -429,7 +428,8 @@ void EffectDock::createImageFileList(QFileInfoList &fileList, QString folderName
 }
 
 void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName)
-{   Q_ASSERT(model);
+{
+    Q_ASSERT(model);
     Q_ASSERT(m_imageList);
     if(!model || !m_imageList)
     {

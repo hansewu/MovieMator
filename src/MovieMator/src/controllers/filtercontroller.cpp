@@ -393,6 +393,16 @@ QString FilterController::getFilterType(QString filterType)
 
     return filterType;
 }
+QmlMetadata* FilterController::getQmlMetadata(int index)
+{
+    if(index < m_metadataModel.rowCount()){
+        QmlMetadata *meta = m_metadataModel.get(index);
+        return meta;
+    }else {
+        return nullptr;
+    }
+
+}
 
 void FilterController::updateFilterDock()
 {

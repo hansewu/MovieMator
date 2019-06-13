@@ -86,6 +86,7 @@ public:
     void resetQview();
 
     Q_INVOKABLE void addFilterItem(int index);
+    Q_INVOKABLE void previewFilter(int idnex);
 
 private:
     MainInterface *m_mainWindow;

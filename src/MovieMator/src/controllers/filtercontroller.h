@@ -50,6 +50,8 @@ public:
     QmlMetadata* metadataForService(Mlt::Service *service);
     //通过uniqueId获取QmlMetadata，与metadataForService有重复的地方
     QmlMetadata* metadataForUniqueId(const char *uniqueId);
+    //获取QmlMetadata
+    QmlMetadata* getQmlMetadata(int index);
 
 protected:
     //重写QObject的timerEvent方法，用于接收定时器事件，进行加载filter的meta以及更新filter和关闭定时器

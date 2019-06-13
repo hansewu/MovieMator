@@ -26,6 +26,9 @@
 #include <shotcut_mlt_properties.h>
 #include "templateeidtor.h"
 #include "controllers/filtercontroller.h"
+#include "util.h"
+#include <QDomDocument>
+#include <Logger.h>
 
 MainInterface& MainInterface::singleton()
 {
@@ -328,4 +331,80 @@ FILE_HANDLE MainInterface::resetFileInTemplate(int index)
 void MainInterface::addFilter(int nFilterIndex)
 {
     MAIN.filterController()->addFilter(nFilterIndex);
+}
+
+void MainInterface::previewFilter(int index)
+{
+//    for (int i=0;i<200;i++) {
+//        QmlMetadata *meta = MAIN.filterController()->getQmlMetadata(i);
+//        if(meta == nullptr) break;
+//        qDebug()<<"111111111111111111111-0:"+QString::number(i);
+//        qDebug()<<meta->name();
+//        qDebug()<<meta->mlt_service();
+//        qDebug()<<meta->keyframes()->parameterCount();
+//        for (int j=0;j<meta->keyframes()->parameterCount();j++) {
+//            qDebug()<<j;
+//            qDebug()<<meta->keyframes()->parameter(j)->name();
+//            qDebug()<<meta->keyframes()->parameter(j)->property();
+//            qDebug()<<meta->keyframes()->parameter(j)->defaultValue();
+//        }
+//    }
+//    1 根据滤镜的index拿到滤镜的meta
+    QmlMetadata *meta = MAIN.filterController()->getQmlMetadata(index);
+//    2 根据mlt配置文件模板生成配置文件
+    QDir commonFileDir = QDir(Util::resourcesPath() + "/template/filters/preview/");
+    QString commonFile = commonFileDir.absoluteFilePath("common.mlt");
+    QFile file(commonFile);
+    QDomDocument doc;
+    if(!doc.setContent(&file))
+    {
+        file.close();
+        return;
+    }
+    file.close();
+    QDomNodeList nodeList = doc.elementsByTagName("producer");
+    QDomElement domElement = nodeList.at(0).toElement();
+
+    QDir imageFileDir = QDir(Util::resourcesPath() + "/template/filters/preview/Samples/");
+    QString imageFile = imageFileDir.absoluteFilePath("1.jpeg");
+    QPixmap pixmap = QPixmap(imageFile);
+    //添加图片宽
+    QDomElement imageW = doc.createElement("property");
+    imageW.setAttribute("name","moviemator:imageW");
+    int width = pixmap.width();
+    QDomText imageWDom = doc.createTextNode(QString::number(width));
+    imageW.appendChild(imageWDom);
+    domElement.appendChild(imageW);
+
+    //添加图片高
+    QDomElement imageH = doc.createElement("property");
+    imageH.setAttribute("name","moviemator:imageH");
+    int height = pixmap.height();
+    QDomText imageHDom = doc.createTextNode(QString::number(height));
+    imageH.appendChild(imageHDom);
+    domElement.appendChild(imageH);
+
+    // 设置图片路径
+    QDomNodeList elementList = domElement.elementsByTagName("property");
+    for(int j=0; j<elementList.count(); j++)
+    {
+        QDomElement de = elementList.at(j).toElement();
+        if(de.attribute("name").contains("resource"))
+        {
+            QDomNode domNodeResource = de.toElement().firstChild();
+            domNodeResource.setNodeValue(imageFile);
+            break;
+        }
+    }
+    // 设置滤镜的mlt_service
+    QDomNodeList filterList = domElement.elementsByTagName("filter");
+    QDomElement filter = filterList.at(0).toElement();
+    QDomNodeList propertyList = filter.elementsByTagName("property");
+    QDomElement prop = propertyList.at(0).toElement();
+    prop.toElement().firstChild().setNodeValue(meta->mlt_service());
+
+
+//    3 play此文件
+    FILE_HANDLE mltSettingFile = createFileWithXMLForDragAndDrop(doc.toString());
+    playFile(mltSettingFile);
 }
