@@ -331,6 +331,8 @@ FILE_HANDLE MainInterface::resetFileInTemplate(int index)
 void MainInterface::addFilter(int nFilterIndex)
 {
     MAIN.filterController()->addFilter(nFilterIndex);
+    TimelineDock *timeline = MAIN.timelineDock();
+    timeline->setPosition(timeline->position());
 }
 
 void MainInterface::previewFilter(int index)
@@ -339,14 +341,14 @@ void MainInterface::previewFilter(int index)
 //        QmlMetadata *meta = MAIN.filterController()->getQmlMetadata(i);
 //        if(meta == nullptr) break;
 //        qDebug()<<"111111111111111111111-0:"+QString::number(i);
-//        qDebug()<<meta->name();
-//        qDebug()<<meta->mlt_service();
-//        qDebug()<<meta->keyframes()->parameterCount();
+//        qDebug()<<"name:"+meta->name();
+//        qDebug()<<"mlt_service:"+meta->mlt_service();
+//        qDebug()<<"parameterCount:"+QString::number(meta->keyframes()->parameterCount());
 //        for (int j=0;j<meta->keyframes()->parameterCount();j++) {
-//            qDebug()<<j;
-//            qDebug()<<meta->keyframes()->parameter(j)->name();
-//            qDebug()<<meta->keyframes()->parameter(j)->property();
-//            qDebug()<<meta->keyframes()->parameter(j)->defaultValue();
+//            qDebug()<<"parameter:"+QString::number(j);
+//            qDebug()<<"parameter name:"+meta->keyframes()->parameter(j)->name();
+//            qDebug()<<"parameter property:"+meta->keyframes()->parameter(j)->property();
+//            qDebug()<<"parameter defaultValue:"+meta->keyframes()->parameter(j)->defaultValue();
 //        }
 //    }
 //    1 根据滤镜的index拿到滤镜的meta
