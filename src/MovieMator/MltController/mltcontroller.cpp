@@ -590,7 +590,7 @@ bool Controller::isSeekable() const
                 // These generators can take an out point to define their length.
                 // TODO: Currently, these max out at 15000 frames, which is arbitrary.
                 QString service(m_producer->get("mlt_service"));
-                seekable = (service == "color") || service.startsWith("frei0r.") || (service =="tone");
+                seekable = (service == "color") || service.startsWith("frei0r.") || (service =="tone") || (service =="xml");// (service =="xml")，临时解决：打开含有flv视频的工程文件不能seek的问题
             }
         }
     }
