@@ -129,10 +129,9 @@ private slots:
     // closeButton单击的槽函数
     void on_closeButton_clicked();
 
+    void on_widthSpinner_editingFinished();
 
-    void on_widthSpinner_valueChanged(int arg1);
-
-    void on_heightSpinner_valueChanged(int arg1);
+    void on_heightSpinner_editingFinished();
 
 private:
     // 码率控制

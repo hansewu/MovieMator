@@ -1553,16 +1553,16 @@ void EncodeDock::setCurrentPreset(Mlt::Properties *preset)
     }
 }
 
-void EncodeDock::on_widthSpinner_valueChanged(int arg1)
+void EncodeDock::on_widthSpinner_editingFinished()
 {
     //输出分辨率宽强制为4的倍数（解决奇数时导出视频无画面问题）
-    int value = (arg1 + 3) / 4 * 4;
+    int value = (ui->widthSpinner->value() + 3) / 4 * 4;
     ui->widthSpinner->setValue(value);
 }
 
-void EncodeDock::on_heightSpinner_valueChanged(int arg1)
+void EncodeDock::on_heightSpinner_editingFinished()
 {
     //输出分辨率高强制为4的倍数（解决奇数时导出视频无画面问题）
-    int value = (arg1 + 3) / 4 * 4;
+    int value = (ui->heightSpinner->value() + 3) / 4 * 4;
     ui->heightSpinner->setValue(value);
 }
