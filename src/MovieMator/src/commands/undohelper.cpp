@@ -347,7 +347,7 @@ void UndoHelper::undoChanges()
         }
         trackIndex++;
     }
-    emit m_model.modified(false);
+    emit m_model.modified();
 #ifdef UNDOHELPER_DEBUG
     debugPrintState();
 #endif

@@ -87,7 +87,7 @@ MultitrackModel::MultitrackModel(QObject *parent)
     , m_tractor(nullptr)
     , m_isMakingTransition(false)
 {
-//    connect(this, SIGNAL(modified(false)), SLOT(adjustBackgroundDuration()));//sll:将modify放在mainwindow中建立连接，防止界面更新与数据操作顺序问题
+//    connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));//sll:将modify放在mainwindow中建立连接，防止界面更新与数据操作顺序问题
     connect(this, SIGNAL(reloadRequested()), SLOT(reload()), Qt::QueuedConnection);
 }
 
@@ -381,7 +381,7 @@ void MultitrackModel::setTrackName(int row, const QString &value)
             QVector<int> roles;
             roles << NameRole;
             emit dataChanged(modelIndex, modelIndex, roles);
-            emit modified(false);
+            emit modified();
         }
     }
 }
@@ -408,7 +408,7 @@ void MultitrackModel::setTrackMute(int row, bool mute)
             QVector<int> roles;
             roles << IsMuteRole;
             emit dataChanged(modelIndex, modelIndex, roles);
-            emit modified(false);
+            emit modified();
         }
     }
 }
@@ -439,7 +439,7 @@ void MultitrackModel::setTrackHidden(int row, bool hidden)
             QVector<int> roles;
             roles << IsHiddenRole;
             emit dataChanged(modelIndex, modelIndex, roles);
-            emit modified(false);
+            emit modified();
         }
     }
 }
@@ -468,7 +468,7 @@ void MultitrackModel::setTrackComposite(int row, Qt::CheckState composite)
         QVector<int> roles;
         roles << IsCompositeRole;
         emit dataChanged(modelIndex, modelIndex, roles);
-        emit modified(false);
+        emit modified();
     }
 }
 
@@ -494,7 +494,7 @@ void MultitrackModel::setTrackLock(int row, bool lock)
         QVector<int> roles;
         roles << IsLockedRole;
         emit dataChanged(modelIndex, modelIndex, roles);
-        emit modified(false);
+        emit modified();
     }
 }
 
@@ -625,7 +625,7 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
                 ++result;
             }
         }
-        emit modified(false);
+        emit modified();
     }
     foreach (int idx, tracksToRemoveRegionFrom) {
         Q_ASSERT(whereToRemoveRegion != -1);
@@ -807,7 +807,7 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         roles << DurationRole;
         roles << OutPointRole;
         emit dataChanged(index, index, roles);
-        emit modified(false);
+        emit modified();
     }
     foreach (int idx, tracksToRemoveRegionFrom) {
         Q_ASSERT(whereToRemoveRegion != -1);
@@ -978,7 +978,7 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int po
         }
     }
     if (result) {
-        emit modified(false);
+        emit modified();
         MLT.refreshConsumer();
     }
     return result;
@@ -1084,7 +1084,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
         if (result >= 0) {
             QModelIndex index = createIndex(result, 0, quintptr(trackIndex));
             AudioLevelsTask::start(clip.parent(), this, index);
-            emit modified(false);
+            emit modified();
             if (seek)
             {
                 emit seeked(playlist.clip_start(result) /*+ playlist.clip_length(result)*/);
@@ -1189,7 +1189,7 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int posi
         }
         QModelIndex index = createIndex(targetIndex, 0, quintptr(trackIndex));
         AudioLevelsTask::start(clip.parent(), this, index);
-        emit modified(false);
+        emit modified();
         if (seek)
             emit seeked(playlist.clip_start(targetIndex));
     }
@@ -1292,7 +1292,7 @@ void MultitrackModel::updateTransition(int trackIndex, int clipIndex) {
             roles << OutPointRole;
             emit dataChanged(modelIndex, modelIndex, roles);
             AudioLevelsTask::start(clip->parent(), this, modelIndex);
-            emit modified(false);
+            emit modified();
         }
     }
 }
@@ -1394,7 +1394,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
 
             QModelIndex index = createIndex(result, 0, quintptr(trackIndex));
             AudioLevelsTask::start(clip.parent(), this, index);
-            emit modified(false);
+            emit modified();
             emit seeked(playlist.clip_start(result));
         }
     }
@@ -1433,7 +1433,7 @@ int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
         endInsertRows();
         QModelIndex index = createIndex(i, 0, quintptr(trackIndex));
         AudioLevelsTask::start(clip.parent(), this, index);
-        emit modified(false);
+        emit modified();
         emit seeked(playlist.clip_start(i));
         return i;
     }
@@ -1494,7 +1494,7 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex)
                     removeRegion(j, clipStart, clipPlaytime);
                 }
             }
-            emit modified(false);
+            emit modified();
         }
     }
 }
@@ -1534,7 +1534,7 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
 
             consolidateBlanks(playlist, trackIndex);
 
-            emit modified(false);
+            emit modified();
         }
     }
 }
@@ -1585,7 +1585,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
             modelIndex = createIndex(clipIndex + 1, 0, quintptr(trackIndex));
             AudioLevelsTask::start(producer.parent(), this, modelIndex);
         }
-        emit modified(false);
+        emit modified();
     }
 }
 
@@ -1644,7 +1644,7 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
         playlist.remove(clipIndex + 1);
         endRemoveRows();
 
-        emit modified(false);
+        emit modified();
     }
 }
 
@@ -1683,7 +1683,7 @@ void MultitrackModel::appendFromPlaylist(Mlt::Playlist *from, int trackIndex)
             }
         }
         endInsertRows();
-        emit modified(false);
+        emit modified();
         emit seeked(nPlaylistTime);
     }
 }
@@ -1738,7 +1738,7 @@ void MultitrackModel::overwriteFromPlaylist(Mlt::Playlist& from, int trackIndex,
             endInsertRows();
         }
         consolidateBlanks(playlist, trackIndex);
-        emit modified(false);
+        emit modified();
         emit seeked(position);
     }
 
@@ -1842,7 +1842,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
             QVector<int> roles;
             roles << FadeInRole;
             emit dataChanged(modelIndex, modelIndex, roles);
-            emit modified(false);
+            emit modified();
         }
     }
 }
@@ -1939,7 +1939,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
             QVector<int> roles;
             roles << FadeOutRole;
             emit dataChanged(modelIndex, modelIndex, roles);
-            emit modified(false);
+            emit modified();
         }
     }
 }
@@ -2060,7 +2060,7 @@ int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position)
             roles << InPointRole;
             roles << DurationRole;
             emit dataChanged(modelIndex, modelIndex, roles);
-            emit modified(false);
+            emit modified();
             emit seeked(playlist.clip_start(targetIndex + 1));
             return targetIndex + 1;
         }
@@ -2206,7 +2206,7 @@ void MultitrackModel::removeTransition(int trackIndex, int clipIndex)
         roles << InPointRole;
         roles << DurationRole;
         emit dataChanged(modelIndex, modelIndex, roles);
-        emit modified(false);
+        emit modified();
     }
 }
 
@@ -2332,7 +2332,7 @@ void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
         roles << DurationRole;
         emit dataChanged(createIndex(clipIndex, 0, quintptr(trackIndex)),
                          createIndex(clipIndex + 1, 0, quintptr(trackIndex)), roles);
-        emit modified(false);
+        emit modified();
     }
 }
 
@@ -2441,7 +2441,7 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
         roles << DurationRole;
         emit dataChanged(createIndex(clipIndex, 0, quintptr(trackIndex)),
                          createIndex(clipIndex, 0, quintptr(trackIndex)), roles);
-        emit modified(false);
+        emit modified();
     }
 }
 
@@ -2521,7 +2521,7 @@ void MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int d
             roles << OutPointRole;
             roles << DurationRole;
             emit dataChanged(modelIndex, modelIndex, roles);
-            emit modified(false);
+            emit modified();
             m_isMakingTransition = true;
         } else if (m_isMakingTransition) {
             // Adjust a transition addition already in progress.
@@ -2613,7 +2613,7 @@ void MultitrackModel::addTransitionByTrimOut(int trackIndex, int clipIndex, int 
             roles << InPointRole;
             roles << DurationRole;
             emit dataChanged(modelIndex, modelIndex, roles);
-            emit modified(false);
+            emit modified();
             m_isMakingTransition = true;
         } else if (m_isMakingTransition) {
             // Adjust a transition addition already in progress.
@@ -3010,7 +3010,7 @@ int MultitrackModel::addAudioTrack()
         addBackgroundTrack();
         addAudioTrack();
         emit created();
-        emit modified(false);
+        emit modified();
         return 0;
     }
 
@@ -3050,7 +3050,7 @@ int MultitrackModel::addAudioTrack()
     beginInsertRows(QModelIndex(), m_trackList.count(), m_trackList.count());
     m_trackList.append(t);
 
-    emit modified(false);
+    emit modified();
     MAIN.setCurrentTrack(m_trackList.count() - 1);
 
     endInsertRows();
@@ -3123,7 +3123,7 @@ int MultitrackModel::addVideoTrack()
     m_trackList.prepend(t);
 
 
-    emit modified(false);
+    emit modified();
     MAIN.setCurrentTrack(0);
     endInsertRows();
 
@@ -3142,7 +3142,7 @@ int MultitrackModel::addFilterTrack()
         addBackgroundTrack();
         addFilterTrack();
         emit created();
-        emit modified(false);
+        emit modified();
         return 0;
     }
 
@@ -3173,7 +3173,7 @@ int MultitrackModel::addFilterTrack()
     beginInsertRows(QModelIndex(), m_trackList.count(), m_trackList.count());
     m_trackList.append(t);
     endInsertRows();
-    emit modified(false);
+    emit modified();
     return m_trackList.count() - 1;
 }
 
@@ -3190,7 +3190,7 @@ int MultitrackModel::addTextTrack()
         addBackgroundTrack();
         addTextTrack();
         emit created();
-        emit modified(false);
+        emit modified();
         return 0;
     }
 
@@ -3222,7 +3222,7 @@ int MultitrackModel::addTextTrack()
     beginInsertRows(QModelIndex(), m_trackList.count(), m_trackList.count());
     m_trackList.append(t);
     endInsertRows();
-    emit modified(false);
+    emit modified();
     return m_trackList.count() - 1;
 }
 
@@ -3258,11 +3258,6 @@ void MultitrackModel::removeTrack(int trackIndex)
     Q_ASSERT(trackIndex < m_trackList.size());
     Q_ASSERT(m_tractor);
 
-    bool needRefresh = false;
-    if(m_trackList.at(trackIndex).type == AudioTrackType){
-        needRefresh = true;
-    }
-
     if (trackIndex >= 0 && trackIndex < m_trackList.size()) {
         const Track& track = m_trackList.value(trackIndex);
         QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", track.mlt_index));
@@ -3283,7 +3278,7 @@ void MultitrackModel::removeTrack(int trackIndex)
         renumberOtherTracks(track);//更新保存在m_trackList中的Track中的mlt_index，然后在通知界面刷新
         endRemoveRows();
     }
-    emit modified(needRefresh);
+    emit modified();
 }
 
 void MultitrackModel::retainPlaylist()
@@ -3471,11 +3466,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     beginInsertRows(QModelIndex(), trackIndex, trackIndex);
     m_trackList.insert(trackIndex, t);
     endInsertRows();
-    if(type == AudioTrackType){
-        emit modified(true);
-    }else {
-        emit modified(false);
-    }
+    emit modified();
 
     MAIN.setCurrentTrack(trackIndex);
 }
@@ -3908,7 +3899,7 @@ void MultitrackModel::addFilter(int trackIndex, Mlt::Producer *filter)
         beginInsertRows(index(trackIndex), i, i);
         playlist.append(*filter, 0, 100);
         endInsertRows();
-        emit modified(false);
+        emit modified();
         emit seeked(playlist.clip_start(i));
     }
 }
@@ -3939,7 +3930,7 @@ void MultitrackModel::addText(int trackIndex, Mlt::Producer *filter)
         beginInsertRows(index(trackIndex), i, i);
         playlist.append(*producer);
         endInsertRows();
-        emit modified(false);
+        emit modified();
         emit seeked(playlist.clip_start(i));
     }
 }
@@ -4040,7 +4031,7 @@ void MultitrackModel::setTransitionDuration(int trackIndex, int clipIndex, int d
             roles << InPointRole;
             roles << DurationRole;
             emit dataChanged(modelIndex, modelIndex, roles);
-            emit modified(false);
+            emit modified();
         }
     }
 }
@@ -4197,7 +4188,7 @@ int MultitrackModel::moveInsertClip(int fromTrack, int toTrack, int clipIndex, i
     }
 
     consolidateBlanksAllTracks();
-    emit modified(false);
+    emit modified();
 
     return 0;
 }
