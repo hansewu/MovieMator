@@ -299,6 +299,7 @@
         <file>filters/Contrast0r.jpg</file>
         <file>filters/Saturat0r.jpg</file>
         <file>filters/Transparency.jpg</file>
+        <file>filters/SOP-Sat.jpg</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>
