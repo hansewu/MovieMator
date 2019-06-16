@@ -249,6 +249,56 @@
         <file>filters/White Balance (LMS space).jpg</file>
         <file>light/32x32/track-video.png</file>
         <file>light/32x32/track-audio.png</file>
+        <file>filters/Premultiply or Unpremultiply.jpg</file>
+        <file>filters/delay0r.jpg</file>
+        <file>filters/TehRoxx0r.jpg</file>
+        <file>filters/BgSubtract0r.jpg</file>
+        <file>filters/Timeout indicator.jpg</file>
+        <file>filters/Nervous.jpg</file>
+        <file>filters/Delaygrab.jpg</file>
+        <file>filters/select0r.jpg</file>
+        <file>filters/Mask0Mate.jpg</file>
+        <file>filters/bluescreen0r.jpg</file>
+        <file>filters/3dflippo.jpg</file>
+        <file>filters/nosync0r.jpg</file>
+        <file>filters/pr0be.jpg</file>
+        <file>filters/Edgeglow.jpg</file>
+        <file>filters/hqdn3d.jpg</file>
+        <file>filters/Light Graffiti.jpg</file>
+        <file>filters/Vertigo.jpg</file>
+        <file>filters/pr0file.jpg</file>
+        <file>filters/Glitch0r.jpg</file>
+        <file>filters/scanline0r.jpg</file>
+        <file>filters/Threshold0r.jpg</file>
+        <file>filters/cairogradient.jpg</file>
+        <file>filters/cairoimagegrid.jpg</file>
+        <file>filters/colorhalftone.jpg</file>
+        <file>filters/rgbsplit0r.jpg</file>
+        <file>filters/rgbnoise.jpg</file>
+        <file>filters/posterize.jpg</file>
+        <file>filters/keyspillm0pup.jpg</file>
+        <file>filters/Medians.jpg</file>
+        <file>filters/emboss.jpg</file>
+        <file>filters/LetterB0xed.jpg</file>
+        <file>filters/Squareblur.jpg</file>
+        <file>filters/IIR blur.jpg</file>
+        <file>filters/Flippo.jpg</file>
+        <file>filters/Lens Correction.jpg</file>
+        <file>filters/Distort0r.jpg</file>
+        <file>filters/c0rners.jpg</file>
+        <file>filters/Defish0r.jpg</file>
+        <file>filters/coloradj_RGB.jpg</file>
+        <file>filters/3 point color balance.jpg</file>
+        <file>filters/Normaliz0r.jpg</file>
+        <file>filters/Hueshift0r.jpg</file>
+        <file>filters/spillsupress.jpg</file>
+        <file>filters/Levels.jpg</file>
+        <file>filters/colorize.jpg</file>
+        <file>filters/Tint0r.jpg</file>
+        <file>filters/Gamma.jpg</file>
+        <file>filters/Contrast0r.jpg</file>
+        <file>filters/Saturat0r.jpg</file>
+        <file>filters/Transparency.jpg</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>
