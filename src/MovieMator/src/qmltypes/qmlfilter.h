@@ -359,14 +359,14 @@ public:
      * \param currentKeyFrame the frame number at which to start looking for the previous animation node
      * \return the integer keyframe, -1 if not found or not in the clip
      */
-    Q_INVOKABLE int cache_getPreKeyFrameNum(int currentKeyFrame);
+    Q_INVOKABLE int cache_getPreKeyFrameNum(int currentKeyFrame, QString propertyName = nullptr);
 
     /** Get the keyfame at the next following of the point from cached data.
      *
      * \param currentKeyFrame the frame number at which to start looking for the next animation node
      * \return the integer keyframe, -1 if not found or not in the clip
      */
-    Q_INVOKABLE int cache_getNextKeyFrameNum(int currentKeyFrame);
+    Q_INVOKABLE int cache_getNextKeyFrameNum(int currentKeyFrame, QString propertyName = nullptr);
 
     /** Sync all keyfame cache to project.
      *
@@ -378,7 +378,7 @@ public:
      * \param frame the frame number in the clip
      * \return true if this is a key frame, false if not a key frame
      */
-    Q_INVOKABLE bool cache_bKeyFrame(int frame);
+    Q_INVOKABLE bool cache_bKeyFrame(int frame, QString propertyName = nullptr);
 
     /** Get a boolean of whether there is a previous frame at the position or not.
      *
@@ -398,14 +398,14 @@ public:
      *
      * \return the number of keyframes
      */
-    Q_INVOKABLE int  cache_getKeyFrameNumber();
+    Q_INVOKABLE int  cache_getKeyFrameNumber(QString propertyName = nullptr);
 
     /** Get the keyfame number for the N-th keyframe.
      *
      * \param index the N-th keyframe (0 based) in this animation
      * \return The integer value, -1 if not found (which may also be a legitimate value)
      */
-    Q_INVOKABLE int  getKeyFrame(int index);
+    Q_INVOKABLE int  getKeyFrame(int index, QString propertyName = nullptr);
 
     /** Get the animation associated to the name.
      *
@@ -562,10 +562,12 @@ private:
      * \param currentKeyFrame the frame number at which to start looking for the previous animation node
      * \return the integer keyframe in parent clip, -1 if not found
      */
-    int cache_getPreKeyFrameNumInParent(int currentKeyFrame);
+    int cache_getPreKeyFrameNumInParent(int currentKeyFrame, QString propertyName = nullptr);
 
+    //获取filter中任何一个支持动画的属性名
+    QString getAnyAnimPropertyName();
 
-    QVector<key_frame_item> m_cacheKeyFrameList; /** Cache data for keyframes*/
+    //QVector<key_frame_item> m_cacheKeyFrameList; /** Cache data for keyframes*/
     bool m_bEnableAnimation;                /** a flag to indicate if the animation is enable state or not*/
     bool m_bAutoAddKeyFrame;                /** a flag to indicate if automatically add key frames or not*/
 };
