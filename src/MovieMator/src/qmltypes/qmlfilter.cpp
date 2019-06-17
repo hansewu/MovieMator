@@ -1031,7 +1031,6 @@ void QmlFilter::syncCacheToProject()
 {
     MLT.refreshConsumer();
     emit filterPropertyValueChanged();
-    return
     /*
     Q_ASSERT(m_filter);
     if(m_metadata)
