@@ -1414,7 +1414,7 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1504"/>
-        <location filename="../src/docks/encodedock.cpp" line="1370"/>
+        <location filename="../src/docks/encodedock.cpp" line="1461"/>
         <source>Delete Preset</source>
         <translation type="unfinished">删除预设</translation>
     </message>
@@ -1445,9 +1445,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1587"/>
-        <location filename="../src/docks/encodedock.cpp" line="1271"/>
-        <location filename="../src/docks/encodedock.cpp" line="1278"/>
-        <location filename="../src/docks/encodedock.cpp" line="1398"/>
+        <location filename="../src/docks/encodedock.cpp" line="1362"/>
+        <location filename="../src/docks/encodedock.cpp" line="1369"/>
+        <location filename="../src/docks/encodedock.cpp" line="1489"/>
         <source>Stream</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1458,7 +1458,7 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1601"/>
-        <location filename="../src/docks/encodedock.cpp" line="1152"/>
+        <location filename="../src/docks/encodedock.cpp" line="1243"/>
         <source>Export File</source>
         <translation type="unfinished">导出文件</translation>
     </message>
@@ -1496,50 +1496,60 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="426"/>
-        <location filename="../src/docks/encodedock.cpp" line="1056"/>
+        <location filename="../src/docks/encodedock.cpp" line="1147"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1131"/>
+        <location filename="../src/docks/encodedock.cpp" line="812"/>
+        <source>MovieMator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="841"/>
+        <source>http://moviemator.net</source>
+        <translation type="unfinished">http://jiandashi.com</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1222"/>
         <source>Stop Capture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1133"/>
-        <location filename="../src/docks/encodedock.cpp" line="1152"/>
-        <location filename="../src/docks/encodedock.cpp" line="1397"/>
+        <location filename="../src/docks/encodedock.cpp" line="1224"/>
+        <location filename="../src/docks/encodedock.cpp" line="1243"/>
+        <location filename="../src/docks/encodedock.cpp" line="1488"/>
         <source>Capture File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1152"/>
+        <location filename="../src/docks/encodedock.cpp" line="1243"/>
         <source>*.%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1266"/>
-        <location filename="../src/docks/encodedock.cpp" line="1287"/>
+        <location filename="../src/docks/encodedock.cpp" line="1357"/>
+        <location filename="../src/docks/encodedock.cpp" line="1378"/>
         <source>Stop Stream</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1279"/>
+        <location filename="../src/docks/encodedock.cpp" line="1370"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1319"/>
+        <location filename="../src/docks/encodedock.cpp" line="1410"/>
         <source>Add Export Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1371"/>
+        <location filename="../src/docks/encodedock.cpp" line="1462"/>
         <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1526"/>
+        <location filename="../src/docks/encodedock.cpp" line="1617"/>
         <source>KiB (%1s)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1691,7 +1701,7 @@ in temporal compression</source>
         <translation type="obsolete">常用</translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="596"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="606"/>
         <source>Only one %1 filter is allowed.</source>
         <translation type="unfinished">仅允许一个%1滤镜</translation>
     </message>
@@ -3953,7 +3963,7 @@ Invalid Time Code!</source>
 无效的时间码!</translation>
     </message>
     <message>
-        <location filename="../src/models/multitrackmodel.cpp" line="3948"/>
+        <location filename="../src/models/multitrackmodel.cpp" line="3972"/>
         <source>&lt;p&gt;The time code of the file cannot be read. Please convert it to MP4 before adding the file. &lt;/p&gt;&lt;p&gt;Recommend:&lt;a href=&quot;http://www.effectmatrix.com/total-video-converter&quot;&gt;Total Video Converter&lt;/a&gt;&lt;/p&gt;</source>
         <translation type="unfinished">&lt;p&gt;文件的时间码无法读取，可以转换成mp4格式后再导入. &lt;/p&gt;&lt;p&gt;推荐:&lt;a href=&quot;http://www.effectmatrix.com/total-video-converter&quot;&gt;Total Video Converter&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
