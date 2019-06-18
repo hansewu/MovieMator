@@ -1503,7 +1503,7 @@ in temporal compression</source>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="812"/>
         <source>MovieMator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">剪大师</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="841"/>

@@ -810,9 +810,10 @@ void EncodeDock::addWatermark(Mlt::Service* service, QTemporaryFile& tmpProjectX
     if (Registration.registrationType() == Registration_None) {
         //显示软件名
         QString softwareName = tr("MovieMator");
+        std::string softwareNameTemp = softwareName.toStdString();
         softwareNameTextFilter = new Mlt::Filter(MLT.profile(), "dynamictext");
         Q_ASSERT(softwareNameTextFilter);
-        softwareNameTextFilter->set("argument", softwareName.toLatin1().data());
+        softwareNameTextFilter->set("argument", softwareNameTemp.c_str());
         softwareNameTextFilter->set("geometry", 0.684375, 0, 0.328125, 0.2875);
         softwareNameTextFilter->set("family", "Arial");
         softwareNameTextFilter->set("size", 207);
@@ -843,7 +844,7 @@ void EncodeDock::addWatermark(Mlt::Service* service, QTemporaryFile& tmpProjectX
         Q_ASSERT(homePagetextFilter);
         homePagetextFilter->set("argument", homePage.toLatin1().data());
         homePagetextFilter->set("geometry", 0.698438, 0.1375, 0.299219, 0.123611);
-        homePagetextFilter->set("family", "Microsoft YaHei UI");
+        homePagetextFilter->set("family", "Arial");
         homePagetextFilter->set("size", 89);
         homePagetextFilter->set("weight", 750);
         homePagetextFilter->set("letter_spaceing", 0);
@@ -878,6 +879,12 @@ void EncodeDock::addWatermark(Mlt::Service* service, QTemporaryFile& tmpProjectX
     if (Registration.registrationType() == Registration_None) {
         service->detach(*softwareNameTextFilter);
         service->detach(*homePagetextFilter);
+
+        delete softwareNameTextFilter;
+        softwareNameTextFilter = nullptr;
+
+        delete homePagetextFilter;
+        homePagetextFilter = nullptr;
     }
 #endif
 #endif
