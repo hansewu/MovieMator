@@ -255,8 +255,10 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             Q_ASSERT(playlist.is_valid());
             switch (role) {
             case NameRole:
-            case Qt::DisplayRole:
-                return track->get(kTrackNameProperty);
+            case Qt::DisplayRole:{
+                QString name = track->get(kTrackNameProperty);
+                return name;
+            }
             case DurationRole:
                 return playlist.get_playtime();
             case IsMuteRole:
@@ -3242,10 +3244,10 @@ void MultitrackModel::renumberOtherTracks(const Track& track) {
              if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName) {
                  trackName = trackNameTemplate.arg(m_trackList[row].number + 1);
                  mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
-                 QModelIndex modelIndex = index(row, 0);
-                 QVector<int> roles;
-                 roles << NameRole;
-                 emit dataChanged(modelIndex, modelIndex, roles);
+//                 QModelIndex modelIndex = index(row, 0);
+//                 QVector<int> roles;
+//                 roles << NameRole;
+//                 emit dataChanged(modelIndex, modelIndex, roles);
              }
          }
          ++row;
@@ -3275,8 +3277,30 @@ void MultitrackModel::removeTrack(int trackIndex)
         beginRemoveRows(QModelIndex(), trackIndex, trackIndex);
         m_tractor->remove_track(track.mlt_index);
         m_trackList.removeAt(trackIndex);
+
         renumberOtherTracks(track);//更新保存在m_trackList中的Track中的mlt_index，然后在通知界面刷新
         endRemoveRows();
+
+        int row = 0;
+        foreach (Track t, m_trackList) {
+
+
+                // Rename default track names.
+                QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(m_trackList[row].mlt_index));
+                Q_ASSERT(mltTrack);
+                QString trackNameTemplate = (t.type == VideoTrackType)? QString("V%1") : QString("A%1");
+                QString trackName = trackNameTemplate.arg(t.number + 1);
+                if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName) {
+                    trackName = trackNameTemplate.arg(m_trackList[row].number + 1);
+                    mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
+                    QModelIndex modelIndex = index(row, 0);
+                    QVector<int> roles;
+                    roles << NameRole;
+                    emit dataChanged(modelIndex, modelIndex, roles);
+                }
+
+            ++row;
+        }
     }
     emit modified();
 }

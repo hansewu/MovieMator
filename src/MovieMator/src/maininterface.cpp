@@ -29,6 +29,11 @@
 #include "util.h"
 #include <QDomDocument>
 #include <Logger.h>
+#include <cmath>
+
+double calculate(double value,QList<QString> funcList);
+bool setFilterProperty(QString parametaerType,QString property,QString value,QList<QString> func,Mlt::Filter* pfilter,QDir filterPath);
+
 
 MainInterface& MainInterface::singleton()
 {
@@ -337,23 +342,9 @@ void MainInterface::addFilter(int nFilterIndex)
 
 void MainInterface::previewFilter(int index)
 {
-//    for (int i=0;i<200;i++) {
-//        QmlMetadata *meta = MAIN.filterController()->getQmlMetadata(i);
-//        if(meta == nullptr) break;
-//        qDebug()<<"111111111111111111111-0:"+QString::number(i);
-//        qDebug()<<"name:"+meta->name();
-//        qDebug()<<"mlt_service:"+meta->mlt_service();
-//        qDebug()<<"parameterCount:"+QString::number(meta->keyframes()->parameterCount());
-//        for (int j=0;j<meta->keyframes()->parameterCount();j++) {
-//            qDebug()<<"parameter:"+QString::number(j);
-//            qDebug()<<"parameter name:"+meta->keyframes()->parameter(j)->name();
-//            qDebug()<<"parameter property:"+meta->keyframes()->parameter(j)->property();
-//            qDebug()<<"parameter defaultValue:"+meta->keyframes()->parameter(j)->defaultValue();
-//        }
-//    }
-//    1 根据滤镜的index拿到滤镜的meta
+//    1 获取滤镜meta
     QmlMetadata *meta = MAIN.filterController()->getQmlMetadata(index);
-//    2 根据mlt配置文件模板生成配置文件
+//    2 生成.mlt文件
     QDir commonFileDir = QDir(Util::resourcesPath() + "/template/filters/preview/");
     QString commonFile = commonFileDir.absoluteFilePath("common.mlt");
     QFile file(commonFile);
@@ -370,7 +361,7 @@ void MainInterface::previewFilter(int index)
     QDir imageFileDir = QDir(Util::resourcesPath() + "/template/filters/preview/Samples/");
     QString imageFile = imageFileDir.absoluteFilePath("1.jpeg");
     QPixmap pixmap = QPixmap(imageFile);
-    //添加图片宽
+    //添加图片宽度
     QDomElement imageW = doc.createElement("property");
     imageW.setAttribute("name","moviemator:imageW");
     int width = pixmap.width();
@@ -378,7 +369,7 @@ void MainInterface::previewFilter(int index)
     imageW.appendChild(imageWDom);
     domElement.appendChild(imageW);
 
-    //添加图片高
+    //添加图片高度
     QDomElement imageH = doc.createElement("property");
     imageH.setAttribute("name","moviemator:imageH");
     int height = pixmap.height();
@@ -386,7 +377,7 @@ void MainInterface::previewFilter(int index)
     imageH.appendChild(imageHDom);
     domElement.appendChild(imageH);
 
-    // 设置图片路径
+    //设置图片路径
     QDomNodeList elementList = domElement.elementsByTagName("property");
     for(int j=0; j<elementList.count(); j++)
     {
@@ -398,15 +389,83 @@ void MainInterface::previewFilter(int index)
             break;
         }
     }
-    // 设置滤镜的mlt_service
+    // 添加filter
     QDomNodeList filterList = domElement.elementsByTagName("filter");
     QDomElement filter = filterList.at(0).toElement();
     QDomNodeList propertyList = filter.elementsByTagName("property");
     QDomElement prop = propertyList.at(0).toElement();
     prop.toElement().firstChild().setNodeValue(meta->mlt_service());
 
+    // 区分是否为frei0r
+    bool isFrei0r = false;
+    if(filter.text().contains("frei0r")){
+        isFrei0r = true;
+    }
 
-//    3 play此文件
+    //    3 设置filter参数并播放效果
     FILE_HANDLE mltSettingFile = createFileWithXMLForDragAndDrop(doc.toString());
+    Mlt::Producer *producer = static_cast<Mlt::Producer*>(mltSettingFile);
+    Mlt::Filter* pfilter = producer->filter(10);
+    for(int k=0;k<meta->keyframes()->parameterCount();k++){
+        QString propertyName;
+        QString propertyValue;
+        if(isFrei0r){
+            propertyName = QString::number(k);
+            propertyValue = meta->keyframes()->parameter(k)->defaultValue();
+        }else{
+            propertyName = meta->keyframes()->parameter(k)->property();
+            if(meta->keyframes()->parameter(k)->paraType() == "double")
+                propertyValue = QString::number(meta->keyframes()->parameter(k)->defaultValue().toDouble() * 100);
+            else
+                propertyValue = meta->keyframes()->parameter(k)->defaultValue();
+        }
+        setFilterProperty(meta->keyframes()->parameter(k)->paraType(),propertyName,propertyValue,meta->keyframes()->parameter(k)->factorFunc(),pfilter,meta->path());
+    }
+
     playFile(mltSettingFile);
+}
+
+double calculate(double value,QList<QString> funcList)
+{
+    double rt = value;
+    for (int i=0;i<funcList.count();i++) {
+        QString func = funcList.at(i);
+        QStringList maps = func.split(":");
+        if(maps.at(0) == "+"){
+            rt += maps.at(1).toDouble();
+        }else if (maps.at(0) == "-") {
+            rt -= maps.at(1).toDouble();
+        }else if (maps.at(0) == "x") {
+            rt = rt * maps.at(1).toDouble();
+        }else if (maps.at(0) == "c") {
+            rt = rt / maps.at(1).toDouble();
+        }else if (maps.at(0) == "b") {
+            if(fabs(rt) < 0.00001)
+                rt = 1;
+            else
+                rt = maps.at(1).toDouble() / rt;
+        }else if (maps.at(0) == "log") {
+            rt = log(fabs(rt)) / log(fabs(maps.at(1).toDouble()));
+        }else if (maps.at(0) == "pow") {
+            rt = pow(maps.at(1).toDouble(), rt);
+        }
+    }
+    return rt;
+}
+bool setFilterProperty(QString parametaerType,QString property,QString value,QList<QString> func,Mlt::Filter* pfilter,QDir filterPath)
+{
+    if(parametaerType == "double"){
+        pfilter->set(property.toUtf8().constData(),calculate(value.toDouble(),func));
+    }else if (parametaerType == "int") {
+        pfilter->set(property.toUtf8().constData(),int(calculate(value.toDouble(),func)));
+    }else if (parametaerType == "color") {
+        pfilter->set(property.toUtf8().constData(),value.toUtf8().constData());
+    }else if ((parametaerType == "rect")||(value == "")) {
+        pfilter->set(property.toUtf8().constData(),value.toUtf8().constData());
+    }else if (parametaerType == "string") {
+        if(value.contains(".html"))
+            value = filterPath.absolutePath().append('/') + value;
+        pfilter->set(property.toUtf8().constData(),value.toUtf8().constData());
+    }
+    return true;
 }
