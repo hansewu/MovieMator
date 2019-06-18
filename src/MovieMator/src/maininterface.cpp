@@ -29,6 +29,10 @@
 #include "util.h"
 #include <QDomDocument>
 #include <Logger.h>
+#include <cmath>
+
+double calculate(double value,QList<QString> funcList);
+bool setFilterProperty(QString parametaerType,QString property,QString value,QList<QString> func,Mlt::Filter* pfilter,QDir filterPath);
 
 MainInterface& MainInterface::singleton()
 {
@@ -337,20 +341,6 @@ void MainInterface::addFilter(int nFilterIndex)
 
 void MainInterface::previewFilter(int index)
 {
-//    for (int i=0;i<200;i++) {
-//        QmlMetadata *meta = MAIN.filterController()->getQmlMetadata(i);
-//        if(meta == nullptr) break;
-//        qDebug()<<"111111111111111111111-0:"+QString::number(i);
-//        qDebug()<<"name:"+meta->name();
-//        qDebug()<<"mlt_service:"+meta->mlt_service();
-//        qDebug()<<"parameterCount:"+QString::number(meta->keyframes()->parameterCount());
-//        for (int j=0;j<meta->keyframes()->parameterCount();j++) {
-//            qDebug()<<"parameter:"+QString::number(j);
-//            qDebug()<<"parameter name:"+meta->keyframes()->parameter(j)->name();
-//            qDebug()<<"parameter property:"+meta->keyframes()->parameter(j)->property();
-//            qDebug()<<"parameter defaultValue:"+meta->keyframes()->parameter(j)->defaultValue();
-//        }
-//    }
 //    1 根据滤镜的index拿到滤镜的meta
     QmlMetadata *meta = MAIN.filterController()->getQmlMetadata(index);
 //    2 根据mlt配置文件模板生成配置文件
@@ -405,8 +395,76 @@ void MainInterface::previewFilter(int index)
     QDomElement prop = propertyList.at(0).toElement();
     prop.toElement().firstChild().setNodeValue(meta->mlt_service());
 
+    // 添加设置滤镜参数
+    bool isFrei0r = false;
+    if(filter.text().contains("frei0r")){
+        isFrei0r = true;
+    }
 
-//    3 play此文件
+    //    3 play此文件
     FILE_HANDLE mltSettingFile = createFileWithXMLForDragAndDrop(doc.toString());
+    Mlt::Producer *producer = static_cast<Mlt::Producer*>(mltSettingFile);
+    Mlt::Filter* pfilter = producer->filter(10);
+    for(int k=0;k<meta->keyframes()->parameterCount();k++){
+        QString propertyName;
+        QString propertyValue;
+        if(isFrei0r){
+            propertyName = QString::number(k);
+            propertyValue = meta->keyframes()->parameter(k)->defaultValue();
+        }else{
+            propertyName = meta->keyframes()->parameter(k)->property();
+            if(meta->keyframes()->parameter(k)->paraType() == "double")
+                propertyValue = QString::number(meta->keyframes()->parameter(k)->defaultValue().toDouble() * 100);
+            else
+                propertyValue = meta->keyframes()->parameter(k)->defaultValue();
+        }
+        setFilterProperty(meta->keyframes()->parameter(k)->paraType(),propertyName,propertyValue,meta->keyframes()->parameter(k)->factorFunc(),pfilter,meta->path());
+    }
+
     playFile(mltSettingFile);
+}
+
+double calculate(double value,QList<QString> funcList)
+{
+    double rt = value;
+    for (int i=0;i<funcList.count();i++) {
+        QString func = funcList.at(i);
+        QStringList maps = func.split(":");
+        if(maps.at(0) == "+"){
+            rt += maps.at(1).toDouble();
+        }else if (maps.at(0) == "-") {
+            rt -= maps.at(1).toDouble();
+        }else if (maps.at(0) == "x") {
+            rt = rt * maps.at(1).toDouble();
+        }else if (maps.at(0) == "c") {
+            rt = rt / maps.at(1).toDouble();
+        }else if (maps.at(0) == "b") {
+            if(fabs(rt) < 0.00001)
+                rt = 1;
+            else
+                rt = maps.at(1).toDouble() / rt;
+        }else if (maps.at(0) == "log") {
+            rt = log(fabs(rt)) / log(fabs(maps.at(1).toDouble()));
+        }else if (maps.at(0) == "pow") {
+            rt = pow(maps.at(1).toDouble(), rt);
+        }
+    }
+    return rt;
+}
+bool setFilterProperty(QString parametaerType,QString property,QString value,QList<QString> func,Mlt::Filter* pfilter,QDir filterPath)
+{
+    if(parametaerType == "double"){
+        pfilter->set(property.toUtf8().constData(),calculate(value.toDouble(),func));
+    }else if (parametaerType == "int") {
+        pfilter->set(property.toUtf8().constData(),int(calculate(value.toDouble(),func)));
+    }else if (parametaerType == "color") {
+        pfilter->set(property.toUtf8().constData(),value.toUtf8().constData());
+    }else if ((parametaerType == "rect")||(value == "")) {
+        pfilter->set(property.toUtf8().constData(),value.toUtf8().constData());
+    }else if (parametaerType == "string") {
+        if(value.contains(".html"))
+            value = filterPath.absolutePath().append('/') + value;
+        pfilter->set(property.toUtf8().constData(),value.toUtf8().constData());
+    }
+    return true;
 }
