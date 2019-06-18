@@ -35,6 +35,7 @@ namespace Ui {
 }
 class AbstractJob;
 class MeltJob;
+class QTemporaryFile;
 namespace Mlt {
     class Service;
 }
@@ -172,6 +173,8 @@ private:
     MeltJob* createMeltJob(Mlt::Service* service, const QString& target, int realtime, int pass = 0);
     // 执行 m_immediateJob
     void runMelt(const QString& target, int realtime = -1);
+    // 添加水印
+    void addWatermark(Mlt::Service* service, QTemporaryFile& tmpProjectXml);
 
     // ???
     void encode(const QString& target);
