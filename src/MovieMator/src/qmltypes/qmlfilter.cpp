@@ -957,11 +957,11 @@ void QmlFilter::removeAllKeyFrame()
     Q_ASSERT(m_metadata);
     Q_ASSERT(m_metadata->keyframes());
 
-    QString propertyName = getAnyAnimPropertyName();
-    if (propertyName == nullptr) return;
-    removeAllKeyFrame(propertyName);
+//    QString propertyName = getAnyAnimPropertyName();
+//    if (propertyName == nullptr) return;
+//    removeAllKeyFrame(propertyName);
 
-    return;
+//    return;
 
     int paramCount = m_metadata->keyframes()->parameterCount();
     for (int i = 0; i < paramCount; i++)
@@ -973,11 +973,21 @@ void QmlFilter::removeAllKeyFrame()
 
 void QmlFilter::removeAllKeyFrame(QString name)
 {
+    Mlt::Animation animation = getAnimation(name);
+    if (!animation.is_valid())   return;
+
     int nKeyFrameCount = this->getKeyFrameCountOnProject(name);
     for (int index = nKeyFrameCount-1; index >= 0; index--) {
-        double nFrame = this->getKeyFrameOnProjectOnIndex(index, name);
-        this->removeKeyFrameParaValue(nFrame);
+        //double nFrame = this->getKeyFrameOnProjectOnIndex(index, name);
+        //this->removeKeyFrameParaValue(nFrame);
+        int nFrame = animation.key_get_frame(index);
+        animation.remove(nFrame);
     }
+
+    emit keyframeNumberChanged();
+
+    MLT.refreshConsumer();
+    emit filterPropertyValueChanged();
 }
 
 void QmlFilter::removeKeyFrameParaValue(int frame)
