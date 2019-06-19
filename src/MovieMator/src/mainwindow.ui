@@ -26,7 +26,7 @@
    <string>MovieMator Video Editor</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../icons/resources.qrc">
+   <iconset resource="../icons/crashreporter.qrc">
     <normaloff>:/icons/moviemator-logo-64.png</normaloff>:/icons/moviemator-logo-64.png</iconset>
   </property>
   <property name="iconSize">
@@ -66,7 +66,7 @@
      <x>0</x>
      <y>0</y>
      <width>1020</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -91,6 +91,8 @@
     <addaction name="actionCut"/>
     <addaction name="actionCopy"/>
     <addaction name="actionPaste"/>
+    <addaction name="separator"/>
+    <addaction name="actionExport_selected_clip_as_template_file"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -947,6 +949,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionExport_selected_clip_as_template_file">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Export Selected Clip as Template</string>
    </property>
   </action>
  </widget>

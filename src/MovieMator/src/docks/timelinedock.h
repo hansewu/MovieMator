@@ -161,6 +161,8 @@ public:
 
     // 将轨道 trackIndex的剪辑 clipIndex导出为模板
     Q_INVOKABLE void exportAsTemplate(int trackIndex, int clipIndex);
+    //将选中的clip导出为xml模版
+    void exportSelectedClipAsTemplate();
 
     // 发送 sizeAndPositionFilterSelected()信号
     void selectSizeAndPositionFilter(int index);

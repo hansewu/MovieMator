@@ -372,8 +372,10 @@ public slots:
     void on_actionCut_triggered();
     void on_actionCopy_triggered();
     void on_actionPaste_triggered();
+    void on_actionExport_selected_clip_as_template_file_triggered();
 
     void on_tasksDockTriggered(bool);
+
 
 #ifdef MOVIEMATOR_PRO
 #ifndef SHARE_VERSION

@@ -3870,6 +3870,7 @@ void MainWindow::onTimelineSelectionChanged()
     bool enable = (m_timelineDock->selection().size() > 0);
     ui->actionCut->setEnabled(enable);
     ui->actionCopy->setEnabled(enable);
+    ui->actionExport_selected_clip_as_template_file->setEnabled(enable);
 }
 
 void MainWindow::on_actionCut_triggered()
@@ -3892,6 +3893,11 @@ void MainWindow::on_actionPaste_triggered()
     m_timelineDock->show();
     m_timelineDock->raise();
     m_timelineDock->insert(-1);
+}
+
+void MainWindow::on_actionExport_selected_clip_as_template_file_triggered()
+{
+    m_timelineDock->exportSelectedClipAsTemplate();
 }
 
 void MainWindow::onClipCopied()
