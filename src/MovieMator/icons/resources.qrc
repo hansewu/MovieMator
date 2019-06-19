@@ -300,6 +300,11 @@
         <file>filters/Saturat0r.jpg</file>
         <file>filters/Transparency.jpg</file>
         <file>filters/SOP-Sat.jpg</file>
+        <file>light/32x32/speed_icon.png</file>
+        <file>light/32x32/media-seek-nextframe.png</file>
+        <file>light/32x32/media-seek-nextframe-pressed.png</file>
+        <file>light/32x32/media-seek-preframe.png</file>
+        <file>light/32x32/media-seek-preframe-pressed.png</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>

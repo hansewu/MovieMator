@@ -26,6 +26,8 @@
 #include "abstractproducerwidget.h"
 #include "sharedframe.h"
 
+#include <QGraphicsOpacityEffect>
+
 namespace Ui {
     class AvformatProducerSimpleWidget;
 }
@@ -35,7 +37,7 @@ class AvformatProducerSimpleWidget : public QWidget, public AbstractProducerWidg
     Q_OBJECT
 
 public:
-    explicit AvformatProducerSimpleWidget(QWidget *parent = 0);
+    explicit AvformatProducerSimpleWidget(QWidget *parent = nullptr);
     ~AvformatProducerSimpleWidget();
 
     // AbstractProducerWidget overrides
@@ -60,12 +62,22 @@ private slots:
 
     void on_okButton_clicked();
 
+    void okButtonFlash();
+
 private:
     Ui::AvformatProducerSimpleWidget *ui;
     int m_defaultDuration;
     bool m_recalcDuration;
 
     Mlt::Producer *m_tempProducer;
+
+    // okButton的闪烁动画：通过改变透明度来闪烁
+    QGraphicsOpacityEffect *m_opacityEffect;
+    QTimer *m_timer;
+    bool m_status;
+    double m_opacityValue;
+
+    void stopTimer();
 
     void reopen(Mlt::Producer* p);
     Mlt::Producer * createProducer(Mlt::Profile&, Mlt::Producer*, double speed);  // 创建一个m_producer的拷贝

@@ -36,14 +36,17 @@ AvformatProducerSimpleWidget::AvformatProducerSimpleWidget(QWidget *parent)
     , ui(new Ui::AvformatProducerSimpleWidget)
     , m_defaultDuration(-1)
     , m_recalcDuration(true)
-    , m_tempProducer(0)
+    , m_tempProducer(nullptr)
 {
     ui->setupUi(this);
 //    Util::setColorsToHighlight(ui->filenameLabel);
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
 
+    ui->speedIcon->setPixmap(QPixmap(":/icons/light/32x32/speed_icon.png"));
+
     ui->filenameLabel->setStyleSheet("background-color:rgb(46,46,46);");
     ui->line->setStyleSheet("color:black;");
+    ui->line_2->setStyleSheet("color:black;");
     QString buttonStyle = "QPushButton{"
                           "border-radius:3px;border:1px solid;border-color:black;"
                           "background-color:rgb(100,100,100);color:rgb(225,225,225);}";
@@ -59,16 +62,34 @@ AvformatProducerSimpleWidget::AvformatProducerSimpleWidget(QWidget *parent)
     ui->endPointSpinBox->setStyleSheet(spinBoxStyle);
     QString doubleSpinBoxStyle = spinBoxStyle.replace("QSpinBox", "QDoubleSpinBox");
     ui->speedSpinBox->setStyleSheet(doubleSpinBoxStyle);
+
+    // 去除 spinBox的上下箭头按钮，使之像一个普通的不可编辑文本框
+    ui->startPointSpinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);
+    ui->endPointSpinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);
+    // 去除 spinBox的边框
+    ui->startPointSpinBox->setStyleSheet("QSpinBox{background-color:transparent; border:none;}");
+    ui->endPointSpinBox->setStyleSheet("QSpinBox{background-color:transparent; border:none;}");
+
+    m_opacityEffect = new QGraphicsOpacityEffect(ui->okButton);
+    m_timer = new QTimer(this);
+    m_timer->setInterval(150);
+    m_status = false;
+    m_opacityValue = 1.0;
+
+    m_opacityEffect->setOpacity(m_opacityValue);
+    ui->okButton->setGraphicsEffect(m_opacityEffect);
+
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(okButtonFlash()));
 }
 
 AvformatProducerSimpleWidget::~AvformatProducerSimpleWidget()
 {
     if (m_tempProducer)
         delete m_tempProducer;
-    m_tempProducer = 0;
+    m_tempProducer = nullptr;
     if (m_producer)
         delete  m_producer;
-    m_producer = 0;
+    m_producer = nullptr;
     delete ui;
 }
 
@@ -105,7 +126,7 @@ void AvformatProducerSimpleWidget::reopen(Mlt::Producer* p)
     }
 
     if (MLT.setProducer(p)) {
-        setProducer(0);
+        setProducer(nullptr);
         return;
     }
     MLT.stop();
@@ -143,7 +164,7 @@ void AvformatProducerSimpleWidget::onFrameDisplayed(const SharedFrame&)
     ui->endPointSpinBox->setValue(m_tempProducer->get_out());
     m_recalcDuration = false;
     ui->speedSpinBox->setValue(warpSpeed);
-    disconnect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, 0);
+    disconnect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, nullptr);
 }
 
 
@@ -152,14 +173,16 @@ void AvformatProducerSimpleWidget::on_speedSpinBox_editingFinished()
     if (!m_tempProducer)
         return;
     m_recalcDuration = true;
+
+    m_timer->start();
 }
 
 void AvformatProducerSimpleWidget::setProducer(Mlt::Producer *aProducer)
 {
     delete m_tempProducer;
     delete m_producer;
-    m_producer = 0;//保存原producer数据
-    m_tempProducer = 0;//接收改变的临时producer
+    m_producer = nullptr;//保存原producer数据
+    m_tempProducer = nullptr;//接收改变的临时producer
     if (aProducer) {
         loadPreset(*aProducer);
         double speed = GetSpeedFromProducer(aProducer);
@@ -171,7 +194,7 @@ void AvformatProducerSimpleWidget::setProducer(Mlt::Producer *aProducer)
 //创建新的producer
 Mlt::Producer * AvformatProducerSimpleWidget::createProducer(Mlt::Profile& profile, Mlt::Producer *producer, double speed)
 {
-    Mlt::Producer* p = NULL;
+    Mlt::Producer* p = nullptr;
     if ( speed == 1.0 )
     {
         p = new Mlt::Producer(profile, GetFilenameFromProducer(producer));
@@ -267,6 +290,8 @@ void AvformatProducerSimpleWidget::on_okButton_clicked()
     } else {
         reopen(producer);
     }
+
+    stopTimer();
 }
 
 
@@ -274,9 +299,49 @@ void AvformatProducerSimpleWidget::on_resetButton_clicked()
 {
     ui->speedSpinBox->setValue(m_producer->get_speed());//
     onFrameDisplayed(SharedFrame());
+
+    stopTimer();
 }
 
 Mlt::Producer* AvformatProducerSimpleWidget::producer(Mlt::Profile& profile)
 {
-    return 0;
+    Q_UNUSED(profile)
+    return nullptr;
+}
+
+void AvformatProducerSimpleWidget::okButtonFlash()
+{
+    ui->okButton->setStyleSheet("QPushButton{"
+                                "border-radius:3px;border:1px solid;border-color:black;"
+                                "background-color:rgb(192,72,44);color:rgb(225,225,225);}");
+    if(m_status)
+    {
+        m_opacityValue -= 0.2;
+    }
+    else
+    {
+        m_opacityValue += 0.2;
+    }
+
+    if(m_opacityValue > 0.9)
+    {
+        m_status = true;
+    }
+    else if(m_opacityValue < 0.5)
+    {
+        m_status = false;
+    }
+
+    m_opacityEffect->setOpacity(m_opacityValue);
+}
+
+void AvformatProducerSimpleWidget::stopTimer()
+{
+    ui->okButton->setStyleSheet("QPushButton{"
+                                "border-radius:3px;border:1px solid;border-color:black;"
+                                "background-color:rgb(100,100,100);color:rgb(225,225,225);}");
+    m_timer->stop();
+
+    m_opacityValue = 1.0;
+    m_opacityEffect->setOpacity(m_opacityValue);
 }
