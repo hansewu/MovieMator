@@ -143,6 +143,9 @@ public:
     //获取模板编辑界面对象TemplateEidtor，目前无用
     TemplateEidtor *templateEditor() const { return m_templateEditor; }
 
+    //修改profile
+    void changeProfile(QString profileName);
+
 
 signals:
     //打开producer时发送此信号
@@ -521,6 +524,7 @@ private slots:
     void addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);//添加dock到右侧的dock容器中
 
     void on_actionNewProject_triggered();
+    void on_actionVideoMode_triggered();
 };
 
 #define MAIN MainWindow::singleton()

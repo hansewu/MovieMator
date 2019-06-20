@@ -116,6 +116,8 @@
 #include <QQmlEngine>
 #include <QQmlContext>
 
+#include "dialogs/videomodesettingsdialog.h"
+
 #if defined (Q_OS_MAC)
     #include "securitybookmark/transport_security_bookmark.h"
 #endif
@@ -1132,6 +1134,8 @@ void MainWindow::setupSettingsMenu()
     delete ui->menuDrawingMethod;
     ui->menuDrawingMethod = 0;
 #endif
+    //隐藏原profile菜单
+    ui->menuProfile->menuAction()->setVisible(false);
     LOG_DEBUG() << "end";
 }
 
@@ -3553,6 +3557,43 @@ void MainWindow::onKeyerTriggered(QAction *action)
     Settings.setPlayerKeyerMode(action->data().toInt());
 }
 
+void MainWindow::changeProfile(QString profileName) {
+    //检测是否和当前profile相等
+    QString currentPrefileName = Settings.playerProfile();
+    if (profileName == currentPrefileName) {
+        return;
+    }
+
+    //need restart
+    QMessageBox dialog(QMessageBox::Information,
+                       qApp->applicationName(),
+                       tr("You must restart MovieMator to change the video mode.\n"
+                          "Do you want to change video mode now?"),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+#if MOVIEMATOR_PRO
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+#else
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    if (dialog.exec() == QMessageBox::Yes) {
+        if (continueModified())
+        {
+            m_exitCode = EXIT_RESTART;
+            //close project
+            if (multitrack())
+                m_timelineDock->model()->close();
+            //set profile
+            Settings.setPlayerProfile(profileName);
+            QApplication::closeAllWindows();
+            return;
+        }
+    }
+}
+
 void MainWindow::onProfileTriggered(QAction *action)
 {
     Q_ASSERT(action);
@@ -4692,4 +4733,13 @@ void MainWindow::loadTemplateInfo(Mlt::Producer *producer)
 void MainWindow::on_actionNewProject_triggered()
 {
     on_actionClose_triggered();
+}
+
+void MainWindow::on_actionVideoMode_triggered()
+{
+    VideoModeSettingsDialog videoModeSettingsDialog(this);
+    videoModeSettingsDialog.setWindowModality(QmlApplication::dialogModality());
+    if (videoModeSettingsDialog.exec() == QDialog::Accepted) {
+        qDebug()<<"";
+    }
 }

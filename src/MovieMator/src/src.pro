@@ -122,8 +122,8 @@ SOURCES += main.cpp\
     widgets/avformatproducersimplewidget.cpp \
     CrashHandler/CrashHandler.cpp \
 #    templateeidtor.cpp \
-    commands/abstractcommand.cpp
-    maininterface.cpp
+    commands/abstractcommand.cpp \
+    dialogs/videomodesettingsdialog.cpp
 
 HEADERS  += mainwindow.h \
     scrubbar.h \
@@ -241,7 +241,8 @@ HEADERS  += mainwindow.h \
 #    templateeidtor.h \
     eccregister/CEccRegister.h \
     commands/abstractcommand.h \
-    CrashHandler/CrashHandler.h
+    CrashHandler/CrashHandler.h \
+    dialogs/videomodesettingsdialog.h
 
 mac {
     SOURCES += securitybookmark/SecurityBookmark.mm \
@@ -295,7 +296,8 @@ FORMS    += mainwindow.ui \
     dialogs/upgradetopropromptdialog.ui \
     dialogs/invalidprojectdialog.ui \
     docks/encodetaskdock.ui \
-    widgets/avformatproducersimplewidget.ui
+    widgets/avformatproducersimplewidget.ui \
+    dialogs/videomodesettingsdialog.ui
 
 RESOURCES += \
     ../icons/resources.qrc \
