@@ -1000,8 +1000,18 @@ void TimelineDock::copyClip(int trackIndex, int clipIndex)
         p.set_speed(0);
         p.seek(info->frame_in);
         p.set_in_and_out(info->frame_in, info->frame_out);
-        MLT.setSavedProducer(&p);
+//        MLT.setSavedProducer(&p);
+        m_model.setCopiedProducer(&p);
         emit clipCopied();
+    }
+}
+
+void TimelineDock::paste()
+{
+    if(m_model.copiedProducer() != nullptr)
+    {
+        QString xml = MLT.XML(m_model.copiedProducer());
+        insert(-1, m_position, xml);
     }
 }
 

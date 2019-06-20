@@ -86,6 +86,7 @@ MultitrackModel::MultitrackModel(QObject *parent)
     : QAbstractItemModel(parent)
     , m_tractor(nullptr)
     , m_isMakingTransition(false)
+    , m_copiedProducer(nullptr)
 {
 //    connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));//sll:将modify放在mainwindow中建立连接，防止界面更新与数据操作顺序问题
     connect(this, SIGNAL(reloadRequested()), SLOT(reload()), Qt::QueuedConnection);
@@ -4327,6 +4328,16 @@ Mlt::Producer* MultitrackModel::producer(Mlt::Producer *producer, Mlt::Profile& 
         if(p) p->set(kShotcutProducerProperty, "avformat");
     }
     return p;
+}
+
+Mlt::Producer* MultitrackModel::copiedProducer()
+{
+    return (m_copiedProducer!=nullptr) ? m_copiedProducer.data() : nullptr;
+}
+
+void MultitrackModel::setCopiedProducer(Mlt::Producer* producer)
+{
+    m_copiedProducer.reset(new Mlt::Producer(producer));
 }
 
 void MultitrackModel::debugPrintState()

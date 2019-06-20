@@ -2180,7 +2180,8 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         } else {
             m_timelineDock->show();
             m_timelineDock->raise();
-            m_timelineDock->insert(-1);
+//            m_timelineDock->insert(-1);
+            m_timelineDock->paste();    // 粘贴
         }
         break;
     case Qt::Key_B: // Avid Overwrite
@@ -3892,7 +3893,8 @@ void MainWindow::on_actionPaste_triggered()
 {
     m_timelineDock->show();
     m_timelineDock->raise();
-    m_timelineDock->insert(-1);
+//    m_timelineDock->insert(-1);
+    m_timelineDock->paste();    //粘贴
 }
 
 void MainWindow::on_actionExport_selected_clip_as_template_file_triggered()
