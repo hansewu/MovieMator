@@ -24,8 +24,8 @@
 #include "docks/timelinedock.h"
 #include "commands/timelinecommands.h"
 #include <shotcut_mlt_properties.h>
-#include "templateeidtor.h"
 #include "controllers/filtercontroller.h"
+#include "templateeidtor.h"
 #include "util.h"
 #include <QDomDocument>
 #include <Logger.h>
@@ -340,10 +340,66 @@ void MainInterface::addFilter(int nFilterIndex)
     timeline->setPosition(timeline->position());
 }
 
+void MainInterface::previewAudioFilter(QmlMetadata *meta)
+{
+    QDir commonFileDir = QDir(Util::resourcesPath() + "/template/filters/preview/");
+    QString commonFile = commonFileDir.absoluteFilePath("auidoSetting.mlt");
+    QFile file(commonFile);
+    QDomDocument doc;
+    if(!doc.setContent(&file))
+    {
+        file.close();
+        return;
+    }
+    file.close();
+    QDomNodeList nodeList = doc.elementsByTagName("producer");
+    QDomElement domElement = nodeList.at(0).toElement();
+
+    QDir audioFileDir = QDir(Util::resourcesPath() + "/template/filters/preview/Samples/");
+    QString audioFile = audioFileDir.absoluteFilePath("1.mp3");
+
+    QDomNodeList elementList = domElement.elementsByTagName("property");
+    for(int j=0; j<elementList.count(); j++)
+    {
+        QDomElement de = elementList.at(j).toElement();
+        if(de.attribute("name").contains("resource"))
+        {
+            QDomNode domNodeResource = de.toElement().firstChild();
+            domNodeResource.setNodeValue(audioFile);
+            break;
+        }
+    }
+
+    QDomNodeList filterList = domElement.elementsByTagName("filter");
+    QDomElement filter = filterList.at(0).toElement();
+    QDomNodeList propertyList = filter.elementsByTagName("property");
+    QDomElement prop = propertyList.at(0).toElement();
+    prop.toElement().firstChild().setNodeValue(meta->mlt_service());
+
+    FILE_HANDLE mltSettingFile = createFileWithXMLForDragAndDrop(doc.toString());
+    Mlt::Producer *producer = static_cast<Mlt::Producer*>(mltSettingFile);
+    Mlt::Filter* pfilter = producer->filter(10);
+    for(int k=0;k<meta->keyframes()->parameterCount();k++){
+        QString propertyName;
+        QString propertyValue;
+        propertyName = meta->keyframes()->parameter(k)->property();
+        if(meta->keyframes()->parameter(k)->paraType() == "double")
+            propertyValue = QString::number(meta->keyframes()->parameter(k)->defaultValue().toDouble() * 100);
+        else
+            propertyValue = meta->keyframes()->parameter(k)->defaultValue();
+        setFilterProperty(meta->keyframes()->parameter(k)->paraType(),propertyName,propertyValue,meta->keyframes()->parameter(k)->factorFunc(),pfilter,meta->path());
+    }
+    playFile(mltSettingFile);
+}
+
 void MainInterface::previewFilter(int index)
 {
-//    1 获取滤镜meta
+//    1 获取滤镜meta  默认按视频滤镜处理
     QmlMetadata *meta = MAIN.filterController()->getQmlMetadata(index);
+    if(meta->isAudio()){
+        previewAudioFilter(meta);
+        return;
+    }
 //    2 生成.mlt文件
     QDir commonFileDir = QDir(Util::resourcesPath() + "/template/filters/preview/");
     QString commonFile = commonFileDir.absoluteFilePath("common.mlt");
