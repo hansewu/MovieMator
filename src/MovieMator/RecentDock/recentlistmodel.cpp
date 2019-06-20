@@ -90,11 +90,13 @@ QVariant RecentListModel::data(const QModelIndex &index, int role) const
             QImage image;
 
             image = QImage(width, height, QImage::Format_ARGB32);
+
             Q_ASSERT(m_mainWindow);
             if(!m_mainWindow)
             {
                 return image;
             }
+
             QImage thumb = m_mainWindow->getThumbnail(fileHandle);
             if (!thumb.isNull()) {
                 QPainter painter(&image);
@@ -106,7 +108,16 @@ QVariant RecentListModel::data(const QModelIndex &index, int role) const
                     rect.setWidth(width);
                     rect.setHeight(height);
                 }
-                painter.drawImage(rect, thumb);
+
+                // 如果是音频文件就显示一个音乐的图片
+                if(m_mainWindow->getFileType(fileHandle)==FILE_TYPE_AUDIO)
+                {
+                    painter.drawImage(rect, QImage(":/icons/filters/Audio.png"));
+                }
+                else
+                {
+                    painter.drawImage(rect, thumb);
+                }
 
                 painter.end();
             }
