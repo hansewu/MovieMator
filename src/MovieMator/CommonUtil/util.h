@@ -41,6 +41,7 @@ public:
     static QString getFileHash(const QString& path);
     static QString resourcesPath();
     static QString templatePath();
+    static bool isAudioFile(const QString& filePath);
 };
 
 #endif // UTIL_H

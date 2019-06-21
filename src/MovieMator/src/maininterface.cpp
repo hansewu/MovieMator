@@ -193,7 +193,12 @@ FILE_TYPE MainInterface::getFileType(FILE_HANDLE fileHandle)
             result = FILE_TYPE_IMAGE;
         } else {
             //video
-            result = FILE_TYPE_VIDEO;
+            QString resource = QString(producer->get("resource"));
+            if (Util::isAudioFile(resource)) {
+                result = FILE_TYPE_AUDIO;
+            } else {
+                 result = FILE_TYPE_VIDEO;
+            }
         }
     } else if (audio_index >= 0) {
         //audio
