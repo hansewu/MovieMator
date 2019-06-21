@@ -305,6 +305,13 @@
         <file>light/32x32/media-seek-nextframe-pressed.png</file>
         <file>light/32x32/media-seek-preframe.png</file>
         <file>light/32x32/media-seek-preframe-pressed.png</file>
+        <file>light/32x32/player-zoom-fit.png</file>
+        <file>light/32x32/player-zoom-fit-pressed.png</file>
+        <file>light/32x32/player-volume-pressed.png</file>
+        <file>light/32x32/player-zoom-fullscreen.png</file>
+        <file>light/32x32/player-zoom-fullscreen-pressed.png</file>
+        <file>light/32x32/player-zoom-set.png</file>
+        <file>light/32x32/player-zoom-set-pressed.png</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>

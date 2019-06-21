@@ -177,54 +177,128 @@ Player::Player(QWidget *parent)
 //    vlayout->addLayout(hBoxLayout);
 //    vlayout->addWidget(progressWidget);
 
-    m_zoomComBox = new QComboBox;
-    m_zoomComBox->setFixedWidth(65);
-//    m_zoomComBox->setCheckable(true);
-    m_zoomComBox->setToolTip(tr("Toggle zoom"));
-    m_zoomComBox->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
+    m_fitButton = new QPushButton();
+    m_fullScreenButton = new QPushButton();
+    m_zoomSetButton = new QPushButton();
 
-    m_zoomComBox->addItem(tr("Fit"));
-    m_zoomComBox->addItem(tr("10%"));
-    m_zoomComBox->addItem(tr("25%"));
-    m_zoomComBox->addItem(tr("50%"));
-    m_zoomComBox->addItem(tr("100%"));
-    m_zoomComBox->addItem(tr("200%"));
+    m_fitButton->setFixedSize(QSize(20, 20));
+    m_fitButton->setIconSize(QSize(20, 20));
+    m_fitButton->setFlat(true);
+    m_fullScreenButton->setFixedSize(QSize(20, 20));
+    m_fullScreenButton->setIconSize(QSize(20, 20));
+    m_fullScreenButton->setFlat(true);
+#ifdef Q_OS_WIN
+    m_fullScreenButton->setVisible(false);
+    m_fullScreenButton->setEnabled(false);
+#endif
+    m_zoomSetButton->setFixedSize(QSize(20, 20));
+    m_zoomSetButton->setIconSize(QSize(20, 20));
+    m_zoomSetButton->setFlat(true);
 
-    connect(m_zoomComBox, SIGNAL(currentIndexChanged(int)), this, SLOT(ZoomChanged(int)));
+    m_zoomMenu = new QMenu(this);
+    m_zoomMenu->setStyleSheet("QMenu{background-color:rgb(82,82,82);border:none;}"
+                              "QMenu::item:selected{background-color:rgb(192,72,44);}");
+    m_zoomMenu->setWindowFlags(Qt::Popup | Qt::NoDropShadowWindowHint); // 消除阴影
 
-     m_zoomComBox->setCurrentIndex(0);
+    const int size = 5;
+    QString zoomTitle[size] = {"10%", "25%", "50%", "100%", "200%"};
+    QActionGroup *actionGroup = new QActionGroup(this);
+    for(int i=0; i<size; i++)
+    {
+        QAction *action = new QAction(this);
+        action->setText(zoomTitle[i]);
+        action->setObjectName("actionZoom_" + QString::number(i));
+        action->setCheckable(true);
+        action->setChecked(false);
+        actionGroup->addAction(action);     // 互斥
+        m_zoomMenu->addAction(action);
+        connect(action, SIGNAL(triggered()), this, SLOT(onZoomActionTriggered()));
+    }
+
+//    QString buttonStyle = "QPushButton {background-color:rgb(49,50,52); border:1px solid;border-color:rgb(109,109,109);}";
+//    m_fitButton->setStyleSheet(buttonStyle);
+//    m_fullScreenButton->setStyleSheet(buttonStyle);
+    m_fitButton->setStyleSheet("QPushButton{border-image: url(:/icons/light/32x32/player-zoom-fit.png)}"
+                               "QPushButton:pressed{ border-image: url(:/icons/light/32x32/player-zoom-fit-pressed.png)}");
+    m_fullScreenButton->setStyleSheet("QPushButton{border-image: url(:/icons/light/32x32/player-zoom-fullscreen.png)}"
+                                      "QPushButton:pressed{ border-image: url(:/icons/light/32x32/player-zoom-fullscreen-pressed.png)}");
+    m_zoomSetButton->setStyleSheet("QPushButton{border-image: url(:/icons/light/32x32/player-zoom-set.png)}"
+                                   "QPushButton:pressed{ border-image: url(:/icons/light/32x32/player-zoom-set-pressed.png)}");
+
+    connect(m_fitButton, SIGNAL(clicked()), this, SLOT(onFitButtonClicked()));
+    connect(m_fullScreenButton, SIGNAL(clicked()), this, SLOT(onFullScreenButtonClicked()));
+    connect(m_zoomSetButton, SIGNAL(clicked()), this, SLOT(onShowZoomMenu()));
+
+//    m_zoomComBox = new QComboBox;
+//    m_zoomComBox->setFixedWidth(65);
+////    m_zoomComBox->setCheckable(true);
+//    m_zoomComBox->setToolTip(tr("Toggle zoom"));
+//    m_zoomComBox->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
+
+//    m_zoomComBox->addItem(tr("Fit"));
+//    m_zoomComBox->addItem(tr("10%"));
+//    m_zoomComBox->addItem(tr("25%"));
+//    m_zoomComBox->addItem(tr("50%"));
+//    m_zoomComBox->addItem(tr("100%"));
+//    m_zoomComBox->addItem(tr("200%"));
+
+//    connect(m_zoomComBox, SIGNAL(currentIndexChanged(int)), this, SLOT(ZoomChanged(int)));
+
+//     m_zoomComBox->setCurrentIndex(0);
      this->ZoomChanged(0);
 
 
      //volume control
 
-     m_muteButton = new QPushButton;
-     m_muteButton->setFlat(true);
- //    m_muteButton->setIconSize(QSize(33,33));
- //    m_muteButton->setStyleSheet("background-color:rgb(82,82,82);");
+    m_volumePopup = new QFrame(this, Qt::Popup | Qt::NoDropShadowWindowHint);
+    m_volumePopup->setStyleSheet("background-color:rgb(82,82,82);");
+    QVBoxLayout *volumeLayout = new QVBoxLayout(m_volumePopup);
 
- //    m_muteButton->setIcon(QIcon(":/icons/light/32x32/player-volume.png"));
-     m_muteButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/player-volume.png)}");
+//     m_muteButton = new QPushButton;
+//     m_muteButton->setFlat(true);
+// //    m_muteButton->setIconSize(QSize(33,33));
+// //    m_muteButton->setStyleSheet("background-color:rgb(82,82,82);");
 
-     m_muteButton->setCheckable(true);
-     m_muteButton->setChecked(false);
+// //    m_muteButton->setIcon(QIcon(":/icons/light/32x32/player-volume.png"));
+//     m_muteButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/player-volume.png)}");
+
+//     m_muteButton->setCheckable(true);
+//     m_muteButton->setChecked(false);
+//     m_bMute = false;
+//     m_muteButton->setFixedSize(QSize(33,33));
+//     m_muteButton->setIconSize(QSize(32,32));
+//     connect(m_muteButton, SIGNAL(clicked(bool)),this,SLOT(onMuteButtonToggled(bool)));
+
+
+     m_volumeButton = new QPushButton;
+     m_volumeButton->setFlat(true);
+     m_volumeButton->setStyleSheet("QPushButton{border-image: url(:/icons/light/32x32/player-volume.png)}"
+                                   "QPushButton:pressed{border-image: url(:/icons/light/32x32/player-volume-pressed.png)}");
+     if(Settings.playerVolume()==0)
+     {
+         m_volumeButton->setStyleSheet("QPushButton{border-image: url(:/icons/light/32x32/player-mute.png)}");
+     }
+     m_volumeButton->setCheckable(true);
+     m_volumeButton->setChecked(false);
      m_bMute = false;
-     m_muteButton->setFixedSize(QSize(33,33));
-     m_muteButton->setIconSize(QSize(32,32));
-     connect(m_muteButton, SIGNAL(clicked(bool)),this,SLOT(onMuteButtonToggled(bool)));
+     m_volumeButton->setFixedSize(QSize(20,20));
+     m_volumeButton->setIconSize(QSize(20,20));
+     connect(m_volumeButton, SIGNAL(clicked()),this,SLOT(onShowVolumeSlider()));
 
 
-     m_volumeSlider = new QSlider(Qt::Horizontal);
+//     m_volumeSlider = new QSlider(Qt::Horizontal);
+     m_volumeSlider = new QSlider(Qt::Vertical);
      m_volumeSlider->setFocusPolicy(Qt::NoFocus);
-     m_volumeSlider->setMinimumWidth(30);//VOLUME_SLIDER_HEIGHT);
+     m_volumeSlider->setMinimumWidth(20);   // 30   //VOLUME_SLIDER_HEIGHT);
      m_volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
      m_volumeSlider->setRange(0,99);
 
      m_volumeSlider->setValue(Settings.playerVolume());
 
-     QString strStyle = "QSlider::sub-page:horizontal{background:rgb(15,114,103);border-radius: 4px}";
-     strStyle.append("QSlider::groove:horizontal{background:'grey';height:8px;border-radius: 4px;}");
-     strStyle.append("QSlider::handle:horizontal{background:'white';width:5px;margin: -2px 1px -2px 1px;border-radius: 2px}");
+     QString strStyle = "QSlider::add-page:vertical{background:rgb(15,114,103);border-radius: 4px}";
+     strStyle.append("QSlider::groove:vertical{background:'grey';width:8px;border-radius: 4px;}");
+     strStyle.append("QSlider::handle:vertical{background:'white';height:5px;margin:0 -2px;border-radius: 2px}");
+     strStyle.append("QToolTip{background-color:rgb(255,255,210)}");
      m_volumeSlider->setStyleSheet(strStyle);
 
      m_volumeSlider->setContentsMargins(0,0,10,0);
@@ -233,6 +307,7 @@ Player::Player(QWidget *parent)
      m_volumeSlider->setToolTip(tr("Adjust the audio volume"));
      connect(m_volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(onVolumeChanged(int)));
 
+     volumeLayout->addWidget(m_volumeSlider);
 
     //add widget for player toolbar
 
@@ -276,27 +351,45 @@ Player::Player(QWidget *parent)
     m_btnPlay->setToolTip(tr("Start playback"));
     m_btnPlay->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-playback-start.png)}" );
 
-    m_btnRewind = new QPushButton();//QIcon(":/icons/light/32x32/media-skip-backward.png"),"");
-    m_btnRewind->setFlat(true);
-    m_btnRewind->setFixedSize(32,32);
-    m_btnRewind->setIconSize(QSize(32,32));
-    connect(m_btnRewind, SIGNAL(clicked()), this, SLOT(rewind()));
-    m_btnRewind->setContentsMargins(0,0,0,0);
-    m_btnRewind->setToolTip(tr("Play quickly backwards (J)"));
-    m_btnRewind->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-skip-backward.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-skip-backward-pressed.png)}");
+//    m_btnRewind = new QPushButton();//QIcon(":/icons/light/32x32/media-skip-backward.png"),"");
+//    m_btnRewind->setFlat(true);
+//    m_btnRewind->setFixedSize(32,32);
+//    m_btnRewind->setIconSize(QSize(32,32));
+//    connect(m_btnRewind, SIGNAL(clicked()), this, SLOT(rewind()));
+//    m_btnRewind->setContentsMargins(0,0,0,0);
+//    m_btnRewind->setToolTip(tr("Play quickly backwards (J)"));
+//    m_btnRewind->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-skip-backward.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-skip-backward-pressed.png)}");
 
-    m_btnFastForword = new QPushButton();//QIcon(":/icons/light/32x32/media-skip-forward.png"),"");
-    m_btnFastForword->setFlat(true);
-    m_btnFastForword->setFixedSize(32,32);
-    m_btnFastForword->setIconSize(QSize(32,32));
-    connect(m_btnFastForword, SIGNAL(clicked()), this, SLOT(fastForward()));
-    m_btnFastForword->setContentsMargins(0,0,0,0);
-    m_btnFastForword->setToolTip(tr("Play quickly forwards (L)"));
-    m_btnFastForword->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-skip-forward.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-skip-forward-pressed.png)}");
+//    m_btnFastForword = new QPushButton();//QIcon(":/icons/light/32x32/media-skip-forward.png"),"");
+//    m_btnFastForword->setFlat(true);
+//    m_btnFastForword->setFixedSize(32,32);
+//    m_btnFastForword->setIconSize(QSize(32,32));
+//    connect(m_btnFastForword, SIGNAL(clicked()), this, SLOT(fastForward()));
+//    m_btnFastForword->setContentsMargins(0,0,0,0);
+//    m_btnFastForword->setToolTip(tr("Play quickly forwards (L)"));
+//    m_btnFastForword->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-skip-forward.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-skip-forward-pressed.png)}");
+
+    m_btnPreFrame = new QPushButton();//QIcon(":/icons/light/32x32/media-seek-preframe.png"),"");
+    m_btnPreFrame->setFlat(true);
+    m_btnPreFrame->setFixedSize(32,32);
+    m_btnPreFrame->setIconSize(QSize(32,32));
+    connect(m_btnPreFrame, SIGNAL(clicked()), this, SLOT(seekPreFrame()));
+    m_btnPreFrame->setContentsMargins(0,0,0,0);
+//    m_btnPreFrame->setToolTip(tr("Play quickly backwards (J)"));
+    m_btnPreFrame->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-seek-preframe.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-seek-preframe-pressed.png)}");
+
+    m_btnNextFrame = new QPushButton();//QIcon(":/icons/light/32x32/media-seek-nextframe.png"),"");
+    m_btnNextFrame->setFlat(true);
+    m_btnNextFrame->setFixedSize(32,32);
+    m_btnNextFrame->setIconSize(QSize(32,32));
+    connect(m_btnNextFrame, SIGNAL(clicked()), this, SLOT(seekNextFrame()));
+    m_btnNextFrame->setContentsMargins(0,0,0,0);
+//    m_btnNextFrame->setToolTip(tr("Play quickly forwards (L)"));
+    m_btnNextFrame->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-seek-nextframe.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-seek-nextframe-pressed.png)}");
 
 
 //    toolbarlayout->addWidget(m_videoScrollWidget,0,0,1,14);
-    toolbarlayout->addWidget(progressWidget,0,0,1,14);
+    toolbarlayout->addWidget(progressWidget,0,0,1,17);      // 14
 
     QSpacerItem *spacer0 = new QSpacerItem(10,20);
     toolbarlayout->addItem(spacer0, 1,0,1,1);
@@ -308,25 +401,40 @@ Player::Player(QWidget *parent)
     toolbarlayout->addItem(spacer1, 1,2,1,1);
 
     toolbarlayout->addWidget(m_btnSeekPrevious, 1,3,1,1);
-    toolbarlayout->addWidget(m_btnRewind,1,4,1,1);
+//    toolbarlayout->addWidget(m_btnRewind,1,4,1,1);
+    toolbarlayout->addWidget(m_btnPreFrame,1,4,1,1);
     toolbarlayout->addWidget(m_btnPlay,1,5,1,1);
-    toolbarlayout->addWidget(m_btnFastForword,1,6,1,1);
+//    toolbarlayout->addWidget(m_btnFastForword,1,6,1,1);
+    toolbarlayout->addWidget(m_btnNextFrame,1,6,1,1);
     toolbarlayout->addWidget(m_btnSeekNext,1,7,1,1);
-
 
     QSpacerItem *spacer2 = new QSpacerItem(50,20, QSizePolicy::Expanding);
     toolbarlayout->addItem(spacer2, 1,8,1,1);
 
-    toolbarlayout->addWidget(m_zoomComBox,1,9,1,1);
+//    toolbarlayout->addWidget(m_zoomComBox,1,9,1,1);
+    toolbarlayout->addWidget(m_fitButton,1,9,1,1);
+    QSpacerItem *spacer3 = new QSpacerItem(15, 20);
+    toolbarlayout->addItem(spacer3,1,10,1,1);
+    toolbarlayout->addWidget(m_fullScreenButton,1,11,1,1);
+#ifdef Q_OS_WIN
+    QSpacerItem *spacer4 = new QSpacerItem(0, 20);
+    toolbarlayout->addItem(spacer4,1,12,1,1);
+#else
+    QSpacerItem *spacer4 = new QSpacerItem(15, 20);
+    toolbarlayout->addItem(spacer4,1,12,1,1);
+#endif
+//    toolbarlayout->addWidget(m_zoomComBox,1,13,1,1);
+    toolbarlayout->addWidget(m_zoomSetButton,1,13,1,1);
 
-    QSpacerItem *spacer3 = new QSpacerItem(20,20);
-    toolbarlayout->addItem(spacer3, 1,10,1,1);
+    QSpacerItem *spacer5 = new QSpacerItem(15,20);   // 20, 20
+    toolbarlayout->addItem(spacer5, 1,14,1,1);      // 10
 
-    toolbarlayout->addWidget(m_muteButton,1,11,1,1);
-    toolbarlayout->addWidget(m_volumeSlider,1,12,1,1);
+//    toolbarlayout->addWidget(m_muteButton,1,11,1,1);
+//    toolbarlayout->addWidget(m_volumeSlider,1,12,1,1);
+    toolbarlayout->addWidget(m_volumeButton,1,15,1,1);
 
-    QSpacerItem *spacer4 = new QSpacerItem(10,20);
-    toolbarlayout->addItem(spacer4, 1,13,1,1);
+    QSpacerItem *spacer6 = new QSpacerItem(10,20);
+    toolbarlayout->addItem(spacer6, 1,16,1,1);      // 13
 
     toolWidget->setLayout(toolbarlayout);
 
@@ -335,6 +443,7 @@ Player::Player(QWidget *parent)
     m_playerLayout->setContentsMargins(0,0,0,0);
     m_playerLayout->addWidget(m_videoScrollWidget, 1);
     m_playerLayout->addWidget(toolWidget,1);
+
 
 
 //    toolbar->addWidget(toolWidget);
@@ -863,6 +972,16 @@ void Player::fastForward()//快进
         play();
 }
 
+void Player::seekPreFrame()
+{
+    m_positionSpinner->setValue(m_positionSpinner->value()-1);
+}
+
+void Player::seekNextFrame()
+{
+    m_positionSpinner->setValue(m_positionSpinner->value()+1);
+}
+
 void Player::showPaused()
 {
     actionPlay->setIcon(m_playIcon);
@@ -1055,21 +1174,34 @@ void Player::onVolumeChanged(int volume)
     Settings.setPlayerMuted(false);
     if(volume == 0)
     {
-        m_muteButton->setChecked(true);
+//        m_muteButton->setChecked(true);
+//        m_bMute = true;
+//   //     m_muteButton->setIcon(QIcon(":/icons/light/32x32/player-mute.png"));
+//        m_muteButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/player-mute.png)}");
+//    //    m_muteButton->setFlat(true);
+//        m_muteButton->setIconSize(QSize(32,32));
+
+        onMuteButtonToggled(true);
+
+        m_volumeButton->setChecked(true);
         m_bMute = true;
-   //     m_muteButton->setIcon(QIcon(":/icons/light/32x32/player-mute.png"));
-        m_muteButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/player-mute.png)}");
-    //    m_muteButton->setFlat(true);
-        m_muteButton->setIconSize(QSize(32,32));
+//        m_volumeButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/player-mute.png)}");
+//        m_volumeButton->setIconSize(QSize(32,32));
+
     }
-    else if(m_muteButton->isChecked())
+//    else if(m_muteButton->isChecked())
+    else if(m_volumeButton->isChecked())
     {
 
-   //     m_muteButton->setIcon(QIcon(":/icons/light/32x32/player-volume.png"));
-         m_muteButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/player-volume.png)}");
-   //     m_muteButton->setChecked(false);
-   //     m_muteButton->setFlat(true);
-        m_muteButton->setIconSize(QSize(32,32));
+//   //     m_muteButton->setIcon(QIcon(":/icons/light/32x32/player-volume.png"));
+//         m_muteButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/player-volume.png)}");
+//   //     m_muteButton->setChecked(false);
+//   //     m_muteButton->setFlat(true);
+//        m_muteButton->setIconSize(QSize(32,32));
+
+        m_volumeButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/player-volume.png)}"
+                                      "QPushButton:pressed{ border-image: url(:/icons/light/32x32/player-volume-pressed.png)}");
+//        m_volumeButton->setIconSize(QSize(32,32));
     }
 }
 
@@ -1089,23 +1221,41 @@ void Player::on_actionVolume_triggered()
 //    m_volumeWidget->show();
 }
 
+void Player::onShowVolumeSlider()
+{
+    m_volumeButton->setChecked(true);
+    m_volumePopup->show();              // 先显示再移动
+    int x = m_volumeButton->width()/2 - m_volumePopup->width()/2 -3;
+    int y = -m_volumePopup->height();
+    m_volumePopup->move(m_volumeButton->mapToGlobal(QPoint(x, y)));
+}
+
 void Player::onMuteButtonToggled(bool checked)
 {
     if (checked) {
         m_savedVolume = MLT.volume();
         MLT.setVolume(0);
         m_volumeSlider->setValue(0);
-     //   m_muteButton->setIcon(QIcon(":/icons/light/32x32/player-mute.png"));
-         m_muteButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/player-mute.png)}");
-        m_muteButton->setFlat(true);
-        m_muteButton->setIconSize(QSize(32,32));
+//     //   m_muteButton->setIcon(QIcon(":/icons/light/32x32/player-mute.png"));
+//         m_muteButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/player-mute.png)}");
+//        m_muteButton->setFlat(true);
+//        m_muteButton->setIconSize(QSize(32,32));
+
+        m_volumeButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/player-mute.png)}");
+//        m_volumeButton->setFlat(true);
+//        m_volumeButton->setIconSize(QSize(32,32));
     } else {
         MLT.setVolume(m_savedVolume);
         m_volumeSlider->setValue(int(m_savedVolume*100));
-     //   m_muteButton->setIcon(QIcon(":/icons/light/32x32/player-volume.png"));
-         m_muteButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/player-volume.png)}");
-        m_muteButton->setFlat(true);
-        m_muteButton->setIconSize(QSize(32,32));
+//     //   m_muteButton->setIcon(QIcon(":/icons/light/32x32/player-volume.png"));
+//         m_muteButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/player-volume.png)}");
+//        m_muteButton->setFlat(true);
+//        m_muteButton->setIconSize(QSize(32,32));
+
+        m_volumeButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/player-volume.png)}"
+                                      "QPushButton:pressed{ border-image: url(:/icons/light/32x32/player-volume-pressed.png)}");
+//        m_volumeButton->setFlat(true);
+//        m_volumeButton->setIconSize(QSize(32,32));
     }
     Settings.setPlayerMuted(checked);
   //  m_volumePopup->hide();
@@ -1134,6 +1284,37 @@ void Player::zoomPlayer(float fZoomFactor)
     //MAIN.showFullScreen();
 }
 
+void Player::onFitButtonClicked()
+{
+    setZoom(0.0f);
+}
+
+void Player::onSameSizeButtonClicked()
+{
+    setZoom(0.0f);
+    setZoom(1.0f);
+}
+
+void Player::onFullScreenButtonClicked()
+{
+    toggleFullScreen();
+}
+
+void Player::onShowZoomMenu()
+{
+    m_zoomMenu->show();
+    int x = m_zoomSetButton->width()/2 - m_zoomMenu->width()/2;
+    int y = m_zoomSetButton->height();
+    m_zoomMenu->exec(m_zoomSetButton->mapToGlobal(QPoint(x, y)));
+}
+
+void Player::onZoomActionTriggered()
+{
+    QString objName = sender()->objectName();
+    int i = objName.split("_")[1].toInt();
+    ZoomChanged(i);
+}
+
 void Player::toggleZoom(bool checked)
 {
     if (!checked)
@@ -1156,26 +1337,26 @@ void Player::toggleZoom(bool checked)
 
 void Player::ZoomChanged(int index)
 {
-    float fZoom = 0.0f;
+    float fZoom = 0.10f;    // 0.0f
     switch(index)
     {
     case 0:
         break;
     case 1:
-        fZoom = 0.10f;
-        break;
-    case 2:
         fZoom = 0.25f;
         break;
-    case 3:
+    case 2:
         fZoom = 0.50f;
         break;
-    case 4:
+    case 3:
         fZoom = 1.0f;
         break;
-    case 5:
+    case 4:
         fZoom = 2.0f;
         break;
+//    case 5:
+//        fZoom = 2.0f;
+//        break;
     }
     zoomPlayer(fZoom);
 }

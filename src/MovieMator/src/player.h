@@ -48,6 +48,7 @@ class QPushButton;
 class QComboBox;
 class MySlider;
 class QVBoxLayout;
+class QMenu;
 
 class Player : public QWidget//QFrame//
 {
@@ -116,6 +117,9 @@ public slots:
     void setStatusLabel(const QString& text, int timeoutSeconds, QAction* action);
     void toggleFullScreen();
 
+    void seekPreFrame();
+    void seekNextFrame();
+
 protected:
     void resizeEvent(QResizeEvent* event);
 //    bool eventFilter(QObject* target, QEvent* event);
@@ -139,8 +143,10 @@ private:
     QPushButton *m_btnSeekPrevious;
     QPushButton *m_btnSeekNext;
     QPushButton *m_btnPlay;
-    QPushButton *m_btnRewind;
-    QPushButton *m_btnFastForword;
+//    QPushButton *m_btnRewind;
+//    QPushButton *m_btnFastForword;
+    QPushButton *m_btnPreFrame;     // 上一帧
+    QPushButton *m_btnNextFrame;    // 下一帧
 
     ScrubBar* m_scrubber;
     QSlider *m_progressBar;
@@ -154,7 +160,8 @@ private:
     QFrame* m_volumePopup;
     QSlider* m_volumeSlider;
     QWidget* m_volumeWidget;
-    QPushButton* m_muteButton;
+    QPushButton* m_muteButton;      // 静音按钮
+    QPushButton* m_volumeButton;    // 弹出音量调节按钮
     int m_previousIn;
     int m_previousOut;
     double m_savedVolume;
@@ -184,6 +191,12 @@ private:
     QPropertyAnimation* m_statusFadeOut;
     QTimer m_statusTimer;
 
+    QPushButton *m_fitButton;           // 合适
+    QPushButton *m_fullScreenButton;    // 全屏
+    QPushButton *m_zoomSetButton;
+    QFrame *m_zoomPopup;
+    QMenu *m_zoomMenu;
+
     bool m_bPlayedOrStoped;
     bool m_bMute;
 
@@ -201,6 +214,14 @@ private slots:
     void ZoomChanged(int index);
 
     void zoomPlayer(float fZoomFactor);
+
+    void onFitButtonClicked();
+    void onSameSizeButtonClicked();
+    void onFullScreenButtonClicked();
+    void onShowZoomMenu();
+    void onZoomActionTriggered();
+
+    void onShowVolumeSlider();
 };
 
 #endif // PLAYER_H
