@@ -30,7 +30,7 @@ class DurationDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit DurationDialog(QWidget *parent = 0);
+    explicit DurationDialog(QWidget *parent = nullptr);
     ~DurationDialog();
     void setDuration(int);
     int duration() const;

@@ -106,7 +106,7 @@ void ColorProducerWidget::loadPreset(Mlt::Properties& p)
 
 void ColorProducerWidget::on_preset_selected(void* p)
 {
-    Mlt::Properties* properties = (Mlt::Properties*) p;
+    Mlt::Properties* properties = static_cast<Mlt::Properties*>(p);
     loadPreset(*properties);
     delete properties;
 }

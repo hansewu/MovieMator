@@ -23,26 +23,27 @@
 
 static inline double IEC_Scale(double dB)
 {
-    double fScale = 1.0f;
+    double fScale = 1.0;
 
-    if (dB < -70.0f)
-        fScale = 0.0f;
-    else if (dB < -60.0f)
-        fScale = (dB + 70.0f) * 0.0025f;
-    else if (dB < -50.0f)
-        fScale = (dB + 60.0f) * 0.005f + 0.025f;
+    if (dB < -70.0)
+        fScale = 0.0;
+    else if (dB < -60.0)
+        fScale = (dB + 70.0) * 0.0025;
+    else if (dB < -50.0)
+        fScale = (dB + 60.0) * 0.005 + 0.025;
     else if (dB < -40.0)
-        fScale = (dB + 50.0f) * 0.0075f + 0.075f;
-    else if (dB < -30.0f)
-        fScale = (dB + 40.0f) * 0.015f + 0.15f;
-    else if (dB < -20.0f)
-        fScale = (dB + 30.0f) * 0.02f + 0.3f;
-    else if (dB < -0.001f || dB > 0.001f)  /* if (dB < 0.0f) */
-        fScale = (dB + 20.0f) * 0.025f + 0.5f;
+        fScale = (dB + 50.0) * 0.0075 + 0.075;
+    else if (dB < -30.0)
+        fScale = (dB + 40.0) * 0.015 + 0.15;
+    else if (dB < -20.0)
+        fScale = (dB + 30.0) * 0.02 + 0.3;
+    else if (dB < -0.001 || dB > 0.001)  /* if (dB < 0.0f) */
+        fScale = (dB + 20.0) * 0.025 + 0.5;
 
     return fScale;
 }
 
+// 此函数有被调用
 static inline double IEC_ScaleMax(double dB, double max)
 {
     return IEC_Scale(dB) / IEC_Scale(max);

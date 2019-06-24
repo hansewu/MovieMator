@@ -34,7 +34,7 @@
 TextlistDock::TextlistDock(AttachedFiltersModel *model, QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::TextlistDock),
-    m_filterSettingsView(QmlUtilities::sharedEngine(), 0)
+    m_filterSettingsView(QmlUtilities::sharedEngine(), nullptr)
 //    m_webvfxFilterView(QmlUtilities::sharedEngine(), 0)
 {
     ui->setupUi(this);
@@ -76,7 +76,7 @@ void TextlistDock::loadTextMetadata() {
                 if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
                 //    meta->loadSettings();
                     meta->setPath(subdir);
-                    meta->setParent(0);
+                    meta->setParent(nullptr);
                     addTextMetadata(meta);
                 }
             } else if (!meta) {
@@ -131,7 +131,7 @@ void TextlistDock::addTextToTimeline(int index)
 
 
 
-    producer = new Mlt::Producer(MLT.profile(), NULL, "noise");
+    producer = new Mlt::Producer(MLT.profile(), nullptr, "noise");
     Q_ASSERT(producer);
     producer->attach(*mltfilter);
 
@@ -153,7 +153,7 @@ QmlMetadata *TextlistDock::metadataForService(Mlt::Service *service)
 {
     Q_ASSERT(service);
 
-    QmlMetadata* meta = 0;
+    QmlMetadata* meta = nullptr;
     int rowCount = m_model.rowCount();
     QString uniqueId = service->get(kShotcutFilterProperty);
 

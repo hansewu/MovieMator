@@ -31,7 +31,7 @@ class DirectShowVideoWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit DirectShowVideoWidget(QWidget *parent = 0);
+    explicit DirectShowVideoWidget(QWidget *parent = nullptr);
     ~DirectShowVideoWidget();
 
     // AbstractProducerWidget overrides

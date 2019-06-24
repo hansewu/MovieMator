@@ -29,7 +29,7 @@ class EncodeTaskDock : public QDockWidget
     Q_OBJECT
 
 public:
-    explicit EncodeTaskDock(QWidget *parent = 0);
+    explicit EncodeTaskDock(QWidget *parent = nullptr);
     ~EncodeTaskDock();
 
 private:

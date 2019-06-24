@@ -27,6 +27,7 @@ QmlHtmlEditor::QmlHtmlEditor()
 
 void QmlHtmlEditor::edit(QString file)
 {
+    Q_UNUSED(file)
 //    MAIN.editHTML(file);
 //    connect(MAIN.htmlEditor(), SIGNAL(closed()), SIGNAL(closed()));
 //    connect(MAIN.htmlEditor(), SIGNAL(saved()), SIGNAL(saved()));

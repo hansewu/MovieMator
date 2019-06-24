@@ -35,7 +35,7 @@ class TextlistDock : public QDockWidget
     Q_OBJECT
 
 public:
-    explicit TextlistDock(AttachedFiltersModel*model,  QWidget *parent = 0);
+    explicit TextlistDock(AttachedFiltersModel*model,  QWidget *parent = nullptr);
     ~TextlistDock();
 
     TextMetadataModel* model() {

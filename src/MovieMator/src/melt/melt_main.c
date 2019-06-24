@@ -41,22 +41,24 @@
 
 static mlt_producer melt = NULL;
 
+// 未使用的函数
 static void stop_handler(int signum)
 {
-	if ( melt )
-	{
-		mlt_properties properties = MLT_PRODUCER_PROPERTIES( melt );
-		mlt_properties_set_int( properties, "done", 1 );
-	}
+    (void)signum;
+    if ( melt )
+    {
+        mlt_properties properties = MLT_PRODUCER_PROPERTIES( melt );
+        mlt_properties_set_int( properties, "done", 1 );
+    }
 }
 
 static void abnormal_exit_handler(int signum)
 {
-	// The process is going down hard. Restore the terminal first.
-	term_exit();
-	// Reset the default handler so the core gets dumped.
-	signal( signum, SIG_DFL );
-	raise( signum );
+    // The process is going down hard. Restore the terminal first.
+    term_exit();
+    // Reset the default handler so the core gets dumped.
+    signal( signum, SIG_DFL );
+    raise( signum );
 }
 
 static void transport_action( mlt_producer producer, char *value )
@@ -104,8 +106,8 @@ static void transport_action( mlt_producer producer, char *value )
 				mlt_events_fire( jack, "jack-stop", NULL );
 				break;
 			case '6':
-			case ' ':
-				if ( !jack || mlt_producer_get_speed( producer ) != 0 )
+            case ' ':
+                if ( !jack || (mlt_producer_get_speed(producer)<=1e-15 && mlt_producer_get_speed(producer)>=-1e-15))
 					mlt_producer_set_speed( producer, 1 );
 				mlt_consumer_purge( consumer );
 				mlt_events_fire( jack, "jack-start", NULL );
@@ -188,7 +190,7 @@ static void transport_action( mlt_producer producer, char *value )
 				{
 					position++;
 					mlt_consumer_purge( consumer );
-					if ( mlt_producer_get_speed( producer ) != 0 )
+                    if ( mlt_producer_get_speed( producer )<=1e-6 && mlt_producer_get_speed(producer)>=-1e-6)
 					{
 						mlt_producer_set_speed( producer, 0 );
 						mlt_events_fire( jack, "jack-stop", NULL );
@@ -219,10 +221,11 @@ static void transport_action( mlt_producer producer, char *value )
 
 static void on_jack_started( mlt_properties owner, mlt_consumer consumer, mlt_position *position )
 {
+    (void)owner;
 	mlt_producer producer = mlt_properties_get_data( MLT_CONSUMER_PROPERTIES(consumer), "transport_producer", NULL );
 	if ( producer )
 	{
-		if ( mlt_producer_get_speed( producer ) != 0 )
+        if ( mlt_producer_get_speed( producer ) <= 1e-6 && mlt_producer_get_speed( producer ) >= -1e-6)
 		{
 			mlt_properties jack = mlt_properties_get_data( MLT_CONSUMER_PROPERTIES( consumer ), "jack_filter", NULL );
 			mlt_events_fire( jack, "jack-stop", NULL );
@@ -239,6 +242,7 @@ static void on_jack_started( mlt_properties owner, mlt_consumer consumer, mlt_po
 
 static void on_jack_stopped( mlt_properties owner, mlt_consumer consumer, mlt_position *position )
 {
+    (void)owner;
 	mlt_producer producer = mlt_properties_get_data( MLT_CONSUMER_PROPERTIES(consumer), "transport_producer", NULL );
 	if ( producer )
 	{
@@ -274,7 +278,7 @@ static mlt_consumer create_consumer( mlt_profile profile, char *id )
 	if ( consumer != NULL )
 	{
 		mlt_properties properties = MLT_CONSUMER_PROPERTIES( consumer );
-		mlt_properties_set_data( properties, "transport_callback", transport_action, 0, NULL, NULL );
+        mlt_properties_set_data( properties, "transport_callback", (void*)transport_action, 0, NULL, NULL );
 	}
 	free( myid );
 	return consumer;
@@ -419,7 +423,7 @@ static void transport( mlt_producer producer, mlt_consumer consumer , MELT_CALLB
 
 			if ( value != -1 )
 			{
-				char string[ 2 ] = { value, 0 };
+                char string[ 2 ] = { (char)value, 0 };
 				transport_action( producer, string );
 			}
 
@@ -699,6 +703,7 @@ static void query_vcodecs( )
 
 static void on_fatal_error( mlt_properties owner, mlt_consumer consumer )
 {
+    (void)owner;
 	mlt_properties_set_int( MLT_CONSUMER_PROPERTIES(consumer), "done", 1 );
 	mlt_properties_set_int( MLT_CONSUMER_PROPERTIES(consumer), "melt_error", 1 );
 }
@@ -894,7 +899,7 @@ query_all:
 			{
 				mlt_properties_inc_ref( MLT_CONSUMER_PROPERTIES(consumer) ); // because we explicitly close it
 				mlt_properties_set_data( MLT_CONSUMER_PROPERTIES(consumer),
-					"transport_callback", transport_action, 0, NULL, NULL );
+                    "transport_callback", (void*)transport_action, 0, NULL, NULL );
 			}
 		}
 

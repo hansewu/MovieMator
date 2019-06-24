@@ -82,7 +82,7 @@ void CustomProfileDialog::on_buttonBox_accepted()
         MLT.profile().set_frame_rate(60000, 1001);
         break;
     default:
-        MLT.profile().set_frame_rate(ui->fpsSpinner->value() * 1000, 1000);
+        MLT.profile().set_frame_rate(int(ui->fpsSpinner->value() * 1000), 1000);
         break;
     }
     MLT.profile().set_progressive(ui->scanModeCombo->currentIndex());

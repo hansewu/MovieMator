@@ -35,12 +35,12 @@ class AudioLoudnessScopeWidget Q_DECL_FINAL : public ScopeWidget
     
 public:
     explicit AudioLoudnessScopeWidget();
-    ~AudioLoudnessScopeWidget();
-    QString getTitle();
+    ~AudioLoudnessScopeWidget() Q_DECL_OVERRIDE;
+    QString getTitle() Q_DECL_OVERRIDE;
     void setOrientation(Qt::Orientation orientation) Q_DECL_OVERRIDE;
 
 protected:
-    bool event(QEvent *event);
+    bool event(QEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
     void resetQview();

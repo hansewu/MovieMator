@@ -26,7 +26,7 @@ class GLTestWidget : public QGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
 public:
-    explicit GLTestWidget(QWidget *parent = 0);
+    explicit GLTestWidget(QWidget *parent = nullptr);
 
 protected:
     void initializeGL();

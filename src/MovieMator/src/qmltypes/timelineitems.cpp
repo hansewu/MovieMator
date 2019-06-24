@@ -99,17 +99,19 @@ public:
     {
         setAntialiasing(QPainter::Antialiasing);
     }
-    void paint(QPainter *painter)
-    {
-        Q_ASSERT(painter);
-
-        QPainterPath path;
-        path.moveTo(0, 0);
-        path.lineTo(width(), 0);
-        path.lineTo(0, height());
-        painter->fillPath(path, Qt::black);
-    }
+    void paint(QPainter *painter);
 };
+
+void TimelineTriangle::paint(QPainter *painter)
+{
+    Q_ASSERT(painter);
+
+    QPainterPath path;
+    path.moveTo(0, 0);
+    path.lineTo(width(), 0);
+    path.lineTo(0, height());
+    painter->fillPath(path, Qt::black);
+}
 
 class TimelineWaveform : public QQuickPaintedItem
 {

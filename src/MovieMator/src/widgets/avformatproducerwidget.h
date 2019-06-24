@@ -35,7 +35,7 @@ class AvformatProducerWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit AvformatProducerWidget(QWidget *parent = 0);
+    explicit AvformatProducerWidget(QWidget *parent = nullptr);
     ~AvformatProducerWidget();
 
     // AbstractProducerWidget overrides

@@ -23,13 +23,14 @@
 
 
 EncodeTask::EncodeTask(Mlt::Producer *producer, Mlt::Profile *profile, Mlt::Properties *presets, QString target) : AbstractTask(target)
-    , m_consumer(NULL)
-    , m_producer(NULL)
-    , m_cut(NULL)
+    , m_consumer(nullptr)
+    , m_producer(nullptr)
+    , m_cut(nullptr)
     , m_duration(-1)
     , m_outputName(target)
-    , m_textFilter(NULL)
+    , m_textFilter(nullptr)
 {
+    Q_UNUSED(producer)
     //m_producer = new Mlt::Producer(producer);
     m_producer = new Mlt::Producer(*(MAIN.multitrack()));
     m_consumer = createConsumer(profile, presets, target);
@@ -129,8 +130,8 @@ Mlt::FilteredConsumer *EncodeTask::createConsumer(Mlt::Profile *profile, Mlt::Pr
     if (target.endsWith(".mp4") || target.endsWith(".mov"))
         m_consumer->set("strict", "experimental");
 
-    m_consumer->listen("consumer-frame-show", this, (mlt_listener)on_frame_show);
-    m_consumer->listen("consumer-stopped", this, (mlt_listener)on_stopped);
+    m_consumer->listen("consumer-frame-show", this, mlt_listener(on_frame_show));
+    m_consumer->listen("consumer-stopped", this, mlt_listener(on_stopped));
 
     return m_consumer;
 }
@@ -143,8 +144,8 @@ void EncodeTask::on_frame_show(mlt_consumer, void *self, mlt_frame frame)
     if (position >= task->duration() -1 )
         emit task->endOfStream();
 
-    int percent = position * 100.0 / task->duration();
-    emit task->progressUpdated(task->modelIndex(), percent);
+    int percent = int(position * 100.0 / task->duration());
+    emit task->progressUpdated(task->modelIndex(), uint(percent));
 
     qDebug() << "CURRENT POS:" << position << "   TOTAL: " <<  task->duration();
 
@@ -180,7 +181,7 @@ void EncodeTask::resetProducer()
         {
             m_producer->detach(*m_textFilter);
             delete m_textFilter;
-            m_textFilter = NULL;
+            m_textFilter = nullptr;
         }
     }
 #endif

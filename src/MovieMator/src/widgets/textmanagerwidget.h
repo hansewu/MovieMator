@@ -72,7 +72,7 @@ class TextManagerWidget : public QQuickWidget
 \
 
 public:
-    TextManagerWidget(QObject *parent = 0);
+    TextManagerWidget(QObject *parent = nullptr);
     ~TextManagerWidget();
     void loadTextMetadata();
 

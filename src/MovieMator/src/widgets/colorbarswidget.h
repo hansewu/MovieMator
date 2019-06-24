@@ -31,7 +31,7 @@ class ColorBarsWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit ColorBarsWidget(QWidget *parent = 0);
+    explicit ColorBarsWidget(QWidget *parent = nullptr);
     ~ColorBarsWidget();
 
     // AbstractProducerWidget overrides

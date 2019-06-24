@@ -28,7 +28,7 @@
 Video4LinuxWidget::Video4LinuxWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Video4LinuxWidget),
-    m_audioWidget(0)
+    m_audioWidget(nullptr)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->label_3);
@@ -78,7 +78,7 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
             profile.set_sample_aspect(1, 1);
             profile.set_progressive(1);
             profile.set_colorspace(601);
-            profile.set_frame_rate(ui->v4lFramerateSpinBox->value() * 10000, 10000);
+            profile.set_frame_rate(int(ui->v4lFramerateSpinBox->value() * 10000), 10000);
         }
     }
     Mlt::Producer* p = new Mlt::Producer(profile, URL().toLatin1().constData());
@@ -149,7 +149,7 @@ void Video4LinuxWidget::on_v4lAudioComboBox_activated(int index)
 {
     if (m_audioWidget)
         delete m_audioWidget;
-    m_audioWidget = 0;
+    m_audioWidget = nullptr;
     if (index == 1)
         m_audioWidget = new PulseAudioWidget(this);
     else if (index == 2)
@@ -162,7 +162,7 @@ void Video4LinuxWidget::on_v4lAudioComboBox_activated(int index)
 
 void Video4LinuxWidget::on_preset_selected(void* p)
 {
-    Mlt::Properties* properties = (Mlt::Properties*) p;
+    Mlt::Properties* properties = static_cast<Mlt::Properties*>(p);
     loadPreset(*properties);
     delete properties;
 }

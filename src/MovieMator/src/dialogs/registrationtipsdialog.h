@@ -29,7 +29,7 @@ class RegistrationTipsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit RegistrationTipsDialog(QWidget *parent = 0);
+    explicit RegistrationTipsDialog(QWidget *parent = nullptr);
     ~RegistrationTipsDialog();
 
 private slots:

@@ -31,7 +31,7 @@ class NetworkProducerWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit NetworkProducerWidget(QWidget *parent = 0);
+    explicit NetworkProducerWidget(QWidget *parent = nullptr);
     ~NetworkProducerWidget();
 
     // AbstractProducerWidget overrides

@@ -40,14 +40,14 @@ static const band BAND_TAB[] =
 {
 //     Low      Preferred  High                Band
 //     Freq      Center    Freq     Label       Num
-    {     1.12,     1.25,     1.41, "1.25"  }, //  1
-    {     1.41,     1.60,     1.78, "1.6"   }, //  2
-    {     1.78,     2.00,     2.24, "2.0"   }, //  3
-    {     2.24,     2.50,     2.82, "2.5"   }, //  4
-    {     2.82,     3.15,     3.55, "3.15"  }, //  5
-    {     3.55,     4.00,     4.44, "4.0"   }, //  6
-    {     4.44,     5.00,     6.00, "5.0"   }, //  7
-    {     6.00,     6.30,     7.00, "6.3"   }, //  8
+    {     1.12f,     1.25f,     1.41f, "1.25"  }, //  1
+    {     1.41f,     1.60f,     1.78f, "1.6"   }, //  2
+    {     1.78f,     2.00f,     2.24f, "2.0"   }, //  3
+    {     2.24f,     2.50f,     2.82f, "2.5"   }, //  4
+    {     2.82f,     3.15f,     3.55f, "3.15"  }, //  5
+    {     3.55f,     4.00f,     4.44f, "4.0"   }, //  6
+    {     4.44f,     5.00,     6.00, "5.0"   }, //  7
+    {     6.00,     6.30f,     7.00, "6.3"   }, //  8
     {     7.00,     8.00,     9.00, "8.0"   }, //  9
     {     9.00,    10.00,    11.00, "10"    }, // 10
     {    11.00,    12.50,    14.00, "12.5"  }, // 11
@@ -91,7 +91,7 @@ static const int AUDIBLE_BAND_COUNT = LAST_AUDIBLE_BAND_INDEX - FIRST_AUDIBLE_BA
 
 AudioSpectrumScopeWidget::AudioSpectrumScopeWidget()
   : ScopeWidget("AudioSpectrum")
-  , m_audioMeter(0)
+  , m_audioMeter(nullptr)
 {
     LOG_DEBUG() << "begin";
 
@@ -137,7 +137,7 @@ AudioSpectrumScopeWidget::~AudioSpectrumScopeWidget()
 void AudioSpectrumScopeWidget::processSpectrum()
 {
     QVector<double> bands(AUDIBLE_BAND_COUNT);
-    float* bins = (float*)m_filter->get_data("bins");
+    float* bins = static_cast<float*>(m_filter->get_data("bins"));
     int bin_count = m_filter->get_int("bin_count");
     double bin_width = m_filter->get_double("bin_width");
 
@@ -146,28 +146,28 @@ void AudioSpectrumScopeWidget::processSpectrum()
     for (int bin = 0; bin < bin_count; bin++) {
         // Loop through all the FFT bins and align bin frequencies with
         // band frequencies.
-        double F = bin_width * (double)bin;
+        double F = bin_width * double(bin);
 
         if (!firstBandFound) {
             // Skip bins that come before the first band.
-            if (BAND_TAB[band + FIRST_AUDIBLE_BAND_INDEX].low > F) {
+            if (double(BAND_TAB[band + FIRST_AUDIBLE_BAND_INDEX].low) > F) {
                 continue;
             } else {
                 firstBandFound = true;
-                bands[band] = bins[bin];
+                bands[band] = double(bins[bin]);
             }
-        } else if (BAND_TAB[band + FIRST_AUDIBLE_BAND_INDEX].high < F) {
+        } else if (double(BAND_TAB[band + FIRST_AUDIBLE_BAND_INDEX].high) < F) {
             // This bin is outside of this band - move to the next band.
             band++;
             if ((band + FIRST_AUDIBLE_BAND_INDEX) > LAST_AUDIBLE_BAND_INDEX) {
                 // Skip bins that come after the last band.
                 break;
             }
-            bands[band] = bins[bin];
-        } else if (bands[band] < bins[bin] ) {
+            bands[band] = double(bins[bin]);
+        } else if (bands[band] < double(bins[bin]) ) {
             // Pick the highest bin level within this band to represent the
             // whole band.
-            bands[band] = bins[bin];
+            bands[band] = double(bins[bin]);
         }
     }
 

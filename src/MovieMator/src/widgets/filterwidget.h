@@ -29,7 +29,7 @@ class FilterWidget : public QQuickWidget
     Q_OBJECT
 
 public:
-    FilterWidget(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QObject *parent = 0);
+    FilterWidget(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QObject *parent = nullptr);
     ~FilterWidget();
 
 

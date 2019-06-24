@@ -30,7 +30,7 @@ class ScreenSelector : public QFrame
 {
     Q_OBJECT
 public:
-    ScreenSelector(QWidget* parent = 0);
+    ScreenSelector(QWidget* parent = nullptr);
 
 public slots:
     void startSelection();
@@ -60,7 +60,7 @@ class ColorPickerItem : public QObject
 {
     Q_OBJECT
 public:
-    explicit ColorPickerItem(QObject* parent = 0);
+    explicit ColorPickerItem(QObject* parent = nullptr);
 
 signals:
     void pickColor();
