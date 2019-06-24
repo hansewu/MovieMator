@@ -53,8 +53,8 @@ class EncodeDock;
 class JobsDock;
 //class PlaylistDock;
 class QUndoStack;
-class MeltedPlaylistDock;
-class MeltedServerDock;
+//class MeltedPlaylistDock;
+//class MeltedServerDock;
 class QActionGroup;
 class FilterController;
 class ScopeController;
@@ -214,8 +214,8 @@ private:
     bool m_isKKeyPressed;//是否按键按下
     QUndoStack* m_undoStack;//undo、redo栈
     QDockWidget* m_historyDock;
-    MeltedServerDock* m_meltedServerDock;
-    MeltedPlaylistDock* m_meltedPlaylistDock;
+//    MeltedServerDock* m_meltedServerDock;
+//    MeltedPlaylistDock* m_meltedPlaylistDock;
     QActionGroup* m_profileGroup;//profile所有菜单的操作
     QActionGroup* m_externalGroup;
     QActionGroup* m_keyerGroup;

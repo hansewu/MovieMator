@@ -1,7 +1,6 @@
 TEMPLATE = subdirs
 
 SUBDIRS = CuteLogger \
-    mvcp \
     CommonUtil \
     QmlUtilities \
     MltController \
@@ -20,6 +19,6 @@ RecentDock.depends = CommonUtil
 FilterDock.depends = QmlUtilities
 AudioFilterDock.depends = QmlUtilities
 EffectDock.depends = CommonUtil
-src.depends = CuteLogger mvcp CommonUtil QmlUtilities MltController RecentDock FilterDock AudioFilterDock EffectDock Breakpad
+src.depends = CuteLogger CommonUtil QmlUtilities MltController RecentDock FilterDock AudioFilterDock EffectDock Breakpad
 
 

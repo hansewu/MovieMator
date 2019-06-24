@@ -53,10 +53,6 @@
 #include "jobqueue.h"
 //#include <playlistdock.h>
 #include "glwidget.h"
-#include "mvcp/meltedserverdock.h"
-#include "mvcp/meltedplaylistdock.h"
-#include "mvcp/meltedunitsmodel.h"
-#include "mvcp/meltedplaylistmodel.h"
 #include "controllers/filtercontroller.h"
 #include "controllers/scopecontroller.h"
 #include "docks/filtersdock.h"
@@ -196,8 +192,8 @@ MainWindow::MainWindow()
     : QMainWindow(nullptr)
     , ui(new Ui::MainWindow)
     , m_isKKeyPressed(false)
-    , m_meltedServerDock(nullptr)
-    , m_meltedPlaylistDock(nullptr)
+//    , m_meltedServerDock(nullptr)
+//    , m_meltedPlaylistDock(nullptr)
     , m_keyerGroup(nullptr)
     , m_keyerMenu(nullptr)
     , m_isPlaylistLoaded(false)
@@ -2539,8 +2535,8 @@ void MainWindow::on_actionOpenOther_triggered()
 void MainWindow::onProducerOpened()
 {
     LOG_DEBUG() << "begin";
-    if (m_meltedServerDock)
-        m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int,double,int,int,int,bool)));
+//    if (m_meltedServerDock)
+//        m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int,double,int,int,int,bool)));
 
     QWidget* w = loadProducerWidget(MLT.producer());
     if (w && !MLT.producer()->get_int(kMultitrackItemProperty)) {
@@ -3185,18 +3181,18 @@ void MainWindow::onMeltedUnitOpened()
     MLT.play(0);
     QScrollArea* scrollArea = qobject_cast<QScrollArea*>(m_propertiesDock->widget());
     delete scrollArea->widget();
-    if (m_meltedServerDock && m_meltedPlaylistDock) {
-        m_player->connectTransport(m_meltedPlaylistDock->transportControl());
-        connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)),
-                m_player, SLOT(onShowFrame(int,double,int,int,int,bool)));
-    }
+//    if (m_meltedServerDock && m_meltedPlaylistDock) {
+//        m_player->connectTransport(m_meltedPlaylistDock->transportControl());
+//        connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)),
+//                m_player, SLOT(onShowFrame(int,double,int,int,int,bool)));
+//    }
     onProducerChanged();
 }
 
 void MainWindow::onMeltedUnitActivated()
 {
-    m_meltedPlaylistDock->setVisible(true);
-    m_meltedPlaylistDock->raise();
+//    m_meltedPlaylistDock->setVisible(true);
+//    m_meltedPlaylistDock->raise();
 }
 
 void MainWindow::on_actionEnter_Full_Screen_triggered()
