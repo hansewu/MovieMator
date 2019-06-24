@@ -94,7 +94,6 @@
 #include "docks/encodetaskdock.h"
 #include "encodetaskqueue.h"
 #include "dialogs/invalidprojectdialog.h"
-//#include <configurationdock.h>
 #include "maininterface.h"
 #include <recentdockinterface.h>
 #include <filterdockinterface.h>
@@ -326,12 +325,6 @@ MainWindow::MainWindow()
     //      MLT.videoWidget()->installEventFilter(this);
     //        rightDockWidget->setWidget(m_player);
 
-//    m_configurationDock = new ConfigurationDock();
-//    addDockWidget(Qt::RightDockWidgetArea, m_configurationDock);
-//    m_configurationDock->setTitleBarWidget(new QWidget());
-//    m_configurationDock->setMinimumSize(500,320);
-//    m_configurationDock->setContentsMargins(0,0,0,0);
-
      ui->centralWidget->layout()->addWidget(m_player);
 
      ui->centralWidget->layout()->setContentsMargins(0,0,0,0);
@@ -470,7 +463,6 @@ MainWindow::MainWindow()
 //    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_filtersDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
      connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_propertiesVideoFilterDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)));
      connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_propertiesAudioFilterDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)));
-//    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_configurationDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
     //MovieMator Pro
 //#ifdef MOVIEMATOR_PRO
 //     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_timelineDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);

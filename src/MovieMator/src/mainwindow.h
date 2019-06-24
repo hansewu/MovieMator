@@ -76,7 +76,6 @@ class InvalidProjectDialog;
 class EncodeTaskDock;
 class QmlFilter;
 class QUndoCommand;
-class ConfigurationDock;
 class ContainerDock;
 class QToolButton;
 class TemplateEidtor;
@@ -296,8 +295,6 @@ private:
 #endif
 
     EncodeTaskDock *m_tasksDock;//导出文件dock
-
-    ConfigurationDock *m_configurationDock;//filter配置dock
 
     ContainerDock *m_resourceDockContainer;//包裹左侧所有dock的容器dock
     ContainerDock *m_propertiesDockContainer;//包裹右侧所有dock的容器dock
