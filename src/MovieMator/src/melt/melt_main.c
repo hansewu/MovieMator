@@ -42,24 +42,24 @@
 static mlt_producer melt = NULL;
 
 // 未使用的函数
-static void stop_handler(int signum)
-{
-    (void)signum;
-    if ( melt )
-    {
-        mlt_properties properties = MLT_PRODUCER_PROPERTIES( melt );
-        mlt_properties_set_int( properties, "done", 1 );
-    }
-}
+//static void stop_handler(int signum)
+//{
+//    (void)signum;
+//    if ( melt )
+//    {
+//        mlt_properties properties = MLT_PRODUCER_PROPERTIES( melt );
+//        mlt_properties_set_int( properties, "done", 1 );
+//    }
+//}
 
-static void abnormal_exit_handler(int signum)
-{
-    // The process is going down hard. Restore the terminal first.
-    term_exit();
-    // Reset the default handler so the core gets dumped.
-    signal( signum, SIG_DFL );
-    raise( signum );
-}
+//static void abnormal_exit_handler(int signum)
+//{
+//    // The process is going down hard. Restore the terminal first.
+//    term_exit();
+//    // Reset the default handler so the core gets dumped.
+//    signal( signum, SIG_DFL );
+//    raise( signum );
+//}
 
 static void transport_action( mlt_producer producer, char *value )
 {
