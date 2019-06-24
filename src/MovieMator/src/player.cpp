@@ -245,7 +245,8 @@ Player::Player(QWidget *parent)
 //    connect(m_zoomComBox, SIGNAL(currentIndexChanged(int)), this, SLOT(ZoomChanged(int)));
 
 //     m_zoomComBox->setCurrentIndex(0);
-     this->ZoomChanged(0);
+//     this->ZoomChanged(0);
+    this->zoomPlayer(0.0f);
 
 
      //volume control
@@ -1289,12 +1290,6 @@ void Player::onFitButtonClicked()
     setZoom(0.0f);
 }
 
-void Player::onSameSizeButtonClicked()
-{
-    setZoom(0.0f);
-    setZoom(1.0f);
-}
-
 void Player::onFullScreenButtonClicked()
 {
     toggleFullScreen();
@@ -1337,10 +1332,11 @@ void Player::toggleZoom(bool checked)
 
 void Player::ZoomChanged(int index)
 {
-    float fZoom = 0.10f;    // 0.0f
+    float fZoom = 0.0f;
     switch(index)
     {
     case 0:
+        fZoom = 0.10f;
         break;
     case 1:
         fZoom = 0.25f;

@@ -216,7 +216,6 @@ private slots:
     void zoomPlayer(float fZoomFactor);
 
     void onFitButtonClicked();
-    void onSameSizeButtonClicked();
     void onFullScreenButtonClicked();
     void onShowZoomMenu();
     void onZoomActionTriggered();
