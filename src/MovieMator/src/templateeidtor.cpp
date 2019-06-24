@@ -19,7 +19,7 @@
 #include "templateeidtor.h"
 #include "maininterface.h"
 #include "mltcontroller.h"
-#include <templateeditordockinterface.h>
+//#include <templateeditordockinterface.h>
 
 TemplateEidtor::TemplateEidtor(QObject *parent)
     : QObject(parent)
@@ -90,7 +90,7 @@ int TemplateEidtor::setProducer(Mlt::Producer *producer)
     }
 
     //初始化替换模板文件界面
-    TemplateEditorDock_initTemplateEditor(replaceableClipList);
+//    TemplateEditorDock_initTemplateEditor(replaceableClipList);
 
     //test
     //Mlt::Producer *newProducer = new Mlt::Producer(MLT.profile(), "C:\\Users\\gdbwin\\Videos\\Wildlife.wmv");
