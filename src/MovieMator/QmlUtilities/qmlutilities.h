@@ -34,7 +34,7 @@ class QMLUTILITIESSHARED_EXPORT QmlUtilities : public QObject
     Q_OBJECT
 
 public:
-    explicit QmlUtilities(QObject *parent = 0);
+    explicit QmlUtilities(QObject *parent = nullptr);
 
 //    static void registerCommonTypes();
     static void setCommonProperties(QQmlContext* context);
