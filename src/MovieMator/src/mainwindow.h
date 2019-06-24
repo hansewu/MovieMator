@@ -51,7 +51,7 @@ class Player;
 //class RecentDock;
 class EncodeDock;
 class JobsDock;
-class PlaylistDock;
+//class PlaylistDock;
 class QUndoStack;
 class MeltedPlaylistDock;
 class MeltedServerDock;
@@ -100,7 +100,7 @@ public:
     //改变软件主界面的主题，当前支持黑色和白色
     static void changeTheme(const QString& theme);
     //获取playlistDock，旧的文件列表，目前已弃用
-    PlaylistDock* playlistDock() const { return m_playlistDock; }
+//    PlaylistDock* playlistDock() const { return m_playlistDock; }
     //获取FilterController
     FilterController* filterController() const { return m_filterController; }
 //    HtmlEditor* htmlEditor() const { return m_htmlEditor; }
@@ -208,7 +208,7 @@ private:
     QDockWidget* m_templateEditorDock;//右侧模板编辑dock，暂时无用
     EncodeDock* m_encodeDock;//导出文件dock
     JobsDock* m_jobsDock;//导出文件进度列表dock
-    PlaylistDock* m_playlistDock;//旧的文件列表dock，暂时无用
+//    PlaylistDock* m_playlistDock;//旧的文件列表dock，暂时无用
     TimelineDock* m_timelineDock;//底下时间线dock
     QString m_currentFile;//当前的工程文件名
     bool m_isKKeyPressed;//是否按键按下

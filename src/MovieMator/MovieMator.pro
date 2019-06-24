@@ -8,7 +8,6 @@ SUBDIRS = CuteLogger \
     RecentDock \
     FilterDock \
     AudioFilterDock \
-    PlaylistDock \
     EffectDock \
     TemplateEditorDock \
     src \
@@ -19,11 +18,10 @@ CommonUtil.depends = CuteLogger
 QmlUtilities.depends = CommonUtil
 MltController.depends = QmlUtilities
 RecentDock.depends = CommonUtil
-PlaylistDock.depends = MltController
 FilterDock.depends = QmlUtilities
 AudioFilterDock.depends = QmlUtilities
 EffectDock.depends = CommonUtil
 TemplateEditorDock.depends = QmlUtilities
-src.depends = CuteLogger mvcp CommonUtil QmlUtilities MltController RecentDock FilterDock AudioFilterDock PlaylistDock EffectDock TemplateEditorDock Breakpad
+src.depends = CuteLogger mvcp CommonUtil QmlUtilities MltController RecentDock FilterDock AudioFilterDock EffectDock TemplateEditorDock Breakpad
 
 
