@@ -27,7 +27,7 @@
 #include "mltcontroller.h"
 
 FilterWidget::FilterWidget(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QObject *parent)
-    :QQuickWidget(QmlUtilities::sharedEngine(), (QWidget *)parent)
+    :QQuickWidget(QmlUtilities::sharedEngine(), qobject_cast<QWidget *>(parent))
 {
     QmlUtilities::setCommonProperties(rootContext());
     this->rootContext()->setContextProperty("view", new QmlView(quickWindow()));
@@ -40,7 +40,7 @@ FilterWidget::FilterWidget(MetadataModel* metadataModel, AttachedFiltersModel* a
 //    connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
 
 //    m_producer = new Mlt::Producer(MLT.profile(), "/Users/gdb/Desktop/video/AVSEQ04.DAT");
-    m_lastAttachedFilter = NULL;
+    m_lastAttachedFilter = nullptr;
 }
 
 FilterWidget::~FilterWidget()
@@ -72,7 +72,7 @@ void FilterWidget::previewFilter(QmlMetadata *meta)
     {
         m_producer->detach(*m_lastAttachedFilter);
         delete m_lastAttachedFilter;
-        m_lastAttachedFilter = NULL;
+        m_lastAttachedFilter = nullptr;
     }
 
     m_lastAttachedFilter = new Mlt::Filter(MLT.profile(), meta->mlt_service().toUtf8().constData());
@@ -84,7 +84,7 @@ void FilterWidget::addFilterToTimeline(QmlMetadata *meta)
 {
     Mlt::Producer *producer;
     Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), meta->mlt_service().toUtf8().constData());
-    producer = new Mlt::Producer(MLT.profile(), NULL, "noise");
+    producer = new Mlt::Producer(MLT.profile(), nullptr, "noise");
     producer->attach(*filter);
     producer->set("meta.fx_cut", 1);
     producer->set("in", 0);

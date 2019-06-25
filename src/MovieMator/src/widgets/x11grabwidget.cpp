@@ -29,7 +29,7 @@
 X11grabWidget::X11grabWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::X11grabWidget),
-    m_audioWidget(0)
+    m_audioWidget(nullptr)
 {
     ui->setupUi(this);
     ui->applyButton->hide();
@@ -53,7 +53,7 @@ void X11grabWidget::on_audioComboBox_activated(int index)
 {
     if (m_audioWidget)
         delete m_audioWidget;
-    m_audioWidget = 0;
+    m_audioWidget = nullptr;
     if (index == 1)
         m_audioWidget = new PulseAudioWidget(this);
     else if (index == 2)
@@ -153,7 +153,7 @@ void X11grabWidget::loadPreset(Mlt::Properties& p)
 
 void X11grabWidget::on_preset_selected(void* p)
 {
-    Mlt::Properties* properties = (Mlt::Properties*) p;
+    Mlt::Properties* properties = static_cast<Mlt::Properties*>(p);
     loadPreset(*properties);
     delete properties;
 }

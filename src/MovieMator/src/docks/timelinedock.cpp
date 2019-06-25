@@ -1000,8 +1000,18 @@ void TimelineDock::copyClip(int trackIndex, int clipIndex)
         p.set_speed(0);
         p.seek(info->frame_in);
         p.set_in_and_out(info->frame_in, info->frame_out);
-        MLT.setSavedProducer(&p);
+//        MLT.setSavedProducer(&p);
+        m_model.setCopiedProducer(&p);
         emit clipCopied();
+    }
+}
+
+void TimelineDock::paste()
+{
+    if(m_model.copiedProducer() != nullptr)
+    {
+        QString xml = MLT.XML(m_model.copiedProducer());
+        insert(-1, m_position, xml);
     }
 }
 
@@ -2282,33 +2292,42 @@ void TimelineDock::exportAsTemplate(int trackIndex, int clipIndex)
             if (!tempProducer) {
                 return;
             }
-            QString templatePath = Util::templatePath();
-            QString sampleFile = QString("%1/Samples/1.png").arg(templatePath);
+            //QString templatePath = Util::templatePath();
+            //QString sampleFile = QString("%1/Samples/1.png").arg(templatePath);
             // get temp filename
-            QString tmpTemplate = QString("%1/tmp_XXXXX").arg(templatePath);
+            //QString tmpTemplate = QString("%1/tmp_XXXXX").arg(templatePath);
 
-            QTemporaryFile tmp(tmpTemplate);
-            tmp.open();
-            tmp.close();
-
+            //QTemporaryFile tmp(tmpTemplate);
+            //tmp.open();
+            //tmp.close();
             QString path = Settings.savePath();
-            path.append("/untitled.mlt");
-            QString filename = QFileDialog::getSaveFileName(this, tr("Save Template"), path, tr("Template (*.mlt)"));
+            path.append("/template.xml");
+            QString filename = QFileDialog::getSaveFileName(this, tr("Save Template"), path, tr("Template (*.xml)"));
             if (!filename.isEmpty()) {
                 QFileInfo fi(filename);
                 Settings.setSavePath(fi.path());
-                if (fi.suffix() != "mlt")
-                    filename += ".mlt";
+                if (fi.suffix() != "xml")
+                    filename += ".xml";
 
                 tempProducer->set_in_and_out(info->frame_in, info->frame_out);
                 tempProducer->set("length", info->frame_count);
-                MLT.saveXML(tmp.fileName(), tempProducer, false);
+                //MLT.saveXML(tmp.fileName(), tempProducer, true);
+                MLT.saveXML(filename, tempProducer, true);
                 //info->producer->set_in_and_out(-1, -1);
-                QFile::remove(filename);
-                QFile::copy(tmp.fileName(), filename);
-                QFile::remove(tmp.fileName());
+                //QFile::remove(filename);
+                //QFile::copy(tmp.fileName(), filename);
+                //QFile::remove(tmp.fileName());
                 delete tempProducer;
             }
         }
     }
+}
+
+void TimelineDock::exportSelectedClipAsTemplate()
+{
+    if(!isAClipSelected())
+        return;
+    int trackIndex = m_selection.selectedTrack;
+    int clipIndex = m_selection.selectedClips[0];
+    exportAsTemplate(trackIndex, clipIndex);
 }

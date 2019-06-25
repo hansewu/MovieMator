@@ -31,7 +31,7 @@ class ServicePresetWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit ServicePresetWidget(QWidget *parent = 0);
+    explicit ServicePresetWidget(QWidget *parent = nullptr);
     ~ServicePresetWidget();
 
     void loadPresets();

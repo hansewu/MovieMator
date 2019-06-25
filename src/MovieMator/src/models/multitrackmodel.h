@@ -141,6 +141,10 @@ public:
     void setClipSpeed(int trackIndex, int clipIndex, double speed);   //设置clip的速度
 
     Mlt::Producer* producer(Mlt::Producer *producer, Mlt::Profile& profile, double speed);  //根据条件重新深度复制一个producer
+
+    Mlt::Producer* copiedProducer();
+    void setCopiedProducer(Mlt::Producer *producer);
+
 signals:
     void created();
     void loaded();
@@ -214,6 +218,8 @@ private:
     Mlt::Tractor* m_tractor;
     TrackList m_trackList;
     bool m_isMakingTransition;
+
+    QScopedPointer<Mlt::Producer> m_copiedProducer;    // 保存时间线轨道上复制的 clip
 
     bool moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position);
     void moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position);//将clip移动到轨道末尾

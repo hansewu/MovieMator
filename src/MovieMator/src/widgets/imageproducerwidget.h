@@ -32,7 +32,7 @@ class ImageProducerWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit ImageProducerWidget(QWidget *parent = 0);
+    explicit ImageProducerWidget(QWidget *parent = nullptr);
     ~ImageProducerWidget();
 
     // AbstractProducerWidget overrides

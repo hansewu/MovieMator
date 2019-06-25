@@ -277,15 +277,18 @@ public:
     }
 
 protected:
-    bool event(QEvent *event) {
-        if (event->type() == QEvent::FileOpen) {
-            QFileOpenEvent *openEvent = static_cast<QFileOpenEvent*>(event);
-            resourceArg = openEvent->file();
-            return true;
-        }
-        else return QApplication::event(event);
-    }
+    bool event(QEvent *event);
 };
+
+bool Application::event(QEvent *event)
+{
+    if (event->type() == QEvent::FileOpen) {
+        QFileOpenEvent *openEvent = static_cast<QFileOpenEvent*>(event);
+        resourceArg = openEvent->file();
+        return true;
+    }
+    else return QApplication::event(event);
+}
 
 bool removeDir(const QString & dirName)
 {

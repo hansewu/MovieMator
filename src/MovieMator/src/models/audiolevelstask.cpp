@@ -42,7 +42,7 @@ static void deleteQVariantList(QVariantList* list)
 AudioLevelsTask::AudioLevelsTask(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index)
     : QRunnable()
     , m_model(model)
-    , m_tempProducer(0)
+    , m_tempProducer(nullptr)
     , m_isCanceled(false)
     , m_isForce(false)
 {
@@ -70,7 +70,7 @@ void AudioLevelsTask::start(Mlt::Producer& producer, MultitrackModel* model, con
             if (*t == *task) {
                 // If so, then just add ourselves to be notified upon completion.
                 delete task;
-                task = 0;
+                task = nullptr;
                 t->m_producers << ProducerAndIndex(new Mlt::Producer(producer), index);
                 break;
             }
@@ -169,7 +169,7 @@ void AudioLevelsTask::run()
             if (frame && frame->is_valid() && !frame->get_int("test_audio")) {
                 mlt_audio_format format = mlt_audio_s16;
                 int frequency = 48000;
-                int samples = mlt_sample_calculator(m_producers.first().first->get_fps(), frequency, i);
+                int samples = mlt_sample_calculator(float(m_producers.first().first->get_fps()), frequency, i);
                 frame->get_audio(format, frequency, channels, samples);
                 // for each channel
                 for (int channel = 0; channel < channels; channel++)
@@ -187,7 +187,7 @@ void AudioLevelsTask::run()
                 updateTime.restart();
                 foreach (ProducerAndIndex p, m_producers) {
                     QVariantList* levelsCopy = new QVariantList(levels);
-                    p.first->set(kAudioLevelsProperty, levelsCopy, 0, (mlt_destructor) deleteQVariantList);
+                    p.first->set(kAudioLevelsProperty, levelsCopy, 0, reinterpret_cast<mlt_destructor>(deleteQVariantList));
                     m_model->audioLevelsReady(p.second);
                 }
             }
@@ -247,7 +247,7 @@ void AudioLevelsTask::run()
     if (levels.size() > 0 && !m_isCanceled) {
         foreach (ProducerAndIndex p, m_producers) {
             QVariantList* levelsCopy = new QVariantList(levels);
-            p.first->set(kAudioLevelsProperty, levelsCopy, 0, (mlt_destructor) deleteQVariantList);
+            p.first->set(kAudioLevelsProperty, levelsCopy, 0, reinterpret_cast<mlt_destructor>(deleteQVariantList));
             m_model->audioLevelsReady(p.second);
         }
     }

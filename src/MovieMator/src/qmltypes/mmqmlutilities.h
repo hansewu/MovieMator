@@ -33,7 +33,7 @@ class MMQmlUtilities : public QmlUtilities
     Q_OBJECT
 
 public:
-    explicit MMQmlUtilities(QmlUtilities *parent = 0);
+    explicit MMQmlUtilities(QmlUtilities *parent = nullptr);
 
     static void registerCommonTypes();
     // static void setCommonProperties(QQmlContext* context);

@@ -22,11 +22,11 @@
 #include <Logger.h>
 
 AbstractJob::AbstractJob(const QString& name)
-    : QProcess(0)
+    : QProcess(nullptr)
     , m_ran(false)
     , m_killed(false)
+    , m_jobFinishedNormally(false)
     , m_label(name)
-    ,m_jobFinishedNormally(false)
 {
     setObjectName(name);
     connect(this, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(onFinished(int, QProcess::ExitStatus)));

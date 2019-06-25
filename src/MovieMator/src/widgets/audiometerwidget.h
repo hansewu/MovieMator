@@ -31,7 +31,7 @@ class AudioMeterWidget : public QWidget
 {
     Q_OBJECT
 public:
-    AudioMeterWidget(QWidget *parent = 0);
+    AudioMeterWidget(QWidget *parent = nullptr);
     void setDbLabels(const QVector<int>& labels);
     void setChannelLabels(const QStringList& labels);
     void setChannelLabelUnits(const QString& units);

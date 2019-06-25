@@ -51,7 +51,7 @@ void IsingWidget::on_tempDial_valueChanged(int value)
 
 void IsingWidget::on_tempSpinner_valueChanged(double value)
 {
-    ui->tempDial->setValue(value * 100);
+    ui->tempDial->setValue(int(value * 100));
 }
 
 void IsingWidget::on_borderGrowthDial_valueChanged(int value)
@@ -65,7 +65,7 @@ void IsingWidget::on_borderGrowthDial_valueChanged(int value)
 
 void IsingWidget::on_borderGrowthSpinner_valueChanged(double value)
 {
-    ui->borderGrowthDial->setValue(value * 100);
+    ui->borderGrowthDial->setValue(int(value * 100));
 }
 
 void IsingWidget::on_spontGrowthDial_valueChanged(int value)
@@ -79,7 +79,7 @@ void IsingWidget::on_spontGrowthDial_valueChanged(int value)
 
 void IsingWidget::on_spontGrowthSpinner_valueChanged(double value)
 {
-    ui->spontGrowthDial->setValue(value * 100);
+    ui->spontGrowthDial->setValue(int(value * 100));
 }
 
 Mlt::Producer* IsingWidget::producer(Mlt::Profile& profile)
@@ -111,7 +111,7 @@ void IsingWidget::loadPreset(Mlt::Properties& p)
 
 void IsingWidget::on_preset_selected(void* p)
 {
-    Mlt::Properties* properties = (Mlt::Properties*) p;
+    Mlt::Properties* properties = static_cast<Mlt::Properties*>(p);
     loadPreset(*properties);
     delete properties;
 }

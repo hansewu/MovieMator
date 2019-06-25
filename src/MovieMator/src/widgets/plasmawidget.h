@@ -31,7 +31,7 @@ class PlasmaWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit PlasmaWidget(QWidget *parent = 0);
+    explicit PlasmaWidget(QWidget *parent = nullptr);
     ~PlasmaWidget();
 
     // AbstractProducerWidget overrides

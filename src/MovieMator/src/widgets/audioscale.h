@@ -25,7 +25,7 @@ class AudioScale : public QWidget
 {
     Q_OBJECT
 public:
-    explicit AudioScale(QWidget *parent = 0);
+    explicit AudioScale(QWidget *parent = nullptr);
 
 protected:
     void paintEvent(QPaintEvent*);

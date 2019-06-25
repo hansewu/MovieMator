@@ -48,7 +48,7 @@ static const int FRAMEDISPLAYED_MIN_MS = 10; // max 100 fps
 #ifdef QT_NO_DEBUG
 #define check_error(fn) {}
 #else
-#define check_error(fn) { int err = fn->glGetError(); if (err != GL_NO_ERROR) { LOG_ERROR() << "GL error"  << hex << err << dec << "at" << __FILE__ << ":" << __LINE__; } }
+#define check_error(fn) { int err = int(fn->glGetError()); if (err != GL_NO_ERROR) { LOG_ERROR() << "GL error"  << hex << err << dec << "at" << __FILE__ << ":" << __LINE__; } }
 #endif
 
 #ifndef GL_TIMEOUT_IGNORED
@@ -375,7 +375,7 @@ void GLWidget::paintGL()
     glViewport(0, 0, width, height);
     check_error(f);
     QColor color = QColor(0,0,0);//QPalette().color(QPalette::Dark);
-    glClearColor(color.redF(), color.greenF(), color.blueF(), color.alphaF());
+    glClearColor(GLclampf(color.redF()), GLclampf(color.greenF()), GLclampf(color.blueF()), GLclampf(color.alphaF()));
     glClear(GL_COLOR_BUFFER_BIT);
     check_error(f);
 
@@ -394,7 +394,7 @@ void GLWidget::paintGL()
     // Bind textures.
     for (int i = 0; i < 3; ++i) {
         if (m_texture[i]) {
-            glActiveTexture(GL_TEXTURE0 + i);
+            glActiveTexture(GLenum(GL_TEXTURE0 + i));
             glBindTexture(GL_TEXTURE_2D, m_texture[i]);
             check_error(f);
         }
@@ -421,7 +421,7 @@ void GLWidget::paintGL()
 
     // Set model view.
     QMatrix4x4 modelView;
-    if (m_zoom > 0.0) {
+    if (m_zoom > float(0.0)) {
         if (offset().x() || offset().y())
             modelView.translate(-offset().x() * devicePixelRatio(),
                                  offset().y() * devicePixelRatio());
@@ -464,7 +464,7 @@ void GLWidget::paintGL()
     m_shader->release();
     for (int i = 0; i < 3; ++i) {
         if (m_texture[i]) {
-            glActiveTexture(GL_TEXTURE0 + i);
+            glActiveTexture(GLenum(GL_TEXTURE0 + i));
             glBindTexture(GL_TEXTURE_2D, 0);
             check_error(f);
         }

@@ -421,9 +421,12 @@ void RecentDock::onListviewPressed(const QModelIndex &index)
             }
             m_currentIndex = index;
             m_currentListView = listView;
-            return;
+//            return;
+            break;
         }
     }
+
+    onListviewActivated(QModelIndex());     // 按下就播放
 }
 
 void RecentDock::onListviewClicked(const QModelIndex &index)

@@ -35,7 +35,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::LumaMixTransition)
     , m_producer(producer)
-    , m_previewMovie(0)
+    , m_previewMovie(nullptr)
 {
     ui->setupUi(this);
 //    Util::setColorsToHighlight(ui->label_2);
@@ -223,7 +223,7 @@ Mlt::Transition *LumaMixTransition::getTransition(const QString &name)
         }
         service.reset(service->producer());
     }
-    return 0;
+    return nullptr;
 }
 
 void LumaMixTransition::updateCustomLumaLabel(Mlt::Transition &transition)

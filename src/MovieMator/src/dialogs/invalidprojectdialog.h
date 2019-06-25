@@ -29,7 +29,7 @@ class InvalidProjectDialog : public QWidget
     Q_OBJECT
 
 public:
-    explicit InvalidProjectDialog(QWidget *parent = 0);
+    explicit InvalidProjectDialog(QWidget *parent = nullptr);
     ~InvalidProjectDialog();
 
 private:

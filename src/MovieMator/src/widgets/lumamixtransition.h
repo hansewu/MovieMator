@@ -35,7 +35,7 @@ class LumaMixTransition : public QWidget
     Q_OBJECT
     
 public:
-    explicit LumaMixTransition(Mlt::Producer &transition, QWidget *parent = 0);
+    explicit LumaMixTransition(Mlt::Producer &transition, QWidget *parent = nullptr);
     ~LumaMixTransition();
     
 private slots:

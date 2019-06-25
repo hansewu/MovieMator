@@ -26,9 +26,9 @@
 
 AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
   : ScopeWidget("AudioPeakMeter")
-  , m_filter(0)
-  , m_audioMeter(0)
-  , m_orientation((Qt::Orientation)-1)
+  , m_filter(nullptr)
+  , m_audioMeter(nullptr)
+  , m_orientation(static_cast<Qt::Orientation>(-1))
 {
     LOG_DEBUG() << "begin";
     m_filter = new Mlt::Filter(MLT.profile(), "audiolevel");

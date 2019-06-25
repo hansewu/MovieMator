@@ -30,7 +30,7 @@
 #include "../mainwindow.h"
 
 TextManagerWidget::TextManagerWidget(QObject *parent)
-    :QQuickWidget(QmlUtilities::sharedEngine(), (QWidget *)parent)
+    :QQuickWidget(QmlUtilities::sharedEngine(), qobject_cast<QWidget *>(parent))
 {
     loadTextMetadata();
     QmlUtilities::setCommonProperties(rootContext());
@@ -44,7 +44,7 @@ TextManagerWidget::TextManagerWidget(QObject *parent)
 //    connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
 
 //    m_producer = new Mlt::Producer(MLT.profile(), "/Users/gdb/Desktop/video/AVSEQ04.DAT");
-    m_lastAttachedFilter = NULL;
+    m_lastAttachedFilter = nullptr;
 }
 
 TextManagerWidget::~TextManagerWidget()
@@ -55,7 +55,7 @@ TextManagerWidget::~TextManagerWidget()
 
 void TextManagerWidget::previewText(QmlMetadata *meta)
 {
-
+    Q_UNUSED(meta)
 //    static int lastAttachedIndex = -1;
 //    //删除滤镜
 //    if (lastAttachedIndex >= 0)
@@ -76,7 +76,7 @@ void TextManagerWidget::previewText(QmlMetadata *meta)
     {
         m_producer->detach(*m_lastAttachedFilter);
         delete m_lastAttachedFilter;
-        m_lastAttachedFilter = NULL;
+        m_lastAttachedFilter = nullptr;
     }
 
 //    m_lastAttachedFilter = new Mlt::Filter(MLT.profile(), meta->mlt_service().toUtf8().constData());
@@ -86,11 +86,11 @@ void TextManagerWidget::previewText(QmlMetadata *meta)
 
 void TextManagerWidget::addTextToTimeline(QmlMetadata *textmeta)
 {
-
+    Q_UNUSED(textmeta)
     QmlMetadata *meta = m_textmetadataModel.get(0);
     Mlt::Producer *producer;
     Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), meta->mlt_service().toUtf8().constData());
-    producer = new Mlt::Producer(MLT.profile(), NULL, "noise");
+    producer = new Mlt::Producer(MLT.profile(), nullptr, "noise");
     producer->attach(*filter);
     producer->set("meta.fx_cut", 1);
     producer->set("in", 0);

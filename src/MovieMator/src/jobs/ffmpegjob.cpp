@@ -96,7 +96,7 @@ void FfmpegJob::onReadyRead()
         msg = msg.mid(msg.indexOf("frame=") + 6);
         msg = msg.left(msg.indexOf(" fps"));
         int frame = msg.toInt();
-        emit progressUpdated(m_index, qRound(frame * 100.0 / m_totalFrames));
+        emit progressUpdated(m_index, uint(qRound(frame * 100.0 / m_totalFrames)));
     }
     else {
         if (!msg.trimmed().isEmpty())

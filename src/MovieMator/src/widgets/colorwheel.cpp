@@ -191,7 +191,7 @@ void ColorWheel::drawSlider()
     painter.setRenderHint(QPainter::Antialiasing);
     int ws = wheelSize();
     qreal scale = qreal(ws + m_sliderWidth) / maximumWidth();
-    int w = m_sliderWidth * scale;
+    int w = int(m_sliderWidth * scale);
     int h = ws - m_margin * 2;
     QLinearGradient gradient(0, 0, w, h);
     gradient.setColorAt(0.0, Qt::white);
@@ -224,7 +224,7 @@ void ColorWheel::drawSliderBar(QPainter &painter)
     qreal value = 1.0 - m_color.valueF();
     int ws = wheelSize();
     qreal scale = qreal(ws + m_sliderWidth) / maximumWidth();
-    int w = m_sliderWidth * scale;
+    int w = int(m_sliderWidth * scale);
     int h = ws - m_margin * 2;
     QPen pen(Qt::white);
     pen.setWidth(2);

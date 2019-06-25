@@ -96,6 +96,7 @@ void TimeSpinBox::setFontSize(int size)
 
     m_lineEdit->setFont(font);
 #endif
+    Q_UNUSED(size)
 }
 
 

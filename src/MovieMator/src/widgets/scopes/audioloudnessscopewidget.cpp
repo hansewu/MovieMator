@@ -41,11 +41,11 @@ static double onedec( double in )
 
 AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
   : ScopeWidget("AudioLoudnessMeter")
-  , m_loudnessFilter(0)
+  , m_loudnessFilter(nullptr)
   , m_peak(-100)
   , m_true_peak(-100)
   , m_newData(false)
-  , m_orientation((Qt::Orientation)-1)
+  , m_orientation(static_cast<Qt::Orientation>(-1))
   , m_qview(new QQuickWidget(QmlUtilities::sharedEngine(), this))
   , m_timeLabel(new QLabel(this))
 {

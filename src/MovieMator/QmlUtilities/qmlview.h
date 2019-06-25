@@ -29,7 +29,7 @@ class QWindow;
 class QMLUTILITIESSHARED_EXPORT QmlView : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QPoint pos READ pos);
+    Q_PROPERTY(QPoint pos READ pos)
 
 public:
     explicit QmlView(QWindow* qview);

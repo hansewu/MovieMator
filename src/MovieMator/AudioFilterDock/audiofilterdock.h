@@ -88,6 +88,7 @@ public:
     void resetQview();
 
     Q_INVOKABLE void addAudioFilterItem(int index);
+    Q_INVOKABLE void previewFilter(int index);
 
 private:
     MainInterface *m_mainWindow;

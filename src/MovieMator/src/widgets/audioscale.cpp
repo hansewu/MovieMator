@@ -37,17 +37,17 @@ AudioScale::AudioScale(QWidget *parent) :
 void AudioScale::paintEvent(QPaintEvent*)
 {
     QPainter p(this);
-    const int h = IEC_Scale(-dbscale[0]) * height() - 2;
+    const int h = int(IEC_Scale(-dbscale[0]) * height()) - 2;
     foreach (int i, dbscale) {
         if (height() > width()) {
             if (i != dbscale[0]) {
                 double xf = IEC_Scale(i) * h;
                 QString s = QString().sprintf("%d", i);
-                p.drawText(width() - fontMetrics().width(s), height() - xf - 1, s);
+                p.drawText(width() - fontMetrics().width(s), height() - int(xf) - 1, s);
             }
         } else {
-            double xf = IEC_Scale(i) * (double) width();
-            p.drawText(xf * 40.0/42.0 - 10, height() - 2, QString().sprintf("%d", i));
+            double xf = IEC_Scale(i) * double(width());
+            p.drawText(int(xf * 40.0/42.0 - 10), height() - 2, QString().sprintf("%d", i));
         }
     }
     p.end();

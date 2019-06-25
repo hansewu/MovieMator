@@ -31,7 +31,7 @@ class X11grabWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit X11grabWidget(QWidget *parent = 0);
+    explicit X11grabWidget(QWidget *parent = nullptr);
     ~X11grabWidget();
 
     // AbstractProducerWidget overrides

@@ -58,11 +58,11 @@ char *trim( char *input )
 {
 	if ( input != NULL )
 	{
-		int length = strlen( input );
+        int length = (int)strlen( input );
 		int first = 0;
 		while( first < length && isspace( input[ first ] ) )
 			first ++;
-		memmove( input, input + first, length - first + 1 );
+        memmove( input, input + first, (unsigned long long)(length - first + 1 ));
 		length = length - first;
 		while ( length > 0 && isspace( input[ length - 1 ] ) )
 			input[ -- length ] = '\0';
@@ -153,7 +153,7 @@ void term_init( )
 		DWORD tty;
 		GetConsoleMode( h, &tty );
 		oldtty = tty;
-		SetConsoleMode( h, mode & ~( ENABLE_LINE_INPUT | ENABLE_ECHO_INPUT ) );
+        SetConsoleMode( h, (DWORD)(mode & ~( ENABLE_LINE_INPUT | ENABLE_ECHO_INPUT ) ));
 	}
 #endif
 
@@ -187,6 +187,7 @@ int term_read( )
 			return ch;
 		return n;
 	}
+    return -1;
 #else
 	HANDLE h = GetStdHandle( STD_INPUT_HANDLE );
 	if ( h && WaitForSingleObject( h, 0 ) == WAIT_OBJECT_0 )
@@ -201,7 +202,6 @@ int term_read( )
 		return 0;
 	}
 #endif
-    return -1;
 }
 
 char get_keypress( )

@@ -82,7 +82,7 @@ void ToneProducerWidget::on_levelSpinBox_valueChanged(int value)
 
 void ToneProducerWidget::on_preset_selected(void* p)
 {
-    Mlt::Properties* properties = (Mlt::Properties*) p;
+    Mlt::Properties* properties = static_cast<Mlt::Properties*>(p);
     loadPreset(*properties);
     delete properties;
 }

@@ -251,12 +251,12 @@ void QmlFilter::set(QString name, double value)
 {
     if (!m_filter) return;
     if (!m_filter->get(name.toUtf8().constData())  //xjp add anim
-        || m_filter->get_double(name.toUtf8().constData()) != value) {
+        || qFuzzyIsNull(m_filter->get_double(name.toUtf8().constData())-value)) {
 
         double from_value = m_filter->get_double(name.toUtf8().constData());
         m_filter->set(name.toUtf8().constData(), value);
 
-        if(from_value != value)
+        if(qFuzzyIsNull(from_value-value))
             MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  from_value, value));
 
         MLT.refreshConsumer();
@@ -308,8 +308,8 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
 
     if (!m_filter) return;
     mlt_rect rect = m_filter->get_rect(name.toUtf8().constData());
-    if (!m_filter->get(name.toUtf8().constData()) || x != rect.x || y != rect.y
-        || width != rect.w || height != rect.h || opacity != rect.o) {
+    if (!m_filter->get(name.toUtf8().constData()) || qFuzzyIsNull(x-rect.x) || qFuzzyIsNull(y-rect.y)
+        || qFuzzyIsNull(width-rect.w) || qFuzzyIsNull(height-rect.h) || qFuzzyIsNull(opacity-rect.o)) {
 
         QRectF rect_from(rect.x, rect.y, rect.w, rect.h);
         QRectF rect_to(x, y, width, height);
@@ -387,7 +387,7 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
     Mlt::Properties properties;
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
 
-    properties.pass_list(*((Mlt::Properties*)m_filter), propertyNames.join('\t').toLatin1().constData());
+    properties.pass_list(*(static_cast<Mlt::Properties*>(m_filter)), propertyNames.join('\t').toLatin1().constData());
 
     if (!dir.exists())
         dir.mkpath(dir.path());
@@ -759,7 +759,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                 if (paraType == "double")
                 {
                     if (!animation.is_valid() || !animation.is_key(frame)
-                            || value.toDouble() != m_filter->anim_get_double(key.toUtf8().constData(), frame, duration))
+                            || qFuzzyIsNull(value.toDouble()-m_filter->anim_get_double(key.toUtf8().constData(), frame, duration)))
                     {
                         from_value = QString::number(m_filter->anim_get_double(key.toUtf8().constData(), frame, duration));
                         m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), frame, duration, mlt_keyframe_linear);
@@ -793,7 +793,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
 
                     mlt_rect rect = m_filter->anim_get_rect(key.toUtf8().constData(), frame, duration);
                     if (!animation.is_valid() || !animation.is_key(frame)
-                        || x != rect.x || y != rect.y || width != rect.w || height != rect.h || opacity != rect.o)
+                        || qFuzzyIsNull(x-rect.x) || qFuzzyIsNull(y-rect.y) || qFuzzyIsNull(width-rect.w) || qFuzzyIsNull(height-rect.h) || qFuzzyIsNull(opacity-rect.o))
                     {
                         from_value = QString("%1 %2 %3 %4 %5").arg(rect.x).arg(rect.y).arg(rect.w).arg(rect.h).arg(rect.o);
                         rect.x = x;
@@ -1467,6 +1467,7 @@ void QmlFilter::refreshKeyFrame(const QVector<key_frame_item> &listKeyFrame)
     //removeAllKeyFrame();
     //m_cacheKeyFrameList = listKeyFrame;
     //syncCacheToProject();
+    Q_UNUSED(listKeyFrame)
 }
 
 //#endif

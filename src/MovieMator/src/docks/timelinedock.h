@@ -161,6 +161,8 @@ public:
 
     // 将轨道 trackIndex的剪辑 clipIndex导出为模板
     Q_INVOKABLE void exportAsTemplate(int trackIndex, int clipIndex);
+    //将选中的clip导出为xml模版
+    void exportSelectedClipAsTemplate();
 
     // 发送 sizeAndPositionFilterSelected()信号
     void selectSizeAndPositionFilter(int index);
@@ -271,6 +273,8 @@ public slots:
     // 保存轨道 trackIndex的剪辑 clipIndex到 m_savedProducer里
     // 调用 MLT.setSavedProducer()
     void copyClip(int trackIndex, int clipIndex);
+    // 粘贴，调用 insert
+    void paste();
     // 设定轨道 trackIndex的名字为 value
     void setTrackName(int trackIndex, const QString& value);
     // 切换轨道 trackIndex的静音状态

@@ -30,7 +30,7 @@ class TextViewerDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit TextViewerDialog(QWidget *parent = 0);
+    explicit TextViewerDialog(QWidget *parent = nullptr);
     ~TextViewerDialog();
     void setText(const QString& s);
 

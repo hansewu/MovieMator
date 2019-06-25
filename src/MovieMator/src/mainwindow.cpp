@@ -53,10 +53,6 @@
 #include "jobqueue.h"
 //#include <playlistdock.h>
 #include "glwidget.h"
-#include "mvcp/meltedserverdock.h"
-#include "mvcp/meltedplaylistdock.h"
-#include "mvcp/meltedunitsmodel.h"
-#include "mvcp/meltedplaylistmodel.h"
 #include "controllers/filtercontroller.h"
 #include "controllers/scopecontroller.h"
 #include "docks/filtersdock.h"
@@ -94,7 +90,6 @@
 #include "docks/encodetaskdock.h"
 #include "encodetaskqueue.h"
 #include "dialogs/invalidprojectdialog.h"
-//#include <configurationdock.h>
 #include "maininterface.h"
 #include <recentdockinterface.h>
 #include <filterdockinterface.h>
@@ -115,6 +110,8 @@
 #include <QJSEngine>
 #include <QQmlEngine>
 #include <QQmlContext>
+
+#include "dialogs/videomodesettingsdialog.h"
 
 #if defined (Q_OS_MAC)
     #include "securitybookmark/transport_security_bookmark.h"
@@ -195,8 +192,8 @@ MainWindow::MainWindow()
     : QMainWindow(nullptr)
     , ui(new Ui::MainWindow)
     , m_isKKeyPressed(false)
-    , m_meltedServerDock(nullptr)
-    , m_meltedPlaylistDock(nullptr)
+//    , m_meltedServerDock(nullptr)
+//    , m_meltedPlaylistDock(nullptr)
     , m_keyerGroup(nullptr)
     , m_keyerMenu(nullptr)
     , m_isPlaylistLoaded(false)
@@ -323,12 +320,6 @@ MainWindow::MainWindow()
     //      m_player->setPalette(palette);
     //      MLT.videoWidget()->installEventFilter(this);
     //        rightDockWidget->setWidget(m_player);
-
-//    m_configurationDock = new ConfigurationDock();
-//    addDockWidget(Qt::RightDockWidgetArea, m_configurationDock);
-//    m_configurationDock->setTitleBarWidget(new QWidget());
-//    m_configurationDock->setMinimumSize(500,320);
-//    m_configurationDock->setContentsMargins(0,0,0,0);
 
      ui->centralWidget->layout()->addWidget(m_player);
 
@@ -468,7 +459,6 @@ MainWindow::MainWindow()
 //    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_filtersDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
      connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_propertiesVideoFilterDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)));
      connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_propertiesAudioFilterDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)));
-//    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_configurationDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
     //MovieMator Pro
 //#ifdef MOVIEMATOR_PRO
 //     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_timelineDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
@@ -1132,6 +1122,8 @@ void MainWindow::setupSettingsMenu()
     delete ui->menuDrawingMethod;
     ui->menuDrawingMethod = 0;
 #endif
+    //隐藏原profile菜单
+    ui->menuProfile->menuAction()->setVisible(false);
     LOG_DEBUG() << "end";
 }
 
@@ -2180,7 +2172,8 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         } else {
             m_timelineDock->show();
             m_timelineDock->raise();
-            m_timelineDock->insert(-1);
+//            m_timelineDock->insert(-1);
+            m_timelineDock->paste();    // 粘贴
         }
         break;
     case Qt::Key_B: // Avid Overwrite
@@ -2542,8 +2535,8 @@ void MainWindow::on_actionOpenOther_triggered()
 void MainWindow::onProducerOpened()
 {
     LOG_DEBUG() << "begin";
-    if (m_meltedServerDock)
-        m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int,double,int,int,int,bool)));
+//    if (m_meltedServerDock)
+//        m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int,double,int,int,int,bool)));
 
     QWidget* w = loadProducerWidget(MLT.producer());
     if (w && !MLT.producer()->get_int(kMultitrackItemProperty)) {
@@ -3188,18 +3181,18 @@ void MainWindow::onMeltedUnitOpened()
     MLT.play(0);
     QScrollArea* scrollArea = qobject_cast<QScrollArea*>(m_propertiesDock->widget());
     delete scrollArea->widget();
-    if (m_meltedServerDock && m_meltedPlaylistDock) {
-        m_player->connectTransport(m_meltedPlaylistDock->transportControl());
-        connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)),
-                m_player, SLOT(onShowFrame(int,double,int,int,int,bool)));
-    }
+//    if (m_meltedServerDock && m_meltedPlaylistDock) {
+//        m_player->connectTransport(m_meltedPlaylistDock->transportControl());
+//        connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)),
+//                m_player, SLOT(onShowFrame(int,double,int,int,int,bool)));
+//    }
     onProducerChanged();
 }
 
 void MainWindow::onMeltedUnitActivated()
 {
-    m_meltedPlaylistDock->setVisible(true);
-    m_meltedPlaylistDock->raise();
+//    m_meltedPlaylistDock->setVisible(true);
+//    m_meltedPlaylistDock->raise();
 }
 
 void MainWindow::on_actionEnter_Full_Screen_triggered()
@@ -3552,6 +3545,43 @@ void MainWindow::onKeyerTriggered(QAction *action)
     Settings.setPlayerKeyerMode(action->data().toInt());
 }
 
+void MainWindow::changeProfile(QString profileName) {
+    //检测是否和当前profile相等
+    QString currentPrefileName = Settings.playerProfile();
+    if (profileName == currentPrefileName) {
+        return;
+    }
+
+    //need restart
+    QMessageBox dialog(QMessageBox::Information,
+                       qApp->applicationName(),
+                       tr("You must restart MovieMator to change the video mode.\n"
+                          "Do you want to change video mode now?"),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+#if MOVIEMATOR_PRO
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+#else
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    if (dialog.exec() == QMessageBox::Yes) {
+        if (continueModified())
+        {
+            m_exitCode = EXIT_RESTART;
+            //close project
+            if (multitrack())
+                m_timelineDock->model()->close();
+            //set profile
+            Settings.setPlayerProfile(profileName);
+            QApplication::closeAllWindows();
+            return;
+        }
+    }
+}
+
 void MainWindow::onProfileTriggered(QAction *action)
 {
     Q_ASSERT(action);
@@ -3870,6 +3900,7 @@ void MainWindow::onTimelineSelectionChanged()
     bool enable = (m_timelineDock->selection().size() > 0);
     ui->actionCut->setEnabled(enable);
     ui->actionCopy->setEnabled(enable);
+    ui->actionExport_selected_clip_as_template_file->setEnabled(enable);
 }
 
 void MainWindow::on_actionCut_triggered()
@@ -3891,7 +3922,13 @@ void MainWindow::on_actionPaste_triggered()
 {
     m_timelineDock->show();
     m_timelineDock->raise();
-    m_timelineDock->insert(-1);
+//    m_timelineDock->insert(-1);
+    m_timelineDock->paste();    //粘贴
+}
+
+void MainWindow::on_actionExport_selected_clip_as_template_file_triggered()
+{
+    m_timelineDock->exportSelectedClipAsTemplate();
 }
 
 void MainWindow::onClipCopied()
@@ -4684,4 +4721,13 @@ void MainWindow::loadTemplateInfo(Mlt::Producer *producer)
 void MainWindow::on_actionNewProject_triggered()
 {
     on_actionClose_triggered();
+}
+
+void MainWindow::on_actionVideoMode_triggered()
+{
+    VideoModeSettingsDialog videoModeSettingsDialog(this);
+    videoModeSettingsDialog.setWindowModality(QmlApplication::dialogModality());
+    if (videoModeSettingsDialog.exec() == QDialog::Accepted) {
+        qDebug()<<"";
+    }
 }

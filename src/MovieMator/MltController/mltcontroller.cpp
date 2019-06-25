@@ -469,7 +469,7 @@ void Controller::saveXML(const QString& filename, Service* service, bool withRel
 
         if (withRelativePaths) {
             c.set("root", QFileInfo(filename).absolutePath().toUtf8().constData());
-            c.set("no_root", 1);
+            //c.set("no_root", 1);
         }
         c.set("title", QString("MovieMator version ").append("2"/*MOVIEMATOR_VERSION*/).toUtf8().constData());
 

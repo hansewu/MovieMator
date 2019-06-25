@@ -20,6 +20,7 @@
 #define MAININTERFACE_H
 
 #include <QObject>
+#include "models/metadatamodel.h"
 
 enum FILE_TYPE {
     FILE_TYPE_NONE,
@@ -98,6 +99,7 @@ public:
     virtual void addFilter(int nFilterIndex = -1);
     //预览滤镜效果
     virtual void previewFilter(int index);
+    virtual void previewAudioFilter(QmlMetadata *meta);
 };
 
 #define MAININTERFACE MainInterface::singleton()

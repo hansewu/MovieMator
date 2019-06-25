@@ -19,8 +19,8 @@
 #include <QApplication>
 
 MMSplashScreen::MMSplashScreen(const QPixmap& pixmap) : QSplashScreen (pixmap)
-  ,progressBar(NULL)
-  ,progressTimer(NULL)
+  ,progressBar(nullptr)
+  ,progressTimer(nullptr)
   ,progressValue(0)
 {
 //    progressBar = new QProgressBar(this);
