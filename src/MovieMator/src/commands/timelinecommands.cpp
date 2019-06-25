@@ -525,12 +525,14 @@ void AddTransitionCommand::redo_impl()
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
     m_undoHelper.recordBeforeState();
     m_transitionIndex = m_model.addTransition(m_trackIndex, m_clipIndex, m_position);
+    MAIN.timelineDock()->emitSelectedFromSelection();
     m_undoHelper.recordAfterState();
 }
 
 void AddTransitionCommand::undo_impl()
 {
     m_undoHelper.undoChanges();
+    MAIN.timelineDock()->emitSelectedFromSelection();
 //    if (m_transitionIndex >= 0) {
 //        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
 //        m_model.removeTransition(m_trackIndex, m_transitionIndex);
@@ -1502,6 +1504,50 @@ void FilterClipCommand::undo_impl()
 
 }
 */
+
+
+TransitionPropertyCommand::TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel &model, int trackIndex, int clipIndex, const QString &propertyName, const QString &propertyValue, int invert, double softness, AbstractCommand *parent)
+    : AbstractCommand(parent)
+    , m_timeline(timeline)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(clipIndex)
+    , m_propertyName(propertyName)
+    , m_propertyValue(propertyValue)
+    , m_undoHelper(m_model)
+    , m_invert(invert)
+    , m_softness(softness)
+    , m_isFirstRedo(true)
+{
+
+}
+
+void TransitionPropertyCommand::redo_impl()
+{
+    m_undoHelper.recordBeforeState();
+    m_model.setTransitionProperty(m_trackIndex, m_clipIndex, m_propertyName, m_propertyValue);
+    if (m_propertyName == "resource")
+    {
+        m_model.setTransitionProperty(m_trackIndex, m_clipIndex, "progressive", "1");
+        m_model.setTransitionProperty(m_trackIndex, m_clipIndex, "invert", QString("%1").arg(m_invert));
+        m_model.setTransitionProperty(m_trackIndex, m_clipIndex, "softness", QString::number(m_softness));
+    }
+    m_undoHelper.recordAfterState();
+    if (m_isFirstRedo == false)
+    {
+        m_timeline.emitSelectedFromSelection();
+    }
+    m_isFirstRedo = false;
+}
+
+void TransitionPropertyCommand::undo_impl()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "propertyName" << m_propertyName << "propertyValue" << m_propertyValue;
+    m_undoHelper.undoChanges();
+    m_timeline.emitSelectedFromSelection();
+}
+
+
 } // namespace
 
 #include "moc_timelinecommands.cpp"

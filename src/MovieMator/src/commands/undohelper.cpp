@@ -308,6 +308,38 @@ void UndoHelper::undoChanges()
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
             AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
         }
+
+
+        if(info.changes & XMLModified)
+        {
+            Q_ASSERT(!(m_hints & SkipXML) && "Cannot restore clip without stored XML");
+            Q_ASSERT(!info.xml.isEmpty());
+            QModelIndex modelIndex = m_model.createIndex(currentIndex, 0, quintptr(info.oldTrackIndex));
+            Mlt::Producer restoredClip(MLT.profile(), "xml-string", info.xml.toUtf8().constData());
+            Mlt::Tractor tractor(restoredClip);
+            //QUuid uid = MLT.ensureHasUuid(tractor);
+            //qDebug() << "uuid - " << QString(tractor.get(kUuidProperty));
+            MLT.XML(&tractor);
+
+            m_model.clearMixReferences(info.oldTrackIndex, currentIndex);
+            m_model.beginRemoveRows(modelIndex.parent(), currentIndex, currentIndex);
+            playlist.remove(currentIndex);
+            m_model.endRemoveRows();
+            emit m_model.modified();
+//            m_model.removeClip(info.oldTrackIndex, currentIndex);
+            modelIndex = m_model.createIndex(currentIndex, 0, quintptr(info.oldTrackIndex));
+            m_model.beginInsertRows(modelIndex.parent(), currentIndex, currentIndex);
+            playlist.insert(tractor, currentIndex, info.frame_in, info.frame_out);
+            m_model.endInsertRows();
+            m_model.initMixReferences();
+
+            QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
+
+            Q_ASSERT(!clip.isNull());
+
+            MLT.setUuid(*clip, uid);
+            emit m_model.modified();
+        }
     }
 
     /* Finally we walk through the tracks once more, removing clips that
