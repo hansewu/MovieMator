@@ -816,8 +816,8 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
 
 
 
-       if(!bFromUndo && (from_value != ""))
-         MAIN.undoStack()->push(new Timeline::KeyFrameCommand(m_filter, nFrameInClip, key, from_value, value));
+//       if(!bFromUndo && (from_value != ""))
+//         MAIN.undoStack()->push(new Timeline::KeyFrameCommand(m_filter, nFrameInClip, key, from_value, value));
     }
     emit keyframeNumberChanged();
 
