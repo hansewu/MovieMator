@@ -68,7 +68,7 @@ public:
     explicit ScopeWidget(const QString& name);
 
     //! Destructs a ScopeWidget.
-    virtual ~ScopeWidget();
+    virtual ~ScopeWidget() Q_DECL_OVERRIDE;
 
     /*!
       Returns the title of the scope to be displayed by the application.
@@ -80,7 +80,7 @@ public:
       Sets the preferred orientation on the scope.
       This virtual function may be reimplemented by subclasses.
     */
-    virtual void setOrientation(Qt::Orientation) {};
+    virtual void setOrientation(Qt::Orientation) {}
 
 public slots:
     //! Provides a new frame to the scope. Should be called by the application.

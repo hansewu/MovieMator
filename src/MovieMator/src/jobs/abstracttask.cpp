@@ -18,12 +18,12 @@
 #include "abstracttask.h"
 
 AbstractTask::AbstractTask(const QString &name) : QObject()
-    , m_label(name)
     , m_ran(false)
-    , m_finishedNormally(false)
     , m_running(false)
-    , m_stopped(false)
+    , m_finishedNormally(false)
     , m_killed(false)
+    , m_stopped(false)
+    , m_label(name)
 {
 
 }

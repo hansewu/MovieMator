@@ -60,7 +60,7 @@ JobsDock::~JobsDock()
 AbstractJob *JobsDock::currentJob() const
 {
     QModelIndex index = ui->treeView->currentIndex();
-    if (!index.isValid()) return 0;
+    if (!index.isValid()) return nullptr;
     return JOBS.jobFromIndex(index);
 }
 
@@ -125,7 +125,7 @@ void JobsDock::on_actionRun_triggered()
     if (job) job->start();
 }
 
-void JobsDock::on_menuButton_clicked()
+void JobsDock::onMenuButtonClicked()
 {
   //  on_treeView_customContextMenuRequested(ui->menuButton->mapToParent(QPoint(0, 0)));
 }

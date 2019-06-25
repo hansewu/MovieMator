@@ -35,7 +35,7 @@ class LissajousWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit LissajousWidget(QWidget *parent = 0);
+    explicit LissajousWidget(QWidget *parent = nullptr);
     ~LissajousWidget();
 
     // AbstractProducerWidget overrides

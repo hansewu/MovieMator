@@ -31,7 +31,7 @@ class PulseAudioWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit PulseAudioWidget(QWidget *parent = 0);
+    explicit PulseAudioWidget(QWidget *parent = nullptr);
     ~PulseAudioWidget();
 
     // AbstractProducerWidget overrides

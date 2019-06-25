@@ -31,7 +31,7 @@ class GDIgrabWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit GDIgrabWidget(QWidget *parent = 0);
+    explicit GDIgrabWidget(QWidget *parent = nullptr);
     ~GDIgrabWidget();
 
     // AbstractProducerWidget overrides

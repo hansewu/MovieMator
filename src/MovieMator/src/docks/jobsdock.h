@@ -32,7 +32,7 @@ class JobsDock : public QDockWidget
     Q_OBJECT
 
 public:
-    explicit JobsDock(QWidget *parent = 0);
+    explicit JobsDock(QWidget *parent = nullptr);
     ~JobsDock();
     AbstractJob* currentJob() const;
 
@@ -47,7 +47,7 @@ private slots:
     void on_actionViewLog_triggered();
     void on_pauseButton_toggled(bool checked);
     void on_actionRun_triggered();
-    void on_menuButton_clicked();
+    void onMenuButtonClicked();
     void on_treeView_doubleClicked(const QModelIndex &index);
     void on_actionRemove_triggered();
     void on_stopButton_clicked();

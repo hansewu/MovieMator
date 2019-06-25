@@ -220,8 +220,8 @@ public:
     void undo_impl();
 protected:
     int id() const { return UndoIdTrimClipIn; }
-    using AbstractCommand::mergeWith;
-    bool mergeWith(const AbstractCommand *other);
+//    using AbstractCommand::mergeWith;
+    bool mergeWith(const QUndoCommand *other);
 private:
     MultitrackModel& m_model;
     int m_trackIndex;
@@ -240,8 +240,8 @@ public:
     void undo_impl();
 protected:
     int id() const { return UndoIdTrimClipOut; }
-    using AbstractCommand::mergeWith;
-    bool mergeWith(const AbstractCommand *other);
+    //using AbstractCommand::mergeWith;
+    bool mergeWith(const QUndoCommand *other);
 private:
     MultitrackModel& m_model;
     int m_trackIndex;
@@ -274,8 +274,8 @@ public:
     void undo_impl();
 protected:
     int id() const { return UndoIdFadeIn; }
-    using AbstractCommand::mergeWith;
-    bool mergeWith(const AbstractCommand *other);
+//    using AbstractCommand::mergeWith;
+    bool mergeWith(const QUndoCommand *other);
 private:
     MultitrackModel& m_model;
     int m_trackIndex;
@@ -293,8 +293,8 @@ public:
     void undo_impl();
 protected:
     int id() const { return UndoIdFadeOut; }
-    using AbstractCommand::mergeWith;
-    bool mergeWith(const AbstractCommand *other);
+//    using AbstractCommand::mergeWith;
+    bool mergeWith(const QUndoCommand *other);
 private:
     MultitrackModel& m_model;
     int m_trackIndex;
@@ -327,8 +327,8 @@ public:
     void undo_impl();
 protected:
     int id() const { return UndoIdTrimTransitionIn; }
-    using AbstractCommand::mergeWith;
-    bool mergeWith(const AbstractCommand *other);
+//    using AbstractCommand::mergeWith;
+    bool mergeWith(const QUndoCommand *other);
 private:
     MultitrackModel& m_model;
     int m_trackIndex;
@@ -345,8 +345,8 @@ public:
     void undo_impl();
 protected:
     int id() const { return UndoIdTrimTransitionOut; }
-    using AbstractCommand::mergeWith;
-    bool mergeWith(const AbstractCommand *other);
+//    using AbstractCommand::mergeWith;
+    bool mergeWith(const QUndoCommand *other);
 private:
     MultitrackModel& m_model;
     int m_trackIndex;
@@ -363,8 +363,8 @@ public:
     void undo_impl();
 protected:
     int id() const { return UndoIdAddTransitionByTrimIn; }
-    using AbstractCommand::mergeWith;
-    bool mergeWith(const AbstractCommand *other);
+//    using AbstractCommand::mergeWith;
+    bool mergeWith(const QUndoCommand *other);
 private:
     MultitrackModel& m_model;
     int m_trackIndex;
@@ -381,8 +381,8 @@ public:
     void undo_impl();
 protected:
     int id() const { return UndoIdAddTransitionByTrimOut; }
-    using AbstractCommand::mergeWith;
-    bool mergeWith(const AbstractCommand *other);
+//    using AbstractCommand::mergeWith;
+    bool mergeWith(const QUndoCommand *other);
 private:
     MultitrackModel& m_model;
     int m_trackIndex;
@@ -550,8 +550,8 @@ public:
     void undo_impl();
 protected:
     int id() const { return UndoIdFilterCommand; }
-    using AbstractCommand::mergeWith;
-    bool mergeWith(const AbstractCommand *other);
+//    using AbstractCommand::mergeWith;
+    bool mergeWith(const QUndoCommand *other);
 
     int transitionValue(QVariant &varFrom, QVariant &varTo, Mlt::Filter* filter, QString name,  double from_value, double to_value);
 
@@ -578,8 +578,8 @@ public:
     void undo_impl();
 protected:
     int id() const { return UndoIdKeyFrameCommand; }
-    using AbstractCommand::mergeWith;
-    bool mergeWith(const AbstractCommand *other);
+//    using AbstractCommand::mergeWith;
+    bool mergeWith(const QUndoCommand *other);
     void set_value(const QVector<key_frame_item>  &value);
     void notify();
 
@@ -656,6 +656,31 @@ protected:
     int         m_newTrackIndex, m_oldTrackIndex;
     bool        m_bNewIsMultitrack, m_bOldIsMultitrack;
 };
+
+
+//转场属性设置
+class TransitionPropertyCommand: public AbstractCommand
+{
+public:
+    TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel& model, int trackIndex, int clipIndex, const QString& propertyName, const QString& propertyValue, int invert = 0, double softness = 0.0, AbstractCommand *parent = nullptr);
+    void redo_impl();
+    void undo_impl();
+
+private:
+    TimelineDock&       m_timeline;
+    MultitrackModel&    m_model;
+    int                 m_trackIndex;
+    int                 m_clipIndex;
+    QString             m_propertyName;
+    QString             m_propertyValue;
+    UndoHelper          m_undoHelper;
+    int                 m_invert;
+    double              m_softness;
+    bool                m_isFirstRedo;
+};
+
+
+
 
 } // namespace Timeline
 

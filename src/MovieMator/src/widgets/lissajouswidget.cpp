@@ -50,7 +50,7 @@ void LissajousWidget::on_xratioDial_valueChanged(int value)
 
 void LissajousWidget::on_xratioSpinner_valueChanged(double value)
 {
-    ui->xratioDial->setValue(value * 100);
+    ui->xratioDial->setValue(int(value * 100));
 }
 
 void LissajousWidget::on_yratioDial_valueChanged(int value)
@@ -64,7 +64,7 @@ void LissajousWidget::on_yratioDial_valueChanged(int value)
 
 void LissajousWidget::on_yratioSpinner_valueChanged(double value)
 {
-    ui->yratioDial->setValue(value * 100);
+    ui->yratioDial->setValue(int(value * 100));
 }
 
 Mlt::Producer* LissajousWidget::producer(Mlt::Profile& profile)
@@ -93,7 +93,7 @@ void LissajousWidget::loadPreset(Mlt::Properties& p)
 
 void LissajousWidget::on_preset_selected(void* p)
 {
-    Mlt::Properties* properties = (Mlt::Properties*) p;
+    Mlt::Properties* properties = static_cast<Mlt::Properties*>(p);
     loadPreset(*properties);
     delete properties;
 }

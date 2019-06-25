@@ -148,12 +148,12 @@ void AudioMeterWidget::drawDbLabels(QPainter& p)
     if (m_orient == Qt::Horizontal) {
         // dB scale is horizontal along the bottom
         int prevX = 0;
-        y = m_graphRect.bottom() + textHeight + TEXT_PAD;
+        y = int(m_graphRect.bottom()) + textHeight + TEXT_PAD;
         for (int i = 0; i < dbLabelCount; i++) {
             int value = m_dbLabels[i];
             QString label = QString().sprintf("%d", value);
             int labelWidth = fontMetrics().width(label);
-            x = m_graphRect.left() + IEC_ScaleMax(value, m_maxDb) * m_graphRect.width() - labelWidth / 2;
+            x = int(m_graphRect.left() + IEC_ScaleMax(value, m_maxDb) * m_graphRect.width() - labelWidth / 2);
             if (x + labelWidth > width()) {
                 x = width() - labelWidth;
             }
@@ -168,8 +168,8 @@ void AudioMeterWidget::drawDbLabels(QPainter& p)
         for (int i = 0; i < dbLabelCount; i++) {
             int value = m_dbLabels[i];
             QString label = QString().sprintf("%d", value);
-            x = m_graphRect.left() - fontMetrics().width(label) - TEXT_PAD;
-            y = m_graphRect.bottom() - IEC_ScaleMax(value, m_maxDb) * m_graphRect.height() + textHeight / 2;
+            x = int(m_graphRect.left() - fontMetrics().width(label) - TEXT_PAD);
+            y = int(m_graphRect.bottom() - IEC_ScaleMax(value, m_maxDb) * m_graphRect.height() + textHeight / 2);
             if (y - textHeight < 0) {
                 y = textHeight;
             }
@@ -203,8 +203,8 @@ void AudioMeterWidget::drawChanLabels(QPainter& p)
         int prevY = height();
         for (int i = 0; i < chanLabelCount; i += stride) {
             const QString& label = m_chanLabels[i];
-            y = m_graphRect.bottom() - i * m_barSize.height() - m_barSize.height() / 2 + textHeight / 2;
-            x = m_graphRect.left() - fontMetrics().width(label) - TEXT_PAD;
+            y = int(m_graphRect.bottom() - i * m_barSize.height() - m_barSize.height() / 2 + textHeight / 2);
+            x = int(m_graphRect.left() - fontMetrics().width(label) - TEXT_PAD);
             if ( prevY - y >= TEXT_PAD) {
                 p.drawText(x, y, label);
                 prevY = y - textHeight;
@@ -225,10 +225,10 @@ void AudioMeterWidget::drawChanLabels(QPainter& p)
         }
 
         int prevX = 0;
-        y = m_graphRect.bottom() + textHeight + TEXT_PAD;
+        y = int(m_graphRect.bottom() + textHeight + TEXT_PAD);
         for (int i = 0; i < chanLabelCount; i += stride) {
             QString label = m_chanLabels[i];
-            x = m_graphRect.left() + i * m_barSize.width() + m_barSize.width() / 2 - fontMetrics().width(label) / 2;
+            x = int(m_graphRect.left() + i * m_barSize.width() + m_barSize.width() / 2 - fontMetrics().width(label) / 2);
             if (x > prevX) {
                 p.drawText(x, y, label);
                 prevX = x + fontMetrics().width(label);
@@ -270,7 +270,7 @@ void AudioMeterWidget::drawPeaks(QPainter& p)
 
     if (m_orient == Qt::Horizontal) {
         for (int i = 0; i < chanCount; i++) {
-            if (m_peaks[i] == m_levels[i])
+            if (qFuzzyCompare(m_peaks[i],m_levels[i]))
                 continue;
             double level = IEC_ScaleMax(m_peaks[i], m_maxDb);
             bar.setLeft(m_graphRect.left() + m_barSize.width() * level - 3);
@@ -283,7 +283,7 @@ void AudioMeterWidget::drawPeaks(QPainter& p)
         }
     } else {
         for (int i = 0; i < chanCount; i++) {
-            if (m_peaks[i] == m_levels[i])
+            if (qFuzzyCompare(m_peaks[i],m_levels[i]))
                 continue;
             double level = IEC_ScaleMax(m_peaks[i], m_maxDb);
             bar.setLeft(m_graphRect.left() + i * m_barSize.width() + 1);
@@ -306,11 +306,11 @@ void AudioMeterWidget::updateToolTip()
     if (this->rect().contains(mousePos)) {
         if (m_orient == Qt::Horizontal) {
             if (mousePos.y() <= m_graphRect.bottom() && mousePos.y() >= m_graphRect.top()) {
-                chan = (int)(m_graphRect.bottom() - mousePos.y()) / (int)m_barSize.height();
+                chan = int(m_graphRect.bottom() - mousePos.y()) / int(m_barSize.height());
             }
         } else {
             if (mousePos.x() >= m_graphRect.left() && mousePos.x() <= m_graphRect.right()) {
-                chan = (int)(mousePos.x() - m_graphRect.left()) / (int)m_barSize.width();
+                chan = int(mousePos.x() - m_graphRect.left()) / int(m_barSize.width());
             }
         }
     }

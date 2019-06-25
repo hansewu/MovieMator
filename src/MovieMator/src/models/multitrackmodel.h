@@ -141,6 +141,13 @@ public:
     void setClipSpeed(int trackIndex, int clipIndex, double speed);   //设置clip的速度
 
     Mlt::Producer* producer(Mlt::Producer *producer, Mlt::Profile& profile, double speed);  //根据条件重新深度复制一个producer
+
+    Mlt::Producer* copiedProducer();
+    void setCopiedProducer(Mlt::Producer *producer);
+
+    //设置转场属性
+    void setTransitionProperty(int trackIndex, int clipIndex, const QString& propertyName, const QString& propertyValue);
+
 signals:
     void created();
     void loaded();
@@ -215,6 +222,8 @@ private:
     TrackList m_trackList;
     bool m_isMakingTransition;
 
+    QScopedPointer<Mlt::Producer> m_copiedProducer;    // 保存时间线轨道上复制的 clip
+
     bool moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position);
     void moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position);//将clip移动到轨道末尾
     void relocateClip(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position);
@@ -234,11 +243,10 @@ private:
     void clearMixReferences(int trackIndex, int clipIndex);
     void initMixReferences();
 
-
-
-
     bool checkClip(Mlt::Producer &clip);
     friend class UndoHelper;
+    Mlt::Producer *getClipProducer(int trackIndex, int clipIndex);
+    Mlt::Transition *getClipTransition(int trackIndex, int clipIndex, const QString& transitionName);
 
 private slots:
     void adjustBackgroundDuration();

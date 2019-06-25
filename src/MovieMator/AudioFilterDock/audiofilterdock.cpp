@@ -129,6 +129,10 @@ void AudioFilterDock::addAudioFilterItem(int index)
     m_mainWindow->addFilter(index);
 }
 
+void AudioFilterDock::previewFilter(int index)
+{
+    m_mainWindow->previewFilter(index);
+}
 
 void AudioFiltersInfo::addAudioFilterItemInfo(AudioFilterItemInfo *AudioFilterInfo)
 {

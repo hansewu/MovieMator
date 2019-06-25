@@ -51,10 +51,10 @@ class Player;
 //class RecentDock;
 class EncodeDock;
 class JobsDock;
-class PlaylistDock;
+//class PlaylistDock;
 class QUndoStack;
-class MeltedPlaylistDock;
-class MeltedServerDock;
+//class MeltedPlaylistDock;
+//class MeltedServerDock;
 class QActionGroup;
 class FilterController;
 class ScopeController;
@@ -76,7 +76,6 @@ class InvalidProjectDialog;
 class EncodeTaskDock;
 class QmlFilter;
 class QUndoCommand;
-class ConfigurationDock;
 class ContainerDock;
 class QToolButton;
 class TemplateEidtor;
@@ -101,7 +100,7 @@ public:
     //改变软件主界面的主题，当前支持黑色和白色
     static void changeTheme(const QString& theme);
     //获取playlistDock，旧的文件列表，目前已弃用
-    PlaylistDock* playlistDock() const { return m_playlistDock; }
+//    PlaylistDock* playlistDock() const { return m_playlistDock; }
     //获取FilterController
     FilterController* filterController() const { return m_filterController; }
 //    HtmlEditor* htmlEditor() const { return m_htmlEditor; }
@@ -142,6 +141,9 @@ public:
 
     //获取模板编辑界面对象TemplateEidtor，目前无用
     TemplateEidtor *templateEditor() const { return m_templateEditor; }
+
+    //修改profile
+    void changeProfile(QString profileName);
 
 
 signals:
@@ -203,17 +205,17 @@ private:
     QDockWidget* m_resourceAudioFilterDock;//左侧音频滤镜列表dock
     QDockWidget* m_templateDock;//左侧模板dock，暂时无用
     QDockWidget* m_effectDock;//左侧贴图列表dock
-    QDockWidget* m_templateEditorDock;//右侧模板编辑dock，暂时无用
+//    QDockWidget* m_templateEditorDock;//右侧模板编辑dock，暂时无用
     EncodeDock* m_encodeDock;//导出文件dock
     JobsDock* m_jobsDock;//导出文件进度列表dock
-    PlaylistDock* m_playlistDock;//旧的文件列表dock，暂时无用
+//    PlaylistDock* m_playlistDock;//旧的文件列表dock，暂时无用
     TimelineDock* m_timelineDock;//底下时间线dock
     QString m_currentFile;//当前的工程文件名
     bool m_isKKeyPressed;//是否按键按下
     QUndoStack* m_undoStack;//undo、redo栈
     QDockWidget* m_historyDock;
-    MeltedServerDock* m_meltedServerDock;
-    MeltedPlaylistDock* m_meltedPlaylistDock;
+//    MeltedServerDock* m_meltedServerDock;
+//    MeltedPlaylistDock* m_meltedPlaylistDock;
     QActionGroup* m_profileGroup;//profile所有菜单的操作
     QActionGroup* m_externalGroup;
     QActionGroup* m_keyerGroup;
@@ -250,7 +252,7 @@ private:
 
     //以下是工具栏上的按钮
     QToolButton *m_addButton;
-    QToolButton *m_removeButton;
+//    QToolButton *m_removeButton;
     QToolButton *m_undoButton;
     QToolButton *m_redoButton;
     QToolButton *m_saveButton;
@@ -293,8 +295,6 @@ private:
 #endif
 
     EncodeTaskDock *m_tasksDock;//导出文件dock
-
-    ConfigurationDock *m_configurationDock;//filter配置dock
 
     ContainerDock *m_resourceDockContainer;//包裹左侧所有dock的容器dock
     ContainerDock *m_propertiesDockContainer;//包裹右侧所有dock的容器dock
@@ -521,6 +521,7 @@ private slots:
     void addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);//添加dock到右侧的dock容器中
 
     void on_actionNewProject_triggered();
+    void on_actionVideoMode_triggered();
 };
 
 #define MAIN MainWindow::singleton()

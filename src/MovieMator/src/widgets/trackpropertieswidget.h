@@ -34,7 +34,7 @@ class TrackPropertiesWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit TrackPropertiesWidget(Mlt::Producer& track, QWidget *parent = 0);
+    explicit TrackPropertiesWidget(Mlt::Producer& track, QWidget *parent = nullptr);
     ~TrackPropertiesWidget();
 
 private slots:

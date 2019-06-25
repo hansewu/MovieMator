@@ -171,6 +171,7 @@
     </widget>
     <addaction name="actionProject"/>
     <addaction name="actionGPU"/>
+    <addaction name="actionVideoMode"/>
     <addaction name="menuProfile"/>
     <addaction name="separator"/>
     <addaction name="actionPlayer"/>
@@ -959,6 +960,11 @@
     <string>Export Selected Clip as Template</string>
    </property>
   </action>
+  <action name="actionVideoMode">
+   <property name="text">
+    <string>Video Mode</string>
+   </property>
+  </action>  
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

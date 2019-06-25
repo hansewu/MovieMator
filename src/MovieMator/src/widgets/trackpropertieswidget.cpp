@@ -118,14 +118,14 @@ Mlt::Transition* TrackPropertiesWidget::getTransition(const QString& name)
         // Iterate the consumers until found transition by mlt_service and track_b index.
         while (service && service->is_valid() && tractor_type != service->type()) {
             if (service->type() == transition_type) {
-                Mlt::Transition t((mlt_transition) service->get_service());
+                Mlt::Transition t(reinterpret_cast<mlt_transition>(service->get_service()));
                 if (name == t.get("mlt_service") && t.get_b_track() == trackIndex)
                     return new Mlt::Transition(t);
             }
             service.reset(service->consumer());
         };
     }
-    return 0;
+    return nullptr;
 }
 
 void TrackPropertiesWidget::on_blendModeCombo_currentIndexChanged(int index)

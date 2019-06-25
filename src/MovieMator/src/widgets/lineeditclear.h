@@ -19,7 +19,7 @@ class LineEditClear : public QLineEdit
     Q_OBJECT
 
 public:
-    LineEditClear(QWidget *parent = 0);
+    LineEditClear(QWidget *parent = nullptr);
     void setStyleSheets(const QString &defaultStyleSheet, const QString &editingStyleSheet);
 
 protected:

@@ -31,7 +31,7 @@ class ColorProducerWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit ColorProducerWidget(QWidget *parent = 0);
+    explicit ColorProducerWidget(QWidget *parent = nullptr);
     ~ColorProducerWidget();
 
     // AbstractProducerWidget overrides

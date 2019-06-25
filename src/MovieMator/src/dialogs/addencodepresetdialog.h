@@ -30,7 +30,7 @@ class AddEncodePresetDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddEncodePresetDialog(QWidget *parent = 0);
+    explicit AddEncodePresetDialog(QWidget *parent = nullptr);
     ~AddEncodePresetDialog();
     void setProperties(const QString&);
     QString presetName() const;

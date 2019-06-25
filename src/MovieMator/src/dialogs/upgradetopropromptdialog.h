@@ -29,7 +29,7 @@ class UpgradeToProPromptDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit UpgradeToProPromptDialog(QWidget *parent = 0);
+    explicit UpgradeToProPromptDialog(QWidget *parent = nullptr);
     ~UpgradeToProPromptDialog();
 
 private slots:

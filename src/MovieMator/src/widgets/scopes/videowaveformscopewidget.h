@@ -30,7 +30,7 @@ class VideoWaveformScopeWidget Q_DECL_FINAL : public ScopeWidget
     
 public:
     explicit VideoWaveformScopeWidget();
-    QString getTitle();
+    QString getTitle() Q_DECL_OVERRIDE;
 
 private:
     void refreshScope(const QSize& size, bool full) Q_DECL_OVERRIDE;

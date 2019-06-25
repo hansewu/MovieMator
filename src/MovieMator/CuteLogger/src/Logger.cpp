@@ -48,27 +48,29 @@ class LogDevice : public QIODevice
     }
 
   protected:
-    qint64 readData(char*, qint64)
-    {
-      return 0;
-    }
+    qint64 readData(char*, qint64);
 
-    qint64 writeData(const char* data, qint64 maxSize)
-    {
-      if (maxSize > 0)
-        Logger::write(m_logLevel, m_file, m_line, m_function, QString::fromLocal8Bit(QByteArray(data, maxSize)));
-
-      m_semaphore.release();
-      return maxSize;
-    }
+    qint64 writeData(const char* data, qint64 maxSize);
 
   private:
+    const char* m_file;
+    const char* m_function;
     QSemaphore m_semaphore;
     Logger::LogLevel m_logLevel;
-    const char* m_file;
     int m_line;
-    const char* m_function;
 };
+
+qint64 LogDevice::readData(char*, qint64) {
+    return 0;
+}
+
+qint64 LogDevice::writeData(const char* data, qint64 maxSize) {
+    if (maxSize > 0)
+      Logger::write(m_logLevel, m_file, m_line, m_function, QString::fromLocal8Bit(QByteArray(data, int(maxSize))));
+
+    m_semaphore.release();
+    return maxSize;
+}
 
 
 // Forward declarations
@@ -97,7 +99,7 @@ class LoggerPrivate
 
     static LoggerPrivate* instance()
     {
-      LoggerPrivate* result = 0;
+      LoggerPrivate* result = nullptr;
       {
         QReadLocker locker(&m_selfLock);
         result = m_self;
@@ -122,7 +124,7 @@ class LoggerPrivate
 
 
     LoggerPrivate()
-      : m_logDevice(0)
+      : m_logDevice(nullptr)
     {}
 
 
@@ -152,7 +154,7 @@ class LoggerPrivate
 
     LogDevice* logDevice()
     {
-      LogDevice* result = 0;
+      LogDevice* result = nullptr;
       {
         QReadLocker locker(&m_logDeviceLock);
         result = m_logDevice;
@@ -226,7 +228,7 @@ class LoggerPrivate
 };
 
 // Static fields initialization
-LoggerPrivate* LoggerPrivate::m_self = 0;
+LoggerPrivate* LoggerPrivate::m_self = nullptr;
 QReadWriteLock LoggerPrivate::m_selfLock;
 
 
@@ -235,7 +237,7 @@ static void cleanupLoggerPrivate()
   QWriteLocker locker(&LoggerPrivate::m_selfLock);
 
   delete LoggerPrivate::m_self;
-  LoggerPrivate::m_self = 0;
+  LoggerPrivate::m_self = nullptr;
 }
 
 

@@ -12,7 +12,7 @@ class FileSaveDialog : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit FileSaveDialog(QQuickItem *parent = 0);
+    explicit FileSaveDialog(QQuickItem *parent = nullptr);
     ~FileSaveDialog();
 
     Q_PROPERTY(bool valid READ valid NOTIFY validChanged)

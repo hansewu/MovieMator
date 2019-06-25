@@ -33,41 +33,42 @@
 class EventFilter : public QObject
 {
 public:
-    explicit EventFilter(ScreenSelector *selector, QObject *parent = 0)
+    explicit EventFilter(ScreenSelector *selector, QObject *parent = nullptr)
         : QObject(parent)
         , m_selector(selector)
     {}
 
-    bool eventFilter(QObject *, QEvent *event)
-    {
-        Q_ASSERT(event);
-        Q_ASSERT(m_selector);
-    //    qDebug()<<"eventFilter begins";
-        switch (event->type()) {
-        case QEvent::MouseButtonPress:
-            return m_selector->onMousePressEvent(static_cast<QMouseEvent *>(event));
-        case QEvent::MouseMove:
-            return m_selector->onMouseMoveEvent(static_cast<QMouseEvent *>(event));
-        case QEvent::MouseButtonRelease:
-            return m_selector->onMouseReleaseEvent(static_cast<QMouseEvent *>(event));
-        case QEvent::KeyPress:
-            return m_selector->onKeyPressEvent(static_cast<QKeyEvent *>(event));
-        default:
-            break;
-        }
-    //    qDebug()<<"eventFilter ends";
-        return false;
-    }
-
+    bool eventFilter(QObject *, QEvent *event);
 private:
     ScreenSelector *m_selector;
 };
+
+bool EventFilter::eventFilter(QObject *, QEvent *event)
+{
+    Q_ASSERT(event);
+    Q_ASSERT(m_selector);
+//    qDebug()<<"eventFilter begins";
+    switch (event->type()) {
+    case QEvent::MouseButtonPress:
+        return m_selector->onMousePressEvent(static_cast<QMouseEvent *>(event));
+    case QEvent::MouseMove:
+        return m_selector->onMouseMoveEvent(static_cast<QMouseEvent *>(event));
+    case QEvent::MouseButtonRelease:
+        return m_selector->onMouseReleaseEvent(static_cast<QMouseEvent *>(event));
+    case QEvent::KeyPress:
+        return m_selector->onKeyPressEvent(static_cast<QKeyEvent *>(event));
+    default:
+        break;
+    }
+//    qDebug()<<"eventFilter ends";
+    return false;
+}
 
 ScreenSelector::ScreenSelector(QWidget* parent)
     : QFrame(parent)
     , m_selectionInProgress(false)
     , m_selectionRect()
-    , m_eventFilter(0)
+    , m_eventFilter(nullptr)
 {
     setFrameStyle(QFrame::Box | QFrame::Plain);
     setWindowOpacity(0.5);

@@ -470,7 +470,7 @@ void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName
                 "QListView{background-color:transparent;color:rgb(214,214,214);}");
 
     connect(listView, SIGNAL(pressed(const QModelIndex&)), this, SLOT(onListviewPressed(const QModelIndex&)));
-    connect(listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(onListviewClicked(const QModelIndex&)));
+//    connect(listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(onListviewClicked(const QModelIndex&)));
     connect(listView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(onListviewCustomContextMenuRequested(const QPoint&)));
 }
 
@@ -497,19 +497,26 @@ void EffectDock::onListviewPressed(const QModelIndex &)
             m_currentListView = listView;
             m_currentIndex = m_currentListView->currentIndex();
             createEffectFile();
-            return;
+//            return;
+            break;
         }
+    }
+
+
+    if(m_effectFile && m_mainWindow)
+    {
+        m_mainWindow->playFile(m_effectFile);   // 按下就播放
     }
 }
 
 void EffectDock::onListviewClicked(const QModelIndex &)
 {
-//    Q_ASSERT(m_effectFile);   // 不能加，默认下可以为空，也就是不播放文件
-    Q_ASSERT(m_mainWindow);
-    if(m_effectFile && m_mainWindow)
-    {
-        m_mainWindow->playFile(m_effectFile);
-    }
+////    Q_ASSERT(m_effectFile);   // 不能加，默认下可以为空，也就是不播放文件
+//    Q_ASSERT(m_mainWindow);
+//    if(m_effectFile && m_mainWindow)
+//    {
+//        m_mainWindow->playFile(m_effectFile);
+//    }
 }
 
 void EffectDock::onListviewCustomContextMenuRequested(const QPoint &pos)
@@ -572,7 +579,8 @@ void EffectDock::on_comboBox_2_activated(int index)
 void EffectDock::on_EffectDock_visibilityChanged(bool visible)
 {
     if (visible) {
-        onListviewClicked(QModelIndex());
+//        onListviewClicked(QModelIndex());
+        onListviewPressed(QModelIndex());
 
         resizeEvent(nullptr);   // 切换dock后listView大小会随dock变化
     }

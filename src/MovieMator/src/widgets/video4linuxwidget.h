@@ -31,7 +31,7 @@ class Video4LinuxWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit Video4LinuxWidget(QWidget *parent = 0);
+    explicit Video4LinuxWidget(QWidget *parent = nullptr);
     ~Video4LinuxWidget();
 
     // AbstractProducerWidget overrides

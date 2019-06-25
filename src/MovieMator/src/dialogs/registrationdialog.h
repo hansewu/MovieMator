@@ -29,7 +29,7 @@ class RegistrationDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit RegistrationDialog(QWidget *parent = 0);
+    explicit RegistrationDialog(QWidget *parent = nullptr);
     ~RegistrationDialog();
 
 private slots:

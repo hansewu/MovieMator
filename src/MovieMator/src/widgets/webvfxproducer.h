@@ -31,7 +31,7 @@ class WebvfxProducer : public QWidget, public AbstractProducerWidget
     Q_OBJECT
     
 public:
-    explicit WebvfxProducer(QWidget *parent = 0);
+    explicit WebvfxProducer(QWidget *parent = nullptr);
     ~WebvfxProducer();
 
     // AbstractProducerWidget overrides

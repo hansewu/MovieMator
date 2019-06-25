@@ -53,10 +53,6 @@
 #include "jobqueue.h"
 //#include <playlistdock.h>
 #include "glwidget.h"
-#include "mvcp/meltedserverdock.h"
-#include "mvcp/meltedplaylistdock.h"
-#include "mvcp/meltedunitsmodel.h"
-#include "mvcp/meltedplaylistmodel.h"
 #include "controllers/filtercontroller.h"
 #include "controllers/scopecontroller.h"
 #include "docks/filtersdock.h"
@@ -94,7 +90,6 @@
 #include "docks/encodetaskdock.h"
 #include "encodetaskqueue.h"
 #include "dialogs/invalidprojectdialog.h"
-//#include <configurationdock.h>
 #include "maininterface.h"
 #include <recentdockinterface.h>
 #include <filterdockinterface.h>
@@ -115,6 +110,8 @@
 #include <QJSEngine>
 #include <QQmlEngine>
 #include <QQmlContext>
+
+#include "dialogs/videomodesettingsdialog.h"
 
 #if defined (Q_OS_MAC)
     #include "securitybookmark/transport_security_bookmark.h"
@@ -195,8 +192,8 @@ MainWindow::MainWindow()
     : QMainWindow(nullptr)
     , ui(new Ui::MainWindow)
     , m_isKKeyPressed(false)
-    , m_meltedServerDock(nullptr)
-    , m_meltedPlaylistDock(nullptr)
+//    , m_meltedServerDock(nullptr)
+//    , m_meltedPlaylistDock(nullptr)
     , m_keyerGroup(nullptr)
     , m_keyerMenu(nullptr)
     , m_isPlaylistLoaded(false)
@@ -269,7 +266,7 @@ MainWindow::MainWindow()
     LOG_DEBUG() << "Connect UI signals";
     // Connect UI signals.
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
-    connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(removeVideo()));
+//    connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(removeVideo()));
 
     if (ui->actionFullscreen)
         connect(ui->actionFullscreen, SIGNAL(triggered()), this, SLOT(on_actionEnter_Full_Screen_triggered()));
@@ -323,12 +320,6 @@ MainWindow::MainWindow()
     //      m_player->setPalette(palette);
     //      MLT.videoWidget()->installEventFilter(this);
     //        rightDockWidget->setWidget(m_player);
-
-//    m_configurationDock = new ConfigurationDock();
-//    addDockWidget(Qt::RightDockWidgetArea, m_configurationDock);
-//    m_configurationDock->setTitleBarWidget(new QWidget());
-//    m_configurationDock->setMinimumSize(500,320);
-//    m_configurationDock->setContentsMargins(0,0,0,0);
 
      ui->centralWidget->layout()->addWidget(m_player);
 
@@ -468,7 +459,6 @@ MainWindow::MainWindow()
 //    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_filtersDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
      connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_propertiesVideoFilterDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)));
      connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_propertiesAudioFilterDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)));
-//    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_configurationDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
     //MovieMator Pro
 //#ifdef MOVIEMATOR_PRO
 //     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_timelineDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
@@ -1132,6 +1122,8 @@ void MainWindow::setupSettingsMenu()
     delete ui->menuDrawingMethod;
     ui->menuDrawingMethod = 0;
 #endif
+    //隐藏原profile菜单
+    ui->menuProfile->menuAction()->setVisible(false);
     LOG_DEBUG() << "end";
 }
 
@@ -2180,7 +2172,8 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         } else {
             m_timelineDock->show();
             m_timelineDock->raise();
-            m_timelineDock->insert(-1);
+//            m_timelineDock->insert(-1);
+            m_timelineDock->paste();    // 粘贴
         }
         break;
     case Qt::Key_B: // Avid Overwrite
@@ -2542,8 +2535,8 @@ void MainWindow::on_actionOpenOther_triggered()
 void MainWindow::onProducerOpened()
 {
     LOG_DEBUG() << "begin";
-    if (m_meltedServerDock)
-        m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int,double,int,int,int,bool)));
+//    if (m_meltedServerDock)
+//        m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int,double,int,int,int,bool)));
 
     QWidget* w = loadProducerWidget(MLT.producer());
     if (w && !MLT.producer()->get_int(kMultitrackItemProperty)) {
@@ -3137,7 +3130,9 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
     else if (service == "tone")
         w = new ToneProducerWidget(this);
     else if (producer->parent().get(kShotcutTransitionProperty)) {
-        w = new LumaMixTransition(producer->parent(), this);
+        int trackIndex = m_timelineDock->selectedTrackIndex();
+        int clipIndex = m_timelineDock->selection().at(0);
+        w = new LumaMixTransition(producer->parent(), trackIndex, clipIndex, this);
         connect(w, SIGNAL(setTransitionDuration(int)), m_timelineDock, SLOT(setTransitionDuration(int)));
         scrollArea->setWidget(w);
         return w;
@@ -3188,18 +3183,18 @@ void MainWindow::onMeltedUnitOpened()
     MLT.play(0);
     QScrollArea* scrollArea = qobject_cast<QScrollArea*>(m_propertiesDock->widget());
     delete scrollArea->widget();
-    if (m_meltedServerDock && m_meltedPlaylistDock) {
-        m_player->connectTransport(m_meltedPlaylistDock->transportControl());
-        connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)),
-                m_player, SLOT(onShowFrame(int,double,int,int,int,bool)));
-    }
+//    if (m_meltedServerDock && m_meltedPlaylistDock) {
+//        m_player->connectTransport(m_meltedPlaylistDock->transportControl());
+//        connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)),
+//                m_player, SLOT(onShowFrame(int,double,int,int,int,bool)));
+//    }
     onProducerChanged();
 }
 
 void MainWindow::onMeltedUnitActivated()
 {
-    m_meltedPlaylistDock->setVisible(true);
-    m_meltedPlaylistDock->raise();
+//    m_meltedPlaylistDock->setVisible(true);
+//    m_meltedPlaylistDock->raise();
 }
 
 void MainWindow::on_actionEnter_Full_Screen_triggered()
@@ -3552,6 +3547,43 @@ void MainWindow::onKeyerTriggered(QAction *action)
     Settings.setPlayerKeyerMode(action->data().toInt());
 }
 
+void MainWindow::changeProfile(QString profileName) {
+    //检测是否和当前profile相等
+    QString currentPrefileName = Settings.playerProfile();
+    if (profileName == currentPrefileName) {
+        return;
+    }
+
+    //need restart
+    QMessageBox dialog(QMessageBox::Information,
+                       qApp->applicationName(),
+                       tr("You must restart MovieMator to change the video mode.\n"
+                          "Do you want to change video mode now?"),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+#if MOVIEMATOR_PRO
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+#else
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    if (dialog.exec() == QMessageBox::Yes) {
+        if (continueModified())
+        {
+            m_exitCode = EXIT_RESTART;
+            //close project
+            if (multitrack())
+                m_timelineDock->model()->close();
+            //set profile
+            Settings.setPlayerProfile(profileName);
+            QApplication::closeAllWindows();
+            return;
+        }
+    }
+}
+
 void MainWindow::onProfileTriggered(QAction *action)
 {
     Q_ASSERT(action);
@@ -3892,7 +3924,8 @@ void MainWindow::on_actionPaste_triggered()
 {
     m_timelineDock->show();
     m_timelineDock->raise();
-    m_timelineDock->insert(-1);
+//    m_timelineDock->insert(-1);
+    m_timelineDock->paste();    //粘贴
 }
 
 void MainWindow::on_actionExport_selected_clip_as_template_file_triggered()
@@ -3976,6 +4009,7 @@ void MainWindow::createMultitrackModelIfNeeded()
     LOG_DEBUG() << "begin";
     if (!m_timelineDock->model()->tractor())
     {
+        setCurrentFile("");
         m_timelineDock->model()->createIfNeeded();
         m_timelineDock->model()->addAudioTrack();
         m_timelineDock->model()->addVideoTrack();
@@ -4086,6 +4120,7 @@ QToolButton *MainWindow::createToolButton(const QString& icon, const QString& ic
 void MainWindow::customizeToolbar()
 {
     QToolBar *toolbar = new QToolBar;
+    toolbar->setObjectName("MainToolBar");
     toolbar->setFloatable(false);
     toolbar->setMovable(false);
 
@@ -4099,13 +4134,14 @@ void MainWindow::customizeToolbar()
 
     m_addButton = createToolButton(QString(":/icons/light/32x32/toolbar-add.png"),
                                    QString(":/icons/light/32x32/toolbar-add-pressed.png"),
-                                   "", tr("Open"), tr("Open a video, audio or image file"));
+                                   QString(":/icons/light/32x32/toolbar-add.png"),
+                                   tr("Open"), tr("Open a video, audio or image file"));
     connect(m_addButton, SIGNAL(clicked()), this, SLOT(openVideo()));
 
-    m_removeButton = createToolButton(":/icons/light/32x32/toolbar-remove.png",
-                                      ":/icons/light/32x32/toolbar-remove-pressed.png",
-                                      "", tr("Remove"), tr("Remove media files"));
-    connect(m_removeButton, SIGNAL(clicked()), this, SLOT(removeVideo()));
+//    m_removeButton = createToolButton(":/icons/light/32x32/toolbar-remove.png",
+//                                      ":/icons/light/32x32/toolbar-remove-pressed.png",
+//                                      "", tr("Remove"), tr("Remove media files"));
+//    connect(m_removeButton, SIGNAL(clicked()), this, SLOT(removeVideo()));
 
 
     m_undoButton = createToolButton(":/icons/light/32x32/toolbar-undo.png",
@@ -4125,25 +4161,29 @@ void MainWindow::customizeToolbar()
 
     m_saveButton = createToolButton(":/icons/light/32x32/toolbar-save.png",
                                     ":/icons/light/32x32/toolbar-save-pressed.png",
-                                    "", tr("Save Project"), tr("Save Project"));
+                                    ":/icons/light/32x32/toolbar-save.png",
+                                    tr("Save Project"), tr("Save Project"));
     connect(m_saveButton, SIGNAL(clicked()), this, SLOT(on_actionSave_triggered()));
 
 
     m_exportButton = createToolButton(":/icons/light/32x32/toolbar-export.png",
                                       ":/icons/light/32x32/toolbar-export-pressed.png",
-                                      "", tr("Export Video"), tr("Export video, audio or image file"));
+                                      ":/icons/light/32x32/toolbar-export.png",
+                                      tr("Export Video"), tr("Export video, audio or image file"));
     connect(m_exportButton, SIGNAL(clicked()), this, SLOT(onEncodeTriggered()));
 
 
     m_helpButton = createToolButton(":/icons/light/32x32/toolbar-help.png",
                                     ":/icons/light/32x32/toolbar-help-pressed.png",
-                                    "", tr("Tutorial"), tr("Tutorials"));
+                                    ":/icons/light/32x32/toolbar-help.png",
+                                    tr("Tutorial"), tr("Tutorials"));
     connect(m_helpButton, SIGNAL(clicked()), this, SLOT(onHelpButtonTriggered()));
 
 
     m_emailButton = createToolButton(":/icons/light/32x32/toolbar-email.png",
                                      ":/icons/light/32x32/toolbar-email-pressed.png",
-                                     "", tr("Feedback"), tr("Send us your suggestions"));
+                                     ":/icons/light/32x32/toolbar-email.png",
+                                     tr("Feedback"), tr("Send us your suggestions"));
     connect(m_emailButton, SIGNAL(clicked()), this, SLOT(onEmail_triggered()));
 
 //    m_forumButton = createToolButton(":/icons/light/32x32/toolbar-forum.png",
@@ -4164,12 +4204,14 @@ void MainWindow::customizeToolbar()
     {
         m_activateButton = createToolButton(":/icons/light/32x32/toolbar-activate.png",
                                             ":/icons/light/32x32/toolbar-activate-pressed.png",
-                                            "", tr("Register"), tr("Enter Licensse Code"));
+                                            ":/icons/light/32x32/toolbar-activate.png",
+                                            tr("Register"), tr("Enter Licensse Code"));
         connect(m_activateButton, SIGNAL(clicked()), this, SLOT(onActivateButton_clicked()));
 
         m_buynowButton = createToolButton(":/icons/light/32x32/toolbar-buynow.png",
                                           ":/icons/light/32x32/toolbar-buynow-pressed.png",
-                                          "", tr("Buy Now"), tr("Buy a License Code"));
+                                          ":/icons/light/32x32/toolbar-buynow.png",
+                                          tr("Buy Now"), tr("Buy a License Code"));
         connect(m_buynowButton, SIGNAL(clicked()), this, SLOT(onBuynowButton_clicked()));
     }
 #endif
@@ -4193,7 +4235,7 @@ void MainWindow::customizeToolbar()
     QSpacerItem *spacer1 = new QSpacerItem(50,20);
 
     gridLayout->addWidget(m_addButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
-    gridLayout->addWidget(m_removeButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+//    gridLayout->addWidget(m_removeButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     gridLayout->addItem(spacer1, 0, buttonIndex++, 1, 1);
 
     gridLayout->addWidget(m_undoButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
@@ -4434,6 +4476,7 @@ void MainWindow::setCurrentFilterForVideoWidget(QObject* filter, QmlMetadata* me
 void MainWindow::initParentDockForResourceDock()
 {
     m_resourceDockContainer = new ContainerDock(TabPosition_Left, this);
+    m_resourceDockContainer->setObjectName("ResourceDockContainer");//savestate needs to be used
     m_resourceDockContainer->setMinimumWidth(360);
     //m_resourceDockContainer->setMinimumHeight()
     addDockWidget(Qt::LeftDockWidgetArea, m_resourceDockContainer);
@@ -4443,6 +4486,7 @@ void MainWindow::initParentDockForResourceDock()
 void MainWindow::initParentDockForPropteriesDock()
 {
     m_propertiesDockContainer = new ContainerDock(TabPosition_Top, this);
+    m_propertiesDockContainer->setObjectName("PropertiesDockContainer");//savestate needs to be used
 
     addDockWidget(Qt::RightDockWidgetArea, m_propertiesDockContainer);
 }
@@ -4690,4 +4734,13 @@ void MainWindow::loadTemplateInfo(Mlt::Producer *producer)
 void MainWindow::on_actionNewProject_triggered()
 {
     on_actionClose_triggered();
+}
+
+void MainWindow::on_actionVideoMode_triggered()
+{
+    VideoModeSettingsDialog videoModeSettingsDialog(this);
+    videoModeSettingsDialog.setWindowModality(QmlApplication::dialogModality());
+    if (videoModeSettingsDialog.exec() == QDialog::Accepted) {
+        qDebug()<<"";
+    }
 }

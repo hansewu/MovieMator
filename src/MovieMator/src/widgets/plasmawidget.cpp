@@ -54,7 +54,7 @@ void PlasmaWidget::on_speed1Dial_valueChanged(int value)
 
 void PlasmaWidget::on_speed1Spinner_valueChanged(double value)
 {
-    ui->speed1Dial->setValue(value * 100);
+    ui->speed1Dial->setValue(int(value * 100));
 }
 
 void PlasmaWidget::on_speed2Dial_valueChanged(int value)
@@ -68,7 +68,7 @@ void PlasmaWidget::on_speed2Dial_valueChanged(int value)
 
 void PlasmaWidget::on_speed2Spinner_valueChanged(double value)
 {
-    ui->speed2Dial->setValue(value * 100);
+    ui->speed2Dial->setValue(int(value * 100));
 }
 
 void PlasmaWidget::on_speed3Dial_valueChanged(int value)
@@ -82,7 +82,7 @@ void PlasmaWidget::on_speed3Dial_valueChanged(int value)
 
 void PlasmaWidget::on_speed3Spinner_valueChanged(double value)
 {
-    ui->speed3Dial->setValue(value * 100);
+    ui->speed3Dial->setValue(int(value * 100));
 }
 
 void PlasmaWidget::on_speed4Dial_valueChanged(int value)
@@ -96,7 +96,7 @@ void PlasmaWidget::on_speed4Dial_valueChanged(int value)
 
 void PlasmaWidget::on_speed4Spinner_valueChanged(double value)
 {
-    ui->speed4Dial->setValue(value * 100);
+    ui->speed4Dial->setValue(int(value * 100));
 }
 
 void PlasmaWidget::on_move1Dial_valueChanged(int value)
@@ -110,7 +110,7 @@ void PlasmaWidget::on_move1Dial_valueChanged(int value)
 
 void PlasmaWidget::on_move1Spinner_valueChanged(double value)
 {
-    ui->move1Dial->setValue(value * 100);
+    ui->move1Dial->setValue(int(value * 100));
 }
 
 void PlasmaWidget::on_move2Dial_valueChanged(int value)
@@ -124,7 +124,7 @@ void PlasmaWidget::on_move2Dial_valueChanged(int value)
 
 void PlasmaWidget::on_move2Spinner_valueChanged(double value)
 {
-    ui->move2Dial->setValue(value * 100);
+    ui->move2Dial->setValue(int(value * 100));
 }
 
 Mlt::Producer* PlasmaWidget::producer(Mlt::Profile& profile)
@@ -165,7 +165,7 @@ void PlasmaWidget::loadPreset(Mlt::Properties& p)
 
 void PlasmaWidget::on_preset_selected(void* p)
 {
-    Mlt::Properties* properties = (Mlt::Properties*) p;
+    Mlt::Properties* properties = static_cast<Mlt::Properties*>(p);
     loadPreset(*properties);
     delete properties;
 }

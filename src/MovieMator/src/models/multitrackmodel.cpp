@@ -86,6 +86,7 @@ MultitrackModel::MultitrackModel(QObject *parent)
     : QAbstractItemModel(parent)
     , m_tractor(nullptr)
     , m_isMakingTransition(false)
+    , m_copiedProducer(nullptr)
 {
 //    connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));//sll:将modify放在mainwindow中建立连接，防止界面更新与数据操作顺序问题
     connect(this, SIGNAL(reloadRequested()), SLOT(reload()), Qt::QueuedConnection);
@@ -4329,6 +4330,16 @@ Mlt::Producer* MultitrackModel::producer(Mlt::Producer *producer, Mlt::Profile& 
     return p;
 }
 
+Mlt::Producer* MultitrackModel::copiedProducer()
+{
+    return (m_copiedProducer!=nullptr) ? m_copiedProducer.data() : nullptr;
+}
+
+void MultitrackModel::setCopiedProducer(Mlt::Producer* producer)
+{
+    m_copiedProducer.reset(new Mlt::Producer(producer));
+}
+
 void MultitrackModel::debugPrintState()
 {
     qDebug("timeline state: {");
@@ -4359,4 +4370,74 @@ void MultitrackModel::debugPrintState()
         }
     }
     qDebug("}");
+}
+
+Mlt::Producer *MultitrackModel::getClipProducer(int trackIndex, int clipIndex)
+{
+    Q_ASSERT(trackIndex >= 0);
+    Q_ASSERT(trackIndex < m_trackList.size());
+    Q_ASSERT(clipIndex >= 0);
+
+    Q_ASSERT(m_tractor);
+
+    Mlt::Producer *retProducer = nullptr;
+
+    int i = m_trackList.at(trackIndex).mlt_index;
+
+    Q_ASSERT(m_tractor->track(i));
+
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        Q_ASSERT(playlist.is_valid());
+        Q_ASSERT(clipIndex < playlist.count());
+
+        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+        Q_ASSERT(info);
+
+        retProducer = new Mlt::Producer(info->producer);
+
+    }
+    return retProducer;
+}
+
+Mlt::Transition *MultitrackModel::getClipTransition(int trackIndex, int clipIndex, const QString& transitionName)
+{
+    Q_ASSERT(trackIndex >= 0);
+    Q_ASSERT(trackIndex < m_trackList.size());
+    Q_ASSERT(clipIndex >= 0);
+
+    Q_ASSERT(m_tractor);
+
+    QScopedPointer<Mlt::Producer> producer(getClipProducer(trackIndex, clipIndex));
+
+    Q_ASSERT(producer);
+
+    QScopedPointer<Mlt::Service> service(producer->producer());
+    while (service && service->is_valid()) {
+        if (service->type() == transition_type) {
+            Mlt::Transition transition(*service);
+            if (transitionName == transition.get("mlt_service"))
+                return new Mlt::Transition(transition);
+            else if (transitionName == "luma" && QString("movit.luma_mix") == transition.get("mlt_service"))
+                return new Mlt::Transition(transition);
+        }
+        service.reset(service->producer());
+    }
+    return 0;
+}
+
+void MultitrackModel::setTransitionProperty(int trackIndex, int clipIndex, const QString &propertyName, const QString &propertyValue)
+{
+    Q_ASSERT(trackIndex >= 0);
+    Q_ASSERT(trackIndex < m_trackList.size());
+    Q_ASSERT(clipIndex >= 0);
+
+    Q_ASSERT(m_tractor);
+
+    QScopedPointer<Mlt::Transition> transition(getClipTransition(trackIndex, clipIndex, "luma"));
+    Q_ASSERT(transition);
+    transition->set(propertyName.toUtf8().constData(), propertyValue.toUtf8().constData());
+
+    MLT.refreshConsumer();
 }

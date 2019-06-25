@@ -29,7 +29,7 @@ class ProFeaturePromptDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ProFeaturePromptDialog(QWidget *parent = 0);
+    explicit ProFeaturePromptDialog(QWidget *parent = nullptr);
     ~ProFeaturePromptDialog();
 
 private slots:

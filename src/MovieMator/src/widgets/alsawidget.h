@@ -31,7 +31,7 @@ class AlsaWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit AlsaWidget(QWidget *parent = 0);
+    explicit AlsaWidget(QWidget *parent = nullptr);
     ~AlsaWidget();
 
     // AbstractProducerWidget overrides
