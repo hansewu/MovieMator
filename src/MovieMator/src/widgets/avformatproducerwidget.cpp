@@ -427,7 +427,7 @@ void AvformatProducerWidget::on_aspectNumSpinBox_editingFinished()
         double sar = m_tempProducer->get_double("meta.media.sample_aspect_num");
         if (m_tempProducer->get_double("meta.media.sample_aspect_den") > 0)
             sar /= m_tempProducer->get_double("meta.media.sample_aspect_den");
-        if (m_tempProducer->get("force_aspect_ratio") || qFuzzyIsNull(new_sar-sar)) {
+        if (m_tempProducer->get("force_aspect_ratio") || !qFuzzyCompare(new_sar,sar)) {
             m_tempProducer->set("force_aspect_ratio", QString::number(new_sar).toLatin1().constData());
             m_tempProducer->set(kAspectRatioNumerator, ui->aspectNumSpinBox->text().toLatin1().constData());
             m_tempProducer->set(kAspectRatioDenominator, ui->aspectDenSpinBox->text().toLatin1().constData());

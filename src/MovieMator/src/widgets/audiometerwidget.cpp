@@ -270,7 +270,7 @@ void AudioMeterWidget::drawPeaks(QPainter& p)
 
     if (m_orient == Qt::Horizontal) {
         for (int i = 0; i < chanCount; i++) {
-            if (qFuzzyIsNull(m_peaks[i]-m_levels[i]))
+            if (qFuzzyCompare(m_peaks[i],m_levels[i]))
                 continue;
             double level = IEC_ScaleMax(m_peaks[i], m_maxDb);
             bar.setLeft(m_graphRect.left() + m_barSize.width() * level - 3);
@@ -283,7 +283,7 @@ void AudioMeterWidget::drawPeaks(QPainter& p)
         }
     } else {
         for (int i = 0; i < chanCount; i++) {
-            if (qFuzzyIsNull(m_peaks[i]-m_levels[i]))
+            if (qFuzzyCompare(m_peaks[i],m_levels[i]))
                 continue;
             double level = IEC_ScaleMax(m_peaks[i], m_maxDb);
             bar.setLeft(m_graphRect.left() + i * m_barSize.width() + 1);

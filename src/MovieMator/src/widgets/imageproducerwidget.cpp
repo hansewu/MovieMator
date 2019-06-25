@@ -167,7 +167,7 @@ void ImageProducerWidget::on_aspectNumSpinBox_valueChanged(int)
         double new_sar = double(ui->aspectNumSpinBox->value()) /
             double(ui->aspectDenSpinBox->value());
         double sar = m_tempProducer->get_double("aspect_ratio");
-        if (m_tempProducer->get("force_aspect_ratio") || qFuzzyIsNull(new_sar-sar)) {
+        if (m_tempProducer->get("force_aspect_ratio") || !qFuzzyCompare(new_sar,sar)) {
             m_tempProducer->set("force_aspect_ratio", QString::number(new_sar).toLatin1().constData());
             m_tempProducer->set(kAspectRatioNumerator, ui->aspectNumSpinBox->text().toLatin1().constData());
             m_tempProducer->set(kAspectRatioDenominator, ui->aspectDenSpinBox->text().toLatin1().constData());
