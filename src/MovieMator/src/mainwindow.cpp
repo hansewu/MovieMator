@@ -266,7 +266,7 @@ MainWindow::MainWindow()
     LOG_DEBUG() << "Connect UI signals";
     // Connect UI signals.
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
-    connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(removeVideo()));
+//    connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(removeVideo()));
 
     if (ui->actionFullscreen)
         connect(ui->actionFullscreen, SIGNAL(triggered()), this, SLOT(on_actionEnter_Full_Screen_triggered()));
@@ -4133,15 +4133,13 @@ void MainWindow::customizeToolbar()
 
     m_addButton = createToolButton(QString(":/icons/light/32x32/toolbar-add.png"),
                                    QString(":/icons/light/32x32/toolbar-add-pressed.png"),
-                                   QString(":/icons/light/32x32/toolbar-add.png"),
-                                   tr("Open"), tr("Open a video, audio or image file"));
+                                   "", tr("Open"), tr("Open a video, audio or image file"));
     connect(m_addButton, SIGNAL(clicked()), this, SLOT(openVideo()));
 
-    m_removeButton = createToolButton(":/icons/light/32x32/toolbar-remove.png",
-                                      ":/icons/light/32x32/toolbar-remove-pressed.png",
-                                      ":/icons/light/32x32/toolbar-remove.png",
-                                      tr("Remove"), tr("Remove media files"));
-    connect(m_removeButton, SIGNAL(clicked()), this, SLOT(removeVideo()));
+//    m_removeButton = createToolButton(":/icons/light/32x32/toolbar-remove.png",
+//                                      ":/icons/light/32x32/toolbar-remove-pressed.png",
+//                                      "", tr("Remove"), tr("Remove media files"));
+//    connect(m_removeButton, SIGNAL(clicked()), this, SLOT(removeVideo()));
 
 
     m_undoButton = createToolButton(":/icons/light/32x32/toolbar-undo.png",
@@ -4161,29 +4159,25 @@ void MainWindow::customizeToolbar()
 
     m_saveButton = createToolButton(":/icons/light/32x32/toolbar-save.png",
                                     ":/icons/light/32x32/toolbar-save-pressed.png",
-                                    ":/icons/light/32x32/toolbar-save.png",
-                                    tr("Save Project"), tr("Save Project"));
+                                    "", tr("Save Project"), tr("Save Project"));
     connect(m_saveButton, SIGNAL(clicked()), this, SLOT(on_actionSave_triggered()));
 
 
     m_exportButton = createToolButton(":/icons/light/32x32/toolbar-export.png",
                                       ":/icons/light/32x32/toolbar-export-pressed.png",
-                                      ":/icons/light/32x32/toolbar-export.png",
-                                      tr("Export Video"), tr("Export video, audio or image file"));
+                                      "", tr("Export Video"), tr("Export video, audio or image file"));
     connect(m_exportButton, SIGNAL(clicked()), this, SLOT(onEncodeTriggered()));
 
 
     m_helpButton = createToolButton(":/icons/light/32x32/toolbar-help.png",
                                     ":/icons/light/32x32/toolbar-help-pressed.png",
-                                    ":/icons/light/32x32/toolbar-help.png",
-                                    tr("Tutorial"), tr("Tutorials"));
+                                    "", tr("Tutorial"), tr("Tutorials"));
     connect(m_helpButton, SIGNAL(clicked()), this, SLOT(onHelpButtonTriggered()));
 
 
     m_emailButton = createToolButton(":/icons/light/32x32/toolbar-email.png",
                                      ":/icons/light/32x32/toolbar-email-pressed.png",
-                                     ":/icons/light/32x32/toolbar-email.png",
-                                     tr("Feedback"), tr("Send us your suggestions"));
+                                     "", tr("Feedback"), tr("Send us your suggestions"));
     connect(m_emailButton, SIGNAL(clicked()), this, SLOT(onEmail_triggered()));
 
 //    m_forumButton = createToolButton(":/icons/light/32x32/toolbar-forum.png",
@@ -4204,14 +4198,12 @@ void MainWindow::customizeToolbar()
     {
         m_activateButton = createToolButton(":/icons/light/32x32/toolbar-activate.png",
                                             ":/icons/light/32x32/toolbar-activate-pressed.png",
-                                            ":/icons/light/32x32/toolbar-activate.png",
-                                            tr("Register"), tr("Enter Licensse Code"));
+                                            "", tr("Register"), tr("Enter Licensse Code"));
         connect(m_activateButton, SIGNAL(clicked()), this, SLOT(onActivateButton_clicked()));
 
         m_buynowButton = createToolButton(":/icons/light/32x32/toolbar-buynow.png",
                                           ":/icons/light/32x32/toolbar-buynow-pressed.png",
-                                          ":/icons/light/32x32/toolbar-buynow.png",
-                                          tr("Buy Now"), tr("Buy a License Code"));
+                                          "", tr("Buy Now"), tr("Buy a License Code"));
         connect(m_buynowButton, SIGNAL(clicked()), this, SLOT(onBuynowButton_clicked()));
     }
 #endif
@@ -4235,7 +4227,7 @@ void MainWindow::customizeToolbar()
     QSpacerItem *spacer1 = new QSpacerItem(50,20);
 
     gridLayout->addWidget(m_addButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
-    gridLayout->addWidget(m_removeButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+//    gridLayout->addWidget(m_removeButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     gridLayout->addItem(spacer1, 0, buttonIndex++, 1, 1);
 
     gridLayout->addWidget(m_undoButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);

@@ -252,7 +252,7 @@ private:
 
     //以下是工具栏上的按钮
     QToolButton *m_addButton;
-    QToolButton *m_removeButton;
+//    QToolButton *m_removeButton;
     QToolButton *m_undoButton;
     QToolButton *m_redoButton;
     QToolButton *m_saveButton;
