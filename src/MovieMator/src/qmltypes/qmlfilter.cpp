@@ -734,8 +734,10 @@ void QmlFilter::cache_setKeyFrameParaRectValue(int frame, QString key, const QRe
     cache_setKeyFrameParaValue(frame, key, sValue);
 }
 
-void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value)
+void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value, bool bFromUndo)
 {
+    QString from_value = "";
+    int nFrameInClip = frame;
 
     if(frame < 0) return;
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
@@ -759,6 +761,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                     if (!animation.is_valid() || !animation.is_key(frame)
                             || value.toDouble() != m_filter->anim_get_double(key.toUtf8().constData(), frame, duration))
                     {
+                        from_value = QString::number(m_filter->anim_get_double(key.toUtf8().constData(), frame, duration));
                         m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), frame, duration, mlt_keyframe_linear);
                     }
                 }
@@ -766,6 +769,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                 {
                     if (!animation.is_valid() || !animation.is_key(frame)
                             || value.toInt() != m_filter->anim_get_int(key.toUtf8().constData(), frame, duration)) {
+                        from_value = QString::number(m_filter->anim_get_int(key.toUtf8().constData(), frame, duration));
                         m_filter->anim_set(key.toUtf8().constData(), value.toInt(), frame, duration, mlt_keyframe_linear);
                     }
                 }
@@ -773,6 +777,8 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                 {
                     if (!animation.is_valid() || !animation.is_key(frame) || value != m_filter->anim_get(key.toUtf8().constData(), frame, duration))
                     {
+                        from_value = QString(m_filter->anim_get(key.toUtf8().constData(), frame, duration));
+
                         m_filter->anim_set(key.toUtf8().constData(), value.toUtf8().constData(), frame, duration);
                     }
                 }
@@ -789,6 +795,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                     if (!animation.is_valid() || !animation.is_key(frame)
                         || x != rect.x || y != rect.y || width != rect.w || height != rect.h || opacity != rect.o)
                     {
+                        from_value = QString("%1 %2 %3 %4 %5").arg(rect.x).arg(rect.y).arg(rect.w).arg(rect.h).arg(rect.o);
                         rect.x = x;
                         rect.y = y;
                         rect.w = width;
@@ -802,11 +809,16 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                 {
                     if (!animation.is_valid() || !animation.is_key(frame) || value != m_filter->anim_get(key.toUtf8().constData(), frame, duration))
                     {
+                        from_value = QString(m_filter->anim_get(key.toUtf8().constData(), frame, duration));
                         m_filter->anim_set(key.toUtf8().constData(), value.toUtf8().constData(), frame, duration);
                     }
                 }
-             }
 
+
+
+       if(!bFromUndo && (from_value != ""))
+         MAIN.undoStack()->push(new Timeline::KeyFrameCommand(m_filter, nFrameInClip, key, from_value, value));
+    }
     emit keyframeNumberChanged();
 
 

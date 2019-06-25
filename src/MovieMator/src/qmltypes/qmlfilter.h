@@ -302,7 +302,7 @@ public:
      * \param frame the frame number
      * \param value QString value
      */
-    Q_INVOKABLE void cache_setKeyFrameParaValue(int frame, QString key, QString value);
+    Q_INVOKABLE void cache_setKeyFrameParaValue(int frame, QString key, QString value, bool bFromUndo = false);
 
     /** Set a QRectF value associated to the name at a frame position to cached data.
      *
