@@ -28,7 +28,7 @@ ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ImageProducerWidget),
     m_defaultDuration(-1),
-    m_tempProducer(0)
+    m_tempProducer(nullptr)
 {
     ui->setupUi(this);
 //    Util::setColorsToHighlight(ui->filenameLabel);
@@ -107,7 +107,7 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
             ui->aspectNumSpinBox->setValue(1);
             ui->aspectDenSpinBox->setValue(1);
         } else {
-            ui->aspectNumSpinBox->setValue(1000 * sar);
+            ui->aspectNumSpinBox->setValue(int(1000 * sar));
             ui->aspectDenSpinBox->setValue(1000);
         }
     }
@@ -136,7 +136,7 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
         position = p->get_out();
     p->set("in", m_tempProducer->get_in());
     if (MLT.setProducer(p)) {
-        setProducer(0);
+        setProducer(nullptr);
         return;
     }
     MLT.stop();
@@ -167,7 +167,7 @@ void ImageProducerWidget::on_aspectNumSpinBox_valueChanged(int)
         double new_sar = double(ui->aspectNumSpinBox->value()) /
             double(ui->aspectDenSpinBox->value());
         double sar = m_tempProducer->get_double("aspect_ratio");
-        if (m_tempProducer->get("force_aspect_ratio") || new_sar != sar) {
+        if (m_tempProducer->get("force_aspect_ratio") || !qFuzzyCompare(new_sar,sar)) {
             m_tempProducer->set("force_aspect_ratio", QString::number(new_sar).toLatin1().constData());
             m_tempProducer->set(kAspectRatioNumerator, ui->aspectNumSpinBox->text().toLatin1().constData());
             m_tempProducer->set(kAspectRatioDenominator, ui->aspectDenSpinBox->text().toLatin1().constData());
@@ -259,7 +259,8 @@ void ImageProducerWidget::on_defaultDurationButton_clicked()
 
 Mlt::Producer * ImageProducerWidget::createTempProducer(Mlt::Profile& profile)
 {
-    Mlt::Producer* p = NULL;
+    Q_UNUSED(profile)
+    Mlt::Producer* p = nullptr;
 
     p = producer(MLT.profile());
 

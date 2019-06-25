@@ -52,7 +52,15 @@
 extern "C"
 {
     // Inform the driver we could make use of the discrete gpu
-// 不会消除的警告
+    /*
+     * 消除警告：
+     * 静态变量需要声明为 static，非静态变量需要外部声明 extern
+     * 这里需要导出给其他模块使用，因此只能使用 extern
+     * 使用 extern时不建议声明时初始化，因此需要把声明和定义分开
+     */
+    __declspec(dllexport) extern DWORD NvOptimusEnablement;
+    __declspec(dllexport) extern int AmdPowerXpressRequestHighPerformance;
+
     __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
     __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
@@ -277,15 +285,18 @@ public:
     }
 
 protected:
-    bool event(QEvent *event) {
-        if (event->type() == QEvent::FileOpen) {
-            QFileOpenEvent *openEvent = static_cast<QFileOpenEvent*>(event);
-            resourceArg = openEvent->file();
-            return true;
-        }
-        else return QApplication::event(event);
-    }
+    bool event(QEvent *event);
 };
+
+bool Application::event(QEvent *event)
+{
+    if (event->type() == QEvent::FileOpen) {
+        QFileOpenEvent *openEvent = static_cast<QFileOpenEvent*>(event);
+        resourceArg = openEvent->file();
+        return true;
+    }
+    else return QApplication::event(event);
+}
 
 bool removeDir(const QString & dirName)
 {

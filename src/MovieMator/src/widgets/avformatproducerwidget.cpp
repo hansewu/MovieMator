@@ -65,7 +65,7 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     , ui(new Ui::AvformatProducerWidget)
     , m_defaultDuration(-1)
     , m_recalcDuration(true)
-    , m_tempProducer(0)
+    , m_tempProducer(nullptr)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->filenameLabel);
@@ -84,7 +84,7 @@ AvformatProducerWidget::~AvformatProducerWidget()
 
 Mlt::Producer* AvformatProducerWidget::producer(Mlt::Profile& profile)
 {
-    Mlt::Producer* p = NULL;
+    Mlt::Producer* p = nullptr;
     if ( ui->speedSpinBox->value() == 1.0 )
     {
         p = new Mlt::Producer(profile, GetFilenameFromProducer(m_producer));
@@ -146,7 +146,7 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
         p->set("in", m_producer->get_in());
     }
     if (MLT.setProducer(p)) {
-        setProducer(0);
+        setProducer(nullptr);
         return;
     }
     MLT.stop();
@@ -282,14 +282,14 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
     // We can stop listening to this signal if this is audio-only or if we have
     // received the video resolution.
     if (videoIndex == 1 || width || height)
-        disconnect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, 0);
+        disconnect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, nullptr);
 
     double sar = m_tempProducer->get_double("meta.media.sample_aspect_num");
     if (m_tempProducer->get_double("meta.media.sample_aspect_den") > 0)
         sar /= m_tempProducer->get_double("meta.media.sample_aspect_den");
     if (m_tempProducer->get("force_aspect_ratio"))
         sar = m_tempProducer->get_double("force_aspect_ratio");
-    int dar_numerator = width * sar;
+    int dar_numerator = int(width * sar);
     int dar_denominator = height;
     if (height > 0) {
         switch (int(sar * width / height * 100)) {
@@ -427,7 +427,7 @@ void AvformatProducerWidget::on_aspectNumSpinBox_editingFinished()
         double sar = m_tempProducer->get_double("meta.media.sample_aspect_num");
         if (m_tempProducer->get_double("meta.media.sample_aspect_den") > 0)
             sar /= m_tempProducer->get_double("meta.media.sample_aspect_den");
-        if (m_tempProducer->get("force_aspect_ratio") || new_sar != sar) {
+        if (m_tempProducer->get("force_aspect_ratio") || !qFuzzyCompare(new_sar,sar)) {
             m_tempProducer->set("force_aspect_ratio", QString::number(new_sar).toLatin1().constData());
             m_tempProducer->set(kAspectRatioNumerator, ui->aspectNumSpinBox->text().toLatin1().constData());
             m_tempProducer->set(kAspectRatioDenominator, ui->aspectDenSpinBox->text().toLatin1().constData());
@@ -531,10 +531,10 @@ void AvformatProducerWidget::on_okButton_clicked()
         recreateTempProducer();
         emit producerChanged(m_tempProducer);
         delete m_tempProducer;
-        m_tempProducer = 0;
+        m_tempProducer = nullptr;
     } else {
         reopen(m_tempProducer);
-        m_tempProducer = 0;
+        m_tempProducer = nullptr;
     }
     MAIN.onPropertiesDockTriggered(false);
 }
@@ -544,8 +544,8 @@ void AvformatProducerWidget::setProducer(Mlt::Producer *aProducer)
 {
     delete m_tempProducer;
     delete m_producer;
-    m_producer = 0;
-    m_tempProducer = 0;
+    m_producer = nullptr;
+    m_tempProducer = nullptr;
     if (aProducer) {
         loadPreset(*aProducer);
         m_producer = new Mlt::Producer(aProducer);
@@ -555,7 +555,7 @@ void AvformatProducerWidget::setProducer(Mlt::Producer *aProducer)
 
 Mlt::Producer * AvformatProducerWidget::createTempProducer(Mlt::Profile& profile)
 {
-    Mlt::Producer* p = NULL;
+    Mlt::Producer* p = nullptr;
     double speed = GetSpeedFromProducer(m_producer);
     if ( speed == 1.0 )
     {
@@ -588,7 +588,7 @@ Mlt::Producer *AvformatProducerWidget::recreateTempProducer()
                  kShotcutHashProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
     delete m_tempProducer;
-    m_tempProducer = 0;
+    m_tempProducer = nullptr;
     m_tempProducer = p;
 
     return p;

@@ -31,7 +31,7 @@ class AvfoundationProducerWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit AvfoundationProducerWidget(QWidget *parent = 0);
+    explicit AvfoundationProducerWidget(QWidget *parent = nullptr);
     ~AvfoundationProducerWidget();
 
     // AbstractProducerWidget overrides

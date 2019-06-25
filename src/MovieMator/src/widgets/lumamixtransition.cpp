@@ -36,7 +36,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, int trackIndex, in
     : QWidget(parent)
     , ui(new Ui::LumaMixTransition)
     , m_producer(producer)
-    , m_previewMovie(0)
+    , m_previewMovie(nullptr)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
 {
@@ -227,7 +227,7 @@ Mlt::Transition *LumaMixTransition::getTransition(const QString &name)
         }
         service.reset(service->producer());
     }
-    return 0;
+    return nullptr;
 }
 
 void LumaMixTransition::updateCustomLumaLabel(Mlt::Transition &transition)

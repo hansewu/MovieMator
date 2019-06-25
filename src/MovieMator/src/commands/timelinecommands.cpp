@@ -358,7 +358,7 @@ void TrimClipInCommand::undo_impl()
     m_undoHelper.undoChanges();
 }
 
-bool TrimClipInCommand::mergeWith(const AbstractCommand *other)
+bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
 {
     const TrimClipInCommand* that = static_cast<const TrimClipInCommand*>(other);
     Q_ASSERT(that);
@@ -399,7 +399,7 @@ void TrimClipOutCommand::undo_impl()
     m_undoHelper.undoChanges();
 }
 
-bool TrimClipOutCommand::mergeWith(const AbstractCommand *other)
+bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
 {
     const TrimClipOutCommand* that = static_cast<const TrimClipOutCommand*>(other);
     Q_ASSERT(that);
@@ -459,7 +459,7 @@ void FadeInCommand::undo_impl()
     m_model.fadeIn(m_trackIndex, m_clipIndex, m_previous);
 }
 
-bool FadeInCommand::mergeWith(const AbstractCommand *other)
+bool FadeInCommand::mergeWith(const QUndoCommand *other)
 {
     const FadeInCommand* that = static_cast<const FadeInCommand*>(other);
     Q_ASSERT(that);
@@ -495,7 +495,7 @@ void FadeOutCommand::undo_impl()
     m_model.fadeOut(m_trackIndex, m_clipIndex, m_previous);
 }
 
-bool FadeOutCommand::mergeWith(const AbstractCommand *other)
+bool FadeOutCommand::mergeWith(const QUndoCommand *other)
 {
     const FadeOutCommand* that = static_cast<const FadeOutCommand*>(other);
     Q_ASSERT(that);
@@ -581,7 +581,7 @@ void TrimTransitionInCommand::undo_impl()
     else LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
 
-bool TrimTransitionInCommand::mergeWith(const AbstractCommand *other)
+bool TrimTransitionInCommand::mergeWith(const QUndoCommand *other)
 {
     const TrimTransitionInCommand* that = static_cast<const TrimTransitionInCommand*>(other);
     Q_ASSERT(that);
@@ -623,7 +623,7 @@ void TrimTransitionOutCommand::undo_impl()
     else LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
 
-bool TrimTransitionOutCommand::mergeWith(const AbstractCommand *other)
+bool TrimTransitionOutCommand::mergeWith(const QUndoCommand *other)
 {
     const TrimTransitionOutCommand* that = static_cast<const TrimTransitionOutCommand*>(other);
     Q_ASSERT(that);
@@ -664,7 +664,7 @@ void AddTransitionByTrimInCommand::undo_impl()
     else LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
 
-bool AddTransitionByTrimInCommand::mergeWith(const AbstractCommand *other)
+bool AddTransitionByTrimInCommand::mergeWith(const QUndoCommand *other)
 {
     const AddTransitionByTrimInCommand* that = static_cast<const AddTransitionByTrimInCommand*>(other);
     Q_ASSERT(that);
@@ -705,7 +705,7 @@ void AddTransitionByTrimOutCommand::undo_impl()
     else LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
 
-bool AddTransitionByTrimOutCommand::mergeWith(const AbstractCommand *other)
+bool AddTransitionByTrimOutCommand::mergeWith(const QUndoCommand *other)
 {
     const AddTransitionByTrimOutCommand* that = static_cast<const AddTransitionByTrimOutCommand*>(other);
     Q_ASSERT(that);
@@ -1165,7 +1165,7 @@ int FilterCommand::transitionValue(QVariant &varFrom, QVariant &varTo, Mlt::Filt
 }
 
 
-bool FilterCommand::mergeWith(const AbstractCommand *other)
+bool FilterCommand::mergeWith(const QUndoCommand *other)
 {
     Q_ASSERT(other);
     if (!other) {
@@ -1296,7 +1296,7 @@ void KeyFrameCommand::undo_impl()
 }
 
 
-bool KeyFrameCommand::mergeWith(const AbstractCommand *other)
+bool KeyFrameCommand::mergeWith(const QUndoCommand *other)
 {
     Q_ASSERT(other);
     if (!other) {

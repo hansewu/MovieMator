@@ -52,7 +52,7 @@ private:
     Mlt::Producer           *m_producer;
     Mlt::Producer           *m_cut;
     int                     m_duration;
-    QString&                m_outputName;
+    QString                 m_outputName;
     Mlt::Filter             *m_textFilter;
 
 

@@ -30,8 +30,8 @@ class AudioWaveformScopeWidget Q_DECL_FINAL : public ScopeWidget
     
 public:
     explicit AudioWaveformScopeWidget();
-    ~AudioWaveformScopeWidget();
-    QString getTitle();
+    ~AudioWaveformScopeWidget() Q_DECL_OVERRIDE;
+    QString getTitle() Q_DECL_OVERRIDE;
 
 private:
     // Functions run in scope thread.

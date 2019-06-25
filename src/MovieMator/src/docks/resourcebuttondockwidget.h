@@ -30,7 +30,7 @@ class ResourceButtonDockWidget : public QDockWidget
     Q_OBJECT
 
 public:
-    explicit ResourceButtonDockWidget(QWidget *parent = 0);
+    explicit ResourceButtonDockWidget(QWidget *parent = nullptr);
     ~ResourceButtonDockWidget();
 
 private:

@@ -53,10 +53,6 @@
 #include "jobqueue.h"
 //#include <playlistdock.h>
 #include "glwidget.h"
-#include "mvcp/meltedserverdock.h"
-#include "mvcp/meltedplaylistdock.h"
-#include "mvcp/meltedunitsmodel.h"
-#include "mvcp/meltedplaylistmodel.h"
 #include "controllers/filtercontroller.h"
 #include "controllers/scopecontroller.h"
 #include "docks/filtersdock.h"
@@ -94,7 +90,6 @@
 #include "docks/encodetaskdock.h"
 #include "encodetaskqueue.h"
 #include "dialogs/invalidprojectdialog.h"
-//#include <configurationdock.h>
 #include "maininterface.h"
 #include <recentdockinterface.h>
 #include <filterdockinterface.h>
@@ -197,8 +192,8 @@ MainWindow::MainWindow()
     : QMainWindow(nullptr)
     , ui(new Ui::MainWindow)
     , m_isKKeyPressed(false)
-    , m_meltedServerDock(nullptr)
-    , m_meltedPlaylistDock(nullptr)
+//    , m_meltedServerDock(nullptr)
+//    , m_meltedPlaylistDock(nullptr)
     , m_keyerGroup(nullptr)
     , m_keyerMenu(nullptr)
     , m_isPlaylistLoaded(false)
@@ -325,12 +320,6 @@ MainWindow::MainWindow()
     //      m_player->setPalette(palette);
     //      MLT.videoWidget()->installEventFilter(this);
     //        rightDockWidget->setWidget(m_player);
-
-//    m_configurationDock = new ConfigurationDock();
-//    addDockWidget(Qt::RightDockWidgetArea, m_configurationDock);
-//    m_configurationDock->setTitleBarWidget(new QWidget());
-//    m_configurationDock->setMinimumSize(500,320);
-//    m_configurationDock->setContentsMargins(0,0,0,0);
 
      ui->centralWidget->layout()->addWidget(m_player);
 
@@ -470,7 +459,6 @@ MainWindow::MainWindow()
 //    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_filtersDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
      connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_propertiesVideoFilterDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)));
      connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_propertiesAudioFilterDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)));
-//    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_configurationDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
     //MovieMator Pro
 //#ifdef MOVIEMATOR_PRO
 //     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), m_timelineDock, SLOT(setCurrentFilter(QObject*, QmlMetadata*, int)), Qt::QueuedConnection);
@@ -2547,8 +2535,8 @@ void MainWindow::on_actionOpenOther_triggered()
 void MainWindow::onProducerOpened()
 {
     LOG_DEBUG() << "begin";
-    if (m_meltedServerDock)
-        m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int,double,int,int,int,bool)));
+//    if (m_meltedServerDock)
+//        m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int,double,int,int,int,bool)));
 
     QWidget* w = loadProducerWidget(MLT.producer());
     if (w && !MLT.producer()->get_int(kMultitrackItemProperty)) {
@@ -3195,18 +3183,18 @@ void MainWindow::onMeltedUnitOpened()
     MLT.play(0);
     QScrollArea* scrollArea = qobject_cast<QScrollArea*>(m_propertiesDock->widget());
     delete scrollArea->widget();
-    if (m_meltedServerDock && m_meltedPlaylistDock) {
-        m_player->connectTransport(m_meltedPlaylistDock->transportControl());
-        connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)),
-                m_player, SLOT(onShowFrame(int,double,int,int,int,bool)));
-    }
+//    if (m_meltedServerDock && m_meltedPlaylistDock) {
+//        m_player->connectTransport(m_meltedPlaylistDock->transportControl());
+//        connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)),
+//                m_player, SLOT(onShowFrame(int,double,int,int,int,bool)));
+//    }
     onProducerChanged();
 }
 
 void MainWindow::onMeltedUnitActivated()
 {
-    m_meltedPlaylistDock->setVisible(true);
-    m_meltedPlaylistDock->raise();
+//    m_meltedPlaylistDock->setVisible(true);
+//    m_meltedPlaylistDock->raise();
 }
 
 void MainWindow::on_actionEnter_Full_Screen_triggered()
@@ -4021,6 +4009,7 @@ void MainWindow::createMultitrackModelIfNeeded()
     LOG_DEBUG() << "begin";
     if (!m_timelineDock->model()->tractor())
     {
+        setCurrentFile("");
         m_timelineDock->model()->createIfNeeded();
         m_timelineDock->model()->addAudioTrack();
         m_timelineDock->model()->addVideoTrack();
@@ -4144,12 +4133,14 @@ void MainWindow::customizeToolbar()
 
     m_addButton = createToolButton(QString(":/icons/light/32x32/toolbar-add.png"),
                                    QString(":/icons/light/32x32/toolbar-add-pressed.png"),
-                                   "", tr("Open"), tr("Open a video, audio or image file"));
+                                   QString(":/icons/light/32x32/toolbar-add.png"),
+                                   tr("Open"), tr("Open a video, audio or image file"));
     connect(m_addButton, SIGNAL(clicked()), this, SLOT(openVideo()));
 
     m_removeButton = createToolButton(":/icons/light/32x32/toolbar-remove.png",
                                       ":/icons/light/32x32/toolbar-remove-pressed.png",
-                                      "", tr("Remove"), tr("Remove media files"));
+                                      ":/icons/light/32x32/toolbar-remove.png",
+                                      tr("Remove"), tr("Remove media files"));
     connect(m_removeButton, SIGNAL(clicked()), this, SLOT(removeVideo()));
 
 
@@ -4170,25 +4161,29 @@ void MainWindow::customizeToolbar()
 
     m_saveButton = createToolButton(":/icons/light/32x32/toolbar-save.png",
                                     ":/icons/light/32x32/toolbar-save-pressed.png",
-                                    "", tr("Save Project"), tr("Save Project"));
+                                    ":/icons/light/32x32/toolbar-save.png",
+                                    tr("Save Project"), tr("Save Project"));
     connect(m_saveButton, SIGNAL(clicked()), this, SLOT(on_actionSave_triggered()));
 
 
     m_exportButton = createToolButton(":/icons/light/32x32/toolbar-export.png",
                                       ":/icons/light/32x32/toolbar-export-pressed.png",
-                                      "", tr("Export Video"), tr("Export video, audio or image file"));
+                                      ":/icons/light/32x32/toolbar-export.png",
+                                      tr("Export Video"), tr("Export video, audio or image file"));
     connect(m_exportButton, SIGNAL(clicked()), this, SLOT(onEncodeTriggered()));
 
 
     m_helpButton = createToolButton(":/icons/light/32x32/toolbar-help.png",
                                     ":/icons/light/32x32/toolbar-help-pressed.png",
-                                    "", tr("Tutorial"), tr("Tutorials"));
+                                    ":/icons/light/32x32/toolbar-help.png",
+                                    tr("Tutorial"), tr("Tutorials"));
     connect(m_helpButton, SIGNAL(clicked()), this, SLOT(onHelpButtonTriggered()));
 
 
     m_emailButton = createToolButton(":/icons/light/32x32/toolbar-email.png",
                                      ":/icons/light/32x32/toolbar-email-pressed.png",
-                                     "", tr("Feedback"), tr("Send us your suggestions"));
+                                     ":/icons/light/32x32/toolbar-email.png",
+                                     tr("Feedback"), tr("Send us your suggestions"));
     connect(m_emailButton, SIGNAL(clicked()), this, SLOT(onEmail_triggered()));
 
 //    m_forumButton = createToolButton(":/icons/light/32x32/toolbar-forum.png",
@@ -4209,12 +4204,14 @@ void MainWindow::customizeToolbar()
     {
         m_activateButton = createToolButton(":/icons/light/32x32/toolbar-activate.png",
                                             ":/icons/light/32x32/toolbar-activate-pressed.png",
-                                            "", tr("Register"), tr("Enter Licensse Code"));
+                                            ":/icons/light/32x32/toolbar-activate.png",
+                                            tr("Register"), tr("Enter Licensse Code"));
         connect(m_activateButton, SIGNAL(clicked()), this, SLOT(onActivateButton_clicked()));
 
         m_buynowButton = createToolButton(":/icons/light/32x32/toolbar-buynow.png",
                                           ":/icons/light/32x32/toolbar-buynow-pressed.png",
-                                          "", tr("Buy Now"), tr("Buy a License Code"));
+                                          ":/icons/light/32x32/toolbar-buynow.png",
+                                          tr("Buy Now"), tr("Buy a License Code"));
         connect(m_buynowButton, SIGNAL(clicked()), this, SLOT(onBuynowButton_clicked()));
     }
 #endif

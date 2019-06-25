@@ -31,7 +31,7 @@ class IsingWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit IsingWidget(QWidget *parent = 0);
+    explicit IsingWidget(QWidget *parent = nullptr);
     ~IsingWidget();
 
     // AbstractProducerWidget overrides

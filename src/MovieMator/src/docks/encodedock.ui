@@ -1608,7 +1608,6 @@ in temporal compression</string>
      </layout>
     </item>
    </layout>
-   <zorder></zorder>
   </widget>
  </widget>
  <customwidgets>

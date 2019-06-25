@@ -31,7 +31,7 @@ class JackProducerWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit JackProducerWidget(QWidget *parent = 0);
+    explicit JackProducerWidget(QWidget *parent = nullptr);
     ~JackProducerWidget();
 
     // AbstractProducerWidget overrides

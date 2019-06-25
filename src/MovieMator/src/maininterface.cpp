@@ -193,7 +193,12 @@ FILE_TYPE MainInterface::getFileType(FILE_HANDLE fileHandle)
             result = FILE_TYPE_IMAGE;
         } else {
             //video
-            result = FILE_TYPE_VIDEO;
+            QString resource = QString(producer->get("resource"));
+            if (Util::isAudioFile(resource)) {
+                result = FILE_TYPE_AUDIO;
+            } else {
+                 result = FILE_TYPE_VIDEO;
+            }
         }
     } else if (audio_index >= 0) {
         //audio
@@ -403,6 +408,11 @@ void MainInterface::previewFilter(int index)
 //    2 生成.mlt文件
     QDir commonFileDir = QDir(Util::resourcesPath() + "/template/filters/preview/");
     QString commonFile = commonFileDir.absoluteFilePath("common.mlt");
+    bool haveSetting = false;
+    if(commonFileDir.exists(meta->objectName()+".mlt")){
+        commonFile = commonFileDir.absoluteFilePath(meta->objectName()+".mlt");
+        haveSetting = true;
+    }
     QFile file(commonFile);
     QDomDocument doc;
     if(!doc.setContent(&file))
@@ -451,13 +461,25 @@ void MainInterface::previewFilter(int index)
     QDomNodeList propertyList = filter.elementsByTagName("property");
     QDomElement prop = propertyList.at(0).toElement();
     prop.toElement().firstChild().setNodeValue(meta->mlt_service());
+    if(haveSetting){
+        for(int i=0; i<propertyList.count(); i++)
+        {
+            QDomElement de = propertyList.at(i).toElement();
+            if(de.attribute("name").contains("resource")){
+                QDomNode domNodeResource = de.toElement().firstChild();
+                domNodeResource.setNodeValue(meta->path().absoluteFilePath(de.text()));
+                break;
+            }
+        }
+        playFile(createFileWithXMLForDragAndDrop(doc.toString()));
+        return;
+    }
 
     // 区分是否为frei0r
     bool isFrei0r = false;
     if(filter.text().contains("frei0r")){
         isFrei0r = true;
     }
-
     //    3 设置filter参数并播放效果
     FILE_HANDLE mltSettingFile = createFileWithXMLForDragAndDrop(doc.toString());
     Mlt::Producer *producer = static_cast<Mlt::Producer*>(mltSettingFile);

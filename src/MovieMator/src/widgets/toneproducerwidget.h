@@ -31,7 +31,7 @@ class ToneProducerWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit ToneProducerWidget(QWidget *parent = 0);
+    explicit ToneProducerWidget(QWidget *parent = nullptr);
     ~ToneProducerWidget();
 
     // AbstractProducerWidget overrides

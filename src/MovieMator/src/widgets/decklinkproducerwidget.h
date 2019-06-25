@@ -31,7 +31,7 @@ class DecklinkProducerWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit DecklinkProducerWidget(QWidget *parent = 0);
+    explicit DecklinkProducerWidget(QWidget *parent = nullptr);
     ~DecklinkProducerWidget();
 
     // AbstractProducerWidget overrides

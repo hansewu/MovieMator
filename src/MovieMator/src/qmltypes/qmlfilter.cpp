@@ -251,12 +251,12 @@ void QmlFilter::set(QString name, double value)
 {
     if (!m_filter) return;
     if (!m_filter->get(name.toUtf8().constData())  //xjp add anim
-        || m_filter->get_double(name.toUtf8().constData()) != value) {
+        || !qFuzzyCompare(m_filter->get_double(name.toUtf8().constData()),value)) {
 
         double from_value = m_filter->get_double(name.toUtf8().constData());
         m_filter->set(name.toUtf8().constData(), value);
 
-        if(from_value != value)
+        if(!qFuzzyCompare(from_value,value))
             MAIN.undoStack()->push(new Timeline::FilterCommand(m_filter, name,  from_value, value));
 
         MLT.refreshConsumer();
@@ -308,8 +308,8 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
 
     if (!m_filter) return;
     mlt_rect rect = m_filter->get_rect(name.toUtf8().constData());
-    if (!m_filter->get(name.toUtf8().constData()) || x != rect.x || y != rect.y
-        || width != rect.w || height != rect.h || opacity != rect.o) {
+    if (!m_filter->get(name.toUtf8().constData()) || !qFuzzyCompare(x,rect.x) || !qFuzzyCompare(y,rect.y)
+        || !qFuzzyCompare(width,rect.w) || !qFuzzyCompare(height,rect.h) || !qFuzzyCompare(opacity,rect.o)) {
 
         QRectF rect_from(rect.x, rect.y, rect.w, rect.h);
         QRectF rect_to(x, y, width, height);
@@ -387,7 +387,7 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
     Mlt::Properties properties;
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
 
-    properties.pass_list(*((Mlt::Properties*)m_filter), propertyNames.join('\t').toLatin1().constData());
+    properties.pass_list(*(static_cast<Mlt::Properties*>(m_filter)), propertyNames.join('\t').toLatin1().constData());
 
     if (!dir.exists())
         dir.mkpath(dir.path());
@@ -734,8 +734,10 @@ void QmlFilter::cache_setKeyFrameParaRectValue(int frame, QString key, const QRe
     cache_setKeyFrameParaValue(frame, key, sValue);
 }
 
-void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value)
+void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value, bool bFromUndo)
 {
+    QString from_value = "";
+    int nFrameInClip = frame;
 
     if(frame < 0) return;
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
@@ -757,8 +759,9 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                 if (paraType == "double")
                 {
                     if (!animation.is_valid() || !animation.is_key(frame)
-                            || value.toDouble() != m_filter->anim_get_double(key.toUtf8().constData(), frame, duration))
+                            || !qFuzzyCompare(value.toDouble(),m_filter->anim_get_double(key.toUtf8().constData(), frame, duration)))
                     {
+                        from_value = QString::number(m_filter->anim_get_double(key.toUtf8().constData(), frame, duration));
                         m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), frame, duration, mlt_keyframe_linear);
                     }
                 }
@@ -766,6 +769,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                 {
                     if (!animation.is_valid() || !animation.is_key(frame)
                             || value.toInt() != m_filter->anim_get_int(key.toUtf8().constData(), frame, duration)) {
+                        from_value = QString::number(m_filter->anim_get_int(key.toUtf8().constData(), frame, duration));
                         m_filter->anim_set(key.toUtf8().constData(), value.toInt(), frame, duration, mlt_keyframe_linear);
                     }
                 }
@@ -773,6 +777,8 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                 {
                     if (!animation.is_valid() || !animation.is_key(frame) || value != m_filter->anim_get(key.toUtf8().constData(), frame, duration))
                     {
+                        from_value = QString(m_filter->anim_get(key.toUtf8().constData(), frame, duration));
+
                         m_filter->anim_set(key.toUtf8().constData(), value.toUtf8().constData(), frame, duration);
                     }
                 }
@@ -787,8 +793,9 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
 
                     mlt_rect rect = m_filter->anim_get_rect(key.toUtf8().constData(), frame, duration);
                     if (!animation.is_valid() || !animation.is_key(frame)
-                        || x != rect.x || y != rect.y || width != rect.w || height != rect.h || opacity != rect.o)
+                        || !qFuzzyCompare(x,rect.x) || !qFuzzyCompare(y,rect.y) || !qFuzzyCompare(width,rect.w) || !qFuzzyCompare(height,rect.h) || !qFuzzyCompare(opacity,rect.o))
                     {
+                        from_value = QString("%1 %2 %3 %4 %5").arg(rect.x).arg(rect.y).arg(rect.w).arg(rect.h).arg(rect.o);
                         rect.x = x;
                         rect.y = y;
                         rect.w = width;
@@ -802,11 +809,16 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                 {
                     if (!animation.is_valid() || !animation.is_key(frame) || value != m_filter->anim_get(key.toUtf8().constData(), frame, duration))
                     {
+                        from_value = QString(m_filter->anim_get(key.toUtf8().constData(), frame, duration));
                         m_filter->anim_set(key.toUtf8().constData(), value.toUtf8().constData(), frame, duration);
                     }
                 }
-             }
 
+
+
+//       if(!bFromUndo && (from_value != ""))
+//         MAIN.undoStack()->push(new Timeline::KeyFrameCommand(m_filter, nFrameInClip, key, from_value, value));
+    }
     emit keyframeNumberChanged();
 
 
@@ -1455,6 +1467,7 @@ void QmlFilter::refreshKeyFrame(const QVector<key_frame_item> &listKeyFrame)
     //removeAllKeyFrame();
     //m_cacheKeyFrameList = listKeyFrame;
     //syncCacheToProject();
+    Q_UNUSED(listKeyFrame)
 }
 
 //#endif

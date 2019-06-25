@@ -31,7 +31,7 @@ class AudioSpectrumScopeWidget Q_DECL_FINAL : public ScopeWidget
     
 public:
     explicit AudioSpectrumScopeWidget();
-    ~AudioSpectrumScopeWidget();
+    ~AudioSpectrumScopeWidget() Q_DECL_OVERRIDE;
     QString getTitle() Q_DECL_OVERRIDE;
 
 private:

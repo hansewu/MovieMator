@@ -30,7 +30,7 @@ class TimeSpinBox : public QSpinBox
     Q_OBJECT
 
 public:
-    explicit TimeSpinBox(QWidget *parent = 0);
+    explicit TimeSpinBox(QWidget *parent = nullptr);
     void setFontSize(int size);
 
 protected:

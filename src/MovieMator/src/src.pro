@@ -42,14 +42,6 @@ SOURCES += main.cpp\
     docks/jobsdock.cpp \
     dialogs/textviewerdialog.cpp \
     dialogs/durationdialog.cpp \
-    mvcp/qconsole.cpp \
-    mvcp/mvcp_socket.cpp \
-    mvcp/meltedclipsmodel.cpp \
-    mvcp/meltedunitsmodel.cpp \
-    mvcp/mvcpthread.cpp \
-    mvcp/meltedplaylistmodel.cpp \
-    mvcp/meltedplaylistdock.cpp \
-    mvcp/meltedserverdock.cpp \
     widgets/colorwheel.cpp \
     models/attachedfiltersmodel.cpp \
     models/metadatamodel.cpp \
@@ -157,13 +149,6 @@ HEADERS  += mainwindow.h \
     docks/jobsdock.h \
     dialogs/textviewerdialog.h \
     dialogs/durationdialog.h \
-    mvcp/qconsole.h \
-    mvcp/meltedclipsmodel.h \
-    mvcp/meltedunitsmodel.h \
-    mvcp/mvcpthread.h \
-    mvcp/meltedplaylistmodel.h \
-    mvcp/meltedplaylistdock.h \
-    mvcp/meltedserverdock.h \
     widgets/colorwheel.h \
     models/attachedfiltersmodel.h \
     models/metadatamodel.h \
@@ -275,8 +260,6 @@ FORMS    += mainwindow.ui \
     docks/jobsdock.ui \
     dialogs/textviewerdialog.ui \
     dialogs/durationdialog.ui \
-    mvcp/meltedserverdock.ui \
-    mvcp/meltedplaylistdock.ui \
     dialogs/customprofiledialog.ui \
     widgets/webvfxproducer.ui \
     docks/timelinedock.ui \
@@ -316,7 +299,7 @@ TRANSLATIONS += \
      ../translations/mm_zh.ts \
 
 
-INCLUDEPATH = ../CuteLogger/include ../mvcp ../RecentDock ../FilterDock ../CommonUtil ../MltController ../QmlUtilities
+INCLUDEPATH = ../CuteLogger/include ../RecentDock ../FilterDock ../CommonUtil ../MltController ../QmlUtilities
 INCLUDEPATH += ../AudioFilterDock
 INCLUDEPATH += ../EffectDock ../EffectDock
 INCLUDEPATH += ../include
@@ -324,26 +307,26 @@ INCLUDEPATH += ../Breakpad/breakpad/src
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
-        LIBS += -L../CuteLogger/debug -L../mvcp/debug -L../RecentDock/debug -L../FilterDock/debug -L../CommonUtil/debug -L../MltController/debug
+        LIBS += -L../CuteLogger/debug -L../RecentDock/debug -L../FilterDock/debug -L../CommonUtil/debug -L../MltController/debug
         LIBS += -L../QmlUtilities/debug
         LIBS += -L../EffectDock/debug
         LIBS += -L../AudioFilterDock/debug
         LIBS += -L../Breakpad/debug
     } else {
-        LIBS += -L../CuteLogger/release -L../mvcp/release -L../RecentDock/release -L../FilterDock/release -L../CommonUtil/release -L../MltController/release
+        LIBS += -L../CuteLogger/release -L../RecentDock/release -L../FilterDock/release -L../CommonUtil/release -L../MltController/release
         LIBS += -L../QmlUtilities/release
         LIBS += -L../EffectDock/release
         LIBS += -L../AudioFilterDock/release
         LIBS += -L../Breakpad/release
     }
 } else {
-    LIBS += -L../CuteLogger -L../mvcp -L../RecentDock -L../FilterDock -L../CommonUtil -L../MltController -L../QmlUtilities #-L../mm
+    LIBS += -L../CuteLogger -L../RecentDock -L../FilterDock -L../CommonUtil -L../MltController -L../QmlUtilities #-L../mm
     LIBS += -L../EffectDock
     LIBS += -L../AudioFilterDock
     LIBS += -L../Breakpad
 }
 
-LIBS += -lLogger -lmvcp -lpthread  -lRecentDock -lFilterDock -lAudioFilterDock -lCommonUtil -lMltController -lQmlUtilities
+LIBS += -lLogger -lpthread  -lRecentDock -lFilterDock -lAudioFilterDock -lCommonUtil -lMltController -lQmlUtilities
 LIBS += -lEffectDock
 LIBS += -lBreakpad
 

@@ -33,7 +33,7 @@ class QmlTextMetaData : public QObject
     Q_PROPERTY(QString thumbnail READ thumbnail WRITE setThumbnail)
 
 public:
-    explicit QmlTextMetaData(QObject *parent = 0);
+    explicit QmlTextMetaData(QObject *parent = nullptr);
 
 
     QString name() const { return m_name; }

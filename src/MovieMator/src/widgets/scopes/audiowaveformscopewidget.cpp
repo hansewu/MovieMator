@@ -113,9 +113,9 @@ void AudioWaveformScopeWidget::refreshScope(const QSize& size, bool full)
     if (sFrame.is_valid() && sFrame.get_audio_samples() > 0) {
 
         int samples = sFrame.get_audio_samples();
-        int16_t* audio = (int16_t*)sFrame.get_audio();
+        int16_t* audio = const_cast<int16_t*>(sFrame.get_audio());
         int waveAmplitude = graphHeight(size, m_channels, m_graphTopPadding) / 2;
-        qreal scaleFactor = (qreal)waveAmplitude / (qreal)MAX_AMPLITUDE;
+        qreal scaleFactor = qreal(waveAmplitude) / qreal(MAX_AMPLITUDE);
 
         for (int c = 0; c < m_channels; c++)
         {
@@ -140,9 +140,9 @@ void AudioWaveformScopeWidget::refreshScope(const QSize& size, bool full)
                     // The min and max have been determined for the previous x
                     // So draw the line
                     high.setX(lastX);
-                    high.setY(max * scaleFactor);
+                    high.setY(int(max * scaleFactor));
                     low.setX(lastX);
-                    low.setY(min * scaleFactor);
+                    low.setY(int(min * scaleFactor));
                     if (high.y() == low.y()) {
                         p.drawPoint(high);
                     } else {
@@ -152,7 +152,7 @@ void AudioWaveformScopeWidget::refreshScope(const QSize& size, bool full)
 
                     // Swap max and min so that the next line picks up where
                     // this one left off.
-                    int tmp = max;
+                    qreal tmp = max;
                     max = min;
                     min = tmp;
                 }

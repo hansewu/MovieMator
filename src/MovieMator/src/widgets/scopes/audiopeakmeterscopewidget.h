@@ -33,8 +33,8 @@ class AudioPeakMeterScopeWidget Q_DECL_FINAL : public ScopeWidget
     
 public:
     explicit AudioPeakMeterScopeWidget();
-    ~AudioPeakMeterScopeWidget();
-    QString getTitle();
+    ~AudioPeakMeterScopeWidget() Q_DECL_OVERRIDE;
+    QString getTitle() Q_DECL_OVERRIDE;
     void setOrientation(Qt::Orientation orientation) Q_DECL_OVERRIDE;
 
 private:

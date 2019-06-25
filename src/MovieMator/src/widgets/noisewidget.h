@@ -31,7 +31,7 @@ class NoiseWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
-    explicit NoiseWidget(QWidget *parent = 0);
+    explicit NoiseWidget(QWidget *parent = nullptr);
     ~NoiseWidget();
 
     // AbstractProducerWidget overrides

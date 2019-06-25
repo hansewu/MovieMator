@@ -69,7 +69,7 @@ Mlt::Producer *DirectShowVideoWidget::producer(Mlt::Profile& profile)
         }
     }
 #endif
-    Mlt::Producer* p = 0;
+    Mlt::Producer* p = nullptr;
     if (ui->videoCombo->currentIndex() > 0) {
         p = new Mlt::Producer(profile, QString("dshow:video=%1")
                           .arg(ui->videoCombo->currentText())
@@ -122,7 +122,7 @@ void DirectShowVideoWidget::setProducer(Mlt::Producer *producer)
     const char* videoDevice = "dshow:video=";
     const char* audioDevice = "dshow:audio=";
     if (resource.startsWith(videoDevice)) {
-        QStringRef name = resource.midRef(qstrlen(videoDevice));
+        QStringRef name = resource.midRef(int(qstrlen(videoDevice)));
         for (int i = 1; i < ui->videoCombo->count(); i++) {
             if (ui->videoCombo->itemText(i) == name) {
                 ui->videoCombo->setCurrentIndex(i);
@@ -130,7 +130,7 @@ void DirectShowVideoWidget::setProducer(Mlt::Producer *producer)
             }
         }
     } else if (resource.startsWith(audioDevice)) {
-        QStringRef name = resource.midRef(qstrlen(audioDevice));
+        QStringRef name = resource.midRef(int(qstrlen(audioDevice)));
         for (int i = 1; i < ui->audioCombo->count(); i++) {
             if (ui->audioCombo->itemText(i) == name) {
                 ui->audioCombo->setCurrentIndex(i);
@@ -139,7 +139,7 @@ void DirectShowVideoWidget::setProducer(Mlt::Producer *producer)
         }
     }
     if (resource2.startsWith(audioDevice)) {
-        QStringRef name = resource2.midRef(qstrlen(audioDevice));
+        QStringRef name = resource2.midRef(int(qstrlen(audioDevice)));
         for (int i = 1; i < ui->audioCombo->count(); i++) {
             if (ui->audioCombo->itemText(i) == name) {
                 ui->audioCombo->setCurrentIndex(i);

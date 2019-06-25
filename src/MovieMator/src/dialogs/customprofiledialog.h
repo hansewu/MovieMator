@@ -30,7 +30,7 @@ class CustomProfileDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit CustomProfileDialog(QWidget *parent = 0);
+    explicit CustomProfileDialog(QWidget *parent = nullptr);
     ~CustomProfileDialog();
     QString profileName() const;
     

@@ -27,7 +27,7 @@
 extern "C" int melt_main(int argc, char** argv, MELT_CALLBACK callback, void *callback_obj);
 //int qmelt(int argc, char** argv);
 
-volatile int stop_melt_thread = 0;
+volatile static int stop_melt_thread = 0;
 
 
 class MeltThread : public QThread
@@ -38,36 +38,7 @@ public:
     }
 
 protected:
-    void run() {
-        int     i = 0;
-        int     argc = 0;
-        char    **argv;
-        argv = (char**)malloc(20*sizeof(char*));
-
-        for(i =0; i<20; i++)
-            argv[i] = (char*)malloc( 256*sizeof(char));
-
-        strcpy(argv[argc], "melt");
-        argc++;
-        strcpy(argv[argc], "-progress2");
-        argc++;
-    //    strcpy(argv[argc], "-abort");
-    //    argc++;
-        strcpy(argv[argc], m_xmlPath.toUtf8().constData());
-        argc++;
-
-        for(i =argc; i<20; i++)
-            argv[i] = NULL;
-
-        melt_main(argc, argv, m_callback, m_callbackObj);
-
-        for(i = 0; i<20; i++)
-        {
-            free(argv[i]);
-        }
-        free(argv);
-
-    }
+    void run();
 
 private:
     QString m_xmlPath;
@@ -75,6 +46,36 @@ private:
     void *m_callbackObj;
 };
 
+void MeltThread::run() {
+    int     i = 0;
+    int     argc = 0;
+    char    **argv;
+    argv = static_cast<char**>(malloc(20*sizeof(char*)));
+
+    for(i =0; i<20; i++)
+        argv[i] = static_cast<char*>(malloc( 256*sizeof(char)));
+
+    strcpy(argv[argc], "melt");
+    argc++;
+    strcpy(argv[argc], "-progress2");
+    argc++;
+//    strcpy(argv[argc], "-abort");
+//    argc++;
+    strcpy(argv[argc], m_xmlPath.toUtf8().constData());
+    argc++;
+
+    for(i =argc; i<20; i++)
+        argv[i] = nullptr;
+
+    melt_main(argc, argv, m_callback, m_callbackObj);
+
+    for(i = 0; i<20; i++)
+    {
+        free(argv[i]);
+    }
+    free(argv);
+
+}
 
 MeltTask::MeltTask(const QString& name, const QString& xml) : AbstractTask(name)
     , m_xml(QDir::tempPath().append("/MovieMator-XXXXXX.mmp"))
@@ -83,7 +84,7 @@ MeltTask::MeltTask(const QString& name, const QString& xml) : AbstractTask(name)
     m_xml.write(xml.toUtf8());
     m_xml.close();
 
-    m_meltThread = new MeltThread(m_xml.fileName(), meltCallback, (void *)this);
+    m_meltThread = new MeltThread(m_xml.fileName(), meltCallback, static_cast<void *>(this));
 }
 
 MeltTask::~MeltTask()
@@ -118,7 +119,7 @@ int MeltTask::meltCallback(int done, int success, int percent, void *callbackObj
 
     MeltTask *task = static_cast<MeltTask *>(callbackObj);
 
-    emit task->progressUpdated(task->modelIndex(), percent);
+    emit task->progressUpdated(task->modelIndex(), uint(percent));
 
 
     if (done)

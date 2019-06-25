@@ -98,7 +98,7 @@ QDir QmlUtilities::qmlDir()
 
 QQmlEngine * QmlUtilities::sharedEngine()
 {
-    static QQmlEngine * s_engine = 0;
+    static QQmlEngine * s_engine = nullptr;
     if (!s_engine)
     {
         s_engine = new QQmlEngine;
