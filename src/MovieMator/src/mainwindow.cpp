@@ -4007,6 +4007,7 @@ void MainWindow::createMultitrackModelIfNeeded()
     LOG_DEBUG() << "begin";
     if (!m_timelineDock->model()->tractor())
     {
+        setCurrentFile("");
         m_timelineDock->model()->createIfNeeded();
         m_timelineDock->model()->addAudioTrack();
         m_timelineDock->model()->addVideoTrack();
