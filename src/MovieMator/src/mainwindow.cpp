@@ -4120,6 +4120,7 @@ QToolButton *MainWindow::createToolButton(const QString& icon, const QString& ic
 void MainWindow::customizeToolbar()
 {
     QToolBar *toolbar = new QToolBar;
+    toolbar->setObjectName("MainToolBar");
     toolbar->setFloatable(false);
     toolbar->setMovable(false);
 
