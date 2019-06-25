@@ -1,129 +1,130 @@
-3dflippo:Transform
-addition_alpha:Art
-addition:Art
-alpha0ps:Art
-alphaatop:Art
-alphagrad:Art
-alphain:Art
-alphainjection:Art
-alphaout:Art
-alphaover:Art
-alphaspot:Art
-alphaxor:Art
-B:Black & White
-balanc0r:Art
-baltan:Effect 2
-bgsubtract0r:Effect 2
-blend:Art
-bluescreen0r:Effect 2
-brightness:Color Adjustment
-burn:Art
-bw0r:Black & White
-c0rners:Distortion
-cairoaffineblend:Art
-cairoblend:Art
-cairogradient:Effect 2
-cairoimagegrid:Effect 2
-cartoon:Art
-cluster:Art
-colgate:Art
-color_only:Art
-coloradj_RGB:Color Adjustment
-colordistance:Black & White
-colorhalftone:Effect 2
-colorize:Color Adjustment
-colortap:Art
-composition:Art
-contrast0r:Color Adjustment
-curves:Color Adjustment
-d90stairsteppingfix:Art
-darken:Art
-defish0r:Distortion
-delay0r:Effect 2
-delaygrab:Effect 2
-difference:Art
-distort0r:Distortion
-dither:Art
-divide:Art
-dodge:Art
-edgeglow:Effect 2
-emboss:Material
-equaliz0r:Art
-flippo:Distortion
-G:Black & White
-gamma:Color Adjustment
-glitch0r:Effect 2
-glow:Effect 2
-grain_extract:Art
-grain_merge:Art
-hardlight:Art
-hqdn3d:Effect 2
-hue:Color Adjustment
-hueshift0r:Color Adjustment
-IIRblur:Blur
-invert0r:Effect
-ising0r:Art
-keyspillm0pup:Color Extraction
-lenscorrection:Distortion
-letterb0xed:Crop
-levels:Color Adjustment
-lighten:Art
-lightgraffiti:Effect 2
-lissajous0r:Art
-luminance:Black & White
-mask0mate:Effect 2
-medians:Color Extraction
-multiply:Art
-ndvi:Black & White
-nervous:Effect 2
-nois0r:Effect 2
-normaliz0r:Color Adjustment
-nosync0r:Effect 2
-onecol0r:Art
-overlay:Art
-partik0l:Art
-perspective:Transform
-pixeliz0r:Art
-plasma:Art
-posterize:Color Extraction
-pr0be:Effect 2
-pr0file:Effect 2
-premultiply:Effect 2
-primaries:Art
-R:Black & White
-RGB:Art
-rgbnoise:Effect 2
-rgbsplit0r:Effect 2
-saturat0r:Color Adjustment
-saturation:Color Adjustment
-scanline0r:Effect 2
-screen:Art
-select0r:Effect 2
-sharpness:Effect
-sigmoidaltransfer:Black & White
-sobel:Art
-softglow:Effect
-softlight:Art
-sopsat:Color Adjustment
-spillsupress:Color Adjustment
-squareblur:Blur
-subtract:Art
-tehroxx0r:Effect 2
-test_pat_B:Art
-test_pat_C:Art
-test_pat_G:Art
-test_pat_I:Art
-test_pat_L:Art
-test_pat_R:Art
-three_point_balance:Color Adjustment
-threelay0r:Black & White
-threshold0r:Effect 2
-timeout:Effect 2
-tint0r:Color Adjustment
-transparency:Effect 2
-twolay0r:Black & White
-uvmap:Art
-value:Art
-vertigo:Effect 2
-vignette:Effect 2
-xfade0r:Art
+3dflippo:7 Distort
+addition_alpha:8 Art
+addition:8 Art
+alpha0ps:8 Art
+alphaatop:8 Art
+alphagrad:8 Art
+alphain:8 Art
+alphainjection:8 Art
+alphaout:8 Art
+alphaover:8 Art
+alphaspot:8 Art
+alphaxor:8 Art
+B:B Black & White
+balanc0r:5 Advanced Coloring Tool
+baltan:6 Light
+bgsubtract0r:6 Light
+blend:8 Art
+bluescreen0r:6 Light
+brightness:5 Advanced Coloring Tool
+burn:8 Art
+bw0r:B Black & White
+c0rners:2 Basic Processing
+cairoaffineblend:8 Art
+cairoblend:8 Art
+cairogradient:6 Light
+cairoimagegrid:7 Distort
+cartoon:8 Art
+cluster:8 Art
+colgate:8 Art
+color_only:8 Art
+coloradj_RGB:5 Advanced Coloring Tool
+colordistance:B Black & White
+colorhalftone:A Effect2
+colorize:3 Basic Coloring Tool
+colortap:8 Art
+composition:8 Art
+contrast0r:5 Advanced Coloring Tool
+curves:5 Advanced Coloring Tool
+d90stairsteppingfix:8 Art
+darken:8 Art
+defish0r:7 Distort
+delay0r:A Effect2
+delaygrab:A Effect2
+difference:8 Art
+distort0r:7 Distort
+dither:8 Art
+divide:8 Art
+dodge:8 Art
+edgeglow:6 Light
+emboss:8 Art
+equaliz0r:8 Art
+flippo:2 Basic Processing
+G:B Black & White
+gamma:5 Advanced Coloring Tool
+glitch0r:A Effect2
+glow:6 Light
+grain_extract:8 Art
+grain_merge:8 Art
+hardlight:6 Light
+hqdn3d:4 Denoise and Blur
+hue:5 Advanced Coloring Tool
+hueshift0r:5 Advanced Coloring Tool
+IIRblur:2 Basic Processing
+invert0r:9 Effect
+ising0r:8 Art
+keyspillm0pup:5 Advanced Coloring Tool
+lenscorrection:7 Distort
+letterb0xed:2 Basic Processing
+levels:5 Advanced Coloring Tool
+lighten:8 Art
+lightgraffiti:6 Light
+lissajous0r:8 Art
+luminance:B Black & White
+mask0mate:6 Light
+medians:4 Denoise and Blur
+multiply:8 Art
+ndvi:B Black & White
+nervous:6 Light
+nois0r:A Effect2
+normaliz0r:5 Advanced Coloring Tool
+nosync0r:A Effect2
+onecol0r:8 Art
+overlay:8 Art
+partik0l:8 Art
+perspective:2 Basic Processing
+pixeliz0r:8 Art
+plasma:8 Art
+posterize:9 Effect
+pr0be:A Effect2
+pr0file:A Effect2
+premultiply:A Effect2
+primaries:8 Art
+R:B Black & White
+RGB:8 Art
+rgbnoise:A Effect2
+rgbsplit0r:A Effect2
+saturat0r:5 Advanced Coloring Tool
+saturation:5 Advanced Coloring Tool
+scanline0r:A Effect2
+screen:8 Art
+select0r:A Effect2
+sharpness:9 Effect
+sigmoidaltransfer:B Black & White
+sobel:8 Art
+softglow:6 Light
+softlight:8 Art
+sopsat:5 Advanced Coloring Tool
+spillsupress:5 Advanced Coloring Tool
+squareblur:4 Denoise and Blur
+subtract:8 Art
+tehroxx0r:A Effect2
+TehRoxx0r:A Effect2
+test_pat_B:8 Art
+test_pat_C:8 Art
+test_pat_G:8 Art
+test_pat_I:8 Art
+test_pat_L:8 Art
+test_pat_R:8 Art
+three_point_balance:5 Advanced Coloring Tool
+threelay0r:B Black & White
+threshold0r:A Effect2
+timeout:A Effect2
+tint0r:5 Advanced Coloring Tool
+transparency:2 Basic Processing
+twolay0r:B Black & White
+uvmap:8 Art
+value:8 Art
+vertigo:A Effect2
+vignette:6 Light
+xfade0r:8 Art
