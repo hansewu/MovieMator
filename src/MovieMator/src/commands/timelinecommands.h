@@ -46,7 +46,9 @@ enum {
     UndoIdAddTransitionByTrimOut,
 
     UndoIdFilterCommand, //wzq
-    UndoIdKeyFrameCommand,
+    UndoIdKeyFrameInsertCommand,
+    UndoIdKeyFrameRemoveCommand,
+    UndoIdKeyFrameUpdateCommand,
     UndoIdUpdate,
     UndoIdTransitionProperty,
     UndoIdTranstionDurationSetting
@@ -569,33 +571,6 @@ protected:
     bool      m_bFirstExec;
 };
 
-//关键帧
-class KeyFrameCommand: public AbstractCommand
-{
-
-public:
-    KeyFrameCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item>  &to_value, AbstractCommand * parent= nullptr);
-    ~KeyFrameCommand();
-    void redo_impl();
-    void undo_impl();
-protected:
-    int id() const { return UndoIdKeyFrameCommand; }
-//    using AbstractCommand::mergeWith;
-    bool mergeWith(const QUndoCommand *other);
-    void set_value(const QVector<key_frame_item>  &value);
-    void notify();
-
-protected:
-    Mlt::Filter* m_filter;
-
-    QVector<key_frame_item>   m_from_value;
-    QVector<key_frame_item>   m_to_value;
-
-    bool      m_bFirstExec;
-    QTime     m_execTime;
-};
-
-
 //选择添加滤镜
 class FilterAttachCommand: public AbstractCommand
 {
@@ -639,6 +614,75 @@ protected:
 
     bool            m_bFirstExec;
 };
+
+
+//增加关键帧
+class KeyFrameInsertCommand: public AbstractCommand
+{
+public:
+    KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &insert_value, AbstractCommand * parent = nullptr);
+    ~KeyFrameInsertCommand();
+    void redo_impl();
+    void undo_impl();
+
+protected:
+    int id() const { return UndoIdKeyFrameInsertCommand; }
+    bool mergeWith(const QUndoCommand *other);
+
+private:
+    Mlt::Filter* m_filter;
+    QVector<key_frame_item>  m_insert_value;
+
+    bool      m_bFirstExec;
+    QTime     m_execTime;
+};
+
+//删除关键帧
+class KeyFrameRemoveCommand: public AbstractCommand
+{
+public:
+    KeyFrameRemoveCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &remove_value, AbstractCommand * parent = nullptr);
+    ~KeyFrameRemoveCommand();
+    void redo_impl();
+    void undo_impl();
+
+protected:
+    int id() const { return UndoIdKeyFrameRemoveCommand; }
+    bool mergeWith(const QUndoCommand *other);
+
+private:
+    Mlt::Filter* m_filter;
+    QVector<key_frame_item>  m_remove_value;
+
+    bool      m_bFirstExec;
+    QTime     m_execTime;
+};
+
+//修改关键帧数据
+class KeyFrameUpdateCommand: public AbstractCommand
+{
+public:
+    KeyFrameUpdateCommand(Mlt::Filter* filter, int nFrame, QString name, QString from_value, QString to_value, AbstractCommand * parent= nullptr);
+    ~KeyFrameUpdateCommand();
+    void redo_impl();
+    void undo_impl();
+
+protected:
+    int id() const { return UndoIdKeyFrameUpdateCommand; }
+    bool mergeWith(const QUndoCommand *other);
+
+private:
+    Mlt::Filter* m_filter;
+    int         m_nKeyFrame;
+    QString     m_sKeyName;
+
+    QString  m_from_value;
+    QString  m_to_value;
+
+    bool      m_bFirstExec;
+    QTime     m_execTime;
+};
+
 
 //选择clip
 class ClipsSelectCommand: public AbstractCommand

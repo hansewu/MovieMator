@@ -1167,6 +1167,7 @@ int FilterCommand::transitionValue(QVariant &varFrom, QVariant &varTo, Mlt::Filt
 
 bool FilterCommand::mergeWith(const QUndoCommand *other)
 {
+//    return false;
     Q_ASSERT(other);
     if (!other) {
         return false;
@@ -1259,77 +1260,227 @@ void FilterCommand::undo_impl()
     notify();
 }
 
-KeyFrameCommand::KeyFrameCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item>  &to_value, AbstractCommand * parent)
+
+//增加关键帧
+KeyFrameInsertCommand::KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<key_frame_item> &insert_value, AbstractCommand *parent)
 : AbstractCommand(parent)
-,m_from_value(from_value)
-,m_to_value(to_value)
+,m_insert_value(insert_value)
 {
-    m_bFirstExec    = true;
     Q_ASSERT(filter);
+
     m_filter        = new Mlt::Filter(filter->get_filter());
 
+    m_bFirstExec    = true;
     m_execTime.start();
-   // m_from_value    = QVector(from_value);
-   // m_to_value      = QVector(to_value);
 }
 
-KeyFrameCommand::~KeyFrameCommand()
+KeyFrameInsertCommand::~KeyFrameInsertCommand()
 {
     delete m_filter;
 }
 
-void KeyFrameCommand::redo_impl()
+void KeyFrameInsertCommand::redo_impl()
 {
     if(m_bFirstExec)//第一次自动执行不调用，外部已经执行
     {
         m_bFirstExec = false;
         return;
     }
-    set_value(m_to_value);
-  //  notify();
+
+    Q_ASSERT(MAIN.filterController());
+    MAIN.filterController()->insertKeyFrame(m_filter, m_insert_value);
 }
 
-void KeyFrameCommand::undo_impl()
+void KeyFrameInsertCommand::undo_impl()
 {
-    set_value(m_from_value);
- //   notify();
+    Q_ASSERT(MAIN.filterController());
+    MAIN.filterController()->removeKeyFrame(m_filter, m_insert_value);
 }
 
-
-bool KeyFrameCommand::mergeWith(const QUndoCommand *other)
+bool KeyFrameInsertCommand::mergeWith(const QUndoCommand *other)
 {
     Q_ASSERT(other);
-    if (!other) {
+    if (!other)                     return false;
+    if (other->id() != id())        return false;
+
+    const KeyFrameInsertCommand *other_command =  static_cast<const KeyFrameInsertCommand*>(other);
+    Q_ASSERT(other_command);
+    if(other_command->m_filter->get_filter() != m_filter->get_filter())     return false;
+
+    if(m_execTime.elapsed() > 1000)   //不合并
+    {
+        m_execTime.restart();
         return false;
     }
-    if (other->id() != id()) // make sure other is also an AppendText command
-              return false;
 
-    const KeyFrameCommand *other_command =  static_cast<const KeyFrameCommand*>(other);
+    //合并
+    key_frame_item newPara = other_command->m_insert_value.at(0);
+
+    int nIndex = 0;
+    for(nIndex = 0; nIndex < m_insert_value.count(); nIndex++)
+    {
+        key_frame_item para = m_insert_value.at(nIndex);
+        if(para.keyFrame == newPara.keyFrame)
+        {
+            QMap<QString, QString>::iterator iter = newPara.paraMap.begin();
+            para.paraMap.insert(iter.key(), iter.value());
+            m_insert_value.removeAt(nIndex);
+            m_insert_value.insert(nIndex, para);
+            break;
+        }
+    }
+    if(nIndex == m_insert_value.count()) //没有存储,没有已经为keyFrame这一帧的存储数据
+    {
+        m_insert_value.insert(nIndex, other_command->m_insert_value.at(0));
+    }
+
+    m_execTime.restart();
+
+    return true;
+}
+
+
+//删除关键帧
+KeyFrameRemoveCommand::KeyFrameRemoveCommand(Mlt::Filter* filter, const QVector<key_frame_item> &remove_value, AbstractCommand *parent)
+: AbstractCommand(parent)
+,m_remove_value(remove_value)
+{
+    Q_ASSERT(filter);
+
+    m_filter        = new Mlt::Filter(filter->get_filter());
+
+    m_bFirstExec    = true;
+    m_execTime.start();
+}
+
+KeyFrameRemoveCommand::~KeyFrameRemoveCommand()
+{
+    delete m_filter;
+}
+
+void KeyFrameRemoveCommand::redo_impl()
+{
+    if(m_bFirstExec)//第一次自动执行不调用，外部已经执行
+    {
+        m_bFirstExec = false;
+        return;
+    }
+
+    Q_ASSERT(MAIN.filterController());
+    MAIN.filterController()->removeKeyFrame(m_filter, m_remove_value);
+}
+
+void KeyFrameRemoveCommand::undo_impl()
+{
+    Q_ASSERT(MAIN.filterController());
+    MAIN.filterController()->insertKeyFrame(m_filter, m_remove_value);
+}
+
+bool KeyFrameRemoveCommand::mergeWith(const QUndoCommand *other)
+{
+    Q_ASSERT(other);
+    if (!other)                     return false;
+    if (other->id() != id())        return false;
+
+    const KeyFrameRemoveCommand *other_command =  static_cast<const KeyFrameRemoveCommand*>(other);
+    Q_ASSERT(other_command);
+    if(other_command->m_filter->get_filter() != m_filter->get_filter())     return false;
+
+    if(m_execTime.elapsed() > 1000)   //不合并
+    {
+        m_execTime.restart();
+        return false;
+    }
+
+    //合并
+    key_frame_item newPara = other_command->m_remove_value.at(0);
+
+    int nIndex = 0;
+    for(nIndex = 0; nIndex < m_remove_value.count(); nIndex++)
+    {
+        key_frame_item para = m_remove_value.at(nIndex);
+        if(para.keyFrame == newPara.keyFrame)
+        {
+            QMap<QString, QString>::iterator iter = newPara.paraMap.begin();
+            para.paraMap.insert(iter.key(), iter.value());
+            m_remove_value.removeAt(nIndex);
+            m_remove_value.insert(nIndex, para);
+            break;
+        }
+    }
+    if(nIndex == m_remove_value.count()) //没有存储,没有已经为keyFrame这一帧的存储数据
+    {
+        m_remove_value.insert(nIndex, other_command->m_remove_value.at(0));
+    }
+
+    m_execTime.restart();
+
+    return true;
+}
+
+
+//修改关键帧数据
+KeyFrameUpdateCommand::KeyFrameUpdateCommand(Mlt::Filter* filter, int nFrame, QString name, QString from_value, QString to_value, AbstractCommand *parent)
+: AbstractCommand(parent)
+{
+    Q_ASSERT(filter);
+
+    m_bFirstExec    = true;
+    m_filter        = new Mlt::Filter(filter->get_filter());
+    m_nKeyFrame     = nFrame;
+    m_sKeyName      = name;
+    m_from_value    = from_value;
+    m_to_value      = to_value;
+
+    m_execTime.start();
+}
+
+KeyFrameUpdateCommand::~KeyFrameUpdateCommand()
+{
+    delete m_filter;
+}
+
+void KeyFrameUpdateCommand::redo_impl()
+{
+    if(m_bFirstExec)//第一次自动执行不调用，外部已经执行
+    {
+        m_bFirstExec = false;
+        return;
+    }
+
+    Q_ASSERT(MAIN.filterController());
+    MAIN.filterController()->updateKeyFrame(m_filter, m_nKeyFrame, m_sKeyName, m_to_value);
+}
+
+void KeyFrameUpdateCommand::undo_impl()
+{
+    Q_ASSERT(MAIN.filterController());
+    MAIN.filterController()->updateKeyFrame(m_filter, m_nKeyFrame, m_sKeyName, m_from_value);
+}
+
+bool KeyFrameUpdateCommand::mergeWith(const QUndoCommand *other)
+{
+    Q_ASSERT(other);
+    if (!other)                     return false;
+    // make sure other is also an AppendText command
+    if (other->id() != id())        return false;
+
+    const KeyFrameUpdateCommand *other_command =  static_cast<const KeyFrameUpdateCommand*>(other);
     Q_ASSERT(other_command);
     if(other_command->m_filter->get_filter() != m_filter->get_filter())
     {
             return false;
     }
-    if(m_execTime.elapsed() > 2000)  return false;
+    if(m_execTime.elapsed() > 800)
+    {
+        m_execTime.restart();
+        return false;
+    }
 
     m_to_value = other_command->m_to_value;
+    m_execTime.restart();
 
     return true;
-}
-
-void KeyFrameCommand::set_value(const QVector<key_frame_item>  &value)
-{
-    Q_ASSERT(MAIN.filterController());
-    MAIN.filterController()->refreshKeyFrame(m_filter, value);
-}
-
-void KeyFrameCommand::notify()
-{
-    Q_ASSERT(MAIN.filterController());
-    MAIN.filterController()->refreshCurrentFilter(m_filter);
-    MLT.refreshConsumer();
-
 }
 
 

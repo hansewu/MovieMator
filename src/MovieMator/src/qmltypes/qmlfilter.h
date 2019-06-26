@@ -317,18 +317,18 @@ public:
      *
      * \param frame the frame number in the clip of the animation node to remove
      */
-    Q_INVOKABLE void removeKeyFrameParaValue(int frame);
+    Q_INVOKABLE void removeKeyFrameParaValue(int frame, bool bFromUndo = false);
 
     /** Remove all the key frames of filter.
      *
      */
-    Q_INVOKABLE void removeAllKeyFrame();
+    Q_INVOKABLE void removeAllKeyFrame(bool bFromUndo = false);
 
     /** Remove all the key frames of filter.
      *
      * \param name the property to remove
      */
-    Q_INVOKABLE void removeAllKeyFrame(QString name);
+    Q_INVOKABLE void removeAllKeyFrame(QString name, bool bFromUndo = false);
 
     /** Get a string value by name at a frame position from cached data.
      *
@@ -482,7 +482,7 @@ public:
      * \param frame the frame number in the clip of the animation node to remove
      * \param name the property to remove key frame
      */
-    Q_INVOKABLE void removeAnimationKeyFrame(int nFrame, QString name);
+    Q_INVOKABLE void removeAnimationKeyFrame(int nFrame, QString name, bool bFromUndo = false);
 
 //#endif
 

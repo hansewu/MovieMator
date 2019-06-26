@@ -543,19 +543,81 @@ void FilterController::refreshCurrentFilter(Mlt::Filter *filter)
 
 void FilterController::refreshKeyFrame(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame)
 {
-    if(m_currentFilterIndex == -1) return;
+    if(m_currentFilterIndex == -1)          return;
 
     QmlFilter *qmlFilter = m_currentFilter.data();
-    if(!qmlFilter) return;
+    if(!qmlFilter)                          return;
 
     Mlt::Filter* mltFilter = qmlFilter->getMltFilter();
     Q_ASSERT(mltFilter);
-    if(mltFilter->get_filter() != filter->get_filter())
-    {
-        return;
-    }
+    if(mltFilter->get_filter() != filter->get_filter())     return;
 
     qmlFilter->refreshKeyFrame(listKeyFrame);
+}
+
+void FilterController::insertKeyFrame(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame)
+{
+    if(m_currentFilterIndex == -1)          return;
+
+    QmlFilter *qmlFilter = m_currentFilter.data();
+    if(!qmlFilter)                          return;
+
+    Mlt::Filter* mltFilter = qmlFilter->getMltFilter();
+    Q_ASSERT(mltFilter);
+    if(mltFilter->get_filter() != filter->get_filter())     return;
+
+    for(int nIndex = 0; nIndex < listKeyFrame.count(); nIndex++)
+    {
+        key_frame_item para = listKeyFrame.at(nIndex);
+
+        QMap<QString, QString>::Iterator iter = para.paraMap.begin();
+        while(iter != para.paraMap.end())
+        {
+            qmlFilter->cache_setKeyFrameParaValue(para.keyFrame, iter.key(), iter.value(), true);
+            iter++;
+        }
+    }
+    qmlFilter->syncCacheToProject();
+}
+
+void FilterController::removeKeyFrame(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame)
+{
+    if(m_currentFilterIndex == -1)          return;
+
+    QmlFilter *qmlFilter = m_currentFilter.data();
+    if(!qmlFilter)                          return;
+
+    Mlt::Filter* mltFilter = qmlFilter->getMltFilter();
+    Q_ASSERT(mltFilter);
+    if(mltFilter->get_filter() != filter->get_filter())     return;
+
+    for(int nIndex = 0; nIndex < listKeyFrame.count(); nIndex++)
+    {
+        key_frame_item para = listKeyFrame.at(nIndex);
+
+        QMap<QString, QString>::Iterator iter = para.paraMap.begin();
+        while(iter != para.paraMap.end())
+        {
+            qmlFilter->removeAnimationKeyFrame(para.keyFrame, iter.key(), true);
+            iter++;
+        }
+    }
+    qmlFilter->syncCacheToProject();
+}
+
+void FilterController::updateKeyFrame(Mlt::Filter *filter, int nFrame, QString name, QString value)
+{
+    if(m_currentFilterIndex == -1)          return;
+
+    QmlFilter *qmlFilter = m_currentFilter.data();
+    if(!qmlFilter)                          return;
+
+    Mlt::Filter* mltFilter = qmlFilter->getMltFilter();
+    Q_ASSERT(mltFilter);
+    if(mltFilter->get_filter() != filter->get_filter())     return;
+
+    qmlFilter->cache_setKeyFrameParaValue(nFrame, name, value, true);
+    qmlFilter->syncCacheToProject();
 }
 
 void FilterController::handleAttachedModelChange()

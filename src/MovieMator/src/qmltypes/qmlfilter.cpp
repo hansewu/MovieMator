@@ -110,14 +110,33 @@ int QmlFilter::getKeyFrameOnProjectOnIndex(int index, QString name)
     return -1;
 }
 
-void QmlFilter::removeAnimationKeyFrame(int nFrame, QString name)
+void QmlFilter::removeAnimationKeyFrame(int nFrame, QString name, bool bFromUndo)
 {
+    int nFrameInClip = nFrame;
     nFrame = MAIN.timelineDock()->getPositionOnParentProducer(nFrame);
+
+    bool bKeyFrame = getAnimation(name).is_key(nFrame);
+    if(!bKeyFrame)      return;
 
     if (m_filter)
     {
+        if(!bFromUndo)
+        {
+            QString value = getAnimStringValue(nFrameInClip, name);
+
+            key_frame_item para;
+            para.keyFrame = nFrameInClip;
+            para.paraMap.insert(name, value);
+
+            QVector<key_frame_item> keyFrameRemove;
+            keyFrameRemove.insert(0, para);
+            MAIN.undoStack()->push(new Timeline::KeyFrameRemoveCommand(m_filter, keyFrameRemove));
+        }
+
         getAnimation(name).remove(nFrame);
     }
+
+    emit keyframeNumberChanged();
 }
 
 double QmlFilter::getKeyValueOnProjectOnIndex(int index, QString name)
@@ -736,11 +755,13 @@ void QmlFilter::cache_setKeyFrameParaRectValue(int frame, QString key, const QRe
 
 void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value, bool bFromUndo)
 {
-    QString from_value = "";
-    int nFrameInClip = frame;
+    QString from_value  = "";
+    int nFrameInClip    = frame;
+    bool bKeyFrame      = cache_bKeyFrame(frame, key);
 
     if(frame < 0) return;
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
+
 
     Q_ASSERT(m_filter);
     if(m_metadata)
@@ -815,9 +836,23 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                 }
 
 
+       if(!bFromUndo && (from_value != ""))
+       {
+            if(bKeyFrame)   //修改关键帧数据
+                MAIN.undoStack()->push(new Timeline::KeyFrameUpdateCommand(m_filter, nFrameInClip, key, from_value, value));
+            else            //增加关键帧
+            {
+                key_frame_item para;
+                para.keyFrame = nFrameInClip;
+                para.paraMap.insert(key, value);
 
-//       if(!bFromUndo && (from_value != ""))
-//         MAIN.undoStack()->push(new Timeline::KeyFrameCommand(m_filter, nFrameInClip, key, from_value, value));
+                QVector<key_frame_item> keyFrameAdd;
+                keyFrameAdd.insert(0, para);
+
+                MAIN.undoStack()->push(new Timeline::KeyFrameInsertCommand(m_filter, keyFrameAdd));
+            }
+       }
+
     }
     emit keyframeNumberChanged();
 
@@ -964,36 +999,31 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
 */
 }
 
-void QmlFilter::removeAllKeyFrame()
+void QmlFilter::removeAllKeyFrame(bool bFromUndo)
 {
     Q_ASSERT(m_metadata);
     Q_ASSERT(m_metadata->keyframes());
-
-//    QString propertyName = getAnyAnimPropertyName();
-//    if (propertyName == nullptr) return;
-//    removeAllKeyFrame(propertyName);
-
-//    return;
 
     int paramCount = m_metadata->keyframes()->parameterCount();
     for (int i = 0; i < paramCount; i++)
     {
          QString name = m_metadata->keyframes()->parameter(i)->property();
-         removeAllKeyFrame(name);
+         removeAllKeyFrame(name, bFromUndo);
     }
 }
 
-void QmlFilter::removeAllKeyFrame(QString name)
+void QmlFilter::removeAllKeyFrame(QString name, bool bFromUndo)
 {
     Mlt::Animation animation = getAnimation(name);
     if (!animation.is_valid())   return;
 
     int nKeyFrameCount = this->getKeyFrameCountOnProject(name);
-    for (int index = nKeyFrameCount-1; index >= 0; index--) {
-        //double nFrame = this->getKeyFrameOnProjectOnIndex(index, name);
-        //this->removeKeyFrameParaValue(nFrame);
-        int nFrame = animation.key_get_frame(index);
-        animation.remove(nFrame);
+    for (int index = nKeyFrameCount-1; index >= 0; index--)
+    {
+        int nFrame          = animation.key_get_frame(index);
+        int nFrameInClip    = MAIN.timelineDock()->getPositionOnClip(nFrame);
+        removeAnimationKeyFrame(nFrameInClip, name, bFromUndo);
+//        animation.remove(nFrame);
     }
 
     emit keyframeNumberChanged();
@@ -1002,21 +1032,21 @@ void QmlFilter::removeAllKeyFrame(QString name)
     emit filterPropertyValueChanged();
 }
 
-void QmlFilter::removeKeyFrameParaValue(int frame)
+void QmlFilter::removeKeyFrameParaValue(int frame, bool bFromUndo)
 {
     Q_ASSERT(m_metadata);
     Q_ASSERT(m_metadata->keyframes());
 
-    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
+//    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
 
     int paramCount = m_metadata->keyframes()->parameterCount();
     for (int i = 0; i < paramCount; i++)
     {
          QString name = m_metadata->keyframes()->parameter(i)->property();
-
-         Mlt::Animation animation = getAnimation(name);
-         if (animation.is_valid())
-             animation.remove(frame);
+         removeAnimationKeyFrame(frame, name, bFromUndo);
+//         Mlt::Animation animation = getAnimation(name);
+//         if (animation.is_valid())
+//             animation.remove(frame);
     }
 
     emit keyframeNumberChanged();
