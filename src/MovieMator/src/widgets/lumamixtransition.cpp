@@ -26,19 +26,27 @@
 #include <QFileInfo>
 #include <Logger.h>
 #include "timespinbox.h"
+#include "commands/timelinecommands.h"
 
 static const int kLumaComboDissolveIndex = 0;
 static const int kLumaComboCutIndex = 1;
 static const int kLumaComboCustomIndex = 24;
 
-LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
+LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, int trackIndex, int clipIndex, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::LumaMixTransition)
     , m_producer(producer)
     , m_previewMovie(nullptr)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(clipIndex)
 {
     ui->setupUi(this);
 //    Util::setColorsToHighlight(ui->label_2);
+
+    ui->softnessSlider->blockSignals(true);
+    ui->mixSlider->blockSignals(true);
+    ui->crossfadeRadioButton->blockSignals(true);
+    ui->mixRadioButton->blockSignals(true);
 
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {
@@ -73,6 +81,11 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
         }
         ui->mixSlider->setValue(qRound(transition->get_double("start") * 100.0));
     }
+    ui->softnessSlider->blockSignals(false);
+    ui->mixSlider->blockSignals(false);
+    ui->crossfadeRadioButton->blockSignals(false);
+    ui->mixRadioButton->blockSignals(false);
+
 
     m_durationSpinBox = new TimeSpinBox(this);
     m_durationSpinBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -149,6 +162,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
                                   }"
                                   "QComboBox::donw-arrow:on {top:3px;left:3px;}"
                                   "QComboBox QAbstractItemView {border: none;}");
+
 }
 
 LumaMixTransition::~LumaMixTransition()
@@ -161,8 +175,10 @@ void LumaMixTransition::on_invertCheckBox_clicked(bool checked)
 {
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {
-        transition->set("invert", checked);
-        MLT.refreshConsumer();
+        QString invertValue = checked ? "1" : "0";
+        MAIN.undoStack()->push(
+                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma", "invert", invertValue)
+                    );
     }
 }
 
@@ -174,39 +190,56 @@ void LumaMixTransition::on_softnessSlider_valueChanged(int value)
             qreal r = qreal(value) / 100.0;
             QColor color = QColor::fromRgbF(r, r, r);
             QString resource = QString("color:%1").arg(color.name());
-            transition->set("resource", resource.toLatin1().constData());
+            MAIN.undoStack()->push(
+                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma", "resource", resource)
+                        );
         } else {
-            transition->set("softness", value / 100.0);
+            MAIN.undoStack()->push(
+                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma", "softness", QString::number(value / 100.0))
+                        );
         }
-        MLT.refreshConsumer();
     }
 }
 
-void LumaMixTransition::on_crossfadeRadioButton_clicked()
+void LumaMixTransition::on_crossfadeRadioButton_toggled(bool checked)
 {
-    QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
-    if (transition && transition->is_valid()) {
-        transition->set("start", -1);
+    if (checked)
+    {
+        QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
+        if (transition && transition->is_valid()) {
+            MAIN.undoStack()->push(
+                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "mix", "start", "-1")
+                        );
+        }
+        ui->mixSlider->setDisabled(true);
+        ui->mixSpinner->setDisabled(true);
     }
-    ui->mixSlider->setDisabled(true);
-    ui->mixSpinner->setDisabled(true);
 }
 
-void LumaMixTransition::on_mixRadioButton_clicked()
+void LumaMixTransition::on_mixRadioButton_toggled(bool checked)
 {
-    QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
-    if (transition && transition->is_valid()) {
-        transition->set("start", ui->mixSlider->value() / 100.0);
+    if (checked)
+    {
+        QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
+        if (transition && transition->is_valid()) {
+            int value = ui->mixSlider->value();
+            MAIN.undoStack()->push(
+                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "mix", "start", QString::number(value / 100.0))
+                        );
+        }
+        ui->mixSlider->setEnabled(true);
+        ui->mixSpinner->setEnabled(true);
     }
-    ui->mixSlider->setEnabled(true);
-    ui->mixSpinner->setEnabled(true);
 }
 
 void LumaMixTransition::on_mixSlider_valueChanged(int value)
 {
     QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
     if (transition && transition->is_valid()) {
-        transition->set("start", value / 100.0);
+        int value = ui->mixSlider->value();
+        MAIN.undoStack()->push(
+                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "mix", "start", QString::number(value / 100.0))
+                    );
     }
 }
 
@@ -242,8 +275,10 @@ void LumaMixTransition::updateCustomLumaLabel(Mlt::Transition &transition)
 void LumaMixTransition::on_lumaCombo_activated(int index)
 {
     if (index == kLumaComboDissolveIndex || index == kLumaComboCutIndex) {
-        on_invertCheckBox_clicked(false);
+        //on_invertCheckBox_clicked(false);
+        ui->invertCheckBox->blockSignals(true);
         ui->invertCheckBox->setChecked(false);
+        ui->invertCheckBox->blockSignals(false);
     }
     ui->invertCheckBox->setEnabled( index != kLumaComboDissolveIndex && index != kLumaComboCutIndex);
     ui->softnessSlider->setEnabled( index != kLumaComboDissolveIndex);
@@ -265,92 +300,55 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
 
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {
-        if (index == kLumaComboDissolveIndex) {
-            transition->set("resource", "");
+        QString resourceValue;
+        int invertValue = 0;
+        double softnessValue = 0.0;
+        if (index == kLumaComboDissolveIndex)
+        {
+            resourceValue = "";
             ui->softnessLabel->setText(tr("Softness"));
-        } else if (index == kLumaComboCutIndex) { // Cut
+        }
+        else if (index == kLumaComboCutIndex)
+        {
             ui->softnessLabel->setText(tr("Position"));
+
+            //设置softnessSlider的值
+            ui->softnessSlider->blockSignals(true);
             ui->softnessSlider->setValue(50);
-        } else if (index == kLumaComboCustomIndex) {
-            ui->softnessLabel->setText(tr("Softness"));
-            // Custom file
-            QString path = Settings.openPath();
-#ifdef Q_OS_MAC
-            path.append("/*");
-#endif
-            QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), path,
-                tr("Images (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;All Files (*)"));
-            activateWindow();
-            if (!filename.isEmpty()) {
-                transition->set("resource", filename.toUtf8().constData());
-                MLT.getHash(*transition);
-            }
-        } else {
-            ui->softnessLabel->setText(tr("Softness"));
-            transition->set("resource", QString("%luma%1.pgm").arg(index - 1, 2, 10, QChar('0')).toLatin1().constData());
+            ui->softnessSlider->blockSignals(false);
+
+            qreal r = qreal(ui->softnessSlider->value()) / 100.0;
+            QColor color = QColor::fromRgbF(r, r, r);
+            resourceValue = QString("color:%1").arg(color.name());
         }
-        if (qstrcmp(transition->get("resource"), "")) {
-            transition->set("progressive", 1);
-            if (index == kLumaComboCutIndex) {
-                transition->set("invert", 0);
-                transition->set("softness", 0);
-            } else {
-                transition->set("invert", ui->invertCheckBox->isChecked());
-                transition->set("softness", ui->softnessSlider->value() / 100.0);
-            }
+        else if (index == kLumaComboCustomIndex)
+        {
+            //不支持自定义
+            //            ui->softnessLabel->setText(tr("Softness"));
+            //            // Custom file
+            //            QString path = Settings.openPath();
+            //#ifdef Q_OS_MAC
+            //            path.append("/*");
+            //#endif
+            //            QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), path,
+            //                tr("Images (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;All Files (*)"));
+            //            activateWindow();
+            //            if (!filename.isEmpty()) {
+            //                transition->set("resource", filename.toUtf8().constData());
+            //                MLT.getHash(*transition);
+            //            }
         }
-        updateCustomLumaLabel(*transition);
-        MLT.refreshConsumer();
+        else
+        {
+            ui->softnessLabel->setText(tr("Softness"));
+            resourceValue = QString("%luma%1.pgm").arg(index - 1, 2, 10, QChar('0')).toLatin1().constData();
+            invertValue = ui->invertCheckBox->isChecked() ? 1 : 0;
+            softnessValue = ui->softnessSlider->value() / 100.0;
+        }
+
+        MAIN.undoStack()->push(
+                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma","resource", resourceValue, invertValue, softnessValue)
+                    );
     }
 }
 
-//void::LumaMixTransition::on_lumaCombo_currentIndexChanged(int index)
-//{
-//    if (index == kLumaComboDissolveIndex || index == kLumaComboCutIndex) {
-//        on_invertCheckBox_clicked(false);
-//        ui->invertCheckBox->setChecked(false);
-//    }
-//    ui->invertCheckBox->setEnabled( index != kLumaComboDissolveIndex && index != kLumaComboCutIndex);
-//    ui->softnessSlider->setEnabled( index != kLumaComboDissolveIndex);
-//    ui->softnessSpinner->setEnabled(index != kLumaComboDissolveIndex);
-
-//    QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
-//    if (transition && transition->is_valid()) {
-//        if (index == kLumaComboDissolveIndex) {
-//            transition->set("resource", "");
-//            ui->softnessLabel->setText(tr("Softness"));
-//        } else if (index == kLumaComboCutIndex) { // Cut
-//            ui->softnessLabel->setText(tr("Position"));
-//            ui->softnessSlider->setValue(50);
-//        } else if (index == kLumaComboCustomIndex) {
-//            ui->softnessLabel->setText(tr("Softness"));
-//            // Custom file
-//            QString path = Settings.openPath();
-//#ifdef Q_OS_MAC
-//            path.append("/*");
-//#endif
-//            QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), path,
-//                tr("Images (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;All Files (*)"));
-//            activateWindow();
-//            if (!filename.isEmpty()) {
-//                transition->set("resource", filename.toUtf8().constData());
-//                MLT.getHash(*transition);
-//            }
-//        } else {
-//            ui->softnessLabel->setText(tr("Softness"));
-//            transition->set("resource", QString("%luma%1.pgm").arg(index - 1, 2, 10, QChar('0')).toLatin1().constData());
-//        }
-//        if (qstrcmp(transition->get("resource"), "")) {
-//            transition->set("progressive", 1);
-//            if (index == kLumaComboCutIndex) {
-//                transition->set("invert", 0);
-//                transition->set("softness", 0);
-//            } else {
-//                transition->set("invert", ui->invertCheckBox->isChecked());
-//                transition->set("softness", ui->softnessSlider->value() / 100.0);
-//            }
-//        }
-//        updateCustomLumaLabel(*transition);
-//        MLT.refreshConsumer();
-//    }
-//}

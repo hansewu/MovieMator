@@ -35,7 +35,7 @@ class LumaMixTransition : public QWidget
     Q_OBJECT
     
 public:
-    explicit LumaMixTransition(Mlt::Producer &transition, QWidget *parent = nullptr);
+    explicit LumaMixTransition(Mlt::Producer &transition, int trackIndex, int clipIndex, QWidget *parent = nullptr);
     ~LumaMixTransition();
     
 private slots:
@@ -43,9 +43,9 @@ private slots:
     
     void on_softnessSlider_valueChanged(int value);
     
-    void on_crossfadeRadioButton_clicked();
+    void on_crossfadeRadioButton_toggled(bool checked);
     
-    void on_mixRadioButton_clicked();
+    void on_mixRadioButton_toggled(bool checked);
     
     void on_mixSlider_valueChanged(int value);
     
@@ -58,11 +58,14 @@ signals:
     
 private:
     Ui::LumaMixTransition *ui;
-    Mlt::Producer m_producer;
-    TimeSpinBox *m_durationSpinBox;
+    Mlt::Producer   m_producer;
+    TimeSpinBox     *m_durationSpinBox;
+    QMovie          *m_previewMovie;
+    int             m_trackIndex;
+    int             m_clipIndex;
+
     Mlt::Transition* getTransition(const QString& name);
     void updateCustomLumaLabel(Mlt::Transition &transition);
-    QMovie *m_previewMovie;
 };
 
 #endif // LUMAMIXTRANSITION_H

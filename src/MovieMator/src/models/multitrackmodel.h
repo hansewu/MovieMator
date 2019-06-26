@@ -145,6 +145,9 @@ public:
     Mlt::Producer* copiedProducer();
     void setCopiedProducer(Mlt::Producer *producer);
 
+    //设置转场属性
+    void setTransitionProperty(int trackIndex, int clipIndex, const QString& transitionName, const QString& propertyName, const QString& propertyValue);
+
 signals:
     void created();
     void loaded();
@@ -240,11 +243,10 @@ private:
     void clearMixReferences(int trackIndex, int clipIndex);
     void initMixReferences();
 
-
-
-
     bool checkClip(Mlt::Producer &clip);
     friend class UndoHelper;
+    Mlt::Producer *getClipProducer(int trackIndex, int clipIndex);
+    Mlt::Transition *getClipTransition(int trackIndex, int clipIndex, const QString& transitionName);
 
 private slots:
     void adjustBackgroundDuration();

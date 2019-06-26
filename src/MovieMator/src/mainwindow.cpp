@@ -266,7 +266,7 @@ MainWindow::MainWindow()
     LOG_DEBUG() << "Connect UI signals";
     // Connect UI signals.
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
-    connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(removeVideo()));
+//    connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(removeVideo()));
 
     if (ui->actionFullscreen)
         connect(ui->actionFullscreen, SIGNAL(triggered()), this, SLOT(on_actionEnter_Full_Screen_triggered()));
@@ -3130,7 +3130,9 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
     else if (service == "tone")
         w = new ToneProducerWidget(this);
     else if (producer->parent().get(kShotcutTransitionProperty)) {
-        w = new LumaMixTransition(producer->parent(), this);
+        int trackIndex = m_timelineDock->selectedTrackIndex();
+        int clipIndex = m_timelineDock->selection().at(0);
+        w = new LumaMixTransition(producer->parent(), trackIndex, clipIndex, this);
         connect(w, SIGNAL(setTransitionDuration(int)), m_timelineDock, SLOT(setTransitionDuration(int)));
         scrollArea->setWidget(w);
         return w;
@@ -4007,6 +4009,7 @@ void MainWindow::createMultitrackModelIfNeeded()
     LOG_DEBUG() << "begin";
     if (!m_timelineDock->model()->tractor())
     {
+        setCurrentFile("");
         m_timelineDock->model()->createIfNeeded();
         m_timelineDock->model()->addAudioTrack();
         m_timelineDock->model()->addVideoTrack();
@@ -4117,6 +4120,7 @@ QToolButton *MainWindow::createToolButton(const QString& icon, const QString& ic
 void MainWindow::customizeToolbar()
 {
     QToolBar *toolbar = new QToolBar;
+    toolbar->setObjectName("MainToolBar");
     toolbar->setFloatable(false);
     toolbar->setMovable(false);
 
@@ -4130,13 +4134,14 @@ void MainWindow::customizeToolbar()
 
     m_addButton = createToolButton(QString(":/icons/light/32x32/toolbar-add.png"),
                                    QString(":/icons/light/32x32/toolbar-add-pressed.png"),
-                                   "", tr("Open"), tr("Open a video, audio or image file"));
+                                   QString(":/icons/light/32x32/toolbar-add.png"),
+                                   tr("Open"), tr("Open a video, audio or image file"));
     connect(m_addButton, SIGNAL(clicked()), this, SLOT(openVideo()));
 
-    m_removeButton = createToolButton(":/icons/light/32x32/toolbar-remove.png",
-                                      ":/icons/light/32x32/toolbar-remove-pressed.png",
-                                      "", tr("Remove"), tr("Remove media files"));
-    connect(m_removeButton, SIGNAL(clicked()), this, SLOT(removeVideo()));
+//    m_removeButton = createToolButton(":/icons/light/32x32/toolbar-remove.png",
+//                                      ":/icons/light/32x32/toolbar-remove-pressed.png",
+//                                      "", tr("Remove"), tr("Remove media files"));
+//    connect(m_removeButton, SIGNAL(clicked()), this, SLOT(removeVideo()));
 
 
     m_undoButton = createToolButton(":/icons/light/32x32/toolbar-undo.png",
@@ -4156,25 +4161,29 @@ void MainWindow::customizeToolbar()
 
     m_saveButton = createToolButton(":/icons/light/32x32/toolbar-save.png",
                                     ":/icons/light/32x32/toolbar-save-pressed.png",
-                                    "", tr("Save Project"), tr("Save Project"));
+                                    ":/icons/light/32x32/toolbar-save.png",
+                                    tr("Save Project"), tr("Save Project"));
     connect(m_saveButton, SIGNAL(clicked()), this, SLOT(on_actionSave_triggered()));
 
 
     m_exportButton = createToolButton(":/icons/light/32x32/toolbar-export.png",
                                       ":/icons/light/32x32/toolbar-export-pressed.png",
-                                      "", tr("Export Video"), tr("Export video, audio or image file"));
+                                      ":/icons/light/32x32/toolbar-export.png",
+                                      tr("Export Video"), tr("Export video, audio or image file"));
     connect(m_exportButton, SIGNAL(clicked()), this, SLOT(onEncodeTriggered()));
 
 
     m_helpButton = createToolButton(":/icons/light/32x32/toolbar-help.png",
                                     ":/icons/light/32x32/toolbar-help-pressed.png",
-                                    "", tr("Tutorial"), tr("Tutorials"));
+                                    ":/icons/light/32x32/toolbar-help.png",
+                                    tr("Tutorial"), tr("Tutorials"));
     connect(m_helpButton, SIGNAL(clicked()), this, SLOT(onHelpButtonTriggered()));
 
 
     m_emailButton = createToolButton(":/icons/light/32x32/toolbar-email.png",
                                      ":/icons/light/32x32/toolbar-email-pressed.png",
-                                     "", tr("Feedback"), tr("Send us your suggestions"));
+                                     ":/icons/light/32x32/toolbar-email.png",
+                                     tr("Feedback"), tr("Send us your suggestions"));
     connect(m_emailButton, SIGNAL(clicked()), this, SLOT(onEmail_triggered()));
 
 //    m_forumButton = createToolButton(":/icons/light/32x32/toolbar-forum.png",
@@ -4195,12 +4204,14 @@ void MainWindow::customizeToolbar()
     {
         m_activateButton = createToolButton(":/icons/light/32x32/toolbar-activate.png",
                                             ":/icons/light/32x32/toolbar-activate-pressed.png",
-                                            "", tr("Register"), tr("Enter Licensse Code"));
+                                            ":/icons/light/32x32/toolbar-activate.png",
+                                            tr("Register"), tr("Enter Licensse Code"));
         connect(m_activateButton, SIGNAL(clicked()), this, SLOT(onActivateButton_clicked()));
 
         m_buynowButton = createToolButton(":/icons/light/32x32/toolbar-buynow.png",
                                           ":/icons/light/32x32/toolbar-buynow-pressed.png",
-                                          "", tr("Buy Now"), tr("Buy a License Code"));
+                                          ":/icons/light/32x32/toolbar-buynow.png",
+                                          tr("Buy Now"), tr("Buy a License Code"));
         connect(m_buynowButton, SIGNAL(clicked()), this, SLOT(onBuynowButton_clicked()));
     }
 #endif
@@ -4224,7 +4235,7 @@ void MainWindow::customizeToolbar()
     QSpacerItem *spacer1 = new QSpacerItem(50,20);
 
     gridLayout->addWidget(m_addButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
-    gridLayout->addWidget(m_removeButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+//    gridLayout->addWidget(m_removeButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     gridLayout->addItem(spacer1, 0, buttonIndex++, 1, 1);
 
     gridLayout->addWidget(m_undoButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
@@ -4465,6 +4476,7 @@ void MainWindow::setCurrentFilterForVideoWidget(QObject* filter, QmlMetadata* me
 void MainWindow::initParentDockForResourceDock()
 {
     m_resourceDockContainer = new ContainerDock(TabPosition_Left, this);
+    m_resourceDockContainer->setObjectName("ResourceDockContainer");//savestate needs to be used
     m_resourceDockContainer->setMinimumWidth(360);
     //m_resourceDockContainer->setMinimumHeight()
     addDockWidget(Qt::LeftDockWidgetArea, m_resourceDockContainer);
@@ -4474,6 +4486,7 @@ void MainWindow::initParentDockForResourceDock()
 void MainWindow::initParentDockForPropteriesDock()
 {
     m_propertiesDockContainer = new ContainerDock(TabPosition_Top, this);
+    m_propertiesDockContainer->setObjectName("PropertiesDockContainer");//savestate needs to be used
 
     addDockWidget(Qt::RightDockWidgetArea, m_propertiesDockContainer);
 }

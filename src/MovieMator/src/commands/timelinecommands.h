@@ -49,7 +49,8 @@ enum {
     UndoIdKeyFrameInsertCommand,
     UndoIdKeyFrameRemoveCommand,
     UndoIdKeyFrameUpdateCommand,
-    UndoIdUpdate
+    UndoIdUpdate,
+    UndoIdTransitionProperty
 };
 
 //拓展连接clip
@@ -700,6 +701,36 @@ protected:
     int         m_newTrackIndex, m_oldTrackIndex;
     bool        m_bNewIsMultitrack, m_bOldIsMultitrack;
 };
+
+
+//转场属性设置
+class TransitionPropertyCommand: public AbstractCommand
+{
+public:
+    TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel& model, int trackIndex, int clipIndex, const QString& transitionName, const QString& propertyName, const QString& propertyValue, int invert = 0, double softness = 0.0, AbstractCommand *parent = nullptr);
+    void redo_impl();
+    void undo_impl();
+
+protected:
+    int id() const { return UndoIdTransitionProperty; }
+    bool mergeWith(const QUndoCommand *other);
+
+private:
+    TimelineDock&       m_timeline;
+    MultitrackModel&    m_model;
+    int                 m_trackIndex;
+    int                 m_clipIndex;
+    QString             m_transitionName;
+    QString             m_propertyName;
+    QString             m_propertyValue;
+    UndoHelper          m_undoHelper;
+    int                 m_invert;
+    double              m_softness;
+    bool                m_isFirstRedo;
+};
+
+
+
 
 } // namespace Timeline
 
