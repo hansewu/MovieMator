@@ -16,10 +16,10 @@ baltan:6 Light
 bgsubtract0r:6 Light
 blend:8 Art
 bluescreen0r:6 Light
-brightness:5 Advanced Coloring Tool
+brightness:3 Basic Coloring Tool
 burn:8 Art
 bw0r:B Black & White
-c0rners:2 Basic Processing
+c0rners:1 Basic Processing
 cairoaffineblend:8 Art
 cairoblend:8 Art
 cairogradient:6 Light
@@ -31,7 +31,7 @@ color_only:8 Art
 coloradj_RGB:5 Advanced Coloring Tool
 colordistance:B Black & White
 colorhalftone:A Effect2
-colorize:3 Basic Coloring Tool
+colorize:5 Advanced Coloring Tool
 colortap:8 Art
 composition:8 Art
 contrast0r:5 Advanced Coloring Tool
@@ -49,7 +49,7 @@ dodge:8 Art
 edgeglow:6 Light
 emboss:8 Art
 equaliz0r:8 Art
-flippo:2 Basic Processing
+flippo:1 Basic Processing
 G:B Black & White
 gamma:5 Advanced Coloring Tool
 glitch0r:A Effect2
@@ -59,13 +59,13 @@ grain_merge:8 Art
 hardlight:6 Light
 hqdn3d:4 Denoise and Blur
 hue:5 Advanced Coloring Tool
-hueshift0r:5 Advanced Coloring Tool
-IIRblur:2 Basic Processing
+hueshift0r:3 Basic Coloring Tool
+IIRblur:1 Basic Processing
 invert0r:9 Effect
 ising0r:8 Art
 keyspillm0pup:5 Advanced Coloring Tool
 lenscorrection:7 Distort
-letterb0xed:2 Basic Processing
+letterb0xed:1 Basic Processing
 levels:5 Advanced Coloring Tool
 lighten:8 Art
 lightgraffiti:6 Light
@@ -82,7 +82,7 @@ nosync0r:A Effect2
 onecol0r:8 Art
 overlay:8 Art
 partik0l:8 Art
-perspective:2 Basic Processing
+perspective:1 Basic Processing
 pixeliz0r:8 Art
 plasma:8 Art
 posterize:9 Effect
@@ -121,7 +121,7 @@ threelay0r:B Black & White
 threshold0r:A Effect2
 timeout:A Effect2
 tint0r:5 Advanced Coloring Tool
-transparency:2 Basic Processing
+transparency:1 Basic Processing
 twolay0r:B Black & White
 uvmap:8 Art
 value:8 Art
