@@ -42,6 +42,7 @@ public:
     static QString resourcesPath();
     static QString templatePath();
     static bool isAudioFile(const QString& filePath);
+    static QString logFolderPath();
 };
 
 #endif // UTIL_H
