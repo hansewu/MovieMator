@@ -47,6 +47,7 @@
 #include <time.h>
 
 #include "CrashHandler/CrashHandler.h"
+#include "util.h"
 
 #ifdef Q_OS_WIN
 extern "C"
@@ -126,7 +127,12 @@ static void mlt_log_handler(void *service, int mlt_level, const char *format, va
     Logger::write(cuteLoggerLevel, __FILE__, __LINE__, "MLT", message);
 }
 
-// 字节对齐及外联虚函数警告，还不会消除
+#pragma pack(push, 1)
+/**
+  * 消除字节对齐警告：warning: padding size of 'Application' with 7 bytes to alignment boundary
+  * 由于系统目前的对齐模数是8个字节（#pragma pack(show) == 8），而Application中有一个bool型成员变量，因此修改补7个额外自己对齐，因此会报警告
+  * 消除警告的方法是不使用默认的对齐方式，手动设置对齐方式为1个字节（#pragma pack(push, 1)）
+  */
 class Application : public QApplication
 {
 public:
@@ -287,6 +293,7 @@ public:
 protected:
     bool event(QEvent *event);
 };
+#pragma pack(pop)
 
 bool Application::event(QEvent *event)
 {
@@ -478,6 +485,9 @@ int main(int argc, char **argv)
     QmlUtilities::sharedEngine()->addImportPath(dir.path().append("/qt_qml"));
 
 #endif
+    //    清空xml日志文件夹
+    QDir logDir = Util::logFolderPath();
+    logDir.removeRecursively();
 
     duration = clock() - begin;
     printf("copy qml --- %ld\n", duration);

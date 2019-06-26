@@ -112,3 +112,22 @@ bool Util::isAudioFile(const QString& filePath) {
     }
     return  false;
 }
+
+QString Util::logFolderPath()
+{
+    QDir dir(qApp->applicationDirPath());
+#if defined(Q_OS_MAC)
+    dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+#endif
+    if (!dir.exists()) dir.mkpath(dir.path());
+    dir.mkdir("log");
+    dir.cd("log");
+    return  dir.absolutePath();
+}
+
+
+
+
+
+
+

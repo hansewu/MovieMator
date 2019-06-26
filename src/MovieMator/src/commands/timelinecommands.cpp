@@ -1024,6 +1024,7 @@ void MoveInsertClipCommand::undo_impl()
 FilterCommand::FilterCommand(Mlt::Filter* filter, QString name, double from_value, double to_value, AbstractCommand * parent)
  : AbstractCommand(parent)
 {
+    setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
     LOG_DEBUG() << "FilterCommand: " <<  name;
     Q_ASSERT(filter);
@@ -1052,6 +1053,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name, double from_valu
 FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  int from_value, int to_value, AbstractCommand * parent)
 : AbstractCommand(parent)
 {
+    setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
     Q_ASSERT(filter);
     m_filter = new Mlt::Filter(filter->get_filter());
@@ -1063,6 +1065,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  int from_value,
 FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QString from_value, QString to_value, AbstractCommand * parent)
 : AbstractCommand(parent)
 {
+    setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
     Q_ASSERT(filter);
     m_filter = new Mlt::Filter(filter->get_filter());
@@ -1074,6 +1077,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QString from_va
 FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, AbstractCommand * parent)
 : AbstractCommand(parent)
 {
+    setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
     Q_ASSERT(filter);
     m_filter = new Mlt::Filter(filter->get_filter());
@@ -1266,6 +1270,7 @@ KeyFrameInsertCommand::KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<
 : AbstractCommand(parent)
 ,m_insert_value(insert_value)
 {
+    setText(QObject::tr("KeyFrameInsertCommand"));
     Q_ASSERT(filter);
 
     m_filter        = new Mlt::Filter(filter->get_filter());
@@ -1345,6 +1350,7 @@ KeyFrameRemoveCommand::KeyFrameRemoveCommand(Mlt::Filter* filter, const QVector<
 : AbstractCommand(parent)
 ,m_remove_value(remove_value)
 {
+    setText(QObject::tr("KeyFrameRemoveCommand"));
     Q_ASSERT(filter);
 
     m_filter        = new Mlt::Filter(filter->get_filter());
@@ -1423,6 +1429,7 @@ bool KeyFrameRemoveCommand::mergeWith(const QUndoCommand *other)
 KeyFrameUpdateCommand::KeyFrameUpdateCommand(Mlt::Filter* filter, int nFrame, QString name, QString from_value, QString to_value, AbstractCommand *parent)
 : AbstractCommand(parent)
 {
+    setText(QObject::tr("KeyFrameUpdateCommand"));
     Q_ASSERT(filter);
 
     m_bFirstExec    = true;
@@ -1488,6 +1495,7 @@ bool KeyFrameUpdateCommand::mergeWith(const QUndoCommand *other)
 FilterAttachCommand::FilterAttachCommand( QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, AbstractCommand * parent)
 : AbstractCommand(parent)
 {
+    setText(QObject::tr("FilterAttachCommand"));
     m_bFirstExec    = true;
     m_meta          = meta;
     m_rowIndex      = rowIndex;
@@ -1548,6 +1556,7 @@ protected:
 FilterMoveCommand::FilterMoveCommand(int rowIndexFrom, int rowIndexTo, AbstractCommand * parent)
 : AbstractCommand(parent)
 {
+    setText(QObject::tr("FilterMoveCommand"));
     m_bFirstExec    = true;
 
     m_rowIndexFrom  = rowIndexFrom;

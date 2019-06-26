@@ -122,11 +122,33 @@ void QmlFilter::removeAnimationKeyFrame(int nFrame, QString name, bool bFromUndo
     {
         if(!bFromUndo)
         {
-            QString value = getAnimStringValue(nFrameInClip, name);
+            QString paraType = "string";
+            int paramCount = m_metadata->keyframes()->parameterCount();
+            for (int i = 0; i < paramCount; i++)
+            {
+                 QString key = m_metadata->keyframes()->parameter(i)->property();
+                 if (name == key) { paraType = m_metadata->keyframes()->parameter(i)->paraType(); break; }
+            }
+
+            QString from_value = "";
+            if (paraType == "double")
+                from_value = QString::number(getAnimDoubleValue(nFrameInClip, name));
+            else if(paraType == "int")
+                from_value = QString::number(getAnimIntValue(nFrameInClip, name));
+            else if(paraType == "string")
+                from_value = getAnimStringValue(nFrameInClip, name);
+            else if(paraType == "rect")
+            {
+                QRectF rect = getAnimRectValue(nFrameInClip, name);
+                from_value = QString("%1 %2 %3 %4 %5").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height()).arg(1.0);
+            }
+            else
+                from_value = getAnimStringValue(nFrameInClip, name);
+
 
             key_frame_item para;
             para.keyFrame = nFrameInClip;
-            para.paraMap.insert(name, value);
+            para.paraMap.insert(name, from_value);
 
             QVector<key_frame_item> keyFrameRemove;
             keyFrameRemove.insert(0, para);
