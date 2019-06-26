@@ -146,7 +146,7 @@ public:
     void setCopiedProducer(Mlt::Producer *producer);
 
     //设置转场属性
-    void setTransitionProperty(int trackIndex, int clipIndex, const QString& propertyName, const QString& propertyValue);
+    void setTransitionProperty(int trackIndex, int clipIndex, const QString& transitionName, const QString& propertyName, const QString& propertyValue);
 
 signals:
     void created();

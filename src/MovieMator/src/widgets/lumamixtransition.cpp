@@ -43,6 +43,11 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, int trackIndex, in
     ui->setupUi(this);
 //    Util::setColorsToHighlight(ui->label_2);
 
+    ui->softnessSlider->blockSignals(true);
+    ui->mixSlider->blockSignals(true);
+    ui->crossfadeRadioButton->blockSignals(true);
+    ui->mixRadioButton->blockSignals(true);
+
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {
         QString resource = transition->get("resource");
@@ -76,6 +81,11 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, int trackIndex, in
         }
         ui->mixSlider->setValue(qRound(transition->get_double("start") * 100.0));
     }
+    ui->softnessSlider->blockSignals(false);
+    ui->mixSlider->blockSignals(false);
+    ui->crossfadeRadioButton->blockSignals(false);
+    ui->mixRadioButton->blockSignals(false);
+
 
     m_durationSpinBox = new TimeSpinBox(this);
     m_durationSpinBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -165,8 +175,10 @@ void LumaMixTransition::on_invertCheckBox_clicked(bool checked)
 {
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {
-        transition->set("invert", checked);
-        MLT.refreshConsumer();
+        QString invertValue = checked ? "1" : "0";
+        MAIN.undoStack()->push(
+                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma", "invert", invertValue)
+                    );
     }
 }
 
@@ -178,39 +190,56 @@ void LumaMixTransition::on_softnessSlider_valueChanged(int value)
             qreal r = qreal(value) / 100.0;
             QColor color = QColor::fromRgbF(r, r, r);
             QString resource = QString("color:%1").arg(color.name());
-            transition->set("resource", resource.toLatin1().constData());
+            MAIN.undoStack()->push(
+                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma", "resource", resource)
+                        );
         } else {
-            transition->set("softness", value / 100.0);
+            MAIN.undoStack()->push(
+                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma", "softness", QString::number(value / 100.0))
+                        );
         }
-        MLT.refreshConsumer();
     }
 }
 
-void LumaMixTransition::on_crossfadeRadioButton_clicked()
+void LumaMixTransition::on_crossfadeRadioButton_toggled(bool checked)
 {
-    QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
-    if (transition && transition->is_valid()) {
-        transition->set("start", -1);
+    if (checked)
+    {
+        QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
+        if (transition && transition->is_valid()) {
+            MAIN.undoStack()->push(
+                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "mix", "start", "-1")
+                        );
+        }
+        ui->mixSlider->setDisabled(true);
+        ui->mixSpinner->setDisabled(true);
     }
-    ui->mixSlider->setDisabled(true);
-    ui->mixSpinner->setDisabled(true);
 }
 
-void LumaMixTransition::on_mixRadioButton_clicked()
+void LumaMixTransition::on_mixRadioButton_toggled(bool checked)
 {
-    QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
-    if (transition && transition->is_valid()) {
-        transition->set("start", ui->mixSlider->value() / 100.0);
+    if (checked)
+    {
+        QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
+        if (transition && transition->is_valid()) {
+            int value = ui->mixSlider->value();
+            MAIN.undoStack()->push(
+                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "mix", "start", QString::number(value / 100.0))
+                        );
+        }
+        ui->mixSlider->setEnabled(true);
+        ui->mixSpinner->setEnabled(true);
     }
-    ui->mixSlider->setEnabled(true);
-    ui->mixSpinner->setEnabled(true);
 }
 
 void LumaMixTransition::on_mixSlider_valueChanged(int value)
 {
     QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
     if (transition && transition->is_valid()) {
-        transition->set("start", value / 100.0);
+        int value = ui->mixSlider->value();
+        MAIN.undoStack()->push(
+                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "mix", "start", QString::number(value / 100.0))
+                    );
     }
 }
 
@@ -247,7 +276,9 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
 {
     if (index == kLumaComboDissolveIndex || index == kLumaComboCutIndex) {
         //on_invertCheckBox_clicked(false);
+        ui->invertCheckBox->blockSignals(true);
         ui->invertCheckBox->setChecked(false);
+        ui->invertCheckBox->blockSignals(false);
     }
     ui->invertCheckBox->setEnabled( index != kLumaComboDissolveIndex && index != kLumaComboCutIndex);
     ui->softnessSlider->setEnabled( index != kLumaComboDissolveIndex);
@@ -316,7 +347,7 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
         }
 
         MAIN.undoStack()->push(
-                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "resource", resourceValue, invertValue, softnessValue)
+                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma","resource", resourceValue, invertValue, softnessValue)
                     );
     }
 }

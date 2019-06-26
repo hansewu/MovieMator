@@ -4427,7 +4427,7 @@ Mlt::Transition *MultitrackModel::getClipTransition(int trackIndex, int clipInde
     return 0;
 }
 
-void MultitrackModel::setTransitionProperty(int trackIndex, int clipIndex, const QString &propertyName, const QString &propertyValue)
+void MultitrackModel::setTransitionProperty(int trackIndex, int clipIndex, const QString& transitionName, const QString &propertyName, const QString &propertyValue)
 {
     Q_ASSERT(trackIndex >= 0);
     Q_ASSERT(trackIndex < m_trackList.size());
@@ -4435,7 +4435,7 @@ void MultitrackModel::setTransitionProperty(int trackIndex, int clipIndex, const
 
     Q_ASSERT(m_tractor);
 
-    QScopedPointer<Mlt::Transition> transition(getClipTransition(trackIndex, clipIndex, "luma"));
+    QScopedPointer<Mlt::Transition> transition(getClipTransition(trackIndex, clipIndex, transitionName));
     Q_ASSERT(transition);
     transition->set(propertyName.toUtf8().constData(), propertyValue.toUtf8().constData());
 

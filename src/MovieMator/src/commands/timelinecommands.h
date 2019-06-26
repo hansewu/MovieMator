@@ -47,7 +47,8 @@ enum {
 
     UndoIdFilterCommand, //wzq
     UndoIdKeyFrameCommand,
-    UndoIdUpdate
+    UndoIdUpdate,
+    UndoIdTransitionProperty
 };
 
 //拓展连接clip
@@ -662,15 +663,20 @@ protected:
 class TransitionPropertyCommand: public AbstractCommand
 {
 public:
-    TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel& model, int trackIndex, int clipIndex, const QString& propertyName, const QString& propertyValue, int invert = 0, double softness = 0.0, AbstractCommand *parent = nullptr);
+    TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel& model, int trackIndex, int clipIndex, const QString& transitionName, const QString& propertyName, const QString& propertyValue, int invert = 0, double softness = 0.0, AbstractCommand *parent = nullptr);
     void redo_impl();
     void undo_impl();
+
+protected:
+    int id() const { return UndoIdTransitionProperty; }
+    bool mergeWith(const QUndoCommand *other);
 
 private:
     TimelineDock&       m_timeline;
     MultitrackModel&    m_model;
     int                 m_trackIndex;
     int                 m_clipIndex;
+    QString             m_transitionName;
     QString             m_propertyName;
     QString             m_propertyValue;
     UndoHelper          m_undoHelper;

@@ -43,9 +43,9 @@ private slots:
     
     void on_softnessSlider_valueChanged(int value);
     
-    void on_crossfadeRadioButton_clicked();
+    void on_crossfadeRadioButton_toggled(bool checked);
     
-    void on_mixRadioButton_clicked();
+    void on_mixRadioButton_toggled(bool checked);
     
     void on_mixSlider_valueChanged(int value);
     

@@ -1506,12 +1506,13 @@ void FilterClipCommand::undo_impl()
 */
 
 
-TransitionPropertyCommand::TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel &model, int trackIndex, int clipIndex, const QString &propertyName, const QString &propertyValue, int invert, double softness, AbstractCommand *parent)
+TransitionPropertyCommand::TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel &model, int trackIndex, int clipIndex, const QString& transitionName, const QString &propertyName, const QString &propertyValue, int invert, double softness, AbstractCommand *parent)
     : AbstractCommand(parent)
     , m_timeline(timeline)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
+    , m_transitionName(transitionName)
     , m_propertyName(propertyName)
     , m_propertyValue(propertyValue)
     , m_undoHelper(m_model)
@@ -1525,12 +1526,12 @@ TransitionPropertyCommand::TransitionPropertyCommand(TimelineDock& timeline, Mul
 void TransitionPropertyCommand::redo_impl()
 {
     m_undoHelper.recordBeforeState();
-    m_model.setTransitionProperty(m_trackIndex, m_clipIndex, m_propertyName, m_propertyValue);
+    m_model.setTransitionProperty(m_trackIndex, m_clipIndex, m_transitionName, m_propertyName, m_propertyValue);
     if (m_propertyName == "resource")
     {
-        m_model.setTransitionProperty(m_trackIndex, m_clipIndex, "progressive", "1");
-        m_model.setTransitionProperty(m_trackIndex, m_clipIndex, "invert", QString("%1").arg(m_invert));
-        m_model.setTransitionProperty(m_trackIndex, m_clipIndex, "softness", QString::number(m_softness));
+        m_model.setTransitionProperty(m_trackIndex, m_clipIndex, m_transitionName, "progressive", "1");
+        m_model.setTransitionProperty(m_trackIndex, m_clipIndex, m_transitionName, "invert", QString("%1").arg(m_invert));
+        m_model.setTransitionProperty(m_trackIndex, m_clipIndex, m_transitionName, "softness", QString::number(m_softness));
     }
     m_undoHelper.recordAfterState();
     if (m_isFirstRedo == false)
@@ -1546,6 +1547,12 @@ void TransitionPropertyCommand::undo_impl()
     m_undoHelper.undoChanges();
     m_timeline.emitSelectedFromSelection();
 }
+
+bool TransitionPropertyCommand::mergeWith(const QUndoCommand *other)
+{
+    return false;
+}
+
 
 
 } // namespace
