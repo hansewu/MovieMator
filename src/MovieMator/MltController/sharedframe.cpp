@@ -17,6 +17,13 @@
  */
 #include "sharedframe.h"
 
+#pragma pack(4)
+/**
+  * 消除字节对齐警告：warning: padding class 'FrameData' with 4 bytes to align 'f'
+  * 由于系统目前的对齐模数是8个字节（#pragma pack(show) == 8），而FrameData中只有一个成员Mlt::Frame f，
+  * Mlt::Frame的对齐方式是4个字节，因此会按照4个字节来处理FrameData的对齐，因此会报警告
+  * 目前的改法是不使用系统的8字节对齐，手动设置对齐为4个字节（#pragma pack(4)）
+  */
 class FrameData : public QSharedData
 {
 public:
@@ -28,6 +35,7 @@ public:
 private:
     Q_DISABLE_COPY(FrameData)
 };
+#pragma pack()
 
 SharedFrame::SharedFrame()
   : d(new FrameData)
