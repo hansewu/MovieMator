@@ -1703,6 +1703,22 @@ void TransitionPropertyCommand::undo_impl()
 
 bool TransitionPropertyCommand::mergeWith(const QUndoCommand *other)
 {
+    if (other->id() != id())
+        return false;
+
+    const TransitionPropertyCommand* that = static_cast<const TransitionPropertyCommand*>(other);
+
+    //需要合并的参数softness、start、Cut类型的resource
+    bool isSoftnessProperty = m_propertyName.compare("softness") == 0 && that->m_propertyName.compare("softness") == 0;
+    bool isStartProperty = m_propertyName.compare("start") == 0 && that->m_propertyName.compare("start") == 0;
+    bool isCutTransition = m_propertyName.compare("resource") == 0 || m_propertyValue.startsWith("color:");
+    if (isSoftnessProperty || isStartProperty || isCutTransition)
+    {
+        m_undoHelper.recordAfterState();
+        m_propertyValue = that->m_propertyValue;
+        return true;
+    }
+
     return false;
 }
 
@@ -1745,7 +1761,13 @@ void TransitionDurationSettingCommand::undo_impl()
 
 bool TransitionDurationSettingCommand::mergeWith(const QUndoCommand *other)
 {
-    return false;
+    if (other->id() != id()) // make sure other is also an AppendText command
+        return false;
+
+    const TransitionDurationSettingCommand* that = static_cast<const TransitionDurationSettingCommand*>(other);
+    m_undoHelper.recordAfterState();
+    m_duration = that->m_duration;
+    return true;
 }
 
 

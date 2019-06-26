@@ -127,6 +127,15 @@ void UndoHelper::recordAfterState()
                     info.changes |= Moved;
                 }
 
+                Mlt::ClipInfo newInfo;
+                playlist.clip_info(j, &newInfo);
+                /* Only in/out point changes are handled at this time. */
+                if (info.frame_in != newInfo.frame_in || info.frame_out != newInfo.frame_out) {
+                    UNDOLOG << "In/out changed:" << uid;
+                    info.changes |= ClipInfoModified;
+                }
+
+
                 if (!(m_hints & SkipXML)) {
 
                     Q_ASSERT(&clip->parent());
@@ -135,16 +144,9 @@ void UndoHelper::recordAfterState()
                     UNDOLOG << "wzq xml:" << newXml;
                     if (info.xml != newXml) {
                         UNDOLOG << "Modified xml:" << uid;
+                        info.changes = 0;
                         info.changes |= XMLModified;
                     }
-                }
-
-                Mlt::ClipInfo newInfo;
-                playlist.clip_info(j, &newInfo);
-                /* Only in/out point changes are handled at this time. */
-                if (info.frame_in != newInfo.frame_in || info.frame_out != newInfo.frame_out) {
-                    UNDOLOG << "In/out changed:" << uid;
-                    info.changes |= ClipInfoModified;
                 }
             }
             clipsRemoved.removeOne(uid);
