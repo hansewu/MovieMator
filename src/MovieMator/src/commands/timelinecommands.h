@@ -48,7 +48,8 @@ enum {
     UndoIdFilterCommand, //wzq
     UndoIdKeyFrameCommand,
     UndoIdUpdate,
-    UndoIdTransitionProperty
+    UndoIdTransitionProperty,
+    UndoIdTranstionDurationSetting
 };
 
 //拓展连接clip
@@ -682,6 +683,29 @@ private:
     UndoHelper          m_undoHelper;
     int                 m_invert;
     double              m_softness;
+    bool                m_isFirstRedo;
+};
+
+
+//转场时长
+class TransitionDurationSettingCommand: public AbstractCommand
+{
+public:
+    TransitionDurationSettingCommand(TimelineDock &timeline, MultitrackModel& model, int trackIndex, int clipIndex, int duration, AbstractCommand *parent = nullptr);
+    void redo_impl();
+    void undo_impl();
+
+protected:
+    int id() const { return UndoIdTranstionDurationSetting; }
+    bool mergeWith(const QUndoCommand *other);
+
+private:
+    TimelineDock&       m_timeline;
+    MultitrackModel&    m_model;
+    int                 m_trackIndex;
+    int                 m_clipIndex;
+    int                 m_duration;
+    UndoHelper          m_undoHelper;
     bool                m_isFirstRedo;
 };
 

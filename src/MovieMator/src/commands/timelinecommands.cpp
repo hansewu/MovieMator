@@ -1520,7 +1520,7 @@ TransitionPropertyCommand::TransitionPropertyCommand(TimelineDock& timeline, Mul
     , m_softness(softness)
     , m_isFirstRedo(true)
 {
-
+    setText(QObject::tr("Transition Property Change"));
 }
 
 void TransitionPropertyCommand::redo_impl()
@@ -1536,6 +1536,7 @@ void TransitionPropertyCommand::redo_impl()
     m_undoHelper.recordAfterState();
     if (m_isFirstRedo == false)
     {
+        //redo时刷新属性界面
         m_timeline.emitSelectedFromSelection();
     }
     m_isFirstRedo = false;
@@ -1545,6 +1546,7 @@ void TransitionPropertyCommand::undo_impl()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "propertyName" << m_propertyName << "propertyValue" << m_propertyValue;
     m_undoHelper.undoChanges();
+    //刷新属性界面
     m_timeline.emitSelectedFromSelection();
 }
 
@@ -1552,6 +1554,49 @@ bool TransitionPropertyCommand::mergeWith(const QUndoCommand *other)
 {
     return false;
 }
+
+
+
+
+TransitionDurationSettingCommand::TransitionDurationSettingCommand(TimelineDock &timeline, MultitrackModel &model, int trackIndex, int clipIndex, int duration, AbstractCommand *parent)
+    : AbstractCommand(parent)
+    , m_timeline(timeline)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(clipIndex)
+    , m_duration(duration)
+    , m_undoHelper(m_model)
+    , m_isFirstRedo(true)
+{
+    setText(QObject::tr("Change Transition Duration"));
+}
+
+void TransitionDurationSettingCommand::redo_impl()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "duration" << m_duration;
+    m_undoHelper.recordBeforeState();
+    m_model.setTransitionDuration(m_trackIndex, m_clipIndex, m_duration);
+    if (m_isFirstRedo == false)
+    {
+        //redo时刷新属性界面
+        m_timeline.emitSelectedFromSelection();
+    }
+    m_undoHelper.recordAfterState();
+    m_isFirstRedo = false;
+}
+
+void TransitionDurationSettingCommand::undo_impl()
+{
+    m_undoHelper.undoChanges();
+    //刷新属性界面
+    m_timeline.emitSelectedFromSelection();
+}
+
+bool TransitionDurationSettingCommand::mergeWith(const QUndoCommand *other)
+{
+    return false;
+}
+
 
 
 

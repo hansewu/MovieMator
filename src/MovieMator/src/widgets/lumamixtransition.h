@@ -52,9 +52,7 @@ private slots:
     void on_lumaCombo_activated(int index);
 
     //void on_lumaCombo_currentIndexChanged(int index);
-
-signals:
-     void setTransitionDuration(int);
+    void setTransitionDuration(int duration);
     
 private:
     Ui::LumaMixTransition *ui;

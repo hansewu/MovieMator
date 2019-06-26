@@ -98,8 +98,8 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, int trackIndex, in
     m_durationSpinBox->setValue(m_producer.get_length());
     m_durationSpinBox->blockSignals(false);
 
-    connect(m_durationSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(setTransitionDuration(int)));
-//    connect(m_durationSpinBox, SIGNAL(editingFinished()), this, SLOT(setTransitionDuration(int)));
+    connect(m_durationSpinBox, SIGNAL(valueChanged(int)), this, SLOT(setTransitionDuration(int)));
+//    connect(m_durationSpinBox, SIGNAL(editingFinished()), this, SLOT(setTransitionDuration()));
 
     m_previewMovie = new QMovie();
 
@@ -350,5 +350,12 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
                     new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma","resource", resourceValue, invertValue, softnessValue)
                     );
     }
+}
+
+void LumaMixTransition::setTransitionDuration(int duration)
+{
+    MAIN.undoStack()->push(
+                new Timeline::TransitionDurationSettingCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, duration)
+                );
 }
 
