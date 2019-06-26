@@ -266,7 +266,7 @@ MainWindow::MainWindow()
     LOG_DEBUG() << "Connect UI signals";
     // Connect UI signals.
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
-    connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(removeVideo()));
+//    connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(removeVideo()));
 
     if (ui->actionFullscreen)
         connect(ui->actionFullscreen, SIGNAL(triggered()), this, SLOT(on_actionEnter_Full_Screen_triggered()));
@@ -4120,6 +4120,7 @@ QToolButton *MainWindow::createToolButton(const QString& icon, const QString& ic
 void MainWindow::customizeToolbar()
 {
     QToolBar *toolbar = new QToolBar;
+    toolbar->setObjectName("MainToolBar");
     toolbar->setFloatable(false);
     toolbar->setMovable(false);
 
@@ -4137,11 +4138,10 @@ void MainWindow::customizeToolbar()
                                    tr("Open"), tr("Open a video, audio or image file"));
     connect(m_addButton, SIGNAL(clicked()), this, SLOT(openVideo()));
 
-    m_removeButton = createToolButton(":/icons/light/32x32/toolbar-remove.png",
-                                      ":/icons/light/32x32/toolbar-remove-pressed.png",
-                                      ":/icons/light/32x32/toolbar-remove.png",
-                                      tr("Remove"), tr("Remove media files"));
-    connect(m_removeButton, SIGNAL(clicked()), this, SLOT(removeVideo()));
+//    m_removeButton = createToolButton(":/icons/light/32x32/toolbar-remove.png",
+//                                      ":/icons/light/32x32/toolbar-remove-pressed.png",
+//                                      "", tr("Remove"), tr("Remove media files"));
+//    connect(m_removeButton, SIGNAL(clicked()), this, SLOT(removeVideo()));
 
 
     m_undoButton = createToolButton(":/icons/light/32x32/toolbar-undo.png",
@@ -4235,7 +4235,7 @@ void MainWindow::customizeToolbar()
     QSpacerItem *spacer1 = new QSpacerItem(50,20);
 
     gridLayout->addWidget(m_addButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
-    gridLayout->addWidget(m_removeButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+//    gridLayout->addWidget(m_removeButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     gridLayout->addItem(spacer1, 0, buttonIndex++, 1, 1);
 
     gridLayout->addWidget(m_undoButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
@@ -4476,6 +4476,7 @@ void MainWindow::setCurrentFilterForVideoWidget(QObject* filter, QmlMetadata* me
 void MainWindow::initParentDockForResourceDock()
 {
     m_resourceDockContainer = new ContainerDock(TabPosition_Left, this);
+    m_resourceDockContainer->setObjectName("ResourceDockContainer");//savestate needs to be used
     m_resourceDockContainer->setMinimumWidth(360);
     //m_resourceDockContainer->setMinimumHeight()
     addDockWidget(Qt::LeftDockWidgetArea, m_resourceDockContainer);
@@ -4485,6 +4486,7 @@ void MainWindow::initParentDockForResourceDock()
 void MainWindow::initParentDockForPropteriesDock()
 {
     m_propertiesDockContainer = new ContainerDock(TabPosition_Top, this);
+    m_propertiesDockContainer->setObjectName("PropertiesDockContainer");//savestate needs to be used
 
     addDockWidget(Qt::RightDockWidgetArea, m_propertiesDockContainer);
 }
