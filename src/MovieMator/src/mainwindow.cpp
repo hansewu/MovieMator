@@ -1120,7 +1120,7 @@ void MainWindow::setupSettingsMenu()
     }
 #else
     delete ui->menuDrawingMethod;
-    ui->menuDrawingMethod = 0;
+    ui->menuDrawingMethod = nullptr;
 #endif
     //隐藏原profile菜单
     ui->menuProfile->menuAction()->setVisible(false);

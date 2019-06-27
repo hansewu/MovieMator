@@ -17,8 +17,8 @@
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef _DEMO_IO_H_
-#define _DEMO_IO_H_
+#ifndef DEMO_IO_H_
+#define DEMO_IO_H_
 
 #ifdef __cplusplus
 extern "C"

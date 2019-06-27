@@ -114,9 +114,9 @@ void EncodeTask::stop()
 
 Mlt::FilteredConsumer *EncodeTask::createConsumer(Mlt::Profile *profile, Mlt::Properties *presets, QString target)
 {
-    Q_ASSERT(profile != NULL);
-    Q_ASSERT(presets != NULL);
-    Q_ASSERT(target != NULL);
+    Q_ASSERT(profile != nullptr);
+    Q_ASSERT(presets != nullptr);
+    Q_ASSERT(target != nullptr);
 
     m_consumer = new Mlt::FilteredConsumer(*profile, "avformat", target.toUtf8().constData());
 

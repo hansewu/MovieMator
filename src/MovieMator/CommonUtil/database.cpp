@@ -27,6 +27,13 @@
 #include <QDir>
 #include <Logger.h>
 
+#pragma pack(2)
+/*
+ * 消除警告：warning: padding struct 'DatabaseJob' with 4 bytes to align 'image'
+ * 消除警告：warning: padding size of 'DatabaseJob' with 6 bytes to alignment boundary
+ * 由于系统目前的对齐模数是8个字节（#pragma pack(show) == 8），成员中有两个连续的bool变量，占两个字节，因此需要填充6个字节，因此出现此警告
+ * 将对齐改为2字节对齐，正好不用填充
+*/
 struct DatabaseJob {
     enum Type {
         PutThumbnail,
@@ -42,6 +49,7 @@ struct DatabaseJob {
         , completed(false)
     {}
 };
+#pragma pack()
 
 static Database* instance = nullptr;
 

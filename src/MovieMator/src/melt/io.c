@@ -45,7 +45,7 @@ char *chomp( char *input )
 {
 	if ( input != NULL )
 	{
-		int length = strlen( input );
+        int length = (int)(strlen( input ));
 		if ( length && input[ length - 1 ] == '\n' )
 			input[ length - 1 ] = '\0';
 		if ( length > 1 && input[ length - 2 ] == '\r' )
@@ -138,10 +138,10 @@ void term_init( )
 	tcgetattr( 0, &tty );
 	oldtty = tty;
 
-	tty.c_iflag &= ~(IGNBRK|BRKINT|PARMRK|ISTRIP|INLCR|IGNCR|ICRNL|IXON);
+    tty.c_iflag &= (tcflag_t)(~(IGNBRK|BRKINT|PARMRK|ISTRIP|INLCR|IGNCR|ICRNL|IXON));
 	tty.c_oflag |= OPOST;
-	tty.c_lflag &= ~(ECHO|ECHONL|ICANON|IEXTEN);
-	tty.c_cflag &= ~(CSIZE|PARENB);
+    tty.c_lflag &= (tcflag_t)(~(ECHO|ECHONL|ICANON|IEXTEN));
+    tty.c_cflag &= (tcflag_t)(~(CSIZE|PARENB));
 	tty.c_cflag |= CS8;
 	tty.c_cc[ VMIN ] = 1;
 	tty.c_cc[ VTIME ] = 0;
@@ -181,7 +181,7 @@ int term_read( )
 	n = select( 1, &rfds, NULL, NULL, &tv );
 	if (n > 0)
 	{
-		n = read( 0, &ch, 1 );
+        n = (int)read( 0, &ch, 1 );
 		tcflush( 0, TCIFLUSH );
 		if (n == 1)
 			return ch;

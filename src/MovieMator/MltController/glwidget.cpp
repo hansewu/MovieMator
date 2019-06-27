@@ -57,7 +57,7 @@ static const int FRAMEDISPLAYED_MIN_MS = 10; // max 100 fps
 
 #ifndef Q_OS_WIN
 typedef GLenum (*ClientWaitSync_fp) (GLsync sync, GLbitfield flags, GLuint64 timeout);
-static ClientWaitSync_fp ClientWaitSync = 0;
+static ClientWaitSync_fp ClientWaitSync = nullptr;
 #endif
 
 using namespace Mlt;
@@ -160,12 +160,12 @@ void GLWidget::initializeGL()
     // getProcAddress is not working for me on Windows.
     if (Settings.playerGPU()) {
         if (m_glslManager && quickWindow()->openglContext()->hasExtension("GL_ARB_sync")) {
-            ClientWaitSync = (ClientWaitSync_fp) quickWindow()->openglContext()->getProcAddress("glClientWaitSync");
+            ClientWaitSync = reinterpret_cast<ClientWaitSync_fp>(quickWindow()->openglContext()->getProcAddress("glClientWaitSync"));
         }
         if (!ClientWaitSync) {
             emit gpuNotSupported();
             delete m_glslManager;
-            m_glslManager = 0;
+            m_glslManager = nullptr;
         }
     }
 #endif

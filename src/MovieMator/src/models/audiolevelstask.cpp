@@ -58,31 +58,36 @@ AudioLevelsTask::~AudioLevelsTask()
 
 void AudioLevelsTask::start(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index, bool force)
 {
+    Q_UNUSED(producer);
+    Q_UNUSED(model);
+    Q_UNUSED(index);
+    Q_UNUSED(force);
+
     return;
   //  clock_t begin, duration;
 
   //  begin = clock();
-    if (producer.is_valid() && index.isValid()) {
-        AudioLevelsTask* task = new AudioLevelsTask(producer, model, index);
-        tasksListMutex.lock();
-        // See if there is already a task for this MLT service and resource.
-        foreach (AudioLevelsTask* t, tasksList) {
-            if (*t == *task) {
-                // If so, then just add ourselves to be notified upon completion.
-                delete task;
-                task = nullptr;
-                t->m_producers << ProducerAndIndex(new Mlt::Producer(producer), index);
-                break;
-            }
-        }
-        if (task) {
-            // Otherwise, start a new audio levels generation thread.
-            task->m_isForce = force;
-            tasksList << task;
-            QThreadPool::globalInstance()->start(task);
-        }
-        tasksListMutex.unlock();
-    }
+//    if (producer.is_valid() && index.isValid()) {
+//        AudioLevelsTask* task = new AudioLevelsTask(producer, model, index);
+//        tasksListMutex.lock();
+//        // See if there is already a task for this MLT service and resource.
+//        foreach (AudioLevelsTask* t, tasksList) {
+//            if (*t == *task) {
+//                // If so, then just add ourselves to be notified upon completion.
+//                delete task;
+//                task = nullptr;
+//                t->m_producers << ProducerAndIndex(new Mlt::Producer(producer), index);
+//                break;
+//            }
+//        }
+//        if (task) {
+//            // Otherwise, start a new audio levels generation thread.
+//            task->m_isForce = force;
+//            tasksList << task;
+//            QThreadPool::globalInstance()->start(task);
+//        }
+//        tasksListMutex.unlock();
+//    }
   //  duration = clock() - begin;
 
     //qDebug() << "函数AudioLevelsTask Start的运行时间大约为：" << duration*1000/CLOCKS_PER_SEC << " ms";
