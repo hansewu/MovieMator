@@ -1575,6 +1575,10 @@ void QmlFilter::refreshNoAnimation(const QVector<key_frame_item> &listParameter,
             iter++;
         }
     }
+
+    MLT.refreshConsumer();
+    emit filterPropertyValueChanged();
+    emit keyframeNumberChanged();
 }
 
 //#endif

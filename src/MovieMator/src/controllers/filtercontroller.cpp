@@ -567,7 +567,7 @@ void FilterController::refreshNoAnimation(Mlt::Filter *filter, const QVector<key
     if(mltFilter->get_filter() != filter->get_filter())     return;
 
     int nKeyNumber = qmlFilter->cache_getKeyFrameNumber();
-    if (nKeyNumber <= 0)
+    if (nKeyNumber <= 1)  //if (nKeyNumber <= 0) //考虑mlt底层会在0的位置自动加上关键帧
         qmlFilter->refreshNoAnimation(listKeyFrame, true);
 }
 
