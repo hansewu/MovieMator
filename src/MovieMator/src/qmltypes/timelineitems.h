@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _TIMELINEITEMS_H
-#define _TIMELINEITEMS_H
+#ifndef TIMELINEITEMS_H_
+#define TIMELINEITEMS_H_
 
 void registerTimelineItems();
 

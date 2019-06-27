@@ -30,9 +30,7 @@
 @implementation SecurityBookmark
 + (NSString *)bookmarkDataPlist
 {
-    NSString *applicationSupportPath;
-    NSString *applicationDataPlist;
-        NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+    NSString *applicationDataPlist = nil;
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
         if ([paths count] > 0) {
 //            applicationDataPlist = [[NSString alloc] initWithFormat:@"%@/%@", [paths objectAtIndex:0], @"etinysoft/bookmarks.plist"];
@@ -94,7 +92,7 @@
         NSURL *url = [[NSURL URLByResolvingBookmarkData:bookmarkData options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:&error] retain];
         if (url)
         {
-            if ([[NSFileManager defaultManager] fileExistsAtPath:[url path]])
+            if ([[NSFileManager defaultManager] fileExistsAtPath:reinterpret_cast<NSString *_Nonnull>([url path])])
                 [url startAccessingSecurityScopedResource];
             else
                 [removeKeys addObject:key];

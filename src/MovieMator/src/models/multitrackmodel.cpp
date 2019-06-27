@@ -4424,7 +4424,7 @@ Mlt::Transition *MultitrackModel::getClipTransition(int trackIndex, int clipInde
         }
         service.reset(service->producer());
     }
-    return 0;
+    return nullptr;
 }
 
 void MultitrackModel::setTransitionProperty(int trackIndex, int clipIndex, const QString& transitionName, const QString &propertyName, const QString &propertyValue)

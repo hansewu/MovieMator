@@ -213,7 +213,7 @@ namespace CrashManager
 
 
 
-                execl(program,program, path, path2, (char*) 0 ); /* Execute the program */
+                execl(program,program, path, path2, nullptr); /* Execute the program */
                 std::cerr << "Uh-Oh! execl() failed!";
                 /* execl doesn't return unless there's an error */
                 //qApp->quit();
@@ -357,12 +357,12 @@ namespace CrashManager
         std::string mm_ver = MOVIEMATOR_VERSION;
         pHandler = new google_breakpad::ExceptionHandler(
                     pathAsStr,
-                    /*FilterCallback*/ 0,
+                    /*FilterCallback*/ nullptr,
                     DumpCallback,
                     /*context*/
-                    0,
+                    nullptr,
                     true,
-                    NULL,
+                    nullptr,
                     mm_ver
                     );
 #endif

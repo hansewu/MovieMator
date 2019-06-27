@@ -13,6 +13,9 @@ public:
 
     virtual void redo_impl() = 0;
     virtual void undo_impl() = 0;
+private:
+    QString m_originalXml;
+    QString m_currentXml;
 };
 
 #endif // ABSTRACTCOMMAND_H

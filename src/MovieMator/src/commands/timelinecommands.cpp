@@ -1024,6 +1024,7 @@ void MoveInsertClipCommand::undo_impl()
 FilterCommand::FilterCommand(Mlt::Filter* filter, QString name, double from_value, double to_value, AbstractCommand * parent)
  : AbstractCommand(parent)
 {
+    setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
     LOG_DEBUG() << "FilterCommand: " <<  name;
     Q_ASSERT(filter);
@@ -1052,6 +1053,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name, double from_valu
 FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  int from_value, int to_value, AbstractCommand * parent)
 : AbstractCommand(parent)
 {
+    setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
     Q_ASSERT(filter);
     m_filter = new Mlt::Filter(filter->get_filter());
@@ -1063,6 +1065,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  int from_value,
 FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QString from_value, QString to_value, AbstractCommand * parent)
 : AbstractCommand(parent)
 {
+    setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
     Q_ASSERT(filter);
     m_filter = new Mlt::Filter(filter->get_filter());
@@ -1074,6 +1077,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QString from_va
 FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, AbstractCommand * parent)
 : AbstractCommand(parent)
 {
+    setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
     Q_ASSERT(filter);
     m_filter = new Mlt::Filter(filter->get_filter());
@@ -1267,6 +1271,7 @@ KeyFrameInsertCommand::KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<
 ,m_from_value(from_value)
 ,m_insert_value(insert_value)
 {
+    setText(QObject::tr("KeyFrameInsertCommand"));
     Q_ASSERT(filter);
 
     m_filter        = new Mlt::Filter(filter->get_filter());
@@ -1368,6 +1373,7 @@ KeyFrameRemoveCommand::KeyFrameRemoveCommand(Mlt::Filter* filter, const QVector<
 : AbstractCommand(parent)
 ,m_remove_value(remove_value)
 {
+    setText(QObject::tr("KeyFrameRemoveCommand"));
     Q_ASSERT(filter);
 
     m_filter        = new Mlt::Filter(filter->get_filter());
@@ -1446,6 +1452,7 @@ bool KeyFrameRemoveCommand::mergeWith(const QUndoCommand *other)
 KeyFrameUpdateCommand::KeyFrameUpdateCommand(Mlt::Filter* filter, int nFrame, QString name, QString from_value, QString to_value, AbstractCommand *parent)
 : AbstractCommand(parent)
 {
+    setText(QObject::tr("KeyFrameUpdateCommand"));
     Q_ASSERT(filter);
 
     m_bFirstExec    = true;
@@ -1511,6 +1518,7 @@ bool KeyFrameUpdateCommand::mergeWith(const QUndoCommand *other)
 FilterAttachCommand::FilterAttachCommand( QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, AbstractCommand * parent)
 : AbstractCommand(parent)
 {
+    setText(QObject::tr("FilterAttachCommand"));
     m_bFirstExec    = true;
     m_meta          = meta;
     m_rowIndex      = rowIndex;
@@ -1571,6 +1579,7 @@ protected:
 FilterMoveCommand::FilterMoveCommand(int rowIndexFrom, int rowIndexTo, AbstractCommand * parent)
 : AbstractCommand(parent)
 {
+    setText(QObject::tr("FilterMoveCommand"));
     m_bFirstExec    = true;
 
     m_rowIndexFrom  = rowIndexFrom;
@@ -1726,6 +1735,22 @@ void TransitionPropertyCommand::undo_impl()
 
 bool TransitionPropertyCommand::mergeWith(const QUndoCommand *other)
 {
+    if (other->id() != id())
+        return false;
+
+    const TransitionPropertyCommand* that = static_cast<const TransitionPropertyCommand*>(other);
+
+    //需要合并的参数softness、start、Cut类型的resource
+    bool isSoftnessProperty = m_propertyName.compare("softness") == 0 && that->m_propertyName.compare("softness") == 0;
+    bool isStartProperty = m_propertyName.compare("start") == 0 && that->m_propertyName.compare("start") == 0;
+    bool isCutTransition = m_propertyName.compare("resource") == 0 || m_propertyValue.startsWith("color:");
+    if (isSoftnessProperty || isStartProperty || isCutTransition)
+    {
+        m_undoHelper.recordAfterState();
+        m_propertyValue = that->m_propertyValue;
+        return true;
+    }
+
     return false;
 }
 
@@ -1768,7 +1793,13 @@ void TransitionDurationSettingCommand::undo_impl()
 
 bool TransitionDurationSettingCommand::mergeWith(const QUndoCommand *other)
 {
-    return false;
+    if (other->id() != id()) // make sure other is also an AppendText command
+        return false;
+
+    const TransitionDurationSettingCommand* that = static_cast<const TransitionDurationSettingCommand*>(other);
+    m_undoHelper.recordAfterState();
+    m_duration = that->m_duration;
+    return true;
 }
 
 

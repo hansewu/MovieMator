@@ -236,7 +236,6 @@ void LumaMixTransition::on_mixSlider_valueChanged(int value)
 {
     QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
     if (transition && transition->is_valid()) {
-        int value = ui->mixSlider->value();
         MAIN.undoStack()->push(
                     new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "mix", "start", QString::number(value / 100.0))
                     );

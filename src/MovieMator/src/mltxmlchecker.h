@@ -116,7 +116,7 @@ private:
     } m_resource;
 
 #ifdef MOVIEMATOR_PRO
-    Mlt::Profile* m_profile;
+//    Mlt::Profile* m_profile;
 #endif
 };
 

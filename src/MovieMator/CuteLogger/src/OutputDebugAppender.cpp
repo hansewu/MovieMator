@@ -14,9 +14,10 @@
 // Local
 #include "OutputDebugAppender.h"
 
+#ifdef Q_OS_WIN
 // STL
 #include <windows.h>
-
+#endif
 
 void OutputDebugAppender::append(const QDateTime& timeStamp,
                                  Logger::LogLevel logLevel,
@@ -26,6 +27,8 @@ void OutputDebugAppender::append(const QDateTime& timeStamp,
                                  const QString& message)
 {
     QString s = formattedString(timeStamp, logLevel, file, line, function, message);
+#ifdef Q_OS_WIN
     OutputDebugStringW(reinterpret_cast<LPCWSTR>(s.utf16()));
+#endif
 }
 

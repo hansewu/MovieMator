@@ -50,7 +50,7 @@ class TimeSpinBoxLineEdit : public QLineEdit
     Q_OBJECT
 
 public:
-    explicit TimeSpinBoxLineEdit(QWidget *parent = 0);
+    explicit TimeSpinBoxLineEdit(QWidget *parent = nullptr);
 
 protected:
     void focusInEvent(QFocusEvent *event);

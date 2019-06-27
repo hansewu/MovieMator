@@ -47,6 +47,7 @@
 #include <time.h>
 
 #include "CrashHandler/CrashHandler.h"
+#include "util.h"
 
 #ifdef Q_OS_WIN
 extern "C"
@@ -484,6 +485,9 @@ int main(int argc, char **argv)
     QmlUtilities::sharedEngine()->addImportPath(dir.path().append("/qt_qml"));
 
 #endif
+    //    清空xml日志文件夹
+    QDir logDir = Util::logFolderPath();
+    logDir.removeRecursively();
 
     duration = clock() - begin;
     printf("copy qml --- %ld\n", duration);
