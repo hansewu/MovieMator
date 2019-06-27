@@ -620,7 +620,7 @@ protected:
 class KeyFrameInsertCommand: public AbstractCommand
 {
 public:
-    KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &insert_value, AbstractCommand * parent = nullptr);
+    KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item>  &insert_value, AbstractCommand * parent = nullptr);
     ~KeyFrameInsertCommand();
     void redo_impl();
     void undo_impl();
@@ -631,6 +631,7 @@ protected:
 
 private:
     Mlt::Filter* m_filter;
+    QVector<key_frame_item>  m_from_value;    //存加关键帧之前的值
     QVector<key_frame_item>  m_insert_value;
 
     bool      m_bFirstExec;

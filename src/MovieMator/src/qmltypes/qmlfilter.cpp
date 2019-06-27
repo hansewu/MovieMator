@@ -864,6 +864,14 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                 MAIN.undoStack()->push(new Timeline::KeyFrameUpdateCommand(m_filter, nFrameInClip, key, from_value, value));
             else            //增加关键帧
             {
+                key_frame_item paraFrom;
+                paraFrom.keyFrame = nFrameInClip;//-1;
+                paraFrom.paraMap.insert(key, from_value);
+
+                QVector<key_frame_item> keyFrameFrom;
+                keyFrameFrom.insert(0, paraFrom);
+
+
                 key_frame_item para;
                 para.keyFrame = nFrameInClip;
                 para.paraMap.insert(key, value);
@@ -871,7 +879,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                 QVector<key_frame_item> keyFrameAdd;
                 keyFrameAdd.insert(0, para);
 
-                MAIN.undoStack()->push(new Timeline::KeyFrameInsertCommand(m_filter, keyFrameAdd));
+                MAIN.undoStack()->push(new Timeline::KeyFrameInsertCommand(m_filter, keyFrameFrom, keyFrameAdd));
             }
        }
 
@@ -1520,6 +1528,57 @@ void QmlFilter::refreshKeyFrame(const QVector<key_frame_item> &listKeyFrame)
     //m_cacheKeyFrameList = listKeyFrame;
     //syncCacheToProject();
     Q_UNUSED(listKeyFrame)
+}
+
+void QmlFilter::refreshNoAnimation(const QVector<key_frame_item> &listParameter, bool bFromUndo)
+{
+    for(int nIndex = 0; nIndex < listParameter.count(); nIndex++)
+    {
+        key_frame_item para = listParameter.at(nIndex);
+        QMap<QString, QString>::Iterator iter = para.paraMap.begin();
+        while(iter != para.paraMap.end())
+        {
+            QString sPropertyName   = iter.key();
+            QString sValue          = iter.value();
+
+            QString paraType    = "string";
+            int paramCount      = m_metadata->keyframes()->parameterCount();
+            for (int i = 0; i < paramCount; i++)
+            {
+                 QString name = m_metadata->keyframes()->parameter(i)->property();
+                 if (name == sPropertyName) { paraType = m_metadata->keyframes()->parameter(i)->paraType(); break; }
+            }
+
+            if (paraType == "double")
+                m_filter->set(sPropertyName.toUtf8().constData(), sValue.toDouble());
+            else if(paraType == "int")
+                m_filter->set(sPropertyName.toUtf8().constData(), sValue.toInt());
+            else if(paraType == "string")
+                m_filter->set(sPropertyName.toUtf8().constData(), sValue.toUtf8().constData());
+            else if(paraType == "rect")
+            {
+                QStringList listValue   = sValue.split(" ", QString::SkipEmptyParts);
+                double x                = listValue[0].toDouble();
+                double y                = listValue[1].toDouble();
+                double width            = listValue[2].toDouble();
+                double height           = listValue[3].toDouble();
+                double opacity          = listValue[4].toDouble();
+
+                m_filter->set(sPropertyName.toUtf8().constData(), x, y, width, height, opacity);
+            }
+            else
+                m_filter->set(sPropertyName.toUtf8().constData(), sValue.toUtf8().constData());
+
+            if(!bFromUndo)
+            {}
+
+            iter++;
+        }
+    }
+
+    MLT.refreshConsumer();
+    emit filterPropertyValueChanged();
+    emit keyframeNumberChanged();
 }
 
 //#endif

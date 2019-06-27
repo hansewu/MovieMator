@@ -101,6 +101,7 @@ public slots:
     void refreshCurrentFilter(Mlt::Filter *filter); //wzq
     //刷新滤镜的关键帧信息，当关键帧发生变化时。实际时通知qmlFilter更新关键帧信息
     void refreshKeyFrame(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame); //wzq
+    void refreshNoAnimation(Mlt::Filter *filter, const QVector<key_frame_item> &listParameter);
     void insertKeyFrame(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame);
     void removeKeyFrame(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame);
     void updateKeyFrame(Mlt::Filter *filter, int nFrame, QString name, QString value);
