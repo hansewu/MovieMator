@@ -36,7 +36,7 @@ colortap:8 Art
 composition:8 Art
 contrast0r:5 Advanced Coloring Tool
 curves:5 Advanced Coloring Tool
-d90stairsteppingfix:8 Art
+d90stairsteppingfix:5 Advanced Coloring Tool
 darken:8 Art
 defish0r:7 Distort
 delay0r:A Effect2

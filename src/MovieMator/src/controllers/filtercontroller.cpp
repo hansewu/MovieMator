@@ -39,6 +39,7 @@
 #include <audiofilterdockinterface.h>
 #include "mainwindow.h"
 #include "util.h"
+#include <assert.h>
 
 FilterController::FilterController(QObject* parent) : QObject(parent),
  m_metadataModel(this),
@@ -409,6 +410,7 @@ void FilterController::updateFilterDock()
     int nFilterCount = m_metadataModel.rowCount();
 
     Filter_Info filterInfos[200];
+    assert(nFilterCount < 200);
     for (int nIndex = 0; nIndex < nFilterCount; nIndex++)
     {
         QmlMetadata* metadataModel          = m_metadataModel.get(nIndex);
