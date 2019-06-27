@@ -90,6 +90,12 @@ public:
      */
     void refreshKeyFrame(const QVector<key_frame_item> &listKeyFrame) ;
 
+    /** Update the filter’s all parameters to the value specified by listParameter.
+     * Sync cache data to project
+     * \param listParameter the filter's new data
+     */
+    void refreshNoAnimation(const QVector<key_frame_item> &listParameter, bool bFromUndo = false) ;
+
     /** Get a string value by name of Mlt::Filter.
      *
      * \param name the property to get

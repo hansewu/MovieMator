@@ -555,6 +555,22 @@ void FilterController::refreshKeyFrame(Mlt::Filter *filter, const QVector<key_fr
     qmlFilter->refreshKeyFrame(listKeyFrame);
 }
 
+void FilterController::refreshNoAnimation(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame)
+{
+    if(m_currentFilterIndex == -1)          return;
+
+    QmlFilter *qmlFilter = m_currentFilter.data();
+    if(!qmlFilter)                          return;
+
+    Mlt::Filter* mltFilter = qmlFilter->getMltFilter();
+    Q_ASSERT(mltFilter);
+    if(mltFilter->get_filter() != filter->get_filter())     return;
+
+    int nKeyNumber = qmlFilter->cache_getKeyFrameNumber();
+    if (nKeyNumber <= 0)
+        qmlFilter->refreshNoAnimation(listKeyFrame, true);
+}
+
 void FilterController::insertKeyFrame(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame)
 {
     if(m_currentFilterIndex == -1)          return;

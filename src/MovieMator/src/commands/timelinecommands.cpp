@@ -1262,8 +1262,9 @@ void FilterCommand::undo_impl()
 
 
 //增加关键帧
-KeyFrameInsertCommand::KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<key_frame_item> &insert_value, AbstractCommand *parent)
+KeyFrameInsertCommand::KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item> &insert_value, AbstractCommand *parent)
 : AbstractCommand(parent)
+,m_from_value(from_value)
 ,m_insert_value(insert_value)
 {
     Q_ASSERT(filter);
@@ -1295,6 +1296,8 @@ void KeyFrameInsertCommand::undo_impl()
 {
     Q_ASSERT(MAIN.filterController());
     MAIN.filterController()->removeKeyFrame(m_filter, m_insert_value);
+
+    MAIN.filterController()->refreshNoAnimation(m_filter, m_from_value);
 }
 
 bool KeyFrameInsertCommand::mergeWith(const QUndoCommand *other)
@@ -1313,7 +1316,7 @@ bool KeyFrameInsertCommand::mergeWith(const QUndoCommand *other)
         return false;
     }
 
-    //合并
+    //合并m_insert_value
     key_frame_item newPara = other_command->m_insert_value.at(0);
 
     int nIndex = 0;
@@ -1332,6 +1335,26 @@ bool KeyFrameInsertCommand::mergeWith(const QUndoCommand *other)
     if(nIndex == m_insert_value.count()) //没有存储,没有已经为keyFrame这一帧的存储数据
     {
         m_insert_value.insert(nIndex, other_command->m_insert_value.at(0));
+    }
+
+    //合并m_from_value:这里可以考虑进一步优化，优化只存储非动画时候的值，因为这个值存下来只是非动画增加帧变成动画时需要用（undo时用到），可优化的地方：存储这个值+mergeWith两个地方。
+    key_frame_item newFromPara = other_command->m_from_value.at(0);
+
+    for(nIndex = 0; nIndex < m_from_value.count(); nIndex++)
+    {
+        key_frame_item para = m_from_value.at(nIndex);
+        if(para.keyFrame == newFromPara.keyFrame)
+        {
+            QMap<QString, QString>::iterator iter = newFromPara.paraMap.begin();
+            para.paraMap.insert(iter.key(), iter.value());
+            m_from_value.removeAt(nIndex);
+            m_from_value.insert(nIndex, para);
+            break;
+        }
+    }
+    if(nIndex == m_from_value.count()) //没有存储,没有已经为keyFrame这一帧的存储数据
+    {
+        m_from_value.insert(nIndex, other_command->m_from_value.at(0));
     }
 
     m_execTime.restart();
