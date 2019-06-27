@@ -98,7 +98,7 @@ saturat0r:5 Advanced Coloring Tool
 saturation:5 Advanced Coloring Tool
 scanline0r:A Effect2
 screen:8 Art
-select0r:A Effect2
+select0r:6 Light
 sharpness:9 Effect
 sigmoidaltransfer:B Black & White
 sobel:8 Art
@@ -121,7 +121,7 @@ threelay0r:B Black & White
 threshold0r:A Effect2
 timeout:A Effect2
 tint0r:5 Advanced Coloring Tool
-transparency:1 Basic Processing
+transparency:3 Basic Coloring Tool
 twolay0r:B Black & White
 uvmap:8 Art
 value:8 Art
