@@ -23,26 +23,34 @@ void saveXmlFile(QString original,QString currrent,QString commandName)
     QString folderName = commandName;
 
     QDateTime now = QDateTime::currentDateTime();
-    QString strNow =now.toString("yyyyMMddhhmmss");
+    QString strNow =now.toString("MMdd-hhmmss");
     folderName = strNow + folderName;
 
     if(original != currrent){
-        folderName = "Error"+folderName;
+        folderName = folderName + "-Error";
     }
 
     QDir dir = Util::logFolderPath();
     dir.mkdir(folderName);
     dir.cd(folderName);
 
-    QFile originalFile(dir.absoluteFilePath("original.txt"));
+    QString originalPath = dir.absoluteFilePath("original.mmp");
+    QFile originalFile(originalPath);
     originalFile.open(QIODevice::WriteOnly | QIODevice::Text);
     originalFile.write(original.toUtf8());
     originalFile.close();
 
-    QFile currentFile(dir.absoluteFilePath("current.txt"));
+    QString currentPath = dir.absoluteFilePath("current.mmp");
+    QFile currentFile(currentPath);
     currentFile.open(QIODevice::WriteOnly | QIODevice::Text);
     currentFile.write(currrent.toUtf8());
     currentFile.close();
+
+    if(original != currrent){
+        if (!MLT.open(originalPath)) {
+            MAIN.open(MLT.producer());
+        }
+    }
 
     qDebug()<<"original:";
     qDebug()<<original;
@@ -78,9 +86,10 @@ void AbstractCommand::undo()
     w_leave_critical();
 
     m_currentXml = MLT.XML(MAIN.timelineDock()->model()->tractor());
-
+#ifndef NDEBUG
     saveXmlFile(m_originalXml,m_currentXml,text());
 //    Q_ASSERT(m_currentXml == m_originalXml);
+#endif
 }
 
 
