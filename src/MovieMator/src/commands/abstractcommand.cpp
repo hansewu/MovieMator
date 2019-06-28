@@ -86,7 +86,7 @@ void AbstractCommand::undo()
     w_leave_critical();
 
     m_currentXml = MLT.XML(MAIN.timelineDock()->model()->tractor());
-#ifndef NDEBUG
+#if defined(NDEBUG)
     saveXmlFile(m_originalXml,m_currentXml,text());
 //    Q_ASSERT(m_currentXml == m_originalXml);
 #endif
