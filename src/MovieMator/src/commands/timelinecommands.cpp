@@ -1743,7 +1743,8 @@ bool TransitionPropertyCommand::mergeWith(const QUndoCommand *other)
     //需要合并的参数softness、start、Cut类型的resource
     bool isSoftnessProperty = m_propertyName.compare("softness") == 0 && that->m_propertyName.compare("softness") == 0;
     bool isStartProperty = m_propertyName.compare("start") == 0 && that->m_propertyName.compare("start") == 0;
-    bool isCutTransition = m_propertyName.compare("resource") == 0 || m_propertyValue.startsWith("color:");
+    bool isCutTransition = m_propertyName.compare("resource") == 0 && m_propertyValue.startsWith("color:")
+            && that->m_propertyName.compare("resource") == 0 && that->m_propertyValue.startsWith("color:");
     if (isSoftnessProperty || isStartProperty || isCutTransition)
     {
         m_undoHelper.recordAfterState();
