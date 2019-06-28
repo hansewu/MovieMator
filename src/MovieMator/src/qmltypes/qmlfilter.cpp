@@ -820,7 +820,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                 {
                     if (!animation.is_valid() || !animation.is_key(frame) || value != m_filter->anim_get(key.toUtf8().constData(), frame, duration))
                     {
-                        from_value = QString(m_filter->anim_get(key.toUtf8().constData(), frame, duration));
+                        from_value = QString::fromUtf8(m_filter->anim_get(key.toUtf8().constData(), frame, duration));
 
                         m_filter->anim_set(key.toUtf8().constData(), value.toUtf8().constData(), frame, duration);
                     }
@@ -852,7 +852,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                 {
                     if (!animation.is_valid() || !animation.is_key(frame) || value != m_filter->anim_get(key.toUtf8().constData(), frame, duration))
                     {
-                        from_value = QString(m_filter->anim_get(key.toUtf8().constData(), frame, duration));
+                        from_value = QString::fromUtf8(m_filter->anim_get(key.toUtf8().constData(), frame, duration));
                         m_filter->anim_set(key.toUtf8().constData(), value.toUtf8().constData(), frame, duration);
                     }
                 }
