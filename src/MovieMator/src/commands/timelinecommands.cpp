@@ -1610,6 +1610,7 @@ ClipsSelectCommand::ClipsSelectCommand(QList<int> newSelection, int newTrackInde
                                        AbstractCommand * parent)
 : AbstractCommand(parent)
 {
+    setText(QObject::tr("ClipsSelectCommand"));
     m_bFirstExec    = true;
     m_newSelection  = newSelection;
     m_oldSelection  = oldSelection;
