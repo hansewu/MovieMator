@@ -167,6 +167,9 @@ public:
     // 发送 sizeAndPositionFilterSelected()信号
     void selectSizeAndPositionFilter(int index);
 
+    // timelinecommand单元测试
+    void unitTestCommand();
+
 signals:
     // 当前轨道发生了变化
     void currentTrackChanged();

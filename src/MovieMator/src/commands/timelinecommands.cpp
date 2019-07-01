@@ -1021,7 +1021,7 @@ void MoveInsertClipCommand::undo_impl()
 
 
 
-FilterCommand::FilterCommand(Mlt::Filter* filter, QString name, double from_value, double to_value, AbstractCommand * parent)
+FilterCommand::FilterCommand(Mlt::Filter* filter, QString name, double from_value, double to_value, bool isFirst,AbstractCommand * parent)
  : AbstractCommand(parent)
 {
     setText(QObject::tr("FilterCommand"));
@@ -1030,6 +1030,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name, double from_valu
     Q_ASSERT(filter);
     m_filter = new Mlt::Filter(filter->get_filter());
     m_keyName   = name;
+    m_bFirstExec = isFirst;
 
     int transed_filter = 0;
     if(name.startsWith("transition.") == true)
@@ -1050,7 +1051,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name, double from_valu
     }
 }
 
-FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  int from_value, int to_value, AbstractCommand * parent)
+FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  int from_value, int to_value,bool isFirst, AbstractCommand * parent)
 : AbstractCommand(parent)
 {
     setText(QObject::tr("FilterCommand"));
@@ -1060,9 +1061,10 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  int from_value,
     m_keyName   = name;
     m_from_value    = QVariant(from_value);
     m_to_value      = QVariant(to_value);
+    m_bFirstExec = isFirst;
 }
 
-FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QString from_value, QString to_value, AbstractCommand * parent)
+FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QString from_value, QString to_value, bool isFirst,AbstractCommand * parent)
 : AbstractCommand(parent)
 {
     setText(QObject::tr("FilterCommand"));
@@ -1072,9 +1074,10 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QString from_va
     m_keyName   = name;
     m_from_value    = QVariant(from_value);
     m_to_value      = QVariant(to_value);
+    m_bFirstExec = isFirst;
 }
 
-FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, AbstractCommand * parent)
+FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, bool isFirst,AbstractCommand * parent)
 : AbstractCommand(parent)
 {
     setText(QObject::tr("FilterCommand"));
@@ -1084,6 +1087,7 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_val
     m_keyName   = name;
     m_from_value = QVariant(from_value);
     m_to_value      = QVariant(to_value);
+    m_bFirstExec = isFirst;
 }
 
 FilterCommand::~FilterCommand()
@@ -1266,7 +1270,7 @@ void FilterCommand::undo_impl()
 
 
 //增加关键帧
-KeyFrameInsertCommand::KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item> &insert_value, AbstractCommand *parent)
+KeyFrameInsertCommand::KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item> &insert_value, bool isFirst,AbstractCommand *parent)
 : AbstractCommand(parent)
 ,m_from_value(from_value)
 ,m_insert_value(insert_value)
@@ -1275,8 +1279,8 @@ KeyFrameInsertCommand::KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<
     Q_ASSERT(filter);
 
     m_filter        = new Mlt::Filter(filter->get_filter());
-
     m_bFirstExec    = true;
+    m_bFirstExec    = isFirst;
     m_execTime.start();
 }
 
@@ -1369,7 +1373,7 @@ bool KeyFrameInsertCommand::mergeWith(const QUndoCommand *other)
 
 
 //删除关键帧
-KeyFrameRemoveCommand::KeyFrameRemoveCommand(Mlt::Filter* filter, const QVector<key_frame_item> &remove_value, AbstractCommand *parent)
+KeyFrameRemoveCommand::KeyFrameRemoveCommand(Mlt::Filter* filter, const QVector<key_frame_item> &remove_value,bool isFirst, AbstractCommand *parent)
 : AbstractCommand(parent)
 ,m_remove_value(remove_value)
 {
@@ -1378,7 +1382,7 @@ KeyFrameRemoveCommand::KeyFrameRemoveCommand(Mlt::Filter* filter, const QVector<
 
     m_filter        = new Mlt::Filter(filter->get_filter());
 
-    m_bFirstExec    = true;
+    m_bFirstExec    = isFirst;
     m_execTime.start();
 }
 
@@ -1449,7 +1453,7 @@ bool KeyFrameRemoveCommand::mergeWith(const QUndoCommand *other)
 
 
 //修改关键帧数据
-KeyFrameUpdateCommand::KeyFrameUpdateCommand(Mlt::Filter* filter, int nFrame, QString name, QString from_value, QString to_value, AbstractCommand *parent)
+KeyFrameUpdateCommand::KeyFrameUpdateCommand(Mlt::Filter* filter, int nFrame, QString name, QString from_value, QString to_value, bool isFirst, AbstractCommand *parent)
 : AbstractCommand(parent)
 {
     setText(QObject::tr("KeyFrameUpdateCommand"));
@@ -1461,7 +1465,7 @@ KeyFrameUpdateCommand::KeyFrameUpdateCommand(Mlt::Filter* filter, int nFrame, QS
     m_sKeyName      = name;
     m_from_value    = from_value;
     m_to_value      = to_value;
-
+    m_bFirstExec    = isFirst;
     m_execTime.start();
 }
 
@@ -1515,7 +1519,7 @@ bool KeyFrameUpdateCommand::mergeWith(const QUndoCommand *other)
 
 
 
-FilterAttachCommand::FilterAttachCommand( QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, AbstractCommand * parent)
+FilterAttachCommand::FilterAttachCommand( QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, bool isFirst, AbstractCommand * parent)
 : AbstractCommand(parent)
 {
     setText(QObject::tr("FilterAttachCommand"));
@@ -1524,6 +1528,7 @@ FilterAttachCommand::FilterAttachCommand( QmlMetadata *meta, int rowIndex, int m
     m_rowIndex      = rowIndex;
     m_metaIndex     = metaIndex;
     m_bAdd          = bAdd;
+    m_bFirstExec    = isFirst;
 }
 
 void FilterAttachCommand::redo_impl()
@@ -1576,7 +1581,7 @@ protected:
     bool            m_bFirstExec;
 */
 
-FilterMoveCommand::FilterMoveCommand(int rowIndexFrom, int rowIndexTo, AbstractCommand * parent)
+FilterMoveCommand::FilterMoveCommand(int rowIndexFrom, int rowIndexTo, bool isFirst, AbstractCommand * parent)
 : AbstractCommand(parent)
 {
     setText(QObject::tr("FilterMoveCommand"));
@@ -1584,6 +1589,7 @@ FilterMoveCommand::FilterMoveCommand(int rowIndexFrom, int rowIndexTo, AbstractC
 
     m_rowIndexFrom  = rowIndexFrom;
     m_rowIndexTo    = rowIndexTo;
+    m_bFirstExec    = isFirst;
 }
 void FilterMoveCommand::redo_impl()
 {
@@ -1607,7 +1613,7 @@ void FilterMoveCommand::undo_impl()
 
 ClipsSelectCommand::ClipsSelectCommand(QList<int> newSelection, int newTrackIndex, bool isNewMultitrack,
                                        QList<int> oldSelection, int oldTrackIndex, bool isOldMultitrack,
-                                       AbstractCommand * parent)
+                                       bool isFirst,AbstractCommand * parent)
 : AbstractCommand(parent)
 {
     setText(QObject::tr("ClipsSelectCommand"));
@@ -1620,6 +1626,8 @@ ClipsSelectCommand::ClipsSelectCommand(QList<int> newSelection, int newTrackInde
 
     m_bNewIsMultitrack  = isNewMultitrack;
     m_bOldIsMultitrack  = isOldMultitrack;
+
+    m_bFirstExec    = isFirst;
 }
 
 void ClipsSelectCommand::redo_impl()
@@ -1690,7 +1698,7 @@ void FilterClipCommand::undo_impl()
 */
 
 
-TransitionPropertyCommand::TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel &model, int trackIndex, int clipIndex, const QString& transitionName, const QString &propertyName, const QString &propertyValue, int invert, double softness, AbstractCommand *parent)
+TransitionPropertyCommand::TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel &model, int trackIndex, int clipIndex, const QString& transitionName, const QString &propertyName, const QString &propertyValue,bool isFirst, int invert, double softness, AbstractCommand *parent)
     : AbstractCommand(parent)
     , m_timeline(timeline)
     , m_model(model)
@@ -1702,7 +1710,7 @@ TransitionPropertyCommand::TransitionPropertyCommand(TimelineDock& timeline, Mul
     , m_undoHelper(m_model)
     , m_invert(invert)
     , m_softness(softness)
-    , m_isFirstRedo(true)
+    , m_isFirstRedo(isFirst)
 {
     setText(QObject::tr("Transition Property Change"));
 }
@@ -1759,7 +1767,7 @@ bool TransitionPropertyCommand::mergeWith(const QUndoCommand *other)
 
 
 
-TransitionDurationSettingCommand::TransitionDurationSettingCommand(TimelineDock &timeline, MultitrackModel &model, int trackIndex, int clipIndex, int duration, AbstractCommand *parent)
+TransitionDurationSettingCommand::TransitionDurationSettingCommand(TimelineDock &timeline, MultitrackModel &model, int trackIndex, int clipIndex, int duration,bool isFirst, AbstractCommand *parent)
     : AbstractCommand(parent)
     , m_timeline(timeline)
     , m_model(model)
@@ -1767,7 +1775,7 @@ TransitionDurationSettingCommand::TransitionDurationSettingCommand(TimelineDock 
     , m_clipIndex(clipIndex)
     , m_duration(duration)
     , m_undoHelper(m_model)
-    , m_isFirstRedo(true)
+    , m_isFirstRedo(isFirst)
 {
     setText(QObject::tr("Change Transition Duration"));
 }
