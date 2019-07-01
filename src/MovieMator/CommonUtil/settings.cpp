@@ -237,7 +237,7 @@ bool ShotcutSettings::playerJACK() const
 
 QString ShotcutSettings::playerInterpolation() const
 {
-    return settings.value("player/interpolation", "nearest").toString();
+    return settings.value("player/interpolation", "bilinear").toString();
 }
 
 void ShotcutSettings::setPlayerInterpolation(const QString& s)
