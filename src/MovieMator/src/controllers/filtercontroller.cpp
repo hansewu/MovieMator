@@ -390,8 +390,8 @@ QString FilterController::getFilterType(QString filterType)
         {"7 Distort",  "扭曲"},
         {"8 Art",  "艺术"},
         {"9 Effect",  "特效1"},
-        {"10 Effect2",  "特效2"},
-        {"11 Black & White",  "黑白"},
+        {"A Effect2",  "特效2"},
+        {"B Black & White",  "黑白"},
         {"C Other",  "其它"},
 
     };
