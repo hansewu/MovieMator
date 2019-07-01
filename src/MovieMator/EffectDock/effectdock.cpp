@@ -208,10 +208,14 @@ QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInf
     QString result = srcStr;
     if (translationInfo.contains(srcStr)) {
         QJsonObject subObj = translationInfo.value(srcStr).toObject();
-        QString language = QLocale::system().name();
+        QString language = Settings.language();
+        if(language=="zh")
+        {
+            language = "zh_CN";     // Settings.language()有 "zh"没有 "zh_CN"
+        }
         result = subObj.value(language).toString();
         if (result.isEmpty()) {
-            result = subObj.value("en").toString();;
+            result = subObj.value("en").toString();
         }
     }
 
@@ -507,6 +511,7 @@ void EffectDock::onListviewPressed(const QModelIndex &)
     {
         m_mainWindow->playFile(m_effectFile);   // 按下就播放
     }
+
 }
 
 void EffectDock::onListviewClicked(const QModelIndex &)

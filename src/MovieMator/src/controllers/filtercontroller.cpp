@@ -336,8 +336,9 @@ QString FilterController::getFilterThumbnailPath(QString filterName, bool isAudi
         {"Reduce Noise", "降噪"},
     };
 
-    QLocale ql;
-    if(ql.language() == QLocale::Chinese)
+//    QLocale ql;
+//    if(ql.language() == QLocale::Chinese)
+    if(Settings.language()=="zh")
     {
         QMap<QString, QString>::const_iterator iter;
         for (iter = filterNameMap.constBegin(); iter != filterNameMap.constEnd(); ++iter )
@@ -364,25 +365,40 @@ QString FilterController::getFilterType(QString filterType)
 {
     const QMap<QString, QString> filterTypeMap =
     {
-        {"Common", "常用"},
-        {"Distortion", "扭曲"},
-        {"Art", "艺术"},
-        {"Color Adjustment", "调色"},
-        {"Transform", "变换"},
-        {"Black & White", "黑 & 白"},
-        {"Time Dimension Effect", "时间维度特效"},
-        {"Color Extraction", "色彩提取"},
-        {"Blur", "模糊"},
-        {"Color Depth", "颜色深度"},
-        {"Material", "材质"},
-        {"Other", "其它"},
-        {"Effect 2", "特效 2"},
-        {"Effect", "特效"},
-        {"Crop", "裁剪"},
+//        {"Common", "常用"},
+//        {"Distortion", "扭曲"},
+//        {"Art", "艺术"},
+//        {"Color Adjustment", "调色"},
+//        {"Transform", "变换"},
+//        {"Black & White", "黑 & 白"},
+//        {"Time Dimension Effect", "时间维度特效"},
+//        {"Color Extraction", "色彩提取"},
+//        {"Blur", "模糊"},
+//        {"Color Depth", "颜色深度"},
+//        {"Material", "材质"},
+//        {"Other", "其它"},
+//        {"Effect 2", "特效 2"},
+//        {"Effect", "特效"},
+//        {"Crop", "裁剪"},
+
+        {"1 Basic Processing", "常用"},
+        {"2 Text", "文字"},
+        {"3 Basic Coloring Tool",  "基础调色"},
+        {"4 Denoise and Blur", "降噪和模糊"},
+        {"5 Advanced Coloring Tool",  "高级调色"},
+        {"6 Light",  "光效"},
+        {"7 Distort",  "扭曲"},
+        {"8 Art",  "艺术"},
+        {"9 Effect",  "特效1"},
+        {"10 Effect2",  "特效2"},
+        {"11 Black & White",  "黑白"},
+        {"C Other",  "其它"},
+
     };
 
-    QLocale ql;
-    if(ql.language() == QLocale::Chinese)
+//    QLocale ql;
+//    if(ql.language() == QLocale::Chinese)
+    if(Settings.language()=="zh")
     {
         QMap<QString, QString>::const_iterator iter;
         for (iter = filterTypeMap.constBegin(); iter != filterTypeMap.constEnd(); ++iter )
