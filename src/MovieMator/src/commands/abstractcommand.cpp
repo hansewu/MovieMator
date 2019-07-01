@@ -10,6 +10,8 @@
 #include "mainwindow.h"
 #include "docks/timelinedock.h"
 
+static bool g_iSInUndoRedoProcess = false;
+
 void saveXmlFile(QString original,QString currrent,QString commandName)
 {   
     QDomDocument doc;
@@ -60,11 +62,12 @@ void saveXmlFile(QString original,QString currrent,QString commandName)
 
 AbstractCommand::AbstractCommand(QUndoCommand * parent) : QUndoCommand (parent)
 {
-
+    Q_ASSERT(g_iSInUndoRedoProcess == false);
 }
 
 void AbstractCommand::redo()
 {
+    g_iSInUndoRedoProcess = true;
     m_originalXml = MLT.XML(MAIN.timelineDock()->model()->tractor());
 
     MLT.consumer()->set_cancelled(1);
@@ -74,11 +77,12 @@ void AbstractCommand::redo()
     this->redo_impl();
     w_leave_critical();
 
-
+    g_iSInUndoRedoProcess = false;
 }
 
 void AbstractCommand::undo()
 {
+    g_iSInUndoRedoProcess = true;
     MLT.consumer()->set_cancelled(1);
     w_enter_critical();
     MLT.consumer()->set_cancelled(0);
@@ -90,6 +94,7 @@ void AbstractCommand::undo()
     saveXmlFile(m_originalXml,m_currentXml,text());
 //    Q_ASSERT(m_currentXml == m_originalXml);
 #endif
+    g_iSInUndoRedoProcess = false;
 }
 
 
