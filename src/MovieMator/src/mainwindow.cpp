@@ -3133,7 +3133,6 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         int trackIndex = m_timelineDock->selectedTrackIndex();
         int clipIndex = m_timelineDock->selection().at(0);
         w = new LumaMixTransition(producer->parent(), trackIndex, clipIndex, this);
-        connect(w, SIGNAL(setTransitionDuration(int)), m_timelineDock, SLOT(setTransitionDuration(int)));
         scrollArea->setWidget(w);
         return w;
     } else if (playlist_type == producer->type()) {
