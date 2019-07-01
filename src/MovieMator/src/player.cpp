@@ -1381,10 +1381,13 @@ void Player::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key())
     {
-    case Qt::Key_Escape:
-        if (isFullScreen())
-            toggleFullScreen();
-        break;
+        case Qt::Key_Escape:
+            if (isFullScreen())
+                toggleFullScreen();
+            break;
+        default:
+            QWidget::keyPressEvent(event);
+            break;
     }
 }
 
