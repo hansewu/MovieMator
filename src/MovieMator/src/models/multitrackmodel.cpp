@@ -87,6 +87,7 @@ MultitrackModel::MultitrackModel(QObject *parent)
     , m_tractor(nullptr)
     , m_isMakingTransition(false)
     , m_copiedProducer(nullptr)
+    , m_selectedProducer(nullptr)
 {
 //    connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));//sll:将modify放在mainwindow中建立连接，防止界面更新与数据操作顺序问题
     connect(this, SIGNAL(reloadRequested()), SLOT(reload()), Qt::QueuedConnection);
@@ -4338,6 +4339,16 @@ Mlt::Producer* MultitrackModel::copiedProducer()
 void MultitrackModel::setCopiedProducer(Mlt::Producer* producer)
 {
     m_copiedProducer.reset(new Mlt::Producer(producer));
+}
+
+Mlt::Producer* MultitrackModel::selectedProducer()
+{
+    return (m_selectedProducer!=nullptr) ? m_selectedProducer.data() : nullptr;
+}
+
+void MultitrackModel::setSelectedProducer(Mlt::Producer* producer)
+{
+    m_selectedProducer.reset(new Mlt::Producer(producer));
 }
 
 void MultitrackModel::debugPrintState()

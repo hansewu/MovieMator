@@ -145,6 +145,9 @@ public:
     Mlt::Producer* copiedProducer();
     void setCopiedProducer(Mlt::Producer *producer);
 
+    Mlt::Producer* selectedProducer();
+    void setSelectedProducer(Mlt::Producer *producer);
+
     //设置转场属性
     void setTransitionProperty(int trackIndex, int clipIndex, const QString& transitionName, const QString& propertyName, const QString& propertyValue);
 
@@ -222,7 +225,11 @@ private:
     TrackList m_trackList;
     bool m_isMakingTransition;
 
-    QScopedPointer<Mlt::Producer> m_copiedProducer;    // 保存时间线轨道上复制的 clip
+    QScopedPointer<Mlt::Producer> m_copiedProducer;     // 保存时间线轨道上复制的 clip
+    // 保存时间线轨道上当前选中的 clip
+    // 只是给预览后添加滤镜用的，没有其他用途
+    QScopedPointer<Mlt::Producer> m_selectedProducer;
+
 
     bool moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position);
     void moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position);//将clip移动到轨道末尾
