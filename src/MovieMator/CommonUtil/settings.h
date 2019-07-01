@@ -45,7 +45,7 @@ class COMMONUTILSHARED_EXPORT ShotcutSettings : public QObject
     Q_PROPERTY(double videoInDuration READ videoInDuration WRITE setVideoInDuration NOTIFY videoInDurationChanged)
     Q_PROPERTY(double videoOutDuration READ videoOutDuration WRITE setVideoOutDuration NOTIFY videoOutDurationChanged)
     // 为 qml获取软件设置的语言
-    Q_PROPERTY(QString language READ language)
+    Q_PROPERTY(QString language READ language CONSTANT)
 
 public:
     static ShotcutSettings& singleton();
