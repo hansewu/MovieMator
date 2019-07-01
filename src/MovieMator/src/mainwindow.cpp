@@ -1736,7 +1736,16 @@ void MainWindow::setMultitrackAsCurrentProducer()
         updateMarkers();
         m_player->setFocus();
         m_player->switchToTab(Player::ProjectTabIndex);
-        m_timelineDock->emitSelectedFromSelection();
+
+        // 屏蔽轨道 clip的滤镜刷新
+        // 如果轨道刚添加 clip，或者轨道上选中的 clip没有变化
+        if(!m_timelineDock->model()->selectedProducer() ||
+                (static_cast<void*>(multitrack()->get_producer()) !=
+                 static_cast<void*>(m_timelineDock->model()->selectedProducer()->get_producer())))
+        {
+            m_timelineDock->model()->setSelectedProducer(multitrack());
+            m_timelineDock->emitSelectedFromSelection();
+        }
     }
 }
 

@@ -843,7 +843,7 @@ void EncodeDock::addWatermark(Mlt::Service* service, QTemporaryFile& tmpProjectX
         homePagetextFilter = new Mlt::Filter(MLT.profile(), "dynamictext");
         Q_ASSERT(homePagetextFilter);
         homePagetextFilter->set("argument", homePage.toLatin1().data());
-        homePagetextFilter->set("geometry", 0.698438, 0.1375, 0.299219, 0.123611);
+        homePagetextFilter->set("geometry", 0.698438, 0.1725, 0.299219, 0.123611);
         homePagetextFilter->set("family", "Arial");
         homePagetextFilter->set("size", 89);
         homePagetextFilter->set("weight", 750);
