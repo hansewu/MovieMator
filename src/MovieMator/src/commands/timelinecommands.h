@@ -100,7 +100,7 @@ private:
     UndoHelper m_undoHelper;
 };
 
-//选中高亮clip
+//移除clip
 class LiftClipCommand : public AbstractCommand
 {
 public:
@@ -544,10 +544,10 @@ class FilterCommand: public AbstractCommand
 {
 
 public:
-    FilterCommand(Mlt::Filter* filter, QString name,  double from_value, double to_value, AbstractCommand * parent= nullptr);
-    FilterCommand(Mlt::Filter* filter, QString name,  int from_value, int to_value, AbstractCommand * parent= nullptr);
-    FilterCommand(Mlt::Filter* filter, QString name,  QString from_value, QString to_value, AbstractCommand * parent= nullptr);
-    FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, AbstractCommand * parent= nullptr);
+    FilterCommand(Mlt::Filter* filter, QString name,  double from_value, double to_value, bool isFirst,AbstractCommand * parent= nullptr);
+    FilterCommand(Mlt::Filter* filter, QString name,  int from_value, int to_value, bool isFirst,AbstractCommand * parent= nullptr);
+    FilterCommand(Mlt::Filter* filter, QString name,  QString from_value, QString to_value, bool isFirst,AbstractCommand * parent= nullptr);
+    FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, bool isFirst,AbstractCommand * parent= nullptr);
 
     ~FilterCommand();
     void redo_impl();
@@ -576,7 +576,7 @@ class FilterAttachCommand: public AbstractCommand
 {
 
 public:
-    FilterAttachCommand( QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, AbstractCommand * parent= nullptr);
+    FilterAttachCommand( QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, bool isFirst, AbstractCommand * parent= nullptr);
    // ~FilterAttachCommand();
     void redo_impl();
     void undo_impl();
@@ -599,7 +599,7 @@ class FilterMoveCommand: public AbstractCommand
 {
 
 public:
-    FilterMoveCommand(int rowIndexFrom, int rowIndexTo, AbstractCommand * parent= nullptr);
+    FilterMoveCommand(int rowIndexFrom, int rowIndexTo, bool isFirst, AbstractCommand * parent= nullptr);
  //   ~FilterMoveCommand();
     void redo_impl();
     void undo_impl();
@@ -620,7 +620,7 @@ protected:
 class KeyFrameInsertCommand: public AbstractCommand
 {
 public:
-    KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item>  &insert_value, AbstractCommand * parent = nullptr);
+    KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item>  &insert_value, bool isFirst, AbstractCommand * parent = nullptr);
     ~KeyFrameInsertCommand();
     void redo_impl();
     void undo_impl();
@@ -642,7 +642,7 @@ private:
 class KeyFrameRemoveCommand: public AbstractCommand
 {
 public:
-    KeyFrameRemoveCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &remove_value, AbstractCommand * parent = nullptr);
+    KeyFrameRemoveCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &remove_value, bool isFirst, AbstractCommand * parent = nullptr);
     ~KeyFrameRemoveCommand();
     void redo_impl();
     void undo_impl();
@@ -663,7 +663,7 @@ private:
 class KeyFrameUpdateCommand: public AbstractCommand
 {
 public:
-    KeyFrameUpdateCommand(Mlt::Filter* filter, int nFrame, QString name, QString from_value, QString to_value, AbstractCommand * parent= nullptr);
+    KeyFrameUpdateCommand(Mlt::Filter* filter, int nFrame, QString name, QString from_value, QString to_value,bool isFirst, AbstractCommand * parent= nullptr);
     ~KeyFrameUpdateCommand();
     void redo_impl();
     void undo_impl();
@@ -692,7 +692,7 @@ class ClipsSelectCommand: public AbstractCommand
 public:
     ClipsSelectCommand(QList<int> newSelection, int newTrackIndex, bool isNewMultitrack,
                        QList<int> oldSelection, int oldTrackIndex, bool isOldMultitrack,
-                       AbstractCommand * parent= nullptr);
+                       bool isFirst,AbstractCommand * parent= nullptr);
 
     void redo_impl();
     void undo_impl();
@@ -709,7 +709,7 @@ protected:
 class TransitionPropertyCommand: public AbstractCommand
 {
 public:
-    TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel& model, int trackIndex, int clipIndex, const QString& transitionName, const QString& propertyName, const QString& propertyValue, int invert = 0, double softness = 0.0, AbstractCommand *parent = nullptr);
+    TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel& model, int trackIndex, int clipIndex, const QString& transitionName, const QString& propertyName, const QString& propertyValue, bool isFirst, int invert = 0, double softness = 0.0, AbstractCommand *parent = nullptr);
     void redo_impl();
     void undo_impl();
 
@@ -736,7 +736,7 @@ private:
 class TransitionDurationSettingCommand: public AbstractCommand
 {
 public:
-    TransitionDurationSettingCommand(TimelineDock &timeline, MultitrackModel& model, int trackIndex, int clipIndex, int duration, AbstractCommand *parent = nullptr);
+    TransitionDurationSettingCommand(TimelineDock &timeline, MultitrackModel& model, int trackIndex, int clipIndex, int duration, bool isFirst, AbstractCommand *parent = nullptr);
     void redo_impl();
     void undo_impl();
 
