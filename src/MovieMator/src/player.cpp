@@ -166,7 +166,7 @@ Player::Player(QWidget *parent)
     m_durationLabel = new QLabel(this);
     m_durationLabel->setToolTip(tr("Total Duration"));
     m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg("00:00:00:00"));
-    m_durationLabel->setFixedWidth(96);
+    m_durationLabel->setFixedWidth(100);
 
     hBoxLayout->addWidget(m_scrubber);
     hBoxLayout->addWidget(m_durationLabel);
@@ -180,6 +180,10 @@ Player::Player(QWidget *parent)
     m_fitButton = new QPushButton();
     m_fullScreenButton = new QPushButton();
     m_zoomSetButton = new QPushButton();
+
+    m_fitButton->setToolTip(tr("Resize player to fit"));
+    m_fullScreenButton->setToolTip(tr("Full screen"));
+    m_zoomSetButton->setToolTip(tr("Set zoom scale"));
 
     m_fitButton->setFixedSize(QSize(20, 20));
     m_fitButton->setIconSize(QSize(20, 20));
@@ -272,6 +276,7 @@ Player::Player(QWidget *parent)
 
 
      m_volumeButton = new QPushButton;
+     m_volumeButton->setToolTip(tr("Volume control"));
      m_volumeButton->setFlat(true);
      m_volumeButton->setStyleSheet("QPushButton{border-image: url(:/icons/light/32x32/player-volume.png)}"
                                    "QPushButton:pressed{border-image: url(:/icons/light/32x32/player-volume-pressed.png)}");
@@ -324,8 +329,8 @@ Player::Player(QWidget *parent)
 
     m_btnSeekPrevious = new QPushButton();//QIcon(":/icons/light/32x32/media-seek-backward.png"),"");
     m_btnSeekPrevious->setFlat(true);
-    m_btnSeekPrevious->setFixedSize(32,32);
-    m_btnSeekPrevious->setIconSize(QSize(32,32));
+    m_btnSeekPrevious->setFixedSize(12,12);
+//    m_btnSeekPrevious->setIconSize(QSize(32,32));
     m_btnSeekPrevious->setToolTip(tr("Skip Previous"));
     connect(m_btnSeekPrevious, SIGNAL(clicked()), this, SLOT(on_actionSkipPrevious_triggered()));
     m_btnSeekPrevious->setContentsMargins(0,0,0,0);
@@ -335,8 +340,8 @@ Player::Player(QWidget *parent)
 
     m_btnSeekNext = new QPushButton();//QIcon();//":/icons/light/32x32/media-seek-forward.png"),"");
     m_btnSeekNext->setFlat(true);
-    m_btnSeekNext->setFixedSize(32,32);
-    m_btnSeekNext->setIconSize(QSize(32,32));
+    m_btnSeekNext->setFixedSize(13,12);
+//    m_btnSeekNext->setIconSize(QSize(32,32));
     connect(m_btnSeekNext, SIGNAL(clicked()), this, SLOT(on_actionSkipNext_triggered()));
     m_btnSeekNext->setContentsMargins(0,0,0,0);
     m_btnSeekNext->setToolTip(tr("Skip Next"));
@@ -345,8 +350,8 @@ Player::Player(QWidget *parent)
 
     m_btnPlay = new QPushButton();//m_playIcon,"");
     m_btnPlay->setFlat(true);
-    m_btnPlay->setFixedSize(32,32);
-    m_btnPlay->setIconSize(QSize(32,32));
+    m_btnPlay->setFixedSize(14,16);
+//    m_btnPlay->setIconSize(QSize(32,32));
     connect(m_btnPlay, SIGNAL(clicked()), this, SLOT(togglePlayPaused()));
     m_btnPlay->setContentsMargins(0,0,0,0);
     m_btnPlay->setToolTip(tr("Start playback"));
@@ -372,25 +377,25 @@ Player::Player(QWidget *parent)
 
     m_btnPreFrame = new QPushButton();//QIcon(":/icons/light/32x32/media-seek-preframe.png"),"");
     m_btnPreFrame->setFlat(true);
-    m_btnPreFrame->setFixedSize(32,32);
-    m_btnPreFrame->setIconSize(QSize(32,32));
+    m_btnPreFrame->setFixedSize(13,10);
+//    m_btnPreFrame->setIconSize(QSize(32,32));
     connect(m_btnPreFrame, SIGNAL(clicked()), this, SLOT(seekPreFrame()));
     m_btnPreFrame->setContentsMargins(0,0,0,0);
-//    m_btnPreFrame->setToolTip(tr("Play quickly backwards (J)"));
+    m_btnPreFrame->setToolTip(tr("Position to the previous frame"));
     m_btnPreFrame->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-seek-preframe.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-seek-preframe-pressed.png)}");
 
     m_btnNextFrame = new QPushButton();//QIcon(":/icons/light/32x32/media-seek-nextframe.png"),"");
     m_btnNextFrame->setFlat(true);
-    m_btnNextFrame->setFixedSize(32,32);
-    m_btnNextFrame->setIconSize(QSize(32,32));
+    m_btnNextFrame->setFixedSize(13,10);
+//    m_btnNextFrame->setIconSize(QSize(32,32));
     connect(m_btnNextFrame, SIGNAL(clicked()), this, SLOT(seekNextFrame()));
     m_btnNextFrame->setContentsMargins(0,0,0,0);
-//    m_btnNextFrame->setToolTip(tr("Play quickly forwards (L)"));
+    m_btnNextFrame->setToolTip(tr("Position to the next frame"));
     m_btnNextFrame->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-seek-nextframe.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-seek-nextframe-pressed.png)}");
 
 
 //    toolbarlayout->addWidget(m_videoScrollWidget,0,0,1,14);
-    toolbarlayout->addWidget(progressWidget,0,0,1,17);      // 14
+    toolbarlayout->addWidget(progressWidget,0,0,1,21);      // 14
 
     QSpacerItem *spacer0 = new QSpacerItem(10,20);
     toolbarlayout->addItem(spacer0, 1,0,1,1);
@@ -401,41 +406,49 @@ Player::Player(QWidget *parent)
     QSpacerItem *spacer1 = new QSpacerItem(100,20, QSizePolicy::Expanding);
     toolbarlayout->addItem(spacer1, 1,2,1,1);
 
+    QSpacerItem *spacer2 = new QSpacerItem(10, 20);
+    QSpacerItem *spacer3 = new QSpacerItem(10, 20);
+    QSpacerItem *spacer4 = new QSpacerItem(10, 20);
+    QSpacerItem *spacer5 = new QSpacerItem(10, 20);
     toolbarlayout->addWidget(m_btnSeekPrevious, 1,3,1,1);
+    toolbarlayout->addItem(spacer2, 1, 4, 1, 1);
 //    toolbarlayout->addWidget(m_btnRewind,1,4,1,1);
-    toolbarlayout->addWidget(m_btnPreFrame,1,4,1,1);
-    toolbarlayout->addWidget(m_btnPlay,1,5,1,1);
+    toolbarlayout->addWidget(m_btnPreFrame,1,5,1,1);
+    toolbarlayout->addItem(spacer3, 1, 6, 1, 1);
+    toolbarlayout->addWidget(m_btnPlay,1,7,1,1);
+    toolbarlayout->addItem(spacer4, 1, 8, 1, 1);
 //    toolbarlayout->addWidget(m_btnFastForword,1,6,1,1);
-    toolbarlayout->addWidget(m_btnNextFrame,1,6,1,1);
-    toolbarlayout->addWidget(m_btnSeekNext,1,7,1,1);
+    toolbarlayout->addWidget(m_btnNextFrame,1,9,1,1);
+    toolbarlayout->addItem(spacer5, 1, 10, 1, 1);
+    toolbarlayout->addWidget(m_btnSeekNext,1,11,1,1);
 
-    QSpacerItem *spacer2 = new QSpacerItem(50,20, QSizePolicy::Expanding);
-    toolbarlayout->addItem(spacer2, 1,8,1,1);
+    QSpacerItem *spacer6 = new QSpacerItem(50,20, QSizePolicy::Expanding);
+    toolbarlayout->addItem(spacer6, 1,12,1,1);
 
 //    toolbarlayout->addWidget(m_zoomComBox,1,9,1,1);
-    toolbarlayout->addWidget(m_fitButton,1,9,1,1);
-    QSpacerItem *spacer3 = new QSpacerItem(15, 20);
-    toolbarlayout->addItem(spacer3,1,10,1,1);
-    toolbarlayout->addWidget(m_fullScreenButton,1,11,1,1);
+    toolbarlayout->addWidget(m_fitButton,1,13,1,1);
+    QSpacerItem *spacer7 = new QSpacerItem(15, 20);
+    toolbarlayout->addItem(spacer7,1,14,1,1);
+    toolbarlayout->addWidget(m_fullScreenButton,1,15,1,1);
 #ifdef Q_OS_WIN
-    QSpacerItem *spacer4 = new QSpacerItem(0, 20);
-    toolbarlayout->addItem(spacer4,1,12,1,1);
+    QSpacerItem *spacer8 = new QSpacerItem(0, 20);
+    toolbarlayout->addItem(spacer8,1,16,1,1);
 #else
-    QSpacerItem *spacer4 = new QSpacerItem(15, 20);
-    toolbarlayout->addItem(spacer4,1,12,1,1);
+    QSpacerItem *spacer8 = new QSpacerItem(15, 20);
+    toolbarlayout->addItem(spacer8,1,16,1,1);
 #endif
 //    toolbarlayout->addWidget(m_zoomComBox,1,13,1,1);
-    toolbarlayout->addWidget(m_zoomSetButton,1,13,1,1);
+    toolbarlayout->addWidget(m_zoomSetButton,1,17,1,1);
 
-    QSpacerItem *spacer5 = new QSpacerItem(15,20);   // 20, 20
-    toolbarlayout->addItem(spacer5, 1,14,1,1);      // 10
+    QSpacerItem *spacer9 = new QSpacerItem(15,20);   // 20, 20
+    toolbarlayout->addItem(spacer9, 1,18,1,1);      // 10
 
 //    toolbarlayout->addWidget(m_muteButton,1,11,1,1);
 //    toolbarlayout->addWidget(m_volumeSlider,1,12,1,1);
-    toolbarlayout->addWidget(m_volumeButton,1,15,1,1);
+    toolbarlayout->addWidget(m_volumeButton,1,19,1,1);
 
-    QSpacerItem *spacer6 = new QSpacerItem(10,20);
-    toolbarlayout->addItem(spacer6, 1,16,1,1);      // 13
+    QSpacerItem *spacer10 = new QSpacerItem(10,20);
+    toolbarlayout->addItem(spacer10, 1,20,1,1);      // 13
 
     toolWidget->setLayout(toolbarlayout);
 
