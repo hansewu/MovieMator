@@ -122,7 +122,7 @@ int MainInterface::addToTimeLine(FILE_HANDLE fileHandle)
 
     TimelineDock *timeline = MAIN.timelineDock();
 
-    MAIN.undoStack()->push(
+    MAIN.pushCommand(
                 new Timeline::AppendClipCommand(*(timeline->model()), timeline->currentTrack(),
                                             MLT.XML(producer)));
     return 0;

@@ -130,7 +130,7 @@ int MainController::appendToTimelineFromPath(int trackIndex, const QString &path
 
         qApp->processEvents();
 
-        MAIN.undoStack()->push(
+        MAIN.pushCommand(
             new Timeline::AppendClipCommand(m_multitrackModel, trackIndex,
                 MLT.XML(p)));
 //        selectClipUnderPlayhead();
@@ -147,13 +147,13 @@ int MainController::appendToTimelineFromPath(int trackIndex, const QString &path
 
 void MainController::insertTrack(int trackIndex)
 {
-    MAIN.undoStack()->push(
+    MAIN.pushCommand(
                 new Timeline::InsertTrackCommand(m_multitrackModel, trackIndex));
 }
 
 void MainController::removeTrack(int trackIndex)
 {
-    MAIN.undoStack()->push(
+    MAIN.pushCommand(
             new Timeline::RemoveTrackCommand(m_multitrackModel, trackIndex));
 }
 
@@ -175,7 +175,7 @@ void MainController::splitClip(int trackIndex, int clipIndex, int position)
                 QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
                 Q_ASSERT(info);
                 if (info && position >= info->start + 2 && position < info->start + info->frame_count - 1 - 2) {
-                    MAIN.undoStack()->push(
+                    MAIN.pushCommand(
                         new Timeline::SplitCommand(m_multitrackModel, trackIndex, clipIndex, position));
                 }
 
@@ -303,7 +303,7 @@ void MainController::addTransition(int trackIndex, int clipIndex, double duratio
         Q_ASSERT(clipIndex < playlist.count());
         clipStart = playlist.clip_start(clipIndex);
         if (m_multitrackModel.addTransitionValid(trackIndex, trackIndex, clipIndex, clipStart + int(duration * MLT.profile().fps()) ))
-                MAIN.undoStack()->push(
+                MAIN.pushCommand(
                     new Timeline::AddTransitionCommand(m_multitrackModel, trackIndex, clipIndex, clipStart + int(duration* MLT.profile().fps()) ));
     }
 }

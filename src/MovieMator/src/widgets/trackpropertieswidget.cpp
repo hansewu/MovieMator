@@ -136,7 +136,7 @@ void TrackPropertiesWidget::on_blendModeCombo_currentIndexChanged(int index)
             Timeline::ChangeBlendModeCommand* command = new Timeline::ChangeBlendModeCommand(
                 *transition, BLEND_PROPERTY_CAIROBLEND, ui->blendModeCombo->itemData(index).toString());
             connect(command, SIGNAL(modeChanged(QString&)), SLOT(onModeChanged(QString&)));
-            MAIN.undoStack()->push(command);
+            MAIN.pushCommand(command);
         }
     }
 }

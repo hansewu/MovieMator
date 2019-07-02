@@ -113,6 +113,8 @@
 
 #include "dialogs/videomodesettingsdialog.h"
 
+#include "commands/timelinecommands.h"
+
 #if defined (Q_OS_MAC)
     #include "securitybookmark/transport_security_bookmark.h"
 #endif
@@ -1535,7 +1537,7 @@ void MainWindow::open1(QString url, const Mlt::Properties *properties)
             LOG_INFO() << url;
         }
 
-     //   MAIN.undoStack()->push(new Playlist::AppendCommand(*(m_playlistDock->model()), MLT.XML()));
+     //   MAIN.pushCommand(new Playlist::AppendCommand(*(m_playlistDock->model()), MLT.XML()));
     //    MLT.producer()->set(kPlaylistIndexProperty, m_playlistDock->model()->playlist()->count());
     }
     else {
@@ -1594,7 +1596,7 @@ void MainWindow::open1(QString url, const Mlt::Properties *properties)
 //                }
 //                MLT.setImageDurationFromDefault(&p);
 //                MLT.getHash(p);
-//                MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.XML(&p)));
+//                MAIN.pushCommand(new Playlist::AppendCommand(*model, MLT.XML(&p)));
 //            }
 //            }
 //        }
@@ -2706,6 +2708,7 @@ QUndoStack* MainWindow::undoStack() const
 
 void MainWindow::pushCommand(QUndoCommand *command)
 {
+    Q_ASSERT(g_isInUndoRedoProcess == false);
     m_undoStack->push(command);
 }
 

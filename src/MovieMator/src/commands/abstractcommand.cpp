@@ -10,7 +10,7 @@
 #include "mainwindow.h"
 #include "docks/timelinedock.h"
 
-static bool g_iSInUndoRedoProcess = false;
+bool g_isInUndoRedoProcess = false;
 
 void saveXmlFile(QString original,QString currrent,QString commandName)
 {   
@@ -56,12 +56,12 @@ void saveXmlFile(QString original,QString currrent,QString commandName)
 
 AbstractCommand::AbstractCommand(QUndoCommand * parent) : QUndoCommand (parent)
 {
-    Q_ASSERT(g_iSInUndoRedoProcess == false);
+    //Q_ASSERT(g_isInUndoRedoProcess == false); //UpdateClipCommand 创建后并不会立即push，此处添加assert创建UpdateClipCommand时会出错。在pushcommand的时候添加。
 }
 
 void AbstractCommand::redo()
 {
-    g_iSInUndoRedoProcess = true;
+    g_isInUndoRedoProcess = true;
     m_originalXml = MLT.XML(MAIN.timelineDock()->model()->tractor());
 
     MLT.consumer()->set_cancelled(1);
@@ -71,12 +71,12 @@ void AbstractCommand::redo()
     this->redo_impl();
     w_leave_critical();
 
-    g_iSInUndoRedoProcess = false;
+    g_isInUndoRedoProcess = false;
 }
 
 void AbstractCommand::undo()
 {
-    g_iSInUndoRedoProcess = true;
+    g_isInUndoRedoProcess = true;
     MLT.consumer()->set_cancelled(1);
     w_enter_critical();
     MLT.consumer()->set_cancelled(0);
@@ -88,7 +88,7 @@ void AbstractCommand::undo()
     saveXmlFile(m_originalXml,m_currentXml,text());
 //    Q_ASSERT(m_currentXml == m_originalXml);
 #endif
-    g_iSInUndoRedoProcess = false;
+    g_isInUndoRedoProcess = false;
 }
 
 

@@ -3,6 +3,7 @@
 
 #include <QUndoCommand>
 
+extern bool g_isInUndoRedoProcess;
 
 class AbstractCommand : public QUndoCommand
 {
