@@ -173,6 +173,7 @@ void FilterController::loadFrei0rFilterMetadata() {
 
                 meta->setName(tr("%1").arg(name.toUtf8().constData()));
                 meta->set_mlt_service(mlt_service_s);
+                meta->setObjectName(mlt_service_s.replace(QRegExp("\\."), "_"));
                 meta->keyframes()->clearParameter();
                 //parameters info
                 //if ( metadata )

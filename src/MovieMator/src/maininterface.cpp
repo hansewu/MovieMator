@@ -399,6 +399,22 @@ void MainInterface::previewAudioFilter(QmlMetadata *meta)
 
 void MainInterface::previewFilter(int index)
 {
+//    for (int i=0;i<MAIN.filterController()->metadataModel()->rowCount();i++) {
+//        QmlMetadata *meta = MAIN.filterController()->getQmlMetadata(i);
+//        if(meta == nullptr) break;
+//        qDebug()<<"111111111111111111111-0:"+QString::number(i);
+//        qDebug()<<"name:"+meta->name();
+//        qDebug()<<"mlt_service:"+meta->mlt_service();
+//        qDebug()<<"objectName:"+meta->objectName();
+//        qDebug()<<"parameterCount:"+QString::number(meta->keyframes()->parameterCount());
+//        for (int j=0;j<meta->keyframes()->parameterCount();j++) {
+//            qDebug()<<"parameter:"+QString::number(j);
+//            qDebug()<<"parameter name:"+meta->keyframes()->parameter(j)->name();
+//            qDebug()<<"parameter property:"+meta->keyframes()->parameter(j)->property();
+//            qDebug()<<"parameter defaultValue:"+meta->keyframes()->parameter(j)->defaultValue();
+//        }
+//    }
+
 //    1 获取滤镜meta  默认按视频滤镜处理
     QmlMetadata *meta = MAIN.filterController()->getQmlMetadata(index);
     if(meta->isAudio()){
