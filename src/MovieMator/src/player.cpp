@@ -329,7 +329,7 @@ Player::Player(QWidget *parent)
 
     m_btnSeekPrevious = new QPushButton();//QIcon(":/icons/light/32x32/media-seek-backward.png"),"");
     m_btnSeekPrevious->setFlat(true);
-    m_btnSeekPrevious->setFixedSize(12,12);
+    m_btnSeekPrevious->setFixedSize(12,19);
 //    m_btnSeekPrevious->setIconSize(QSize(32,32));
     m_btnSeekPrevious->setToolTip(tr("Skip Previous"));
     connect(m_btnSeekPrevious, SIGNAL(clicked()), this, SLOT(on_actionSkipPrevious_triggered()));
@@ -340,7 +340,7 @@ Player::Player(QWidget *parent)
 
     m_btnSeekNext = new QPushButton();//QIcon();//":/icons/light/32x32/media-seek-forward.png"),"");
     m_btnSeekNext->setFlat(true);
-    m_btnSeekNext->setFixedSize(13,12);
+    m_btnSeekNext->setFixedSize(12,19);
 //    m_btnSeekNext->setIconSize(QSize(32,32));
     connect(m_btnSeekNext, SIGNAL(clicked()), this, SLOT(on_actionSkipNext_triggered()));
     m_btnSeekNext->setContentsMargins(0,0,0,0);
@@ -350,7 +350,7 @@ Player::Player(QWidget *parent)
 
     m_btnPlay = new QPushButton();//m_playIcon,"");
     m_btnPlay->setFlat(true);
-    m_btnPlay->setFixedSize(14,16);
+    m_btnPlay->setFixedSize(16,19);
 //    m_btnPlay->setIconSize(QSize(32,32));
     connect(m_btnPlay, SIGNAL(clicked()), this, SLOT(togglePlayPaused()));
     m_btnPlay->setContentsMargins(0,0,0,0);
@@ -377,7 +377,7 @@ Player::Player(QWidget *parent)
 
     m_btnPreFrame = new QPushButton();//QIcon(":/icons/light/32x32/media-seek-preframe.png"),"");
     m_btnPreFrame->setFlat(true);
-    m_btnPreFrame->setFixedSize(13,10);
+    m_btnPreFrame->setFixedSize(12,19);
 //    m_btnPreFrame->setIconSize(QSize(32,32));
     connect(m_btnPreFrame, SIGNAL(clicked()), this, SLOT(seekPreFrame()));
     m_btnPreFrame->setContentsMargins(0,0,0,0);
@@ -386,7 +386,7 @@ Player::Player(QWidget *parent)
 
     m_btnNextFrame = new QPushButton();//QIcon(":/icons/light/32x32/media-seek-nextframe.png"),"");
     m_btnNextFrame->setFlat(true);
-    m_btnNextFrame->setFixedSize(13,10);
+    m_btnNextFrame->setFixedSize(12,19);
 //    m_btnNextFrame->setIconSize(QSize(32,32));
     connect(m_btnNextFrame, SIGNAL(clicked()), this, SLOT(seekNextFrame()));
     m_btnNextFrame->setContentsMargins(0,0,0,0);
