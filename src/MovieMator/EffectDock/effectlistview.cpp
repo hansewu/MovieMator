@@ -28,6 +28,7 @@ EffectListView::EffectListView(QWidget *parent)
     : QListView(parent)
     , m_canStartDrag(false)
     , m_mimeData(new QMimeData())
+    , m_columnCount(1)
 {
     setAcceptDrops(false);
 }

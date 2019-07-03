@@ -29,6 +29,7 @@
 RecentListView::RecentListView(QWidget *parent)
     : QListView(parent)
     , m_canStartDrag(false)
+    , m_columnCount(1)
 {
 
 }
