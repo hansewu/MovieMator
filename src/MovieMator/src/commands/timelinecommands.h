@@ -441,7 +441,7 @@ class ChangeBlendModeCommand : public QObject, public AbstractCommand
 {
     Q_OBJECT
 public:
-    ChangeBlendModeCommand(Mlt::Transition& transition, const QString& propertyName, const QString& mode, AbstractCommand* parent = nullptr);
+    ChangeBlendModeCommand(MultitrackModel& model, Mlt::Transition& transition, const QString& propertyName, const QString& mode, AbstractCommand* parent = nullptr);
     void redo_impl();
     void undo_impl();
 signals:
@@ -457,7 +457,7 @@ private:
 class UpdateClipCommand : public AbstractCommand
 {
 public:
-    UpdateClipCommand(TimelineDock& timeline, int trackIndex, int clipIndex, int position,
+    UpdateClipCommand(TimelineDock& timeline, MultitrackModel& model, int trackIndex, int clipIndex, int position,
         AbstractCommand * parent = nullptr);
     void setXmlAfter(const QString& xml) { m_xmlAfter = xml; }
     void setSpeedChanged(bool isSpeedChanged) {m_isSpeedChanged = isSpeedChanged;}
@@ -544,10 +544,10 @@ class FilterCommand: public AbstractCommand
 {
 
 public:
-    FilterCommand(Mlt::Filter* filter, QString name,  double from_value, double to_value, bool isFirst,AbstractCommand * parent= nullptr);
-    FilterCommand(Mlt::Filter* filter, QString name,  int from_value, int to_value, bool isFirst,AbstractCommand * parent= nullptr);
-    FilterCommand(Mlt::Filter* filter, QString name,  QString from_value, QString to_value, bool isFirst,AbstractCommand * parent= nullptr);
-    FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, bool isFirst,AbstractCommand * parent= nullptr);
+    FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name,  double from_value, double to_value, bool isFirst,AbstractCommand * parent= nullptr);
+    FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name,  int from_value, int to_value, bool isFirst,AbstractCommand * parent= nullptr);
+    FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name,  QString from_value, QString to_value, bool isFirst,AbstractCommand * parent= nullptr);
+    FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, bool isFirst,AbstractCommand * parent= nullptr);
 
     ~FilterCommand();
     void redo_impl();
@@ -576,7 +576,7 @@ class FilterAttachCommand: public AbstractCommand
 {
 
 public:
-    FilterAttachCommand( QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, bool isFirst, AbstractCommand * parent= nullptr);
+    FilterAttachCommand(MultitrackModel& model, QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, bool isFirst, AbstractCommand * parent= nullptr);
    // ~FilterAttachCommand();
     void redo_impl();
     void undo_impl();
@@ -599,7 +599,7 @@ class FilterMoveCommand: public AbstractCommand
 {
 
 public:
-    FilterMoveCommand(int rowIndexFrom, int rowIndexTo, bool isFirst, AbstractCommand * parent= nullptr);
+    FilterMoveCommand(MultitrackModel& model, int rowIndexFrom, int rowIndexTo, bool isFirst, AbstractCommand * parent= nullptr);
  //   ~FilterMoveCommand();
     void redo_impl();
     void undo_impl();
@@ -620,7 +620,7 @@ protected:
 class KeyFrameInsertCommand: public AbstractCommand
 {
 public:
-    KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item>  &insert_value, bool isFirst, AbstractCommand * parent = nullptr);
+    KeyFrameInsertCommand(MultitrackModel& model, Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item>  &insert_value, bool isFirst, AbstractCommand * parent = nullptr);
     ~KeyFrameInsertCommand();
     void redo_impl();
     void undo_impl();
@@ -642,7 +642,7 @@ private:
 class KeyFrameRemoveCommand: public AbstractCommand
 {
 public:
-    KeyFrameRemoveCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &remove_value, bool isFirst, AbstractCommand * parent = nullptr);
+    KeyFrameRemoveCommand(MultitrackModel& model, Mlt::Filter* filter, const QVector<key_frame_item>  &remove_value, bool isFirst, AbstractCommand * parent = nullptr);
     ~KeyFrameRemoveCommand();
     void redo_impl();
     void undo_impl();
@@ -663,7 +663,7 @@ private:
 class KeyFrameUpdateCommand: public AbstractCommand
 {
 public:
-    KeyFrameUpdateCommand(Mlt::Filter* filter, int nFrame, QString name, QString from_value, QString to_value,bool isFirst, AbstractCommand * parent= nullptr);
+    KeyFrameUpdateCommand(MultitrackModel& model, Mlt::Filter* filter, int nFrame, QString name, QString from_value, QString to_value,bool isFirst, AbstractCommand * parent= nullptr);
     ~KeyFrameUpdateCommand();
     void redo_impl();
     void undo_impl();
@@ -690,7 +690,7 @@ class ClipsSelectCommand: public AbstractCommand
 {
 
 public:
-    ClipsSelectCommand(QList<int> newSelection, int newTrackIndex, bool isNewMultitrack,
+    ClipsSelectCommand(MultitrackModel& model, QList<int> newSelection, int newTrackIndex, bool isNewMultitrack,
                        QList<int> oldSelection, int oldTrackIndex, bool isOldMultitrack,
                        bool isFirst,AbstractCommand * parent= nullptr);
 

@@ -49,6 +49,15 @@ typedef struct {
 
 typedef QList<Track> TrackList;
 
+typedef struct {
+    // 选中的各个 clip序号(只有 1个剪辑)
+    QList<int> selectedClips;
+    // 被选中的轨道序号
+    int selectedTrack;
+    // 多轨道选中（只能选中一个轨道）
+    bool isMultitrackSelected;
+} Selection;
+
 
 bool ProducerIsTimewarp( Mlt::Producer* producer );
 char* GetFilenameFromProducer( Mlt::Producer* producer );
@@ -151,6 +160,9 @@ public:
     //设置转场属性
     void setTransitionProperty(int trackIndex, int clipIndex, const QString& transitionName, const QString& propertyName, const QString& propertyValue);
 
+    Selection selection() { return m_selection; }
+    void setSelection(Selection aSelection) { m_selection = aSelection; }
+
 signals:
     void created();
     void loaded();
@@ -224,6 +236,7 @@ private:
     Mlt::Tractor* m_tractor;
     TrackList m_trackList;
     bool m_isMakingTransition;
+    Selection m_selection;
 
     QScopedPointer<Mlt::Producer> m_copiedProducer;     // 保存时间线轨道上复制的 clip
     // 保存时间线轨道上当前选中的 clip

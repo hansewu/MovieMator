@@ -800,12 +800,6 @@ void MainWindow::onTimelineClipSelected()
 
     m_navigationPosition = t->centerOfClip(t->currentTrack(), t->selection().first());
 
-
-    // Switch to Project player.
-//    if (m_player->tabIndex() != Player::ProjectTabIndex) {
-//        t->saveAndClearSelection();
-//        m_player->onTabBarClicked(Player::ProjectTabIndex);
-//    }
 }
 
 void MainWindow::onAddAllToTimeline(Mlt::Playlist* playlist)
@@ -2708,7 +2702,7 @@ QUndoStack* MainWindow::undoStack() const
 
 void MainWindow::pushCommand(QUndoCommand *command)
 {
-    Q_ASSERT(g_isInUndoRedoProcess == false);
+    //Q_ASSERT(g_isInUndoRedoProcess == false);
     m_undoStack->push(command);
 }
 
@@ -3874,10 +3868,6 @@ void MainWindow::on_actionClose_triggered()
 void MainWindow::onPlayerTabIndexChanged(int index)
 {
     Q_UNUSED(index);
-//    if (Player::SourceTabIndex == index)
-//        m_timelineDock->saveAndClearSelection();
-//    else
-//        m_timelineDock->restoreSelection();
 }
 
 void MainWindow::onUpgradeCheckFinished(QNetworkReply* reply)

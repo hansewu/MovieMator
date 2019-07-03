@@ -91,6 +91,9 @@ MultitrackModel::MultitrackModel(QObject *parent)
 {
 //    connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));//sll:将modify放在mainwindow中建立连接，防止界面更新与数据操作顺序问题
     connect(this, SIGNAL(reloadRequested()), SLOT(reload()), Qt::QueuedConnection);
+
+    m_selection.selectedTrack = -1;
+    m_selection.isMultitrackSelected = false;
 }
 
 MultitrackModel::~MultitrackModel()

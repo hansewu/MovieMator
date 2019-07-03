@@ -46,7 +46,7 @@ Q_DECLARE_METATYPE(MY_ROTATE_COMMAND);
 namespace Timeline {
 
 AppendClipCommand::AppendClipCommand(MultitrackModel &model, int trackIndex, const QString &xml, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_xml(xml)
@@ -59,6 +59,7 @@ AppendClipCommand::AppendClipCommand(MultitrackModel &model, int trackIndex, con
 void AppendClipCommand::redo_impl()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex;
+
     m_undoHelper.recordBeforeState();
     Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     Q_ASSERT(producer.is_valid());
@@ -74,7 +75,7 @@ void AppendClipCommand::undo_impl()
 
 InsertClipCommand::InsertClipCommand(MultitrackModel &model, int trackIndex,
     int position, const QString &xml, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_position(position)
@@ -102,7 +103,7 @@ void InsertClipCommand::undo_impl()
 
 OverwriteClipCommand::OverwriteClipCommand(MultitrackModel &model, int trackIndex,
     int position, const QString &xml, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_position(position)
@@ -130,7 +131,7 @@ void OverwriteClipCommand::undo_impl()
 
 LiftClipCommand::LiftClipCommand(MultitrackModel &model, TimelineDock &timeline, int trackIndex,
     int clipIndex, const QString &xml, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
@@ -160,7 +161,7 @@ void LiftClipCommand::undo_impl()
 
 RemoveClipCommand::RemoveClipCommand(MultitrackModel &model, TimelineDock& timeline, int trackIndex,
     int clipIndex, const QString &xml, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
@@ -191,7 +192,7 @@ void RemoveClipCommand::undo_impl()
 
 NameTrackCommand::NameTrackCommand(MultitrackModel &model, int trackIndex,
     const QString &name, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_name(name)
@@ -213,7 +214,7 @@ void NameTrackCommand::undo_impl()
 }
 
 MuteTrackCommand::MuteTrackCommand(MultitrackModel &model, int trackIndex, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_oldValue(model.data(m_model.index(trackIndex), MultitrackModel::IsMuteRole).toBool())
@@ -234,7 +235,7 @@ void MuteTrackCommand::undo_impl()
 }
 
 HideTrackCommand::HideTrackCommand(MultitrackModel &model, int trackIndex, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_oldValue(model.data(m_model.index(trackIndex), MultitrackModel::IsHiddenRole).toBool())
@@ -255,7 +256,7 @@ void HideTrackCommand::undo_impl()
 }
 
 CompositeTrackCommand::CompositeTrackCommand(MultitrackModel &model, int trackIndex, Qt::CheckState value, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_value(value)
@@ -277,7 +278,7 @@ void CompositeTrackCommand::undo_impl()
 }
 
 LockTrackCommand::LockTrackCommand(MultitrackModel &model, int trackIndex, bool value, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_value(value)
@@ -299,7 +300,7 @@ void LockTrackCommand::undo_impl()
 }
 
 MoveClipCommand::MoveClipCommand(MultitrackModel &model, int fromTrackIndex, int toTrackIndex, int clipIndex, int position, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_fromTrackIndex(fromTrackIndex)
     , m_toTrackIndex(toTrackIndex)
@@ -331,7 +332,7 @@ void MoveClipCommand::undo_impl()
 }
 
 TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, bool ripple, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
@@ -373,7 +374,7 @@ bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
 }
 
 TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, bool ripple, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
@@ -415,7 +416,7 @@ bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
 
 SplitCommand::SplitCommand(MultitrackModel &model, int trackIndex,
     int clipIndex, int position, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
@@ -437,7 +438,7 @@ void SplitCommand::undo_impl()
 }
 
 FadeInCommand::FadeInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int duration, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
@@ -473,7 +474,7 @@ bool FadeInCommand::mergeWith(const QUndoCommand *other)
 }
 
 FadeOutCommand::FadeOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int duration, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
@@ -509,7 +510,7 @@ bool FadeOutCommand::mergeWith(const QUndoCommand *other)
 }
 
 AddTransitionCommand::AddTransitionCommand(MultitrackModel &model, int trackIndex, int clipIndex, int position, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
@@ -553,7 +554,7 @@ void AddTransitionCommand::undo_impl()
 }
 
 TrimTransitionInCommand::TrimTransitionInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
@@ -595,7 +596,7 @@ bool TrimTransitionInCommand::mergeWith(const QUndoCommand *other)
 }
 
 TrimTransitionOutCommand::TrimTransitionOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
@@ -637,7 +638,7 @@ bool TrimTransitionOutCommand::mergeWith(const QUndoCommand *other)
 }
 
 AddTransitionByTrimInCommand::AddTransitionByTrimInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
@@ -678,7 +679,7 @@ bool AddTransitionByTrimInCommand::mergeWith(const QUndoCommand *other)
 }
 
 AddTransitionByTrimOutCommand::AddTransitionByTrimOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
@@ -718,7 +719,7 @@ bool AddTransitionByTrimOutCommand::mergeWith(const QUndoCommand *other)
 }
 
 AddTrackCommand::AddTrackCommand(MultitrackModel& model, TrackType trackType, AbstractCommand* parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackType(trackType)
 {
@@ -754,7 +755,7 @@ void AddTrackCommand::undo_impl()
 }
 
 InsertTrackCommand::InsertTrackCommand(MultitrackModel& model, int trackIndex, AbstractCommand* parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_trackType(model.trackList().size() > 0 ? model.trackList().at(trackIndex).type : VideoTrackType)
@@ -778,7 +779,7 @@ void InsertTrackCommand::undo_impl()
 }
 
 RemoveTrackCommand::RemoveTrackCommand(MultitrackModel& model, int trackIndex, AbstractCommand* parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_trackType(model.trackList().at(trackIndex).type)
@@ -845,8 +846,8 @@ void RemoveTrackCommand::undo_impl()
     }
 }
 
-ChangeBlendModeCommand::ChangeBlendModeCommand(Mlt::Transition& transition, const QString& propertyName, const QString& mode, AbstractCommand* parent)
-    : AbstractCommand(parent)
+ChangeBlendModeCommand::ChangeBlendModeCommand(MultitrackModel& model, Mlt::Transition& transition, const QString& propertyName, const QString& mode, AbstractCommand* parent)
+    : AbstractCommand(model, parent)
     , m_transition(transition)
     , m_propertyName(propertyName)
     , m_newMode(mode)
@@ -875,9 +876,9 @@ void ChangeBlendModeCommand::undo_impl()
     }
 }
 
-UpdateClipCommand::UpdateClipCommand(TimelineDock& timeline, int trackIndex, int clipIndex,
+UpdateClipCommand::UpdateClipCommand(TimelineDock& timeline, MultitrackModel& model, int trackIndex, int clipIndex,
     int position, AbstractCommand* parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_timeline(timeline)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
@@ -919,7 +920,7 @@ void UpdateClipCommand::undo_impl()
 }
 
 RemoveTransitionCommand::RemoveTransitionCommand(MultitrackModel &model, int trackIndex, int clipIndex, int transitionIndex, int position, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
@@ -968,7 +969,7 @@ void RemoveTransitionCommand::undo_impl()
 }
 
 RemoveTransitionsOnClipCommand::RemoveTransitionsOnClipCommand(MultitrackModel &model, TimelineDock &timeline, int trackIndex, int clipIndex, AbstractCommand *parent)
-    :AbstractCommand(parent)
+    :AbstractCommand(model, parent)
     , m_model(model)
     , m_timeline(timeline)
     , m_trackIndex(trackIndex)
@@ -993,7 +994,7 @@ void RemoveTransitionsOnClipCommand::undo_impl()
 }
 
 MoveInsertClipCommand::MoveInsertClipCommand(MultitrackModel &model, int fromTrack, int toTrack, int clipIndex, int position, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_fromTrackIndex(fromTrack)
     , m_toTrackIndex(toTrack)
@@ -1021,8 +1022,8 @@ void MoveInsertClipCommand::undo_impl()
 
 
 
-FilterCommand::FilterCommand(Mlt::Filter* filter, QString name, double from_value, double to_value, bool isFirst,AbstractCommand * parent)
- : AbstractCommand(parent)
+FilterCommand::FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name, double from_value, double to_value, bool isFirst,AbstractCommand * parent)
+ : AbstractCommand(model, parent)
 {
     setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
@@ -1051,8 +1052,8 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name, double from_valu
     }
 }
 
-FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  int from_value, int to_value,bool isFirst, AbstractCommand * parent)
-: AbstractCommand(parent)
+FilterCommand::FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name,  int from_value, int to_value,bool isFirst, AbstractCommand * parent)
+: AbstractCommand(model, parent)
 {
     setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
@@ -1064,8 +1065,8 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  int from_value,
     m_bFirstExec = isFirst;
 }
 
-FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QString from_value, QString to_value, bool isFirst,AbstractCommand * parent)
-: AbstractCommand(parent)
+FilterCommand::FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name,  QString from_value, QString to_value, bool isFirst,AbstractCommand * parent)
+: AbstractCommand(model, parent)
 {
     setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
@@ -1077,8 +1078,8 @@ FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QString from_va
     m_bFirstExec = isFirst;
 }
 
-FilterCommand::FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, bool isFirst,AbstractCommand * parent)
-: AbstractCommand(parent)
+FilterCommand::FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, bool isFirst,AbstractCommand * parent)
+: AbstractCommand(model, parent)
 {
     setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
@@ -1270,8 +1271,8 @@ void FilterCommand::undo_impl()
 
 
 //增加关键帧
-KeyFrameInsertCommand::KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item> &insert_value, bool isFirst,AbstractCommand *parent)
-: AbstractCommand(parent)
+KeyFrameInsertCommand::KeyFrameInsertCommand(MultitrackModel& model, Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item> &insert_value, bool isFirst,AbstractCommand *parent)
+: AbstractCommand(model, parent)
 ,m_from_value(from_value)
 ,m_insert_value(insert_value)
 {
@@ -1373,8 +1374,8 @@ bool KeyFrameInsertCommand::mergeWith(const QUndoCommand *other)
 
 
 //删除关键帧
-KeyFrameRemoveCommand::KeyFrameRemoveCommand(Mlt::Filter* filter, const QVector<key_frame_item> &remove_value,bool isFirst, AbstractCommand *parent)
-: AbstractCommand(parent)
+KeyFrameRemoveCommand::KeyFrameRemoveCommand(MultitrackModel& model, Mlt::Filter* filter, const QVector<key_frame_item> &remove_value,bool isFirst, AbstractCommand *parent)
+: AbstractCommand(model, parent)
 ,m_remove_value(remove_value)
 {
     setText(QObject::tr("KeyFrameRemoveCommand"));
@@ -1453,8 +1454,8 @@ bool KeyFrameRemoveCommand::mergeWith(const QUndoCommand *other)
 
 
 //修改关键帧数据
-KeyFrameUpdateCommand::KeyFrameUpdateCommand(Mlt::Filter* filter, int nFrame, QString name, QString from_value, QString to_value, bool isFirst, AbstractCommand *parent)
-: AbstractCommand(parent)
+KeyFrameUpdateCommand::KeyFrameUpdateCommand(MultitrackModel& model, Mlt::Filter* filter, int nFrame, QString name, QString from_value, QString to_value, bool isFirst, AbstractCommand *parent)
+: AbstractCommand(model, parent)
 {
     setText(QObject::tr("KeyFrameUpdateCommand"));
     Q_ASSERT(filter);
@@ -1519,8 +1520,8 @@ bool KeyFrameUpdateCommand::mergeWith(const QUndoCommand *other)
 
 
 
-FilterAttachCommand::FilterAttachCommand( QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, bool isFirst, AbstractCommand * parent)
-: AbstractCommand(parent)
+FilterAttachCommand::FilterAttachCommand(MultitrackModel& model, QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, bool isFirst, AbstractCommand * parent)
+: AbstractCommand(model, parent)
 {
     setText(QObject::tr("FilterAttachCommand"));
     m_bFirstExec    = true;
@@ -1581,8 +1582,8 @@ protected:
     bool            m_bFirstExec;
 */
 
-FilterMoveCommand::FilterMoveCommand(int rowIndexFrom, int rowIndexTo, bool isFirst, AbstractCommand * parent)
-: AbstractCommand(parent)
+FilterMoveCommand::FilterMoveCommand(MultitrackModel& model, int rowIndexFrom, int rowIndexTo, bool isFirst, AbstractCommand * parent)
+: AbstractCommand(model, parent)
 {
     setText(QObject::tr("FilterMoveCommand"));
     m_bFirstExec    = true;
@@ -1611,10 +1612,10 @@ void FilterMoveCommand::undo_impl()
 }
 
 
-ClipsSelectCommand::ClipsSelectCommand(QList<int> newSelection, int newTrackIndex, bool isNewMultitrack,
+ClipsSelectCommand::ClipsSelectCommand(MultitrackModel& model, QList<int> newSelection, int newTrackIndex, bool isNewMultitrack,
                                        QList<int> oldSelection, int oldTrackIndex, bool isOldMultitrack,
                                        bool isFirst,AbstractCommand * parent)
-: AbstractCommand(parent)
+: AbstractCommand(model, parent)
 {
     setText(QObject::tr("ClipsSelectCommand"));
     m_bFirstExec    = true;
@@ -1640,13 +1641,13 @@ void ClipsSelectCommand::redo_impl()
     }
 
     Q_ASSERT(MAIN.timelineDock());
-    MAIN.timelineDock()->setSelection(m_newSelection, m_newTrackIndex, m_bNewIsMultitrack, true);
+    MAIN.timelineDock()->setSelection(m_newSelection, m_newTrackIndex, m_bNewIsMultitrack);
 }
 
 void ClipsSelectCommand::undo_impl()
 {
     Q_ASSERT(MAIN.timelineDock());
-    MAIN.timelineDock()->setSelection(m_oldSelection, m_oldTrackIndex, m_bOldIsMultitrack, true);
+    MAIN.timelineDock()->setSelection(m_oldSelection, m_oldTrackIndex, m_bOldIsMultitrack);
 }
 
 
@@ -1666,7 +1667,7 @@ protected:
 
 /*
 FilterClipCommand::FilterClipCommand(MultitrackModel& model, int trackIndex, int clipIndex, QString strFromXml, QString strToXml, AbstractCommand * parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
@@ -1699,7 +1700,7 @@ void FilterClipCommand::undo_impl()
 
 
 TransitionPropertyCommand::TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel &model, int trackIndex, int clipIndex, const QString& transitionName, const QString &propertyName, const QString &propertyValue,bool isFirst, int invert, double softness, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_timeline(timeline)
     , m_model(model)
     , m_trackIndex(trackIndex)
@@ -1768,7 +1769,7 @@ bool TransitionPropertyCommand::mergeWith(const QUndoCommand *other)
 
 
 TransitionDurationSettingCommand::TransitionDurationSettingCommand(TimelineDock &timeline, MultitrackModel &model, int trackIndex, int clipIndex, int duration,bool isFirst, AbstractCommand *parent)
-    : AbstractCommand(parent)
+    : AbstractCommand(model, parent)
     , m_timeline(timeline)
     , m_model(model)
     , m_trackIndex(trackIndex)

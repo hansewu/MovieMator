@@ -100,13 +100,9 @@ public:
     // 使轨道高度变高
     void makeTracksTaller();
     // 设置 m_selection的值
-    Q_INVOKABLE void setSelection(QList<int> selection = QList<int>(), int trackIndex = -1, bool isMultitrack = false, bool bFromUndo = false);
+    Q_INVOKABLE void setSelection(QList<int> selection = QList<int>(), int trackIndex = -1, bool isMultitrack = false);
     // 获取 m_selection中的 selectedClips（选中的剪辑）值
     QList<int> selection() const;
-    // 将当前 m_selection保存到 m_savedSelection并清除 m_selection的值
-    void saveAndClearSelection();
-    // 恢复 m_selection值为 m_savedSelection
-    void restoreSelection();
     // 选中播放游标处当前轨道的剪辑
     void selectClipUnderPlayhead();
     //  获取轨道 trackIndex的剪辑 clipIndex的中间位置
@@ -120,11 +116,11 @@ public:
     // 是否波纹（ripple）（视频/音频剪辑、空白剪辑）
     bool isRipple() const;
     // 当前选中的是否含有多个轨道
-    Q_INVOKABLE bool isMultitrackSelected() const { return m_selection.isMultitrackSelected; }
+    Q_INVOKABLE bool isMultitrackSelected() const { return m_model.selection().isMultitrackSelected; }
     // 选中的轨道的序号
-    Q_INVOKABLE int selectedTrackIndex() const { return m_selection.selectedTrack; }
+    Q_INVOKABLE int selectedTrackIndex() const { return m_model.selection().selectedTrack; }
     // 选中的剪辑是否为空    
-    Q_INVOKABLE bool isAClipSelected() const {return !m_selection.selectedClips.isEmpty();} // selectedAClip()
+    Q_INVOKABLE bool isAClipSelected() const {return !m_model.selection().selectedClips.isEmpty();} // selectedAClip()
     // 选中轨道 trackIndex在位置 position处的剪辑
     void selectClipAtPosition(int trackIndex, int position);
     // 获取当前轨道选中剪辑的位置（播放游标-剪辑起始位置）
@@ -437,19 +433,6 @@ private:
     Timeline::UpdateClipCommand* m_updateCommand;
     // 是否忽略下一个位置变化？？？
     bool m_ignoreNextPositionChange;
-    // 保存选中的轨道、剪辑、是否选中了多个轨道等信息
-    struct Selection {
-        // 选中的各个 clip序号(只有 1个剪辑)
-        QList<int> selectedClips;
-        // 被选中的轨道序号
-        int selectedTrack;
-        // 多轨道选中（只能选中一个轨道）
-        bool isMultitrackSelected;
-    };
-    // 当前 selection
-    Selection m_selection;
-    // 保存的 selection，用来恢复 m_selection值
-    Selection m_savedSelection;
 
     // 滤镜设置界面（qml界面）
     QQuickWidget m_filterSettingsView;

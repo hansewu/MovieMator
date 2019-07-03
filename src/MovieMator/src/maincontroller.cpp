@@ -130,11 +130,11 @@ int MainController::appendToTimelineFromPath(int trackIndex, const QString &path
 
         qApp->processEvents();
 
-        MAIN.pushCommand(
-            new Timeline::AppendClipCommand(m_multitrackModel, trackIndex,
-                MLT.XML(p)));
-//        selectClipUnderPlayhead();
+        Timeline::AppendClipCommand *appendCommand = new Timeline::AppendClipCommand(m_multitrackModel, trackIndex,
+                                                                                     MLT.XML(p));
+        MAIN.pushCommand(appendCommand);
         MAIN.timelineDock()->selectClipUnderPlayhead();
+        appendCommand->refreshSelection();
 
         qApp->processEvents();
 

@@ -401,7 +401,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
         if(!bFromUndo)
         {
             int nCount = MAIN.undoStack()->count();
-             QUndoCommand *attachCommand = new Timeline::FilterAttachCommand(meta, m_metaList.count()-1, insertIndex, true,true);
+             QUndoCommand *attachCommand = new Timeline::FilterAttachCommand(*(MAIN.timelineDock()->model()), meta, m_metaList.count()-1, insertIndex, true,true);
 
              MAIN.pushCommand(attachCommand);
              nCount = MAIN.undoStack()->count();
@@ -453,7 +453,7 @@ void AttachedFiltersModel::remove(int row, bool bFromUndo)
 
     if(!bFromUndo)
     {
-        MAIN.pushCommand(new Timeline::FilterAttachCommand(metaData, row, row, false,true));
+        MAIN.pushCommand(new Timeline::FilterAttachCommand(*(MAIN.timelineDock()->model()), metaData, row, row, false,true));
     }
 
     MAIN.timelineDock()->AttachedfilterChanged();
@@ -482,7 +482,7 @@ bool AttachedFiltersModel::move(int fromRow, int toRow, bool bFromUndo)
 
     if(!bFromUndo && bRet)
     {
-        MAIN.pushCommand(new Timeline::FilterMoveCommand(fromRow, toRowOld,true));
+        MAIN.pushCommand(new Timeline::FilterMoveCommand(*(MAIN.timelineDock()->model()), fromRow, toRowOld,true));
     }
     return bRet;
 }
