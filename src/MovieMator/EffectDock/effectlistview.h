@@ -35,6 +35,11 @@ public:
     // 按键事件
     void keyPressEvent(QKeyEvent*);
 
+    // 设置 m_columnCount的值
+    void setColumnCount(int columnCount) { m_columnCount = columnCount; }
+    // 获取 m_columnCount的值
+    int getColumnCount() { return m_columnCount;}
+
 protected:
     // 鼠标按下事件
     void mousePressEvent(QMouseEvent *);
@@ -51,6 +56,8 @@ private:
     QMimeData *m_mimeData;
     // 保存动画文件 mimeData类型
     QString m_mimeType;
+    // 保存 listView显示的时候每行的列数
+    int m_columnCount;
 };
 
 #endif // EFFECTLISTVIEW_H

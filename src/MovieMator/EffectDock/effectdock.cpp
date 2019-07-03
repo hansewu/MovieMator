@@ -111,6 +111,14 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
                             "QScrollBar::handle:vertical{width:8px;background:rgba(160,160,160,25%);border-radius:4px;min-height:20;}"
                             "QScrollBar::handle:vertical:hover{width:8px;background:rgba(160,160,160,50%);border-radius:4px;min-height:20;}");
 
+    // 添加到时间线的按钮，整个界面只有一个，而不是为每个 item都安置一个
+    m_addToTimelineButton = new QPushButton(this);  // QIcon(":/icons/light/32x32/filter_add.png")
+    m_addToTimelineButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/filter_add.png)}"
+                                         "QPushButton:pressed{ border-image: url(:/icons/light/32x32/filter_add-a.png)}");
+    m_addToTimelineButton->setFixedSize(QSize(27, 26));
+    m_addToTimelineButton->setVisible(false);
+    connect(m_addToTimelineButton, SIGNAL(clicked()), this, SLOT(on_actionAddToTimeline_triggered()));
+
     LOG_DEBUG() << "end";
 }
 
@@ -161,6 +169,13 @@ void EffectDock::resizeEvent(QResizeEvent *event)
         int rowCount = listView->model()->rowCount();
         int rows = rowCount%columns>0 ? (rowCount/columns+1) : (rowCount/columns);
         listView->setFixedHeight(rows*hSize);
+
+        listView->setColumnCount(columns);
+        if(listView==m_currentListView && m_currentIndex.isValid())
+        {
+            // 调整按钮的位置
+            positionAddToTimelineButton();
+        }
     }
     on_comboBox_2_activated(ui->comboBox_2->currentIndex());
     QDockWidget::resizeEvent(event);
@@ -198,6 +213,35 @@ QString EffectDock::getImageClassType(QString srcStr, QJsonObject propertyInfo){
     }
 
     return result;
+}
+
+// 调整 m_addToTimelineButton的位置，点击时，调整界面大小时
+// 位置随当前选中的 item变化而变化
+void EffectDock::positionAddToTimelineButton()
+{
+    if(!m_currentListView || !m_currentIndex.isValid())
+        return;
+
+    int columnCount = m_currentListView->getColumnCount();
+
+    int count = m_currentIndex.row() + 1;
+    int row = (count % columnCount > 0) ? (count / columnCount + 1) : (count / columnCount);
+    int column = count - (row-1)*columnCount;
+
+    int gridWidth = m_currentListView->gridSize().width()
+                    + m_currentListView->contentsMargins().left()       // 0
+                    + m_currentListView->contentsMargins().right();     // 0
+    int gridHeight = m_currentListView->gridSize().height()
+                    + m_currentListView->contentsMargins().top()        // 5
+                    + m_currentListView->contentsMargins().bottom();    // 5
+
+    int width = m_addToTimelineButton->width();
+    int height = m_addToTimelineButton->height();
+
+    int x = column * gridWidth - width -5;
+    int y = (row-1) * gridHeight;
+
+    m_addToTimelineButton->setGeometry(x, y, width, height);
 }
 
 QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInfo) {
@@ -466,7 +510,7 @@ void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName
     listView->setContentsMargins(0, 5, 0, 5);
     listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     listView->setStyleSheet(
-                "QListView::item:selected{background-color:rgb(192,72,44); color:rgb(255,255,255);}"
+                "QListView::item:selected{background-color:rgb(192,72,44); color:rgb(255,255,255);border-radius:4px;}"
                 "QListView{background-color:transparent;color:rgb(214,214,214);}");
 
     connect(listView, SIGNAL(pressed(const QModelIndex&)), this, SLOT(onListviewPressed(const QModelIndex&)));
@@ -474,34 +518,55 @@ void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName
     connect(listView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(onListviewCustomContextMenuRequested(const QPoint&)));
 }
 
-void EffectDock::onListviewPressed(const QModelIndex &)
+void EffectDock::onListviewPressed(const QModelIndex &index)
 {
-    Q_ASSERT(m_imageList);
-    if(!m_imageList)
-    {
+//    Q_ASSERT(m_imageList);
+//    if(!m_imageList)
+//    {
+//        return;
+//    }
+//    for(EffectListView *listView : *m_imageList)
+//    {
+//        Q_ASSERT(listView);
+//        if(!listView)
+//        {
+//            continue;
+//        }
+//        if(listView->hasFocus())
+//        {
+//            if(m_currentListView && m_currentListView!=listView)
+//            {
+//                m_currentListView->clearSelection();
+//            }
+//            m_currentListView = listView;
+//            m_currentIndex = m_currentListView->currentIndex();
+//            createEffectFile();
+////            return;
+//            break;
+//        }
+//    }
+
+    // 不用 for循环遍历，直接用 sender()获取 listView
+    if(!sender())
         return;
-    }
-    for(EffectListView *listView : *m_imageList)
+    EffectListView *listView = static_cast<EffectListView*>(sender());
+    if(m_currentListView && m_currentListView!=listView)
     {
-        Q_ASSERT(listView);
-        if(!listView)
-        {
-            continue;
-        }
-        if(listView->hasFocus())
-        {
-            if(m_currentListView && m_currentListView!=listView)
-            {
-                m_currentListView->clearSelection();
-            }
-            m_currentListView = listView;
-            m_currentIndex = m_currentListView->currentIndex();
-            createEffectFile();
-//            return;
-            break;
-        }
+        m_currentListView->clearSelection();
     }
 
+    m_currentListView = listView;
+    m_currentIndex = index;     //m_currentListView->currentIndex();
+
+    createEffectFile();
+
+    if(m_currentListView && m_currentIndex.isValid())
+    {
+        // 按下后显示按钮
+        m_addToTimelineButton->setParent(m_currentListView);
+        m_addToTimelineButton->setVisible(true);
+        positionAddToTimelineButton();
+    }
 
     if(m_effectFile && m_mainWindow)
     {
@@ -580,7 +645,11 @@ void EffectDock::on_EffectDock_visibilityChanged(bool visible)
 {
     if (visible) {
 //        onListviewClicked(QModelIndex());
-        onListviewPressed(QModelIndex());
+//        onListviewPressed(QModelIndex());
+        if(m_effectFile && m_mainWindow)
+        {
+            m_mainWindow->playFile(m_effectFile);
+        }
 
         resizeEvent(nullptr);   // 切换dock后listView大小会随dock变化
     }

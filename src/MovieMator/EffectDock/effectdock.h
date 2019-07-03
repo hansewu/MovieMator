@@ -34,6 +34,8 @@
 #include "effectlistmodel.h"
 #include "effectlistview.h"
 
+#include <QPushButton>
+
 namespace Ui {
     class EffectDock;
 }
@@ -72,6 +74,8 @@ private:
     QString getTranslationStr(QString srcStr, QJsonObject translationInfo);
     // 根据字符串 srcStr从 propertyInfo中寻获取对应的翻译内容
     QString getImageClassType(QString srcStr, QJsonObject propertyInfo);
+    // 设置 m_addToTimelineButton的位置
+    void positionAddToTimelineButton();
 
 private slots:
     // 响应 listView按下的槽函数
@@ -118,6 +122,10 @@ private:
     QJsonObject m_imageClassNameTranslateInfo;
     // 图片文件名称翻译信息
     QJsonObject m_imageClassPropertyInfo;
+
+    // 将当前动画添加到时间线的按钮
+    // 不为 model的每个 item都添加一个，只使用一个
+    QPushButton *m_addToTimelineButton;
 };
 
 #endif // EFFECTDOCK_H
