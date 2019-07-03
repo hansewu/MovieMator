@@ -35,6 +35,7 @@
 #include <QMap>
 #include <QLabel>
 #include <QSpacerItem>
+#include <QPushButton>
 
 namespace Ui {
     class RecentDock;
@@ -64,6 +65,8 @@ private:
     // 界面大小改变事件
     void resizeEvent(QResizeEvent* event);
 
+    // 调整 m_addToTimelineButton的位置
+    void positionAddToTimelineButton();
 private:
     // 界面 ui
     Ui::RecentDock *ui;
@@ -96,6 +99,10 @@ private:
     // 标题与对应的下拉列表序号
     QMap<int, QString> m_map;
 
+    // listView中 item的添加到时间线按钮
+    // 整个 dock只有一个，而不是每个 item一个
+    QPushButton *m_addToTimelineButton;
+
 public slots:
     // listView右键菜单 actionRemove触发的槽函数
     void on_actionRemove_triggered();
@@ -124,6 +131,9 @@ private slots:
     void onListviewClicked(const QModelIndex &index);
     // listView右键菜单的槽函数
     void onListviewCustomContextMenuRequested(const QPoint &pos);
+
+    // 将当前文件添加到时间线上
+    void addToTimeline();
 };
 
 #endif // RECENTDOCK_H

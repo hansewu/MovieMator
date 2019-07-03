@@ -107,7 +107,7 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
         listView->setContextMenuPolicy(Qt::CustomContextMenu);
         listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         listView->setStyleSheet(
-                    "QListView::item:selected{background-color:rgb(192,72,44);color:rgb(255,255,255);}"
+                    "QListView::item:selected{background-color:rgb(192,72,44);color:rgb(255,255,255);border-radius:4px;}"
                     "QListView{background-color:transparent;color:rgb(214,214,214);}");
 
         connect(listView, SIGNAL(pressed(const QModelIndex&)), this, SLOT(onListviewPressed(const QModelIndex&)));
@@ -151,6 +151,15 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
             ->setStyleSheet("QScrollBar:vertical{width:8px;background:rgba(0,0,0,0%);margin:0px,0px,0px,0px;}"
                             "QScrollBar::handle:vertical{width:8px;background:rgba(160,160,160,25%);border-radius:4px;min-height:20;}"
                             "QScrollBar::handle:vertical:hover{width:8px;background:rgba(160,160,160,50%);border-radius:4px;min-height:20;}");
+
+
+    // 添加到时间线的按钮，整个界面只有一个，而不是为每个 item都安置一个
+    m_addToTimelineButton = new QPushButton(this);  // QIcon(":/icons/light/32x32/filter_add.png")
+    m_addToTimelineButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/filter_add.png)}"
+                                         "QPushButton:pressed{ border-image: url(:/icons/light/32x32/filter_add-a.png)}");
+    m_addToTimelineButton->setFixedSize(QSize(27, 26));
+    m_addToTimelineButton->setVisible(false);
+    connect(m_addToTimelineButton, SIGNAL(clicked()), this, SLOT(addToTimeline()));
 
     LOG_DEBUG() << "end";
 }
@@ -205,9 +214,75 @@ void RecentDock::resizeEvent(QResizeEvent* event)
         int rowCount = listView->model()->rowCount();
         int row = rowCount%columns>0 ? (rowCount/columns+1) : (rowCount/columns);
         listView->setFixedHeight(row*hSize);
+
+        listView->setColumnCount(columns);
+        if(listView==m_currentListView && m_currentIndex.isValid())
+        {
+            positionAddToTimelineButton();
+        }
     }
 //    on_comboBox_currentIndexChanged(ui->comboBox->currentIndex());
     QDockWidget::resizeEvent(event);
+}
+
+void  RecentDock::positionAddToTimelineButton()
+{
+    if(!m_currentListView || !m_currentIndex.isValid())
+        return;
+
+    int columnCount = m_currentListView->getColumnCount();
+
+//    QSortFilterProxyModel *proxyModel = qobject_cast<QSortFilterProxyModel*>(m_currentListView->model());
+//    Q_ASSERT(proxyModel);
+//    RecentListModel *model = proxyModel ? qobject_cast<RecentListModel*>(proxyModel->sourceModel()) : nullptr;
+//    Q_ASSERT(model);
+//    if(!model)
+//    {
+//        return;
+//    }
+
+    int count = m_currentIndex.row() + 1;   //proxyModel->mapToSource(m_currentIndex).row() + 1;
+    int row = (count % columnCount > 0) ? (count / columnCount + 1) : (count / columnCount);
+    int column = count - (row-1)*columnCount;
+
+    int gridWidth = m_currentListView->gridSize().width()
+                    + m_currentListView->contentsMargins().left()       // 0
+                    + m_currentListView->contentsMargins().right();     // 0
+    int gridHeight = m_currentListView->gridSize().height()
+                    + m_currentListView->contentsMargins().top()        // 5
+                    + m_currentListView->contentsMargins().bottom();    // 5
+
+    int width = m_addToTimelineButton->width();
+    int height = m_addToTimelineButton->height();
+
+    int x = column * gridWidth - width -5;
+    int y = (row-1) * gridHeight;
+
+    m_addToTimelineButton->setGeometry(x, y, width, height);
+}
+
+void RecentDock::addToTimeline()
+{
+    if (!m_currentListView || m_currentListView->model()->rowCount()<=0 || !m_currentIndex.isValid())
+    {
+        return;
+    }
+
+    QSortFilterProxyModel *proxyModel = qobject_cast<QSortFilterProxyModel*>(m_currentListView->model());
+    Q_ASSERT(proxyModel);
+    RecentListModel *model = proxyModel ? qobject_cast<RecentListModel*>(proxyModel->sourceModel()) : nullptr;
+    Q_ASSERT(model);
+    if(model)
+    {
+        FILE_HANDLE fileHandle = model->fileAt(proxyModel->mapToSource(m_currentIndex).row());
+        Q_ASSERT(fileHandle);
+        Q_ASSERT(m_mainWindow);
+        if(!fileHandle || !m_mainWindow)
+        {
+            return;
+        }
+        m_mainWindow->addToTimeLine(fileHandle);
+    }
 }
 
 void RecentDock::add(const QString &s)
@@ -354,6 +429,8 @@ void RecentDock::on_lineEdit_textChanged(const QString& search)
         m_currentListView->clearSelection();
     }
     resizeEvent(nullptr);
+
+    m_addToTimelineButton->setVisible(false);
 }
 
 void RecentDock::on_comboBox_activated(const QString &arg1)
@@ -400,30 +477,48 @@ void RecentDock::onListviewActivated(const QModelIndex &index)
 
 void RecentDock::onListviewPressed(const QModelIndex &index)
 {
-    Q_ASSERT(m_listviewList);
-    if(!m_listviewList)
-    {
+//    Q_ASSERT(m_listviewList);
+//    if(!m_listviewList)
+//    {
+//        return;
+//    }
+//    for(RecentListView *listView : *m_listviewList)
+//    {
+//        Q_ASSERT(listView);
+//        if(!listView)
+//        {
+//            continue;
+//        }
+//        Q_ASSERT(index.isValid());
+//        if(index.isValid() && index==listView->currentIndex())
+//        {
+//            if(m_currentListView && m_currentListView!=listView)
+//            {
+//                m_currentListView->clearSelection();
+//            }
+//            m_currentIndex = index;
+//            m_currentListView = listView;
+////            return;
+//            break;
+//        }
+//    }
+
+    if(!sender())
         return;
-    }
-    for(RecentListView *listView : *m_listviewList)
+
+    RecentListView *listView = static_cast<RecentListView*>(sender());
+    if(m_currentListView && m_currentListView!=listView)
     {
-        Q_ASSERT(listView);
-        if(!listView)
-        {
-            continue;
-        }
-        Q_ASSERT(index.isValid());
-        if(index.isValid() && index==listView->currentIndex())
-        {
-            if(m_currentListView && m_currentListView!=listView)
-            {
-                m_currentListView->clearSelection();
-            }
-            m_currentIndex = index;
-            m_currentListView = listView;
-//            return;
-            break;
-        }
+        m_currentListView->clearSelection();
+    }
+    m_currentListView = listView;
+    m_currentIndex = index;
+
+    if(m_currentListView && m_currentIndex.isValid())
+    {
+        m_addToTimelineButton->setParent(m_currentListView);
+        m_addToTimelineButton->setVisible(true);
+        positionAddToTimelineButton();
     }
 
     onListviewActivated(QModelIndex());     // 按下就播放

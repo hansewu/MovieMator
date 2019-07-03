@@ -30,6 +30,10 @@ public:
     void keyPressEvent(QKeyEvent*);
     // 获取被选中的多个 model
     QModelIndexList getSelected();
+    // 获取 m_columnCount的值
+    int getColumnCount() const { return m_columnCount; }
+    // 设置 m_columnCount的值
+    void setColumnCount(int columnCount) { m_columnCount = columnCount; }
 
 protected:
     // 鼠标按下事件
@@ -42,6 +46,8 @@ private:
     QPoint m_dragStart;
     // listView能否被拖动
     bool m_canStartDrag;
+    // 保存 listView显示时的每行列数
+    int m_columnCount;
 };
 
 #endif // RECENTLISTVIEW_H
