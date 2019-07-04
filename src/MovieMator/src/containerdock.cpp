@@ -66,7 +66,7 @@ ContainerDock::ContainerDock(TAB_POSITION tabPosition, QWidget *parent)
     else if (m_tabPostion == TabPosition_Top)
     {
         m_tabBtnWidget->setStyleSheet(".QWidget{background-color: rgb(82,82,82);border-radius:5px}");
-        m_tabBtnWidget->setFixedHeight(33);
+        m_tabBtnWidget->setFixedHeight(43);     // 33
         QHBoxLayout *tabButtonLayout = new QHBoxLayout();
         tabButtonLayout->setSpacing(0);
         tabButtonLayout->setContentsMargins(0,0,0,0);
@@ -167,7 +167,11 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
     }
     else if (m_tabPostion == TabPosition_Top)
     {
-        button->setFixedSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        font.setPixelSize(14);
+        button->setFont(font);
+        button->setFixedSize(110, 45);
+
+//        button->setFixedSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         QHBoxLayout *hLayout = qobject_cast<QHBoxLayout*>(m_tabBtnWidget->layout());    //(QHBoxLayout *)m_tabBtnWidget->layout();
         hLayout->insertWidget(hLayout->count()-1,button);
