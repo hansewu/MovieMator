@@ -181,6 +181,10 @@ Player::Player(QWidget *parent)
     m_fullScreenButton = new QPushButton();
     m_zoomSetButton = new QPushButton();
 
+    m_fitButton->setToolTip(tr("Zoom to fit"));
+    m_fullScreenButton->setToolTip(tr("Full screen"));
+    m_zoomSetButton->setToolTip(tr("Change aspect ratio"));
+
     m_fitButton->setFixedSize(QSize(20, 20));
     m_fitButton->setIconSize(QSize(20, 20));
     m_fitButton->setFlat(true);
@@ -272,6 +276,7 @@ Player::Player(QWidget *parent)
 
 
      m_volumeButton = new QPushButton;
+     m_volumeButton->setToolTip(tr("Volume control"));
      m_volumeButton->setFlat(true);
      m_volumeButton->setStyleSheet("QPushButton{border-image: url(:/icons/light/32x32/player-volume.png)}"
                                    "QPushButton:pressed{border-image: url(:/icons/light/32x32/player-volume-pressed.png)}");
@@ -376,7 +381,7 @@ Player::Player(QWidget *parent)
     m_btnPreFrame->setIconSize(QSize(32,32));
     connect(m_btnPreFrame, SIGNAL(clicked()), this, SLOT(seekPreFrame()));
     m_btnPreFrame->setContentsMargins(0,0,0,0);
-//    m_btnPreFrame->setToolTip(tr("Play quickly backwards (J)"));
+    m_btnPreFrame->setToolTip(tr("Previous frame"));
     m_btnPreFrame->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-seek-preframe.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-seek-preframe-pressed.png)}");
 
     m_btnNextFrame = new QPushButton();//QIcon(":/icons/light/32x32/media-seek-nextframe.png"),"");
@@ -385,7 +390,7 @@ Player::Player(QWidget *parent)
     m_btnNextFrame->setIconSize(QSize(32,32));
     connect(m_btnNextFrame, SIGNAL(clicked()), this, SLOT(seekNextFrame()));
     m_btnNextFrame->setContentsMargins(0,0,0,0);
-//    m_btnNextFrame->setToolTip(tr("Play quickly forwards (L)"));
+    m_btnNextFrame->setToolTip(tr("Next frame"));
     m_btnNextFrame->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-seek-nextframe.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-seek-nextframe-pressed.png)}");
 
 
