@@ -2702,7 +2702,7 @@ QUndoStack* MainWindow::undoStack() const
 
 void MainWindow::pushCommand(QUndoCommand *command)
 {
-    //Q_ASSERT(g_isInUndoRedoProcess == false);
+    Q_ASSERT(g_isInUndoRedoProcess == false);
     m_undoStack->push(command);
 }
 
