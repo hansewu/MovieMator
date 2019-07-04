@@ -346,13 +346,17 @@ void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
     if (filter->is_valid()) {
         if (!meta->objectName().isEmpty())
             filter->set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
-//        if(meta->keyframes()->parameterCount() == 1)
-//        {
-//            if (filter->get_int("in") == 0 && filter->get_int("out") == 0)
-//                filter->set_in_and_out(0, MAIN.timelineDock()->getCurrentClipParentLength());
-//        }
-        // Put the filter after the last filter that is greater than or equal
-        // in sort order.
+
+        for (int j=0;j<meta->keyframes()->parameterCount();j++) {
+            QString property = meta->keyframes()->parameter(j)->property();
+            if(property == "")
+                property = QString::number(j);
+            QString value = meta->keyframes()->parameter(j)->defaultValue();
+            if(value.contains(".html"))
+                value = meta->path().absolutePath().append('/') + value;
+            filter->set(property.toUtf8().constData(),value.toUtf8().constData());
+        }
+
         insertIndex = 0;
         for (int i = m_metaList.count() - 1; i >= 0; i--)
         {
