@@ -29,8 +29,10 @@ EffectListView::EffectListView(QWidget *parent)
     , m_canStartDrag(false)
     , m_mimeData(new QMimeData())
     , m_columnCount(1)
+    , m_modelIndex(QModelIndex())
 {
     setAcceptDrops(false);
+    setMouseTracking(true);     // 可以跟踪鼠标（移动事件）
 }
 
 EffectListView::~EffectListView()
@@ -83,6 +85,24 @@ void EffectListView::mousePressEvent(QMouseEvent* event)
 
 void EffectListView::mouseMoveEvent(QMouseEvent* event)
 {
+    // 鼠标悬浮时触发的行为
+    QModelIndex index = indexAt(event->pos());
+    if(index.isValid())
+    {
+        // 防止在同一个 item里每次移动都发送信号
+        if(m_modelIndex != index)
+        {
+            m_modelIndex = index;
+            emit mouseMove();
+        }
+    }
+    else
+    {
+        m_modelIndex = QModelIndex();
+        emit mouseLeave();
+    }
+    // End
+
     if (!(event->buttons() & Qt::LeftButton))
         return;
     if ((event->pos() - m_dragStart).manhattanLength() < QApplication::startDragDistance())
@@ -110,3 +130,13 @@ void EffectListView::mouseMoveEvent(QMouseEvent* event)
 //        QListView::mouseMoveEvent(event);
     }
 }
+
+// 鼠标离开时要清除 m_modelIndex
+void EffectListView::leaveEvent(QEvent *event)
+{
+    m_modelIndex = QModelIndex();
+    emit mouseLeave();
+
+    QListView::leaveEvent(event);
+}
+

@@ -112,12 +112,14 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
                             "QScrollBar::handle:vertical:hover{width:8px;background:rgba(160,160,160,50%);border-radius:4px;min-height:20;}");
 
     // 添加到时间线的按钮，整个界面只有一个，而不是为每个 item都安置一个
-    m_addToTimelineButton = new QPushButton(this);  // QIcon(":/icons/light/32x32/filter_add.png")
-    m_addToTimelineButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/filter_add.png)}"
-                                         "QPushButton:pressed{ border-image: url(:/icons/light/32x32/filter_add-a.png)}");
-    m_addToTimelineButton->setFixedSize(QSize(27, 26));
-    m_addToTimelineButton->setVisible(false);
-    connect(m_addToTimelineButton, SIGNAL(clicked()), this, SLOT(on_actionAddToTimeline_triggered()));
+    m_addButton = new AddButton(this);  // QIcon(":/icons/light/32x32/filter_add.png")
+    m_addButton->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/filter_add.png)}"
+                               "QPushButton:pressed{ border-image: url(:/icons/light/32x32/filter_add-a.png)}");
+    m_addButton->setFixedSize(QSize(27, 26));
+    m_addButton->setVisible(false);
+    connect(m_addButton, SIGNAL(clicked()), this, SLOT(addToTimeline()));
+    connect(m_addButton, SIGNAL(mouseEnter()), this, SLOT(setSelection()));
+    connect(m_addButton, SIGNAL(mouseLeave()), this, SLOT(resetSelection()));
 
     LOG_DEBUG() << "end";
 }
@@ -171,11 +173,6 @@ void EffectDock::resizeEvent(QResizeEvent *event)
         listView->setFixedHeight(rows*hSize);
 
         listView->setColumnCount(columns);
-        if(listView==m_currentListView && m_currentIndex.isValid())
-        {
-            // 调整按钮的位置
-            positionAddToTimelineButton();
-        }
     }
     on_comboBox_2_activated(ui->comboBox_2->currentIndex());
     QDockWidget::resizeEvent(event);
@@ -217,31 +214,116 @@ QString EffectDock::getImageClassType(QString srcStr, QJsonObject propertyInfo){
 
 // 调整 m_addToTimelineButton的位置，点击时，调整界面大小时
 // 位置随当前选中的 item变化而变化
-void EffectDock::positionAddToTimelineButton()
+// 鼠标悬浮时显示添加按钮
+void EffectDock::positionAddButton()
 {
-    if(!m_currentListView || !m_currentIndex.isValid())
+    if(!sender())
         return;
 
-    int columnCount = m_currentListView->getColumnCount();
+    EffectListView *listView = qobject_cast<EffectListView*>(sender());
+    if(!listView->getModelIndex().isValid())
+        return;
 
-    int count = m_currentIndex.row() + 1;
+    int columnCount = listView->getColumnCount();
+
+    int count = listView->getModelIndex().row() + 1;
     int row = (count % columnCount > 0) ? (count / columnCount + 1) : (count / columnCount);
     int column = count - (row-1)*columnCount;
 
-    int gridWidth = m_currentListView->gridSize().width()
-                    + m_currentListView->contentsMargins().left()       // 0
-                    + m_currentListView->contentsMargins().right();     // 0
-    int gridHeight = m_currentListView->gridSize().height()
-                    + m_currentListView->contentsMargins().top()        // 5
-                    + m_currentListView->contentsMargins().bottom();    // 5
+    int gridWidth = listView->gridSize().width()
+                    + listView->contentsMargins().left()       // 0
+                    + listView->contentsMargins().right();     // 0
+    int gridHeight = listView->gridSize().height()
+                    + listView->contentsMargins().top()        // 5
+                    + listView->contentsMargins().bottom();    // 5
 
-    int width = m_addToTimelineButton->width();
-    int height = m_addToTimelineButton->height();
+    int width = m_addButton->width();
+    int height = m_addButton->height();
 
     int x = column * gridWidth - width -5;
     int y = (row-1) * gridHeight;
 
-    m_addToTimelineButton->setGeometry(x, y, width, height);
+    m_addButton->setParent(listView);
+    m_addButton->setVisible(true);
+    m_addButton->setGeometry(x, y, width, height);
+}
+
+void EffectDock::hideAddButton()
+{
+    m_addButton->setVisible(false);
+}
+
+// 鼠标进入按钮时设置 listView的 item为选中状态
+// 通过设置鼠标进入按钮时设置 item为选中状态来维持 item的背景色
+// 鼠标进入按钮后，item的悬浮效果会被清除
+void EffectDock::setSelection()
+{
+    if(!sender() || !sender()->parent())
+    {
+        return;
+    }
+
+    EffectListView *listView = qobject_cast<EffectListView*>(sender()->parent());
+    listView->selectionModel()->select(listView->getModelIndex(), QItemSelectionModel::Select);
+}
+
+// 鼠标离开按钮时重置 listView的 item选中状态
+void EffectDock::resetSelection()
+{
+    if(!sender() || !sender()->parent())
+    {
+        return;
+    }
+
+    EffectListView *listView = qobject_cast<EffectListView*>(sender()->parent());
+    listView->clearSelection();
+    // 当前 lsitView的当前 item依然要处于选中状态
+    if(listView==m_currentListView)
+    {
+        listView->selectionModel()->select(m_currentIndex, QItemSelectionModel::Select);
+    }
+}
+
+void EffectDock::addToTimeline()
+{
+    if(!sender() || !sender()->parent())
+        return;
+
+    EffectListView *tmpListView = m_currentListView;       // 保存值
+    QModelIndex tmpIndex = m_currentIndex;                 // 保存值
+
+    EffectListView *listView = qobject_cast<EffectListView*>(sender()->parent());
+    m_currentListView = listView;
+    if(!m_currentListView)
+    {
+        m_currentListView = tmpListView;
+        return;
+    }
+    m_currentIndex = listView->getModelIndex();
+    if(!m_currentIndex.isValid())
+    {
+        m_currentListView = tmpListView;
+        m_currentIndex = tmpIndex;
+        return;
+    }
+    createEffectFile();
+
+    Q_ASSERT(m_effectFile);
+    Q_ASSERT(m_mainWindow);
+    if(m_effectFile && m_mainWindow)
+    {
+        m_mainWindow->addToTimeLine(m_effectFile);
+    }
+
+    // 添加到时间线的动画没有被选中，把动画切换回选中的
+    m_currentListView = tmpListView;
+    m_currentIndex = tmpIndex;
+    createEffectFile();
+    // 防止切换 dock时没有选中动画时播放了添加到时间线的动画
+    if(!m_currentListView || !m_currentIndex.isValid())
+    {
+        m_effectFile = nullptr;
+    }
 }
 
 QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInfo) {
@@ -511,62 +593,31 @@ void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName
     listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     listView->setStyleSheet(
                 "QListView::item:selected{background-color:rgb(192,72,44); color:rgb(255,255,255);border-radius:4px;}"
+                "QListView::item:hover{background-color:rgb(192,72,44); color:rgb(255,255,255);border-radius:4px;}"
                 "QListView{background-color:transparent;color:rgb(214,214,214);}");
 
     connect(listView, SIGNAL(pressed(const QModelIndex&)), this, SLOT(onListviewPressed(const QModelIndex&)));
 //    connect(listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(onListviewClicked(const QModelIndex&)));
     connect(listView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(onListviewCustomContextMenuRequested(const QPoint&)));
+
+    connect(listView, SIGNAL(mouseMove()), this, SLOT(positionAddButton()));
+    connect(listView, SIGNAL(mouseLeave()), this, SLOT(hideAddButton()));
 }
 
 void EffectDock::onListviewPressed(const QModelIndex &index)
 {
-//    Q_ASSERT(m_imageList);
-//    if(!m_imageList)
-//    {
-//        return;
-//    }
-//    for(EffectListView *listView : *m_imageList)
-//    {
-//        Q_ASSERT(listView);
-//        if(!listView)
-//        {
-//            continue;
-//        }
-//        if(listView->hasFocus())
-//        {
-//            if(m_currentListView && m_currentListView!=listView)
-//            {
-//                m_currentListView->clearSelection();
-//            }
-//            m_currentListView = listView;
-//            m_currentIndex = m_currentListView->currentIndex();
-//            createEffectFile();
-////            return;
-//            break;
-//        }
-//    }
-
-    // 不用 for循环遍历，直接用 sender()获取 listView
     if(!sender())
         return;
-    EffectListView *listView = static_cast<EffectListView*>(sender());
+    EffectListView *listView = qobject_cast<EffectListView*>(sender());
     if(m_currentListView && m_currentListView!=listView)
     {
         m_currentListView->clearSelection();
     }
 
     m_currentListView = listView;
-    m_currentIndex = index;     //m_currentListView->currentIndex();
+    m_currentIndex = index;
 
     createEffectFile();
-
-    if(m_currentListView && m_currentIndex.isValid())
-    {
-        // 按下后显示按钮
-        m_addToTimelineButton->setParent(m_currentListView);
-        m_addToTimelineButton->setVisible(true);
-        positionAddToTimelineButton();
-    }
 
     if(m_effectFile && m_mainWindow)
     {

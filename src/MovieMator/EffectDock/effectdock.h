@@ -40,6 +40,31 @@ namespace Ui {
     class EffectDock;
 }
 
+// 添加到时间线按钮，重写鼠标移入移出事件
+class AddButton : public QPushButton
+{
+    Q_OBJECT
+public:
+    AddButton(QWidget *parent) : QPushButton(parent) { }
+    ~AddButton(){}
+
+signals:
+    void mouseEnter();
+    void mouseLeave();
+
+protected:
+    void enterEvent(QEvent *event)
+    {
+        emit mouseEnter();
+        QPushButton::enterEvent(event);
+    }
+    void leaveEvent(QEvent *event)
+    {
+        emit mouseLeave();
+        QPushButton::leaveEvent(event);
+    }
+};
+
 class EffectDock : public QDockWidget
 {
     Q_OBJECT
@@ -74,8 +99,6 @@ private:
     QString getTranslationStr(QString srcStr, QJsonObject translationInfo);
     // 根据字符串 srcStr从 propertyInfo中寻获取对应的翻译内容
     QString getImageClassType(QString srcStr, QJsonObject propertyInfo);
-    // 设置 m_addToTimelineButton的位置
-    void positionAddToTimelineButton();
 
 private slots:
     // 响应 listView按下的槽函数
@@ -94,6 +117,20 @@ private slots:
     void on_comboBox_2_activated(int index);
     // 响应 EffectDock显示（切换到 EffectDock）的槽函数
     void on_EffectDock_visibilityChanged(bool visible);
+
+    // 设置 m_addToTimelineButton的位置
+    void positionAddButton();
+    // 隐藏 m_addToTimelineButton
+    void hideAddButton();
+    // 添加到时间线
+    void addToTimeline();
+    // 设置 listView的选中 item
+    // 主要是为了在鼠标进入按钮时不清除 item的背景
+    // 鼠标进入按钮后会清除 item的悬浮效果
+    void setSelection();
+    // 重置 listView的选中 item
+    // 鼠标离开按钮后重置 item的背景
+    void resetSelection();
 
 private:
     // 界面 ui
@@ -125,7 +162,7 @@ private:
 
     // 将当前动画添加到时间线的按钮
     // 不为 model的每个 item都添加一个，只使用一个
-    QPushButton *m_addToTimelineButton;
+    AddButton *m_addButton;
 };
 
 #endif // EFFECTDOCK_H

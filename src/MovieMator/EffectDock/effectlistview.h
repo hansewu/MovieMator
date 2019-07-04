@@ -23,6 +23,7 @@
 
 class EffectListView : public QListView
 {
+    Q_OBJECT
 public:
     // 构造函数
     EffectListView(QWidget *parent = nullptr);
@@ -38,7 +39,13 @@ public:
     // 设置 m_columnCount的值
     void setColumnCount(int columnCount) { m_columnCount = columnCount; }
     // 获取 m_columnCount的值
-    int getColumnCount() { return m_columnCount;}
+    int getColumnCount() const { return m_columnCount;}
+    //  获取鼠标悬浮时的 index
+    QModelIndex getModelIndex() const { return m_modelIndex; }
+
+signals:
+    void mouseMove();
+    void mouseLeave();
 
 protected:
     // 鼠标按下事件
@@ -46,6 +53,7 @@ protected:
     // 鼠标移动事件（拖放）
     void mouseMoveEvent(QMouseEvent *);
 
+    void leaveEvent(QEvent *);
 private:
     // 鼠标左键按下时的起点（拖动用）
     QPoint m_dragStart;
@@ -58,6 +66,8 @@ private:
     QString m_mimeType;
     // 保存 listView显示的时候每行的列数
     int m_columnCount;
+    // 鼠标悬浮时的 modelIndex
+    QModelIndex m_modelIndex;
 };
 
 #endif // EFFECTLISTVIEW_H
