@@ -22,6 +22,7 @@
 #include <QImage>
 #include <QAbstractItemModel>
 #include "maininterface.h"
+#include <qscriptengine.h>
 
 class FilterItemInfo : public QObject
 {
@@ -90,10 +91,14 @@ public:
     QImage thumbnail(int row) const;
 
 private:
+    void readTranslatJsFile(QString jsFilePath);
+private:
     // model的 list
     QList<FilterItemInfo *> *m_effectList;
     // 主界面
     MainInterface *m_mainWindow;
+
+    QScriptEngine m_jsEngine;
 };
 
 #endif // VIDEOFILTERLISTVIEWMODEL_H

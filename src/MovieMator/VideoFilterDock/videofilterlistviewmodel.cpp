@@ -24,12 +24,17 @@
 #include <QApplication>
 #include <QPalette>
 #include <util.h>
+#include <qfile.h>
+#include <qtextstream.h>
+#include <qdebug.h>
 
 VideoFilterListVideoModel::VideoFilterListVideoModel(MainInterface *main, QObject *parent) :
     QAbstractItemModel(parent),
     m_mainWindow(main)
 {
     m_effectList = new QList<FilterItemInfo *>;
+    QString jsFilePath = Util::resourcesPath() + "/share/moviemator/qml/views/filter/translateTool.js";
+    readTranslatJsFile(jsFilePath);
 }
 
 VideoFilterListVideoModel::~VideoFilterListVideoModel()
@@ -53,6 +58,23 @@ int VideoFilterListVideoModel::rowCount(const QModelIndex&) const
 int VideoFilterListVideoModel::columnCount(const QModelIndex&) const
 {
     return 1;
+}
+
+void VideoFilterListVideoModel::readTranslatJsFile(QString jsFilePath) {
+    QString result = "";
+    QFile scriptFile(jsFilePath);
+    if (!scriptFile.open(QIODevice::ReadOnly)) {
+        result.clear();
+        qDebug()<<"sll-------------js file open error!!!";
+        return;
+    }
+
+    QTextStream out(&scriptFile);
+    out.setCodec("UTF-8");
+    QString contents = out.readAll();
+    scriptFile.close();
+
+    m_jsEngine.evaluate(contents);
 }
 
 QVariant VideoFilterListVideoModel::data(const QModelIndex &index, int role) const
@@ -81,6 +103,17 @@ QVariant VideoFilterListVideoModel::data(const QModelIndex &index, int role) con
                 return QString();
             }
             QString result = Util::baseName(fileHandle->name());
+            if (Settings.language() == "zh") {
+                QScriptValue transEn2ChFunc = m_jsEngine.globalObject().property("transEn2Ch");
+                QScriptValueList args;
+                args << QScriptValue(result);
+                result = transEn2ChFunc.call(QScriptValue(), args).toString();
+            } else {
+                QScriptValue transEn2ShortFunc = m_jsEngine.globalObject().property("transEn2Short");
+                QScriptValueList args;
+                args << QScriptValue(result);
+                result = transEn2ShortFunc.call(QScriptValue(), args).toString();
+            }
             return result.split(".")[0];
         }
         case Qt::DecorationRole: {

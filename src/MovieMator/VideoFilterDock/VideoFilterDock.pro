@@ -5,7 +5,7 @@
 #-------------------------------------------------
 CONFIG   += link_prl
 
-QT       += widgets
+QT       += widgets script
 
 TARGET = VideoFilterDock
 TEMPLATE = lib
