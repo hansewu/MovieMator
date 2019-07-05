@@ -351,7 +351,7 @@ void VideoFilterDock::on_comboBox_2_activated(int index)
     ui->scrollArea->verticalScrollBar()->setValue(widget->y());
 }
 
-void VideoFilterDock::on_EffectDock_visibilityChanged(bool visible)
+void VideoFilterDock::on_VideoFilterDock_visibilityChanged(bool visible)
 {
     if (visible) {
 //        onListviewClicked(QModelIndex());
@@ -444,6 +444,9 @@ void VideoFilterDock::updateAudioFilters(VideoFilter_Info *filterInfos, int nFil
         ui->comboBox_2->addItem(i.key());
         appendListViewAndLabel(i.value(), i.key());
     }
+
+    QSpacerItem *spacerItem = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    ui->verticalLayout_2->addItem(spacerItem);
     return;
 }
 

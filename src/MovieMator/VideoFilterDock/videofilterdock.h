@@ -83,7 +83,7 @@ private slots:
     // 响应 comboBox_2（图片列表）的选项激活的槽函数
     void on_comboBox_2_activated(int index);
     // 响应 EffectDock显示（切换到 EffectDock）的槽函数
-    void on_EffectDock_visibilityChanged(bool visible);
+    void on_VideoFilterDock_visibilityChanged(bool visible);
 
     // 设置 m_addToTimelineButton的位置
     void positionAddButton();
