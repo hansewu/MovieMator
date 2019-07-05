@@ -4164,32 +4164,32 @@ Invalid Time Code!</source>
     <message>
         <location filename="../src/player.cpp" line="184"/>
         <source>Zoom to fit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">画面适合屏幕</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="185"/>
         <source>Full screen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">全屏</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="186"/>
         <source>Change aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">画面比例调整</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="279"/>
         <source>Volume control</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">音量调节</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="384"/>
         <source>Previous frame</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">上一帧</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="393"/>
         <source>Next frame</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">下一帧</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="572"/>
