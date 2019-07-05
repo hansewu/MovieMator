@@ -410,7 +410,8 @@ void FilterController::updateFilterDock()
 {
     int nFilterCount = m_metadataModel.rowCount();
 
-    Filter_Info filterInfos[200];
+//    Filter_Info filterInfos[200];
+    VideoFilter_Info filterInfos[200];
     assert(nFilterCount < 200);
     for (int nIndex = 0; nIndex < nFilterCount; nIndex++)
     {
@@ -432,28 +433,29 @@ void FilterController::updateFilterDock()
         filterInfos[nIndex].visible = bVisible;
     }
 
-    setFiltersInfo(filterInfos, nFilterCount);
+//    setFiltersInfo(filterInfos, nFilterCount);
 
 
-    AudioFilter_Info audiofilterInfos[200];
-    for (int nIndex = 0; nIndex < nFilterCount; nIndex++)
-    {
-        strcpy(audiofilterInfos[nIndex].name, filterInfos[nIndex].name);
-        strcpy(audiofilterInfos[nIndex].type, filterInfos[nIndex].type);
-        strcpy(audiofilterInfos[nIndex].imageSourcePath, filterInfos[nIndex].imageSourcePath);
-        audiofilterInfos[nIndex].visible = filterInfos[nIndex].visible;
-    }
-    setAudioFiltersInfo(audiofilterInfos, nFilterCount);
+//    AudioFilter_Info audiofilterInfos[200];
+//    for (int nIndex = 0; nIndex < nFilterCount; nIndex++)
+//    {
+//        strcpy(audiofilterInfos[nIndex].name, filterInfos[nIndex].name);
+//        strcpy(audiofilterInfos[nIndex].type, filterInfos[nIndex].type);
+//        strcpy(audiofilterInfos[nIndex].imageSourcePath, filterInfos[nIndex].imageSourcePath);
+//        audiofilterInfos[nIndex].visible = filterInfos[nIndex].visible;
+//    }
+//    setAudioFiltersInfo(audiofilterInfos, nFilterCount);
 
-    VideoFilter_Info videofilterInfos[200];
-    for (int nIndex = 0; nIndex < nFilterCount; nIndex++)
-    {
-        strcpy(videofilterInfos[nIndex].name, filterInfos[nIndex].name);
-        strcpy(videofilterInfos[nIndex].type, filterInfos[nIndex].type);
-        strcpy(videofilterInfos[nIndex].imageSourcePath, filterInfos[nIndex].imageSourcePath);
-        videofilterInfos[nIndex].visible = filterInfos[nIndex].visible;
-    }
-    setVideoFiltersInfo(videofilterInfos, nFilterCount);
+//    VideoFilter_Info videofilterInfos[200];
+//    for (int nIndex = 0; nIndex < nFilterCount; nIndex++)
+//    {
+//        strcpy(videofilterInfos[nIndex].name, filterInfos[nIndex].name);
+//        strcpy(videofilterInfos[nIndex].type, filterInfos[nIndex].type);
+//        strcpy(videofilterInfos[nIndex].imageSourcePath, filterInfos[nIndex].imageSourcePath);
+//        videofilterInfos[nIndex].visible = filterInfos[nIndex].visible;
+//    }
+    MAIN.setVideoFiltersInfo(filterInfos, nFilterCount);
+    MAIN.setAudioFiltersInfo(filterInfos, nFilterCount);
 }
 
 void FilterController::timerEvent(QTimerEvent* event)

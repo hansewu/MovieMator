@@ -50,11 +50,12 @@ class VideoFilterDock : public QDockWidget
 
 public:
     // 构造函数
-    explicit VideoFilterDock(MainInterface *main = nullptr, QWidget *parent = nullptr);
+    explicit VideoFilterDock(int filterDockType, MainInterface *main = nullptr, QWidget *parent = nullptr);
     // 析构函数
     ~VideoFilterDock();
 
     void updateVideoFilters(VideoFilter_Info *filterInfos, int nFilterCount);
+    void updateAudioFilters(VideoFilter_Info *filterInfos, int nFilterCount);
 
 protected:
     // 界面的尺寸变化事件
@@ -117,6 +118,8 @@ private:
     AddButton *m_addButton;
 
     QMap<QString, VideoFilterListVideoModel *> m_filtersInfoMap;
+
+    int m_filterDockType;
 };
 
 #endif // VIDEOFILTERDOCK_H

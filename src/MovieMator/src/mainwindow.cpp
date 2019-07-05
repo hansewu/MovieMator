@@ -614,14 +614,17 @@ MainWindow::MainWindow()
     m_recentDock = RecentDock_initModule(&MainInterface::singleton());//new RecentDock();
     addResourceDock(m_recentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file-highlight.png"));
 
-    m_resourceVideoFilterDock = FilterDock_initModule(&MainInterface::singleton());
-    addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
+//    m_resourceVideoFilterDock = FilterDock_initModule(&MainInterface::singleton());
+//    addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
 
-    m_resourceAudioFilterDock = AudioFilterDock_initModule(&MainInterface::singleton());
+//    m_resourceAudioFilterDock = AudioFilterDock_initModule(&MainInterface::singleton());
+//    addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
+
+    m_resourceAudioFilterDock = VideoFilterDock_initModule(&MainInterface::singleton(), 1);
     addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
 
-    m_resourceVideoFilterDock2 = VideoFilterDock_initModule(&MainInterface::singleton());
-    addResourceDock(m_resourceVideoFilterDock2, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
+    m_resourceVideoFilterDock = VideoFilterDock_initModule(&MainInterface::singleton(), 0);
+    addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
 
     //模板资源管理界面Dock
 //    m_templateDock = TemplateDock_initModule(&MainInterface::singleton());
@@ -3594,6 +3597,14 @@ void MainWindow::changeProfile(QString profileName) {
             return;
         }
     }
+}
+
+void MainWindow::setVideoFiltersInfo(void *vudioFilterInfos, int nVudioFilterCount) {
+    g_setVideoFiltersInfo(m_resourceVideoFilterDock, static_cast<VideoFilter_Info *>(vudioFilterInfos), nVudioFilterCount);
+}
+
+void MainWindow::setAudioFiltersInfo(void *audioFilterInfos, int nAudioFilterCount) {
+     g_setAudioFiltersInfo(m_resourceAudioFilterDock, static_cast<VideoFilter_Info *>(audioFilterInfos), nAudioFilterCount);
 }
 
 void MainWindow::onProfileTriggered(QAction *action)

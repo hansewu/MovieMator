@@ -15,11 +15,12 @@ typedef struct {
 //初始化模块
 //参数，main 主程序接口对象
 //返回界面对象
-VIDEOFILTERDOCKSHARED_EXPORT QDockWidget *VideoFilterDock_initModule(MainInterface *main);
+VIDEOFILTERDOCKSHARED_EXPORT QDockWidget *VideoFilterDock_initModule(MainInterface *main, int filterDockType);
 
 //销毁模块
 VIDEOFILTERDOCKSHARED_EXPORT void VideoFilterDock_destroyModule();
 
-VIDEOFILTERDOCKSHARED_EXPORT int setVideoFiltersInfo(VideoFilter_Info *filterInfos, int nFilterCount);
+VIDEOFILTERDOCKSHARED_EXPORT int g_setVideoFiltersInfo(QDockWidget *videoDock, VideoFilter_Info *filterInfos, int nFilterCount);
+VIDEOFILTERDOCKSHARED_EXPORT int g_setAudioFiltersInfo(QDockWidget *audioDock, VideoFilter_Info *filterInfos, int nFilterCount);
 
 #endif // VIDEOFILTERDOCKINTERFACE_H

@@ -29,10 +29,11 @@
 #include <QDebug>
 #include <QImage>
 
-VideoFilterDock::VideoFilterDock(MainInterface *main, QWidget *parent) :
+VideoFilterDock::VideoFilterDock(int filterDockType, MainInterface *main, QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::VideoFilterDock),
-    m_mainWindow(main)
+    m_mainWindow(main),
+    m_filterDockType(filterDockType)
 {
     LOG_DEBUG() << "begin";
 
@@ -42,6 +43,12 @@ VideoFilterDock::VideoFilterDock(MainInterface *main, QWidget *parent) :
     m_imageList = new QList<VideoFilterListView*>;
     m_currentListView = nullptr;
 
+    if (filterDockType == 0) {//视频滤镜
+        ui->dockName->setText(tr("Video Filter"));
+    } else if (filterDockType == 1){//音频滤镜
+        ui->comboBox_2->setHidden(true);//音频滤镜目前只有一个分类，暂时隐藏分类控件
+        ui->dockName->setText(tr("Audio Filter"));
+    }
     ui->comboBox_2->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
 
     ui->scrollArea->setWidgetResizable(true);
@@ -222,24 +229,27 @@ void VideoFilterDock::appendListViewAndLabel(VideoFilterListVideoModel *model, Q
         return;
     }
     VideoFilterListView *listView = new VideoFilterListView();
-    QLabel *label = new QLabel(itemName, this);
-    label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QLabel *image = new QLabel(this);
-    image->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    image->setScaledContents(true);     // 可以让图片随 label拉伸
-    image->setPixmap(QPixmap(":/icons/light/32x32/line.png"));
+    if (m_filterDockType == 0) {
+        QLabel *label = new QLabel(itemName, this);
+        label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        QLabel *image = new QLabel(this);
+        image->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        image->setScaledContents(true);     // 可以让图片随 label拉伸
+        image->setPixmap(QPixmap(":/icons/light/32x32/line.png"));
 
-    QHBoxLayout *box = new QHBoxLayout();
-    box->addWidget(label);
-    box->addWidget(image);
+        QHBoxLayout *box = new QHBoxLayout();
+        box->addWidget(label);
+        box->addWidget(image);
+
+        label->setFixedHeight(40);
+
+        ui->verticalLayout_2->addLayout(box);
+    }
 
     listView->setModel(model);
 
     m_imageList->append(listView);
-    ui->verticalLayout_2->addLayout(box);
     ui->verticalLayout_2->addWidget(listView);
-
-    label->setFixedHeight(40);
 
     listView->setFont(QFont(font().family(), 8));   // 改变字体大小
     listView->setFocusPolicy(Qt::ClickFocus);
@@ -396,6 +406,47 @@ void VideoFilterDock::updateVideoFilters(VideoFilter_Info *filterInfos, int nFil
     return;
 }
 
+void VideoFilterDock::updateAudioFilters(VideoFilter_Info *filterInfos, int nFilterCount)
+{
+    Q_ASSERT(filterInfos);
+    if(!filterInfos) return;
+
+    if(!m_mainWindow)
+    {
+        return;
+    }
+
+    //分类filter
+    for (int i = 0; i < nFilterCount; i++) {
+        if ((filterInfos[i].visible == true) && (QString(filterInfos[i].type) == "")) {//音频滤镜
+            if (!m_filtersInfoMap.keys().contains(QString(filterInfos[i].type))) {
+                VideoFilterListVideoModel *model = new VideoFilterListVideoModel(m_mainWindow, this);
+                m_filtersInfoMap.insert(QString(filterInfos[i].type), model);
+            }
+
+            FilterItemInfo *filterInfo = new FilterItemInfo();
+            filterInfo->setVisible(filterInfos[i].visible);
+            filterInfo->setName(QString(filterInfos[i].name));
+            filterInfo->setFilterType(QString(filterInfos[i].type));
+            QString tempPath = QString(filterInfos[i].imageSourcePath);
+            QString path = tempPath.right(tempPath.length() - 3);
+            filterInfo->setImageSourcePath(path);
+            filterInfo->setFilterIndex(i);
+
+            VideoFilterListVideoModel *tempModel = m_filtersInfoMap.value(QString(filterInfos[i].type));
+            tempModel->append(filterInfo);
+        }
+    }
+
+    //添加model到listview
+    QMap<QString, VideoFilterListVideoModel *>::const_iterator i;
+    for (i = m_filtersInfoMap.constBegin(); i != m_filtersInfoMap.constEnd(); ++i) {
+        ui->comboBox_2->addItem(i.key());
+        appendListViewAndLabel(i.value(), i.key());
+    }
+    return;
+}
+
 void VideoFilterDock::addFilter(int filterIndex) {
     m_mainWindow->addFilter(filterIndex);
 }
@@ -404,15 +455,16 @@ void VideoFilterDock::previewFilter(int filterIndex) {
     m_mainWindow->previewFilter(filterIndex);
 }
 
-static VideoFilterDock *instance = nullptr;
+//static VideoFilterDock *instance = nullptr;
 //初始化模块
 //参数，main 主程序接口对象
 //返回界面对象
-QDockWidget *VideoFilterDock_initModule(MainInterface *main)
+QDockWidget *VideoFilterDock_initModule(MainInterface *main, int filterDockType)
 {
-    if (instance == nullptr)
-        instance = new VideoFilterDock(main);
-    return instance;
+//    if (instance == nullptr)
+//        instance = new VideoFilterDock(filterDockType, main);
+//    return instance;
+    return new VideoFilterDock(filterDockType, main);
 }
 
 //销毁模块
@@ -421,13 +473,24 @@ void VideoFilterDock_destroyModule()
 
 }
 
-int setVideoFiltersInfo(VideoFilter_Info *filterInfos, int nFilterCount)
+int g_setVideoFiltersInfo(QDockWidget *videoDock, VideoFilter_Info *filterInfos, int nFilterCount)
 {
     Q_ASSERT(filterInfos);
     if(!filterInfos) return 1;
-    Q_ASSERT(instance);
-    if(!instance) return 1;
-    instance->updateVideoFilters(filterInfos, nFilterCount);
+    Q_ASSERT(videoDock);
+    if(!videoDock) return 1;
+    qobject_cast<VideoFilterDock *>(videoDock)->updateVideoFilters(filterInfos, nFilterCount);
+
+    return 0;
+}
+
+int g_setAudioFiltersInfo(QDockWidget *audioDock, VideoFilter_Info *filterInfos, int nFilterCount)
+{
+    Q_ASSERT(filterInfos);
+    if(!filterInfos) return 1;
+    Q_ASSERT(audioDock);
+    if(!audioDock) return 1;
+    qobject_cast<VideoFilterDock *>(audioDock)->updateAudioFilters(filterInfos, nFilterCount);
 
     return 0;
 }
