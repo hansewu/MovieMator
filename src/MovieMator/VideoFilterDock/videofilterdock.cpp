@@ -270,6 +270,7 @@ void VideoFilterDock::appendListViewAndLabel(VideoFilterListVideoModel *model, Q
 
     connect(listView, SIGNAL(mouseMove()), this, SLOT(positionAddButton()));
     connect(listView, SIGNAL(mouseLeave()), this, SLOT(hideAddButton()));
+    connect(listView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onListviewDoubleClicked(const QModelIndex&)));
 }
 
 void VideoFilterDock::onListviewPressed(const QModelIndex &index)
@@ -302,6 +303,27 @@ void VideoFilterDock::onListviewClicked(const QModelIndex &)
 //    {
 //        m_mainWindow->playFile(m_effectFile);
 //    }
+}
+
+void VideoFilterDock::onListviewDoubleClicked(const QModelIndex &index) {
+    if(!sender())
+        return;
+    VideoFilterListView *listView = qobject_cast<VideoFilterListView*>(sender());
+    if(m_currentListView && m_currentListView!=listView)
+    {
+        m_currentListView->clearSelection();
+    }
+
+    m_currentListView = listView;
+    m_currentIndex = index;
+
+    VideoFilterListVideoModel *model = qobject_cast<VideoFilterListVideoModel *>(listView->model());
+    Q_ASSERT(model);
+    if(model) {
+        FilterItemInfo *filterItemInfo = model->fileAt(m_currentIndex.row());
+        int filterIndex = filterItemInfo->filterIndex();
+        addFilter(filterIndex);
+    }
 }
 
 void VideoFilterDock::onListviewCustomContextMenuRequested(const QPoint &pos)

@@ -76,6 +76,8 @@ private slots:
     void onListviewPressed(const QModelIndex&);
     // 响应 listView单击的槽函数
     void onListviewClicked(const QModelIndex&);
+    // 响应 listView单击的槽函数
+    void onListviewDoubleClicked(const QModelIndex&);
     // 响应 listView右键菜单的槽函数
     void onListviewCustomContextMenuRequested(const QPoint&);
     // 响应 listView右键菜单 actionAddToTimeline的槽函数
