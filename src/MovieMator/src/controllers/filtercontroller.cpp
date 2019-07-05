@@ -37,6 +37,7 @@
 #include <map>
 #include <filterdockinterface.h>
 #include <audiofilterdockinterface.h>
+#include <videofilterdockinterface.h>
 #include "mainwindow.h"
 #include "util.h"
 #include <assert.h>
@@ -443,6 +444,16 @@ void FilterController::updateFilterDock()
         audiofilterInfos[nIndex].visible = filterInfos[nIndex].visible;
     }
     setAudioFiltersInfo(audiofilterInfos, nFilterCount);
+
+    VideoFilter_Info videofilterInfos[200];
+    for (int nIndex = 0; nIndex < nFilterCount; nIndex++)
+    {
+        strcpy(videofilterInfos[nIndex].name, filterInfos[nIndex].name);
+        strcpy(videofilterInfos[nIndex].type, filterInfos[nIndex].type);
+        strcpy(videofilterInfos[nIndex].imageSourcePath, filterInfos[nIndex].imageSourcePath);
+        videofilterInfos[nIndex].visible = filterInfos[nIndex].visible;
+    }
+    setVideoFiltersInfo(videofilterInfos, nFilterCount);
 }
 
 void FilterController::timerEvent(QTimerEvent* event)

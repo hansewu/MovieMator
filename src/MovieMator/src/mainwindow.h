@@ -202,6 +202,7 @@ private:
     QDockWidget* m_simplePropertiesDock;//右侧属性dock中的clip属性dock
     QDockWidget* m_recentDock;//左侧文件列表dock
     QDockWidget* m_resourceVideoFilterDock;//左侧视频滤镜列表dock
+    QDockWidget* m_resourceVideoFilterDock2;//左侧视频滤镜列表dock
     QDockWidget* m_resourceAudioFilterDock;//左侧音频滤镜列表dock
     QDockWidget* m_templateDock;//左侧模板dock，暂时无用
     QDockWidget* m_effectDock;//左侧贴图列表dock

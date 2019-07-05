@@ -95,6 +95,7 @@
 #include <filterdockinterface.h>
 #include <audiofilterdockinterface.h>
 #include <effectdockinterface.h>
+#include <videofilterdockinterface.h>
 #include "containerdock.h"
 #include "templateeidtor.h"
 #include <util.h>
@@ -619,6 +620,8 @@ MainWindow::MainWindow()
     m_resourceAudioFilterDock = AudioFilterDock_initModule(&MainInterface::singleton());
     addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
 
+    m_resourceVideoFilterDock2 = VideoFilterDock_initModule(&MainInterface::singleton());
+    addResourceDock(m_resourceVideoFilterDock2, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
 
     //模板资源管理界面Dock
 //    m_templateDock = TemplateDock_initModule(&MainInterface::singleton());
