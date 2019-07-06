@@ -11,7 +11,8 @@ SUBDIRS = CuteLogger \
     src \
     Breakpad \
     CrashReporter \
-    VideoFilterDock
+    VideoFilterDock \
+    TextDock
 cache()
 CommonUtil.depends = CuteLogger
 QmlUtilities.depends = CommonUtil
@@ -21,6 +22,7 @@ FilterDock.depends = QmlUtilities
 AudioFilterDock.depends = QmlUtilities
 EffectDock.depends = CommonUtil
 VideoFilterDock.depends = CommonUtil
-src.depends = CuteLogger CommonUtil QmlUtilities MltController RecentDock FilterDock AudioFilterDock EffectDock Breakpad VideoFilterDock
+TextDock.depends = CommonUtil
+src.depends = CuteLogger CommonUtil QmlUtilities MltController RecentDock FilterDock AudioFilterDock EffectDock Breakpad VideoFilterDock TextDock
 
 

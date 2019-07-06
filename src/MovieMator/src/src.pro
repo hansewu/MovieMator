@@ -305,6 +305,7 @@ INCLUDEPATH += ../EffectDock ../EffectDock
 INCLUDEPATH += ../include
 INCLUDEPATH += ../Breakpad/breakpad/src
 INCLUDEPATH += ../VideoFilterDock
+INCLUDEPATH += ../TextDock
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
@@ -314,6 +315,7 @@ debug_and_release {
         LIBS += -L../AudioFilterDock/debug
         LIBS += -L../Breakpad/debug
         LIBS += -L../VideoFilterDock/debug
+        LIBS += -L../TextDock/debug
     } else {
         LIBS += -L../CuteLogger/release -L../RecentDock/release -L../FilterDock/release -L../CommonUtil/release -L../MltController/release
         LIBS += -L../QmlUtilities/release
@@ -321,6 +323,7 @@ debug_and_release {
         LIBS += -L../AudioFilterDock/release
         LIBS += -L../Breakpad/release
         LIBS += -L../VideoFilterDock/release
+        LIBS += -L../TextDock/release
     }
 } else {
     LIBS += -L../CuteLogger -L../RecentDock -L../FilterDock -L../CommonUtil -L../MltController -L../QmlUtilities #-L../mm
@@ -328,12 +331,14 @@ debug_and_release {
     LIBS += -L../AudioFilterDock
     LIBS += -L../Breakpad
     LIBS += -L../VideoFilterDock
+    LIBS += -L../TextDock
 }
 
 LIBS += -lLogger -lpthread  -lRecentDock -lFilterDock -lAudioFilterDock -lCommonUtil -lMltController -lQmlUtilities
 LIBS += -lEffectDock
 LIBS += -lBreakpad
 LIBS += -lVideoFilterDock
+LIBS += -lTextDock
 
 
 

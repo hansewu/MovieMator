@@ -96,6 +96,7 @@
 #include <audiofilterdockinterface.h>
 #include <effectdockinterface.h>
 #include <videofilterdockinterface.h>
+#include <textdock.h>
 #include "containerdock.h"
 #include "templateeidtor.h"
 #include <util.h>
@@ -632,6 +633,9 @@ MainWindow::MainWindow()
 
     m_effectDock = EffectDock_initModule(&MainInterface::singleton());
     addResourceDock(m_effectDock, tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
+
+    m_resourceTextDock = TextDock_initModule(&MainInterface::singleton());
+    addResourceDock(m_resourceTextDock, tr("Text"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
 
     m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
     m_propertiesDock->installEventFilter(this);
