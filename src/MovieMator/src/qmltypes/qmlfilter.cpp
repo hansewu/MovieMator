@@ -281,7 +281,7 @@ void QmlFilter::set(QString name, QString value)
 
         m_filter->set(name.toUtf8().constData(), value.toUtf8().constData());
          if(from_value != "" && from_value != value)
-            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), m_filter, name,  from_value, value,true));
+            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), MAIN.filterController()->currentFilterIndex(), name, from_value, value,true));
 
         MLT.refreshConsumer();
         emit filterPropertyValueChanged();
@@ -298,7 +298,7 @@ void QmlFilter::set(QString name, double value)
         m_filter->set(name.toUtf8().constData(), value);
 
         if(!qFuzzyCompare(from_value,value))
-            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), m_filter, name,  from_value, value,true));
+            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), MAIN.filterController()->currentFilterIndex(), name,  from_value, value,true));
 
         MLT.refreshConsumer();
         emit filterPropertyValueChanged();
@@ -314,7 +314,7 @@ void QmlFilter::set(QString name, int value)
         int from_value = m_filter->get_int(name.toUtf8().constData());
         m_filter->set(name.toUtf8().constData(), value);
          if(from_value != value)
-            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), m_filter, name,  from_value, value,true));
+            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), MAIN.filterController()->currentFilterIndex(), name,  from_value, value,true));
 
         MLT.refreshConsumer();
         emit filterPropertyValueChanged();
@@ -357,7 +357,7 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
 
         m_filter->set(name.toUtf8().constData(), x, y, width, height, opacity);
         if(rect_from != rect_to && isValidRect(rect_from))
-            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), m_filter, name,  rect_from, rect_to,true));
+            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), MAIN.filterController()->currentFilterIndex(), name,  rect_from, rect_to,true));
 
         MLT.refreshConsumer();
         emit filterPropertyValueChanged();

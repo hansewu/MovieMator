@@ -1022,14 +1022,14 @@ void MoveInsertClipCommand::undo_impl()
 
 
 
-FilterCommand::FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name, double from_value, double to_value, bool isFirst,AbstractCommand * parent)
- : AbstractCommand(model, parent)
+FilterCommand::FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name, double from_value, double to_value, bool isFirst,AbstractCommand * parent)
+    : AbstractCommand(model, parent)
+    , m_attachedFiltersModel(attachedFiltersModel)
+    , m_filterIndex(row)
 {
     setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
     LOG_DEBUG() << "FilterCommand: " <<  name;
-    Q_ASSERT(filter);
-    m_filter = new Mlt::Filter(filter->get_filter());
     m_keyName   = name;
     m_bFirstExec = isFirst;
 
@@ -1037,7 +1037,7 @@ FilterCommand::FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QStrin
     if(name.startsWith("transition.") == true)
     {
         QVariant varFrom, varTo;
-        if(0 == transitionValue(varFrom, varTo, m_filter, name, from_value, to_value))
+        if(0 == transitionValue(varFrom, varTo, name, from_value, to_value))
         {
             transed_filter = 1;
             m_from_value    = varFrom;
@@ -1052,39 +1052,39 @@ FilterCommand::FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QStrin
     }
 }
 
-FilterCommand::FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name,  int from_value, int to_value,bool isFirst, AbstractCommand * parent)
-: AbstractCommand(model, parent)
+FilterCommand::FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name,  int from_value, int to_value,bool isFirst, AbstractCommand * parent)
+    : AbstractCommand(model, parent)
+    , m_attachedFiltersModel(attachedFiltersModel)
+    , m_filterIndex(row)
 {
     setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
-    Q_ASSERT(filter);
-    m_filter = new Mlt::Filter(filter->get_filter());
     m_keyName   = name;
     m_from_value    = QVariant(from_value);
     m_to_value      = QVariant(to_value);
     m_bFirstExec = isFirst;
 }
 
-FilterCommand::FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name,  QString from_value, QString to_value, bool isFirst,AbstractCommand * parent)
-: AbstractCommand(model, parent)
+FilterCommand::FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name,  QString from_value, QString to_value, bool isFirst,AbstractCommand * parent)
+    : AbstractCommand(model, parent)
+    , m_attachedFiltersModel(attachedFiltersModel)
+    , m_filterIndex(row)
 {
     setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
-    Q_ASSERT(filter);
-    m_filter = new Mlt::Filter(filter->get_filter());
     m_keyName   = name;
     m_from_value    = QVariant(from_value);
     m_to_value      = QVariant(to_value);
     m_bFirstExec = isFirst;
 }
 
-FilterCommand::FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, bool isFirst,AbstractCommand * parent)
-: AbstractCommand(model, parent)
+FilterCommand::FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name,  QRectF from_value, QRectF to_value, bool isFirst,AbstractCommand * parent)
+    : AbstractCommand(model, parent)
+    , m_attachedFiltersModel(attachedFiltersModel)
+    , m_filterIndex(row)
 {
     setText(QObject::tr("FilterCommand"));
     m_bFirstExec = true;
-    Q_ASSERT(filter);
-    m_filter = new Mlt::Filter(filter->get_filter());
     m_keyName   = name;
     m_from_value = QVariant(from_value);
     m_to_value      = QVariant(to_value);
@@ -1093,7 +1093,6 @@ FilterCommand::FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QStrin
 
 FilterCommand::~FilterCommand()
 {
-    delete m_filter;
 }
 
 static const char *s_key_name[5] ={"transition.fix_rotate_x", "transition.scale_x", "transition.scale_y",
@@ -1115,7 +1114,7 @@ static int which_rotate_command(QString strKey)
     return -2;
 }
 
-int FilterCommand::transitionValue(QVariant &varFrom, QVariant &varTo, Mlt::Filter* filter, QString name,  double from_value, double to_value)
+int FilterCommand::transitionValue(QVariant &varFrom, QVariant &varTo, QString name,  double from_value, double to_value)
 {
     if(name.startsWith("transition.") == false)
         return -1;
@@ -1123,6 +1122,7 @@ int FilterCommand::transitionValue(QVariant &varFrom, QVariant &varTo, Mlt::Filt
     int found_key = which_rotate_command(name);
     if(found_key < 0 )  return -2;
 
+    QScopedPointer<Mlt::Filter> filter(m_attachedFiltersModel.getFilter(m_filterIndex));
     Q_ASSERT(filter);
     if (!filter) {
         return -1;
@@ -1149,8 +1149,6 @@ int FilterCommand::transitionValue(QVariant &varFrom, QVariant &varTo, Mlt::Filt
             value_to[i]     = to_value;
         }
     }
-
-
 
     MY_ROTATE_COMMAND rotateCmd_from, rotateCmd_to;
 
@@ -1189,7 +1187,7 @@ bool FilterCommand::mergeWith(const QUndoCommand *other)
     if (!other_command) {
         return false;
     }
-    if(other_command->m_filter->get_filter() != m_filter->get_filter()|| m_keyName.isEmpty())
+    if(other_command->m_filterIndex != m_filterIndex || m_keyName.isEmpty())
         return false;
 
     if((which_rotate_command(m_keyName) >=0 && which_rotate_command(other_command->m_keyName) >= 0
@@ -1207,7 +1205,7 @@ bool FilterCommand::mergeWith(const QUndoCommand *other)
 void FilterCommand::notify()
 {
     MLT.refreshConsumer();
-    MAIN.filterController()->refreshCurrentFilter(m_filter);
+    MAIN.filterController()->refreshCurrentFilter(m_filterIndex);
 
 
     //emit MAIN.filterController()->attachedModel()->changed();
@@ -1218,36 +1216,41 @@ void FilterCommand::set_value(QVariant value)
 {
     QVariant::Type value_type = value.type();
 
+    QScopedPointer<Mlt::Filter> filter(m_attachedFiltersModel.getFilter(m_filterIndex));
+    Q_ASSERT(filter);
+    if (!filter)
+        return;
+
     if (value.canConvert<MY_ROTATE_COMMAND>())
     {
         MY_ROTATE_COMMAND rotateCmd = value.value<MY_ROTATE_COMMAND>();
 
-        m_filter->set(s_key_name[0], rotateCmd.fix_rotate_x);
-        m_filter->set(s_key_name[1], rotateCmd.scale_x);
-        m_filter->set(s_key_name[2], rotateCmd.scale_y);
-        m_filter->set(s_key_name[3], rotateCmd.offsetx);
-        m_filter->set(s_key_name[4], rotateCmd.offsety);
+        filter->set(s_key_name[0], rotateCmd.fix_rotate_x);
+        filter->set(s_key_name[1], rotateCmd.scale_x);
+        filter->set(s_key_name[2], rotateCmd.scale_y);
+        filter->set(s_key_name[3], rotateCmd.offsetx);
+        filter->set(s_key_name[4], rotateCmd.offsety);
 
         return;
     }
 
     if(value_type == QVariant::Double)
     {
-        m_filter->set(m_keyName.toUtf8().constData(), value.toDouble());
+        filter->set(m_keyName.toUtf8().constData(), value.toDouble());
     }
     else if(value_type == QVariant::Int)
     {
-         m_filter->set(m_keyName.toUtf8().constData(), value.toInt());
+         filter->set(m_keyName.toUtf8().constData(), value.toInt());
     }
     else if(value_type == QVariant::String)
     {
-        m_filter->set(m_keyName.toUtf8().constData(), value.toString().toUtf8().constData());
+        filter->set(m_keyName.toUtf8().constData(), value.toString().toUtf8().constData());
     }
     else if(value_type == QVariant::RectF)
     {
         QRectF rectF = value.toRectF();
 
-        m_filter->set(m_keyName.toUtf8().constData(), double(rectF.left()), double(rectF.top()), double(rectF.width()), double(rectF.height()), 1.0);
+        filter->set(m_keyName.toUtf8().constData(), double(rectF.left()), double(rectF.top()), double(rectF.width()), double(rectF.height()), 1.0);
     }
 
 }

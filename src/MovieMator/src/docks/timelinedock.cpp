@@ -2464,7 +2464,7 @@ void TimelineDock::unitTestCommand()
     }
     if (!MLT.open(testFile)) {
         MAIN.open(MLT.producer());
-        MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), MLT.producer()->filter(0), "u",  105, 110,false));
+        MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), 0, "u",  105, 110,false));
         MAIN.undoStack()->undo();
     }
     if (!MLT.open(testFile)) {

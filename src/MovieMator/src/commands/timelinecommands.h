@@ -23,6 +23,7 @@
 #define COMMANDS_H
 
 #include "models/multitrackmodel.h"
+#include "models/attachedfiltersmodel.h"
 #include "docks/timelinedock.h"
 #include "undohelper.h"
 #include "qmlmetadata.h"
@@ -544,10 +545,10 @@ class FilterCommand: public AbstractCommand
 {
 
 public:
-    FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name,  double from_value, double to_value, bool isFirst,AbstractCommand * parent= nullptr);
-    FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name,  int from_value, int to_value, bool isFirst,AbstractCommand * parent= nullptr);
-    FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name,  QString from_value, QString to_value, bool isFirst,AbstractCommand * parent= nullptr);
-    FilterCommand(MultitrackModel& model, Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, bool isFirst,AbstractCommand * parent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name,  double from_value, double to_value, bool isFirst,AbstractCommand * parent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name,  int from_value, int to_value, bool isFirst,AbstractCommand * parent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name,  QString from_value, QString to_value, bool isFirst,AbstractCommand * parent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name,  QRectF from_value, QRectF to_value, bool isFirst,AbstractCommand * parent= nullptr);
 
     ~FilterCommand();
     void redo_impl();
@@ -557,18 +558,17 @@ protected:
 //    using AbstractCommand::mergeWith;
     bool mergeWith(const QUndoCommand *other);
 
-    int transitionValue(QVariant &varFrom, QVariant &varTo, Mlt::Filter* filter, QString name,  double from_value, double to_value);
+    int transitionValue(QVariant &varFrom, QVariant &varTo, QString name,  double from_value, double to_value);
 
     void notify();
     void set_value(QVariant value);
 protected:
-    Mlt::Filter* m_filter;
+    AttachedFiltersModel& m_attachedFiltersModel;
+    int         m_filterIndex;
     QString     m_keyName;
-
-    QVariant  m_from_value;
-    QVariant  m_to_value;
-
-    bool      m_bFirstExec;
+    QVariant    m_from_value;
+    QVariant    m_to_value;
+    bool        m_bFirstExec;
 };
 
 //选择添加滤镜
