@@ -57,12 +57,12 @@ public slots:
     void add(const QString&);
     // 移除文件 s，并从历史记录中删除
     QString remove(const QString& s);
-    // 获取选中的多个文件
-    QList<FILE_HANDLE> getSelected();
 
 private:
     // 界面大小改变事件
     void resizeEvent(QResizeEvent* event);
+
+    void loadRecentFile();
 
 private:
     // 界面 ui

@@ -29,7 +29,7 @@ RecentListModel::RecentListModel(MainInterface *main, QObject *parent) :
     QAbstractItemModel(parent),
     m_mainWindow(main)
 {
-    m_recentList = new QList<FILE_HANDLE>;
+    m_recentList = new QList<FileItemInfo *>;
 }
 
 RecentListModel::~RecentListModel()
@@ -66,9 +66,10 @@ QVariant RecentListModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-    FILE_HANDLE fileHandle = m_recentList->at(index.row());
-    Q_ASSERT(fileHandle);
-    if(!fileHandle)
+//    FILE_HANDLE fileHandle = m_recentList->at(index.row());
+    FileItemInfo *itemInfo = m_recentList->at(index.row());
+    Q_ASSERT(itemInfo);
+    if(!itemInfo)
     {
         return QVariant();
     }
@@ -80,7 +81,7 @@ QVariant RecentListModel::data(const QModelIndex &index, int role) const
             {
                 return QString();
             }
-            QString result = Util::baseName(m_mainWindow->getFileName(fileHandle));
+            QString result = Util::baseName(itemInfo->filePath());//Util::baseName(m_mainWindow->getFileName(fileHandle));
             return result;
         }
         case Qt::DecorationRole: {
@@ -97,7 +98,7 @@ QVariant RecentListModel::data(const QModelIndex &index, int role) const
                 return image;
             }
 
-            QImage thumb = m_mainWindow->getThumbnail(fileHandle);
+            QImage thumb = itemInfo->fileThumbnail();//m_mainWindow->getThumbnail(fileHandle);
             if (!thumb.isNull()) {
                 QPainter painter(&image);
                 image.fill(QApplication::palette().base().color().rgb());
@@ -110,7 +111,8 @@ QVariant RecentListModel::data(const QModelIndex &index, int role) const
                 }
 
                 // 如果是音频文件就显示一个音乐的图片
-                if(m_mainWindow->getFileType(fileHandle)==FILE_TYPE_AUDIO)
+//                if(m_mainWindow->getFileType(fileHandle)==FILE_TYPE_AUDIO)
+                if (itemInfo->fileType() == FILE_TYPE_AUDIO)
                 {
                     painter.drawImage(rect, QImage(":/icons/filters/Audio.png"));
                 }
@@ -135,32 +137,38 @@ QVariant RecentListModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QMimeData *RecentListModel::mimeData(const QModelIndexList &indexes) const
-{
-    Q_ASSERT(m_recentList);
-    Q_ASSERT(indexes.first().isValid());
-    Q_ASSERT(indexes.first().row()>=0);
-    Q_ASSERT(indexes.first().row()<m_recentList->count());
-    if(!m_recentList || !indexes.first().isValid() || (indexes.first().row()<0) || (indexes.first().row()>=m_recentList->count()))
-    {
-        return nullptr;
-    }
-    FILE_HANDLE fileHandle = m_recentList->at(indexes.first().row());
-    Q_ASSERT(fileHandle);
-    Q_ASSERT(m_mainWindow);
-    if(!fileHandle || !m_mainWindow)
-    {
-        return nullptr;
-    }
+//QMimeData *RecentListModel::mimeData(const QModelIndexList &indexes) const
+//{
+//    Q_ASSERT(m_recentList);
+//    Q_ASSERT(indexes.first().isValid());
+//    Q_ASSERT(indexes.first().row()>=0);
+//    Q_ASSERT(indexes.first().row()<m_recentList->count());
+//    if(!m_recentList || !indexes.first().isValid() || (indexes.first().row()<0) || (indexes.first().row()>=m_recentList->count()))
+//    {
+//        return nullptr;
+//    }
+////    FILE_HANDLE fileHandle = m_recentList->at(indexes.first().row());
+//    FileItemInfo *itemInfo = m_recentList->at(indexes.first().row());
+//    Q_ASSERT(m_mainWindow);
+//    Q_ASSERT(itemInfo);
+//    FILE_HANDLE fileHandle = m_mainWindow->openFile(itemInfo->filePath());
+//    Q_ASSERT(fileHandle);
+//    if(!fileHandle || !m_mainWindow)
+//    {
+//        return nullptr;
+//    }
 
-    QMimeData *mimeData = new QMimeData;
-    mimeData->setData(m_mainWindow->getXMLMimeTypeForDragDrop(), m_mainWindow->getXmlForDragDrop(fileHandle).toUtf8());
-    mimeData->setText(QString::number(m_mainWindow->getPlayTime(fileHandle)));
+//    QMimeData *mimeData = new QMimeData;
+//    mimeData->setData(m_mainWindow->getXMLMimeTypeForDragDrop(), m_mainWindow->getXmlForDragDrop(fileHandle).toUtf8());
+//    mimeData->setText(QString::number(m_mainWindow->getPlayTime(fileHandle)));
 
-    return mimeData;
-}
+//    delete fileHandle;
+//    fileHandle = nullptr;
 
-QMimeData *RecentListModel::mimeData(const int index) const
+//    return mimeData;
+//}
+
+QMimeData *RecentListModel::getMimeData(const int index) const
 {
     Q_ASSERT(m_recentList);
     Q_ASSERT(index>=0);
@@ -169,9 +177,12 @@ QMimeData *RecentListModel::mimeData(const int index) const
     {
         return nullptr;
     }
-    FILE_HANDLE fileHandle = m_recentList->at(index);
-    Q_ASSERT(fileHandle);
+//    FILE_HANDLE fileHandle = m_recentList->at(index);
+    FileItemInfo *itemInfo = m_recentList->at(index);
+    Q_ASSERT(itemInfo);
     Q_ASSERT(m_mainWindow);
+    FILE_HANDLE fileHandle  = m_mainWindow->openFile(itemInfo->filePath());
+    Q_ASSERT(fileHandle);
     if(!fileHandle || !m_mainWindow)
     {
         return nullptr;
@@ -180,6 +191,9 @@ QMimeData *RecentListModel::mimeData(const int index) const
     QMimeData *mimeData = new QMimeData;
     mimeData->setData(m_mainWindow->getXMLMimeTypeForDragDrop(), m_mainWindow->getXmlForDragDrop(fileHandle).toUtf8());
     mimeData->setText(QString::number(m_mainWindow->getPlayTime(fileHandle)));
+
+    delete fileHandle;
+    fileHandle = nullptr;
 
     return mimeData;
 }
@@ -194,32 +208,32 @@ QModelIndex RecentListModel::parent(const QModelIndex&) const
     return QModelIndex();
 }
 
-void RecentListModel::append(FILE_HANDLE fileHandle)
+void RecentListModel::append(FileItemInfo *fileItemInfo)
 {
-    Q_ASSERT(fileHandle);
+    Q_ASSERT(fileItemInfo);
     Q_ASSERT(m_recentList);
-    if(!fileHandle || !m_recentList)
+    if(!fileItemInfo || !m_recentList)
     {
         return;
     }
     int count = m_recentList->count();
     beginInsertRows(QModelIndex(), count, count);
-    m_recentList->append(fileHandle);
+    m_recentList->append(fileItemInfo);
     endInsertRows();
 }
 
-void RecentListModel::insert(FILE_HANDLE fileHandle, int row)
+void RecentListModel::insert(FileItemInfo *fileItemInfo, int row)
 {
-    Q_ASSERT(fileHandle);
+    Q_ASSERT(fileItemInfo);
     Q_ASSERT(m_recentList);
     Q_ASSERT(row>=0);
     Q_ASSERT(row<=m_recentList->count());
-    if(!fileHandle || !m_recentList || row<0 || row>m_recentList->count())
+    if(!fileItemInfo || !m_recentList || row<0 || row>m_recentList->count())
     {
         return;
     }
     beginInsertRows(QModelIndex(), row, row);
-    m_recentList->prepend(fileHandle);
+    m_recentList->prepend(fileItemInfo);
     endInsertRows();
 }
 
@@ -248,7 +262,7 @@ void RecentListModel::clear()
     }
 }
 
-FILE_HANDLE RecentListModel::fileAt(int row) const
+FileItemInfo *RecentListModel::fileAt(int row) const
 {
     Q_ASSERT(m_recentList);
     Q_ASSERT(row >= 0);
@@ -260,28 +274,28 @@ FILE_HANDLE RecentListModel::fileAt(int row) const
     return m_recentList->at(row);
 }
 
-QString RecentListModel::fileName(int row) const
-{
-    Q_ASSERT(m_recentList);
-    Q_ASSERT(row>=0);
-    Q_ASSERT(row<m_recentList->count());
-    Q_ASSERT(m_mainWindow);
-    if(!m_recentList || row<0 || row>=m_recentList->count() || !m_mainWindow)
-    {
-        return QString();
-    }
-    return m_mainWindow->getFileName(m_recentList->at(row));
-}
+//QString RecentListModel::fileName(int row) const
+//{
+//    Q_ASSERT(m_recentList);
+//    Q_ASSERT(row>=0);
+//    Q_ASSERT(row<m_recentList->count());
+//    Q_ASSERT(m_mainWindow);
+//    if(!m_recentList || row<0 || row>=m_recentList->count() || !m_mainWindow)
+//    {
+//        return QString();
+//    }
+//    return m_mainWindow->getFileName(m_recentList->at(row));
+//}
 
-QImage RecentListModel::thumbnail(int row) const
-{
-    Q_ASSERT(m_recentList);
-    Q_ASSERT(row>=0);
-    Q_ASSERT(row<m_recentList->count());
-    Q_ASSERT(m_mainWindow);
-    if(!m_recentList || row<0 || row>=m_recentList->count() || !m_mainWindow)
-    {
-        return QImage();
-    }
-    return m_mainWindow->getThumbnail(m_recentList->at(row));
-}
+//QImage RecentListModel::thumbnail(int row) const
+//{
+//    Q_ASSERT(m_recentList);
+//    Q_ASSERT(row>=0);
+//    Q_ASSERT(row<m_recentList->count());
+//    Q_ASSERT(m_mainWindow);
+//    if(!m_recentList || row<0 || row>=m_recentList->count() || !m_mainWindow)
+//    {
+//        return QImage();
+//    }
+//    return m_mainWindow->getThumbnail(m_recentList->at(row));
+//}

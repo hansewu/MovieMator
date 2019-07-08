@@ -51,35 +51,7 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
     m_modelList = new QList<RecentListModel*>;
     m_currentListView = nullptr;
 
-    RecentListModel *model1 = new RecentListModel(main, this);
-    RecentListModel *model2 = new RecentListModel(main, this);
-    RecentListModel *model3 = new RecentListModel(main, this);
-
-    m_modelList->append(model1);
-    m_modelList->append(model2);
-    m_modelList->append(model3);
-
-    foreach (QString s, m_recent) {
-        // 工程文件不添加到历史记录列表里
-        if(!s.endsWith(".mmp") && !s.endsWith(".xml") && !s.endsWith(".mlt"))
-        {
-            FILE_HANDLE fileHandle = m_mainWindow->openFile(s);
-//            Q_ASSERT(fileHandle);     // 如果文件名s被改过了就无法打开
-            if(fileHandle)
-            {
-                if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_VIDEO) {
-                    model1->append(fileHandle);
-                    m_flag[0] = true;
-                } else if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_AUDIO) {
-                    model2->append(fileHandle);
-                    m_flag[1] = true;
-                } else if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_IMAGE) {
-                    model3->append(fileHandle);
-                    m_flag[2] = true;
-                }
-            }
-        }
-    }
+    loadRecentFile();
 
     for(int i=0; i<num; i++)
     {
@@ -170,6 +142,49 @@ RecentDock::~RecentDock()
     delete ui;
 }
 
+void RecentDock::loadRecentFile() {
+    RecentListModel *model1 = new RecentListModel(m_mainWindow, this);
+    RecentListModel *model2 = new RecentListModel(m_mainWindow, this);
+    RecentListModel *model3 = new RecentListModel(m_mainWindow, this);
+
+    m_modelList->append(model1);
+    m_modelList->append(model2);
+    m_modelList->append(model3);
+
+    foreach (QString s, m_recent) {
+        // 工程文件不添加到历史记录列表里
+        if(!s.endsWith(".mmp") && !s.endsWith(".xml") && !s.endsWith(".mlt"))
+        {
+            FILE_HANDLE fileHandle = m_mainWindow->openFile(s);
+//            Q_ASSERT(fileHandle);     // 如果文件名s被改过了就无法打开
+            if(fileHandle)
+            {
+                FileItemInfo *itemInfo = new FileItemInfo();
+                Q_ASSERT(itemInfo);
+                itemInfo->setFilePath(s);
+                Q_ASSERT(m_mainWindow);
+                itemInfo->setFileThumbnail(m_mainWindow->getThumbnail(fileHandle));
+                if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_VIDEO) {
+                    itemInfo->setFileType(FILE_TYPE_VIDEO);
+                    model1->append(itemInfo);
+                    m_flag[0] = true;
+                } else if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_AUDIO) {
+                    itemInfo->setFileType(FILE_TYPE_AUDIO);
+                    model2->append(itemInfo);
+                    m_flag[1] = true;
+                } else if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_IMAGE) {
+                    itemInfo->setFileType(FILE_TYPE_IMAGE);
+                    model3->append(itemInfo);
+                    m_flag[2] = true;
+                }
+
+                delete fileHandle;
+                fileHandle = nullptr;
+            }
+        }
+    }
+}
+
 void RecentDock::resizeEvent(QResizeEvent* event)
 {
     Q_ASSERT(m_listviewList);
@@ -232,13 +247,18 @@ void RecentDock::add(const QString &s)
     {
         int index = 0;
         FILE_TYPE file_type = m_mainWindow->getFileType(fileHandle);
+        FileItemInfo *itemInfo = new FileItemInfo();
+        Q_ASSERT(itemInfo);
+        itemInfo->setFilePath(s);
+        itemInfo->setFileType(file_type);
+        itemInfo->setFileThumbnail(m_mainWindow->getThumbnail(fileHandle));
         if (file_type == FILE_TYPE_VIDEO) {
             Q_ASSERT(m_modelList->at(0));
             if(!m_modelList->at(0))
             {
                 return;
             }
-            m_modelList->at(0)->insert(fileHandle, 0);
+            m_modelList->at(0)->insert(itemInfo, 0);
             m_recent.prepend(s);
             m_flag[0] = true;
             index = 0;
@@ -248,7 +268,7 @@ void RecentDock::add(const QString &s)
             {
                 return;
             }
-            m_modelList->at(1)->insert(fileHandle, 0);
+            m_modelList->at(1)->insert(itemInfo, 0);
             m_recent.prepend(s);
             m_flag[1] = true;
             index = 1;
@@ -258,7 +278,7 @@ void RecentDock::add(const QString &s)
             {
                 return;
             }
-            m_modelList->at(2)->insert(fileHandle, 0);
+            m_modelList->at(2)->insert(itemInfo, 0);
             m_recent.prepend(s);
             m_flag[2] = true;
             index = 2;
@@ -290,6 +310,9 @@ void RecentDock::add(const QString &s)
         }
 
         resizeEvent(nullptr);
+
+        delete fileHandle;
+        fileHandle = nullptr;
     }
 //    while (m_recent.count() > MaxItems)
 //    {
@@ -319,7 +342,7 @@ QString RecentDock::remove(const QString &s)
         }
         for(int i=0; i<model->rowCount(); i++)
         {
-            if(QString::compare(s, model->fileName(i))==0)
+            if(QString::compare(s,model->fileAt(i)->filePath())==0)
             {
                 model->remove(i);
                 flag = true;
@@ -387,14 +410,20 @@ void RecentDock::onListviewActivated(const QModelIndex &index)
     Q_ASSERT(model);
     if(model)
     {
-        FILE_HANDLE fileHandle = model->fileAt(proxyModel->mapToSource(m_currentIndex).row());
-        Q_ASSERT(fileHandle);
+//        FILE_HANDLE fileHandle = model->fileAt(proxyModel->mapToSource(m_currentIndex).row());
+        FileItemInfo *itemInfo = model->fileAt(proxyModel->mapToSource(m_currentIndex).row());
+        Q_ASSERT(itemInfo);
         Q_ASSERT(m_mainWindow);
+        FILE_HANDLE fileHandle = m_mainWindow->openFile(itemInfo->filePath());
+        Q_ASSERT(fileHandle);
         if(!fileHandle || !m_mainWindow)
         {
             return;
         }
         m_mainWindow->playFile(fileHandle);
+
+        delete fileHandle;
+        fileHandle = nullptr;
     }
 }
 
@@ -441,14 +470,20 @@ void RecentDock::onListviewClicked(const QModelIndex &index)
         Q_ASSERT(model);
         if(model)
         {
-            FILE_HANDLE fileHandle = model->fileAt(proxyModel->mapToSource(m_currentIndex).row());
-            Q_ASSERT(fileHandle);
+//            FILE_HANDLE fileHandle = model->fileAt(proxyModel->mapToSource(m_currentIndex).row());
+            FileItemInfo *itemInfo = model->fileAt(proxyModel->mapToSource(m_currentIndex).row());
+            Q_ASSERT(itemInfo);
             Q_ASSERT(m_mainWindow);
+            FILE_HANDLE fileHandle = m_mainWindow->openFile(itemInfo->filePath());
+            Q_ASSERT(fileHandle);
             if(!fileHandle || !m_mainWindow)
             {
                 return;
             }
             m_mainWindow->playFile(fileHandle);
+
+            delete fileHandle;
+            fileHandle = nullptr;
         }
     }
 }
@@ -489,7 +524,7 @@ void RecentDock::on_actionRemove_triggered()
         return;
     }
     int row = proxyModel->mapToSource(m_currentIndex).row();
-    if(m_recent.removeOne(model->fileName(row)))
+    if(m_recent.removeOne(model->fileAt(row)->filePath()))
     {
         Settings.setRecent(m_recent);
         model->remove(row);
@@ -590,39 +625,6 @@ void RecentDock::on_RecentDock_visibilityChanged(bool visible)
     }
 }
 
-QList<FILE_HANDLE> RecentDock::getSelected()
-{
-    Q_ASSERT(m_currentListView);
-    QList<FILE_HANDLE> selected;
-    if(m_currentListView)
-    {
-        QModelIndexList selectedIndexes = m_currentListView->getSelected();
-
-        foreach(QModelIndex index, selectedIndexes)
-        {
-            Q_ASSERT(index.isValid());
-            if(!index.isValid())
-            {
-                continue;
-            }
-            QModelIndex sourceIndex = qobject_cast<QSortFilterProxyModel*>(m_currentListView->model())->mapToSource(index);
-            Q_ASSERT(sourceIndex.isValid());
-            if(!sourceIndex.isValid())
-            {
-                continue;
-            }
-            FILE_HANDLE fileHandle = qobject_cast<RecentListModel*>(qobject_cast<QSortFilterProxyModel*>(m_currentListView->model())->sourceModel())->fileAt(sourceIndex.row());
-            Q_ASSERT(fileHandle);
-            if(!fileHandle)
-            {
-                continue;
-            }
-            selected.append(fileHandle);
-        }
-    }
-    return selected;
-}
-
 static RecentDock *instance = nullptr;
 //初始化模块
 //参数，main 主程序接口对象
@@ -638,12 +640,6 @@ QDockWidget *RecentDock_initModule(MainInterface *main)
 void RecentDock_destroyModule()
 {
 
-}
-
-//获取选中的文件列表
-QList<FILE_HANDLE> RecentDock_getSelectedFiles()
-{
-    return instance->getSelected();
 }
 
 //添加文件
