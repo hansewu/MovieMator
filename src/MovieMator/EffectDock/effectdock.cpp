@@ -401,8 +401,11 @@ void EffectDock::createEffectFile()
     }
     if(m_currentListView && m_currentIndex.isValid() && m_mainWindow)
     {
-        m_effectFile = qobject_cast<EffectListModel*>(m_currentListView->model())->fileAt(m_currentIndex.row());
-        imageFile = m_mainWindow->getFileName(m_effectFile);
+//        m_effectFile = qobject_cast<EffectListModel*>(m_currentListView->model())->fileAt(m_currentIndex.row());
+//        imageFile = m_mainWindow->getFileName(m_effectFile);
+        EffectListItemInfo *itemInfo = qobject_cast<EffectListModel*>(m_currentListView->model())->fileAt(m_currentIndex.row());
+        Q_ASSERT(itemInfo);
+        imageFile = itemInfo->effectImagePath();
     }
     if(!effectFile.isEmpty() && !imageFile.isEmpty())
     {
@@ -425,7 +428,10 @@ void EffectDock::createImageFileList(QFileInfoList &fileList, QString folderName
     EffectListModel *model = new EffectListModel(m_mainWindow, this);
     for(int i=0; i<fileList.count(); i++)
     {
-        model->append(m_mainWindow->openFile(fileList[i].filePath()));
+        EffectListItemInfo *itemInfo = new EffectListItemInfo();
+        itemInfo->setEffectImagePath(fileList[i].filePath());
+        model->append(itemInfo);
+//        model->append(m_mainWindow->openFile(fileList[i].filePath()));
     }
 
     appendListViewAndLabel(model, folderName);
