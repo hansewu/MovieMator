@@ -323,8 +323,9 @@ void QmlFilter::set(QString name, int value)
 
 bool isValidRect(QRectF &rect)
 {
-    if(rect.isValid() || rect.isEmpty() || rect.isNull())
+    if(!rect.isValid() || rect.isEmpty() || rect.isNull()){
         return false;
+    }
 
     if(rect.left() < -10000.0 && rect.left() > 10000.0)
         return false;
@@ -356,9 +357,10 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
         QRectF rect_to(x, y, width, height);
 
         m_filter->set(name.toUtf8().constData(), x, y, width, height, opacity);
-        if(rect_from != rect_to && isValidRect(rect_from))
-            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), MAIN.filterController()->currentFilterIndex(), name,  rect_from, rect_to,true));
 
+        if((rect_from != rect_to) && isValidRect(rect_from)){
+            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), MAIN.filterController()->currentFilterIndex(), name,  rect_from, rect_to,true));
+        }
         MLT.refreshConsumer();
         emit filterPropertyValueChanged();
     }
@@ -401,7 +403,7 @@ void QmlFilter::anim_set(QString name, QString value)
 void QmlFilter::resetProperty(const QString& name)
 {
     if (!m_filter) return;
-    m_filter->clear(name.toUtf8().constData());
+//    m_filter->clear(name.toUtf8().constData());
 }
 
 void QmlFilter::loadPresets()
