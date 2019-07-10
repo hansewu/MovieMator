@@ -88,34 +88,38 @@ QVariant EffectListModel::data(const QModelIndex &index, int role) const
             return result.split(".")[0];
         }
         case Qt::DecorationRole: {
-            int width = THUMBNAIL_WIDTH;
-            int height = THUMBNAIL_HEIGHT;
-            QString setting = Settings.playlistThumbnails();
-            QImage image;
+//            int width = THUMBNAIL_WIDTH;
+//            int height = THUMBNAIL_HEIGHT;
+//            QString setting = Settings.playlistThumbnails();
+//            QImage image;
 
-            image = QImage(width, height, QImage::Format_ARGB32);
-            Q_ASSERT(m_mainWindow);
-            if(!m_mainWindow)
-            {
-                return image;
-            }
-//            QImage thumb = m_mainWindow->getThumbnail(fileHandle);
-            QImage thumb = QImage(itemInfo->effectImagePath());
-            if (!thumb.isNull()) {
-                QPainter painter(&image);
-                image.fill(QApplication::palette().base().color().rgb());
+//            image = QImage(width, height, QImage::Format_ARGB32);
+//            Q_ASSERT(m_mainWindow);
+//            if(!m_mainWindow)
+//            {
+//                return image;
+//            }
+////            QImage thumb = m_mainWindow->getThumbnail(fileHandle);
+//            QImage thumb = itemInfo->thumbnail();//QImage(itemInfo->effectImagePath());
+//            if (!thumb.isNull()) {
+//                QPainter painter(&image);
+//                image.fill(QApplication::palette().base().color().rgb());
 
-                // draw the in thumbnail
-                QRect rect = thumb.rect();
-                if (setting != "large") {
-                    rect.setWidth(width);
-                    rect.setHeight(height);
-                }
-                painter.drawImage(rect, thumb);
+//                // draw the in thumbnail
+//                QRect rect = thumb.rect();
+//                if (setting != "large") {
+//                    rect.setWidth(width);
+//                    rect.setHeight(height);
+//                }
+//                painter.drawImage(rect, thumb);
 
-                painter.end();
-            }
-            else {
+//                painter.end();
+//            }
+//            else {
+//                image.fill(QApplication::palette().base().color().rgb());
+//            }
+            QImage image = itemInfo->thumbnail();
+            if (image.isNull()) {
                 image.fill(QApplication::palette().base().color().rgb());
             }
             return image;

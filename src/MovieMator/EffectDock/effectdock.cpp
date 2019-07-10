@@ -33,6 +33,7 @@
 #include <QDebug>
 #include <QJsonArray>
 #include <QImage>
+#include <qpainter.h>
 
 EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     QDockWidget(parent),
@@ -224,6 +225,34 @@ QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInf
     }
 
     return result;
+}
+
+QImage EffectDock::createThumbnail(QString filePath) {
+    int width = EffectListModel::THUMBNAIL_WIDTH;
+    int height = EffectListModel::THUMBNAIL_HEIGHT;
+    QString setting = Settings.playlistThumbnails();
+    QImage image;
+
+    image = QImage(width, height, QImage::Format_ARGB32);
+    QImage tempImage = QImage(filePath);
+    if (!tempImage.isNull()) {
+         QPainter painter(&image);
+         image.fill(QApplication::palette().base().color().rgb());
+
+         // draw the in thumbnail
+         QRect rect = tempImage.rect();
+         if (setting != "large") {
+             rect.setWidth(width);
+             rect.setHeight(height);
+         }
+         painter.drawImage(rect, tempImage);
+
+         painter.end();
+    } else {
+        image.fill(QApplication::palette().base().color().rgb());
+    }
+
+    return image;
 }
 
 void EffectDock::resetImage(QString effectFile, QString imageFile)
@@ -437,6 +466,7 @@ void EffectDock::createImageFileList(QFileInfoList &fileList, QString folderName
     {
         EffectListItemInfo *itemInfo = new EffectListItemInfo();
         itemInfo->setEffectImagePath(fileList[i].filePath());
+        itemInfo->setThumbnail(createThumbnail(fileList[i].filePath()));
         model->append(itemInfo);
 //        model->append(m_mainWindow->openFile(fileList[i].filePath()));
     }

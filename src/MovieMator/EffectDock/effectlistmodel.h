@@ -33,9 +33,12 @@ public:
 
     QString effectImagePath() const {return  m_effectImagePath;}
     void setEffectImagePath(const QString filePath) {m_effectImagePath = filePath;}
+    QImage thumbnail() const {return  m_thumbnail;}
+    void setThumbnail(const QImage thumbnail) {m_thumbnail = thumbnail;}
 
 private:
     QString m_effectImagePath;
+    QImage m_thumbnail;
 };
 
 class EffectListModel : public QAbstractItemModel
