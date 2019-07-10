@@ -3403,7 +3403,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     }
 
     // Get the new track index.
-    Track& track = m_trackList[qMax(0, qMin(trackIndex, m_trackList.count() - 1))];
+    Track track = m_trackList[qMax(0, qMin(trackIndex, m_trackList.count() - 1))];
     int i = track.mlt_index;
     if (type == VideoTrackType)
         ++i;
