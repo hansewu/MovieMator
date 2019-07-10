@@ -292,8 +292,15 @@ FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
          char* filter_name = filter->get("moviemator:filter");
          if (QString(filter_name) == "affineSizePosition") {
              hasSizeAndPositionFilter = true;
+
+             delete filter;
+             filter = nullptr;
+
              break;
          }
+
+         delete filter;
+         filter = nullptr;
     }
 
     if (resource == "template" && !hasSizeAndPositionFilter) {
@@ -317,6 +324,9 @@ FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
         sizeAndPositionFilter->set("transition.halign", "left");
         sizeAndPositionFilter->set("transition.threads", 0);
         producer->attach(*sizeAndPositionFilter);
+
+        delete sizeAndPositionFilter;
+        sizeAndPositionFilter = nullptr;
     }
 
     return producer;
@@ -498,7 +508,9 @@ void MainInterface::previewFilter(int index)
                 break;
             }
         }
-        playFile(createFileWithXMLForDragAndDrop(doc.toString()));
+        FILE_HANDLE fileHandle = createFileWithXMLForDragAndDrop(doc.toString());
+        playFile(fileHandle);
+        destroyFileHandle(fileHandle);
         return;
     }
 
@@ -529,7 +541,11 @@ void MainInterface::previewFilter(int index)
 
     playFile(mltSettingFile);
 
-    destroyFileHandle(mltSettingFile);//释放临时的FILE_HANDLE
+    delete producer;
+    producer = nullptr;
+    mltSettingFile = nullptr;
+
+//    destroyFileHandle(mltSettingFile);//释放临时的FILE_HANDLE
 }
 
 double calculate(double value,QList<QString> funcList)
