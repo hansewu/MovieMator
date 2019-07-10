@@ -192,8 +192,7 @@ QMimeData *RecentListModel::getMimeData(const int index) const
     mimeData->setData(m_mainWindow->getXMLMimeTypeForDragDrop(), m_mainWindow->getXmlForDragDrop(fileHandle).toUtf8());
     mimeData->setText(QString::number(m_mainWindow->getPlayTime(fileHandle)));
 
-    delete fileHandle;
-    fileHandle = nullptr;
+    m_mainWindow->destroyFileHandle(fileHandle);
 
     return mimeData;
 }

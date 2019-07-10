@@ -129,6 +129,10 @@ EffectDock::~EffectDock()
     delete m_imageList;
     m_imageList = nullptr;
 
+    if (m_mainWindow) {
+        m_mainWindow->destroyFileHandle(m_effectFile);
+    }
+
 //    delete m_spacerItem;
 //    m_spacerItem = nullptr;
 
@@ -365,6 +369,9 @@ void EffectDock::resetImage(QString effectFile, QString imageFile)
             {
                 return;
             }
+
+            m_mainWindow->destroyFileHandle(m_effectFile);
+
             m_effectFile = m_mainWindow->createFileWithXMLForDragAndDrop(doc.toString());
             return;
         }
