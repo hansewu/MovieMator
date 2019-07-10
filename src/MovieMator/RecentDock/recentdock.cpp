@@ -178,8 +178,7 @@ void RecentDock::loadRecentFile() {
                     m_flag[2] = true;
                 }
 
-                delete fileHandle;
-                fileHandle = nullptr;
+                m_mainWindow->destroyFileHandle(fileHandle);
             }
         }
     }
@@ -256,6 +255,9 @@ void RecentDock::add(const QString &s)
             Q_ASSERT(m_modelList->at(0));
             if(!m_modelList->at(0))
             {
+                delete itemInfo;
+                itemInfo = nullptr;
+                m_mainWindow->destroyFileHandle(fileHandle);
                 return;
             }
             m_modelList->at(0)->insert(itemInfo, 0);
@@ -266,6 +268,9 @@ void RecentDock::add(const QString &s)
             Q_ASSERT(m_modelList->at(1));
             if(!m_modelList->at(1))
             {
+                delete itemInfo;
+                itemInfo = nullptr;
+                m_mainWindow->destroyFileHandle(fileHandle);
                 return;
             }
             m_modelList->at(1)->insert(itemInfo, 0);
@@ -276,6 +281,9 @@ void RecentDock::add(const QString &s)
             Q_ASSERT(m_modelList->at(2));
             if(!m_modelList->at(2))
             {
+                delete itemInfo;
+                itemInfo = nullptr;
+                m_mainWindow->destroyFileHandle(fileHandle);
                 return;
             }
             m_modelList->at(2)->insert(itemInfo, 0);
@@ -295,6 +303,9 @@ void RecentDock::add(const QString &s)
                Q_ASSERT(m_imageArray[i]);
                if(!m_listviewList->at(i) || !m_labelArray[i] || !m_imageArray[i])
                {
+                   delete itemInfo;
+                   itemInfo = nullptr;
+                   m_mainWindow->destroyFileHandle(fileHandle);
                    return;
                }
                ui->comboBox->addItem(m_itemNames[i]);
@@ -311,8 +322,7 @@ void RecentDock::add(const QString &s)
 
         resizeEvent(nullptr);
 
-        delete fileHandle;
-        fileHandle = nullptr;
+        m_mainWindow->destroyFileHandle(fileHandle);
     }
 //    while (m_recent.count() > MaxItems)
 //    {
@@ -422,8 +432,7 @@ void RecentDock::onListviewActivated(const QModelIndex &index)
         }
         m_mainWindow->playFile(fileHandle);
 
-        delete fileHandle;
-        fileHandle = nullptr;
+        m_mainWindow->destroyFileHandle(fileHandle);
     }
 }
 
@@ -482,8 +491,7 @@ void RecentDock::onListviewClicked(const QModelIndex &index)
             }
             m_mainWindow->playFile(fileHandle);
 
-            delete fileHandle;
-            fileHandle = nullptr;
+            m_mainWindow->destroyFileHandle(fileHandle);
         }
     }
 }

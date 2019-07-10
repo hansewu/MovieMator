@@ -60,6 +60,15 @@ FILE_HANDLE MainInterface::openFile(QString filepath)
     return producer;
 }
 
+void MainInterface::destroyFileHandle(FILE_HANDLE fileHandle) {
+    if (fileHandle) {
+        Mlt::Producer *producer = static_cast<Mlt::Producer*>(fileHandle);
+        delete producer;
+        producer = nullptr;
+        fileHandle = nullptr;
+    }
+}
+
 //0 成功 其他失败
 int MainInterface::openFileAsProject(QString filepath)
 {
@@ -395,6 +404,8 @@ void MainInterface::previewAudioFilter(QmlMetadata *meta)
         setFilterProperty(meta->keyframes()->parameter(k)->paraType(),propertyName,propertyValue,meta->keyframes()->parameter(k)->factorFunc(),pfilter,meta->path());
     }
     playFile(mltSettingFile);
+
+    destroyFileHandle(mltSettingFile);//释放临时的FILE_HANDLE
 }
 
 void MainInterface::previewFilter(int index)
@@ -517,6 +528,8 @@ void MainInterface::previewFilter(int index)
     }
 
     playFile(mltSettingFile);
+
+    destroyFileHandle(mltSettingFile);//释放临时的FILE_HANDLE
 }
 
 double calculate(double value,QList<QString> funcList)
