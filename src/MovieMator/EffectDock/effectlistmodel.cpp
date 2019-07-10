@@ -26,12 +26,13 @@
 #include <QPalette>
 #include <QMimeData>
 #include <util.h>
+#include <qdebug.h>
 
 EffectListModel::EffectListModel(MainInterface *main, QObject *parent) :
     QAbstractItemModel(parent),
     m_mainWindow(main)
 {
-    m_effectList = new QList<FILE_HANDLE>;
+    m_effectList = new QList<EffectListItemInfo *>;
 }
 
 EffectListModel::~EffectListModel()
@@ -68,9 +69,10 @@ QVariant EffectListModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-    FILE_HANDLE fileHandle = m_effectList->at(index.row());
-    Q_ASSERT(fileHandle);
-    if(!fileHandle)
+//    FILE_HANDLE fileHandle = m_effectList->at(index.row());
+    EffectListItemInfo *itemInfo = m_effectList->at(index.row());
+    Q_ASSERT(itemInfo);
+    if(!itemInfo)
     {
         return QVariant();
     }
@@ -82,7 +84,7 @@ QVariant EffectListModel::data(const QModelIndex &index, int role) const
             {
                 return QString();
             }
-            QString result = Util::baseName(m_mainWindow->getFileName(fileHandle));
+            QString result = Util::baseName(itemInfo->effectImagePath());
             return result.split(".")[0];
         }
         case Qt::DecorationRole: {
@@ -97,7 +99,8 @@ QVariant EffectListModel::data(const QModelIndex &index, int role) const
             {
                 return image;
             }
-            QImage thumb = m_mainWindow->getThumbnail(fileHandle);
+//            QImage thumb = m_mainWindow->getThumbnail(fileHandle);
+            QImage thumb = QImage(itemInfo->effectImagePath());
             if (!thumb.isNull()) {
                 QPainter painter(&image);
                 image.fill(QApplication::palette().base().color().rgb());
@@ -126,30 +129,30 @@ QVariant EffectListModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QMimeData *EffectListModel::mimeData(const QModelIndexList &indexes) const
-{
-    Q_ASSERT(m_effectList);
-    Q_ASSERT(indexes.first().isValid());
-    Q_ASSERT(indexes.first().row() >= 0);
-    Q_ASSERT(indexes.first().row() < m_effectList->count());
-    if(!m_effectList || !indexes.first().isValid() || (indexes.first().row()<0) || (indexes.first().row()>=m_effectList->count()))
-    {
-        return nullptr;
-    }
-    FILE_HANDLE fileHandle = m_effectList->at(indexes.first().row());
-    Q_ASSERT(fileHandle);
-    Q_ASSERT(m_mainWindow);
-    if(!fileHandle || !m_mainWindow)
-    {
-        return nullptr;
-    }
+//QMimeData *EffectListModel::mimeData(const QModelIndexList &indexes) const
+//{
+//    Q_ASSERT(m_effectList);
+//    Q_ASSERT(indexes.first().isValid());
+//    Q_ASSERT(indexes.first().row() >= 0);
+//    Q_ASSERT(indexes.first().row() < m_effectList->count());
+//    if(!m_effectList || !indexes.first().isValid() || (indexes.first().row()<0) || (indexes.first().row()>=m_effectList->count()))
+//    {
+//        return nullptr;
+//    }
+//    FILE_HANDLE fileHandle = m_effectList->at(indexes.first().row());
+//    Q_ASSERT(fileHandle);
+//    Q_ASSERT(m_mainWindow);
+//    if(!fileHandle || !m_mainWindow)
+//    {
+//        return nullptr;
+//    }
 
-    QMimeData *mimeData = new QMimeData;
-    mimeData->setData(m_mainWindow->getXMLMimeTypeForDragDrop(), m_mainWindow->getXmlForDragDrop(fileHandle).toUtf8());
-    mimeData->setText(QString::number(m_mainWindow->getPlayTime(fileHandle)));
+//    QMimeData *mimeData = new QMimeData;
+//    mimeData->setData(m_mainWindow->getXMLMimeTypeForDragDrop(), m_mainWindow->getXmlForDragDrop(fileHandle).toUtf8());
+//    mimeData->setText(QString::number(m_mainWindow->getPlayTime(fileHandle)));
 
-    return mimeData;
-}
+//    return mimeData;
+//}
 
 QModelIndex EffectListModel::index(int row, int column, const QModelIndex&) const
 {
@@ -161,21 +164,21 @@ QModelIndex EffectListModel::parent(const QModelIndex&) const
     return QModelIndex();
 }
 
-void EffectListModel::append(FILE_HANDLE fileHandle)
+void EffectListModel::append(EffectListItemInfo *itemInfo)
 {
-    Q_ASSERT(fileHandle);
+    Q_ASSERT(itemInfo);
     Q_ASSERT(m_effectList);
-    if(!fileHandle || !m_effectList)
+    if(!itemInfo || !m_effectList)
     {
         return;
     }
     int count = m_effectList->count();
     beginInsertRows(QModelIndex(), count, count);
-    m_effectList->append(fileHandle);
+    m_effectList->append(itemInfo);
     endInsertRows();
 }
 
-FILE_HANDLE EffectListModel::fileAt(int row) const
+EffectListItemInfo *EffectListModel::fileAt(int row) const
 {
     Q_ASSERT(m_effectList);
     Q_ASSERT(row >= 0);
@@ -187,15 +190,15 @@ FILE_HANDLE EffectListModel::fileAt(int row) const
     return m_effectList->at(row);
 }
 
-QImage EffectListModel::thumbnail(int row) const
-{
-    Q_ASSERT(m_effectList);
-    Q_ASSERT(row>=0);
-    Q_ASSERT(row<m_effectList->count());
-    Q_ASSERT(m_mainWindow);
-    if(!m_effectList || row<0 || row>=m_effectList->count() || !m_mainWindow)
-    {
-        return QImage();
-    }
-    return m_mainWindow->getThumbnail(m_effectList->at(row));
-}
+//QImage EffectListModel::thumbnail(int row) const
+//{
+//    Q_ASSERT(m_effectList);
+//    Q_ASSERT(row>=0);
+//    Q_ASSERT(row<m_effectList->count());
+//    Q_ASSERT(m_mainWindow);
+//    if(!m_effectList || row<0 || row>=m_effectList->count() || !m_mainWindow)
+//    {
+//        return QImage();
+//    }
+//    return m_mainWindow->getThumbnail(m_effectList->at(row));
+//}
