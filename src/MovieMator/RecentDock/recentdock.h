@@ -120,8 +120,6 @@ private slots:
     void onListviewActivated(const QModelIndex &index);
     // 按下 listView的槽函数
     void onListviewPressed(const QModelIndex &index);
-    // 单击 listView的槽函数
-    void onListviewClicked(const QModelIndex &index);
     // listView右键菜单的槽函数
     void onListviewCustomContextMenuRequested(const QPoint &pos);
 };

@@ -83,7 +83,6 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
                     "QListView{background-color:transparent;color:rgb(214,214,214);}");
 
         connect(listView, SIGNAL(pressed(const QModelIndex&)), this, SLOT(onListviewPressed(const QModelIndex&)));
-        connect(listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(onListviewClicked(const QModelIndex&)));
         connect(listView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(onListviewCustomContextMenuRequested(const QPoint&)));
 
 
@@ -465,35 +464,6 @@ void RecentDock::onListviewPressed(const QModelIndex &index)
     }
 
     onListviewActivated(QModelIndex());     // 按下就播放
-}
-
-void RecentDock::onListviewClicked(const QModelIndex &index)
-{
-    Q_ASSERT(m_currentListView);
-    Q_ASSERT(m_currentIndex.isValid());
-    if(m_currentIndex.isValid() && m_currentListView && index==m_currentIndex)
-    {
-        QSortFilterProxyModel *proxyModel = qobject_cast<QSortFilterProxyModel*>(m_currentListView->model());
-        Q_ASSERT(proxyModel);
-        RecentListModel *model = proxyModel ? qobject_cast<RecentListModel*>(proxyModel->sourceModel()) : nullptr;
-        Q_ASSERT(model);
-        if(model)
-        {
-//            FILE_HANDLE fileHandle = model->fileAt(proxyModel->mapToSource(m_currentIndex).row());
-            FileItemInfo *itemInfo = model->fileAt(proxyModel->mapToSource(m_currentIndex).row());
-            Q_ASSERT(itemInfo);
-            Q_ASSERT(m_mainWindow);
-            FILE_HANDLE fileHandle = m_mainWindow->openFile(itemInfo->filePath());
-            Q_ASSERT(fileHandle);
-            if(!fileHandle || !m_mainWindow)
-            {
-                return;
-            }
-            m_mainWindow->playFile(fileHandle);
-
-            m_mainWindow->destroyFileHandle(fileHandle);
-        }
-    }
 }
 
 void RecentDock::onListviewCustomContextMenuRequested(const QPoint &pos)
