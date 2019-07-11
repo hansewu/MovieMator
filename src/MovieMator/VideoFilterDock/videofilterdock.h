@@ -109,7 +109,7 @@ private:
 
     // 图片列表的列表
     // 每个文件夹下的图片存放在一个列表里，这些列表也存放在一个列表里
-    QList<VideoFilterListView *> *m_imageList;
+    QList<VideoFilterListView *> *m_filterList;
     // 当前选中的 listView项
     QModelIndex m_currentIndex;
     // 当前被激活的图片文件列表

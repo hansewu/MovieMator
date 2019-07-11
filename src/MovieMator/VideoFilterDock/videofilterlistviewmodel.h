@@ -62,9 +62,9 @@ class VideoFilterListVideoModel : public QAbstractItemModel
 
 public:
     // 缩略图宽度
-    static const int THUMBNAIL_WIDTH = 80;      // 100;
+    static const int THUMBNAIL_WIDTH = 85;      //80;      // 100; 96  95      15  110
     // 缩略图高度
-    static const int THUMBNAIL_HEIGHT = 60;     // 70;
+    static const int THUMBNAIL_HEIGHT = 57;     //60;     // 70;  64  90      30  79
 
     // 构造函数
     explicit VideoFilterListVideoModel(MainInterface *main = nullptr, QObject *parent = nullptr);

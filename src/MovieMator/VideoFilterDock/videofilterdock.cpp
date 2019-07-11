@@ -40,7 +40,7 @@ VideoFilterDock::VideoFilterDock(int filterDockType, MainInterface *main, QWidge
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
 
-    m_imageList = new QList<VideoFilterListView*>;
+    m_filterList = new QList<VideoFilterListView*>;
     m_currentListView = nullptr;
 
     if (filterDockType == 0) {//视频滤镜
@@ -74,22 +74,22 @@ VideoFilterDock::VideoFilterDock(int filterDockType, MainInterface *main, QWidge
 
 VideoFilterDock::~VideoFilterDock()
 {
-    qDeleteAll(*m_imageList);
-    m_imageList->clear();
-    delete m_imageList;
-    m_imageList = nullptr;
+    qDeleteAll(*m_filterList);
+    m_filterList->clear();
+    delete m_filterList;
+    m_filterList = nullptr;
 
     delete ui;
 }
 
 void VideoFilterDock::resizeEvent(QResizeEvent *event)
 {
-    Q_ASSERT(m_imageList);
-    if(!m_imageList)
+    Q_ASSERT(m_filterList);
+    if(!m_filterList)
     {
         return;
     }
-    for(VideoFilterListView *listView : *m_imageList)
+    for(VideoFilterListView *listView : *m_filterList)
     {
         Q_ASSERT(listView);
         if(!listView)
@@ -223,8 +223,8 @@ void VideoFilterDock::addToTimeline()
 void VideoFilterDock::appendListViewAndLabel(VideoFilterListVideoModel *model, QString itemName)
 {
     Q_ASSERT(model);
-    Q_ASSERT(m_imageList);
-    if(!model || !m_imageList)
+    Q_ASSERT(m_filterList);
+    if(!model || !m_filterList)
     {
         return;
     }
@@ -248,13 +248,13 @@ void VideoFilterDock::appendListViewAndLabel(VideoFilterListVideoModel *model, Q
 
     listView->setModel(model);
 
-    m_imageList->append(listView);
+    m_filterList->append(listView);
     ui->verticalLayout_2->addWidget(listView);
 
     listView->setFont(QFont(font().family(), 8));   // 改变字体大小
     listView->setFocusPolicy(Qt::ClickFocus);
     listView->setViewMode(QListView::IconMode);
-    listView->setGridSize(QSize(95, 90));         // 120,100    ,300/3-5
+    listView->setGridSize(QSize(100, 85));         // 120,100    ,300/3-5    95,90
     listView->setUniformItemSizes(true);
     listView->setResizeMode(QListView::Adjust);
     listView->setContextMenuPolicy(Qt::CustomContextMenu);
