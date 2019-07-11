@@ -4010,8 +4010,6 @@ void MultitrackModel::setTransitionDuration(int trackIndex, int clipIndex, int d
     Q_ASSERT(m_tractor);
 
 
-    const Track& track = m_trackList.value(trackIndex);
-    Q_UNUSED(track)
     int i = m_trackList.at(trackIndex).mlt_index;
     Q_ASSERT(m_tractor->track(i));
 

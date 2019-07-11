@@ -64,11 +64,9 @@ QmlFilter::~QmlFilter()
 Mlt::Animation QmlFilter::getAnimation(const QString& name)
 {
     if (m_filter) {
-//        const char* propertyName = name.toUtf8().constData();
-//        const char* propertyName = name.toStdString().c_str();
-
         std::string strName = name.toStdString();
-        const char* propertyName = strName.c_str();
+        char propertyName[32];
+        strcpy(propertyName, strName.c_str());
 
         if (!m_filter->get_animation(propertyName)) {
             // Cause a string property to be interpreted as animated value.
@@ -234,7 +232,8 @@ QRectF QmlFilter::getRect(QString name, int position)  //
     if (!m_filter->is_valid()) return QRectF();
     const char* s = m_filter->get(name.toUtf8().constData());
     if (s) {
-        const char* propertyName = name.toUtf8().constData();
+        char propertyName[32];
+        strcpy(propertyName, name.toUtf8().constData());
         mlt_rect rect;
         if (position < 0) {
             rect = m_filter->get_rect(propertyName);
@@ -261,7 +260,8 @@ QRectF QmlFilter::getRectOfTextFilter(QString name, int position)
         position = MAIN.timelineDock()->getPositionOnParentProducer(position);
     if (!m_filter->is_valid()) return QRectF();
 
-    const char* propertyName = name.toUtf8().constData();
+    char propertyName[32];
+    strcpy(propertyName, name.toUtf8().constData());
     mlt_rect rect;
     if (position < 0) {
         rect = m_filter->get_rect(propertyName);
@@ -375,24 +375,7 @@ void QmlFilter::set(QString name, const QRectF& rect, double opacity, int positi
 void QmlFilter::anim_set(QString name, QString value)
 {
     if (!m_filter) return;
-//    if (!m_filter->get_data("parameters_animations"))
-//    {
-//        mlt_properties paraAnimations = mlt_properties_new();
-//        m_filter->set("parameters_animations", paraAnimations, 0, (mlt_destructor)mlt_properties_close);
 
-//    }
-
-//    mlt_properties para_animations = (mlt_properties)m_filter->get_data("parameters_animations");
-//    if (para_animations)
-//    {
-//        if (qstrcmp(mlt_properties_get(para_animations, name.toUtf8().constData()), value.toUtf8().constData()))
-//        {
-//            mlt_properties_set(para_animations, name.toUtf8().constData(), value.toUtf8().constData());
-//            MLT.refreshConsumer();
-//            emit filterPropertyValueChanged();
-//        }
-//    }
-//   m_filter->set(name, value);
     QString anim_name = "anim-"+name;
     qDebug()<<"anim_set, key:"<<anim_name<<", value:"<<value;
     m_filter->set(anim_name.toUtf8().constData(),value.toUtf8().constData());
@@ -1069,16 +1052,11 @@ void QmlFilter::removeKeyFrameParaValue(int frame, bool bFromUndo)
     Q_ASSERT(m_metadata);
     Q_ASSERT(m_metadata->keyframes());
 
-//    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
-
     int paramCount = m_metadata->keyframes()->parameterCount();
     for (int i = 0; i < paramCount; i++)
     {
          QString name = m_metadata->keyframes()->parameter(i)->property();
          removeAnimationKeyFrame(frame, name, bFromUndo);
-//         Mlt::Animation animation = getAnimation(name);
-//         if (animation.is_valid())
-//             animation.remove(frame);
     }
 
     emit keyframeNumberChanged();
@@ -1087,145 +1065,12 @@ void QmlFilter::removeKeyFrameParaValue(int frame, bool bFromUndo)
     emit filterPropertyValueChanged();
 
     return;
-
-    /*
-    int keyFrameCount = m_cacheKeyFrameList.count();
-    if(keyFrameCount==0)
-        return ;
-
-
-    for(int index=0; index < keyFrameCount; index++)
-    {
-        key_frame_item para = m_cacheKeyFrameList.at(index);
-        if(para.keyFrame == frame)
-        {
-            m_cacheKeyFrameList.remove(index);
-            emit cache_removedKeyFrame();
-            emit keyframeNumberChanged();
-            if(keyFrameCount > 1)
-                syncCacheToProject();
-
-            return;
-        }
-    }
-    */
 }
 
 void QmlFilter::syncCacheToProject()
 {
     MLT.refreshConsumer();
     emit filterPropertyValueChanged();
-    /*
-    Q_ASSERT(m_filter);
-    if(m_metadata)
-    {
-        int keyFrameCount = m_cacheKeyFrameList.count();
-        if(keyFrameCount>0)
-        {
-//            key_frame_item para1 = m_cacheKeyFrameList.at(0);
-//            int paraCount = para1.paraMap.keys().count();
-
-//           QVector<QString> str(paraCount);
-           for(int index=0; index<keyFrameCount; index++)
-          {
-               key_frame_item para = m_cacheKeyFrameList.at(index);
-              // paraCount = para.paraMap.keys().count();
-               int paraCount = para.paraMap.keys().count();
-              for(int keyIndex=0; keyIndex<paraCount; keyIndex++)
-              {
-
-//               int out = m_filter->get_out();// producerOut();
-//               int in = m_filter->get_in();//producerIn();
-//               int duration = out - in + 1;
-               //duration = filter.out - filter.in + 1;应该等于没有split的producer长度
-               int duration = m_filter->get_length();//MAIN.timelineDock()->getCurrentClipParentLength();
-
-//                QString key = para1.paraMap.keys().at(keyIndex);
-                QString key = para.paraMap.keys().at(keyIndex);
-                QString value = para.paraMap.values().at(keyIndex);
-
-
-                QString paraType = "string";
-                int paramCount = m_metadata->keyframes()->parameterCount();
-                for (int i = 0; i < paramCount; i++)
-                {
-                     QString name = m_metadata->keyframes()->parameter(i)->property();
-                     if (name == key) { paraType = m_metadata->keyframes()->parameter(i)->paraType(); break; }
-                }
-
-
-                // Only set an animation keyframe if it does not already exist with the same value.
-                Mlt::Animation animation(m_filter->get_animation(key.toUtf8().constData()));
-                if (paraType == "double")
-                {
-                    if (!animation.is_valid() || !animation.is_key(para.keyFrame)
-                            || value.toDouble() != m_filter->anim_get_double(key.toUtf8().constData(), para.keyFrame, duration))
-                    {
-                        m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), para.keyFrame, duration, mlt_keyframe_linear);
-//                        MLT.refreshConsumer();
-//                        emit filterPropertyValueChanged();
-                    }
-                }
-                else if(paraType == "int")
-                {
-                    if (!animation.is_valid() || !animation.is_key(para.keyFrame)
-                            || value.toInt() != m_filter->anim_get_int(key.toUtf8().constData(), para.keyFrame, duration)) {
-                        m_filter->anim_set(key.toUtf8().constData(), value.toInt(), para.keyFrame, duration, mlt_keyframe_linear);
-//                        MLT.refreshConsumer();
-//                        emit filterPropertyValueChanged();
-                    }
-                }
-                else if(paraType == "string")
-                {
-                    if (!animation.is_valid() || !animation.is_key(para.keyFrame) || value != m_filter->anim_get(key.toUtf8().constData(), para.keyFrame, duration))
-                    {
-                        m_filter->anim_set(key.toUtf8().constData(), value.toUtf8().constData(), para.keyFrame, duration);
-//                        MLT.refreshConsumer();
-//                        emit filterPropertyValueChanged();
-                    }
-                }
-                else if(paraType == "rect")
-                {
-                    QStringList listValue = value.split(" ", QString::SkipEmptyParts);
-                    double x = listValue[0].toDouble();
-                    double y = listValue[1].toDouble();
-                    double width = listValue[2].toDouble();
-                    double height = listValue[3].toDouble();
-                    double opacity = listValue[4].toDouble();
-
-                    mlt_rect rect = m_filter->anim_get_rect(key.toUtf8().constData(), para.keyFrame, duration);
-                    if (!animation.is_valid() || !animation.is_key(para.keyFrame)
-                        || x != rect.x || y != rect.y || width != rect.w || height != rect.h || opacity != rect.o)
-                    {
-                        rect.x = x;
-                        rect.y = y;
-                        rect.w = width;
-                        rect.h = height;
-                        rect.o = opacity;
-
-                        m_filter->anim_set(key.toUtf8().constData(), rect, para.keyFrame, duration); //, mlt_keyframe_smooth); mlt_keyframe_smooth 可能有问题，在颜色显示时很明显  https://github.com/hansewu/MovieMator/issues/271
-//                        MLT.refreshConsumer();
-//                        emit filterPropertyValueChanged();
-                    }
-                }
-                else
-                {
-                    if (!animation.is_valid() || !animation.is_key(para.keyFrame) || value != m_filter->anim_get(key.toUtf8().constData(), para.keyFrame, duration))
-                    {
-                        m_filter->anim_set(key.toUtf8().constData(), value.toUtf8().constData(), para.keyFrame, duration);
-//                        MLT.refreshConsumer();
-//                        emit filterPropertyValueChanged();
-                    }
-                }
-             }
-          }
-
-           MLT.refreshConsumer();
-           emit filterPropertyValueChanged();
-        }
-
-    }
-    */
 }
 
 
@@ -1238,28 +1083,12 @@ bool QmlFilter::cache_bKeyFrame(int frame, QString propertyName)
     if (propertyName == nullptr) return false;
 
     return getAnimation(propertyName).is_key(frame);
-
-//    int keyFrameCount = m_cacheKeyFrameList.count();
-//    if(keyFrameCount == 0)
-//        return false;
-
-//    for(int index=0; index < keyFrameCount; index++)
-//    {
-//        key_frame_item para = m_cacheKeyFrameList.at(index);
-//        if(frame == para.keyFrame)
-//            return true;
-
-//    }
-
-//    return false;
-
 }
 
 
 bool QmlFilter::bHasPreKeyFrame(int frame)
 {
     Q_ASSERT(MAIN.timelineDock());
-//    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     int frameInParent = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     if (m_filter)
     {
@@ -1281,7 +1110,6 @@ bool QmlFilter::bHasPreKeyFrame(int frame)
 bool QmlFilter::bHasNextKeyFrame(int frame)
 {
     Q_ASSERT(MAIN.timelineDock());
-//    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     int frameInParent = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     if (m_filter)
     {
@@ -1315,20 +1143,6 @@ double QmlFilter::cache_getKeyFrameParaDoubleValue(int frame, QString key)
 
     return -1.0;
 
-//    int keyFrameCount = m_cacheKeyFrameList.count();
-//    if(keyFrameCount == 0)
-//        return -1.0;
-//    else
-//    {
-//        for(int index=0; index < keyFrameCount; index++)
-//        {
-//            key_frame_item para = m_cacheKeyFrameList.at(index);
-//            if(frame == para.keyFrame)
-//                return para.paraMap.value(key).toDouble();
-
-//        }
-//    }
-//    return -1.0;
 
 }
 
@@ -1353,27 +1167,6 @@ QRectF QmlFilter::cache_getKeyFrameParaRectValue(int frame, QString name)
     } else {
         return QRectF(0.0, 0.0, 0.0, 0.0);
     }
-
-
-//    int keyFrameCount = m_cacheKeyFrameList.count();
-//    if(keyFrameCount == 0) {
-//        return QRectF();
-//    } else {
-//        for(int index=0; index < keyFrameCount; index++) {
-//            key_frame_item para = m_cacheKeyFrameList.at(index);
-//            if(frame == para.keyFrame) {
-//                QString value = para.paraMap.value(key);
-//                QStringList listValue = value.split(" ", QString::SkipEmptyParts);
-//                double x = listValue[0].toDouble();
-//                double y = listValue[1].toDouble();
-//                double width = listValue[2].toDouble();
-//                double height = listValue[3].toDouble();
-
-//                return QRectF(x, y, width, height);
-//            }
-//        }
-//    }
-//    return QRectF();
 }
 
 QString QmlFilter::cache_getKeyFrameParaValue(int frame, QString key)
@@ -1384,28 +1177,6 @@ QString QmlFilter::cache_getKeyFrameParaValue(int frame, QString key)
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     QString str = QString::fromUtf8(m_filter->anim_get(key.toUtf8().constData(), frame));
     return str;
-
-/*
-    int keyFrameCount = m_cacheKeyFrameList.count();
-    if(keyFrameCount == 0)
-        return "";
-    else
-    {
-        int keyLength = key.size();
-//        int keySize = key.length();
-        QString subKey = key.right(keyLength-5);
-        for(int index=0; index < keyFrameCount; index++)
-        {
-            key_frame_item para = m_cacheKeyFrameList.at(index);
-            if(frame == para.keyFrame)
-            {
-                qDebug()<<"para.paraMap.value(key):"<<para.paraMap.value(subKey);
-                return para.paraMap.value(subKey);
-            }
-        }
-    }
-    return "";
-*/
 }
 
 QString QmlFilter::getAnimStringValue(int frame, QString key)
@@ -1449,7 +1220,8 @@ QRectF QmlFilter::getAnimRectValue(int frame, QString key)
 
     const char* s = m_filter->get(key.toUtf8().constData());
     if (s) {
-        const char* propertyName = key.toUtf8().constData();
+        char propertyName[32];
+        strcpy(propertyName, key.toUtf8().constData());
         mlt_rect rect;
 //        if (frame < 0) {
 //            rect = m_filter->get_rect(propertyName);
@@ -1508,15 +1280,6 @@ int QmlFilter::cache_getKeyFrameNumber(QString propertyName)
 
 int QmlFilter::getKeyFrame(int index, QString propertyName)
 {
-//    int keyFrameCount = m_cacheKeyFrameList.count();
-//    if(index < keyFrameCount)
-//    {
-//        int nKeyFrame = m_cacheKeyFrameList.at(index).keyFrame;
-//        return MAIN.timelineDock()->getPositionOnClip(nKeyFrame);
-//    }
-//    else
-//        return -1;
-
     if (propertyName == nullptr) propertyName = getAnyAnimPropertyName();
     if (propertyName == nullptr) return -1;
 
@@ -1526,9 +1289,6 @@ int QmlFilter::getKeyFrame(int index, QString propertyName)
 
 void QmlFilter::refreshKeyFrame(const QVector<key_frame_item> &listKeyFrame)
 {
-    //removeAllKeyFrame();
-    //m_cacheKeyFrameList = listKeyFrame;
-    //syncCacheToProject();
     Q_UNUSED(listKeyFrame)
 }
 
