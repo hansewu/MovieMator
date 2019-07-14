@@ -1,7 +1,7 @@
 #include "textdockwidget.h"
 #include "util.h"
+#include "ui_basedockwidget.h"
 
-#include <qmetatype.h>
 #include <qstandarditemmodel.h>
 #include <qdir.h>
 #include <qdebug.h>
@@ -9,8 +9,6 @@
 struct TextUserData {
     QString xmlFilePath;
 };
-
-Q_DECLARE_METATYPE(TextUserData)
 
 TextDockWidget::TextDockWidget(MainInterface *main, QWidget *parent) :
     BaseDockWidget(parent),
@@ -38,14 +36,15 @@ QMap<QString, QStandardItemModel *> *TextDockWidget::createAllClassesItemModel()
             QString fileName = templateFileInfo.baseName();
             QIcon icon = QIcon(":///icons/filters/Common.jpg");
             QString toolTip = fileName;
-            TextUserData textUserData;
-            textUserData.xmlFilePath = templateFileInfo.filePath();
-            QVariant userData = QVariant::fromValue(textUserData);
+            TextUserData *textUserData = new TextUserData;
+            textUserData->xmlFilePath = templateFileInfo.filePath();
             QStandardItem *item = new QStandardItem();
             item->setText(fileName);
             item->setIcon(icon);
             item->setToolTip(toolTip);
-            item->setData(userData, Qt::UserRole);
+            QByteArray userDataByteArray;
+            userDataByteArray.append(reinterpret_cast<char *>(textUserData), sizeof(TextUserData));
+            item->setData(userDataByteArray, Qt::UserRole);
 
             itemMode->appendRow(item);
 
@@ -70,25 +69,28 @@ bool TextDockWidget::hasClass() {
 void TextDockWidget::addToTimeline(const QStandardItem *item) {
     qDebug()<<"sll-----addToTimeline---start";
 
-    QVariant data = item->data(Qt::UserRole);
-    TextUserData textUserData = data.value<TextUserData>();
-    qDebug()<<"sll-----xmlFilePath = "<<textUserData.xmlFilePath;
+    QVariant userDataVariant = item->data(Qt::UserRole);
+    QByteArray userByteArray = userDataVariant.value<QByteArray>();
+    TextUserData *textUserData = reinterpret_cast<TextUserData *>(userByteArray.data());
+    qDebug()<<"sll-----xmlFilePath = "<<textUserData->xmlFilePath;
 
     qDebug()<<"sll-----addToTimeline---end";
 }
 
 void TextDockWidget::preview(const QStandardItem *item) {
     qDebug()<<"sll-----preview---start";
-    QVariant data = item->data(Qt::UserRole);
-    TextUserData textUserData = data.value<TextUserData>();
-    qDebug()<<"sll-----xmlFilePath = "<<textUserData.xmlFilePath;
-    qDebug()<<"sll-----preview---start";
+    QVariant userDataVariant = item->data(Qt::UserRole);
+    QByteArray userByteArray = userDataVariant.value<QByteArray>();
+    TextUserData *textUserData = reinterpret_cast<TextUserData *>(userByteArray.data());
+
+    qDebug()<<"sll-----xmlFilePath = "<<textUserData->xmlFilePath;
+    qDebug()<<"sll-----preview---end";
 }
 
 QDockWidget *createTextDock(MainInterface *main) {
     qDebug()<<"sll-----createTextDock---start";
     TextDockWidget *textDockWidget = new TextDockWidget(main);
-    textDockWidget->setupListView();
+    textDockWidget->setupUi();
     qDebug()<<"sll-----createTextDock---end";
 
     return textDockWidget;

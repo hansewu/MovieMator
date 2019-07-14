@@ -2,9 +2,14 @@
 
 #include <qpainter.h>
 #include <qevent.h>
+#include <qdebug.h>
+#include <qpoint.h>
+#include <qapplication.h>
 
 BaseItemDelegate::BaseItemDelegate(QObject *parent) :
     QStyledItemDelegate(parent) {
+    m_canStartDrag = false;
+    m_dragStart = QPoint(0, 0);
 }
 
 BaseItemDelegate::~BaseItemDelegate() {
@@ -45,6 +50,22 @@ bool BaseItemDelegate::editorEvent(QEvent *event,
                !decorationRect.contains(mouseEvent->pos())) {
         emit selectItem(index);
     }
+
+    if ((mouseEvent->buttons() & Qt::LeftButton)) {
+        m_dragStart = mouseEvent->pos();
+        m_canStartDrag = true;
+    } else {
+        m_canStartDrag = false;
+    }
+
+    if (event->type() == QEvent::MouseMove &&
+            m_canStartDrag &&
+            (mouseEvent->pos() - m_dragStart).manhattanLength() < QApplication::startDragDistance()) {
+        qDebug()<<"sll------event->type() = "<<event->type();
+        qDebug()<<"sll------drag";
+        emit dragItem(index);
+    }
+
     return QStyledItemDelegate::editorEvent(event, model, option, index);
 }
 

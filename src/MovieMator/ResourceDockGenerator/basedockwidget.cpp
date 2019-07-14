@@ -34,6 +34,19 @@ BaseDockWidget::~BaseDockWidget() {
     qDebug()<<"sll-----BaseDockWidget析构---end";
 }
 
+void BaseDockWidget::setupUi() {
+    //初始化及设置顶部控件，各子类可以定制
+    setupOtherUi();
+
+    //初始化及设置listview
+    setupListView();
+}
+
+void BaseDockWidget::setupOtherUi() {
+    qDebug()<<"sll-----setupOtherUi---start";
+    qDebug()<<"sll-----setupOtherUi---end";
+}
+
 void BaseDockWidget::setupListView() {
     qDebug()<<"sll-----setupListView---start";
 
@@ -41,10 +54,19 @@ void BaseDockWidget::setupListView() {
 
     QMap<QString, QStandardItemModel *> *allClassesItemModel = createAllClassesItemModel();
 
-    bool hanClass = hasClass();
+    if (hasClass()) {
+        createAllClassesListView(allClassesItemModel, hasClass());
+    } else {
+        //无分类时移除分类控件
+        ui->comboBox_class->setHidden(true);
 
-    createAllClassesListView(allClassesItemModel, hanClass);
+        BaseListView *listView = createListView(allClassesItemModel->first());
+        m_allClassesListView->insert("Undefined", listView);
+    }
 
+    QSpacerItem *spacerItem = new QSpacerItem(20, 40, QSizePolicy::Minimum,
+                                              QSizePolicy::Expanding);
+    ui->verticalLayout_scrollarea->addItem(spacerItem);
     qDebug()<<"sll-----setupListView---end";
 }
 
@@ -63,34 +85,31 @@ void BaseDockWidget::createClassesNameWidget(const QString &className) {
     box->addWidget(classLabel);
     box->addWidget(image);
 
-    ui->verticalLayout_2->addLayout(box);
+    ui->verticalLayout_scrollarea->addLayout(box);
 
     qDebug()<<"sll-----createClassesNameWidget---end";
 }
 
 void BaseDockWidget::createAllClassesListView(QMap<QString, QStandardItemModel *> *allClassesItemModel,
         bool hasClass) {
+    Q_UNUSED(hasClass);
+
     qDebug()<<"sll-----createAllClassesListView---start";
+    //创建分类combox控件，并添加到UI
+
+    //创建各分类listview，并添加到UI
     QMap<QString, QStandardItemModel *>::const_iterator iter;
     for (iter = allClassesItemModel->constBegin(); iter != allClassesItemModel->constEnd(); iter++) {
-        //创建分类控件
+        //创建分类名控件
         createClassesNameWidget(iter.key());
 
+        //创建分类combox控件，并添加到布局
+        ui->comboBox_class->addItem(iter.key());
+
+        //保存listview用于分类跳转
         BaseListView *listView = createListView(iter.value());
         m_allClassesListView->insert(iter.key(), listView);
-
-        if (hasClass) {//如果有分类才需要创建
-            //创建分类名控件，并添加到布局中
-
-            //创建分类combox分类控件，并添加到布局
-        }
-
-        //添加listview到布局中
     }
-
-    QSpacerItem *spacerItem = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    ui->verticalLayout_2->addItem(spacerItem);
-
     qDebug()<<"sll-----createAllClassesListView---end";
 }
 
@@ -112,6 +131,7 @@ BaseListView *BaseDockWidget::createListView(QStandardItemModel *itemModel) {
     listView->setContentsMargins(0, 5, 0, 5);
     listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    listView->setAcceptDrops(false);
     listView->setStyleSheet(
                 "QListView::item:selected{background-color:rgb(192,72,44); color:rgb(255,255,255);border-radius:4px;}"
                 "QListView::item:hover{background-color:rgb(192,72,44); color:rgb(255,255,255);border-radius:4px;}"
@@ -119,8 +139,9 @@ BaseListView *BaseDockWidget::createListView(QStandardItemModel *itemModel) {
 
     connect(itemDelegate, &BaseItemDelegate::addItem, this, &BaseDockWidget::addItemToTimeline);
     connect(itemDelegate, &BaseItemDelegate::selectItem, this, &BaseDockWidget::clickedItem);
+    connect(itemDelegate, &BaseItemDelegate::selectItem, this, &BaseDockWidget::addItemToTimeline);
 
-    ui->verticalLayout_2->addWidget(listView);
+    ui->verticalLayout_scrollarea->addWidget(listView);
 
     qDebug()<<"sll-----createListView---end";
 

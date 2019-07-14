@@ -8,8 +8,6 @@ class QStandardItemModel;
 class QStandardItem;
 class BaseListView;
 
-//typedef QMap<QString, QStandardItemModel *> ItemModelMap;
-
 namespace Ui {
     class BaseDockWidget;
 }
@@ -23,10 +21,11 @@ public:
     ~BaseDockWidget();
 
     void addItemToDock(QString itemClass, QStandardItem *item);
-    void setupListView();
+    void setupUi();
 
 protected:
     virtual void resizeEvent(QResizeEvent *event);
+    virtual void setupOtherUi();
     virtual QMap<QString, QStandardItemModel *> *createAllClassesItemModel() = 0;
     virtual bool hasClass() = 0;
     virtual void addToTimeline(const QStandardItem *item) = 0;
@@ -37,6 +36,7 @@ private slots:
     virtual void clickedItem(const QModelIndex &index);
 
 private:
+    void setupListView();
     void createAllClassesListView(QMap<QString, QStandardItemModel *> *allClassesItemModel,
                                   bool hasClass = true);
     BaseListView *createListView(QStandardItemModel *itemModel);
@@ -47,7 +47,7 @@ protected:
     Ui::BaseDockWidget *ui;
 
 private:
-    //保存所有的分类listview，主要用于切换分类时跳转到对应分类的listview，
+    //保存所有的分类listview，主要用于从combox切换分类时跳转到对应分类的listview，
     //key为分类名，value为对应的listview
     QMap<QString, BaseListView *> *m_allClassesListView;
 };
