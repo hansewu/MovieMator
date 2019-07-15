@@ -520,6 +520,53 @@ QString Controller::XML(Service* service)
     return QString::fromUtf8(c.get(propertyName));
 }
 
+QString Controller::getXMLWithoutProfile(QString &xml)
+{
+    int position = xml.indexOf("<producer ", 0, Qt::CaseInsensitive);
+    QString end = "</mlt>\n";
+    if(xml.endsWith("</mlt>", Qt::CaseInsensitive))
+    {
+        end = "</mlt>";
+    }
+    int n = xml.length() - end.length() - position;
+
+    return xml.mid(position, n);
+}
+
+void Controller::saveXMLWithoutProfile(const QString& filename, Service* service, bool withRelativePaths)
+{
+    Q_ASSERT(m_producer);
+    LOG_DEBUG() << "begin";
+    static const char* propertyName = "string";
+    Consumer c(profile(), "xml", propertyName);
+    Service s(service? service->get_service() : m_producer->get_service());
+    if (!s.is_valid())
+        return;
+    int ignore = s.get_int("ignore_points");
+    if (ignore)
+        s.set("ignore_points", 0);
+    c.set("no_meta", 1);
+    c.set("store", "moviemator");
+
+    if (withRelativePaths) {
+        c.set("root", QFileInfo(filename).absolutePath().toUtf8().constData());
+    }
+    c.connect(s);
+    c.start();
+    if (ignore)
+        s.set("ignore_points", ignore);
+
+    QString xml = QString::fromUtf8(c.get(propertyName));
+    QString content = getXMLWithoutProfile(xml);
+    QFile file(filename);
+    if(file.open(QIODevice::WriteOnly))
+    {
+        file.write(content.toUtf8().constData());
+    }
+    file.close();
+}
+
+
 int Controller::consumerChanged()
 {
     LOG_DEBUG() << "begin";
