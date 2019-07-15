@@ -27,7 +27,6 @@
 TextListView::TextListView(QWidget *parent)
     : QListView(parent)
     , m_canStartDrag(false)
-    , m_mimeData(new QMimeData())
     , m_columnCount(1)
     , m_modelIndex(QModelIndex())
 {
@@ -37,21 +36,7 @@ TextListView::TextListView(QWidget *parent)
 
 TextListView::~TextListView()
 {
-    delete m_mimeData;
-    m_mimeData = nullptr;
-}
 
-void TextListView::setMimeData(QMimeData *mimeData, const QString &mimeType)
-{
-    Q_ASSERT(mimeData);
-    Q_ASSERT(m_mimeData);
-    if(!mimeData || !m_mimeData)
-    {
-        return;
-    }
-    m_mimeData->setData(mimeType, mimeData->data(mimeType));
-    m_mimeData->setText(mimeData->text());
-    m_mimeType = mimeType;
 }
 
 void TextListView::keyPressEvent(QKeyEvent* event)
@@ -114,13 +99,9 @@ void TextListView::mouseMoveEvent(QMouseEvent* event)
 
     TextListModel *viewModel = static_cast<TextListModel *>(model());
     Q_ASSERT(viewModel);
-    Q_ASSERT(m_mimeData);
-    if(viewModel && m_mimeData && (selectedIndexes().count() > 0))
+    if(viewModel && (selectedIndexes().count() > 0))
     {
-        QMimeData *mimeData = new QMimeData;
-        mimeData->setData(m_mimeType, m_mimeData->data(m_mimeType));
-        mimeData->setText(m_mimeData->text());
-        drag.setMimeData(mimeData);
+        drag.setMimeData(viewModel->mimeData(selectedIndexes()));     //drag.setMimeData(mimeData);
         QImage thumbnail = viewModel->thumbnail(selectedIndexes().first().row());
         drag.setPixmap(QPixmap::fromImage(thumbnail).scaled(80, 45));
 

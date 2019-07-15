@@ -4,18 +4,14 @@
 #include "textdock_global.h"
 
 #include <QDir>
-#include <QLabel>
-#include <QMimeData>
 #include <QDockWidget>
-#include <QSpacerItem>
-#include <maininterface.h>
+#include <QPushButton>
 #include <QJsonObject>
+#include <maininterface.h>
 
 #include "textdockinterface.h"
 #include "textlistmodel.h"
 #include "textlistview.h"
-
-#include <QPushButton>
 
 namespace Ui {
     class TextDock;
@@ -61,39 +57,21 @@ protected:
     void resizeEvent(QResizeEvent *event);
 
 private:
-    // 使用图片 imageFile替换动画 effectFile中的图片,并根据类型设置sizeandposition滤镜参数
-//    void resetImage(QString effectFile, QString imageFile);
-    // 存放拖动动画的 MimeData
-    void setMimeDataForDrag();
-    // 根据动画和图片的下拉列表内容（选中即确定）创建动画文件
-    void createEffectFile();
-
-    // 创建图片列表 fileList，并保存文件夹名称 folderName
+    // 获取当前的 FILE_HANDLE
+    void genCurrentTextFile();
+    // 创建文本模板 fileList，并保存文件夹名称 folderName
     // folderName传递给 appendListViewAndLabel()函数用来创建列表的显示名称
-    void createImageFileList(QFileInfoList &fileList, QString folderName);
+    void createTextFileList(QFileInfoList &fileList, QString folderName);
     // 根据 model创建显示的列表，并显示名称 itemName
     void appendListViewAndLabel(TextListModel *model, QString itemName);
-    // 读取 json文件 filePath，主要是用来翻译文件夹名称的
-    // jsonObj是给函数 getTranslationStr()使用的
-    void readJsonFile(QString filePath, QJsonObject &jsonObj);
-    // 根据字符串 srcStr从 translationInfo中寻获取对应的翻译内容
-    QString getTranslationStr(QString srcStr, QJsonObject translationInfo);
-    // 根据字符串 srcStr从 propertyInfo中寻获取对应的翻译内容
-    QString getImageClassType(QString srcStr, QJsonObject propertyInfo);
 
 private slots:
     // 响应 listView按下的槽函数
     void onListviewPressed(const QModelIndex&);
-    // 响应 listView单击的槽函数
-    void onListviewClicked(const QModelIndex&);
     // 响应 listView右键菜单的槽函数
     void onListviewCustomContextMenuRequested(const QPoint&);
     // 响应 listView右键菜单 actionAddToTimeline的槽函数
     void on_actionAddToTimeline_triggered();
-//    // 响应 comboBox（动画列表）的选项被激活的槽函数
-//    void on_comboBox_activated(int index);
-//    // 响应 comboBox（动画列表）的选项发生变化的槽函数
-//    void on_comboBox_currentIndexChanged(int index);
     // 响应 comboBox_2（图片列表）的选项激活的槽函数
     void on_comboBox_2_activated(int index);
     // 响应 TextDock显示（切换到 TextDock）的槽函数
@@ -118,30 +96,20 @@ private:
     Ui::TextDock *ui;
     // 主界面
     MainInterface *m_mainWindow;
-
-    // （带图片的）动画文件
-    TextItemInfo *m_effectFile;
-//    // 动画文件列表
-//    QList<QString> *m_effectList;
-    // 存放当前动画文件的 MimeData（供拖放到时间线使用）
-    QMimeData *m_mimeData;
-
-    // 图片列表的列表
-    // 每个文件夹下的图片存放在一个列表里，这些列表也存放在一个列表里
-    QList<TextListView *> *m_imageList;
+    // 每个文件夹下的文字模板存放在一个列表里，这些列表也存放在一个列表里
+    QList<TextListView *> *m_textList;
     // 当前选中的 listView项
     QModelIndex m_currentIndex;
     // 当前被激活的图片文件列表
     TextListView *m_currentListView;
+    // 当前的 FILE_HANDLE
+    // 每次点击同一个文件时都不用重新生成
+    FILE_HANDLE m_currentFile;
 
-    // 动画文件名称翻译信息
-    QJsonObject m_animationNameTranslateInfo;
-    // 图片文件名称翻译信息
-    QJsonObject m_imageClassNameTranslateInfo;
-    // 图片文件名称翻译信息
-    QJsonObject m_imageClassPropertyInfo;
+    // 文字模板文件夹（分类）名称翻译信息
+    QJsonObject m_textClassNameTranslateInfo;
 
-    // 将当前动画添加到时间线的按钮
+    // 将当前文字模板添加到时间线的按钮
     // 不为 model的每个 item都添加一个，只使用一个
     AddButton *m_addButton;
 };

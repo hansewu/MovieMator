@@ -27,14 +27,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     textdock.cpp \
     textlistmodel.cpp \
-    textlistview.cpp
+    textlistview.cpp \
+    translationhelper.cpp
 
 HEADERS += \
         textdock_global.h \  
     textdock.h \
     textdockinterface.h \
     textlistmodel.h \
-    textlistview.h
+    textlistview.h \
+    translationhelper.h
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 INCLUDEPATH += ../src

@@ -19,9 +19,10 @@
 #ifndef TEXTLISTMODEL_H
 #define TEXTLISTMODEL_H
 
-#include <QImage>
 #include <QAbstractItemModel>
 #include "maininterface.h"
+
+#include "translationhelper.h"
 
 class TextItemInfo : public QObject
 {
@@ -33,12 +34,13 @@ public:
 
     QString textFilePath() const {return m_textFilePath;}
     void setTextFilePath(const QString textFilePath) {m_textFilePath = textFilePath;}
-    FILE_HANDLE textFileHandel() const {return  m_textFileHandel;}
-    void setTextFileHandel(const FILE_HANDLE textFileHandel) {m_textFileHandel = textFileHandel;}
+
+    QString  thumbnailPath() const { return m_thumbnailPath; }
+    void setThumbnailPath(const QString thumbnailPath) { m_thumbnailPath = thumbnailPath; }
 
 private:
-    QString m_textFilePath;
-    FILE_HANDLE m_textFileHandel;
+    QString m_textFilePath;     // 文件路径：获取实际文件及显示的文件名
+    QString m_thumbnailPath;    // 缩略图路径：显示缩略图
 };
 
 class TextListModel : public QAbstractItemModel
@@ -79,9 +81,12 @@ public:
 
 private:
     // model的 list
-    QList<TextItemInfo *> *m_effectList;
+    QList<TextItemInfo *> *m_textList;
     // 主界面
     MainInterface *m_mainWindow;
+
+    // 文字模板文件夹（分类）名称翻译信息
+    QJsonObject m_textFilesNameTranslateInfo;
 };
 
 #endif // TEXTLISTMODEL_H

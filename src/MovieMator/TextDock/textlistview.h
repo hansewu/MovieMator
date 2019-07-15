@@ -29,9 +29,6 @@ public:
     TextListView(QWidget *parent = nullptr);
     // 析构函数
     ~TextListView();
-    // 给 m_mimeData设置数据 mimeData，mime类型为 mimeType
-    // 这个是在拖放时使用的
-    void setMimeData(QMimeData *mimeData, const QString &mimeType);
 
     // 按键事件
     void keyPressEvent(QKeyEvent*);
@@ -60,10 +57,6 @@ private:
     // listView能否被拖动
     bool m_canStartDrag;
 
-    // 保存动画文件的 mimeData，供拖放使用
-    QMimeData *m_mimeData;
-    // 保存动画文件 mimeData类型
-    QString m_mimeType;
     // 保存 listView显示的时候每行的列数
     int m_columnCount;
     // 鼠标悬浮时的 modelIndex
