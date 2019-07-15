@@ -4,7 +4,7 @@
 #include <QDockWidget>
 
 class QListView;
-class QStandardItemModel;
+class BaseItemModel;
 class QStandardItem;
 class BaseListView;
 
@@ -26,7 +26,7 @@ public:
 protected:
     virtual void resizeEvent(QResizeEvent *event);
     virtual void setupOtherUi();
-    virtual QMap<QString, QStandardItemModel *> *createAllClassesItemModel() = 0;
+    virtual QMap<QString, BaseItemModel *> *createAllClassesItemModel() = 0;
     virtual bool hasClass() = 0;
     virtual void addToTimeline(const QStandardItem *item) = 0;
     virtual void preview(const QStandardItem *item) = 0;
@@ -37,9 +37,9 @@ private slots:
 
 private:
     void setupListView();
-    void createAllClassesListView(QMap<QString, QStandardItemModel *> *allClassesItemModel,
+    void createAllClassesListView(QMap<QString, BaseItemModel *> *allClassesItemModel,
                                   bool hasClass = true);
-    BaseListView *createListView(QStandardItemModel *itemModel);
+    BaseListView *createListView(BaseItemModel *itemModel);
     void createClassesNameWidget(const QString &className);
     void createClassCombox();
 

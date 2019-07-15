@@ -4,6 +4,8 @@
 #include "basedockwidget.h"
 #include "resourcedockgenerator_global.h"
 
+class TextItemModel;
+
 class TextDockWidget : public BaseDockWidget
 {
     Q_OBJECT
@@ -14,7 +16,7 @@ public:
     ~TextDockWidget();
 
 protected:
-    QMap<QString, QStandardItemModel *> *createAllClassesItemModel();
+    QMap<QString, BaseItemModel *> *createAllClassesItemModel();
     bool hasClass();
     void addToTimeline(const QStandardItem *item);
     void preview(const QStandardItem *item);

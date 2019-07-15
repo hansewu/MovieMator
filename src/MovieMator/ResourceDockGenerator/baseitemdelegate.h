@@ -9,7 +9,6 @@ class BaseItemDelegate : public QStyledItemDelegate
 
 public:
     explicit BaseItemDelegate(QObject *parent = nullptr);
-    ~BaseItemDelegate();
 
     // painting
     void paint(QPainter *painter,
@@ -29,12 +28,6 @@ signals:
     void addItem(const QModelIndex &index);
     void selectItem(const QModelIndex &index);
     void dragItem(const QModelIndex &index);
-
-private:
-    // 鼠标左键按下时的起点（拖动用）
-    QPoint m_dragStart;
-    // listView能否被拖动
-    bool m_canStartDrag;
 };
 
 #endif // BASEITEMDELEGATE_H

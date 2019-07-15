@@ -3,16 +3,11 @@
 #include <qpainter.h>
 #include <qevent.h>
 #include <qdebug.h>
-#include <qpoint.h>
-#include <qapplication.h>
 
 BaseItemDelegate::BaseItemDelegate(QObject *parent) :
     QStyledItemDelegate(parent) {
-    m_canStartDrag = false;
-    m_dragStart = QPoint(0, 0);
-}
-
-BaseItemDelegate::~BaseItemDelegate() {
+    qDebug()<<"sll-----BaseItemDelegate构造---start";
+    qDebug()<<"sll-----BaseItemDelegate构造---end";
 }
 
 void BaseItemDelegate::paint(QPainter *painter,
@@ -39,6 +34,7 @@ bool BaseItemDelegate::editorEvent(QEvent *event,
                                    const QModelIndex &index) {
     Q_UNUSED(model);
 
+    qDebug()<<"sll-----editorEvent---start";
     QRect decorationRect = QRect(option.rect.left() + option.rect.width() - 27,
                                  option.rect.top(), 27, 26);
     QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
@@ -51,20 +47,7 @@ bool BaseItemDelegate::editorEvent(QEvent *event,
         emit selectItem(index);
     }
 
-    if ((mouseEvent->buttons() & Qt::LeftButton)) {
-        m_dragStart = mouseEvent->pos();
-        m_canStartDrag = true;
-    } else {
-        m_canStartDrag = false;
-    }
-
-    if (event->type() == QEvent::MouseMove &&
-            m_canStartDrag &&
-            (mouseEvent->pos() - m_dragStart).manhattanLength() < QApplication::startDragDistance()) {
-        qDebug()<<"sll------event->type() = "<<event->type();
-        qDebug()<<"sll------drag";
-        emit dragItem(index);
-    }
+    qDebug()<<"sll-----editorEvent---end";
 
     return QStyledItemDelegate::editorEvent(event, model, option, index);
 }
@@ -73,6 +56,8 @@ QSize BaseItemDelegate::sizeHint(const QStyleOptionViewItem &option,
                                  const QModelIndex &index) const {
     Q_UNUSED(option);
     Q_UNUSED(index);
+    qDebug()<<"sll-----sizeHint---start";
+    qDebug()<<"sll-----sizeHint---end";
 
     return QSize(120, 80);
 }

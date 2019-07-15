@@ -1,14 +1,10 @@
 #include "textdockwidget.h"
 #include "util.h"
 #include "ui_basedockwidget.h"
+#include "textitemmodel.h"
 
-#include <qstandarditemmodel.h>
 #include <qdir.h>
 #include <qdebug.h>
-
-struct TextUserData {
-    QString xmlFilePath;
-};
 
 TextDockWidget::TextDockWidget(MainInterface *main, QWidget *parent) :
     BaseDockWidget(parent),
@@ -22,16 +18,16 @@ TextDockWidget::~TextDockWidget() {
     qDebug()<<"sll-----TextDockWidget析构---end";
 }
 
-QMap<QString, QStandardItemModel *> *TextDockWidget::createAllClassesItemModel() {
+QMap<QString, BaseItemModel *> *TextDockWidget::createAllClassesItemModel() {
     qDebug()<<"sll-----createAllClassesItemModel---start";
-    QMap<QString, QStandardItemModel *> *textDockListViewItemModel = new QMap<QString, QStandardItemModel *>;
+    QMap<QString, BaseItemModel *> *textDockListViewItemModel = new QMap<QString, BaseItemModel *>;
 
     QDir textTemplateDir(Util::resourcesPath() + "/template/text");
     QFileInfoList allClassFolderInfo = textTemplateDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
     foreach (QFileInfo oneClassFolderInfo, allClassFolderInfo) {
         QFileInfoList oneClassFileList = QDir(oneClassFolderInfo.absoluteFilePath()).entryInfoList(QDir::Files | QDir::NoSymLinks);
         QString className = oneClassFolderInfo.fileName();
-        QStandardItemModel *itemMode = new QStandardItemModel(this);
+        TextItemModel *itemMode = new TextItemModel(m_mainInterface, this);
         foreach (QFileInfo templateFileInfo, oneClassFileList) {
             QString fileName = templateFileInfo.baseName();
             QIcon icon = QIcon(":///icons/filters/Common.jpg");

@@ -29,7 +29,9 @@ SOURCES += \
     basedockwidget.cpp \
     textdockwidget.cpp \
     baselistview.cpp \
-    baseitemdelegate.cpp
+    baseitemdelegate.cpp \
+    baseitemmodel.cpp \
+    textitemmodel.cpp
 
 HEADERS += \
         resourcedockgenerator.h \
@@ -37,7 +39,9 @@ HEADERS += \
     basedockwidget.h \
     textdockwidget.h \
     baselistview.h \
-    baseitemdelegate.h
+    baseitemdelegate.h \
+    baseitemmodel.h \
+    textitemmodel.h
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 INCLUDEPATH += ../src

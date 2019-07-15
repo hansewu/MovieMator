@@ -2,8 +2,8 @@
 #include "ui_basedockwidget.h"
 #include "baseitemdelegate.h"
 #include "baselistview.h"
+#include "baseitemmodel.h"
 
-#include <qstandarditemmodel.h>
 #include <qscrollbar.h>
 #include <qlabel.h>
 #include <qdebug.h>
@@ -35,11 +35,13 @@ BaseDockWidget::~BaseDockWidget() {
 }
 
 void BaseDockWidget::setupUi() {
+    qDebug()<<"sll-----setupUi---start";
     //初始化及设置顶部控件，各子类可以定制
     setupOtherUi();
 
     //初始化及设置listview
     setupListView();
+    qDebug()<<"sll-----setupUi---end";
 }
 
 void BaseDockWidget::setupOtherUi() {
@@ -52,7 +54,7 @@ void BaseDockWidget::setupListView() {
 
     m_allClassesListView = new QMap<QString, BaseListView *>;
 
-    QMap<QString, QStandardItemModel *> *allClassesItemModel = createAllClassesItemModel();
+    QMap<QString, BaseItemModel *> *allClassesItemModel = createAllClassesItemModel();
 
     if (hasClass()) {
         createAllClassesListView(allClassesItemModel, hasClass());
@@ -90,7 +92,7 @@ void BaseDockWidget::createClassesNameWidget(const QString &className) {
     qDebug()<<"sll-----createClassesNameWidget---end";
 }
 
-void BaseDockWidget::createAllClassesListView(QMap<QString, QStandardItemModel *> *allClassesItemModel,
+void BaseDockWidget::createAllClassesListView(QMap<QString, BaseItemModel *> *allClassesItemModel,
         bool hasClass) {
     Q_UNUSED(hasClass);
 
@@ -98,7 +100,7 @@ void BaseDockWidget::createAllClassesListView(QMap<QString, QStandardItemModel *
     //创建分类combox控件，并添加到UI
 
     //创建各分类listview，并添加到UI
-    QMap<QString, QStandardItemModel *>::const_iterator iter;
+    QMap<QString, BaseItemModel *>::const_iterator iter;
     for (iter = allClassesItemModel->constBegin(); iter != allClassesItemModel->constEnd(); iter++) {
         //创建分类名控件
         createClassesNameWidget(iter.key());
@@ -113,7 +115,7 @@ void BaseDockWidget::createAllClassesListView(QMap<QString, QStandardItemModel *
     qDebug()<<"sll-----createAllClassesListView---end";
 }
 
-BaseListView *BaseDockWidget::createListView(QStandardItemModel *itemModel) {
+BaseListView *BaseDockWidget::createListView(BaseItemModel *itemModel) {
     qDebug()<<"sll-----createListView---start";
     BaseItemDelegate *itemDelegate = new BaseItemDelegate(this);
     BaseListView *listView = new BaseListView(this);
@@ -139,7 +141,7 @@ BaseListView *BaseDockWidget::createListView(QStandardItemModel *itemModel) {
 
     connect(itemDelegate, &BaseItemDelegate::addItem, this, &BaseDockWidget::addItemToTimeline);
     connect(itemDelegate, &BaseItemDelegate::selectItem, this, &BaseDockWidget::clickedItem);
-    connect(itemDelegate, &BaseItemDelegate::selectItem, this, &BaseDockWidget::addItemToTimeline);
+    connect(itemDelegate, &BaseItemDelegate::dragItem, this, &BaseDockWidget::addItemToTimeline);
 
     ui->verticalLayout_scrollarea->addWidget(listView);
 
@@ -151,7 +153,7 @@ BaseListView *BaseDockWidget::createListView(QStandardItemModel *itemModel) {
 void BaseDockWidget::addItemToTimeline(const QModelIndex &index) {
     qDebug()<<"sll-----addItemToTimeline---start";
     QAbstractItemModel *itemModel = const_cast<QAbstractItemModel *>(index.model());
-    QStandardItemModel *standardItemModel = static_cast<QStandardItemModel *>(itemModel);
+    BaseItemModel *standardItemModel = static_cast<BaseItemModel *>(itemModel);
     QStandardItem *standardItem = standardItemModel->itemFromIndex(index);
 
     addToTimeline(standardItem);
@@ -161,14 +163,14 @@ void BaseDockWidget::addItemToTimeline(const QModelIndex &index) {
 void BaseDockWidget::clickedItem(const QModelIndex &index) {
     qDebug()<<"sll-----clickedItem---start";
     QAbstractItemModel *itemModel = const_cast<QAbstractItemModel *>(index.model());
-    QStandardItemModel *standardItemModel = static_cast<QStandardItemModel *>(itemModel);
+    BaseItemModel *standardItemModel = static_cast<BaseItemModel *>(itemModel);
     QStandardItem *standardItem = standardItemModel->itemFromIndex(index);
 
     //清空其他listview上的选中状态
     QMap<QString, BaseListView *>::const_iterator iter;
     for (iter = m_allClassesListView->constBegin(); iter != m_allClassesListView->constEnd(); iter++) {
         BaseListView *listView = iter.value();
-        QStandardItemModel *tempItemModel = static_cast<QStandardItemModel *>(listView->model());
+        BaseItemModel *tempItemModel = static_cast<BaseItemModel *>(listView->model());
         if (tempItemModel != standardItemModel) {
             listView->clearSelection();
         }
@@ -187,6 +189,7 @@ void BaseDockWidget::addItemToDock(QString itemClass, QStandardItem *item) {
 }
 
 void BaseDockWidget::resizeEvent(QResizeEvent *event) {
+    qDebug()<<"sll-----resizeEvent---start";
     QMap<QString, BaseListView *>::const_iterator iter;
     for (iter = m_allClassesListView->constBegin(); iter != m_allClassesListView->constEnd(); iter++) {
         BaseListView *listView = iter.value();
@@ -203,4 +206,6 @@ void BaseDockWidget::resizeEvent(QResizeEvent *event) {
         listView->setFixedHeight(rows*hSize);
     }
     QDockWidget::resizeEvent(event);
+
+    qDebug()<<"sll-----resizeEvent---end";
 }
