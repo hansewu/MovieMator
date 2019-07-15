@@ -97,7 +97,6 @@ private:
     Mlt::Producer *m_tempProducer;
 
     void reopen(Mlt::Producer* p);
-    void recreateProducer();
     Mlt::Producer * createTempProducer(Mlt::Profile&);  // 创建一个m_producer的拷贝
     Mlt::Producer * recreateTempProducer();  //创建一个新的producer
 };

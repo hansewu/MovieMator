@@ -212,7 +212,6 @@ Mlt::Producer * AvformatProducerSimpleWidget::createProducer(Mlt::Profile& profi
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty);
-    Mlt::Controller::copyFilters(*m_producer, *p);
     p->set_in_and_out(producer->get_in(), producer->get_out());
     p->set(kMultitrackItemProperty, producer->get(kMultitrackItemProperty));
     return p;
@@ -285,6 +284,7 @@ void AvformatProducerSimpleWidget::on_okButton_clicked()
 
     //使用用tempProducer发送producerChanged消息
     if (producer->get_int(kMultitrackItemProperty)) {
+        Mlt::Controller::copyFilters(*producer, *m_tempProducer);
         emit producerChanged(producer);
         delete producer;
     } else {

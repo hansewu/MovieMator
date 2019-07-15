@@ -169,23 +169,6 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
 //    setProducer(p);
 }
 
-void AvformatProducerWidget::recreateProducer()
-{
-    Mlt::Producer* p = producer(MLT.profile());
-    p->pass_list(*m_producer, "audio_index, video_index, force_aspect_ratio,"
-                 "video_delay, force_progressive, force_tff,"
-                 kAspectRatioNumerator ","
-                 kAspectRatioDenominator ","
-                 kShotcutHashProperty);
-    Mlt::Controller::copyFilters(*m_producer, *p);
-    if (m_producer->get_int(kMultitrackItemProperty)) {
-        emit producerChanged(p);
-        delete p;
-    } else {
-        reopen(p);
-    }
-}
-
 void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
 {
     // This forces avformat-novalidate or unloaded avformat to load and get
@@ -536,6 +519,7 @@ void AvformatProducerWidget::on_okButton_clicked()
     //使用用tempProducer发送producerChanged消息
     if (m_producer->get_int(kMultitrackItemProperty)) {
         recreateTempProducer();
+        Mlt::Controller::copyFilters(*m_producer, *m_tempProducer);
         emit producerChanged(m_tempProducer);
     } else {
         reopen( new Mlt::Producer(m_tempProducer));
@@ -578,7 +562,6 @@ Mlt::Producer * AvformatProducerWidget::createTempProducer(Mlt::Profile& profile
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty);
-    Mlt::Controller::copyFilters(*m_producer, *p);
     return p;
 }
 
@@ -590,7 +573,6 @@ Mlt::Producer *AvformatProducerWidget::recreateTempProducer()
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty);
-    Mlt::Controller::copyFilters(*m_producer, *p);
     delete m_tempProducer;
     m_tempProducer = nullptr;
     m_tempProducer = p;
