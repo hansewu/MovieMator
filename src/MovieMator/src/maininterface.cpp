@@ -60,6 +60,15 @@ FILE_HANDLE MainInterface::openFile(QString filepath)
     return producer;
 }
 
+void MainInterface::destroyFileHandle(FILE_HANDLE fileHandle) {
+    if (fileHandle) {
+        Mlt::Producer *producer = static_cast<Mlt::Producer*>(fileHandle);
+        delete producer;
+        producer = nullptr;
+        fileHandle = nullptr;
+    }
+}
+
 //0 成功 其他失败
 int MainInterface::openFileAsProject(QString filepath)
 {
