@@ -992,7 +992,18 @@ void TimelineDock::emitSelectedFromSelection()
         m_ignoreNextPositionChange = true;
 
         info->producer->set_in_and_out(info->frame_in, info->frame_out);
+
         emit selected(info->producer);
+        if(selection().isEmpty()
+           || model()->selectedProducer()==nullptr
+           || (static_cast<void*>(model()->selectedProducer()->get_producer())
+                != static_cast<void*>(info->producer->get_producer())))
+        {
+            // 同一个 producer就不刷新滤镜列表
+//            emit selected(info->producer);
+            model()->setSelectedProducer(info->producer);
+        }
+
         info->producer->set_in_and_out(0, -1);
 
         delete info;
