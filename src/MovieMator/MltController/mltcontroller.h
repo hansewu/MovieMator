@@ -86,6 +86,11 @@ public:
     void refreshConsumer(bool scrubAudio = false);
     void saveXML(const QString& filename, Service* service = nullptr, bool withRelativePaths = true);
     QString XML(Service* service = nullptr);
+    // 去除 xml内容里的 profile等信息
+    QString getXMLWithoutProfile(QString &xml);
+    // 将没有 profile等信息的内容保存到 xml文件里
+    void saveXMLWithoutProfile(const QString& filename, Service* service=nullptr, bool withRelativePaths=true);
+
     int consumerChanged();
     void setProfile(const QString& profile_name);
     QString resource() const;
