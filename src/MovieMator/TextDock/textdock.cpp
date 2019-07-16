@@ -67,6 +67,7 @@ TextDock::TextDock(MainInterface *main, QWidget *parent) :
                                "QPushButton:pressed{ border-image: url(:/icons/light/32x32/filter_add-a.png)}");
     m_addButton->setFixedSize(QSize(27, 26));
     m_addButton->setVisible(false);
+    m_addButton->setFocusPolicy(Qt::NoFocus);
     connect(m_addButton, SIGNAL(clicked()), this, SLOT(addToTimeline()));
     connect(m_addButton, SIGNAL(mouseEnter()), this, SLOT(setSelection()));
     connect(m_addButton, SIGNAL(mouseLeave()), this, SLOT(resetSelection()));
@@ -185,15 +186,15 @@ void TextDock::resetSelection()
     TextListView *listView = qobject_cast<TextListView *>(sender()->parent());
     listView->clearSelection();
     // 当前 lsitView的当前 item依然要处于选中状态
-    if(listView==m_currentListView)
-    {
-        listView->selectionModel()->select(m_currentIndex, QItemSelectionModel::Select);
-    }
-//    QModelIndex index = listView->currentIndex();
-//    if(index.isValid())
+//    if(listView==m_currentListView)
 //    {
-//        listView->selectionModel()->select(index, QItemSelectionModel::Select);
+//        listView->selectionModel()->select(m_currentIndex, QItemSelectionModel::Select);
 //    }
+    QModelIndex index = listView->currentIndex();
+    if(index.isValid())
+    {
+        listView->selectionModel()->select(index, QItemSelectionModel::Select);
+    }
 }
 
 void TextDock::addToTimeline()
@@ -250,26 +251,12 @@ void TextDock::genCurrentTextFile()
     {
         return;
     }
+
     m_mainWindow->destroyFileHandle(m_currentFile);
     if(m_currentListView && m_currentIndex.isValid())
     {
         TextItemInfo *textFile = qobject_cast<TextListModel*>(m_currentListView->model())->fileAt(m_currentIndex.row());
         m_currentFile = m_mainWindow->openFile(textFile->textFilePath());
-
-        QFile file(textFile->textFilePath());
-        if(!file.exists())
-        {
-            return;
-        }
-        QDomDocument doc;
-        if(!doc.setContent(&file))
-        {
-            file.close();
-            return;
-        }
-        file.close();
-        qDebug() << "xxxxxxxxx : " << doc.toString();
-        m_currentFile = m_mainWindow->createFileWithXMLForDragAndDrop(doc.toString());
     }
 }
 
@@ -317,7 +304,7 @@ void TextDock::appendListViewAndLabel(TextListModel *model, QString itemName)
     TextListView *listView = new TextListView();
     listView->setModel(model);
     listView->setFont(QFont(font().family(), 8));   // 改变字体大小
-    listView->setFocusPolicy(Qt::ClickFocus);
+    listView->setFocusPolicy(Qt::NoFocus);
     listView->setViewMode(QListView::IconMode);
     listView->setGridSize(QSize(95, 90));         // 120,100    ,300/3-5
     listView->setUniformItemSizes(true);
@@ -355,11 +342,11 @@ void TextDock::onListviewPressed(const QModelIndex &index)
     }
 
     TextListView *listView = qobject_cast<TextListView *>(sender());
-    if(m_currentListView && m_currentListView!=listView)
-    {
-        m_currentListView->clearSelection();
-//        m_currentListView->setCurrentIndex(QModelIndex());
-    }
+//    if(m_currentListView && m_currentListView!=listView)
+//    {
+//        m_currentListView->clearSelection();
+////        m_currentListView->setCurrentIndex(QModelIndex());
+//    }
 
     m_currentListView = listView;
     m_currentIndex = index;
@@ -369,6 +356,14 @@ void TextDock::onListviewPressed(const QModelIndex &index)
     if(m_currentFile)
     {
         m_mainWindow->playFile(m_currentFile);
+    }
+
+    for(TextListView *videoList : *m_textList)
+    {
+        if(videoList->currentIndex().isValid() && videoList!=listView)
+        {
+            videoList->setCurrentIndex(QModelIndex());
+        }
     }
 }
 
