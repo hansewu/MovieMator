@@ -28,6 +28,7 @@
 #include <qtextstream.h>
 #include <qdebug.h>
 #include <qdir.h>
+#include <qstandardpaths.h>
 
 VideoFilterListVideoModel::VideoFilterListVideoModel(MainInterface *main, QObject *parent) :
     QAbstractItemModel(parent),
