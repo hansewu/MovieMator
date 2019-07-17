@@ -59,7 +59,7 @@ QMap<QString, BaseItemModel *> *TextDockWidget::createAllClassesItemModel() {
 bool TextDockWidget::hasClass() {
     qDebug()<<"sll-----hasClass---start";
     qDebug()<<"sll-----hasClass---end";
-    return true;
+    return false;
 }
 
 void TextDockWidget::addToTimeline(const QStandardItem *item) {

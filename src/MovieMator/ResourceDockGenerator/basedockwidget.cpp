@@ -61,6 +61,7 @@ void BaseDockWidget::setupListView() {
     } else {
         //无分类时移除分类控件
         ui->comboBox_class->setHidden(true);
+        ui->classlabe->setHidden(true);
 
         BaseListView *listView = createListView(allClassesItemModel->first());
         m_allClassesListView->insert("Undefined", listView);
@@ -105,7 +106,7 @@ void BaseDockWidget::createAllClassesListView(QMap<QString, BaseItemModel *> *al
         //创建分类名控件
         createClassesNameWidget(iter.key());
 
-        //创建分类combox控件，并添加到布局
+        //设置分类combobox的数据项
         ui->comboBox_class->addItem(iter.key());
 
         //保存listview用于分类跳转
@@ -123,25 +124,8 @@ BaseListView *BaseDockWidget::createListView(BaseItemModel *itemModel) {
     listView->setModel(itemModel);
     listView->setItemDelegate(itemDelegate);
 
-    listView->setFont(QFont(font().family(), 8));   // 改变字体大小
-    listView->setFocusPolicy(Qt::NoFocus);
-    listView->setViewMode(QListView::IconMode);
-    listView->setGridSize(QSize(126, 82));         // 120,100    ,300/3-5
-    listView->setUniformItemSizes(true);
-    listView->setResizeMode(QListView::Adjust);
-    listView->setContextMenuPolicy(Qt::CustomContextMenu);
-    listView->setContentsMargins(0, 5, 0, 5);
-    listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    listView->setAcceptDrops(false);
-    listView->setStyleSheet(
-                "QListView::item:selected{background-color:rgb(192,72,44); color:rgb(255,255,255);border-radius:4px;}"
-                "QListView::item:hover{background-color:rgb(192,72,44); color:rgb(255,255,255);border-radius:4px;}"
-                "QListView{background-color:transparent;color:rgb(214,214,214);}");
-
     connect(itemDelegate, &BaseItemDelegate::addItem, this, &BaseDockWidget::addItemToTimeline);
     connect(itemDelegate, &BaseItemDelegate::selectItem, this, &BaseDockWidget::clickedItem);
-    connect(itemDelegate, &BaseItemDelegate::dragItem, this, &BaseDockWidget::addItemToTimeline);
 
     ui->verticalLayout_scrollarea->addWidget(listView);
 
@@ -166,7 +150,7 @@ void BaseDockWidget::clickedItem(const QModelIndex &index) {
     BaseItemModel *standardItemModel = static_cast<BaseItemModel *>(itemModel);
     QStandardItem *standardItem = standardItemModel->itemFromIndex(index);
 
-    //清空其他listview上的选中状态
+    //因为每个分类由一个listview显示，因此在从一个分类中的选中项切换到另一个分类中的选中项时，需要手动清除前一个listview中的选中项
     QMap<QString, BaseListView *>::const_iterator iter;
     for (iter = m_allClassesListView->constBegin(); iter != m_allClassesListView->constEnd(); iter++) {
         BaseListView *listView = iter.value();

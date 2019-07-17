@@ -41,7 +41,8 @@ HEADERS += \
     baselistview.h \
     baseitemdelegate.h \
     baseitemmodel.h \
-    textitemmodel.h
+    textitemmodel.h \
+    uiuserdef.h
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 INCLUDEPATH += ../src

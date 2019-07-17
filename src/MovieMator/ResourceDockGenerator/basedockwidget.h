@@ -41,7 +41,6 @@ private:
                                   bool hasClass = true);
     BaseListView *createListView(BaseItemModel *itemModel);
     void createClassesNameWidget(const QString &className);
-    void createClassCombox();
 
 protected:
     Ui::BaseDockWidget *ui;

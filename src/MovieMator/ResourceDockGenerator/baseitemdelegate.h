@@ -27,7 +27,6 @@ protected:
 signals:
     void addItem(const QModelIndex &index);
     void selectItem(const QModelIndex &index);
-    void dragItem(const QModelIndex &index);
 };
 
 #endif // BASEITEMDELEGATE_H
