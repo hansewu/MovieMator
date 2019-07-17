@@ -622,11 +622,11 @@ MainWindow::MainWindow()
 //    m_resourceAudioFilterDock = AudioFilterDock_initModule(&MainInterface::singleton());
 //    addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
 
-    m_resourceAudioFilterDock = VideoFilterDock_initModule(&MainInterface::singleton(), 1);
-    addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
-
     m_resourceVideoFilterDock = VideoFilterDock_initModule(&MainInterface::singleton(), 0);
     addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
+
+    m_resourceAudioFilterDock = VideoFilterDock_initModule(&MainInterface::singleton(), 1);
+    addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
 
     //模板资源管理界面Dock
 //    m_templateDock = TemplateDock_initModule(&MainInterface::singleton());
