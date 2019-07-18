@@ -2,7 +2,7 @@ Title         : MovieMator Video Editor - a open source video editor
 Author        : 
 Logo          : True
 
-[TITLE]
+
 
 # Features 
 
