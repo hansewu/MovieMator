@@ -522,15 +522,10 @@ QString Controller::XML(Service* service)
 
 QString Controller::getXMLWithoutProfile(QString &xml)
 {
-    int position = xml.indexOf("<producer ", 0, Qt::CaseInsensitive);
-    QString end = "</mlt>\n";
-    if(xml.endsWith("</mlt>", Qt::CaseInsensitive))
-    {
-        end = "</mlt>";
-    }
-    int n = xml.length() - end.length() - position;
+    int start = xml.indexOf("<producer ", 0, Qt::CaseInsensitive);
+    int end = xml.lastIndexOf("</mlt>", -1, Qt::CaseInsensitive);
 
-    return xml.mid(position, n);
+    return xml.mid(start, end-start);
 }
 
 void Controller::saveXMLWithoutProfile(const QString& filename, Service* service, bool withRelativePaths)
