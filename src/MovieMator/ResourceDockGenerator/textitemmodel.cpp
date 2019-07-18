@@ -22,13 +22,18 @@ QMimeData *TextItemModel::mimeData(const QModelIndexList &indexes) const {
     QByteArray userByteArray = userDataVariant.value<QByteArray>();
     TextUserData *textUserData = reinterpret_cast<TextUserData *>(userByteArray.data());
 
-
-    QMimeData *mimeData = new QMimeData;
-    mimeData->setData(m_mainInterface->getXMLMimeTypeForDragDrop(), textUserData->xmlFilePath.toUtf8());
-
     qDebug()<<"sll----xmlFilePath = "<<textUserData->xmlFilePath;
 
-    qDebug()<<"sll-----mimeData---start";
+    FILE_HANDLE fileHandel = m_mainInterface->openFile(textUserData->xmlFilePath);
+    QMimeData *mimeData = new QMimeData;
+    if (fileHandel) {
+         mimeData->setData(m_mainInterface->getXMLMimeTypeForDragDrop(),
+                           m_mainInterface->getXmlForDragDrop(fileHandel).toUtf8());
+         mimeData->setText(QString::number(m_mainInterface->getPlayTime(fileHandel)));
+
+
+        m_mainInterface->destroyFileHandle(fileHandel);
+    }
 
     return mimeData;
 }

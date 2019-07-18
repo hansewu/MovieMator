@@ -31,7 +31,8 @@ SOURCES += \
     baselistview.cpp \
     baseitemdelegate.cpp \
     baseitemmodel.cpp \
-    textitemmodel.cpp
+    textitemmodel.cpp \
+    translationhelper.cpp
 
 HEADERS += \
         resourcedockgenerator.h \
@@ -42,7 +43,8 @@ HEADERS += \
     baseitemdelegate.h \
     baseitemmodel.h \
     textitemmodel.h \
-    uiuserdef.h
+    uiuserdef.h \
+    translationhelper.h
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 INCLUDEPATH += ../src

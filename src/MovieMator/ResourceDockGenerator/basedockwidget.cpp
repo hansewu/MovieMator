@@ -99,6 +99,7 @@ void BaseDockWidget::createAllClassesListView(QMap<QString, BaseItemModel *> *al
 
     qDebug()<<"sll-----createAllClassesListView---start";
     //设置分类combobox，连接函数
+    ui->comboBox_class->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
     connect(ui->comboBox_class, SIGNAL(activated(int)), this, SLOT(onClassComboBoxActivated(int)));
 
     //创建各分类listview，并添加到UI
@@ -190,6 +191,10 @@ void BaseDockWidget::resizeEvent(QResizeEvent *event) {
         int rows = rowCount%columns>0 ? (rowCount/columns+1) : (rowCount/columns);
         listView->setFixedHeight(rows*hSize);
     }
+
+    //listview大小变化时，保证依然在当前分类的listview上
+    onClassComboBoxActivated(ui->comboBox_class->currentIndex());
+
     QDockWidget::resizeEvent(event);
 
     qDebug()<<"sll-----resizeEvent---end";
