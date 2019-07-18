@@ -346,7 +346,7 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
         }
 
         MAIN.pushCommand(
-                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma","resource", resourceValue, invertValue,true, softnessValue)
+                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma","resource", resourceValue, true, invertValue, softnessValue)
                     );
     }
 }
