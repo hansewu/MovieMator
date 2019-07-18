@@ -13,3 +13,11 @@ QMimeData *BaseItemModel::mimeData(const QModelIndexList &indexes) const {
     qDebug()<<"sll-----mimeData---end";
     return QStandardItemModel::mimeData(indexes);
 }
+
+QVariant BaseItemModel::data(const QModelIndex &index, int role) const {
+    if (role == Qt::TextAlignmentRole) {
+         return Qt::AlignLeft;//设置listview中的item上的文字左对齐
+    } else {
+        return QStandardItemModel::data(index, role);
+    }
+}

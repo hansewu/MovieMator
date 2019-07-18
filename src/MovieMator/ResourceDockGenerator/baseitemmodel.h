@@ -10,6 +10,7 @@ public:
     explicit BaseItemModel(QObject *parent = nullptr);
 
     QMimeData *mimeData(const QModelIndexList &indexes) const;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 };
 
 #endif // BASEITEMMODEL_H

@@ -98,7 +98,8 @@ void BaseDockWidget::createAllClassesListView(QMap<QString, BaseItemModel *> *al
     Q_UNUSED(hasClass);
 
     qDebug()<<"sll-----createAllClassesListView---start";
-    //创建分类combox控件，并添加到UI
+    //设置分类combobox，连接函数
+    connect(ui->comboBox_class, SIGNAL(activated(int)), this, SLOT(onClassComboBoxActivated(int)));
 
     //创建各分类listview，并添加到UI
     QMap<QString, BaseItemModel *>::const_iterator iter;
@@ -192,4 +193,22 @@ void BaseDockWidget::resizeEvent(QResizeEvent *event) {
     QDockWidget::resizeEvent(event);
 
     qDebug()<<"sll-----resizeEvent---end";
+}
+
+//void BaseDockWidget::onClassComboBoxActivated(const QString &className) {
+void BaseDockWidget::onClassComboBoxActivated(int index) {
+    qDebug()<<"sll-----onClassComboBoxActivated---start";
+    //每个分类对应两个控件。即：分了名和分类listview。因此通过combobox切换分类时，通过index * 2找到对应的分类控件位置，进行跳转
+    QLayoutItem *item = ui->verticalLayout_scrollarea->itemAt(index * 2);
+    Q_ASSERT(item);
+    if (item) {
+        Q_ASSERT(item->layout());
+        Q_ASSERT(item->layout()->itemAt(0));
+        QWidget *widget = item->layout()->itemAt(0)->widget();
+        Q_ASSERT(widget);
+        if(widget) {
+            ui->scrollArea->verticalScrollBar()->setValue(widget->y());
+        }
+    }
+    qDebug()<<"sll-----onClassComboBoxActivated---end";
 }

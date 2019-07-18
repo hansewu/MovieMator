@@ -35,6 +35,8 @@ private slots:
     virtual void addItemToTimeline(const QModelIndex &index);
     virtual void clickedItem(const QModelIndex &index);
 
+    void onClassComboBoxActivated(int index);
+
 private:
     void setupListView();
     void createAllClassesListView(QMap<QString, BaseItemModel *> *allClassesItemModel,
