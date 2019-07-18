@@ -27,13 +27,15 @@
 #include <qfile.h>
 #include <qtextstream.h>
 #include <qdebug.h>
+#include <qdir.h>
+#include <qstandardpaths.h>
 
 VideoFilterListVideoModel::VideoFilterListVideoModel(MainInterface *main, QObject *parent) :
     QAbstractItemModel(parent),
     m_mainWindow(main)
 {
     m_effectList = new QList<FilterItemInfo *>;
-    QString jsFilePath = Util::resourcesPath() + "/share/moviemator/qml/views/filter/translateTool.js";
+    QString jsFilePath = getQmlDirPath() + "/views/filter/translateTool.js";
     readTranslatJsFile(jsFilePath);
 }
 
@@ -75,6 +77,21 @@ void VideoFilterListVideoModel::readTranslatJsFile(QString jsFilePath) {
     scriptFile.close();
 
     m_jsEngine.evaluate(contents);
+}
+
+QString VideoFilterListVideoModel::getQmlDirPath() {
+    QDir dir(qApp->applicationDirPath());
+
+    #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+        dir.cdUp();
+    #elif defined(Q_OS_MAC)
+        dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+    #endif
+
+    dir.cd("share");
+    dir.cd("moviemator");
+    dir.cd("qml");
+    return dir.absolutePath();
 }
 
 QVariant VideoFilterListVideoModel::data(const QModelIndex &index, int role) const

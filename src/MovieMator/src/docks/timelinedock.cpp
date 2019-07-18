@@ -2312,7 +2312,10 @@ void TimelineDock::exportAsTemplate(int trackIndex, int clipIndex)
                 tempProducer->set_in_and_out(info->frame_in, info->frame_out);
                 tempProducer->set("length", info->frame_count);
                 //MLT.saveXML(tmp.fileName(), tempProducer, true);
-                MLT.saveXML(filename, tempProducer, true);
+
+//                MLT.saveXML(filename, tempProducer, true);
+                MLT.saveXMLWithoutProfile(filename, tempProducer, true);
+
                 //info->producer->set_in_and_out(-1, -1);
                 //QFile::remove(filename);
                 //QFile::copy(tmp.fileName(), filename);

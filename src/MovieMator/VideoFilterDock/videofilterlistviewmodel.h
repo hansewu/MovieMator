@@ -92,6 +92,7 @@ public:
 
 private:
     void readTranslatJsFile(QString jsFilePath);
+    QString getQmlDirPath();
 private:
     // model的 list
     QList<FilterItemInfo *> *m_effectList;

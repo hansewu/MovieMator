@@ -19,7 +19,6 @@
 
 #include "textlistmodel.h"
 
-//#include <maininterface.h>
 #include <settings.h>
 #include <QPainter>
 #include <QApplication>
@@ -31,25 +30,28 @@ TextListModel::TextListModel(MainInterface *main, QObject *parent) :
     QAbstractItemModel(parent),
     m_mainWindow(main)
 {
-    m_effectList = new QList<TextItemInfo *>;
+    m_textList = new QList<TextItemInfo *>;
+
+    QString templateDir = Util::resourcesPath() + "/template/";
+    TranslationHelper::readJsonFile(templateDir + "textfile_name_translation_info.json", m_textFilesNameTranslateInfo);
 }
 
 TextListModel::~TextListModel()
 {
-    qDeleteAll(*m_effectList);
-    m_effectList->clear();
-    delete m_effectList;
-    m_effectList = nullptr;
+    qDeleteAll(*m_textList);
+    m_textList->clear();
+    delete m_textList;
+    m_textList = nullptr;
 }
 
 int TextListModel::rowCount(const QModelIndex&) const
 {
-    Q_ASSERT(m_effectList);
-    if(!m_effectList)
+    Q_ASSERT(m_textList);
+    if(!m_textList)
     {
         return 0;
     }
-    return m_effectList->count();
+    return m_textList->count();
 }
 
 int TextListModel::columnCount(const QModelIndex&) const
@@ -59,16 +61,16 @@ int TextListModel::columnCount(const QModelIndex&) const
 
 QVariant TextListModel::data(const QModelIndex &index, int role) const
 {
-    Q_ASSERT(m_effectList);
+    Q_ASSERT(m_textList);
     Q_ASSERT(index.isValid());
     Q_ASSERT(index.row()>=0);
-    Q_ASSERT(index.row()<m_effectList->count());
-    if(!m_effectList || !index.isValid() || index.row()<0 || index.row()>=m_effectList->count())
+    Q_ASSERT(index.row()<m_textList->count());
+    if(!m_textList || !index.isValid() || index.row()<0 || index.row()>=m_textList->count())
     {
         return QVariant();
     }
 
-    TextItemInfo *fileHandle = m_effectList->at(index.row());
+    TextItemInfo *fileHandle = m_textList->at(index.row());
     Q_ASSERT(fileHandle);
     if(!fileHandle)
     {
@@ -82,8 +84,10 @@ QVariant TextListModel::data(const QModelIndex &index, int role) const
             {
                 return QString();
             }
-            QString result = Util::baseName(fileHandle->textFilePath());
-            return result.split(".")[0];
+
+            QString name = Util::baseName(fileHandle->textFilePath()).split(".")[0];
+            QString result = TranslationHelper::getTranslationStr(name, m_textFilesNameTranslateInfo);
+            return result;
         }
         case Qt::DecorationRole: {
             int width = THUMBNAIL_WIDTH;
@@ -97,7 +101,7 @@ QVariant TextListModel::data(const QModelIndex &index, int role) const
             {
                 return image;
             }
-            QImage thumb = m_mainWindow->getThumbnail(fileHandle->textFileHandel());
+            QImage thumb = QImage(fileHandle->thumbnailPath());
             if (!thumb.isNull()) {
                 QPainter painter(&image);
                 image.fill(QApplication::palette().base().color().rgb());
@@ -128,15 +132,15 @@ QVariant TextListModel::data(const QModelIndex &index, int role) const
 
 QMimeData *TextListModel::mimeData(const QModelIndexList &indexes) const
 {
-    Q_ASSERT(m_effectList);
+    Q_ASSERT(m_textList);
     Q_ASSERT(indexes.first().isValid());
     Q_ASSERT(indexes.first().row() >= 0);
-    Q_ASSERT(indexes.first().row() < m_effectList->count());
-    if(!m_effectList || !indexes.first().isValid() || (indexes.first().row()<0) || (indexes.first().row()>=m_effectList->count()))
+    Q_ASSERT(indexes.first().row() < m_textList->count());
+    if(!m_textList || !indexes.first().isValid() || (indexes.first().row()<0) || (indexes.first().row()>=m_textList->count()))
     {
         return nullptr;
     }
-    TextItemInfo *fileHandle = m_effectList->at(indexes.first().row());
+    TextItemInfo *fileHandle = m_textList->at(indexes.first().row());
     Q_ASSERT(fileHandle);
     Q_ASSERT(m_mainWindow);
     if(!fileHandle || !m_mainWindow)
@@ -145,8 +149,12 @@ QMimeData *TextListModel::mimeData(const QModelIndexList &indexes) const
     }
 
     QMimeData *mimeData = new QMimeData;
-    mimeData->setData(m_mainWindow->getXMLMimeTypeForDragDrop(), m_mainWindow->getXmlForDragDrop(fileHandle->textFileHandel()).toUtf8());
-    mimeData->setText(QString::number(m_mainWindow->getPlayTime(fileHandle->textFileHandel())));
+    FILE_HANDLE file = m_mainWindow->openFile(fileHandle->textFilePath());
+
+    mimeData->setData(m_mainWindow->getXMLMimeTypeForDragDrop(), m_mainWindow->getXmlForDragDrop(file).toUtf8());
+    mimeData->setText(QString::number(m_mainWindow->getPlayTime(file)));
+
+    m_mainWindow->destroyFileHandle(file);
 
     return mimeData;
 }
@@ -164,38 +172,38 @@ QModelIndex TextListModel::parent(const QModelIndex&) const
 void TextListModel::append(TextItemInfo *fileHandle)
 {
     Q_ASSERT(fileHandle);
-    Q_ASSERT(m_effectList);
-    if(!fileHandle || !m_effectList)
+    Q_ASSERT(m_textList);
+    if(!fileHandle || !m_textList)
     {
         return;
     }
-    int count = m_effectList->count();
+    int count = m_textList->count();
     beginInsertRows(QModelIndex(), count, count);
-    m_effectList->append(fileHandle);
+    m_textList->append(fileHandle);
     endInsertRows();
 }
 
 TextItemInfo *TextListModel::fileAt(int row) const
 {
-    Q_ASSERT(m_effectList);
+    Q_ASSERT(m_textList);
     Q_ASSERT(row >= 0);
-    Q_ASSERT(row < m_effectList->count());
-    if(!m_effectList || row<0 || row>=m_effectList->count())
+    Q_ASSERT(row < m_textList->count());
+    if(!m_textList || row<0 || row>=m_textList->count())
     {
         return nullptr;
     }
-    return m_effectList->at(row);
+    return m_textList->at(row);
 }
 
 QImage TextListModel::thumbnail(int row) const
 {
-    Q_ASSERT(m_effectList);
+    Q_ASSERT(m_textList);
     Q_ASSERT(row>=0);
-    Q_ASSERT(row<m_effectList->count());
-    Q_ASSERT(m_mainWindow);
-    if(!m_effectList || row<0 || row>=m_effectList->count() || !m_mainWindow)
+    Q_ASSERT(row<m_textList->count());
+    if(!m_textList || row<0 || row>=m_textList->count())
     {
         return QImage();
     }
-    return m_mainWindow->getThumbnail(m_effectList->at(row)->textFileHandel());
+
+    return QImage(m_textList->at(row)->thumbnailPath());
 }

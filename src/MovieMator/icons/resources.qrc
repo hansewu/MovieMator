@@ -312,6 +312,8 @@
         <file>light/32x32/player-zoom-fullscreen-pressed.png</file>
         <file>light/32x32/player-zoom-set.png</file>
         <file>light/32x32/player-zoom-set-pressed.png</file>
+        <file>light/32x32/text.png</file>
+        <file>light/32x32/text-highlight.png</file>
     </qresource>
     <qresource prefix="/">
         <file>toolbar-bg.png</file>

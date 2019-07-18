@@ -153,6 +153,7 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
 
     if (m_tabPostion == TabPosition_Left)
     {
+        button->setIconSize(QSize(30, 25));
         button->setFixedSize(BUTTON_WIDTH_SQUARE, BUTTON_HEIGHT_SQUARE);
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         QVBoxLayout *vLayout = qobject_cast<QVBoxLayout*>(m_tabBtnWidget->layout());    //(QVBoxLayout *)m_tabBtnWidget->layout();

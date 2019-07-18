@@ -636,7 +636,7 @@ MainWindow::MainWindow()
     addResourceDock(m_effectDock, tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
 
     m_resourceTextDock = TextDock_initModule(&MainInterface::singleton());
-    addResourceDock(m_resourceTextDock, tr("Text"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
+    addResourceDock(m_resourceTextDock, tr("Text"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text-highlight.png"));
 
     m_resourceTestDock = createTextDock(&MainInterface::singleton());
     addResourceDock(m_resourceTestDock, tr("Text"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
