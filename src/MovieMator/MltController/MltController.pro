@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += widgets qml quick opengl quickwidgets
+QT       += widgets qml quick opengl quickwidgets xml
 
 TARGET = MltController
 TEMPLATE = lib

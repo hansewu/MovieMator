@@ -34,6 +34,8 @@
 #include "qmlutilities.h"
 #include <util.h>
 
+#include <QDomDocument>
+
 namespace Mlt {
 
 static Controller* instance = nullptr;
@@ -554,12 +556,17 @@ void Controller::saveXMLWithoutProfile(const QString& filename, Service* service
     if (ignore)
         s.set("ignore_points", ignore);
 
-    QString xml = QString::fromUtf8(c.get(propertyName));
-    QString content = getXMLWithoutProfile(xml);
     QFile file(filename);
     if(file.open(QIODevice::WriteOnly))
     {
-        file.write(content.toUtf8().constData());
+        QString xml = QString::fromUtf8(c.get(propertyName));
+        QString content = getXMLWithoutProfile(xml);
+
+        QDomDocument dom;
+        dom.setContent(content);    // xml格式化内容到文件
+        file.write(dom.toString().toUtf8().constData());
+
+//        file.write(content.toUtf8().constData());
     }
     file.close();
 }
