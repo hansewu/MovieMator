@@ -46,8 +46,7 @@ QMap<QString, BaseItemModel *> *TextDockWidget::createAllClassesItemModel() {
             item->setText(fileName);
 
             qDebug()<<"sll----------"<<textDir + "/thumbnail/" + oneClassFolderInfo.fileName() + "/" + templateFileInfo.baseName() + ".jpg";
-//            QIcon icon = QIcon(textDir + "/thumbnail/" + oneClassFolderInfo.fileName() + "/" + templateFileInfo.baseName() + ".jpg");
-            QIcon icon = QIcon(":///icons/filters/Common.jpg");
+            QIcon icon = QIcon(textDir + "/thumbnail/" + oneClassFolderInfo.fileName() + "/" + templateFileInfo.baseName() + ".jpg");
             item->setIcon(icon);
 
             QString toolTip = fileName;
