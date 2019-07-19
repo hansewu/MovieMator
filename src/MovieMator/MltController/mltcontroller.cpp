@@ -524,7 +524,10 @@ QString Controller::getXMLWithoutProfile(QString &xml)
 {
     int start = xml.indexOf("<producer ", 0, Qt::CaseInsensitive);
     int end = xml.lastIndexOf("</mlt>", -1, Qt::CaseInsensitive);
-
+    if(start<0 || end<0 || start>=end)
+    {
+        return QString();
+    }
     return xml.mid(start, end-start);
 }
 
