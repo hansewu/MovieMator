@@ -424,7 +424,7 @@ void RecentDock::on_lineEdit_textChanged(const QString& search)
         }
         m_proxyArray[i]->setFilterFixedString(search);
     }
-    Q_ASSERT(m_currentListView);
+//    Q_ASSERT(m_currentListView);  // 不用
     if(m_currentListView)
     {
         m_currentListView->clearSelection();
