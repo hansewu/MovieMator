@@ -8,9 +8,10 @@
 #include <qlabel.h>
 #include <qdebug.h>
 
-BaseDockWidget::BaseDockWidget(QWidget *parent) :
-    QDockWidget(parent),
-    ui(new Ui::BaseDockWidget) {
+BaseDockWidget::BaseDockWidget(QWidget *pParent) :
+    QDockWidget(pParent),
+    ui(new Ui::BaseDockWidget)
+{
     qDebug()<<"sll-----BaseDockWidget构造---start";
 
     ui->setupUi(this);
@@ -21,81 +22,97 @@ BaseDockWidget::BaseDockWidget(QWidget *parent) :
     ui->scrollArea->verticalScrollBar()->setStyleSheet("QScrollBar:vertical{width:8px;background:rgba(0,0,0,0%);margin:0px,0px,0px,0px;}"
                             "QScrollBar::handle:vertical{width:8px;background:rgba(160,160,160,25%);border-radius:4px;min-height:20;}"
                             "QScrollBar::handle:vertical:hover{width:8px;background:rgba(160,160,160,50%);border-radius:4px;min-height:20;}");
+
     qDebug()<<"sll-----BaseDockWidget构造---end";
 }
 
-BaseDockWidget::~BaseDockWidget() {
+BaseDockWidget::~BaseDockWidget()
+{
     qDebug()<<"sll-----BaseDockWidget析构---start";
-    qDeleteAll(*m_allClassesListView);
-    m_allClassesListView->clear();
-    m_allClassesListView = nullptr;
+
+    qDeleteAll(*m_pAllClassesListView);
+    m_pAllClassesListView->clear();
+    m_pAllClassesListView = nullptr;
 
     delete ui;
+
     qDebug()<<"sll-----BaseDockWidget析构---end";
 }
 
-void BaseDockWidget::setupUi() {
+void BaseDockWidget::setupUi()
+{
     qDebug()<<"sll-----setupUi---start";
+
     //初始化及设置顶部控件，各子类可以定制
     setupOtherUi();
 
     //初始化及设置listview
     setupListView();
+
     qDebug()<<"sll-----setupUi---end";
 }
 
-void BaseDockWidget::setupOtherUi() {
+void BaseDockWidget::setupOtherUi()
+{
     qDebug()<<"sll-----setupOtherUi---start";
     qDebug()<<"sll-----setupOtherUi---end";
 }
 
-void BaseDockWidget::setupListView() {
+void BaseDockWidget::setupListView()
+{
     qDebug()<<"sll-----setupListView---start";
 
-    m_allClassesListView = new QMap<QString, BaseListView *>;
+    m_pAllClassesListView = new QMap<QString, BaseListView *>;
 
-    QMap<QString, BaseItemModel *> *allClassesItemModel = createAllClassesItemModel();
+    QMap<QString, BaseItemModel *> *pAllClassesItemModel = createAllClassesItemModel();
 
-    if (hasClass()) {
-        createAllClassesListView(allClassesItemModel, hasClass());
-    } else {
+    if (hasClass())
+    {
+        createAllClassesListView(pAllClassesItemModel, hasClass());
+    }
+    else
+    {
         //无分类时移除分类控件
         ui->comboBox_class->setHidden(true);
         ui->classlabe->setHidden(true);
 
-        BaseListView *listView = createListView(allClassesItemModel->first());
-        m_allClassesListView->insert("Undefined", listView);
+        BaseListView *pListView = createListView(pAllClassesItemModel->first());
+        m_pAllClassesListView->insert("Undefined", pListView);
     }
 
-    QSpacerItem *spacerItem = new QSpacerItem(20, 40, QSizePolicy::Minimum,
+    QSpacerItem *pSpacerItem = new QSpacerItem(20, 40, QSizePolicy::Minimum,
                                               QSizePolicy::Expanding);
-    ui->verticalLayout_scrollarea->addItem(spacerItem);
+    ui->verticalLayout_scrollarea->addItem(pSpacerItem);
+
     qDebug()<<"sll-----setupListView---end";
 }
 
-void BaseDockWidget::createClassesNameWidget(const QString &className) {
+void BaseDockWidget::createClassesNameWidget(const QString &strClassName)
+{
     qDebug()<<"sll-----createClassesNameWidget---start";
-    QLabel *classLabel = new QLabel(className, this);
-    classLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    classLabel->setFixedHeight(40);
 
-    QLabel *image = new QLabel(this);
-    image->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    image->setScaledContents(true);     // 可以让图片随 label拉伸
-    image->setPixmap(QPixmap(":/icons/light/32x32/line.png"));
+    QLabel *pClassLabel = new QLabel(strClassName, this);
+    pClassLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    pClassLabel->setFixedHeight(40);
 
-    QHBoxLayout *box = new QHBoxLayout();
-    box->addWidget(classLabel);
-    box->addWidget(image);
+    QLabel *pImageLabel = new QLabel(this);
+    pImageLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    pImageLabel->setScaledContents(true);     // 可以让图片随 label拉伸
+    pImageLabel->setPixmap(QPixmap(":/icons/light/32x32/line.png"));
 
-    ui->verticalLayout_scrollarea->addLayout(box);
+    QHBoxLayout *pHBoxLayout = new QHBoxLayout();
+    pHBoxLayout->addWidget(pClassLabel);
+    pHBoxLayout->addWidget(pImageLabel);
+
+    ui->verticalLayout_scrollarea->addLayout(pHBoxLayout);
 
     qDebug()<<"sll-----createClassesNameWidget---end";
 }
 
-void BaseDockWidget::createAllClassesListView(QMap<QString, BaseItemModel *> *allClassesItemModel,
-        bool hasClass) {
-    Q_UNUSED(hasClass);
+void BaseDockWidget::createAllClassesListView(QMap<QString, BaseItemModel *> *pAllClassesItemModel,
+        bool bHasClass)
+{
+    Q_UNUSED(bHasClass);
 
     qDebug()<<"sll-----createAllClassesListView---start";
     //设置分类combobox，连接函数
@@ -104,7 +121,8 @@ void BaseDockWidget::createAllClassesListView(QMap<QString, BaseItemModel *> *al
 
     //创建各分类listview，并添加到UI
     QMap<QString, BaseItemModel *>::const_iterator iter;
-    for (iter = allClassesItemModel->constBegin(); iter != allClassesItemModel->constEnd(); iter++) {
+    for (iter = pAllClassesItemModel->constBegin(); iter != pAllClassesItemModel->constEnd(); iter++)
+    {
         //创建分类名控件
         createClassesNameWidget(iter.key());
 
@@ -112,53 +130,63 @@ void BaseDockWidget::createAllClassesListView(QMap<QString, BaseItemModel *> *al
         ui->comboBox_class->addItem(iter.key());
 
         //保存listview用于分类跳转
-        BaseListView *listView = createListView(iter.value());
-        m_allClassesListView->insert(iter.key(), listView);
+        BaseListView *pListView = createListView(iter.value());
+        m_pAllClassesListView->insert(iter.key(), pListView);
     }
+
     qDebug()<<"sll-----createAllClassesListView---end";
 }
 
-BaseListView *BaseDockWidget::createListView(BaseItemModel *itemModel) {
+BaseListView *BaseDockWidget::createListView(BaseItemModel *pItemModel)
+{
     qDebug()<<"sll-----createListView---start";
-    BaseItemDelegate *itemDelegate = new BaseItemDelegate(this);
-    BaseListView *listView = new BaseListView(this);
 
-    listView->setModel(itemModel);
-    listView->setItemDelegate(itemDelegate);
+    BaseItemDelegate *pItemDelegate  = new BaseItemDelegate(this);
+    BaseListView *pListView          = new BaseListView(this);
 
-    connect(itemDelegate, &BaseItemDelegate::addItem, this, &BaseDockWidget::addItemToTimeline);
-    connect(itemDelegate, &BaseItemDelegate::selectItem, this, &BaseDockWidget::clickedItem);
+    pListView->setModel(pItemModel);
+    pListView->setItemDelegate(pItemDelegate);
 
-    ui->verticalLayout_scrollarea->addWidget(listView);
+    connect(pItemDelegate, &BaseItemDelegate::addItem, this, &BaseDockWidget::addItemToTimeline);
+    connect(pItemDelegate, &BaseItemDelegate::selectItem, this, &BaseDockWidget::clickedItem);
+
+    ui->verticalLayout_scrollarea->addWidget(pListView);
 
     qDebug()<<"sll-----createListView---end";
 
-    return listView;
+    return pListView;
 }
 
-void BaseDockWidget::addItemToTimeline(const QModelIndex &index) {
+void BaseDockWidget::addItemToTimeline(const QModelIndex &index)
+{
     qDebug()<<"sll-----addItemToTimeline---start";
-    QAbstractItemModel *itemModel = const_cast<QAbstractItemModel *>(index.model());
-    BaseItemModel *standardItemModel = static_cast<BaseItemModel *>(itemModel);
-    QStandardItem *standardItem = standardItemModel->itemFromIndex(index);
 
-    addToTimeline(standardItem);
+    QAbstractItemModel *pItemModel       = const_cast<QAbstractItemModel *>(index.model());
+    BaseItemModel *pStandardItemModel    = static_cast<BaseItemModel *>(pItemModel);
+    QStandardItem *pStandardItem         = pStandardItemModel->itemFromIndex(index);
+
+    addToTimeline(pStandardItem);
+
     qDebug()<<"sll-----addItemToTimeline---end";
 }
 
-void BaseDockWidget::clickedItem(const QModelIndex &index) {
+void BaseDockWidget::clickedItem(const QModelIndex &index)
+{
     qDebug()<<"sll-----clickedItem---start";
-    QAbstractItemModel *itemModel = const_cast<QAbstractItemModel *>(index.model());
-    BaseItemModel *standardItemModel = static_cast<BaseItemModel *>(itemModel);
-    QStandardItem *standardItem = standardItemModel->itemFromIndex(index);
+
+    QAbstractItemModel *itemModel       = const_cast<QAbstractItemModel *>(index.model());
+    BaseItemModel *standardItemModel    = static_cast<BaseItemModel *>(itemModel);
+    QStandardItem *standardItem         = standardItemModel->itemFromIndex(index);
 
     //因为每个分类由一个listview显示，因此在从一个分类中的选中项切换到另一个分类中的选中项时，需要手动清除前一个listview中的选中项
     QMap<QString, BaseListView *>::const_iterator iter;
-    for (iter = m_allClassesListView->constBegin(); iter != m_allClassesListView->constEnd(); iter++) {
-        BaseListView *listView = iter.value();
-        BaseItemModel *tempItemModel = static_cast<BaseItemModel *>(listView->model());
-        if (tempItemModel != standardItemModel) {
-            listView->clearSelection();
+    for (iter = m_pAllClassesListView->constBegin(); iter != m_pAllClassesListView->constEnd(); iter++)
+    {
+        BaseListView *pListView          = iter.value();
+        BaseItemModel *pTempItemModel    = static_cast<BaseItemModel *>(pListView->model());
+        if (pTempItemModel != standardItemModel)
+        {
+            pListView->clearSelection();
         }
     }
 
@@ -167,53 +195,75 @@ void BaseDockWidget::clickedItem(const QModelIndex &index) {
     qDebug()<<"sll-----clickedItem---end";
 }
 
-void BaseDockWidget::addItemToDock(QString itemClass, QStandardItem *item) {
+void BaseDockWidget::addItemToDock(QString strItemClass, QStandardItem *pItem)
+{
     qDebug()<<"sll-----addItemToDock---start";
-    Q_UNUSED(itemClass);
-    Q_UNUSED(item);
+    Q_UNUSED(strItemClass);
+    Q_UNUSED(pItem);
     qDebug()<<"sll-----addItemToDock---end";
 }
 
-void BaseDockWidget::resizeEvent(QResizeEvent *event) {
+//FIXME:此函数需要优化，存在魔法数字
+void BaseDockWidget::resizeEvent(QResizeEvent *pEvent)
+{
     qDebug()<<"sll-----resizeEvent---start";
+
     QMap<QString, BaseListView *>::const_iterator iter;
-    for (iter = m_allClassesListView->constBegin(); iter != m_allClassesListView->constEnd(); iter++) {
-        BaseListView *listView = iter.value();
-        listView->setFixedWidth(ui->scrollArea->width() - 5);
-        int wSize = listView->gridSize().width();
-        if(wSize <= 0) {
+    for (iter = m_pAllClassesListView->constBegin(); iter != m_pAllClassesListView->constEnd(); iter++)
+    {
+        BaseListView *pListView = iter.value();
+        pListView->setFixedWidth(ui->scrollArea->width() - 5);
+
+        int nGridHeight = pListView->gridSize().height();
+        int nGridWidth = pListView->gridSize().width();
+        if (nGridWidth <= 0)
+        {
             continue;
         }
-        int hSize = listView->gridSize().height();
-        int width = listView->size().width();
-        int columns = width/wSize<1 ? 1: width/wSize;
-        int rowCount = listView->model()->rowCount();
-        int rows = rowCount%columns>0 ? (rowCount/columns+1) : (rowCount/columns);
-        listView->setFixedHeight(rows*hSize);
+
+        int nListViewWidth = pListView->size().width();
+        int nColumns = (nListViewWidth / nGridWidth) < 1 ? 1 : (nListViewWidth / nGridWidth);
+        int nRowCount = pListView->model()->rowCount();
+        int nRows = (nRowCount % nColumns) > 0 ? (nRowCount / nColumns + 1) : (nRowCount / nColumns);
+
+        pListView->setFixedHeight(nRows * nGridHeight);
     }
 
     //listview大小变化时，保证依然在当前分类的listview上
     onClassComboBoxActivated(ui->comboBox_class->currentIndex());
 
-    QDockWidget::resizeEvent(event);
+    QDockWidget::resizeEvent(pEvent);
 
     qDebug()<<"sll-----resizeEvent---end";
 }
 
-//void BaseDockWidget::onClassComboBoxActivated(const QString &className) {
-void BaseDockWidget::onClassComboBoxActivated(int index) {
+void BaseDockWidget::onClassComboBoxActivated(int nIndex) {
     qDebug()<<"sll-----onClassComboBoxActivated---start";
+
     //每个分类对应两个控件。即：分了名和分类listview。因此通过combobox切换分类时，通过index * 2找到对应的分类控件位置，进行跳转
-    QLayoutItem *item = ui->verticalLayout_scrollarea->itemAt(index * 2);
-    Q_ASSERT(item);
-    if (item) {
-        Q_ASSERT(item->layout());
-        Q_ASSERT(item->layout()->itemAt(0));
-        QWidget *widget = item->layout()->itemAt(0)->widget();
-        Q_ASSERT(widget);
-        if(widget) {
-            ui->scrollArea->verticalScrollBar()->setValue(widget->y());
+    QLayoutItem *pLayoutItem = ui->verticalLayout_scrollarea->itemAt(nIndex * 2);
+    Q_ASSERT(pLayoutItem);
+    if (pLayoutItem)
+    {
+        Q_ASSERT(pLayoutItem->layout());
+        if (!pLayoutItem->layout())
+        {
+            return;
+        }
+
+        Q_ASSERT(pLayoutItem->layout()->itemAt(0));
+        if (pLayoutItem->layout()->itemAt(0))
+        {
+            return;
+        }
+
+        QWidget *pWidget = pLayoutItem->layout()->itemAt(0)->widget();
+        Q_ASSERT(pWidget);
+        if(pWidget)
+        {
+            ui->scrollArea->verticalScrollBar()->setValue(pWidget->y());
         }
     }
+
     qDebug()<<"sll-----onClassComboBoxActivated---end";
 }
