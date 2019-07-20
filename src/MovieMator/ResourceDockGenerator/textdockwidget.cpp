@@ -115,7 +115,7 @@ void TextDockWidget::preview(const QStandardItem *item) {
     qDebug()<<"sll-----preview---end";
 }
 
-QDockWidget *createTextDock(MainInterface *main) {
+QDockWidget *g_createTextDock(MainInterface *main) {
     qDebug()<<"sll-----createTextDock---start";
     TextDockWidget *textDockWidget = new TextDockWidget(main);
     textDockWidget->setupUi();

@@ -13,9 +13,11 @@
 #endif
 
 
-RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *createTextDock(MainInterface *main);
+RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createTextDock(MainInterface *main);
 
-RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *createFilterDock(MainInterface *main);
+RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createFilterDock(MainInterface *main);
+
+RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createStickerDock(MainInterface *main);
 
 RESOURCEDOCKGENERATORSHARED_EXPORT void deleteDock();
 

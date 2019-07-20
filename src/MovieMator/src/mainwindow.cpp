@@ -638,8 +638,11 @@ MainWindow::MainWindow()
 //    m_resourceTextDock = TextDock_initModule(&MainInterface::singleton());
 //    addResourceDock(m_resourceTextDock, tr("Text"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text-highlight.png"));
 
-    m_resourceTextDock = createTextDock(&MainInterface::singleton());
+    m_resourceTextDock = g_createTextDock(&MainInterface::singleton());
     addResourceDock(m_resourceTextDock, tr("Text"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text-highlight.png"));
+
+    m_resourceStickerDock = g_createStickerDock(&MainInterface::singleton());
+    addResourceDock(m_resourceStickerDock, tr("Sticker"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text-highlight.png"));
 
     m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
     m_propertiesDock->installEventFilter(this);
