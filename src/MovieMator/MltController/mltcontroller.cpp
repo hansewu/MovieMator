@@ -34,8 +34,6 @@
 #include "qmlutilities.h"
 #include <util.h>
 
-#include <QDomDocument>
-
 namespace Mlt {
 
 static Controller* instance = nullptr;
@@ -522,51 +520,37 @@ QString Controller::XML(Service* service)
     return QString::fromUtf8(c.get(propertyName));
 }
 
-QString Controller::getXMLWithoutProfile(QString &xml)
+QString Controller::getXMLWithoutProfile(QString &strXml)
 {
-    int start = xml.indexOf("<producer ", 0, Qt::CaseInsensitive);
-    int end = xml.lastIndexOf("</mlt>", -1, Qt::CaseInsensitive);
-    if(start<0 || end<0 || start>=end)
+    int nStart  = strXml.indexOf("<producer ", 0, Qt::CaseInsensitive);
+    int nEnd    = strXml.lastIndexOf("</mlt>", -1, Qt::CaseInsensitive);
+
+    if((nStart < 0) || (nEnd < 0) || (nStart >= nEnd))
     {
         return QString();
     }
-    return xml.mid(start, end-start);
+
+    return strXml.mid(nStart, nEnd - nStart);
 }
 
-void Controller::saveXMLWithoutProfile(const QString& filename, Service* service, bool withRelativePaths)
+void Controller::saveXMLWithoutProfile(const QString& strFilename, Service* pService, bool bWithRelativePaths)
 {
-    Q_ASSERT(m_producer);
-    LOG_DEBUG() << "begin";
-    static const char* propertyName = "string";
-    Consumer c(profile(), "xml", propertyName);
-    Service s(service? service->get_service() : m_producer->get_service());
-    if (!s.is_valid())
-        return;
-    int ignore = s.get_int("ignore_points");
-    if (ignore)
-        s.set("ignore_points", 0);
-    c.set("no_meta", 1);
-    c.set("store", "moviemator");
+    saveXML(strFilename, pService, bWithRelativePaths);
 
-    if (withRelativePaths) {
-        c.set("root", QFileInfo(filename).absolutePath().toUtf8().constData());
-    }
-    c.connect(s);
-    c.start();
-    if (ignore)
-        s.set("ignore_points", ignore);
-
-    QFile file(filename);
-    if(file.open(QIODevice::WriteOnly))
+    QFile file(strFilename);
+    if(!file.exists())
     {
-        QString xml = QString::fromUtf8(c.get(propertyName));
-        QString content = getXMLWithoutProfile(xml);
+        return;
+    }
 
-        QDomDocument dom;
-        dom.setContent(content);    // xml格式化内容到文件
-        file.write(dom.toString().toUtf8().constData());
-
-//        file.write(content.toUtf8().constData());
+    if(file.open(QIODevice::ReadWrite))
+    {
+        QString strXml      = file.readAll();
+        QString strContent  = getXMLWithoutProfile(strXml);
+        if(file.resize(0))      // 清空 file文件内容
+        {
+            file.write(strContent.toUtf8().constData());
+        }
     }
     file.close();
 }
