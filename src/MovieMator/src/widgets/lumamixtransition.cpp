@@ -345,8 +345,17 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
             softnessValue = ui->softnessSlider->value() / 100.0;
         }
 
+        Timeline::TransitionPropertyCommandParameters commandParameters;
+        commandParameters.trackIndex = m_trackIndex;
+        commandParameters.clipIndex = m_clipIndex;
+        commandParameters.transitionName = "luma";
+        commandParameters.propertyName = "resource";
+        commandParameters.propertyValue = resourceValue;
+        commandParameters.invertTransition = invertValue;
+        commandParameters.transitionSoftness = softnessValue;
+
         MAIN.pushCommand(
-                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma","resource", resourceValue, true, invertValue, softnessValue)
+                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), commandParameters)
                     );
     }
 }

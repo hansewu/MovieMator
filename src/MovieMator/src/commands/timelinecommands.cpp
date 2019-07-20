@@ -1719,6 +1719,23 @@ TransitionPropertyCommand::TransitionPropertyCommand(TimelineDock& timeline, Mul
     setText(QObject::tr("Transition Property Change"));
 }
 
+TransitionPropertyCommand::TransitionPropertyCommand(TimelineDock &timeline, MultitrackModel &model, const TransitionPropertyCommandParameters &parameters, bool isFirst, AbstractCommand *parent)
+    : AbstractCommand(model, parent)
+    , m_timeline(timeline)
+    , m_model(model)
+    , m_trackIndex(parameters.trackIndex)
+    , m_clipIndex(parameters.clipIndex)
+    , m_transitionName(parameters.transitionName)
+    , m_propertyName(parameters.propertyName)
+    , m_propertyValue(parameters.propertyValue)
+    , m_undoHelper(m_model)
+    , m_invert(parameters.invertTransition)
+    , m_softness(parameters.transitionSoftness)
+    , m_isFirstRedo(isFirst)
+{
+    setText(QObject::tr("Transition Property Change"));
+}
+
 void TransitionPropertyCommand::redo_impl()
 {
     m_undoHelper.recordBeforeState();
