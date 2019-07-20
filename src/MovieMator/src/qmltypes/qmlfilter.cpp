@@ -65,8 +65,7 @@ Mlt::Animation QmlFilter::getAnimation(const QString& name)
 {
     if (m_filter) {
         std::string strName = name.toStdString();
-        char propertyName[32];
-        strcpy(propertyName, strName.c_str());
+        const char *propertyName = strName.c_str();
 
         if (!m_filter->get_animation(propertyName)) {
             // Cause a string property to be interpreted as animated value.
@@ -230,10 +229,11 @@ QRectF QmlFilter::getRect(QString name, int position)  //
         position = MAIN.timelineDock()->getPositionOnParentProducer(position);
 
     if (!m_filter->is_valid()) return QRectF();
-    const char* s = m_filter->get(name.toUtf8().constData());
+
+    QByteArray byteArrayName = name.toUtf8();
+    const char *propertyName = byteArrayName.constData();
+    const char* s = m_filter->get(propertyName);
     if (s) {
-        char propertyName[32];
-        strcpy(propertyName, name.toUtf8().constData());
         mlt_rect rect;
         if (position < 0) {
             rect = m_filter->get_rect(propertyName);
@@ -260,8 +260,8 @@ QRectF QmlFilter::getRectOfTextFilter(QString name, int position)
         position = MAIN.timelineDock()->getPositionOnParentProducer(position);
     if (!m_filter->is_valid()) return QRectF();
 
-    char propertyName[32];
-    strcpy(propertyName, name.toUtf8().constData());
+    QByteArray byteArrayName = name.toUtf8();
+    const char *propertyName = byteArrayName.constData();
     mlt_rect rect;
     if (position < 0) {
         rect = m_filter->get_rect(propertyName);
@@ -1218,16 +1218,12 @@ QRectF QmlFilter::getAnimRectValue(int frame, QString key)
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
     if (!m_filter) return QRectF();
 
-    const char* s = m_filter->get(key.toUtf8().constData());
+    QByteArray byteArrayName = key.toUtf8();
+    const char *propertyName = byteArrayName.constData();
+    const char* s = m_filter->get(propertyName);
     if (s) {
-        char propertyName[32];
-        strcpy(propertyName, key.toUtf8().constData());
         mlt_rect rect;
-//        if (frame < 0) {
-//            rect = m_filter->get_rect(propertyName);
-//        } else {
-            rect = m_filter->anim_get_rect(propertyName, frame);
-//        }
+        rect = m_filter->anim_get_rect(propertyName, frame);
         if (::strchr(s, '%')) {
             return QRectF(qRound(rect.x * MLT.profile().width()),
                           qRound(rect.y * MLT.profile().height()),
