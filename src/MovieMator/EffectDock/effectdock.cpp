@@ -214,7 +214,7 @@ QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInf
     if (translationInfo.contains(srcStr)) {
         QJsonObject subObj = translationInfo.value(srcStr).toObject();
         QString language = Settings.language();
-        if(language=="zh")
+        if(language=="zh" || language=="zh_CN")
         {
             language = "zh_CN";     // Settings.language()有 "zh"没有 "zh_CN"
         }
