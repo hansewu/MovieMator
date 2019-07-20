@@ -707,14 +707,14 @@ protected:
 
 //保存构造TransitionPropertyCommand的参数
 typedef struct {
-    int     trackIndex; //transition所在的轨道索引
-    int     clipIndex; //transition在轨道上的索引
-    QString transitionName; //transition名字，视频luma、音频mix
+    int     nTrackIndex; //transition所在的轨道索引
+    int     nClipIndex; //transition在轨道上的索引
 
-    QString propertyName; //要修改的属性名
-    QString propertyValue;
-    int     invertTransition;
-    double  transitionSoftness;
+    QString strTransitionName; //transition名字，视频luma、音频mix
+    QString strPropertyName; //要修改的属性名
+    QString strPropertyValue;
+    int     nInvertTransition;
+    double  dTransitionSoftness;
 } TransitionPropertyCommandParameters;
 
 //转场属性设置
@@ -722,7 +722,7 @@ class TransitionPropertyCommand: public AbstractCommand
 {
 public:
     TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel& model, int trackIndex, int clipIndex, const QString& transitionName, const QString& propertyName, const QString& propertyValue, bool isFirst = true, int invert = 0, double softness = 0.0, AbstractCommand *parent = nullptr);
-    TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel& model, const TransitionPropertyCommandParameters& parameters, bool isFirst = true, AbstractCommand *parent = nullptr);
+    TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel& model, const TransitionPropertyCommandParameters& parameters, bool bIsFirstRedo = true, AbstractCommand *parent = nullptr);
     void redo_impl();
     void undo_impl();
 

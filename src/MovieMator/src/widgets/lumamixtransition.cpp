@@ -346,13 +346,14 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
         }
 
         Timeline::TransitionPropertyCommandParameters commandParameters;
-        commandParameters.trackIndex = m_trackIndex;
-        commandParameters.clipIndex = m_clipIndex;
-        commandParameters.transitionName = "luma";
-        commandParameters.propertyName = "resource";
-        commandParameters.propertyValue = resourceValue;
-        commandParameters.invertTransition = invertValue;
-        commandParameters.transitionSoftness = softnessValue;
+
+        commandParameters.nTrackIndex            = m_trackIndex;
+        commandParameters.nClipIndex             = m_clipIndex;
+        commandParameters.strTransitionName      = "luma";
+        commandParameters.strPropertyName        = "resource";
+        commandParameters.strPropertyValue       = resourceValue;
+        commandParameters.nInvertTransition      = invertValue;
+        commandParameters.dTransitionSoftness    = softnessValue;
 
         MAIN.pushCommand(
                     new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), commandParameters)

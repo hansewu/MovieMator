@@ -1719,19 +1719,19 @@ TransitionPropertyCommand::TransitionPropertyCommand(TimelineDock& timeline, Mul
     setText(QObject::tr("Transition Property Change"));
 }
 
-TransitionPropertyCommand::TransitionPropertyCommand(TimelineDock &timeline, MultitrackModel &model, const TransitionPropertyCommandParameters &parameters, bool isFirst, AbstractCommand *parent)
+TransitionPropertyCommand::TransitionPropertyCommand(TimelineDock &timeline, MultitrackModel &model, const TransitionPropertyCommandParameters &parameters, bool bIsFirstRedo, AbstractCommand *parent)
     : AbstractCommand(model, parent)
     , m_timeline(timeline)
     , m_model(model)
-    , m_trackIndex(parameters.trackIndex)
-    , m_clipIndex(parameters.clipIndex)
-    , m_transitionName(parameters.transitionName)
-    , m_propertyName(parameters.propertyName)
-    , m_propertyValue(parameters.propertyValue)
+    , m_trackIndex(parameters.nTrackIndex)
+    , m_clipIndex(parameters.nClipIndex)
+    , m_transitionName(parameters.strTransitionName)
+    , m_propertyName(parameters.strPropertyName)
+    , m_propertyValue(parameters.strPropertyValue)
     , m_undoHelper(m_model)
-    , m_invert(parameters.invertTransition)
-    , m_softness(parameters.transitionSoftness)
-    , m_isFirstRedo(isFirst)
+    , m_invert(parameters.nInvertTransition)
+    , m_softness(parameters.dTransitionSoftness)
+    , m_isFirstRedo(bIsFirstRedo)
 {
     setText(QObject::tr("Transition Property Change"));
 }
