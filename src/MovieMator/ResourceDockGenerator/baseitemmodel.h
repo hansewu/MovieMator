@@ -3,11 +3,12 @@
 
 #include <qstandarditemmodel.h>
 
-class BaseItemModel : public QStandardItemModel {
+class BaseItemModel : public QStandardItemModel
+{
     Q_OBJECT
 
 public:
-    explicit BaseItemModel(QObject *parent = nullptr);
+    explicit BaseItemModel(QObject *pParent = nullptr);
 
     QMimeData *mimeData(const QModelIndexList &indexes) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;

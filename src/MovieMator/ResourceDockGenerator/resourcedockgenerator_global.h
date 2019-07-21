@@ -12,13 +12,10 @@
 #  define RESOURCEDOCKGENERATORSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createTextDock(MainInterface *pMainInterface);
 
-RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createTextDock(MainInterface *main);
+RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createFilterDock(MainInterface *pMainInterface);
 
-RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createFilterDock(MainInterface *main);
-
-RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createStickerDock(MainInterface *main);
-
-RESOURCEDOCKGENERATORSHARED_EXPORT void deleteDock();
+RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createStickerDock(MainInterface *pMainInterface);
 
 #endif // RESOURCEDOCKGENERATOR_GLOBAL_H

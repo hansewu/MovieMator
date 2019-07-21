@@ -12,17 +12,17 @@ class TextDockWidget : public BaseDockWidget
 
 public:
     // 构造函数
-    explicit TextDockWidget(MainInterface *main = nullptr, QWidget *parent = nullptr);
+    explicit TextDockWidget(MainInterface *pMainInterface = nullptr, QWidget *pParent = nullptr);
     ~TextDockWidget();
 
 protected:
     QMap<QString, BaseItemModel *> *createAllClassesItemModel();
     bool hasClass();
-    void addToTimeline(const QStandardItem *item);
-    void preview(const QStandardItem *item);
+    void addToTimeline(const QStandardItem *pItem);
+    void preview(const QStandardItem *pItem);
 
 private:
-    MainInterface *m_mainInterface;
+    MainInterface *m_pMainInterface;
 };
 
 #endif // TEXTDOCKWIDGET_H

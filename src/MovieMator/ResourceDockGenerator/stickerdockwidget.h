@@ -15,40 +15,39 @@ class StickerDockWidget : public BaseDockWidget
     Q_OBJECT
 public:
     // 构造函数
-    explicit StickerDockWidget(MainInterface *pMainInterface = nullptr, QWidget *pParent = nullptr);
+    explicit StickerDockWidget(MainInterface *pMainInterface = nullptr,
+                               QWidget *pParent = nullptr);
 
     //用于StickerItemModel中创建拖拽数据
-    static FILE_HANDLE createFileHandle(MainInterface *mainInterface,
-                                        const QString &animationFilePath,
-                                        const QString &imageFilePath);
+    static FILE_HANDLE createFileHandle(MainInterface *pMainInterface,
+                                        const QString &strAnimationFilePath,
+                                        const QString &strImageFilePath);
 
 protected:
-    void resizeEvent(QResizeEvent *event);
+    void resizeEvent(QResizeEvent *pEvent);
     QMap<QString, BaseItemModel *> *createAllClassesItemModel();
     bool hasClass();
-    void addToTimeline(const QStandardItem *item);
-    void preview(const QStandardItem *item);
+    void addToTimeline(const QStandardItem *pItem);
+    void preview(const QStandardItem *pItem);
     void setupOtherUi();
 
 signals:
-    void currentSelectedAnimationChanged(QString &animationFilePath);
+    void currentSelectedAnimationChanged(QString &strAnimationFilePath);
 
 private slots:
-    void onAnimationComboBoxCurrentIndexChanged(int index);
-    void onAnimationComboBoxActivated(int index);
+    void onAnimationComboBoxCurrentIndexChanged(int nIndex);
+    void onAnimationComboBoxActivated(int nIndex);
 
 private:
-    QIcon getListViewItemIcon(const QString filePath);
+    QIcon getListViewItemIcon(const QString strFilePath);
     void setupAnimationComboboxData();
-//    FILE_HANDLE createFileHandle(const QString &animationFilePath, const QString &imageFilePath);
-//    QString getImageClassType(QString srcStr, QJsonObject propertyInfo);
+
     static QString getImageClassType(QString srcStr);
 
 private:
-    MainInterface *m_mainInterface;
-    QComboBox *m_animationCombobox;
-    QJsonObject m_imageClassPropertyInfo;//根据不同的分类设置sizeAndPosition滤镜参数
-    QString m_currentSelectedImageFilePath;
+    MainInterface   *m_pMainInterface;
+    QComboBox       *m_pAnimationCombobox;
+    QString         m_strCurrentSelectedImageFilePath;
 };
 
 #endif // STICKERDOCKWIDGET_H

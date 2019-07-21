@@ -7,121 +7,129 @@
 #include <qdir.h>
 #include <qdebug.h>
 
-TextDockWidget::TextDockWidget(MainInterface *main, QWidget *parent) :
-    BaseDockWidget(parent),
-    m_mainInterface(main) {
+TextDockWidget::TextDockWidget(MainInterface *pMainInterface, QWidget *pParent) :
+    BaseDockWidget(pParent),
+    m_pMainInterface(pMainInterface)
+{
     qDebug()<<"sll-----TextDockWidget构造---start";
     qDebug()<<"sll-----TextDockWidget构造---end";
 }
 
-TextDockWidget::~TextDockWidget() {
+TextDockWidget::~TextDockWidget()
+{
     qDebug()<<"sll-----TextDockWidget析构---start";
     qDebug()<<"sll-----TextDockWidget析构---end";
 }
 
-QMap<QString, BaseItemModel *> *TextDockWidget::createAllClassesItemModel() {
+QMap<QString, BaseItemModel *> *TextDockWidget::createAllClassesItemModel()
+{
     qDebug()<<"sll-----createAllClassesItemModel---start";
-    QMap<QString, BaseItemModel *> *textDockListViewItemModel = new QMap<QString, BaseItemModel *>;
+    QMap<QString, BaseItemModel *> *pTextDockListViewItemModel = new QMap<QString, BaseItemModel *>;
 
-    QString textDir = Util::resourcesPath() + "/template/text";
+    QString strTextDir = Util::resourcesPath() + "/template/text";
 
     QJsonObject textClassNameTranslateInfo;
-    TranslationHelper::readJsonFile(textDir + "/textclass_name_translation_info.json", textClassNameTranslateInfo);
+    TranslationHelper::readJsonFile(strTextDir + "/textclass_name_translation_info.json", textClassNameTranslateInfo);
 
     QJsonObject textFileNameTranslateInfo;
-    TranslationHelper::readJsonFile(textDir + "/textfile_name_translation_info.json", textFileNameTranslateInfo);
+    TranslationHelper::readJsonFile(strTextDir + "/textfile_name_translation_info.json", textFileNameTranslateInfo);
 
-    QDir textTemplateFileDir(textDir + "/template");
+    QDir textTemplateFileDir(strTextDir + "/template");
     QFileInfoList allClassFolderInfo = textTemplateFileDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
-    foreach (QFileInfo oneClassFolderInfo, allClassFolderInfo) {
+    foreach (QFileInfo oneClassFolderInfo, allClassFolderInfo)
+    {
         QFileInfoList oneClassFileList = QDir(oneClassFolderInfo.absoluteFilePath()).entryInfoList(QDir::Files | QDir::NoSymLinks);
 
-        QString className = TranslationHelper::getTranslationStr(oneClassFolderInfo.fileName(), textClassNameTranslateInfo);
+        QString strClassName        = TranslationHelper::getTranslationStr(oneClassFolderInfo.fileName(), textClassNameTranslateInfo);
+        TextItemModel *pItemMode    = new TextItemModel(m_pMainInterface, this);
+        foreach (QFileInfo templateFileInfo, oneClassFileList)
+        {
+            QStandardItem *pItem = new QStandardItem();
 
-        TextItemModel *itemMode = new TextItemModel(m_mainInterface, this);
-        foreach (QFileInfo templateFileInfo, oneClassFileList) {
-            QStandardItem *item = new QStandardItem();
+            QString strFileName = TranslationHelper::getTranslationStr(templateFileInfo.baseName(), textFileNameTranslateInfo);
+            pItem->setText(strFileName);
 
-            QString fileName = TranslationHelper::getTranslationStr(templateFileInfo.baseName(), textFileNameTranslateInfo);
-            item->setText(fileName);
+            qDebug()<<"sll----------"<<strTextDir + "/thumbnail/" + oneClassFolderInfo.fileName() + "/" + templateFileInfo.baseName() + ".jpg";
+            QIcon icon = QIcon(strTextDir + "/thumbnail/" + oneClassFolderInfo.fileName() + "/" + templateFileInfo.baseName() + ".jpg");
+            pItem->setIcon(icon);
 
-            qDebug()<<"sll----------"<<textDir + "/thumbnail/" + oneClassFolderInfo.fileName() + "/" + templateFileInfo.baseName() + ".jpg";
-            QIcon icon = QIcon(textDir + "/thumbnail/" + oneClassFolderInfo.fileName() + "/" + templateFileInfo.baseName() + ".jpg");
-            item->setIcon(icon);
+            QString strToolTip = strFileName;
+            pItem->setToolTip(strToolTip);
 
-            QString toolTip = fileName;
-            item->setToolTip(toolTip);
-
-            TextUserData *textUserData = new TextUserData;
-            textUserData->xmlFilePath = templateFileInfo.filePath();
+            TextUserData *pTextUserData = new TextUserData;
+            pTextUserData->strXmlFilePath = templateFileInfo.filePath();
             QByteArray userDataByteArray;
-            userDataByteArray.append(reinterpret_cast<char *>(textUserData), sizeof(TextUserData));
-            item->setData(userDataByteArray, Qt::UserRole);
+            userDataByteArray.append(reinterpret_cast<char *>(pTextUserData), sizeof(TextUserData));
+            pItem->setData(userDataByteArray, Qt::UserRole);
 
-            itemMode->appendRow(item);
+            pItemMode->appendRow(pItem);
 
             qDebug()<<"sll-----xmlFilePath = "<<templateFileInfo.filePath();
         }
 
-        qDebug()<<"sll-----className = "<<className;
+        qDebug()<<"sll-----className = "<<strClassName;
 
-        textDockListViewItemModel->insert(className, itemMode);
+        pTextDockListViewItemModel->insert(strClassName, pItemMode);
     }
 
     qDebug()<<"sll-----createAllClassesItemModel---end";
-    return textDockListViewItemModel;
+    return pTextDockListViewItemModel;
 }
 
-bool TextDockWidget::hasClass() {
+bool TextDockWidget::hasClass()
+{
     qDebug()<<"sll-----hasClass---start";
     qDebug()<<"sll-----hasClass---end";
     return true;
 }
 
-void TextDockWidget::addToTimeline(const QStandardItem *item) {
+void TextDockWidget::addToTimeline(const QStandardItem *pItem)
+{
     qDebug()<<"sll-----addToTimeline---start";
 
-    QVariant userDataVariant = item->data(Qt::UserRole);
-    QByteArray userByteArray = userDataVariant.value<QByteArray>();
-    TextUserData *textUserData = reinterpret_cast<TextUserData *>(userByteArray.data());
+    QVariant userDataVariant    = pItem->data(Qt::UserRole);
+    QByteArray userByteArray    = userDataVariant.value<QByteArray>();
+    TextUserData *pTextUserData = reinterpret_cast<TextUserData *>(userByteArray.data());
 
-    qDebug()<<"sll-----xmlFilePath = "<<textUserData->xmlFilePath;
+    qDebug()<<"sll-----xmlFilePath = "<<pTextUserData->strXmlFilePath;
 
-    FILE_HANDLE fileHandel = m_mainInterface->openFile(textUserData->xmlFilePath);
+    FILE_HANDLE fileHandel = m_pMainInterface->openFile(pTextUserData->strXmlFilePath);
     if (fileHandel) {
-        m_mainInterface->addToTimeLine(fileHandel);
+        m_pMainInterface->addToTimeLine(fileHandel);
 
-        m_mainInterface->destroyFileHandle(fileHandel);
+        m_pMainInterface->destroyFileHandle(fileHandel);
     }
 
     qDebug()<<"sll-----addToTimeline---end";
 }
 
-void TextDockWidget::preview(const QStandardItem *item) {
+void TextDockWidget::preview(const QStandardItem *pItem)
+{
     qDebug()<<"sll-----preview---start";
-    QVariant userDataVariant = item->data(Qt::UserRole);
-    QByteArray userByteArray = userDataVariant.value<QByteArray>();
-    TextUserData *textUserData = reinterpret_cast<TextUserData *>(userByteArray.data());
+    QVariant userDataVariant    = pItem->data(Qt::UserRole);
+    QByteArray userByteArray    = userDataVariant.value<QByteArray>();
+    TextUserData *pTextUserData = reinterpret_cast<TextUserData *>(userByteArray.data());
 
-    qDebug()<<"sll-----xmlFilePath = "<<textUserData->xmlFilePath;
+    qDebug()<<"sll-----xmlFilePath = "<<pTextUserData->strXmlFilePath;
 
-    FILE_HANDLE fileHandel = m_mainInterface->openFile(textUserData->xmlFilePath);
+    FILE_HANDLE fileHandel = m_pMainInterface->openFile(pTextUserData->strXmlFilePath);
     if (fileHandel) {
-        m_mainInterface->playFile(fileHandel);
+        m_pMainInterface->playFile(fileHandel);
 
-        m_mainInterface->destroyFileHandle(fileHandel);
+        m_pMainInterface->destroyFileHandle(fileHandel);
     }
 
     qDebug()<<"sll-----preview---end";
 }
 
-QDockWidget *g_createTextDock(MainInterface *main) {
+QDockWidget *g_createTextDock(MainInterface *pMainInterface)
+{
     qDebug()<<"sll-----createTextDock---start";
-    TextDockWidget *textDockWidget = new TextDockWidget(main);
-    textDockWidget->setupUi();
+    TextDockWidget *pTextDockWidget = new TextDockWidget(pMainInterface);
+    pTextDockWidget->setupUi();
     qDebug()<<"sll-----createTextDock---end";
 
-    return textDockWidget;
+    return pTextDockWidget;
 }
 
 

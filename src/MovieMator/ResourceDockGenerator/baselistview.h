@@ -3,11 +3,12 @@
 
 #include <qlistview.h>
 
-class BaseListView : public QListView {
+class BaseListView : public QListView
+{
     Q_OBJECT
 
 public:
-    BaseListView(QWidget *parent = nullptr);
+    BaseListView(QWidget *pParent = nullptr);
 };
 
 #endif // BASELISTVIEW_H

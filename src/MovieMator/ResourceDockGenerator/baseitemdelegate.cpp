@@ -5,63 +5,81 @@
 #include <qevent.h>
 #include <qdebug.h>
 
-BaseItemDelegate::BaseItemDelegate(QObject *parent) :
-    QStyledItemDelegate(parent) {
+BaseItemDelegate::BaseItemDelegate(QObject *pParent) :
+    QStyledItemDelegate(pParent)
+{
     qDebug()<<"sll-----BaseItemDelegate构造---start";
     qDebug()<<"sll-----BaseItemDelegate构造---end";
 }
 
-void BaseItemDelegate::paint(QPainter *painter,
+void BaseItemDelegate::paint(QPainter *pPainter,
                              const QStyleOptionViewItem &option,
-                             const QModelIndex &index) const {
+                             const QModelIndex &index) const
+{
     QStyleOptionViewItem viewOption(option);
 
-    QStyledItemDelegate::paint(painter, viewOption, index);
+    QStyledItemDelegate::paint(pPainter, viewOption, index);
 
-    if (option.state.testFlag(QStyle::State_MouseOver)) {//绘制鼠标停留在item上的添加按钮
-        //绘制添加按钮
-        QPixmap addBtnPixmap = QPixmap(":/icons/light/32x32/filter_add.png");
-        QRect addBtnRect = QRect(viewOption.rect.left() + viewOption.rect.width() - LISTVIEW_ITEM_ADDBTNSIZE,
-                                 viewOption.rect.top(), LISTVIEW_ITEM_ADDBTNSIZE, LISTVIEW_ITEM_ADDBTNSIZE);
-        painter->save();
-        painter->drawPixmap(addBtnRect, addBtnPixmap);
-        painter->restore();
+    //绘制鼠标停留在item上的添加按钮
+    if (option.state.testFlag(QStyle::State_MouseOver))
+    {
+        QPixmap addBtnPixmap    = QPixmap(":/icons/light/32x32/filter_add.png");
+        QRect addBtnRect        = QRect(viewOption.rect.left() + viewOption.rect.width() - LISTVIEW_ITEM_ADDBTNSIZE,
+                                        viewOption.rect.top(),
+                                        LISTVIEW_ITEM_ADDBTNSIZE,
+                                        LISTVIEW_ITEM_ADDBTNSIZE);
+
+        pPainter->save();
+        pPainter->drawPixmap(addBtnRect, addBtnPixmap);
+        pPainter->restore();
     }
 }
 
-bool BaseItemDelegate::editorEvent(QEvent *event,
-                                   QAbstractItemModel *model,
+bool BaseItemDelegate::editorEvent(QEvent *pEvent,
+                                   QAbstractItemModel *pModel,
                                    const QStyleOptionViewItem &option,
-                                   const QModelIndex &index) {
-    Q_UNUSED(model);
+                                   const QModelIndex &index)
+{
+    Q_UNUSED(pModel);
 
     qDebug()<<"sll-----editorEvent---start";
-    QRect decorationRect = QRect(option.rect.left() + option.rect.width() - LISTVIEW_ITEM_ADDBTNSIZE,
-                                 option.rect.top(), LISTVIEW_ITEM_ADDBTNSIZE, LISTVIEW_ITEM_ADDBTNSIZE);
-    QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
-    if (event->type() == QEvent::MouseButtonPress &&
-        decorationRect.contains(mouseEvent->pos())) {//点击item右上角的添加按钮
+
+    QRect decorationRect    = QRect(option.rect.left() + option.rect.width() - LISTVIEW_ITEM_ADDBTNSIZE,
+                                    option.rect.top(),
+                                    LISTVIEW_ITEM_ADDBTNSIZE,
+                                    LISTVIEW_ITEM_ADDBTNSIZE);
+    QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(pEvent);
+
+    if (pEvent->type() == QEvent::MouseButtonPress &&
+        decorationRect.contains(mouseEvent->pos()))
+    {
+        //点击item右上角的添加按钮
         emit addItem(index);
         return true;
-    } else if (event->type() == QEvent::MouseButtonPress &&
-               !decorationRect.contains(mouseEvent->pos())) {//点击item右上角以外的其他位置
+    }
+    else if (pEvent->type() == QEvent::MouseButtonPress &&
+               !decorationRect.contains(mouseEvent->pos()))
+    {
+        //点击item右上角以外的其他位置
         emit selectItem(index);
     }
 
     qDebug()<<"sll-----editorEvent---end";
 
-    return QStyledItemDelegate::editorEvent(event, model, option, index);
+    return QStyledItemDelegate::editorEvent(pEvent, pModel, option, index);
 }
 
 QSize BaseItemDelegate::sizeHint(const QStyleOptionViewItem &option,
-                                 const QModelIndex &index) const {
+                                 const QModelIndex &index) const
+{
     Q_UNUSED(option);
     Q_UNUSED(index);
     qDebug()<<"sll-----sizeHint---start";
-    qDebug()<<"sll-----sizeHint---end";
 
     QSize itemSize = QSize(LISTVIEW_GRIDSIZE_WIDTH - LISTVIEW_GRID_SPACING * 2,
                            LISTVIEW_GRIDSIZE_HEIGHT - LISTVIEW_GRID_SPACING * 2);
+
+    qDebug()<<"sll-----sizeHint---end";
 
     return itemSize;
 }

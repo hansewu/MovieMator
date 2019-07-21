@@ -2,8 +2,9 @@
 #include "uiuserdef.h"
 #include "qdebug.h"
 
-BaseListView::BaseListView(QWidget *parent) :
-    QListView (parent) {
+BaseListView::BaseListView(QWidget *pParent) :
+    QListView (pParent)
+{
     //FIXME:mac上字体显示太小
     setFont(QFont(font().family(), LISTVIEW_ITEM_FONTSIZE));//设置listview的字体大小，主要作用与item上的文字
     setViewMode(QListView::IconMode);//使用大尺寸的图标及名字显示item

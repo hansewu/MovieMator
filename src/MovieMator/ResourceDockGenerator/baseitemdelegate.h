@@ -8,18 +8,18 @@ class BaseItemDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    explicit BaseItemDelegate(QObject *parent = nullptr);
+    explicit BaseItemDelegate(QObject *pParent = nullptr);
 
     // painting
-    void paint(QPainter *painter,
+    void paint(QPainter *pPainter,
                const QStyleOptionViewItem &option,
                const QModelIndex &index) const;
     QSize sizeHint(const QStyleOptionViewItem &option,
                    const QModelIndex &index) const;
 
 protected:
-    bool editorEvent(QEvent *event,
-                     QAbstractItemModel *model,
+    bool editorEvent(QEvent *pEvent,
+                     QAbstractItemModel *pModel,
                      const QStyleOptionViewItem &option,
                      const QModelIndex &index);
 

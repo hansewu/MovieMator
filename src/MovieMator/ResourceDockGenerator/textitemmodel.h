@@ -3,22 +3,24 @@
 
 #include "baseitemmodel.h"
 
-struct TextUserData {
-    QString xmlFilePath;
+struct TextUserData
+{
+    QString strXmlFilePath;
 };
 
 class MainInterface;
 
-class TextItemModel : public BaseItemModel {
+class TextItemModel : public BaseItemModel
+{
     Q_OBJECT
 
 public:
-    explicit TextItemModel(MainInterface *main = nullptr, QObject *parent = nullptr);
+    explicit TextItemModel(MainInterface *pMainInterface = nullptr, QObject *pParent = nullptr);
 
     QMimeData *mimeData(const QModelIndexList &indexes) const;
 
 private:
-    MainInterface *m_mainInterface;
+    MainInterface *m_pMainInterface;
 };
 
 #endif // TEXTITEMMODEL_H
