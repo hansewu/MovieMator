@@ -63,16 +63,18 @@ QmlFilter::~QmlFilter()
 //#ifdef MOVIEMATOR_PRO
 Mlt::Animation QmlFilter::getAnimation(const QString& name)
 {
-    if (m_filter) {
-        std::string strName = name.toStdString();
-        const char *propertyName = strName.c_str();
+    if (m_filter)
+    {
+        std::string strName         = name.toStdString();
+        const char  *pPropertyName  = strName.c_str();
 
-        if (!m_filter->get_animation(propertyName)) {
+        if (!m_filter->get_animation(pPropertyName))
+        {
             // Cause a string property to be interpreted as animated value.
-            m_filter->anim_get_double(propertyName, 0, 0);
-//            return Mlt::Animation();
+            m_filter->anim_get_double(pPropertyName, 0, 0);
         }
-        return m_filter->get_animation(propertyName);
+
+        return m_filter->get_animation(pPropertyName);
     }
     return Mlt::Animation();
 }
@@ -228,29 +230,35 @@ QRectF QmlFilter::getRect(QString name, int position)  //
     if (position != -1)
         position = MAIN.timelineDock()->getPositionOnParentProducer(position);
 
-    if (!m_filter->is_valid()) return QRectF();
+    if (!m_filter->is_valid())
+        return QRectF();
 
-    QByteArray byteArrayName = name.toUtf8();
-    const char *propertyName = byteArrayName.constData();
-    const char* s = m_filter->get(propertyName);
-    if (s) {
+    QByteArray byteArrayName    = name.toUtf8();
+    const char *pPropertyName   = byteArrayName.constData();
+    const char *pPropertyValue  = m_filter->get(pPropertyName);
+
+    if (pPropertyValue)
+    {
         mlt_rect rect;
-        if (position < 0) {
-            rect = m_filter->get_rect(propertyName);
-        } else {
-//            rect = m_filter->anim_get_rect(propertyName, position, duration());
+        if (position < 0)
+        {
+            rect = m_filter->get_rect(pPropertyName);
         }
-        if (::strchr(s, '%')) {
+
+        if (::strchr(pPropertyValue, '%'))
+        {
             return QRectF(qRound(rect.x * MLT.profile().width()),
                           qRound(rect.y * MLT.profile().height()),
                           qRound(rect.w * MLT.profile().width()),
                           qRound(rect.h * MLT.profile().height()));
-        } else {
+        }
+        else
+        {
             return QRectF(rect.x, rect.y, rect.w, rect.h);
         }
-    } else {
-        return QRectF(0.0, 0.0, 0.0, 0.0);
     }
+
+    return QRectF();
 }
 
 //FIXME: 暫時之應用與Text Filter，之後其他濾鏡獲取rect方法統一后移除
@@ -258,15 +266,20 @@ QRectF QmlFilter::getRectOfTextFilter(QString name, int position)
 {
     if (position != -1)
         position = MAIN.timelineDock()->getPositionOnParentProducer(position);
-    if (!m_filter->is_valid()) return QRectF();
+    if (!m_filter->is_valid())
+        return QRectF();
 
-    QByteArray byteArrayName = name.toUtf8();
-    const char *propertyName = byteArrayName.constData();
+    QByteArray byteArrayName    = name.toUtf8();
+    const char *pPropertyName   = byteArrayName.constData();
     mlt_rect rect;
-    if (position < 0) {
-        rect = m_filter->get_rect(propertyName);
-    } else {
-        rect = m_filter->anim_get_rect(propertyName, position);
+
+    if (position < 0)
+    {
+        rect = m_filter->get_rect(pPropertyName);
+    }
+    else
+    {
+        rect = m_filter->anim_get_rect(pPropertyName, position);
     }
 
     return QRectF(rect.x, rect.y, rect.w, rect.h);
@@ -1216,25 +1229,32 @@ double QmlFilter::getAnimDoubleValue(int frame, QString key)
 QRectF QmlFilter::getAnimRectValue(int frame, QString key)
 {
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
-    if (!m_filter) return QRectF();
+    if (!m_filter)
+        return QRectF();
 
     QByteArray byteArrayName = key.toUtf8();
-    const char *propertyName = byteArrayName.constData();
-    const char* s = m_filter->get(propertyName);
-    if (s) {
+    const char *pPropertyName   = byteArrayName.constData();
+    const char* pPropertyValue  = m_filter->get(pPropertyName);
+
+    if (pPropertyValue)
+    {
         mlt_rect rect;
-        rect = m_filter->anim_get_rect(propertyName, frame);
-        if (::strchr(s, '%')) {
+        rect = m_filter->anim_get_rect(pPropertyName, frame);
+
+        if (::strchr(pPropertyValue, '%'))
+        {
             return QRectF(qRound(rect.x * MLT.profile().width()),
                           qRound(rect.y * MLT.profile().height()),
                           qRound(rect.w * MLT.profile().width()),
                           qRound(rect.h * MLT.profile().height()));
-        } else {
+        }
+        else
+        {
             return QRectF(rect.x, rect.y, rect.w, rect.h);
         }
-    } else {
-        return QRectF(0.0, 0.0, 0.0, 0.0);
     }
+
+    return QRectF();
 }
 
 QString QmlFilter::getAnyAnimPropertyName()
