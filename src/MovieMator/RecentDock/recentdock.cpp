@@ -99,7 +99,7 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
         RecentListView *listView = new RecentListView();
         listView->setModel(proxyModel);
         listView->setViewMode(QListView::IconMode);
-        listView->setFocusPolicy(Qt::ClickFocus);
+        listView->setFocusPolicy(Qt::NoFocus);
         listView->setGridSize(QSize(95, 90));     // 120, 100
         listView->setUniformItemSizes(true);
         listView->setResizeMode(QListView::Adjust);
@@ -159,6 +159,7 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
                                          "QPushButton:pressed{ border-image: url(:/icons/light/32x32/filter_add-a.png)}");
     m_addToTimelineButton->setFixedSize(QSize(27, 26));
     m_addToTimelineButton->setVisible(false);
+    m_addToTimelineButton->setFocusPolicy(Qt::NoFocus);
     connect(m_addToTimelineButton, SIGNAL(clicked()), this, SLOT(addToTimeline()));
 
     LOG_DEBUG() << "end";
@@ -423,7 +424,7 @@ void RecentDock::on_lineEdit_textChanged(const QString& search)
         }
         m_proxyArray[i]->setFilterFixedString(search);
     }
-    Q_ASSERT(m_currentListView);
+//    Q_ASSERT(m_currentListView);  // 不用加，为空表示没有选中状态需要清空
     if(m_currentListView)
     {
         m_currentListView->clearSelection();

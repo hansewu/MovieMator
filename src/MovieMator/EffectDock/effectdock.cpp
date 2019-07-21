@@ -117,6 +117,7 @@ EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
                                "QPushButton:pressed{ border-image: url(:/icons/light/32x32/filter_add-a.png)}");
     m_addButton->setFixedSize(QSize(27, 26));
     m_addButton->setVisible(false);
+    m_addButton->setFocusPolicy(Qt::NoFocus);
     connect(m_addButton, SIGNAL(clicked()), this, SLOT(addToTimeline()));
     connect(m_addButton, SIGNAL(mouseEnter()), this, SLOT(setSelection()));
     connect(m_addButton, SIGNAL(mouseLeave()), this, SLOT(resetSelection()));
@@ -583,7 +584,7 @@ void EffectDock::appendListViewAndLabel(EffectListModel *model, QString itemName
     label->setFixedHeight(40);
 
     listView->setFont(QFont(font().family(), 8));   // 改变字体大小
-    listView->setFocusPolicy(Qt::ClickFocus);
+    listView->setFocusPolicy(Qt::NoFocus);
     listView->setViewMode(QListView::IconMode);
     listView->setGridSize(QSize(95, 90));         // 120,100    ,300/3-5
     listView->setUniformItemSizes(true);
