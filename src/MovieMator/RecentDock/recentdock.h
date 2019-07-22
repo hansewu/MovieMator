@@ -51,7 +51,7 @@ public:
     // 析构函数
     ~RecentDock();
     // listView等的个数（Video、Audio、Image）
-    static const int num = 3;
+    static const int num = 4;
 
 public slots:
     // 添加文件到对应类型的 listView中，并添加到历史记录里
@@ -67,6 +67,10 @@ private:
 
     // 调整 m_addToTimelineButton的位置
     void positionAddToTimelineButton();
+
+    // 添加黑场视频
+    void addBlackVideo();
+
 private:
     // 界面 ui
     Ui::RecentDock *ui;
@@ -94,7 +98,7 @@ private:
     // 文件是哪种类型
     bool m_flag[num] = {false};
     // 标签 m_labeleArray[]要显示的标题
-    const QString m_itemNames[num] = {tr("Videos"), tr("Audios"), tr("Images")};
+    const QString m_itemNames[num] = {tr("Samples"), tr("Videos"), tr("Audios"), tr("Images")};
 
     // 标题与对应的下拉列表序号
     QMap<int, QString> m_map;
