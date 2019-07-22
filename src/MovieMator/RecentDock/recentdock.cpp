@@ -47,8 +47,8 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
     QString style2= "QLineEdit {padding-right: 20px; border: 1px; border-radius: 3px; background-color: rgb(100,100,100) ; }";
     ui->lineEdit->setStyleSheets(style1, style2);
 
-    m_listviewList    = new QList<RecentListView*>;
-    m_modelList       = new QList<RecentListModel*>;
+    m_listviewList = new QList<RecentListView*>;
+    m_modelList = new QList<RecentListModel*>;
     m_currentListView = nullptr;
 
     for(int i=0; i<num; i++)
