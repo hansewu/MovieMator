@@ -51,13 +51,13 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
     m_modelList = new QList<RecentListModel*>;
     m_currentListView = nullptr;
 
-    RecentListModel *model1 = new RecentListModel(main, this);
-    RecentListModel *model2 = new RecentListModel(main, this);
-    RecentListModel *model3 = new RecentListModel(main, this);
+    for(int i=0; i<num; i++)
+    {
+        RecentListModel* pModel = new RecentListModel(main, this);
+        m_modelList->append(pModel);
+    }
 
-    m_modelList->append(model1);
-    m_modelList->append(model2);
-    m_modelList->append(model3);
+    addBlackVideo();
 
     foreach (QString s, m_recent) {
         // 工程文件不添加到历史记录列表里
@@ -67,15 +67,13 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
 //            Q_ASSERT(fileHandle);     // 如果文件名s被改过了就无法打开
             if(fileHandle)
             {
-                if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_VIDEO) {
-                    model1->append(fileHandle);
-                    m_flag[0] = true;
-                } else if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_AUDIO) {
-                    model2->append(fileHandle);
-                    m_flag[1] = true;
-                } else if (m_mainWindow->getFileType(fileHandle) == FILE_TYPE_IMAGE) {
-                    model3->append(fileHandle);
-                    m_flag[2] = true;
+                for(int i = 1; i < num; i++)
+                {
+                    if(m_mainWindow->getFileType(fileHandle) == i)    // m_mainWindow->getFileType(fileHandle)==static_cast<FILE_TYPE>(i)
+                    {
+                        m_modelList->at(i)->append(fileHandle);
+                        m_flag[i] = true;
+                    }
                 }
             }
         }
@@ -262,6 +260,40 @@ void  RecentDock::positionAddToTimelineButton()
     m_addToTimelineButton->setGeometry(x, y, width, height);
 }
 
+void RecentDock::addBlackVideo()
+{
+    Q_ASSERT(m_modelList->at(0));
+    RecentListModel *pList = m_modelList->at(0);
+    if(!pList)
+    {
+        return;
+    }
+
+    QString strTemplateDir = Util::resourcesPath() + "/template/";
+    QDir dir(strTemplateDir + "samplevideo");
+    QFileInfoList files = dir.entryInfoList(QDir::Files | QDir::NoSymLinks);
+    if(files.count() > 0)
+    {
+        for(QFileInfo file : files)
+        {
+            FILE_HANDLE fileHandle = m_mainWindow->openFile(file.filePath());
+            if(fileHandle)
+            {
+                pList->append(fileHandle);
+            }
+        }
+    }
+
+    if(pList->rowCount() > 0)
+    {
+        m_flag[0] = true;
+    }
+    else
+    {
+        m_flag[0] = false;
+    }
+}
+
 void RecentDock::addToTimeline()
 {
     if (!m_currentListView || m_currentListView->model()->rowCount()<=0 || !m_currentIndex.isValid())
@@ -307,37 +339,22 @@ void RecentDock::add(const QString &s)
     if(fileHandle)
     {
         int index = 0;
-        FILE_TYPE file_type = m_mainWindow->getFileType(fileHandle);
-        if (file_type == FILE_TYPE_VIDEO) {
-            Q_ASSERT(m_modelList->at(0));
-            if(!m_modelList->at(0))
+        FILE_TYPE fileType = m_mainWindow->getFileType(fileHandle);
+
+        for(int i = 1; i < num; i++)
+        {
+            if(fileType == i)        // fileType == static_cast<FILE_TYPE>(i)
             {
-                return;
+                Q_ASSERT(m_modelList->at(i));
+                if(!m_modelList->at(i))
+                {
+                    return;
+                }
+                m_modelList->at(i)->insert(fileHandle, 0);
+                m_recent.prepend(s);
+                m_flag[i] = true;
+                index = i;
             }
-            m_modelList->at(0)->insert(fileHandle, 0);
-            m_recent.prepend(s);
-            m_flag[0] = true;
-            index = 0;
-        } else if (file_type == FILE_TYPE_AUDIO) {
-            Q_ASSERT(m_modelList->at(1));
-            if(!m_modelList->at(1))
-            {
-                return;
-            }
-            m_modelList->at(1)->insert(fileHandle, 0);
-            m_recent.prepend(s);
-            m_flag[1] = true;
-            index = 1;
-        } else if (file_type == FILE_TYPE_IMAGE) {
-            Q_ASSERT(m_modelList->at(2));
-            if(!m_modelList->at(2))
-            {
-                return;
-            }
-            m_modelList->at(2)->insert(fileHandle, 0);
-            m_recent.prepend(s);
-            m_flag[2] = true;
-            index = 2;
         }
 
         ui->comboBox->clear();
@@ -366,6 +383,7 @@ void RecentDock::add(const QString &s)
         }
 
         resizeEvent(nullptr);
+        m_addToTimelineButton->setVisible(false);
     }
 //    while (m_recent.count() > MaxItems)
 //    {
