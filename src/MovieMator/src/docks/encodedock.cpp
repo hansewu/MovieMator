@@ -705,44 +705,6 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
     tmp.open();
     tmp.close();
 
-
-//#if SHARE_VERSION
-//#if MOVIEMATOR_PRO
-//    //加水印
-//    Mlt::Filter* textFilter = nullptr;
-//    if (Registration.registrationType() == Registration_None)
-//    {
-//        textFilter = new Mlt::Filter(MLT.profile(), "dynamictext");
-//        Q_ASSERT(textFilter);
-//        textFilter->set("argument", "MovieMator Video Editor Pro\nwww.macvideostudio.com");
-//        textFilter->set("family", "Arial");
-//        textFilter->set("fgcolour", 255.0, 255.0, 255.0, 255.0);
-//        textFilter->set("bgcolour", 0.0, 0.0, 0.0, 0.0);
-//        textFilter->set("olcolour", 255.0, 0.0, 0.0, 0.0);
-//        textFilter->set("outline", "1");
-
-//        textFilter->set("weight", 600);
-
-//        textFilter->set("geometry", 0.25, 0.0, 0.5, 1.0);
-//        textFilter->set("valign", "center");
-//        textFilter->set("halign", "center");
-//        service->attach(*textFilter);
-//    }
-//#endif
-//#endif
-
-
-//    MLT.saveXML(tmp.fileName(), service, false /* without relative paths */);
-
-//#if SHARE_VERSION
-//#if MOVIEMATOR_PRO
-//    if (Registration.registrationType() == Registration_None)
-//    {
-//        service->detach(*textFilter);
-//    }
-//#endif
-//#endif
-
     //添加水印
     addWatermark(service, tmp);
 
@@ -796,95 +758,102 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
 }
 
 //添加水印
-void EncodeDock::addWatermark(Mlt::Service* service, QTemporaryFile& tmpProjectXml) {
-    Q_ASSERT(service);
-    if (!service) {
+void EncodeDock::addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProjectXml)
+{
+    Q_ASSERT(pService);
+    if (!pService)
+    {
         return;
     }
 
     //添加水印滤镜
 #if SHARE_VERSION
 #if MOVIEMATOR_PRO
-    Mlt::Filter* softwareNameTextFilter = nullptr;
-    Mlt::Filter* homePagetextFilter = nullptr;
-    if (Registration.registrationType() == Registration_None) {
+    Mlt::Filter *pSoftwareNameTextFilter = nullptr;
+    Mlt::Filter *pHomePagetextFilter     = nullptr;
+
+    if (Registration.registrationType() == Registration_None)
+    {
         //显示软件名
-        QString softwareName = tr("MovieMator");
-        std::string softwareNameTemp = softwareName.toStdString();
-        softwareNameTextFilter = new Mlt::Filter(MLT.profile(), "dynamictext");
-        Q_ASSERT(softwareNameTextFilter);
-        softwareNameTextFilter->set("argument", softwareNameTemp.c_str());
-        softwareNameTextFilter->set("geometry", 0.684375, 0, 0.328125, 0.2875);
-        softwareNameTextFilter->set("family", "Arial");
-        softwareNameTextFilter->set("size", 207);
-        softwareNameTextFilter->set("weight", 750);
-        softwareNameTextFilter->set("letter_spaceing", 0);
-        softwareNameTextFilter->set("style", "normal");
-        softwareNameTextFilter->set("shear_x", 0);
-        softwareNameTextFilter->set("shadow_distance", 0);
-        softwareNameTextFilter->set("shadow_angle", 44);
-        softwareNameTextFilter->set("fgcolour", 255, 255, 255, 255);
-        softwareNameTextFilter->set("bgcolour", 0, 128, 128, 128);
-        softwareNameTextFilter->set("olcolour", 255, 187, 66, 48);
-        softwareNameTextFilter->set("pad", 0);
-        softwareNameTextFilter->set("halign", "center");
-        softwareNameTextFilter->set("valign", "middle");
-        softwareNameTextFilter->set("outline", 3);
-        softwareNameTextFilter->set("trans_fix_rotate_x", 0);
-        softwareNameTextFilter->set("trans_scale_x", 1);
-        softwareNameTextFilter->set("trans_ox", 0);
-        softwareNameTextFilter->set("trans_oy", 0);
-        softwareNameTextFilter->set("trans_scale_aspect_ratio", 1);
-        softwareNameTextFilter->set("transparent_alpha", 1);
-        service->attach(*softwareNameTextFilter);
+        QString strSoftwareName             = tr("MovieMator");
+        std::string strSoftwareNameTemp     = strSoftwareName.toStdString();
+        pSoftwareNameTextFilter             = new Mlt::Filter(MLT.profile(), "dynamictext");
+
+        Q_ASSERT(pSoftwareNameTextFilter);
+        pSoftwareNameTextFilter->set("argument", strSoftwareNameTemp.c_str());
+        pSoftwareNameTextFilter->set("geometry", 0.684375, 0, 0.328125, 0.2875);
+        pSoftwareNameTextFilter->set("family", "Arial");
+        pSoftwareNameTextFilter->set("size", 207);
+        pSoftwareNameTextFilter->set("weight", 750);
+        pSoftwareNameTextFilter->set("letter_spaceing", 0);
+        pSoftwareNameTextFilter->set("style", "normal");
+        pSoftwareNameTextFilter->set("shear_x", 0);
+        pSoftwareNameTextFilter->set("shadow_distance", 0);
+        pSoftwareNameTextFilter->set("shadow_angle", 44);
+        pSoftwareNameTextFilter->set("fgcolour", 255, 255, 255, 255);
+        pSoftwareNameTextFilter->set("bgcolour", 0, 128, 128, 128);
+        pSoftwareNameTextFilter->set("olcolour", 255, 187, 66, 48);
+        pSoftwareNameTextFilter->set("pad", 0);
+        pSoftwareNameTextFilter->set("halign", "center");
+        pSoftwareNameTextFilter->set("valign", "middle");
+        pSoftwareNameTextFilter->set("outline", 3);
+        pSoftwareNameTextFilter->set("trans_fix_rotate_x", 0);
+        pSoftwareNameTextFilter->set("trans_scale_x", 1);
+        pSoftwareNameTextFilter->set("trans_ox", 0);
+        pSoftwareNameTextFilter->set("trans_oy", 0);
+        pSoftwareNameTextFilter->set("trans_scale_aspect_ratio", 1);
+        pSoftwareNameTextFilter->set("transparent_alpha", 1);
+        pService->attach(*pSoftwareNameTextFilter);
 
         //显示主页网址
-        QString homePage = tr("http://moviemator.net");
-        homePagetextFilter = new Mlt::Filter(MLT.profile(), "dynamictext");
-        Q_ASSERT(homePagetextFilter);
-        homePagetextFilter->set("argument", homePage.toLatin1().data());
-        homePagetextFilter->set("geometry", 0.698438, 0.1725, 0.299219, 0.123611);
-        homePagetextFilter->set("family", "Arial");
-        homePagetextFilter->set("size", 89);
-        homePagetextFilter->set("weight", 750);
-        homePagetextFilter->set("letter_spaceing", 0);
-        homePagetextFilter->set("style", "normal");
-        homePagetextFilter->set("shear_x", -0.2);
-        homePagetextFilter->set("shadow_distance", 0);
-        homePagetextFilter->set("shadow_angle", 44);
-        homePagetextFilter->set("fgcolour", 255, 255, 255, 255);
-        homePagetextFilter->set("bgcolour", 0, 128, 128, 128);
-        homePagetextFilter->set("olcolour", 255, 187, 66, 48);
-        homePagetextFilter->set("pad", 0);
-        homePagetextFilter->set("halign", "center");
-        homePagetextFilter->set("valign", "middle");
-        homePagetextFilter->set("outline", 2);
-        homePagetextFilter->set("trans_fix_rotate_x", 0);
-        homePagetextFilter->set("trans_scale_x", 1);
-        homePagetextFilter->set("trans_ox", 0);
-        homePagetextFilter->set("trans_oy", 0);
-        homePagetextFilter->set("trans_scale_aspect_ratio", 1);
-        homePagetextFilter->set("transparent_alpha", 1);
-        service->attach(*homePagetextFilter);
+        QString strHomePage     = tr("http://moviemator.net");
+        pHomePagetextFilter     = new Mlt::Filter(MLT.profile(), "dynamictext");
+
+        Q_ASSERT(pHomePagetextFilter);
+        pHomePagetextFilter->set("argument", strHomePage.toLatin1().data());
+        pHomePagetextFilter->set("geometry", 0.698438, 0.1725, 0.299219, 0.123611);
+        pHomePagetextFilter->set("family", "Arial");
+        pHomePagetextFilter->set("size", 89);
+        pHomePagetextFilter->set("weight", 750);
+        pHomePagetextFilter->set("letter_spaceing", 0);
+        pHomePagetextFilter->set("style", "normal");
+        pHomePagetextFilter->set("shear_x", -0.2);
+        pHomePagetextFilter->set("shadow_distance", 0);
+        pHomePagetextFilter->set("shadow_angle", 44);
+        pHomePagetextFilter->set("fgcolour", 255, 255, 255, 255);
+        pHomePagetextFilter->set("bgcolour", 0, 128, 128, 128);
+        pHomePagetextFilter->set("olcolour", 255, 187, 66, 48);
+        pHomePagetextFilter->set("pad", 0);
+        pHomePagetextFilter->set("halign", "center");
+        pHomePagetextFilter->set("valign", "middle");
+        pHomePagetextFilter->set("outline", 2);
+        pHomePagetextFilter->set("trans_fix_rotate_x", 0);
+        pHomePagetextFilter->set("trans_scale_x", 1);
+        pHomePagetextFilter->set("trans_ox", 0);
+        pHomePagetextFilter->set("trans_oy", 0);
+        pHomePagetextFilter->set("trans_scale_aspect_ratio", 1);
+        pHomePagetextFilter->set("transparent_alpha", 1);
+        pService->attach(*pHomePagetextFilter);
     }
 #endif
 #endif
 
     //保存已添加水印的工程为xml工程文件
-    MLT.saveXML(tmpProjectXml.fileName(), service, false /* without relative paths */);
+    MLT.saveXML(tmpProjectXml.fileName(), pService, false /* without relative paths */);
 
     //从当前工程中移除水印
 #if SHARE_VERSION
 #if MOVIEMATOR_PRO
-    if (Registration.registrationType() == Registration_None) {
-        service->detach(*softwareNameTextFilter);
-        service->detach(*homePagetextFilter);
+    if (Registration.registrationType() == Registration_None)
+    {
+        pService->detach(*pSoftwareNameTextFilter);
+        pService->detach(*pHomePagetextFilter);
 
-        delete softwareNameTextFilter;
-        softwareNameTextFilter = nullptr;
+        delete pSoftwareNameTextFilter;
+        pSoftwareNameTextFilter = nullptr;
 
-        delete homePagetextFilter;
-        homePagetextFilter = nullptr;
+        delete pHomePagetextFilter;
+        pHomePagetextFilter = nullptr;
     }
 #endif
 #endif
