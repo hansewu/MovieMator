@@ -4284,22 +4284,28 @@ Mlt::Producer* MultitrackModel::producer(Mlt::Producer *producer, Mlt::Profile& 
 
 Mlt::Producer* MultitrackModel::copiedProducer()
 {
-    return (m_copiedProducer!=nullptr) ? m_copiedProducer.data() : nullptr;
+    return (m_copiedProducer != nullptr) ? m_copiedProducer.data() : nullptr;
 }
 
-void MultitrackModel::setCopiedProducer(Mlt::Producer* producer)
+void MultitrackModel::setCopiedProducer(Mlt::Producer* pProducer)
 {
-    m_copiedProducer.reset(new Mlt::Producer(producer));
+    if(pProducer && pProducer->is_valid())
+    {
+        m_copiedProducer.reset(new Mlt::Producer(pProducer));
+    }
 }
 
 Mlt::Producer* MultitrackModel::selectedProducer()
 {
-    return (m_selectedProducer!=nullptr) ? m_selectedProducer.data() : nullptr;
+    return (m_selectedProducer != nullptr) ? m_selectedProducer.data() : nullptr;
 }
 
-void MultitrackModel::setSelectedProducer(Mlt::Producer* producer)
+void MultitrackModel::setSelectedProducer(Mlt::Producer* pProducer)
 {
-    m_selectedProducer.reset(new Mlt::Producer(producer));
+    if(pProducer && pProducer->is_valid())
+    {
+        m_selectedProducer.reset(new Mlt::Producer(pProducer));
+    }
 }
 
 void MultitrackModel::debugPrintState()

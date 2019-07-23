@@ -339,8 +339,8 @@ QString FilterController::getFilterThumbnailPath(QString filterName, bool isAudi
 
 //    QLocale ql;
 //    if(ql.language() == QLocale::Chinese)
-    QString language = Settings.language();
-    if(language=="zh" || language=="zh_CN")
+    QString strLanguage = Settings.language();
+    if((strLanguage == "zh") || (strLanguage == "zh_CN"))
     {
         QMap<QString, QString>::const_iterator iter;
         for (iter = filterNameMap.constBegin(); iter != filterNameMap.constEnd(); ++iter )
@@ -400,8 +400,8 @@ QString FilterController::getFilterType(QString filterType)
 
 //    QLocale ql;
 //    if(ql.language() == QLocale::Chinese)
-    QString language = Settings.language();
-    if(language=="zh" || language=="zh_CN")
+    QString strLanguage = Settings.language();
+    if((strLanguage == "zh") || (strLanguage == "zh_CN"))
     {
         QMap<QString, QString>::const_iterator iter;
         for (iter = filterTypeMap.constBegin(); iter != filterTypeMap.constEnd(); ++iter )
