@@ -9,7 +9,8 @@
 #include <qstandardpaths.h>
 #include <qmessagebox.h>
 
-const QMap<QString, QString> profileNameMap = {
+const QMap<QString, QString> profileNameMap =
+{
     {"", "Automatic"},
     {"atsc_720p_50", "HD 720p 50 fps"},
     {"atsc_720p_5994", "HD 720p 59.94 fps"},
@@ -51,8 +52,8 @@ const QMap<QString, QString> profileNameMap = {
 };
 
 
-VideoModeSettingsDialog::VideoModeSettingsDialog(QWidget *parent) :
-    QDialog(parent),
+VideoModeSettingsDialog::VideoModeSettingsDialog(QWidget *pParent) :
+    QDialog(pParent),
     ui(new Ui::VideoModeSettingsDialog)
 {
     ui->setupUi(this);
@@ -66,32 +67,41 @@ VideoModeSettingsDialog::~VideoModeSettingsDialog()
     delete ui;
 }
 
-void VideoModeSettingsDialog::setupCurrentProfileUI() {
-    QString currentPrefileFileName = Settings.playerProfile();
-    QList<QString> keys =  profileNameMap.keys();
-    if (keys.contains(currentPrefileFileName)) {
-        ui->videoModeComboBox->setCurrentText(profileNameMap.value(currentPrefileFileName));
-    } else {
-        ui->videoModeComboBox->setCurrentText(currentPrefileFileName);
+void VideoModeSettingsDialog::setupCurrentProfileUI()
+{
+    QString strCurrentPrefileFileName   = Settings.playerProfile();
+    QList<QString> keys                 =  profileNameMap.keys();
+
+    if (keys.contains(strCurrentPrefileFileName))
+    {
+        ui->videoModeComboBox->setCurrentText(profileNameMap.value(strCurrentPrefileFileName));
+    }
+    else
+    {
+        ui->videoModeComboBox->setCurrentText(strCurrentPrefileFileName);
     }
 }
 
-void VideoModeSettingsDialog::setUpVideoModeComboBox() {
-    int itemCount = 0;
+void VideoModeSettingsDialog::setUpVideoModeComboBox()
+{
+    int nItemCount = 0;
     //添加固定菜单项
     QMap<QString, QString>::const_iterator mapIter;
-    for (mapIter = profileNameMap.constBegin(); mapIter != profileNameMap.constEnd(); ++mapIter) {
+    for (mapIter = profileNameMap.constBegin(); mapIter != profileNameMap.constEnd(); ++mapIter)
+    {
         ui->videoModeComboBox->addItem(mapIter.value(), mapIter.key());
-        itemCount += 1;
+        nItemCount += 1;
     }
 
     //添加自定义菜单项
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
-    if (dir.cd("profiles")) {
+    if (dir.cd("profiles"))
+    {
         QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
-        foreach (QString name, profiles) {
+        foreach (QString name, profiles)
+        {
             ui->videoModeComboBox->addItem(name, name);
-            itemCount += 1;
+            nItemCount += 1;
         }
     }
 
@@ -102,19 +112,23 @@ void VideoModeSettingsDialog::setUpVideoModeComboBox() {
     setupCurrentProfileUI();
 }
 
-void VideoModeSettingsDialog::on_videoModeComboBox_currentTextChanged(const QString &arg1)
+void VideoModeSettingsDialog::on_videoModeComboBox_currentTextChanged(const QString &strText)
 {
-    if (arg1 == "Custom") {
+    if (strText == "Custom")
+    {
         CustomProfileDialog dialog(this);
         dialog.setWindowModality(QmlApplication::dialogModality());
-        if (dialog.exec() == QDialog::Accepted) {
+
+        if (dialog.exec() == QDialog::Accepted)
+        {
             QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
-            if (dir.cd("profiles")) {
-                QString name = dialog.profileName();
-                int itemCount = ui->videoModeComboBox->count();
-                ui->videoModeComboBox->setCurrentIndex(itemCount - 2);
-                ui->videoModeComboBox->insertItem(itemCount - 1, name, name);
-                ui->videoModeComboBox->setCurrentText(name);
+            if (dir.cd("profiles"))
+            {
+                QString strProfileName  = dialog.profileName();
+                int nItemCount          = ui->videoModeComboBox->count();
+                ui->videoModeComboBox->setCurrentIndex(nItemCount - 2);
+                ui->videoModeComboBox->insertItem(nItemCount - 1, strProfileName, strProfileName);
+                ui->videoModeComboBox->setCurrentText(strProfileName);
             }
         }
     }
@@ -122,8 +136,8 @@ void VideoModeSettingsDialog::on_videoModeComboBox_currentTextChanged(const QStr
 
 void VideoModeSettingsDialog::on_buttonBox_accepted()
 {
-    QString profileName = ui->videoModeComboBox->currentData().toString();
-    MAIN.changeProfile(profileName);
+    QString strProfileName = ui->videoModeComboBox->currentData().toString();
+    MAIN.changeProfile(strProfileName);
 }
 
 void VideoModeSettingsDialog::on_buttonBox_rejected()
