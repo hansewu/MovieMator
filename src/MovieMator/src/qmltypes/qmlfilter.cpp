@@ -351,14 +351,16 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
     if (!m_filter) return;
     mlt_rect rect = m_filter->get_rect(name.toUtf8().constData());
     if (!m_filter->get(name.toUtf8().constData()) || !qFuzzyCompare(x,rect.x) || !qFuzzyCompare(y,rect.y)
-        || !qFuzzyCompare(width,rect.w) || !qFuzzyCompare(height,rect.h) || !qFuzzyCompare(opacity,rect.o)) {
+        || !qFuzzyCompare(width,rect.w) || !qFuzzyCompare(height,rect.h) || !qFuzzyCompare(opacity,rect.o))
+    {
 
         QRectF rect_from(rect.x, rect.y, rect.w, rect.h);
         QRectF rect_to(x, y, width, height);
 
         m_filter->set(name.toUtf8().constData(), x, y, width, height, opacity);
 
-        if((rect_from != rect_to) && isValidRect(rect_from)){
+        if((rect_from != rect_to) && isValidRect(rect_from))
+        {
             MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), MAIN.filterController()->currentFilterIndex(), name,  rect_from, rect_to,true));
         }
         MLT.refreshConsumer();
