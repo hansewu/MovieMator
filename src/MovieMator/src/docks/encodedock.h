@@ -174,7 +174,7 @@ private:
     // 执行 m_immediateJob
     void runMelt(const QString& target, int realtime = -1);
     // 添加水印
-    void addWatermark(Mlt::Service* service, QTemporaryFile& tmpProjectXml);
+    void addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProjectXml);
 
     // ???
     void encode(const QString& target);
