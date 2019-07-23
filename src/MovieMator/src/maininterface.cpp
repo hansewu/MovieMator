@@ -66,7 +66,7 @@ void MainInterface::destroyFileHandle(FILE_HANDLE &fileHandle)
     {
         Mlt::Producer *pProducer = static_cast<Mlt::Producer*>(fileHandle);
         delete pProducer;
-        pProducer = nullptr;
+        pProducer  = nullptr;
         fileHandle = nullptr;
     }
 }
