@@ -34,6 +34,7 @@ protected:
 private slots:
     virtual void addItemToTimeline(const QModelIndex &index);
     virtual void clickedItem(const QModelIndex &index);
+    virtual void showMenu(const QModelIndex &index);
 
     void onClassComboBoxActivated(int nIndex);
 

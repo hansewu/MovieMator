@@ -149,6 +149,7 @@ BaseListView *BaseDockWidget::createListView(BaseItemModel *pItemModel)
 
     connect(pItemDelegate, &BaseItemDelegate::addItem, this, &BaseDockWidget::addItemToTimeline);
     connect(pItemDelegate, &BaseItemDelegate::selectItem, this, &BaseDockWidget::clickedItem);
+    connect(pItemDelegate, &BaseItemDelegate::rightClickItem, this, &BaseDockWidget::showMenu);
 
     ui->verticalLayout_scrollarea->addWidget(pListView);
 
@@ -193,6 +194,12 @@ void BaseDockWidget::clickedItem(const QModelIndex &index)
     preview(standardItem);
 
     qDebug()<<"sll-----clickedItem---end";
+}
+
+void BaseDockWidget::showMenu(const QModelIndex &index)
+{
+    qDebug()<<"sll-----showMenu---start";
+    qDebug()<<"sll-----showMenu---end";
 }
 
 void BaseDockWidget::addItemToDock(QString strItemClass, QStandardItem *pItem)
