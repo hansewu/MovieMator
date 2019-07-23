@@ -3550,10 +3550,12 @@ void MainWindow::onKeyerTriggered(QAction *action)
     Settings.setPlayerKeyerMode(action->data().toInt());
 }
 
-void MainWindow::changeProfile(QString profileName) {
+void MainWindow::changeProfile(QString strProfileName)
+{
     //检测是否和当前profile相等
-    QString currentPrefileName = Settings.playerProfile();
-    if (profileName == currentPrefileName) {
+    QString strCurrentPrefileName = Settings.playerProfile();
+    if (strProfileName == strCurrentPrefileName)
+    {
         return;
     }
 
@@ -3569,18 +3571,24 @@ void MainWindow::changeProfile(QString profileName) {
 #else
     dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
 #endif
+
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());
-    if (dialog.exec() == QMessageBox::Yes) {
+
+    if (dialog.exec() == QMessageBox::Yes)
+    {
         if (continueModified())
         {
             m_exitCode = EXIT_RESTART;
             //close project
             if (multitrack())
+            {
                 m_timelineDock->model()->close();
+            }
+
             //set profile
-            Settings.setPlayerProfile(profileName);
+            Settings.setPlayerProfile(strProfileName);
             QApplication::closeAllWindows();
             return;
         }
@@ -4739,7 +4747,6 @@ void MainWindow::on_actionVideoMode_triggered()
 {
     VideoModeSettingsDialog videoModeSettingsDialog(this);
     videoModeSettingsDialog.setWindowModality(QmlApplication::dialogModality());
-    if (videoModeSettingsDialog.exec() == QDialog::Accepted) {
-        qDebug()<<"";
-    }
+
+    videoModeSettingsDialog.exec();
 }

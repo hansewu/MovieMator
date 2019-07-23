@@ -143,7 +143,7 @@ public:
     TemplateEidtor *templateEditor() const { return m_templateEditor; }
 
     //修改profile
-    void changeProfile(QString profileName);
+    void changeProfile(QString strProfileName);
 
 
 signals:
