@@ -11,44 +11,44 @@
 
 const QMap<QString, QString> profileNameMap =
 {
-    {"", "Automatic"},
-    {"atsc_720p_50", "HD 720p 50 fps"},
-    {"atsc_720p_5994", "HD 720p 59.94 fps"},
-    {"atsc_720p_60", "HD 720p 60 fps"},
-    {"atsc_1080i_50", "HD 1080i 25 fps"},
-    {"atsc_1080i_5994", "HD 1080i 29.97 fps"},
-    {"atsc_1080p_2398", "HD 1080p 23.98 fps"},
-    {"atsc_1080p_24", "HD 1080p 24 fps"},
-    {"atsc_1080p_25", "HD 1080p 25 fps"},
-    {"atsc_1080p_2997", "HD 1080p 29.97 fps"},
-    {"atsc_1080p_30", "HD 1080p 30 fps"},
-    {"dv_ntsc", "SD NTSC"},
-    {"dv_pal", "SD PAL"},
-    {"uhd_2160p_2398", "UHD 2160p 23.98 fps"},
-    {"uhd_2160p_24", "UHD 2160p 24 fps"},
-    {"uhd_2160p_25", "UHD 2160p 25 fps"},
-    {"uhd_2160p_2997", "UHD 2160p 29.97 fps"},
-    {"uhd_2160p_30", "UHD 2160p 30 fps"},
-    {"uhd_2160p_50", "UHD 2160p 50 fps"},
-    {"uhd_2160p_5994", "UHD 2160p 59.94 fps"},
-    {"uhd_2160p_60", "UHD 2160p 60 fps"},
+    {"",                    "Automatic"},
+    {"atsc_720p_50",        "HD 720p 50 fps"},
+    {"atsc_720p_5994",      "HD 720p 59.94 fps"},
+    {"atsc_720p_60",        "HD 720p 60 fps"},
+    {"atsc_1080i_50",       "HD 1080i 25 fps"},
+    {"atsc_1080i_5994",     "HD 1080i 29.97 fps"},
+    {"atsc_1080p_2398",     "HD 1080p 23.98 fps"},
+    {"atsc_1080p_24",       "HD 1080p 24 fps"},
+    {"atsc_1080p_25",       "HD 1080p 25 fps"},
+    {"atsc_1080p_2997",     "HD 1080p 29.97 fps"},
+    {"atsc_1080p_30",       "HD 1080p 30 fps"},
+    {"dv_ntsc",             "SD NTSC"},
+    {"dv_pal",              "SD PAL"},
+    {"uhd_2160p_2398",      "UHD 2160p 23.98 fps"},
+    {"uhd_2160p_24",        "UHD 2160p 24 fps"},
+    {"uhd_2160p_25",        "UHD 2160p 25 fps"},
+    {"uhd_2160p_2997",      "UHD 2160p 29.97 fps"},
+    {"uhd_2160p_30",        "UHD 2160p 30 fps"},
+    {"uhd_2160p_50",        "UHD 2160p 50 fps"},
+    {"uhd_2160p_5994",      "UHD 2160p 59.94 fps"},
+    {"uhd_2160p_60",        "UHD 2160p 60 fps"},
 
     //Non-Broadcast
-    {"atsc_720p_2398", "HD 720p 23.98 fps"},
-    {"atsc_720p_24", "HD 720p 24 fps"},
-    {"atsc_720p_25", "HD 720p 25 fps"},
-    {"atsc_720p_2997", "HD 720p 29.97 fps"},
-    {"atsc_720p_30", "HD 720p 30 fps"},
-    {"atsc_1080i_60", "HD 1080i 60 fps"},
-    {"hdv_1080_50i", "HDV 1080i 25 fps"},
-    {"hdv_1080_60i", "HDV 1080i 29.97 fps"},
-    {"hdv_1080_25p", "HDV 1080p 25 fps"},
-    {"dv_ntsc_wide", "DVD Widescreen NTSC"},
-    {"dv_pal_wide", "DVD Widescreen PAL"},
-    {"square_ntsc", "640x480 4:3 NTSC"},
-    {"square_pal", "768x576 4:3 PAL"},
-    {"square_ntsc_wide", "854x480 16:9 NTSC"},
-    {"square_pal_wide", "1024x576 16:9 PAL"},
+    {"atsc_720p_2398",      "HD 720p 23.98 fps"},
+    {"atsc_720p_24",        "HD 720p 24 fps"},
+    {"atsc_720p_25",        "HD 720p 25 fps"},
+    {"atsc_720p_2997",      "HD 720p 29.97 fps"},
+    {"atsc_720p_30",        "HD 720p 30 fps"},
+    {"atsc_1080i_60",       "HD 1080i 60 fps"},
+    {"hdv_1080_50i",        "HDV 1080i 25 fps"},
+    {"hdv_1080_60i",        "HDV 1080i 29.97 fps"},
+    {"hdv_1080_25p",        "HDV 1080p 25 fps"},
+    {"dv_ntsc_wide",        "DVD Widescreen NTSC"},
+    {"dv_pal_wide",         "DVD Widescreen PAL"},
+    {"square_ntsc",         "640x480 4:3 NTSC"},
+    {"square_pal",          "768x576 4:3 PAL"},
+    {"square_ntsc_wide",    "854x480 16:9 NTSC"},
+    {"square_pal_wide",     "1024x576 16:9 PAL"},
 };
 
 
@@ -70,7 +70,7 @@ VideoModeSettingsDialog::~VideoModeSettingsDialog()
 void VideoModeSettingsDialog::setupCurrentProfileUI()
 {
     QString strCurrentPrefileFileName   = Settings.playerProfile();
-    QList<QString> keys                 =  profileNameMap.keys();
+    QList<QString> keys                 = profileNameMap.keys();
 
     if (keys.contains(strCurrentPrefileFileName))
     {
