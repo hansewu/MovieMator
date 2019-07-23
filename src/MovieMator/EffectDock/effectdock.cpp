@@ -210,21 +210,21 @@ QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInf
         return srcStr;
     }
 
-    QString result = srcStr;
+    QString strResult = srcStr;
     if (translationInfo.contains(srcStr)) {
         QJsonObject subObj = translationInfo.value(srcStr).toObject();
-        QString language = Settings.language();
-        if(language=="zh" || language=="zh_CN")
+        QString strLanguage = Settings.language();
+        if((strLanguage == "zh") || (strLanguage == "zh_CN"))
         {
-            language = "zh_CN";     // Settings.language()有 "zh"没有 "zh_CN"
+            strLanguage = "zh_CN";     // Settings.language()有 "zh"没有 "zh_CN"
         }
-        result = subObj.value(language).toString();
-        if (result.isEmpty()) {
-            result = subObj.value("en").toString();
+        strResult = subObj.value(strLanguage).toString();
+        if (strResult.isEmpty()) {
+            strResult = subObj.value("en").toString();
         }
     }
 
-    return result;
+    return strResult;
 }
 
 QImage EffectDock::createThumbnail(QString filePath) {

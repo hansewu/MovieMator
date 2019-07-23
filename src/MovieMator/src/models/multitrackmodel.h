@@ -152,10 +152,10 @@ public:
     Mlt::Producer* producer(Mlt::Producer *producer, Mlt::Profile& profile, double speed);  //根据条件重新深度复制一个producer
 
     Mlt::Producer* copiedProducer();
-    void setCopiedProducer(Mlt::Producer *producer);
+    void setCopiedProducer(Mlt::Producer *pProducer);
 
     Mlt::Producer* selectedProducer();
-    void setSelectedProducer(Mlt::Producer *producer);
+    void setSelectedProducer(Mlt::Producer *pProducer);
 
     //设置转场属性
     void setTransitionProperty(int trackIndex, int clipIndex, const QString& transitionName, const QString& propertyName, const QString& propertyValue);

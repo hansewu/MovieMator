@@ -70,13 +70,13 @@ AvformatProducerSimpleWidget::AvformatProducerSimpleWidget(QWidget *parent)
     ui->startPointSpinBox->setStyleSheet("QSpinBox{background-color:transparent; border:none;}");
     ui->endPointSpinBox->setStyleSheet("QSpinBox{background-color:transparent; border:none;}");
 
+    m_bStatus       = false;
+    m_dOpacityValue = 1.0;
+    m_timer         = new QTimer(this);
     m_opacityEffect = new QGraphicsOpacityEffect(ui->okButton);
-    m_timer = new QTimer(this);
-    m_timer->setInterval(150);
-    m_status = false;
-    m_opacityValue = 1.0;
 
-    m_opacityEffect->setOpacity(m_opacityValue);
+    m_timer->setInterval(150);
+    m_opacityEffect->setOpacity(m_dOpacityValue);
     ui->okButton->setGraphicsEffect(m_opacityEffect);
 
     connect(m_timer, SIGNAL(timeout()), this, SLOT(okButtonFlash()));
@@ -314,25 +314,25 @@ void AvformatProducerSimpleWidget::okButtonFlash()
     ui->okButton->setStyleSheet("QPushButton{"
                                 "border-radius:3px;border:1px solid;border-color:black;"
                                 "background-color:rgb(192,72,44);color:rgb(225,225,225);}");
-    if(m_status)
+    if(m_bStatus)
     {
-        m_opacityValue -= 0.2;
+        m_dOpacityValue -= 0.2;
     }
     else
     {
-        m_opacityValue += 0.2;
+        m_dOpacityValue += 0.2;
     }
 
-    if(m_opacityValue > 0.9)
+    if(m_dOpacityValue > 0.9)
     {
-        m_status = true;
+        m_bStatus = true;
     }
-    else if(m_opacityValue < 0.5)
+    else if(m_dOpacityValue < 0.5)
     {
-        m_status = false;
+        m_bStatus = false;
     }
 
-    m_opacityEffect->setOpacity(m_opacityValue);
+    m_opacityEffect->setOpacity(m_dOpacityValue);
 }
 
 void AvformatProducerSimpleWidget::stopTimer()
@@ -342,6 +342,6 @@ void AvformatProducerSimpleWidget::stopTimer()
                                 "background-color:rgb(100,100,100);color:rgb(225,225,225);}");
     m_timer->stop();
 
-    m_opacityValue = 1.0;
-    m_opacityEffect->setOpacity(m_opacityValue);
+    m_dOpacityValue = 1.0;
+    m_opacityEffect->setOpacity(m_dOpacityValue);
 }
