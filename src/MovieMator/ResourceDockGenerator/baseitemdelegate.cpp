@@ -50,18 +50,30 @@ bool BaseItemDelegate::editorEvent(QEvent *pEvent,
                                     LISTVIEW_ITEM_ADDBTNSIZE);
     QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(pEvent);
 
-    if (pEvent->type() == QEvent::MouseButtonPress &&
-        decorationRect.contains(mouseEvent->pos()))
+    if (pEvent->type() == QEvent::MouseButtonPress)
     {
-        //点击item右上角的添加按钮
-        emit addItem(index);
-        return true;
-    }
-    else if (pEvent->type() == QEvent::MouseButtonPress &&
-               !decorationRect.contains(mouseEvent->pos()))
-    {
-        //点击item右上角以外的其他位置
-        emit selectItem(index);
+        if (mouseEvent->button() == Qt::LeftButton)
+        {
+            if (decorationRect.contains(mouseEvent->pos()))
+            {
+                emit addItem(index);
+                return true;
+            }
+            else
+            {
+                emit selectItem(index);
+            }
+        }
+        else if (mouseEvent->button() == Qt::RightButton)
+        {
+            if (!decorationRect.contains(mouseEvent->pos()))
+            {
+                 emit selectItem(index);
+            }
+
+            //显示右键菜单
+            emit rightClickItem(index);
+        }
     }
 
     qDebug()<<"sll-----editorEvent---end";
