@@ -194,8 +194,8 @@ private:
     QPushButton *m_fitButton;           // 合适
     QPushButton *m_fullScreenButton;    // 全屏
     QPushButton *m_zoomSetButton;
-    QFrame *m_zoomPopup;
-    QMenu *m_zoomMenu;
+    QFrame      *m_zoomPopup;
+    QMenu       *m_zoomMenu;
 
     bool m_bPlayedOrStoped;
     bool m_bMute;
