@@ -220,15 +220,13 @@ QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInf
     {
         QJsonObject subObj = translationInfo.value(srcStr).toObject();
         QString strLanguage = Settings.language();
-        if(strLanguage=="zh" || strLanguage=="zh_CN")
+        if((strLanguage == "zh") || (strLanguage == "zh_CN"))
         {
             strLanguage = "zh_CN";     // Settings.language()有 "zh"没有 "zh_CN"
         }
         strResult = subObj.value(strLanguage).toString();
-
         if (strResult.isEmpty())
         {
-
             strResult = subObj.value("en").toString();
         }
     }
