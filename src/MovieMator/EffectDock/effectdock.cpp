@@ -215,7 +215,7 @@ QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInf
         return srcStr;
     }
 
-    QString result = srcStr;
+    QString strResult = srcStr;
     if (translationInfo.contains(srcStr))
     {
         QJsonObject subObj = translationInfo.value(srcStr).toObject();
@@ -224,15 +224,15 @@ QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInf
         {
             language = "zh_CN";     // Settings.language()有 "zh"没有 "zh_CN"
         }
-        result = subObj.value(language).toString();
+        strResult = subObj.value(language).toString();
 
-        if (result.isEmpty())
+        if (strResult.isEmpty())
         {
-            result = subObj.value("en").toString();
+            strResult = subObj.value("en").toString();
         }
     }
 
-    return result;
+    return strResult;
 }
 
 QImage EffectDock::createThumbnail(QString filePath) {
