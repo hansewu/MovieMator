@@ -3203,21 +3203,9 @@ void MultitrackModel::renumberOtherTracks(const Track& track)
          {
              --m_trackList[row].number;
 
-             // Rename default track names.
-             QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(m_trackList[row].mlt_index));
-             Q_ASSERT(mltTrack);
-             QString trackNameTemplate = (t.type == VideoTrackType)? QString("V%1") : QString("A%1");
-             QString trackName = trackNameTemplate.arg(t.number + 1);
+             bool emitSignal = false;
+             renameTrack(t,row,emitSignal);
 
-             if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName)
-             {
-                 trackName = trackNameTemplate.arg(m_trackList[row].number + 1);
-                 mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
-//                 QModelIndex modelIndex = index(row, 0);
-//                 QVector<int> roles;
-//                 roles << NameRole;
-//                 emit dataChanged(modelIndex, modelIndex, roles);
-             }
          }
          ++row;
      }
@@ -3254,27 +3242,37 @@ void MultitrackModel::removeTrack(int trackIndex)
         int row = 0;
         foreach (Track t, m_trackList)
         {
-            // Rename default track names.
-            QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(m_trackList[row].mlt_index));
-            Q_ASSERT(mltTrack);
-            QString trackNameTemplate = (t.type == VideoTrackType)? QString("V%1") : QString("A%1");
-            QString trackName = trackNameTemplate.arg(t.number + 1);
-
-            if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName)
-            {
-                trackName = trackNameTemplate.arg(m_trackList[row].number + 1);
-                mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
-                QModelIndex modelIndex = index(row, 0);
-                QVector<int> roles;
-                roles << NameRole;
-
-                emit dataChanged(modelIndex, modelIndex, roles);
-            }
+            bool emitSignal = true;
+            renameTrack(t,row,emitSignal);
 
             ++row;
         }
     }
     emit modified();
+}
+
+void MultitrackModel::renameTrack(Track t, int trackIndex,bool emitSignal)
+{
+    // Rename default track names.
+    QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(m_trackList[trackIndex].mlt_index));
+    Q_ASSERT(mltTrack);
+    QString trackNameTemplate = (t.type == VideoTrackType)? QString("V%1") : QString("A%1");
+    QString trackName = trackNameTemplate.arg(t.number + 1);
+
+    if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName)
+    {
+        trackName = trackNameTemplate.arg(m_trackList[trackIndex].number + 1);
+        mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
+        if(emitSignal)
+        {
+            QModelIndex modelIndex = index(trackIndex, 0);
+            QVector<int> roles;
+            roles << NameRole;
+
+            emit dataChanged(modelIndex, modelIndex, roles);
+        }
+
+    }
 }
 
 void MultitrackModel::retainPlaylist()

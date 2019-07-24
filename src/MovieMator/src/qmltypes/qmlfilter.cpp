@@ -277,11 +277,11 @@ void QmlFilter::set(QString name, QString value)
     if (!m_filter) return;
     if (qstrcmp(m_filter->get(name.toUtf8().constData()), value.toUtf8().constData()))
     { //xjp add anim
-        QString from_value = m_filter->get(name.toUtf8().constData());
+        QString fromValue = m_filter->get(name.toUtf8().constData());
 
         m_filter->set(name.toUtf8().constData(), value.toUtf8().constData());
-         if(from_value != "" && from_value != value)
-            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), MAIN.filterController()->currentFilterIndex(), name, from_value, value,true));
+         if(fromValue != "" && fromValue != value)
+            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), MAIN.filterController()->currentFilterIndex(), name, fromValue, value,true));
 
         MLT.refreshConsumer();
         emit filterPropertyValueChanged();
@@ -294,11 +294,11 @@ void QmlFilter::set(QString name, double value)
     if (!m_filter->get(name.toUtf8().constData())  //xjp add anim
         || !qFuzzyCompare(m_filter->get_double(name.toUtf8().constData()),value)) {
 
-        double from_value = m_filter->get_double(name.toUtf8().constData());
+        double fromValue = m_filter->get_double(name.toUtf8().constData());
         m_filter->set(name.toUtf8().constData(), value);
 
-        if(!qFuzzyCompare(from_value,value))
-            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), MAIN.filterController()->currentFilterIndex(), name,  from_value, value,true));
+        if(!qFuzzyCompare(fromValue,value))
+            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), MAIN.filterController()->currentFilterIndex(), name,  fromValue, value,true));
 
         MLT.refreshConsumer();
         emit filterPropertyValueChanged();
@@ -311,10 +311,10 @@ void QmlFilter::set(QString name, int value)
     if (!m_filter->get(name.toUtf8().constData())
         || m_filter->get_int(name.toUtf8().constData()) != value) {
 
-        int from_value = m_filter->get_int(name.toUtf8().constData());
+        int fromValue = m_filter->get_int(name.toUtf8().constData());
         m_filter->set(name.toUtf8().constData(), value);
-         if(from_value != value)
-            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), MAIN.filterController()->currentFilterIndex(), name,  from_value, value,true));
+         if(fromValue != value)
+            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), MAIN.filterController()->currentFilterIndex(), name,  fromValue, value,true));
 
         MLT.refreshConsumer();
         emit filterPropertyValueChanged();
@@ -354,14 +354,14 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
         || !qFuzzyCompare(width,rect.w) || !qFuzzyCompare(height,rect.h) || !qFuzzyCompare(opacity,rect.o))
     {
 
-        QRectF rect_from(rect.x, rect.y, rect.w, rect.h);
-        QRectF rect_to(x, y, width, height);
+        QRectF rectFrom(rect.x, rect.y, rect.w, rect.h);
+        QRectF rectTo(x, y, width, height);
 
         m_filter->set(name.toUtf8().constData(), x, y, width, height, opacity);
 
-        if((rect_from != rect_to) && isValidRect(rect_from))
+        if((rectFrom != rectTo) && isValidRect(rectFrom))
         {
-            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), MAIN.filterController()->currentFilterIndex(), name,  rect_from, rect_to,true));
+            MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), MAIN.filterController()->currentFilterIndex(), name,  rectFrom, rectTo,true));
         }
         MLT.refreshConsumer();
         emit filterPropertyValueChanged();

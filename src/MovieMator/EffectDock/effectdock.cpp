@@ -191,7 +191,7 @@ void EffectDock::readJsonFile(QString filePath, QJsonObject &jsonObj) {
     jsonObj = jsonDoc.object();
 }
 
-QString EffectDock::getImageClassType(QString srcStr, QJsonObject propertyInfo)
+QString EffectDock::getImageClassType(QString strClassName, QJsonObject propertyInfo)
 {
     QString result = "";
     if (propertyInfo.isEmpty())
@@ -199,9 +199,9 @@ QString EffectDock::getImageClassType(QString srcStr, QJsonObject propertyInfo)
         return result;
     }
 
-    if (propertyInfo.contains(srcStr))
+    if (propertyInfo.contains(strClassName))
     {
-        QJsonObject subObj = propertyInfo.value(srcStr).toObject();
+        QJsonObject subObj = propertyInfo.value(strClassName).toObject();
         result = subObj.value("type").toString();
     }
 

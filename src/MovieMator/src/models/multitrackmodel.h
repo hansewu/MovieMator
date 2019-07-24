@@ -267,6 +267,8 @@ private:
     friend class UndoHelper;
     Mlt::Producer *getClipProducer(int trackIndex, int clipIndex);
     Mlt::Transition *getClipTransition(int trackIndex, int clipIndex, const QString& transitionName);
+    //    给轨道重新命名
+    void renameTrack(Track t, int trackIndex,bool emitSignal);
 
 private slots:
     void adjustBackgroundDuration();
