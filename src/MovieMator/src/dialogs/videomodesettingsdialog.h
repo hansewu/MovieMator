@@ -3,8 +3,9 @@
 
 #include <QDialog>
 
-namespace Ui {
-class VideoModeSettingsDialog;
+namespace Ui
+{
+    class VideoModeSettingsDialog;
 }
 
 class VideoModeSettingsDialog : public QDialog
@@ -12,11 +13,11 @@ class VideoModeSettingsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit VideoModeSettingsDialog(QWidget *parent = nullptr);
+    explicit VideoModeSettingsDialog(QWidget *pParent = nullptr);
     ~VideoModeSettingsDialog();
 
 private slots:
-    void on_videoModeComboBox_currentTextChanged(const QString &arg1);
+    void on_videoModeComboBox_currentTextChanged(const QString &strText);
 
     void on_buttonBox_accepted();
 

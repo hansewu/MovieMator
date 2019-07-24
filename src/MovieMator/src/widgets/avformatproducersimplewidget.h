@@ -71,11 +71,12 @@ private:
 
     Mlt::Producer *m_tempProducer;
 
+    QTimer  *m_timer;
+    bool    m_bStatus;
+    double  m_dOpacityValue;
     // okButton的闪烁动画：通过改变透明度来闪烁
     QGraphicsOpacityEffect *m_opacityEffect;
-    QTimer *m_timer;
-    bool m_status;
-    double m_opacityValue;
+
 
     void stopTimer();
 
