@@ -188,36 +188,40 @@ QString MainInterface::getFileName(FILE_HANDLE fileHandle)
 FILE_TYPE MainInterface::getFileType(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
-    FILE_TYPE result = FILE_TYPE_NONE;
-    Mlt::Producer *producer = static_cast<Mlt::Producer*>(fileHandle);  //(Mlt::Producer *)fileHandle;
-    if (!producer->is_valid()) {
-        return result;
+    FILE_TYPE fileType = FILE_TYPE_NONE;
+    Mlt::Producer *pProducer = static_cast<Mlt::Producer*>(fileHandle);
+    if (!pProducer || !pProducer->is_valid())
+    {
+        return fileType;
     }
 
-    int audio_index = producer->get_int("audio_index");
-    int video_index = producer->get_int("video_index");
-    if (video_index >= 0) {
-        if (audio_index == 0 && video_index == 0) {
-            //image
-            result = FILE_TYPE_IMAGE;
-        } else {
-            //video
-            QString resource = QString(producer->get("resource"));
-            if (Util::isAudioFile(resource)) {
-                result = FILE_TYPE_AUDIO;
-            } else {
-                 result = FILE_TYPE_VIDEO;
+    int nAudioIndex = pProducer->get_int("audio_index");
+    int nVideoIndex = pProducer->get_int("video_index");
+    if (nVideoIndex >= 0)
+    {
+        if (nVideoIndex == 0 && nAudioIndex == 0)
+        {
+            fileType = FILE_TYPE_IMAGE;
+        }
+        else
+        {
+            QString strResource = QString(pProducer->get("resource"));
+            if (Util::isAudioFile(strResource))//有封面的音频也会有video_index，因此还需要在做格式
+            {
+                fileType = FILE_TYPE_AUDIO;
+            }
+            else
+            {
+                fileType = FILE_TYPE_VIDEO;
             }
         }
-    } else if (audio_index >= 0) {
-        //audio
-        result = FILE_TYPE_AUDIO;
-    } else {
-        //
-        result = FILE_TYPE_NONE;
+    }
+    else if (nAudioIndex >= 0)
+    {
+        fileType = FILE_TYPE_AUDIO;
     }
 
-    return result;
+    return fileType;
 }
 
 //功能：获取文件时长
