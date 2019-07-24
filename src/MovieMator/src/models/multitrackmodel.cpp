@@ -3193,27 +3193,19 @@ int MultitrackModel::addTextTrack()
     return m_trackList.count() - 1;
 }
 
-void MultitrackModel::renumberOtherTracks(const Track& track) {
+void MultitrackModel::renumberOtherTracks(const Track& track)
+{
      int row = 0;
      foreach (Track t, m_trackList) {
          if (t.mlt_index > track.mlt_index)
              --m_trackList[row].mlt_index;
-         if (t.type == track.type && t.number > track.number) {
+         if (t.type == track.type && t.number > track.number)
+         {
              --m_trackList[row].number;
 
-             // Rename default track names.
-             QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(m_trackList[row].mlt_index));
-             Q_ASSERT(mltTrack);
-             QString trackNameTemplate = (t.type == VideoTrackType)? QString("V%1") : QString("A%1");
-             QString trackName = trackNameTemplate.arg(t.number + 1);
-             if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName) {
-                 trackName = trackNameTemplate.arg(m_trackList[row].number + 1);
-                 mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
-//                 QModelIndex modelIndex = index(row, 0);
-//                 QVector<int> roles;
-//                 roles << NameRole;
-//                 emit dataChanged(modelIndex, modelIndex, roles);
-             }
+             bool emitSignal = false;
+             renameTrack(t,row,emitSignal);
+
          }
          ++row;
      }
@@ -3225,7 +3217,8 @@ void MultitrackModel::removeTrack(int trackIndex)
     Q_ASSERT(trackIndex < m_trackList.size());
     Q_ASSERT(m_tractor);
 
-    if (trackIndex >= 0 && trackIndex < m_trackList.size()) {
+    if (trackIndex >= 0 && trackIndex < m_trackList.size())
+    {
         const Track& track = m_trackList.value(trackIndex);
         QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", track.mlt_index));
 
@@ -3247,27 +3240,39 @@ void MultitrackModel::removeTrack(int trackIndex)
         endRemoveRows();
 
         int row = 0;
-        foreach (Track t, m_trackList) {
-
-
-                // Rename default track names.
-                QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(m_trackList[row].mlt_index));
-                Q_ASSERT(mltTrack);
-                QString trackNameTemplate = (t.type == VideoTrackType)? QString("V%1") : QString("A%1");
-                QString trackName = trackNameTemplate.arg(t.number + 1);
-                if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName) {
-                    trackName = trackNameTemplate.arg(m_trackList[row].number + 1);
-                    mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
-                    QModelIndex modelIndex = index(row, 0);
-                    QVector<int> roles;
-                    roles << NameRole;
-                    emit dataChanged(modelIndex, modelIndex, roles);
-                }
+        foreach (Track t, m_trackList)
+        {
+            bool emitSignal = true;
+            renameTrack(t,row,emitSignal);
 
             ++row;
         }
     }
     emit modified();
+}
+
+void MultitrackModel::renameTrack(Track t, int trackIndex,bool emitSignal)
+{
+    // Rename default track names.
+    QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(m_trackList[trackIndex].mlt_index));
+    Q_ASSERT(mltTrack);
+    QString trackNameTemplate = (t.type == VideoTrackType)? QString("V%1") : QString("A%1");
+    QString trackName = trackNameTemplate.arg(t.number + 1);
+
+    if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName)
+    {
+        trackName = trackNameTemplate.arg(m_trackList[trackIndex].number + 1);
+        mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
+        if(emitSignal)
+        {
+            QModelIndex modelIndex = index(trackIndex, 0);
+            QVector<int> roles;
+            roles << NameRole;
+
+            emit dataChanged(modelIndex, modelIndex, roles);
+        }
+
+    }
 }
 
 void MultitrackModel::retainPlaylist()

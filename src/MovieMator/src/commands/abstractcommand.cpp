@@ -15,10 +15,12 @@ bool g_isInUndoRedoProcess = false;
 void saveXmlFile(QString original,QString currrent,QString commandName)
 {   
     QDomDocument doc;
-    if(doc.setContent(original)){
+    if(doc.setContent(original))
+    {
         original = doc.toString();
     }
-    if(doc.setContent(currrent)){
+    if(doc.setContent(currrent))
+    {
         currrent = doc.toString();
     }
 
@@ -28,7 +30,8 @@ void saveXmlFile(QString original,QString currrent,QString commandName)
     QString strNow =now.toString("MMdd-hhmmss");
     folderName = strNow + folderName;
 
-    if(original != currrent){
+    if(original != currrent)
+    {
         folderName = folderName + "-Error";
     }
 
