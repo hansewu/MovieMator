@@ -100,7 +100,7 @@ public slots:
     void removeFilter(int row);
 
     //刷新当前的filter，当filter的参数或者关键帧变化时
-    void refreshCurrentFilter(int filterIndex); //wzq
+    void refreshCurrentFilter(int nFilterIndex); //wzq
     //刷新滤镜的关键帧信息，当关键帧发生变化时。实际时通知qmlFilter更新关键帧信息
     void refreshKeyFrame(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame); //wzq
     void refreshNoAnimation(Mlt::Filter *filter, const QVector<key_frame_item> &listParameter);

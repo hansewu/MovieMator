@@ -545,10 +545,10 @@ class FilterCommand: public AbstractCommand
 {
 
 public:
-    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name,  double from_value, double to_value, bool isFirst,AbstractCommand * parent= nullptr);
-    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name,  int from_value, int to_value, bool isFirst,AbstractCommand * parent= nullptr);
-    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name,  QString from_value, QString to_value, bool isFirst,AbstractCommand * parent= nullptr);
-    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name,  QRectF from_value, QRectF to_value, bool isFirst,AbstractCommand * parent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nRow, QString strName,  double dFromValue, double dToValue, bool bIsFirstExec,AbstractCommand * pParent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nRow, QString strName,  int nFromValue, int nToValue, bool bIsFirstExec,AbstractCommand * pParent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nRow, QString strName,  QString strFromValue, QString strToValue, bool bIsFirstExec,AbstractCommand * pParent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nRow, QString strName,  QRectF rectFromValue, QRectF rectToValue, bool bIsFirstExec,AbstractCommand * pParent= nullptr);
 
     ~FilterCommand();
     void redo_impl();
@@ -556,18 +556,18 @@ public:
 protected:
     int id() const { return UndoIdFilterCommand; }
 //    using AbstractCommand::mergeWith;
-    bool mergeWith(const QUndoCommand *other);
+    bool mergeWith(const QUndoCommand *pOtherCommand);
 
-    int transitionValue(QVariant &varFrom, QVariant &varTo, QString name,  double from_value, double to_value);
+    int transitionValue(QVariant &varFrom, QVariant &varTo, QString strName,  double dFromValue, double dToValue);
 
     void notify();
-    void set_value(QVariant value);
+    void setValue(QVariant value);
 protected:
     AttachedFiltersModel& m_attachedFiltersModel;
-    int         m_filterIndex;
-    QString     m_keyName;
-    QVariant    m_from_value;
-    QVariant    m_to_value;
+    int         m_nFilterIndex;
+    QString     m_strKeyName;
+    QVariant    m_varFromValue;
+    QVariant    m_varToValue;
     bool        m_bFirstExec;
 };
 

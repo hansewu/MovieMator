@@ -531,10 +531,11 @@ void FilterController::setCurrentFilter(int attachedIndex)
     m_currentFilter.reset(filter);
 }
 
-void FilterController::refreshCurrentFilter(int filterIndex)
+void FilterController::refreshCurrentFilter(int nFilterIndex)
 {
-    //setCurrentFilter(filterIndex);
-    if(m_currentFilterIndex == -1) return;
+    //setCurrentFilter(nFilterIndex);
+    if(m_currentFilterIndex == -1)
+        return;
 
     QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
     Q_ASSERT(meta);
