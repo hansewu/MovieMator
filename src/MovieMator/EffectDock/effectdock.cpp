@@ -219,15 +219,16 @@ QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInf
     if (translationInfo.contains(srcStr))
     {
         QJsonObject subObj = translationInfo.value(srcStr).toObject();
-        QString language = Settings.language();
-        if(language=="zh" || language=="zh_CN")
+        QString strLanguage = Settings.language();
+        if(strLanguage=="zh" || strLanguage=="zh_CN")
         {
-            language = "zh_CN";     // Settings.language()有 "zh"没有 "zh_CN"
+            strLanguage = "zh_CN";     // Settings.language()有 "zh"没有 "zh_CN"
         }
-        strResult = subObj.value(language).toString();
+        strResult = subObj.value(strLanguage).toString();
 
         if (strResult.isEmpty())
         {
+
             strResult = subObj.value("en").toString();
         }
     }
