@@ -145,10 +145,6 @@ public:
     //修改profile
     void changeProfile(QString profileName);
 
-    //
-    void setVideoFiltersInfo(void *vudioFilterInfos, int nVudioFilterCount);
-    void setAudioFiltersInfo(void *audioFilterInfos, int nAudioFilterCount);
-
 signals:
     //打开producer时发送此信号
     void producerOpened();

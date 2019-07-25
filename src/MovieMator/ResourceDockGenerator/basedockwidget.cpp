@@ -247,29 +247,36 @@ void BaseDockWidget::resizeEvent(QResizeEvent *pEvent)
 void BaseDockWidget::onClassComboBoxActivated(int nIndex) {
     qDebug()<<"sll-----onClassComboBoxActivated---start";
 
+    if (nIndex < 0)
+    {
+        return;
+    }
+
     //每个分类对应两个控件。即：分了名和分类listview。因此通过combobox切换分类时，通过index * 2找到对应的分类控件位置，进行跳转
     QLayoutItem *pLayoutItem = ui->verticalLayout_scrollarea->itemAt(nIndex * 2);
     Q_ASSERT(pLayoutItem);
     if (pLayoutItem)
     {
         Q_ASSERT(pLayoutItem->layout());
-        if (!pLayoutItem->layout())
+        if (pLayoutItem->layout() == nullptr)
         {
             return;
         }
 
         Q_ASSERT(pLayoutItem->layout()->itemAt(0));
-        if (pLayoutItem->layout()->itemAt(0))
+        if (pLayoutItem->layout()->itemAt(0) == nullptr)
         {
             return;
         }
 
         QWidget *pWidget = pLayoutItem->layout()->itemAt(0)->widget();
         Q_ASSERT(pWidget);
-        if(pWidget)
+        if (pWidget == nullptr)
         {
-            ui->scrollArea->verticalScrollBar()->setValue(pWidget->y());
+            return;
         }
+
+        ui->scrollArea->verticalScrollBar()->setValue(pWidget->y());
     }
 
     qDebug()<<"sll-----onClassComboBoxActivated---end";

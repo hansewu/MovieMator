@@ -92,12 +92,7 @@
 #include "dialogs/invalidprojectdialog.h"
 #include "maininterface.h"
 #include <recentdockinterface.h>
-#include <filterdockinterface.h>
-#include <audiofilterdockinterface.h>
-#include <effectdockinterface.h>
 #include <resourcedockgenerator_global.h>
-#include <videofilterdockinterface.h>
-#include <textdock.h>
 #include "containerdock.h"
 #include "templateeidtor.h"
 #include <util.h>
@@ -616,27 +611,13 @@ MainWindow::MainWindow()
     m_recentDock = RecentDock_initModule(&MainInterface::singleton());//new RecentDock();
     addResourceDock(m_recentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file-highlight.png"));
 
-//    m_resourceVideoFilterDock = FilterDock_initModule(&MainInterface::singleton());
-//    addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
-
-//    m_resourceAudioFilterDock = AudioFilterDock_initModule(&MainInterface::singleton());
-//    addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
-
-    m_resourceVideoFilterDock = VideoFilterDock_initModule(&MainInterface::singleton(), 0);
+    m_resourceVideoFilterDock = g_createFilterDock(&MainInterface::singleton(), 0);
     addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
+    g_setFiltersInfo(m_resourceVideoFilterDock, m_filterController->getFiltersInfo(0));
 
-    m_resourceAudioFilterDock = VideoFilterDock_initModule(&MainInterface::singleton(), 1);
+    m_resourceAudioFilterDock = g_createFilterDock(&MainInterface::singleton(), 1);
     addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
-
-    //模板资源管理界面Dock
-//    m_templateDock = TemplateDock_initModule(&MainInterface::singleton());
-//    addResourceDock(m_templateDock, tr("Recent"), QIcon(":/icons/light/32x32/show-playlist.png"), QIcon(":/icons/light/32x32/show-playlist-highlight.png"));
-
-    m_effectDock = EffectDock_initModule(&MainInterface::singleton());
-    addResourceDock(m_effectDock, tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
-
-//    m_resourceTextDock = TextDock_initModule(&MainInterface::singleton());
-//    addResourceDock(m_resourceTextDock, tr("Text"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text-highlight.png"));
+    g_setFiltersInfo(m_resourceAudioFilterDock, m_filterController->getFiltersInfo(1));
 
     m_resourceTextDock = g_createTextDock(&MainInterface::singleton());
     addResourceDock(m_resourceTextDock, tr("Text"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text-highlight.png"));
@@ -3608,14 +3589,6 @@ void MainWindow::changeProfile(QString profileName) {
             return;
         }
     }
-}
-
-void MainWindow::setVideoFiltersInfo(void *vudioFilterInfos, int nVudioFilterCount) {
-    g_setVideoFiltersInfo(m_resourceVideoFilterDock, static_cast<VideoFilter_Info *>(vudioFilterInfos), nVudioFilterCount);
-}
-
-void MainWindow::setAudioFiltersInfo(void *audioFilterInfos, int nAudioFilterCount) {
-     g_setAudioFiltersInfo(m_resourceAudioFilterDock, static_cast<VideoFilter_Info *>(audioFilterInfos), nAudioFilterCount);
 }
 
 void MainWindow::onProfileTriggered(QAction *action)

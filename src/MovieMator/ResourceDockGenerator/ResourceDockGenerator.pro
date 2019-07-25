@@ -6,7 +6,7 @@
 
 CONFIG   += link_prl
 
-QT       += widgets xml
+QT       += widgets xml script
 
 TARGET = ResourceDockGenerator
 TEMPLATE = lib
@@ -33,7 +33,9 @@ SOURCES += \
     textitemmodel.cpp \
     translationhelper.cpp \
     stickerdockwidget.cpp \
-    stickeritemmodel.cpp
+    stickeritemmodel.cpp \
+    filterdockwidget.cpp \
+    filteritemmodel.cpp
 
 HEADERS += \
         resourcedockgenerator_global.h \ 
@@ -46,7 +48,9 @@ HEADERS += \
     uiuserdef.h \
     translationhelper.h \
     stickerdockwidget.h \
-    stickeritemmodel.h
+    stickeritemmodel.h \
+    filterdockwidget.h \
+    filteritemmodel.h
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 INCLUDEPATH += ../src
