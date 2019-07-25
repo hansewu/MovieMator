@@ -13,10 +13,10 @@
 #endif
 
 typedef struct {
-    char strName[256];
-    char strClassification[256];
-    char strThumbnailFilePath[256];
-    int  nIndexOfMetadataModel;//保存filter在metadataModel中索引
+    QString strName;
+    QString strClassification;
+    QString strThumbnailFilePath;
+    int nIndexOfMetadataModel;//保存filter在metadataModel中索引
     bool bVisible;
 } FilterInfo;
 
@@ -27,7 +27,7 @@ RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createStickerDock(MainInterfac
 RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createRecentDock(MainInterface *pMainInterface);
 RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_addFileToRecentDock(const QString &strFilePath);
 
-RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createFilterDock(MainInterface *pMainInterface, bool isVideo = true);
-RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_setFiltersInfo(QDockWidget *pFilterDock, FilterInfo *pFiltersInfo, int nFilterCount);
+RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createFilterDock(MainInterface *pMainInterface, int nFilterDockType = 0);//0：视频滤镜dock，1：音频滤镜dock
+RESOURCEDOCKGENERATORSHARED_EXPORT void g_setFiltersInfo(QDockWidget *pDockWidget, const QList<FilterInfo> filtersInfo);
 
 #endif // RESOURCEDOCKGENERATOR_GLOBAL_H
