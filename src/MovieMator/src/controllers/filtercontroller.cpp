@@ -384,7 +384,7 @@ QString FilterController::getFilterClassNameZH(QString strFilterType)
         {"Crop", "裁剪"},
     };
 
-    if (Settings.language() == "zh" || Settings.language() == "zh_CN")
+    if (Settings.language() == "zh_CN")
     {
         if (filterTypeMap.contains(strFilterType))
         {
