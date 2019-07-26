@@ -623,7 +623,7 @@ MainWindow::MainWindow()
     addResourceDock(m_resourceTextDock, tr("Text"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text-highlight.png"));
 
     m_resourceStickerDock = g_createStickerDock(&MainInterface::singleton());
-    addResourceDock(m_resourceStickerDock, tr("Sticker"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text-highlight.png"));
+    addResourceDock(m_resourceStickerDock, tr("Sticker"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
 
     m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
     m_propertiesDock->installEventFilter(this);
@@ -992,7 +992,7 @@ void MainWindow::setupSettingsMenu()
 
     a = new QAction(QLocale::languageToString(QLocale::Chinese), m_languagesGroup);
     a->setCheckable(true);
-    a->setData("zh");
+    a->setData("zh_CN");
     ui->menuLanguage->addActions(m_languagesGroup->actions());
  /*   a = new QAction(QLocale::languageToString(QLocale::Czech), m_languagesGroup);
     a->setCheckable(true);

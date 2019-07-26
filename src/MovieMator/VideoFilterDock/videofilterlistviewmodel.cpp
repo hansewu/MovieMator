@@ -120,7 +120,7 @@ QVariant VideoFilterListVideoModel::data(const QModelIndex &index, int role) con
                 return QString();
             }
             QString result = Util::baseName(fileHandle->name());
-            if (Settings.language() == "zh") {
+            if (Settings.language() == "zh_CN") {
                 QScriptValue transEn2ChFunc = m_jsEngine.globalObject().property("transEn2Ch");
                 QScriptValueList args;
                 args << QScriptValue(result);

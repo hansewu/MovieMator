@@ -43,7 +43,7 @@ QMap<QString, BaseItemModel *> *FilterDockWidget::createAllClassesItemModel()
         QStandardItem *pItem = new QStandardItem();
 
         QString strFileName = filterInfo.strName;
-        if (Settings.language() == "zh" || Settings.language() == "zh_CN") {
+        if (Settings.language() == "zh_CN") {
             QScriptValue transEn2ChFunc = m_jsEngine.globalObject().property("transEn2Ch");
             QScriptValueList args;
             args << QScriptValue(strFileName);
