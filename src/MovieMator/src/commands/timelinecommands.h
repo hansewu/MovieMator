@@ -545,10 +545,10 @@ class FilterCommand: public AbstractCommand
 {
 
 public:
-    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nRow, QString strName,  double dFromValue, double dToValue, bool bIsFirstExec,AbstractCommand * pParent= nullptr);
-    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nRow, QString strName,  int nFromValue, int nToValue, bool bIsFirstExec,AbstractCommand * pParent= nullptr);
-    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nRow, QString strName,  QString strFromValue, QString strToValue, bool bIsFirstExec,AbstractCommand * pParent= nullptr);
-    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nRow, QString strName,  QRectF rectFromValue, QRectF rectToValue, bool bIsFirstExec,AbstractCommand * pParent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nFilterIndex, QString strFilterKeyName,  double dFromValue, double dToValue, bool bIsFirstExec,AbstractCommand * pParent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nFilterIndex, QString strFilterKeyName,  int nFromValue, int nToValue, bool bIsFirstExec,AbstractCommand * pParent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nFilterIndex, QString strFilterKeyName,  QString strFromValue, QString strToValue, bool bIsFirstExec,AbstractCommand * pParent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nFilterIndex, QString strFilterKeyName,  QRectF rectFromValue, QRectF rectToValue, bool bIsFirstExec,AbstractCommand * pParent= nullptr);
 
     ~FilterCommand();
     void redo_impl();

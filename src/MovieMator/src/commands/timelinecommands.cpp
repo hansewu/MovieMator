@@ -1022,23 +1022,23 @@ void MoveInsertClipCommand::undo_impl()
 
 
 
-FilterCommand::FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nRow, QString strName, double dFromValue, double dToValue, bool bIsFirstExec,AbstractCommand * pParent)
+FilterCommand::FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nFilterIndex, QString strFilterKeyName, double dFromValue, double dToValue, bool bIsFirstExec,AbstractCommand * pParent)
     : AbstractCommand(model, pParent)
     , m_attachedFiltersModel(attachedFiltersModel)
-    , m_nFilterIndex(nRow)
+    , m_nFilterIndex(nFilterIndex)
 {
-    LOG_DEBUG() << "FilterCommand: " <<  strName;
+    LOG_DEBUG() << "FilterCommand: " <<  strFilterKeyName;
 
     setText(QObject::tr("FilterCommand"));
     m_bFirstExec    = true;
-    m_strKeyName    = strName;
+    m_strKeyName    = strFilterKeyName;
     m_bFirstExec    = bIsFirstExec;
 
     int nTransedFilter = 0;
-    if(strName.startsWith("transition.") == true)
+    if(strFilterKeyName.startsWith("transition.") == true)
     {
         QVariant varFrom, varTo;
-        if(0 == transitionValue(varFrom, varTo, strName, dFromValue, dToValue))
+        if(0 == transitionValue(varFrom, varTo, strFilterKeyName, dFromValue, dToValue))
         {
             nTransedFilter  = 1;
             m_varFromValue  = varFrom;
@@ -1053,40 +1053,40 @@ FilterCommand::FilterCommand(MultitrackModel& model, AttachedFiltersModel& attac
     }
 }
 
-FilterCommand::FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nRow, QString strName,  int nFromValue, int nToValue,bool bIsFirstExec, AbstractCommand * pParent)
+FilterCommand::FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nFilterIndex, QString strFilterKeyName,  int nFromValue, int nToValue,bool bIsFirstExec, AbstractCommand * pParent)
     : AbstractCommand(model, pParent)
     , m_attachedFiltersModel(attachedFiltersModel)
-    , m_nFilterIndex(nRow)
+    , m_nFilterIndex(nFilterIndex)
 {
     setText(QObject::tr("FilterCommand"));
     m_bFirstExec    = true;
-    m_strKeyName    = strName;
+    m_strKeyName    = strFilterKeyName;
     m_varFromValue  = QVariant(nFromValue);
     m_varToValue    = QVariant(nToValue);
     m_bFirstExec    = bIsFirstExec;
 }
 
-FilterCommand::FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nRow, QString strName,  QString strFromValue, QString strToValue, bool bIsFirstExec, AbstractCommand *pParent)
+FilterCommand::FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nFilterIndex, QString strFilterKeyName,  QString strFromValue, QString strToValue, bool bIsFirstExec, AbstractCommand *pParent)
     : AbstractCommand(model, pParent)
     , m_attachedFiltersModel(attachedFiltersModel)
-    , m_nFilterIndex(nRow)
+    , m_nFilterIndex(nFilterIndex)
 {
     setText(QObject::tr("FilterCommand"));
     m_bFirstExec    = true;
-    m_strKeyName    = strName;
+    m_strKeyName    = strFilterKeyName;
     m_varFromValue  = QVariant(strFromValue);
     m_varToValue    = QVariant(strToValue);
     m_bFirstExec    = bIsFirstExec;
 }
 
-FilterCommand::FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nRow, QString strName,  QRectF rectFromValue, QRectF rectToValue, bool bIsFirstExec, AbstractCommand *pParent)
+FilterCommand::FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int nFilterIndex, QString strFilterKeyName,  QRectF rectFromValue, QRectF rectToValue, bool bIsFirstExec, AbstractCommand *pParent)
     : AbstractCommand(model, pParent)
     , m_attachedFiltersModel(attachedFiltersModel)
-    , m_nFilterIndex(nRow)
+    , m_nFilterIndex(nFilterIndex)
 {
     setText(QObject::tr("FilterCommand"));
     m_bFirstExec    = true;
-    m_strKeyName    = strName;
+    m_strKeyName    = strFilterKeyName;
     m_varFromValue  = QVariant(rectFromValue);
     m_varToValue    = QVariant(rectToValue);
     m_bFirstExec    = bIsFirstExec;
@@ -1155,23 +1155,23 @@ int FilterCommand::transitionValue(QVariant &varFrom, QVariant &varTo, QString s
         }
     }
 
-    MY_ROTATE_COMMAND rotateCmdFrom, rotateCmdTo;
+    MY_ROTATE_COMMAND cmdRotateFrom, cmdRotateTo;
 
 
-    rotateCmdFrom.fix_rotate_x = arrayValueFrom[0];
-    rotateCmdFrom.scale_x      = arrayValueFrom[1];
-    rotateCmdFrom.scale_y      = arrayValueFrom[2];
-    rotateCmdFrom.offsetx      = arrayValueFrom[3];
-    rotateCmdFrom.offsety      = arrayValueFrom[4];
+    cmdRotateFrom.fix_rotate_x = arrayValueFrom[0];
+    cmdRotateFrom.scale_x      = arrayValueFrom[1];
+    cmdRotateFrom.scale_y      = arrayValueFrom[2];
+    cmdRotateFrom.offsetx      = arrayValueFrom[3];
+    cmdRotateFrom.offsety      = arrayValueFrom[4];
 
-    rotateCmdTo.fix_rotate_x = arrayValueTo[0];
-    rotateCmdTo.scale_x      = arrayValueTo[1];
-    rotateCmdTo.scale_y      = arrayValueTo[2];
-    rotateCmdTo.offsetx      = arrayValueTo[3];
-    rotateCmdTo.offsety      = arrayValueTo[4];
+    cmdRotateTo.fix_rotate_x = arrayValueTo[0];
+    cmdRotateTo.scale_x      = arrayValueTo[1];
+    cmdRotateTo.scale_y      = arrayValueTo[2];
+    cmdRotateTo.offsetx      = arrayValueTo[3];
+    cmdRotateTo.offsety      = arrayValueTo[4];
 
-    varFrom = QVariant::fromValue(rotateCmdFrom);
-    varTo   = QVariant::fromValue(rotateCmdTo);
+    varFrom = QVariant::fromValue(cmdRotateFrom);
+    varTo   = QVariant::fromValue(cmdRotateTo);
 
     return 0;
 }
