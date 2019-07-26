@@ -412,7 +412,7 @@ void MainInterface::previewAudioFilter(QmlMetadata *meta)
         QString propertyValue;
         propertyName = meta->keyframes()->parameter(k)->property();
         if(meta->keyframes()->parameter(k)->paraType() == "double")
-            propertyValue = QString::number(meta->keyframes()->parameter(k)->defaultValue().toDouble() * 100);
+            propertyValue = QString::number(meta->keyframes()->parameter(k)->defaultValue().toDouble() );
         else
             propertyValue = meta->keyframes()->parameter(k)->defaultValue();
         setFilterProperty(meta->keyframes()->parameter(k)->paraType(),propertyName,propertyValue,meta->keyframes()->parameter(k)->factorFunc(),pfilter,meta->path());
