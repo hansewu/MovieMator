@@ -401,7 +401,7 @@ void QmlFilter::anim_set(QString name, QString value)
 void QmlFilter::resetProperty(const QString& name)
 {
     if (!m_filter) return;
-//    m_filter->clear(name.toUtf8().constData());
+    m_filter->clear(name.toUtf8().constData());
 }
 
 void QmlFilter::loadPresets()
