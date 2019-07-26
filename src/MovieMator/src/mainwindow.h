@@ -208,6 +208,7 @@ private:
     QDockWidget* m_effectDock;//左侧贴图列表dock
     QDockWidget* m_resourceTextDock;//文字Dock
     QDockWidget* m_resourceStickerDock;//文字Dock
+    QDockWidget* m_resourceRecentDock;
 //    QDockWidget* m_templateEditorDock;//右侧模板编辑dock，暂时无用
     EncodeDock* m_encodeDock;//导出文件dock
     JobsDock* m_jobsDock;//导出文件进度列表dock

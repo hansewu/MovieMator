@@ -625,6 +625,9 @@ MainWindow::MainWindow()
     m_resourceStickerDock = g_createStickerDock(&MainInterface::singleton());
     addResourceDock(m_resourceStickerDock, tr("Sticker"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
 
+    m_resourceRecentDock = g_createRecentDock(&MainInterface::singleton());
+    addResourceDock(m_resourceRecentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file-highlight.png"));
+
     m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
     m_propertiesDock->installEventFilter(this);
     m_propertiesDock->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
@@ -4528,7 +4531,8 @@ void MainWindow::onFileOpened(QString filePath)
     }
     else
     {
-        RecentDock_add(filePath);
+//        RecentDock_add(filePath);
+        g_addFileToRecentDock(filePath);
 #ifdef Q_OS_MAC
     create_security_bookmark(filePath.toUtf8().constData());
 #endif
@@ -4537,7 +4541,8 @@ void MainWindow::onFileOpened(QString filePath)
 
 void MainWindow::onOpenFailed(QString filePath)
 {
-    RecentDock_remove(filePath);
+//    RecentDock_remove(filePath);
+    g_removeFileFromRecentDock(filePath);
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event)
