@@ -43,15 +43,12 @@ QMap<QString, BaseItemModel *> *FilterDockWidget::createAllClassesItemModel()
         QStandardItem *pItem = new QStandardItem();
 
         QString strFileName = filterInfo.strName;
-        if (Settings.language() == "zh_CN")
-        {
+        if (Settings.language() == "zh_CN") {
             QScriptValue transEn2ChFunc = m_jsEngine.globalObject().property("transEn2Ch");
             QScriptValueList args;
             args << QScriptValue(strFileName);
             strFileName = transEn2ChFunc.call(QScriptValue(), args).toString();
-        }
-        else
-        {
+        } else {
             QScriptValue transEn2ShortFunc = m_jsEngine.globalObject().property("transEn2Short");
             QScriptValueList args;
             args << QScriptValue(strFileName);
