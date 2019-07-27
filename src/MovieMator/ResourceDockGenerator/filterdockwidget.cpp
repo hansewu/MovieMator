@@ -7,6 +7,7 @@
 #include <qdir.h>
 #include <qapplication.h>
 #include <settings.h>
+#include <qstandardpaths.h>
 
 FilterDockWidget::FilterDockWidget(int nFilterDockType, MainInterface *pMainInterface, QWidget *pParent) :
     BaseDockWidget(pParent),
