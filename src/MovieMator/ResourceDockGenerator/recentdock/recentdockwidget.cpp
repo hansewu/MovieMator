@@ -4,6 +4,7 @@
 #include "ui_basedockwidget.h"
 #include "baselistview.h"
 #include "lineeditclear.h"
+#include "uiuserdef.h"
 
 #include "util.h"
 #include "settings.h"
@@ -11,6 +12,7 @@
 #include <QDir>
 #include <QMenu>
 #include <QDebug>
+#include <QPainter>
 #include <QScrollBar>
 
 RecentDockWidget::RecentDockWidget(MainInterface *pMainInterface, QWidget *pParent) :
@@ -18,11 +20,7 @@ RecentDockWidget::RecentDockWidget(MainInterface *pMainInterface, QWidget *pPare
     m_pMainInterface(pMainInterface)
 {
     m_recent            = Settings.recent();
-
-    m_strItemName[0]    = tr("0 Samples");
-    m_strItemName[1]    = tr("1 Videos");
-    m_strItemName[2]    = tr("2 Audios");
-    m_strItemName[3]    = tr("3 Images");
+    m_listItemNames     = {tr("0 Samples"), tr("1 Videos"), tr("2 Audios"), tr("3 Images")};
 
     m_pRemoveAction     = new QAction(this);
     m_pRemoveAllAction  = new QAction(this);
@@ -40,14 +38,9 @@ RecentDockWidget::RecentDockWidget(MainInterface *pMainInterface, QWidget *pPare
 
 RecentDockWidget::~RecentDockWidget()
 {
-//    delete m_pRemoveAction;
-//    m_pRemoveAction = nullptr;
-//    delete m_pRemoveAllAction;
-//    m_pRemoveAllAction = nullptr;
-
-    for(int i = 0; i < nCount; i++)
+    for(int i = 0; i < m_listProxyModel.count(); i++)
     {
-        RecentItemModel *pModel = static_cast<RecentItemModel*>(m_pProxyModelArray[i]->sourceModel());
+        RecentItemModel *pModel = static_cast<RecentItemModel*>(m_listProxyModel[i]->sourceModel());
         if(pModel)
         {
             while(pModel->rowCount() > 0)
@@ -56,8 +49,7 @@ RecentDockWidget::~RecentDockWidget()
             }
             delete pModel;
         }
-        delete m_pProxyModelArray[i];
-        m_pProxyModelArray[i] = nullptr;
+        delete m_listProxyModel[i];
     }
 }
 
@@ -85,6 +77,10 @@ void RecentDockWidget::add(const QString &strFile)
     {
         return;
     }
+    if(strFile.startsWith(Util::resourcesPath(), Qt::CaseInsensitive))
+    {
+        return;
+    }
     if(m_recent.contains(strFile))
     {
         return;
@@ -96,27 +92,27 @@ void RecentDockWidget::add(const QString &strFile)
         return;
     }
 
-    int nModelIndex = setItemModelInfo(strFile);
-    if(nModelIndex >= 0)
+    int nTypeIndex = setItemModelInfo(strFile);
+    if(nTypeIndex >= 0)
     {
         m_recent.prepend(strFile);
         Settings.setRecent(m_recent);
 
-        if(ui->comboBox_class->findText(m_strItemName[nModelIndex]) < 0)
+        if(ui->comboBox_class->findText(m_listItemNames[nTypeIndex]) < 0)
         {
             ui->comboBox_class->clear();
-            showModelTitle(nModelIndex);
+            showModelTitle(nTypeIndex);
 
-            for(int i = 0; i < nCount; i++)
+            for(int i = 0; i < m_listProxyModel.count(); i++)
             {
-                if(m_pProxyModelArray[i]->sourceModel()->rowCount() > 0)
+                if(m_listProxyModel[i]->sourceModel()->rowCount() > 0)
                 {
-                    ui->comboBox_class->addItem(m_strItemName[i]);
+                    ui->comboBox_class->addItem(m_listItemNames[i]);
                 }
             }
         }
 
-        ui->comboBox_class->setCurrentText(m_strItemName[nModelIndex]);
+        ui->comboBox_class->setCurrentText(m_listItemNames[nTypeIndex]);
 
         resizeEvent(nullptr);
         onClassComboBoxActivated(ui->comboBox_class->currentIndex());
@@ -137,7 +133,7 @@ QString RecentDockWidget::remove(const QString &strFile)
             FILE_TYPE fileType = m_pMainInterface->getFileType(fileHandle);
             m_pMainInterface->destroyFileHandle(fileHandle);
 
-            BaseListView *pListView = m_pAllClassesListView->value(m_strItemName[fileType]);
+            BaseListView *pListView = m_pAllClassesListView->value(m_listItemNames[fileType]);
             if(pListView == nullptr ||
                (pListView->model() == nullptr) ||
                (pListView->model()->rowCount() <= 0))
@@ -175,9 +171,18 @@ QString RecentDockWidget::remove(const QString &strFile)
 
 void RecentDockWidget::setProxyModel()
 {
-    for(int i = 0; i < nCount; i++)
+    Q_ASSERT(m_listItemNames.count() == m_listProxyModel.count());
+    if(m_listItemNames.count() == m_listProxyModel.count())
     {
-        m_pAllClassesListView->value(m_strItemName[i])->setModel(m_pProxyModelArray[i]);
+        for(int i = 0; i < m_listItemNames.count(); i++)
+        {
+            m_pAllClassesListView->value(m_listItemNames[i])->setModel(m_listProxyModel[i]);
+
+            if(m_listProxyModel[i]->sourceModel()->rowCount() <= 0)
+            {
+                hideModelTitle(i);
+            }
+        }
     }
 }
 
@@ -197,6 +202,61 @@ void RecentDockWidget::addBlackVideo()
     }
 }
 
+QIcon RecentDockWidget::getItemIcon(const QString &strFile)
+{
+    FILE_HANDLE fileHandle = m_pMainInterface->openFile(strFile);
+    if(fileHandle)
+    {
+        FILE_TYPE fileType = m_pMainInterface->getFileType(fileHandle);
+
+        QImage iconImage = QImage(LISTVIEW_ITEMICONSIZE_WIDTH,
+                                  LISTVIEW_ITEMICONSIZE_HEIGHT,
+                                  QImage::Format_ARGB32);
+        QImage image;
+        if(fileType == FILE_TYPE_AUDIO)
+        {   // 音频
+            image = QImage(":/icons/filters/Audio.png");
+        }
+        else if(fileType == FILE_TYPE_VIDEO ||
+                strFile.contains(Util::resourcesPath(), Qt::CaseInsensitive))
+        {   // 视频和黑场视频
+            image = m_pMainInterface->getThumbnail(fileHandle);
+        }
+        else
+        {   //图片
+            image = QImage(strFile);
+        }
+
+        if (!image.isNull())
+        {
+            if(strFile.contains(Util::resourcesPath(), Qt::CaseInsensitive))
+            {   // 黑场视频
+                iconImage.fill(image.pixel(image.width()/2, image.height()/2));
+            }
+            else
+            {
+                QPainter painter(&iconImage);
+                iconImage.fill(QApplication::palette().base().color().rgb());
+                QRect rect = image.rect();
+                rect.setWidth(LISTVIEW_ITEMICONSIZE_WIDTH);
+                rect.setHeight(LISTVIEW_ITEMICONSIZE_HEIGHT);
+                painter.drawImage(rect, image);
+                painter.end();
+            }
+        }
+        else
+        {
+            iconImage.fill(QApplication::palette().base().color().rgb());
+        }
+
+        m_pMainInterface->destroyFileHandle(fileHandle);
+
+        return QPixmap::fromImage(iconImage);
+    }
+
+    return QIcon(strFile);
+}
+
 int RecentDockWidget::setItemModelInfo(const QString &strFile)
 {
     int nType              = -1;
@@ -211,15 +271,7 @@ int RecentDockWidget::setItemModelInfo(const QString &strFile)
 
         FILE_TYPE fileType = m_pMainInterface->getFileType(fileHandle);
 
-        QIcon icon;
-        if(fileType == FILE_TYPE_AUDIO)
-        {   // 音频
-            icon = QIcon(QPixmap().fromImage(QImage(":/icons/filters/Audio.png")));
-        }
-        else
-        {
-            icon = QIcon(QPixmap().fromImage(m_pMainInterface->getThumbnail(fileHandle)));
-        }
+        QIcon icon = getItemIcon(strFile);
         pItem->setIcon(icon);
 
         m_pMainInterface->destroyFileHandle(fileHandle);
@@ -231,7 +283,7 @@ int RecentDockWidget::setItemModelInfo(const QString &strFile)
         userDataByteArray.append(reinterpret_cast<char *>(pFileUserData), sizeof(FileUserData));
         pItem->setData(userDataByteArray, Qt::UserRole);
 
-        if(strFile.contains(Util::resourcesPath() + "/template/sampleVideo", Qt::CaseInsensitive))
+        if(strFile.contains(Util::resourcesPath(), Qt::CaseInsensitive))
         {   // 黑场视频
             nType = 0;
         }
@@ -240,7 +292,7 @@ int RecentDockWidget::setItemModelInfo(const QString &strFile)
             nType = fileType;
         }
 
-        RecentItemModel *pModel = static_cast<RecentItemModel*>(m_pProxyModelArray[nType]->sourceModel());
+        RecentItemModel *pModel = static_cast<RecentItemModel*>(m_listProxyModel[nType]->sourceModel());
         if(pModel)
         {
             pModel->insertRow(0, pItem);
@@ -293,21 +345,27 @@ void RecentDockWidget::hideModelTitle(int nIndex)
         }
     }
 
-    m_pAllClassesListView->value(m_strItemName[nIndex])->setVisible(false);
+    int nItemIndex = ui->comboBox_class->findText(m_listItemNames[nIndex]);
+    if(nItemIndex >= 0)
+    {
+        ui->comboBox_class->removeItem(nItemIndex);
+    }
+
+    m_pAllClassesListView->value(m_listItemNames[nIndex])->setVisible(false);
 }
 
 void RecentDockWidget::hideModelTitle(BaseItemModel *pModel)
 {
-    for(int i = 0; i < nCount; i++)
+    Q_ASSERT(m_listProxyModel.count() == m_listItemNames.count());
+    if(m_listItemNames.count() != m_listProxyModel.count())
     {
-        if(m_pProxyModelArray[i]->sourceModel() == pModel)
-        {
-            int nIndex = ui->comboBox_class->findText(m_strItemName[i]);
-            if(nIndex >= 0)
-            {
-                ui->comboBox_class->removeItem(nIndex);
-            }
+        return;
+    }
 
+    for(int i = 0; i < m_listProxyModel.count(); i++)
+    {
+        if(m_listProxyModel[i]->sourceModel() == pModel)
+        {
             hideModelTitle(i);
 
             return;
@@ -343,7 +401,7 @@ void RecentDockWidget::showModelTitle(int nIndex)
         }
     }
 
-    m_pAllClassesListView->value(m_strItemName[nIndex])->setVisible(true);
+    m_pAllClassesListView->value(m_listItemNames[nIndex])->setVisible(true);
 }
 
 void RecentDockWidget::preview(const QStandardItem *pItem)
@@ -446,16 +504,16 @@ void RecentDockWidget::showMenu(const QModelIndex &index)
 QMap<QString, BaseItemModel *> * RecentDockWidget::createAllClassesItemModel()
 {
     QMap<QString, BaseItemModel*> *pFileDockListViewItemModel = new QMap<QString, BaseItemModel*>();
-    for( int i = 0; i < nCount; i++ )
+    for( int i = 0; i < m_listItemNames.count(); i++ )
     {
         RecentItemModel *pItemModel = new RecentItemModel(m_pMainInterface, this);
-        pFileDockListViewItemModel->insert(m_strItemName[i], pItemModel);
+        pFileDockListViewItemModel->insert(m_listItemNames[i], pItemModel);
         pFileDockListViewItemModel->setSharable(true);
 
         QSortFilterProxyModel *pProxyModel = new QSortFilterProxyModel(this);
         pProxyModel->setSourceModel(pItemModel);
         pProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);   // 忽略大小写
-        m_pProxyModelArray[i] = pProxyModel;
+        m_listProxyModel.append(pProxyModel);
     }
 
     for( QString strFile : m_recent )
@@ -483,7 +541,7 @@ void RecentDockWidget::on_actionRemove_triggered()
         QByteArray userByteArray   = userDataVariant.value<QByteArray>();
         FileUserData *pUserData    = reinterpret_cast<FileUserData *>(userByteArray.data());
 
-        if(pUserData->strFilePath.contains(Util::resourcesPath() + "/template/sampleVideo", Qt::CaseInsensitive))
+        if(pUserData->strFilePath.contains(Util::resourcesPath(), Qt::CaseInsensitive))
         {
             ui->comboBox_class->setCurrentIndex(0);
         }
@@ -494,7 +552,7 @@ void RecentDockWidget::on_actionRemove_triggered()
             {
                 FILE_TYPE fileType = m_pMainInterface->getFileType(fileHandle);
 
-                ui->comboBox_class->setCurrentText(m_strItemName[fileType]);
+                ui->comboBox_class->setCurrentText(m_listItemNames[fileType]);
 
                 m_pMainInterface->destroyFileHandle(fileHandle);
             }
@@ -529,9 +587,9 @@ void RecentDockWidget::on_actionRemoveAll_triggered()
     m_pCurrentItem = nullptr;
 
     // 清空 listView的 model
-    for(int i = 0; i < nCount; i++)
+    for(int i = 0; i < m_listProxyModel.count(); i++)
     {
-        RecentItemModel *pModel = static_cast<RecentItemModel*>(m_pProxyModelArray[i]->sourceModel());
+        RecentItemModel *pModel = static_cast<RecentItemModel*>(m_listProxyModel[i]->sourceModel());
         if(pModel)
         {
             while(pModel->rowCount() > 0)
@@ -549,7 +607,7 @@ void RecentDockWidget::on_actionRemoveAll_triggered()
 
 void RecentDockWidget::onClassComboBoxActivated(int nIndex)
 {
-    for(int i = nIndex; i < nCount; i++)
+    for(int i = nIndex; i < m_listItemNames.count(); i++)
     {
         QLayoutItem *pLayoutItem = ui->verticalLayout_scrollarea->itemAt(i * 2);
         if (pLayoutItem)
@@ -580,12 +638,12 @@ void RecentDockWidget::onClassComboBoxActivated(int nIndex)
 
 void RecentDockWidget::on_lineEdit_textChanged(const QString &strSearch)
 {
-    for(int i = 0; i < nCount; i++)
+    for(int i = 0; i < m_listProxyModel.count(); i++)
     {
-        Q_ASSERT(m_pProxyModelArray[i]);
-        if(m_pProxyModelArray[i])
+        Q_ASSERT(m_listProxyModel[i]);
+        if(m_listProxyModel[i])
         {
-            m_pProxyModelArray[i]->setFilterFixedString(strSearch);
+            m_listProxyModel[i]->setFilterFixedString(strSearch);
         }
     }
 

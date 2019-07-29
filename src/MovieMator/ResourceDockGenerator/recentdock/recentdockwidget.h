@@ -55,6 +55,8 @@ private slots:
 private:
     // 添加黑场视频
     void addBlackVideo();
+    // 生成图标
+    QIcon getItemIcon(const QString &strFile);
     // 通过文件 strFile设置 item的内容，多个函数的共有内容
     int setItemModelInfo(const QString &strFile);
     // 将 filterProxyModel转换成原来的 model
@@ -75,14 +77,12 @@ private:
     QAction         *m_pRemoveAllAction;    // 删除所有
     // 历史记录
     QStringList     m_recent;
-    // 文件分类：样例、视频、音频、图片
-    static const int nCount = 4;
     // 分类名称
-    QString               m_strItemName[nCount];
+    QList<QString>  m_listItemNames;
     // 搜索过滤 Model
-    QSortFilterProxyModel *m_pProxyModelArray[nCount];
+    QList<QSortFilterProxyModel*> m_listProxyModel;
     // 删除功能使用
-    QStandardItem         *m_pCurrentItem;
+    QStandardItem   *m_pCurrentItem;
 };
 
 #endif // RECENTDOCKWIDGET_H
