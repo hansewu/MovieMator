@@ -35,7 +35,10 @@ SOURCES += \
     stickerdockwidget.cpp \
     stickeritemmodel.cpp \
     filterdockwidget.cpp \
-    filteritemmodel.cpp
+    filteritemmodel.cpp \
+    recentdock/recentdockwidget.cpp \
+    recentdock/recentitemmodel.cpp \
+    recentdock/lineeditclear.cpp
 
 HEADERS += \
         resourcedockgenerator_global.h \ 
@@ -50,7 +53,10 @@ HEADERS += \
     stickerdockwidget.h \
     stickeritemmodel.h \
     filterdockwidget.h \
-    filteritemmodel.h
+    filteritemmodel.h \
+    recentdock/recentdockwidget.h \
+    recentdock/recentitemmodel.h \
+    recentdock/lineeditclear.h
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 INCLUDEPATH += ../src

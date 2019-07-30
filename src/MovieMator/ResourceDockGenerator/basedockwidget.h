@@ -31,7 +31,7 @@ protected:
     virtual void addToTimeline(const QStandardItem *pItem) = 0;
     virtual void preview(const QStandardItem *pItem) = 0;
 
-private slots:
+protected slots:
     virtual void addItemToTimeline(const QModelIndex &index);
     virtual void clickedItem(const QModelIndex &index);
     virtual void showMenu(const QModelIndex &index);
@@ -48,7 +48,6 @@ private:
 protected:
     Ui::BaseDockWidget *ui;
 
-private:
     //保存所有的分类listview，主要用于从combox切换分类时跳转到对应分类的listview，
     //key为分类名，value为对应的listview
     QMap<QString, BaseListView *> *m_pAllClassesListView;

@@ -25,7 +25,8 @@ RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createTextDock(MainInterface *
 RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createStickerDock(MainInterface *pMainInterface);
 
 RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createRecentDock(MainInterface *pMainInterface);
-RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_addFileToRecentDock(const QString &strFilePath);
+RESOURCEDOCKGENERATORSHARED_EXPORT void g_addFileToRecentDock(const QString &strFilePath);
+RESOURCEDOCKGENERATORSHARED_EXPORT void g_removeFileFromRecentDock(const QString &strFilePath);
 
 RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createFilterDock(MainInterface *pMainInterface, int nFilterDockType = 0);//0：视频滤镜dock，1：音频滤镜dock
 RESOURCEDOCKGENERATORSHARED_EXPORT void g_setFiltersInfo(QDockWidget *pDockWidget, const QList<FilterInfo> filtersInfo);
