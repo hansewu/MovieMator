@@ -624,7 +624,7 @@ MainWindow::MainWindow()
 
     m_resourceStickerDock = g_createStickerDock(&MainInterface::singleton());
     addResourceDock(m_resourceStickerDock, tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
-
+      
     m_resourceRecentDock = g_createRecentDock(&MainInterface::singleton());
     addResourceDock(m_resourceRecentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file-highlight.png"));
 
