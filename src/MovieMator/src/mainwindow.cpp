@@ -46,8 +46,6 @@
 #include "widgets/avformatproducersimplewidget.h"
 #include "widgets/imageproducerwidget.h"
 #include "widgets/webvfxproducer.h"
-//#include "docks/recentdock.h"
-//#include <recentdock.h>
 #include "docks/encodedock.h"
 #include "docks/jobsdock.h"
 #include "jobqueue.h"
@@ -91,7 +89,6 @@
 #include "encodetaskqueue.h"
 #include "dialogs/invalidprojectdialog.h"
 #include "maininterface.h"
-#include <recentdockinterface.h>
 #include <resourcedockgenerator_global.h>
 #include "containerdock.h"
 #include "templateeidtor.h"
@@ -608,25 +605,26 @@ MainWindow::MainWindow()
     initParentDockForPropteriesDock();
 
     LOG_DEBUG() << "RecentDock";
-    m_recentDock = RecentDock_initModule(&MainInterface::singleton());//new RecentDock();
-    addResourceDock(m_recentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file-highlight.png"));
+    m_resourceRecentDock = g_createRecentDock(&MainInterface::singleton());
+    addResourceDock(m_resourceRecentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file-highlight.png"));
 
+    LOG_DEBUG() << "VideoFilterDock";
     m_resourceVideoFilterDock = g_createFilterDock(&MainInterface::singleton(), 0);
     addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
     g_setFiltersInfo(m_resourceVideoFilterDock, m_filterController->getFiltersInfo(0));
 
+    LOG_DEBUG() << "AudioFilterDock";
     m_resourceAudioFilterDock = g_createFilterDock(&MainInterface::singleton(), 1);
     addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
     g_setFiltersInfo(m_resourceAudioFilterDock, m_filterController->getFiltersInfo(1));
 
+    LOG_DEBUG() << "TextDock";
     m_resourceTextDock = g_createTextDock(&MainInterface::singleton());
     addResourceDock(m_resourceTextDock, tr("Text"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text-highlight.png"));
 
+    LOG_DEBUG() << "StickersDock";
     m_resourceStickerDock = g_createStickerDock(&MainInterface::singleton());
     addResourceDock(m_resourceStickerDock, tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
-      
-    m_resourceRecentDock = g_createRecentDock(&MainInterface::singleton());
-    addResourceDock(m_resourceRecentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file-highlight.png"));
 
     m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
     m_propertiesDock->installEventFilter(this);
@@ -1675,7 +1673,7 @@ void MainWindow::removeVideo()
 //   m_textManagerWidget->addTextToTimeline(NULL);
 //   m_textlistDock->addTextToTimeline(NULL);
 //   m_playlistDock->on_removeButton_clicked();
-    RecentDock_removeSelectedItem();
+//    RecentDock_removeSelectedItem();
 }
 
 
@@ -4324,7 +4322,7 @@ void MainWindow::showPlaylistDock()
 void MainWindow::showRecentDock()
 {
 //    m_playlistDock->hide();
-    m_recentDock->show();
+//    m_recentDock->show();
 //    m_filtersDock->hide();
 //    m_recentDock->raise();
 }

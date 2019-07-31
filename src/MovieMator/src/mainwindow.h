@@ -48,7 +48,6 @@ namespace Ui {
     class MainWindow;
 }
 class Player;
-//class RecentDock;
 class EncodeDock;
 class JobsDock;
 //class PlaylistDock;
@@ -199,14 +198,13 @@ private:
     Player* m_player;//播放器
     QDockWidget* m_propertiesDock;//属性dock，目前已经弃用
     QDockWidget* m_simplePropertiesDock;//右侧属性dock中的clip属性dock
-    QDockWidget* m_recentDock;//左侧文件列表dock
+    QDockWidget* m_resourceRecentDock;//左侧文件列表dock
     QDockWidget* m_resourceVideoFilterDock;//左侧视频滤镜列表dock
     QDockWidget* m_resourceAudioFilterDock;//左侧音频滤镜列表dock
     QDockWidget* m_templateDock;//左侧模板dock，暂时无用
     QDockWidget* m_effectDock;//左侧贴图列表dock
     QDockWidget* m_resourceTextDock;//文字Dock
     QDockWidget* m_resourceStickerDock;//文字Dock
-    QDockWidget* m_resourceRecentDock;
 //    QDockWidget* m_templateEditorDock;//右侧模板编辑dock，暂时无用
     EncodeDock* m_encodeDock;//导出文件dock
     JobsDock* m_jobsDock;//导出文件进度列表dock
