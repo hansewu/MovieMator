@@ -4,7 +4,6 @@ SUBDIRS = CuteLogger \
     CommonUtil \
     QmlUtilities \
     MltController \
-    EffectDock \
     src \
     Breakpad \
     CrashReporter \
@@ -13,8 +12,7 @@ cache()
 CommonUtil.depends = CuteLogger
 QmlUtilities.depends = CommonUtil
 MltController.depends = QmlUtilities
-EffectDock.depends = CommonUtil
 ResourceDockGenerator.depends = CommonUtil
-src.depends = CuteLogger CommonUtil QmlUtilities MltController EffectDock Breakpad ResourceDockGenerator
+src.depends = CuteLogger CommonUtil QmlUtilities MltController Breakpad ResourceDockGenerator
 
 

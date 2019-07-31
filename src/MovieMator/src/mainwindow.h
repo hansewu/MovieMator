@@ -202,7 +202,6 @@ private:
     QDockWidget* m_resourceVideoFilterDock;//左侧视频滤镜列表dock
     QDockWidget* m_resourceAudioFilterDock;//左侧音频滤镜列表dock
     QDockWidget* m_templateDock;//左侧模板dock，暂时无用
-    QDockWidget* m_effectDock;//左侧贴图列表dock
     QDockWidget* m_resourceTextDock;//文字Dock
     QDockWidget* m_resourceStickerDock;//文字Dock
 //    QDockWidget* m_templateEditorDock;//右侧模板编辑dock，暂时无用

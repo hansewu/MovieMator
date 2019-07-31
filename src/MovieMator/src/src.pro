@@ -300,7 +300,6 @@ TRANSLATIONS += \
 
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil ../MltController ../QmlUtilities
-INCLUDEPATH += ../EffectDock ../EffectDock
 INCLUDEPATH += ../include
 INCLUDEPATH += ../Breakpad/breakpad/src
 INCLUDEPATH += ../ResourceDockGenerator
@@ -309,25 +308,21 @@ debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
         LIBS += -L../CuteLogger/debug -L../CommonUtil/debug -L../MltController/debug
         LIBS += -L../QmlUtilities/debug
-        LIBS += -L../EffectDock/debug
         LIBS += -L../Breakpad/debug
         LIBS += -L../ResourceDockGenerator/debug
     } else {
         LIBS += -L../CuteLogger/release -L../CommonUtil/release -L../MltController/release
         LIBS += -L../QmlUtilities/release
-        LIBS += -L../EffectDock/release
         LIBS += -L../Breakpad/release
         LIBS += -L../ResourceDockGenerator/release
     }
 } else {
     LIBS += -L../CuteLogger -L../CommonUtil -L../MltController -L../QmlUtilities #-L../mm
-    LIBS += -L../EffectDock
     LIBS += -L../Breakpad
     LIBS += -L../ResourceDockGenerator
 }
 
 LIBS += -lLogger -lpthread -lCommonUtil -lMltController -lQmlUtilities
-LIBS += -lEffectDock
 LIBS += -lBreakpad
 LIBS += -lResourceDockGenerator
 
