@@ -300,7 +300,6 @@ TRANSLATIONS += \
 
 
 INCLUDEPATH = ../CuteLogger/include ../RecentDock ../FilterDock ../CommonUtil ../MltController ../QmlUtilities
-INCLUDEPATH += ../AudioFilterDock
 INCLUDEPATH += ../EffectDock ../EffectDock
 INCLUDEPATH += ../include
 INCLUDEPATH += ../Breakpad/breakpad/src
@@ -312,7 +311,6 @@ debug_and_release {
         LIBS += -L../CuteLogger/debug -L../RecentDock/debug -L../FilterDock/debug -L../CommonUtil/debug -L../MltController/debug
         LIBS += -L../QmlUtilities/debug
         LIBS += -L../EffectDock/debug
-        LIBS += -L../AudioFilterDock/debug
         LIBS += -L../Breakpad/debug
         LIBS += -L../VideoFilterDock/debug
         LIBS += -L../ResourceDockGenerator/debug
@@ -320,7 +318,6 @@ debug_and_release {
         LIBS += -L../CuteLogger/release -L../RecentDock/release -L../FilterDock/release -L../CommonUtil/release -L../MltController/release
         LIBS += -L../QmlUtilities/release
         LIBS += -L../EffectDock/release
-        LIBS += -L../AudioFilterDock/release
         LIBS += -L../Breakpad/release
         LIBS += -L../VideoFilterDock/release
         LIBS += -L../ResourceDockGenerator/release
@@ -328,13 +325,12 @@ debug_and_release {
 } else {
     LIBS += -L../CuteLogger -L../RecentDock -L../FilterDock -L../CommonUtil -L../MltController -L../QmlUtilities #-L../mm
     LIBS += -L../EffectDock
-    LIBS += -L../AudioFilterDock
     LIBS += -L../Breakpad
     LIBS += -L../VideoFilterDock
     LIBS += -L../ResourceDockGenerator
 }
 
-LIBS += -lLogger -lpthread  -lRecentDock -lFilterDock -lAudioFilterDock -lCommonUtil -lMltController -lQmlUtilities
+LIBS += -lLogger -lpthread  -lRecentDock -lFilterDock -lCommonUtil -lMltController -lQmlUtilities
 LIBS += -lEffectDock
 LIBS += -lBreakpad
 LIBS += -lVideoFilterDock

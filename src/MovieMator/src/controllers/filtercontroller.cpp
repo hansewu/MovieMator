@@ -36,7 +36,6 @@
 #include <MltFilter.h>
 #include <map>
 #include <filterdockinterface.h>
-#include <audiofilterdockinterface.h>
 #include <videofilterdockinterface.h>
 #include "mainwindow.h"
 #include "util.h"
