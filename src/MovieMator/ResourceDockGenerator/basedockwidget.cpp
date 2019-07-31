@@ -202,14 +202,6 @@ void BaseDockWidget::showMenu(const QModelIndex &index)
     qDebug()<<"sll-----showMenu---end";
 }
 
-void BaseDockWidget::addItemToDock(QString strItemClass, QStandardItem *pItem)
-{
-    qDebug()<<"sll-----addItemToDock---start";
-    Q_UNUSED(strItemClass);
-    Q_UNUSED(pItem);
-    qDebug()<<"sll-----addItemToDock---end";
-}
-
 //FIXME:此函数需要优化，存在魔法数字
 void BaseDockWidget::resizeEvent(QResizeEvent *pEvent)
 {

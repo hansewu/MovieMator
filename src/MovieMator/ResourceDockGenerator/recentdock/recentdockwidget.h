@@ -48,8 +48,6 @@ private slots:
 
     void addItemToTimeline(const QModelIndex &index);
 
-    void onClassComboBoxActivated(int nIndex);
-
     void onDockWidgetVisibility(bool bVisible);
 
 private:

@@ -20,10 +20,12 @@ public:
     explicit BaseDockWidget(QWidget *pParent = nullptr);
     ~BaseDockWidget();
 
-    void addItemToDock(QString strItemClass, QStandardItem *pItem);
-    void setupUi();
+    //模板方法，构建UI的流程
+    virtual void setupUi() final;
 
 protected:
+    virtual void onClassComboBoxActivated(int nIndex) final;
+
     virtual void resizeEvent(QResizeEvent *pEvent);
     virtual void setupOtherUi();
     virtual QMap<QString, BaseItemModel *> *createAllClassesItemModel() = 0;
@@ -35,8 +37,6 @@ protected slots:
     virtual void addItemToTimeline(const QModelIndex &index);
     virtual void clickedItem(const QModelIndex &index);
     virtual void showMenu(const QModelIndex &index);
-
-    void onClassComboBoxActivated(int nIndex);
 
 private:
     void setupListView();

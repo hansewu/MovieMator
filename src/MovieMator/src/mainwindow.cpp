@@ -4540,7 +4540,6 @@ void MainWindow::onFileOpened(QString filePath)
 void MainWindow::onOpenFailed(QString filePath)
 {
 //    RecentDock_remove(filePath);
-    g_removeFileFromRecentDock(filePath);
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event)
