@@ -35,8 +35,6 @@
 #include "qmltypes/qmlfilter.h"
 #include <MltFilter.h>
 #include <map>
-#include <filterdockinterface.h>
-#include <videofilterdockinterface.h>
 #include "mainwindow.h"
 #include "util.h"
 #include <assert.h>
@@ -838,7 +836,10 @@ void FilterController::addFilter(int nFilterIndex)
 
     int nCurrentFilter = nFilterIndex;
     if(nCurrentFilter == -1)
-        nCurrentFilter = getCurrentSelectedFilterIndex();
+    {
+//        nCurrentFilter = getCurrentSelectedFilterIndex();此函数得到的是一个恒值0
+        nCurrentFilter = 0;
+    }
 
     QmlMetadata *meta = m_metadataModel.get(nCurrentFilter);
 
