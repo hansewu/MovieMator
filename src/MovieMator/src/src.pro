@@ -305,7 +305,6 @@ INCLUDEPATH += ../EffectDock ../EffectDock
 INCLUDEPATH += ../include
 INCLUDEPATH += ../Breakpad/breakpad/src
 INCLUDEPATH += ../VideoFilterDock
-INCLUDEPATH += ../TextDock
 INCLUDEPATH += ../ResourceDockGenerator
 
 debug_and_release {
@@ -316,7 +315,6 @@ debug_and_release {
         LIBS += -L../AudioFilterDock/debug
         LIBS += -L../Breakpad/debug
         LIBS += -L../VideoFilterDock/debug
-        LIBS += -L../TextDock/debug
         LIBS += -L../ResourceDockGenerator/debug
     } else {
         LIBS += -L../CuteLogger/release -L../RecentDock/release -L../FilterDock/release -L../CommonUtil/release -L../MltController/release
@@ -325,7 +323,6 @@ debug_and_release {
         LIBS += -L../AudioFilterDock/release
         LIBS += -L../Breakpad/release
         LIBS += -L../VideoFilterDock/release
-        LIBS += -L../TextDock/release
         LIBS += -L../ResourceDockGenerator/release
     }
 } else {
@@ -334,7 +331,6 @@ debug_and_release {
     LIBS += -L../AudioFilterDock
     LIBS += -L../Breakpad
     LIBS += -L../VideoFilterDock
-    LIBS += -L../TextDock
     LIBS += -L../ResourceDockGenerator
 }
 
@@ -342,7 +338,6 @@ LIBS += -lLogger -lpthread  -lRecentDock -lFilterDock -lAudioFilterDock -lCommon
 LIBS += -lEffectDock
 LIBS += -lBreakpad
 LIBS += -lVideoFilterDock
-LIBS += -lTextDock
 LIBS += -lResourceDockGenerator
 
 

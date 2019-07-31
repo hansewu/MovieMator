@@ -251,8 +251,6 @@ private:
     QQuickWidget *m_quickWidgetForVoice;
     FilterWidget *m_filterWidget;
     TextManagerWidget *m_textManagerWidget;
-//    TextlistDock *m_textlistDock;
-    QDockWidget *m_textDock;
 
     //以下是工具栏上的按钮
     QToolButton *m_addButton;
