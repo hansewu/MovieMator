@@ -59,12 +59,15 @@ void RecentDockWidget::setupTopBarUi()
     pSearchLineEdit->setObjectName(QStringLiteral("searchLineEdit"));
     pSearchLineEdit->setPlaceholderText(tr("Search"));
     pSearchLineEdit->setFixedHeight(ui->comboBox_class->height());
+    pSearchLineEdit->setMaximumWidth(350);
+    pSearchLineEdit->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
     connect(pSearchLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_lineEdit_textChanged(QString)));
 
     ui->horizontalLayout_titlebar->addWidget(pSearchLineEdit);
+    ui->horizontalLayout_titlebar->setStretchFactor(pSearchLineEdit, 2);
 
-    ui->horizontalSpacer->changeSize(10, 40, QSizePolicy::Fixed, QSizePolicy::Fixed);
+    ui->horizontalSpacer->changeSize(10, 20, QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 }
 
 void RecentDockWidget::add(const QString &strFile)
