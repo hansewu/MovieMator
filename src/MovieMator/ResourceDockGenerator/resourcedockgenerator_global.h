@@ -20,14 +20,17 @@ typedef struct {
     bool bVisible;
 } FilterInfo;
 
-RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createTextDock(MainInterface *pMainInterface);
+RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *RDG_CreateTextDock(MainInterface *pMainInterface);
 
-RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createStickerDock(MainInterface *pMainInterface);
+RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *RDG_CreateStickerDock(MainInterface *pMainInterface);
 
-RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createRecentDock(MainInterface *pMainInterface);
-RESOURCEDOCKGENERATORSHARED_EXPORT void g_addFileToRecentDock(const QString &strFilePath);
+RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *RDG_CreateRecentDock(MainInterface *pMainInterface);
+RESOURCEDOCKGENERATORSHARED_EXPORT void RDG_AddFileToRecentDock(const QString &strFilePath);
 
-RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *g_createFilterDock(MainInterface *pMainInterface, int nFilterDockType = 0);//0：视频滤镜dock，1：音频滤镜dock
-RESOURCEDOCKGENERATORSHARED_EXPORT void g_setFiltersInfo(QDockWidget *pDockWidget, const QList<FilterInfo> filtersInfo);
+RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *RDG_CreateAudioFilterDock(MainInterface *pMainInterface);
+RESOURCEDOCKGENERATORSHARED_EXPORT void RDG_SetAudioFiltersInfo(const QList<FilterInfo> filtersInfo);
+
+RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *RDG_CreateVideoFilterDock(MainInterface *pMainInterface);
+RESOURCEDOCKGENERATORSHARED_EXPORT void RDG_SetVideoFiltersInfo(const QList<FilterInfo> filtersInfo);
 
 #endif // RESOURCEDOCKGENERATOR_GLOBAL_H

@@ -158,25 +158,48 @@ QString FilterDockWidget::getQmlDirPath() {
     return dir.absolutePath();
 }
 
-QDockWidget *g_createFilterDock(MainInterface *pMainInterface, int nFilterDockType)
+static FilterDockWidget *pVideoDockInstance = nullptr;
+
+QDockWidget *RDG_CreateVideoFilterDock(MainInterface *pMainInterface)
 {
-    qDebug()<<"sll-----g_createFilterDock---start";
-    qDebug()<<"sll-----nFilterDockType = "<<nFilterDockType;
-    qDebug()<<"sll-----g_createFilterDock---end";
-    return new FilterDockWidget(nFilterDockType, pMainInterface);
+    if(pMainInterface && (pVideoDockInstance == nullptr))
+    {
+        pVideoDockInstance = new FilterDockWidget(0, pMainInterface);
+    }
+    return pVideoDockInstance;
 }
 
-void g_setFiltersInfo(QDockWidget *pDockWidget, const QList<FilterInfo> filtersInfo)
+void RDG_SetVideoFiltersInfo(const QList<FilterInfo> filtersInfo)
 {
-    qDebug()<<"sll-----g_setFiltersInfo---start";
-    Q_ASSERT(pDockWidget);
-    if (pDockWidget == nullptr)
+    Q_ASSERT(pVideoDockInstance);
+    if (pVideoDockInstance == nullptr)
     {
         return;
     }
 
-    FilterDockWidget *pFilterDock = qobject_cast<FilterDockWidget *>(pDockWidget);
-    pFilterDock->setFiltersInfo(filtersInfo);
-    pFilterDock->setupUi();
-    qDebug()<<"sll-----g_setFiltersInfo---end";
+    pVideoDockInstance->setFiltersInfo(filtersInfo);
+    pVideoDockInstance->setupUi();
+}
+
+static FilterDockWidget *pAudioDockInstance = nullptr;
+
+QDockWidget *RDG_CreateAudioFilterDock(MainInterface *pMainInterface)
+{
+    if(pMainInterface && (pAudioDockInstance == nullptr))
+    {
+        pAudioDockInstance = new FilterDockWidget(1, pMainInterface);
+    }
+    return pAudioDockInstance;
+}
+
+void RDG_SetAudioFiltersInfo(const QList<FilterInfo> filtersInfo)
+{
+    Q_ASSERT(pAudioDockInstance);
+    if (pAudioDockInstance == nullptr)
+    {
+        return;
+    }
+
+    pAudioDockInstance->setFiltersInfo(filtersInfo);
+    pAudioDockInstance->setupUi();
 }

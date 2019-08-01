@@ -54,8 +54,11 @@ public:
     //获取QmlMetadata
     QmlMetadata* getQmlMetadata(int index);
 
-    //获取已加载的滤镜信息
-    QList<FilterInfo> getFiltersInfo(int nFilterType = 0);
+    //获取已加载的音频滤镜信息
+    QList<FilterInfo> getAudioFiltersInfo();
+
+    //获取已加载的视频滤镜信息
+    QList<FilterInfo> getVideoFiltersInfo();
 
 signals:
     void currentFilterAboutToChange(int index);
@@ -128,6 +131,9 @@ private:
     void readFilterTypeFromFile(QString &pFilePath, std::map<QString, QString> &filterTypes);
 //    void getFrei0rPluginInfo(Mlt::Filter *filter, f0r_plugin_info_t &info);
 //    void getFrei0rParamInfo(Mlt::Filter *filter, int index, f0r_param_info_t &info);
+
+    //获取已加载的滤镜信息，0：表示视频滤镜，1：表示音频滤镜
+    QList<FilterInfo> getFiltersInfo(int nFilterType = 0);
 
     //获取filter的缩略图路径
     QString getFilterThumbnailPath(QString filterName, bool isAudio = false);

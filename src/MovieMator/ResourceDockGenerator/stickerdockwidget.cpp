@@ -448,12 +448,13 @@ void StickerDockWidget::onAnimationComboBoxCurrentIndexChanged(int nIndex)
     qDebug()<<"sll-----onAnimationComboBoxCurrentIndexChanged---end";
 }
 
-QDockWidget *g_createStickerDock(MainInterface *pMainInterface)
+static StickerDockWidget *pStickerDockInstance = nullptr;
+QDockWidget *RDG_CreateStickerDock(MainInterface *pMainInterface)
 {
-    qDebug()<<"sll-----g_createStickerDock---start";
-    StickerDockWidget *pStickerDockWidget = new StickerDockWidget(pMainInterface);
-    pStickerDockWidget->setupUi();
-    qDebug()<<"sll-----g_createStickerDock---end";
-
-    return pStickerDockWidget;
+    if(pMainInterface && (pStickerDockInstance == nullptr))
+    {
+        pStickerDockInstance = new StickerDockWidget(pMainInterface);
+        pStickerDockInstance->setupUi();
+    }
+    return pStickerDockInstance;
 }

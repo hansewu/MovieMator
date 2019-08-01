@@ -115,14 +115,14 @@ void TextDockWidget::preview(const QStandardItem *pItem)
     qDebug()<<"sll-----preview---end";
 }
 
-QDockWidget *g_createTextDock(MainInterface *pMainInterface)
+static TextDockWidget *pTextDockInstance = nullptr;
+QDockWidget *RDG_CreateTextDock(MainInterface *pMainInterface)
 {
-    qDebug()<<"sll-----createTextDock---start";
-    TextDockWidget *pTextDockWidget = new TextDockWidget(pMainInterface);
-    pTextDockWidget->setupUi();
-    qDebug()<<"sll-----createTextDock---end";
-
-    return pTextDockWidget;
+    if(pMainInterface && (pTextDockInstance == nullptr))
+    {
+        pTextDockInstance = new TextDockWidget(pMainInterface);
+        pTextDockInstance->setupUi();
+    }
+    return pTextDockInstance;
 }
-
 

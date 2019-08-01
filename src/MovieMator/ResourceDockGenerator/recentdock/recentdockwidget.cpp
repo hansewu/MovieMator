@@ -653,7 +653,7 @@ void RecentDockWidget::on_lineEdit_textChanged(const QString &strSearch)
 
 static RecentDockWidget *pInstance = nullptr;
 
-QDockWidget *g_createRecentDock(MainInterface *pMainInterface)
+QDockWidget *RDG_CreateRecentDock(MainInterface *pMainInterface)
 {
     if(pMainInterface && (pInstance == nullptr))
     {
@@ -664,7 +664,7 @@ QDockWidget *g_createRecentDock(MainInterface *pMainInterface)
     return pInstance;
 }
 
-void g_addFileToRecentDock(const QString &strFilePath)
+void RDG_AddFileToRecentDock(const QString &strFilePath)
 {
     if(pInstance)
     {

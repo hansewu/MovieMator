@@ -437,6 +437,16 @@ QmlMetadata* FilterController::getQmlMetadata(int index)
 
 }
 
+QList<FilterInfo> FilterController::getAudioFiltersInfo()
+{
+    return getFiltersInfo(0);
+}
+
+QList<FilterInfo> FilterController::getVideoFiltersInfo()
+{
+    return getFiltersInfo(1);
+}
+
 QList<FilterInfo> FilterController::getFiltersInfo(int nFilterType)
 {
     qDebug()<<"sll---------getFiltersInfo---start";

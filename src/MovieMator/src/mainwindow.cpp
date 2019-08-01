@@ -605,25 +605,25 @@ MainWindow::MainWindow()
     initParentDockForPropteriesDock();
 
     LOG_DEBUG() << "RecentDock";
-    m_resourceRecentDock = g_createRecentDock(&MainInterface::singleton());
+    m_resourceRecentDock = RDG_CreateRecentDock(&MainInterface::singleton());
     addResourceDock(m_resourceRecentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file-highlight.png"));
 
     LOG_DEBUG() << "VideoFilterDock";
-    m_resourceVideoFilterDock = g_createFilterDock(&MainInterface::singleton(), 0);
+    m_resourceVideoFilterDock = RDG_CreateVideoFilterDock(&MainInterface::singleton());
     addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
-    g_setFiltersInfo(m_resourceVideoFilterDock, m_filterController->getFiltersInfo(0));
+    RDG_SetVideoFiltersInfo( m_filterController->getVideoFiltersInfo());
 
     LOG_DEBUG() << "AudioFilterDock";
-    m_resourceAudioFilterDock = g_createFilterDock(&MainInterface::singleton(), 1);
+    m_resourceAudioFilterDock = RDG_CreateAudioFilterDock(&MainInterface::singleton());
     addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
-    g_setFiltersInfo(m_resourceAudioFilterDock, m_filterController->getFiltersInfo(1));
+    RDG_SetAudioFiltersInfo(m_filterController->getAudioFiltersInfo());
 
     LOG_DEBUG() << "TextDock";
-    m_resourceTextDock = g_createTextDock(&MainInterface::singleton());
+    m_resourceTextDock = RDG_CreateTextDock(&MainInterface::singleton());
     addResourceDock(m_resourceTextDock, tr("Text"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text-highlight.png"));
 
     LOG_DEBUG() << "StickersDock";
-    m_resourceStickerDock = g_createStickerDock(&MainInterface::singleton());
+    m_resourceStickerDock = RDG_CreateStickerDock(&MainInterface::singleton());
     addResourceDock(m_resourceStickerDock, tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
 
     m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
@@ -4530,7 +4530,7 @@ void MainWindow::onFileOpened(QString filePath)
     else
     {
 //        RecentDock_add(filePath);
-        g_addFileToRecentDock(filePath);
+        RDG_AddFileToRecentDock(filePath);
 #ifdef Q_OS_MAC
     create_security_bookmark(filePath.toUtf8().constData());
 #endif
