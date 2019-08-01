@@ -28,15 +28,18 @@ void StickerDockWidget::setupOtherUi()
     QHBoxLayout *pAnimationWidgetLayout = new QHBoxLayout();
 
     //动画标签
-    QLabel *pAnimationLabel = new QLabel(tr("Animation: "));
+    QLabel *pAnimationLabel = new QLabel(tr("Animation:"));
     pAnimationWidgetLayout->addWidget(pAnimationLabel);
 
     //动画combobox
     m_pAnimationCombobox = new QComboBox();
     m_pAnimationCombobox->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
     pAnimationWidgetLayout->addWidget(m_pAnimationCombobox);
+    pAnimationWidgetLayout->setSpacing(10);
 
-    ui->horizontalLayout_titlebar->insertLayout(1, pAnimationWidgetLayout);
+    ui->horizontalLayout_titlebar->addLayout(pAnimationWidgetLayout);
+
+    ui->horizontalSpacer->changeSize(10, 20, QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
     setupAnimationComboboxData();
 
