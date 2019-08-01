@@ -491,6 +491,37 @@ void RecentDockWidget::clickedItem(const QModelIndex &index)
     }
 }
 
+void RecentDockWidget::onClassComboBoxActivated(int nIndex)
+{
+    for(int i = nIndex; i < m_listItemNames.count(); i++)
+    {
+        QLayoutItem *pLayoutItem = ui->verticalLayout_scrollarea->itemAt(i * 2);
+        if (pLayoutItem)
+        {
+            if (pLayoutItem->layout() == nullptr)
+            {
+                return;
+            }
+            if (pLayoutItem->layout()->itemAt(0) == nullptr)
+            {
+                return;
+            }
+
+            QWidget *pWidget = pLayoutItem->layout()->itemAt(0)->widget();
+            if(pWidget)
+            {
+                QLabel *pLabel = qobject_cast<QLabel*>(pWidget);
+                if(pLabel->text() == ui->comboBox_class->itemText(nIndex))
+                {
+                    ui->scrollArea->verticalScrollBar()->setValue(pWidget->y());
+
+                    return;
+                }
+            }
+        }
+    }
+}
+
 void RecentDockWidget::showMenu(const QModelIndex &index)
 {
     if(index.isValid())

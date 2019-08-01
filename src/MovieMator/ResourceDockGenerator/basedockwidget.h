@@ -24,8 +24,6 @@ public:
     virtual void setupUi() final;
 
 protected:
-    virtual void onClassComboBoxActivated(int nIndex) final;
-
     virtual void resizeEvent(QResizeEvent *pEvent);
     virtual void setupOtherUi();
     virtual QMap<QString, BaseItemModel *> *createAllClassesItemModel() = 0;
@@ -37,6 +35,7 @@ protected slots:
     virtual void addItemToTimeline(const QModelIndex &index);
     virtual void clickedItem(const QModelIndex &index);
     virtual void showMenu(const QModelIndex &index);
+    virtual void onClassComboBoxActivated(int nIndex);
 
 private slots:
     void onDockWidgetVisibilityChanged(bool bVisible);

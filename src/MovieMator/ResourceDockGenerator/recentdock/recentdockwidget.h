@@ -28,13 +28,17 @@ protected:
 
     void setupOtherUi();
 
-    void showMenu(const QModelIndex &index);
-
     void preview(const QStandardItem *pItem);
 
     void addToTimeline(const QStandardItem *pItem);
 
     QMap<QString, BaseItemModel *> *createAllClassesItemModel();
+
+protected slots:
+    void addItemToTimeline(const QModelIndex &index);
+    void clickedItem(const QModelIndex &index);
+    void showMenu(const QModelIndex &index);
+    void onClassComboBoxActivated(int nIndex);
 
 private slots:
     // 右键移除槽函数
@@ -43,10 +47,6 @@ private slots:
     void on_actionRemoveAll_triggered();
     // 搜索框槽函数
     void on_lineEdit_textChanged(const QString &strSearch);
-
-    void clickedItem(const QModelIndex &index);
-
-    void addItemToTimeline(const QModelIndex &index);
 
 private:
     // 添加黑场视频
