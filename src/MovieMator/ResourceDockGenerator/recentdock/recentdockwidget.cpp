@@ -32,8 +32,6 @@ RecentDockWidget::RecentDockWidget(MainInterface *pMainInterface, QWidget *pPare
 
     connect(m_pRemoveAction, SIGNAL(triggered()), this, SLOT(on_actionRemove_triggered()));
     connect(m_pRemoveAllAction, SIGNAL(triggered()), this, SLOT(on_actionRemoveAll_triggered()));
-
-    connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(onDockWidgetVisibility(bool)));
 }
 
 RecentDockWidget::~RecentDockWidget()
@@ -65,10 +63,13 @@ void RecentDockWidget::setupOtherUi()
     LineEditClear *pSearchLineEdit = new LineEditClear(this);
     pSearchLineEdit->setObjectName(QStringLiteral("searchLineEdit"));
     pSearchLineEdit->setPlaceholderText(tr("Search"));
+    pSearchLineEdit->setFixedHeight(ui->comboBox_class->height());
 
     connect(pSearchLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_lineEdit_textChanged(QString)));
 
     ui->horizontalLayout_titlebar->addWidget(pSearchLineEdit);
+
+    ui->horizontalSpacer->changeSize(10, 40, QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 
 void RecentDockWidget::add(const QString &strFile)
@@ -115,7 +116,7 @@ void RecentDockWidget::add(const QString &strFile)
         ui->comboBox_class->setCurrentText(m_listItemNames[nTypeIndex]);
 
         resizeEvent(nullptr);
-        onClassComboBoxActivated(ui->comboBox_class->currentIndex());
+//        onClassComboBoxActivated(ui->comboBox_class->currentIndex());
     }
 }
 
@@ -157,7 +158,7 @@ QString RecentDockWidget::remove(const QString &strFile)
                         pItemModel->removeRow(j);
 
                         resizeEvent(nullptr);
-                        onClassComboBoxActivated(ui->comboBox_class->currentIndex());
+//                        onClassComboBoxActivated(ui->comboBox_class->currentIndex());
 
                         return strName;
                     }
@@ -536,7 +537,6 @@ void RecentDockWidget::on_actionRemove_triggered()
     if(m_pCurrentItem)
     {
         BaseItemModel *pItemModel  = static_cast<BaseItemModel*>(m_pCurrentItem->model());
-        int nRow                   = m_pCurrentItem->row();
         QVariant userDataVariant   = m_pCurrentItem->data(Qt::UserRole);
         QByteArray userByteArray   = userDataVariant.value<QByteArray>();
         FileUserData *pUserData    = reinterpret_cast<FileUserData *>(userByteArray.data());
@@ -563,7 +563,7 @@ void RecentDockWidget::on_actionRemove_triggered()
             Settings.setRecent(m_recent);
         }
 
-        if(pItemModel->removeRow(nRow))
+        if(pItemModel->removeRow(m_pCurrentItem->row()))
         {
             if(pItemModel->rowCount() <= 0)
             {
@@ -572,9 +572,9 @@ void RecentDockWidget::on_actionRemove_triggered()
 
             m_pCurrentItem = nullptr;
 
-            resizeEvent(nullptr);
+//            onClassComboBoxActivated(ui->comboBox_class->currentIndex());
 
-            onClassComboBoxActivated(ui->comboBox_class->currentIndex());
+            resizeEvent(nullptr);
         }
     }
 }
@@ -618,15 +618,7 @@ void RecentDockWidget::on_lineEdit_textChanged(const QString &strSearch)
 
     resizeEvent(nullptr);
 
-    onClassComboBoxActivated(ui->comboBox_class->currentIndex());
-}
-
-void RecentDockWidget::onDockWidgetVisibility(bool bVisible)
-{
-    if(bVisible)
-    {
-        resizeEvent(nullptr);
-    }
+//    onClassComboBoxActivated(ui->comboBox_class->currentIndex());
 }
 
 static RecentDockWidget *pInstance = nullptr;

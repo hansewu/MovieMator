@@ -38,6 +38,9 @@ protected slots:
     virtual void clickedItem(const QModelIndex &index);
     virtual void showMenu(const QModelIndex &index);
 
+private slots:
+    void onDockWidgetVisibilityChanged(bool bVisible);
+
 private:
     void setupListView();
     void createAllClassesListView(QMap<QString, BaseItemModel *> *pAllClassesItemModel,

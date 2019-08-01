@@ -23,6 +23,8 @@ BaseDockWidget::BaseDockWidget(QWidget *pParent) :
                             "QScrollBar::handle:vertical{width:8px;background:rgba(160,160,160,25%);border-radius:4px;min-height:20;}"
                             "QScrollBar::handle:vertical:hover{width:8px;background:rgba(160,160,160,50%);border-radius:4px;min-height:20;}");
 
+    connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(onDockWidgetVisibilityChanged(bool)));
+
     qDebug()<<"sll-----BaseDockWidget构造---end";
 }
 
@@ -272,4 +274,12 @@ void BaseDockWidget::onClassComboBoxActivated(int nIndex) {
     }
 
     qDebug()<<"sll-----onClassComboBoxActivated---end";
+}
+
+void BaseDockWidget::onDockWidgetVisibilityChanged(bool bVisible)
+{
+    if(bVisible)
+    {
+        resizeEvent(nullptr);
+    }
 }

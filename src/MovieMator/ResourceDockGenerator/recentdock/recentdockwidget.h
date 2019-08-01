@@ -48,8 +48,6 @@ private slots:
 
     void addItemToTimeline(const QModelIndex &index);
 
-    void onDockWidgetVisibility(bool bVisible);
-
 private:
     // 添加黑场视频
     void addBlackVideo();
