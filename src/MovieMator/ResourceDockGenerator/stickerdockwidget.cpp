@@ -21,7 +21,7 @@ StickerDockWidget::StickerDockWidget(MainInterface *pMainInterface, QWidget *pPa
     qDebug()<<"sll-----StickerDockWidget构造---end";
 }
 
-void StickerDockWidget::setupOtherUi()
+void StickerDockWidget::setupTopBarUi()
 {
     qDebug()<<"sll-----setupOtherUi---start";
 
@@ -157,14 +157,7 @@ QMap<QString, BaseItemModel *> *StickerDockWidget::createAllClassesItemModel()
     return pStickerDockListViewItemModel;
 }
 
-bool StickerDockWidget::hasClass()
-{
-    qDebug()<<"sll-----hasClass---start";
-    qDebug()<<"sll-----hasClass---end";
-    return true;
-}
-
-void StickerDockWidget::addToTimeline(const QStandardItem *pItem)
+void StickerDockWidget::addItemToTimeline(const QStandardItem *pItem)
 {
     qDebug()<<"sll-----addToTimeline---start";
 

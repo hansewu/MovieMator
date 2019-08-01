@@ -24,20 +24,19 @@ public:
     QString remove(const QString &strFile);
 
 protected:
-    bool hasClass();
-
-    void setupOtherUi();
+    void setupTopBarUi();
 
     void preview(const QStandardItem *pItem);
 
-    void addToTimeline(const QStandardItem *pItem);
+    void addItemToTimeline(const QStandardItem *pItem);
 
     QMap<QString, BaseItemModel *> *createAllClassesItemModel();
 
+    void showMeun(const QStandardItem *pItem, const QPoint &position);
+
 protected slots:
-    void addItemToTimeline(const QModelIndex &index);
-    void clickedItem(const QModelIndex &index);
-    void showMenu(const QModelIndex &index);
+    void onLeftClickedAddButtonInItem(const QModelIndex &index);
+    void onLeftClickedItem(const QModelIndex &index);
     void onClassComboBoxActivated(int nIndex);
 
 private slots:

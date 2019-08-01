@@ -17,8 +17,7 @@ public:
 
 protected:
     QMap<QString, BaseItemModel *> *createAllClassesItemModel();
-    bool hasClass();
-    void addToTimeline(const QStandardItem *pItem);
+    void addItemToTimeline(const QStandardItem *pItem);
     void preview(const QStandardItem *pItem);
 
 private:

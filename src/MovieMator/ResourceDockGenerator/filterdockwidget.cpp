@@ -80,14 +80,7 @@ QMap<QString, BaseItemModel *> *FilterDockWidget::createAllClassesItemModel()
     return pFilterDockListViewItemModel;
 }
 
-bool FilterDockWidget::hasClass()
-{
-    qDebug()<<"sll-----hasClass---start";
-    qDebug()<<"sll-----hasClass---end";
-    return (m_nFilterDockType == 0);
-}
-
-void FilterDockWidget::addToTimeline(const QStandardItem *pItem)
+void FilterDockWidget::addItemToTimeline(const QStandardItem *pItem)
 {
     qDebug()<<"sll-----addToTimeline---start";
 

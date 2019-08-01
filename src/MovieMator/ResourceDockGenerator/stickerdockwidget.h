@@ -26,10 +26,9 @@ public:
 protected:
     void resizeEvent(QResizeEvent *pEvent);
     QMap<QString, BaseItemModel *> *createAllClassesItemModel();
-    bool hasClass();
-    void addToTimeline(const QStandardItem *pItem);
+    void addItemToTimeline(const QStandardItem *pItem);
     void preview(const QStandardItem *pItem);
-    void setupOtherUi();
+    void setupTopBarUi();
 
 signals:
     void currentSelectedAnimationChanged(QString &strAnimationFilePath);

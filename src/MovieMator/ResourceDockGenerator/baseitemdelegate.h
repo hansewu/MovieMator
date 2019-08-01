@@ -27,7 +27,7 @@ protected:
 signals:
     void addItem(const QModelIndex &index);
     void selectItem(const QModelIndex &index);
-    void rightClickItem(const QModelIndex &index);
+    void rightClickItem(const QModelIndex &index, const QPoint &position);
 };
 
 #endif // BASEITEMDELEGATE_H

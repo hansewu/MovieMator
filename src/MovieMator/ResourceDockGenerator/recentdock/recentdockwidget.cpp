@@ -51,14 +51,9 @@ RecentDockWidget::~RecentDockWidget()
     }
 }
 
-bool RecentDockWidget::hasClass()
+void RecentDockWidget::setupTopBarUi()
 {
-    return true;
-}
-
-void RecentDockWidget::setupOtherUi()
-{
-    BaseDockWidget::setupOtherUi();
+    BaseDockWidget::setupTopBarUi();
 
     LineEditClear *pSearchLineEdit = new LineEditClear(this);
     pSearchLineEdit->setObjectName(QStringLiteral("searchLineEdit"));
@@ -417,7 +412,7 @@ void RecentDockWidget::preview(const QStandardItem *pItem)
     }
 }
 
-void RecentDockWidget::addToTimeline(const QStandardItem *pItem)
+void RecentDockWidget::addItemToTimeline(const QStandardItem *pItem)
 {
     FILE_HANDLE fileHandle = getFileHandle(pItem);
     Q_ASSERT(fileHandle);
@@ -443,7 +438,7 @@ QModelIndex RecentDockWidget::proxyToSource(const QModelIndex &index)
     }
 }
 
-void RecentDockWidget::addItemToTimeline(const QModelIndex &index)
+void RecentDockWidget::onLeftClickedAddButtonInItem(const QModelIndex &index)
 {
     QModelIndex modelIndex = proxyToSource(index);
     if(modelIndex.isValid())
@@ -454,12 +449,12 @@ void RecentDockWidget::addItemToTimeline(const QModelIndex &index)
 
         if(pStandardItem)
         {
-            addToTimeline(pStandardItem);
+            addItemToTimeline(pStandardItem);
         }
     }
 }
 
-void RecentDockWidget::clickedItem(const QModelIndex &index)
+void RecentDockWidget::onLeftClickedItem(const QModelIndex &index)
 {
     QModelIndex modelIndex = proxyToSource(index);
     if(modelIndex.isValid())
@@ -522,17 +517,6 @@ void RecentDockWidget::onClassComboBoxActivated(int nIndex)
     }
 }
 
-void RecentDockWidget::showMenu(const QModelIndex &index)
-{
-    if(index.isValid())
-    {
-        QMenu menu(this);
-        menu.addAction(m_pRemoveAction);
-        menu.addAction(m_pRemoveAllAction);
-        menu.exec(QCursor::pos());
-    }
-}
-
 QMap<QString, BaseItemModel *> * RecentDockWidget::createAllClassesItemModel()
 {
     QMap<QString, BaseItemModel*> *pFileDockListViewItemModel = new QMap<QString, BaseItemModel*>();
@@ -561,6 +545,18 @@ QMap<QString, BaseItemModel *> * RecentDockWidget::createAllClassesItemModel()
     addBlackVideo();
 
     return pFileDockListViewItemModel;
+}
+
+void RecentDockWidget::showMeun(const QStandardItem *pItem, const QPoint &position)
+{
+    Q_UNUSED(position);
+    if(pItem)
+    {
+        QMenu menu(this);
+        menu.addAction(m_pRemoveAction);
+        menu.addAction(m_pRemoveAllAction);
+        menu.exec(QCursor::pos());
+    }
 }
 
 void RecentDockWidget::on_actionRemove_triggered()

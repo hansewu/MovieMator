@@ -76,14 +76,7 @@ QMap<QString, BaseItemModel *> *TextDockWidget::createAllClassesItemModel()
     return pTextDockListViewItemModel;
 }
 
-bool TextDockWidget::hasClass()
-{
-    qDebug()<<"sll-----hasClass---start";
-    qDebug()<<"sll-----hasClass---end";
-    return true;
-}
-
-void TextDockWidget::addToTimeline(const QStandardItem *pItem)
+void TextDockWidget::addItemToTimeline(const QStandardItem *pItem)
 {
     qDebug()<<"sll-----addToTimeline---start";
 

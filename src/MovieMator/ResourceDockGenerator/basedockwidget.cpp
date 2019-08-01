@@ -25,6 +25,12 @@ BaseDockWidget::BaseDockWidget(QWidget *pParent) :
 
     connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(onDockWidgetVisibilityChanged(bool)));
 
+    //设置分类combobox，连接函数
+    ui->comboBox_class->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
+    connect(ui->comboBox_class, SIGNAL(activated(int)), this, SLOT(onClassComboBoxActivated(int)));
+
+    m_pAllClassesListView = new QMap<QString, BaseListView *>;
+
     qDebug()<<"sll-----BaseDockWidget构造---end";
 }
 
@@ -46,31 +52,60 @@ void BaseDockWidget::setupUi()
     qDebug()<<"sll-----setupUi---start";
 
     //初始化及设置顶部控件，各子类可以定制
-    setupOtherUi();
+    setupTopBarUi();
 
-    //初始化及设置listview
-    setupListView();
+    //创建所有分类的数据
+    QMap<QString, BaseItemModel *> *pAllClassesItemModel = createAllClassesItemModel();
+
+    //创建所有分类的UI
+    setupAllClassesUi(pAllClassesItemModel);
 
     qDebug()<<"sll-----setupUi---end";
 }
 
-void BaseDockWidget::setupOtherUi()
+void BaseDockWidget::setupTopBarUi()
 {
     qDebug()<<"sll-----setupOtherUi---start";
     qDebug()<<"sll-----setupOtherUi---end";
 }
 
-void BaseDockWidget::setupListView()
+void BaseDockWidget::showMeun(const QStandardItem *pItem, const QPoint &position)
 {
-    qDebug()<<"sll-----setupListView---start";
+    Q_UNUSED(pItem);
+    Q_UNUSED(position);
+}
 
-    m_pAllClassesListView = new QMap<QString, BaseListView *>;
-
-    QMap<QString, BaseItemModel *> *pAllClassesItemModel = createAllClassesItemModel();
-
-    if (hasClass())
+void BaseDockWidget::setupAllClassesUi(QMap<QString, BaseItemModel *> *pAllClassesItemModel)
+{
+    //创建所有分类的listview
+    Q_ASSERT(pAllClassesItemModel);
+    if (pAllClassesItemModel == nullptr)
     {
-        createAllClassesListView(pAllClassesItemModel, hasClass());
+        return;
+    }
+
+    bool hasClass = (pAllClassesItemModel->keys().count() > 1) ? true : false;
+
+    if (hasClass)
+    {
+        //创建各分类listview，并添加到UI
+        QMap<QString, BaseItemModel *>::const_iterator iter;
+        for (iter = pAllClassesItemModel->constBegin(); iter != pAllClassesItemModel->constEnd(); iter++)
+        {
+            //创建分类名控件
+            QHBoxLayout *classLabelLayout = createClassLabel(iter.key());
+            ui->verticalLayout_scrollarea->addLayout(classLabelLayout);
+
+            //设置分类combobox的数据项
+            ui->comboBox_class->addItem(iter.key());
+
+            //创建一个分类的lsitview
+            BaseListView *pOneClassListView = createClassListView(iter.value());
+            ui->verticalLayout_scrollarea->addWidget(pOneClassListView);
+
+            //保存listview到map
+            m_pAllClassesListView->insert(iter.key(), pOneClassListView);
+        }
     }
     else
     {
@@ -78,21 +113,22 @@ void BaseDockWidget::setupListView()
         ui->comboBox_class->setHidden(true);
         ui->classlabe->setHidden(true);
 
-        BaseListView *pListView = createListView(pAllClassesItemModel->first());
-        m_pAllClassesListView->insert("Undefined", pListView);
+        //创建一个分类的lsitview
+        BaseListView *pOneClassListView = createClassListView(pAllClassesItemModel->first());
+        ui->verticalLayout_scrollarea->addWidget(pOneClassListView);
+
+        //保存listview到map，
+        m_pAllClassesListView->insert(pAllClassesItemModel->firstKey(), pOneClassListView);
     }
 
+    //在dock底部添加伸缩布局控件，控制dock中控件的数值布局是靠顶部的
     QSpacerItem *pSpacerItem = new QSpacerItem(20, 40, QSizePolicy::Minimum,
                                               QSizePolicy::Expanding);
     ui->verticalLayout_scrollarea->addItem(pSpacerItem);
-
-    qDebug()<<"sll-----setupListView---end";
 }
 
-void BaseDockWidget::createClassesNameWidget(const QString &strClassName)
+QHBoxLayout *BaseDockWidget::createClassLabel(const QString &strClassName)
 {
-    qDebug()<<"sll-----createClassesNameWidget---start";
-
     QLabel *pClassLabel = new QLabel(strClassName, this);
     pClassLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     pClassLabel->setFixedHeight(40);
@@ -106,42 +142,16 @@ void BaseDockWidget::createClassesNameWidget(const QString &strClassName)
     pHBoxLayout->addWidget(pClassLabel);
     pHBoxLayout->addWidget(pImageLabel);
 
-    ui->verticalLayout_scrollarea->addLayout(pHBoxLayout);
-
-    qDebug()<<"sll-----createClassesNameWidget---end";
+    return pHBoxLayout;
 }
 
-void BaseDockWidget::createAllClassesListView(QMap<QString, BaseItemModel *> *pAllClassesItemModel,
-        bool bHasClass)
+BaseListView *BaseDockWidget::createClassListView(BaseItemModel *pItemModel)
 {
-    Q_UNUSED(bHasClass);
-
-    qDebug()<<"sll-----createAllClassesListView---start";
-    //设置分类combobox，连接函数
-    ui->comboBox_class->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
-    connect(ui->comboBox_class, SIGNAL(activated(int)), this, SLOT(onClassComboBoxActivated(int)));
-
-    //创建各分类listview，并添加到UI
-    QMap<QString, BaseItemModel *>::const_iterator iter;
-    for (iter = pAllClassesItemModel->constBegin(); iter != pAllClassesItemModel->constEnd(); iter++)
+    Q_ASSERT(pItemModel);
+    if (pItemModel == nullptr)
     {
-        //创建分类名控件
-        createClassesNameWidget(iter.key());
-
-        //设置分类combobox的数据项
-        ui->comboBox_class->addItem(iter.key());
-
-        //保存listview用于分类跳转
-        BaseListView *pListView = createListView(iter.value());
-        m_pAllClassesListView->insert(iter.key(), pListView);
+        return nullptr;
     }
-
-    qDebug()<<"sll-----createAllClassesListView---end";
-}
-
-BaseListView *BaseDockWidget::createListView(BaseItemModel *pItemModel)
-{
-    qDebug()<<"sll-----createListView---start";
 
     BaseItemDelegate *pItemDelegate  = new BaseItemDelegate(this);
     BaseListView *pListView          = new BaseListView(this);
@@ -149,18 +159,14 @@ BaseListView *BaseDockWidget::createListView(BaseItemModel *pItemModel)
     pListView->setModel(pItemModel);
     pListView->setItemDelegate(pItemDelegate);
 
-    connect(pItemDelegate, &BaseItemDelegate::addItem, this, &BaseDockWidget::addItemToTimeline);
-    connect(pItemDelegate, &BaseItemDelegate::selectItem, this, &BaseDockWidget::clickedItem);
-    connect(pItemDelegate, &BaseItemDelegate::rightClickItem, this, &BaseDockWidget::showMenu);
-
-    ui->verticalLayout_scrollarea->addWidget(pListView);
-
-    qDebug()<<"sll-----createListView---end";
+    connect(pItemDelegate, &BaseItemDelegate::addItem, this, &BaseDockWidget::onLeftClickedAddButtonInItem);
+    connect(pItemDelegate, &BaseItemDelegate::selectItem, this, &BaseDockWidget::onLeftClickedItem);
+    connect(pItemDelegate, &BaseItemDelegate::rightClickItem, this, &BaseDockWidget::onRightClickedItem);
 
     return pListView;
 }
 
-void BaseDockWidget::addItemToTimeline(const QModelIndex &index)
+void BaseDockWidget::onLeftClickedAddButtonInItem(const QModelIndex &index)
 {
     qDebug()<<"sll-----addItemToTimeline---start";
 
@@ -168,12 +174,12 @@ void BaseDockWidget::addItemToTimeline(const QModelIndex &index)
     BaseItemModel *pStandardItemModel    = static_cast<BaseItemModel *>(pItemModel);
     QStandardItem *pStandardItem         = pStandardItemModel->itemFromIndex(index);
 
-    addToTimeline(pStandardItem);
+    addItemToTimeline(pStandardItem);
 
     qDebug()<<"sll-----addItemToTimeline---end";
 }
 
-void BaseDockWidget::clickedItem(const QModelIndex &index)
+void BaseDockWidget::onLeftClickedItem(const QModelIndex &index)
 {
     qDebug()<<"sll-----clickedItem---start";
 
@@ -198,9 +204,16 @@ void BaseDockWidget::clickedItem(const QModelIndex &index)
     qDebug()<<"sll-----clickedItem---end";
 }
 
-void BaseDockWidget::showMenu(const QModelIndex &index)
+void BaseDockWidget::onRightClickedItem(const QModelIndex &index, const QPoint &position)
 {
     qDebug()<<"sll-----showMenu---start";
+
+    QAbstractItemModel *pItemModel       = const_cast<QAbstractItemModel *>(index.model());
+    BaseItemModel *pStandardItemModel    = static_cast<BaseItemModel *>(pItemModel);
+    QStandardItem *pStandardItem         = pStandardItemModel->itemFromIndex(index);
+
+    showMeun(pStandardItem, position);
+
     qDebug()<<"sll-----showMenu---end";
 }
 

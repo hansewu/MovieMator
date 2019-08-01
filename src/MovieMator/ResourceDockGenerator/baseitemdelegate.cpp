@@ -72,7 +72,7 @@ bool BaseItemDelegate::editorEvent(QEvent *pEvent,
             }
 
             //显示右键菜单
-            emit rightClickItem(index);
+            emit rightClickItem(index, mouseEvent->pos());
         }
     }
 
