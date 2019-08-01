@@ -2,6 +2,12 @@
 #include "uiuserdef.h"
 #include "qdebug.h"
 
+#include <QDrag>
+#include <QMouseEvent>
+#include <QApplication>
+#include <QStandardItemModel>
+#include <QSortFilterProxyModel>
+
 BaseListView::BaseListView(QWidget *pParent) :
     QListView (pParent)
 {
@@ -25,3 +31,73 @@ BaseListView::BaseListView(QWidget *pParent) :
             "QListView{background-color:transparent;color:rgb(214,214,214);}");
 }
 
+void BaseListView::mousePressEvent(QMouseEvent *pEvent)
+{
+    if ((pEvent->button() == Qt::LeftButton)
+            && indexAt(pEvent->pos()).isValid())
+    {
+        m_dragStart     = pEvent->pos();
+        m_bCanStartDrag = true;
+    }
+    else
+    {
+        m_bCanStartDrag = false;
+    }
+
+    QListView::mousePressEvent(pEvent);
+}
+
+void BaseListView::mouseMoveEvent(QMouseEvent *pEvent)
+{
+    if (!(pEvent->buttons() & Qt::LeftButton))
+    {
+        return;
+    }
+    if ((pEvent->pos() - m_dragStart).manhattanLength() < QApplication::startDragDistance())
+    {
+        return;
+    }
+    if (!m_bCanStartDrag)
+    {
+        return;
+    }
+
+    if(model())
+    {
+        QPixmap pixmap;
+        QString strSuperClassName = model()->metaObject()->superClass()->className();
+        if(strSuperClassName == "BaseItemModel")
+        {
+            QStandardItemModel *pItemModel
+                    = qobject_cast<QStandardItemModel *>(model());
+            if(pItemModel)
+            {
+                pixmap = pItemModel->itemFromIndex(selectedIndexes().first())->icon().pixmap(80, 45);
+            }
+        }
+        else if(strSuperClassName == "QAbstractProxyModel")
+        {
+            QSortFilterProxyModel *pProxyModel
+                    = qobject_cast<QSortFilterProxyModel *>(model());
+            if(pProxyModel)
+            {
+                QModelIndex modelIndex
+                        = pProxyModel->mapToSource(selectedIndexes().first());
+                QStandardItemModel *pItemModel
+                        = qobject_cast<QStandardItemModel *>(pProxyModel->sourceModel());
+                if(pItemModel && modelIndex.isValid())
+                {
+                    pixmap = pItemModel->itemFromIndex(modelIndex)->icon().pixmap(80, 45);
+                }
+            }
+        }
+
+        QDrag drag(this);
+
+        drag.setPixmap(pixmap);
+        drag.setHotSpot(QPoint(0, 0));
+        drag.setMimeData(model()->mimeData(selectedIndexes()));
+
+        drag.exec(Qt::MoveAction);
+    }
+}

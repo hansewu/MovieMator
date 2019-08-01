@@ -9,6 +9,16 @@ class BaseListView : public QListView
 
 public:
     BaseListView(QWidget *pParent = nullptr);
+
+protected:
+    void mousePressEvent(QMouseEvent *pEvent);
+
+    void mouseMoveEvent(QMouseEvent *pEvent);
+
+private:
+    QPoint m_dragStart;
+
+    bool   m_bCanStartDrag;
 };
 
 #endif // BASELISTVIEW_H
