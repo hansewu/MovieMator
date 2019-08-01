@@ -520,6 +520,19 @@ void RecentDockWidget::onClassComboBoxActivated(int nIndex)
     }
 }
 
+void RecentDockWidget::onRightClickedItem(const QModelIndex &index, const QPoint &position)
+{
+    QModelIndex modelIndex = proxyToSource(index);
+    if(modelIndex.isValid())
+    {
+        QAbstractItemModel *pItemModel = const_cast<QAbstractItemModel *>(modelIndex.model());
+        BaseItemModel *pBaseItemModel  = static_cast<BaseItemModel *>(pItemModel);
+        QStandardItem *pStandardItem   = pBaseItemModel->itemFromIndex(modelIndex);
+
+        showMeun(pStandardItem, position);
+    }
+}
+
 QMap<QString, BaseItemModel *> * RecentDockWidget::createAllClassesItemModel()
 {
     QMap<QString, BaseItemModel*> *pFileDockListViewItemModel = new QMap<QString, BaseItemModel*>();

@@ -38,6 +38,7 @@ protected slots:
     void onLeftClickedAddButtonInItem(const QModelIndex &index);
     void onLeftClickedItem(const QModelIndex &index);
     void onClassComboBoxActivated(int nIndex);
+    void onRightClickedItem(const QModelIndex &index, const QPoint &position);
 
 private slots:
     // 右键移除槽函数

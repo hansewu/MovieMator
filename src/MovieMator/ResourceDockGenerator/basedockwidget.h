@@ -53,12 +53,12 @@ protected slots:
     //当切换分类时，跳转到对应分类的listview
     virtual void onClassComboBoxActivated(int nIndex);
 
+    //右键点击item
+    virtual void onRightClickedItem(const QModelIndex &index, const QPoint &position);
+
 private slots:
     //切换dock时，自适应调节dock的宽
     void onDockWidgetVisibilityChanged(bool bVisible);
-
-    //右键点击item
-    virtual void onRightClickedItem(const QModelIndex &index, const QPoint &position);
 
 private:
     //创建所有分类的UI
