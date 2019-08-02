@@ -102,6 +102,9 @@ public:
     //预览滤镜效果
     virtual void previewFilter(int index);
     virtual void previewAudioFilter(QmlMetadata *meta);
+
+    //设置时间线上文字模板显示的名字
+    virtual void setTextTemplateNameOnTimeline(FILE_HANDLE fileHandle, QString strName);
 };
 
 #define MAININTERFACE MainInterface::singleton()
