@@ -408,22 +408,6 @@ void MainInterface::previewAudioFilter(QmlMetadata *meta)
     playFile(mltSettingFile);
 }
 
-void MainInterface::setTextTemplateNameOnTimeline(FILE_HANDLE fileHandle, QString strName)
-{
-    Q_ASSERT(fileHandle);
-    Q_ASSERT(!strName.isNull());
-    if (fileHandle && !strName.isNull())
-    {
-        Mlt::Producer *pProducer = static_cast<Mlt::Producer*>(fileHandle);
-        Q_ASSERT(pProducer);
-        Q_ASSERT(pProducer->is_valid());
-        if (pProducer && pProducer->is_valid())
-        {
-            pProducer->set("moviemator:textTemplateName", strName.toUtf8().data());
-        }
-    }
-}
-
 void MainInterface::previewFilter(int index)
 {
 //    1 获取滤镜meta  默认按视频滤镜处理

@@ -29,7 +29,6 @@ QMimeData *TextItemModel::mimeData(const QModelIndexList &indexes) const
     FILE_HANDLE fileHandel = m_pMainInterface->openFile(pTextUserData->strXmlFilePath);
     QMimeData *pMimeData = new QMimeData;
     if (fileHandel) {
-        m_pMainInterface->setTextTemplateNameOnTimeline(fileHandel, pStandardItem->text());
          pMimeData->setData(m_pMainInterface->getXMLMimeTypeForDragDrop(),
                            m_pMainInterface->getXmlForDragDrop(fileHandel).toUtf8());
          pMimeData->setText(QString::number(m_pMainInterface->getPlayTime(fileHandel)));

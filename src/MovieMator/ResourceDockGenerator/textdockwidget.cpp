@@ -88,7 +88,6 @@ void TextDockWidget::addItemToTimeline(const QStandardItem *pItem)
 
     FILE_HANDLE fileHandel = m_pMainInterface->openFile(pTextUserData->strXmlFilePath);
     if (fileHandel) {
-        m_pMainInterface->setTextTemplateNameOnTimeline(fileHandel, pItem->text());
         m_pMainInterface->addToTimeLine(fileHandel);
 
         m_pMainInterface->destroyFileHandle(fileHandel);
