@@ -99,9 +99,6 @@ public:
 
     //添加滤镜到选定的clip上
     virtual void addFilter(int nFilterIndex = -1);
-    //预览滤镜效果
-    virtual void previewFilter(int index);
-    virtual void previewAudioFilter(QmlMetadata *meta);
 };
 
 #define MAININTERFACE MainInterface::singleton()

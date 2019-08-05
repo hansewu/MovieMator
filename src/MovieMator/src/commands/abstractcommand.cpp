@@ -12,8 +12,80 @@
 
 bool g_isInUndoRedoProcess = false;
 
-void saveXmlFile(QString original,QString currrent,QString commandName)
-{   
+AbstractCommand::AbstractCommand(MultitrackModel &model, QUndoCommand * parent)
+    : QUndoCommand (parent)
+    , m_model(model)
+    , m_oldSelection(m_model.selection())
+    , m_bisFirstRedo(true)
+{
+    //Q_ASSERT(g_isInUndoRedoProcess == false); //UpdateClipCommand 创建后并不会立即push，此处添加assert创建UpdateClipCommand时会出错。在pushcommand的时候添加。
+}
+
+void AbstractCommand::redo()
+{
+    g_isInUndoRedoProcess = true;
+
+#ifndef NDEBUG
+    m_originalXml = MLT.XML(MAIN.timelineDock()->model()->tractor());
+#endif
+
+    //设置操作时的选中状态
+    if (m_bisFirstRedo == false)
+    {
+        MAIN.timelineDock()->setSelection(m_oldSelection.selectedClips, m_oldSelection.selectedTrack, m_oldSelection.isMultitrackSelected);
+    }
+
+    //取消consumer
+    MLT.consumer()->set_cancelled(1);
+    w_enter_critical();
+    MLT.consumer()->set_cancelled(0);
+
+    this->redo_impl();
+    w_leave_critical();
+
+    //记录操作之后的选中状态
+    if (m_bisFirstRedo == true)
+    {
+        m_newSelection = m_model.selection();
+        m_bisFirstRedo = false;
+    }
+    else
+    {
+        MAIN.timelineDock()->setSelection(m_newSelection.selectedClips, m_newSelection.selectedTrack, m_newSelection.isMultitrackSelected);
+    }
+
+    g_isInUndoRedoProcess = false;
+}
+
+void AbstractCommand::undo()
+{
+    g_isInUndoRedoProcess = true;
+    MLT.consumer()->set_cancelled(1);
+    w_enter_critical();
+    MLT.consumer()->set_cancelled(0);
+    this->undo_impl();
+    w_leave_critical();
+
+    //恢复选中状态
+    MAIN.timelineDock()->setSelection(m_oldSelection.selectedClips, m_oldSelection.selectedTrack, m_oldSelection.isMultitrackSelected);
+
+#ifndef NDEBUG
+    m_currentXml = MLT.XML(MAIN.timelineDock()->model()->tractor());
+
+    saveStateAsXmlFile(m_originalXml,m_currentXml,text());
+//    Q_ASSERT(m_currentXml == m_originalXml);
+#endif
+    g_isInUndoRedoProcess = false;
+}
+
+
+void AbstractCommand::refreshSelection()
+{
+    m_newSelection = m_model.selection();
+}
+
+void AbstractCommand::saveStateAsXmlFile(QString original,QString currrent,QString commandName)
+{
     QDomDocument doc;
     if(doc.setContent(original))
     {
@@ -56,72 +128,3 @@ void saveXmlFile(QString original,QString currrent,QString commandName)
     qDebug()<<"currrent:";
     qDebug()<<currrent;
 }
-
-AbstractCommand::AbstractCommand(MultitrackModel &model, QUndoCommand * parent)
-    : QUndoCommand (parent)
-    , m_model(model)
-    , m_oldSelection(m_model.selection())
-    , m_bisFirstRedo(true)
-{
-    //Q_ASSERT(g_isInUndoRedoProcess == false); //UpdateClipCommand 创建后并不会立即push，此处添加assert创建UpdateClipCommand时会出错。在pushcommand的时候添加。
-}
-
-void AbstractCommand::redo()
-{
-    g_isInUndoRedoProcess = true;
-    m_originalXml = MLT.XML(MAIN.timelineDock()->model()->tractor());
-
-    //设置操作时的选中状态
-    if (m_bisFirstRedo == false)
-    {
-        MAIN.timelineDock()->setSelection(m_oldSelection.selectedClips, m_oldSelection.selectedTrack, m_oldSelection.isMultitrackSelected);
-    }
-
-    //取消consumer
-    MLT.consumer()->set_cancelled(1);
-    w_enter_critical();
-    MLT.consumer()->set_cancelled(0);
-
-    this->redo_impl();
-    w_leave_critical();
-
-    //记录操作之后的选中状态
-    if (m_bisFirstRedo == true)
-    {
-        m_newSelection = m_model.selection();
-        m_bisFirstRedo = false;
-    }
-    else
-    {
-        MAIN.timelineDock()->setSelection(m_newSelection.selectedClips, m_newSelection.selectedTrack, m_newSelection.isMultitrackSelected);
-    }
-
-    g_isInUndoRedoProcess = false;
-}
-
-void AbstractCommand::undo()
-{
-    g_isInUndoRedoProcess = true;
-    MLT.consumer()->set_cancelled(1);
-    w_enter_critical();
-    MLT.consumer()->set_cancelled(0);
-    this->undo_impl();
-    w_leave_critical();
-
-    //恢复选中状态
-    MAIN.timelineDock()->setSelection(m_oldSelection.selectedClips, m_oldSelection.selectedTrack, m_oldSelection.isMultitrackSelected);
-
-    m_currentXml = MLT.XML(MAIN.timelineDock()->model()->tractor());
-#ifndef NDEBUG
-    saveXmlFile(m_originalXml,m_currentXml,text());
-//    Q_ASSERT(m_currentXml == m_originalXml);
-#endif
-    g_isInUndoRedoProcess = false;
-}
-
-
-void AbstractCommand::refreshSelection()
-{
-    m_newSelection = m_model.selection();
-}
-

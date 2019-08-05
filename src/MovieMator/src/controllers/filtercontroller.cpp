@@ -198,23 +198,19 @@ void FilterController::loadFrei0rFilterMetadata() {
 //                                LOG_DEBUG() << "param F0R_PARAM_BOOL" << meta->name() << QString::number(mlt_properties_get_int(param_pro, "default"));
                             }
                             else if(parmType == "float")
-                                {
-                                    param->setParaType("double");
-                                    param->setMinimum(QString::fromUtf8(mlt_properties_get(param_pro, "minimum")).toDouble());
-                                    param->setMaximum(QString::fromUtf8(mlt_properties_get(param_pro, "maximum")).toDouble());
-                                    param->setDefaultValue(QString::number(mlt_properties_get_double(param_pro, "default")));
-
-//                                    LOG_DEBUG() << "param F0R_PARAM_DOUBLE" << meta->name() << QString::number(mlt_properties_get_double(param_pro, "default"));
-                                }
+                            {
+                                param->setParaType("double");
+                                param->setMinimum(QString::fromUtf8(mlt_properties_get(param_pro, "minimum")).toDouble());
+                                param->setMaximum(QString::fromUtf8(mlt_properties_get(param_pro, "maximum")).toDouble());
+                                param->setDefaultValue(QString::number(mlt_properties_get_double(param_pro, "default")));
+                            }
                             else if(parmType == "color")
-                                {
-                                    param->setParaType("color");
-                                    mlt_rect rect = mlt_properties_get_rect(param_pro, "default");
-                                    QString sValue = QString("%1 %2 %3 %4 %5").arg(rect.x).arg(rect.y).arg(rect.w).arg(rect.h).arg(rect.o);
-                                    param->setDefaultValue(sValue);
-
-//                                    LOG_DEBUG() << "param F0R_PARAM_COLOR" << meta->name() << sValue;
-                                }
+                            {
+                                param->setParaType("color");
+                                mlt_rect rect = mlt_properties_get_rect(param_pro, "default");
+                                QString sValue = QString("%1 %2 %3 %4 %5").arg(rect.x).arg(rect.y).arg(rect.w).arg(rect.h).arg(rect.o);
+                                param->setDefaultValue(sValue);
+                            }
                             else if(parmType == "string")
                             {
                                 param->setParaType("string");
@@ -415,7 +411,8 @@ QString FilterController::getFilterType(QString filterType)
 }
 QmlMetadata* FilterController::getQmlMetadata(int index)
 {
-    if(index < m_metadataModel.rowCount()){
+    if(index < m_metadataModel.rowCount())
+    {
         QmlMetadata *meta = m_metadataModel.get(index);
         return meta;
     }else {
@@ -442,6 +439,11 @@ void FilterController::updateFilterDock()
         QString imageSourcePath = metadataModel->thumbnail();
         strcpy(filterInfos[nIndex].imageSourcePath, imageSourcePath.toStdString().c_str());
 
+        QString strObjectName = metadataModel->objectName();
+        QDir commonFileDir = QDir(Util::resourcesPath() + "/template/filters/preview/");
+        QString filePath = commonFileDir.absoluteFilePath(strObjectName + ".mlt");
+        strcpy(filterInfos[nIndex].perviewSettingFilePath, filePath.toStdString().c_str());
+
         bool bVisible = true;
         if (metadataModel->isHidden()) bVisible = false;
         if (metadataModel->needsGPU() && !Settings.playerGPU()) bVisible = false;
@@ -460,6 +462,8 @@ void FilterController::updateFilterDock()
         strcpy(audiofilterInfos[nIndex].type, filterInfos[nIndex].type);
         strcpy(audiofilterInfos[nIndex].imageSourcePath, filterInfos[nIndex].imageSourcePath);
         audiofilterInfos[nIndex].visible = filterInfos[nIndex].visible;
+        strcpy(audiofilterInfos[nIndex].perviewSettingFilePath, filterInfos[nIndex].perviewSettingFilePath);
+
     }
     setAudioFiltersInfo(audiofilterInfos, nFilterCount);
 }

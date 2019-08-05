@@ -319,6 +319,23 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
     return false;
 }
 
+void AttachedFiltersModel::setDefaultValueForAllParemeters(Mlt::Filter* filter,QmlMetadata *meta)
+{
+    for (int j=0;j<meta->keyframes()->parameterCount();j++)
+    {
+        QString property = meta->keyframes()->parameter(j)->property();
+        //frei0r滤镜参数的property都是“0”、“1”、“2”、“3”。。。规则固定的，而生成QmlMetadata的时候有可能并没有设置。所以需要在用的时候设置。
+        if(property == "")
+            property = QString::number(j);
+
+        QString value = meta->keyframes()->parameter(j)->defaultValue();
+        //主要针对webvfx相关的几个滤镜会引用到.html文件，meta里面存的是相对路径，而使用的时候需要绝对路径
+        if(value.contains(".html"))
+            value = meta->path().absolutePath().append('/') + value;
+        filter->set(property.toUtf8().constData(),value.toUtf8().constData());
+    }
+}
+
 void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
 {
     if (MAIN.timelineDock()->selection().isEmpty() )
@@ -355,15 +372,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
         if (!meta->objectName().isEmpty())
             filter->set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
 
-        for (int j=0;j<meta->keyframes()->parameterCount();j++) {
-            QString property = meta->keyframes()->parameter(j)->property();
-            if(property == "")
-                property = QString::number(j);
-            QString value = meta->keyframes()->parameter(j)->defaultValue();
-            if(value.contains(".html"))
-                value = meta->path().absolutePath().append('/') + value;
-            filter->set(property.toUtf8().constData(),value.toUtf8().constData());
-        }
+        setDefaultValueForAllParemeters(filter,meta);
 
         insertIndex = 0;
         for (int i = m_metaList.count() - 1; i >= 0; i--)
