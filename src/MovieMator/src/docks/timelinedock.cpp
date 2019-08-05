@@ -2333,7 +2333,8 @@ void TimelineDock::unitTestCommand()
     replaceVideofilePath(testFile,"test.mp4",newStr);
 
     testFile = testFileDir.absoluteFilePath("test1.mmp");
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::OverwriteClipCommand(m_model, 1, 0, MLT.XML(MLT.savedProducer())));
         MAIN.undoStack()->undo();
@@ -2341,67 +2342,80 @@ void TimelineDock::unitTestCommand()
 
     testFile = testFileDir.absoluteFilePath("test.mmp");
 
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         new Timeline::AppendClipCommand(m_model, 1,MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer()));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::InsertClipCommand(m_model, 1, m_position, MLT.XML(MLT.savedProducer())));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         lift(1,0); //LiftClipCommand
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::RemoveClipCommand(m_model, *this, 1, 0, MLT.XML(MLT.savedProducer())));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::NameTrackCommand(m_model, 1, "value"));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::MuteTrackCommand(m_model, 1));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::HideTrackCommand(m_model, 1));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::CompositeTrackCommand(m_model, 1,Qt::CheckState(m_model.data(m_model.index(1), MultitrackModel::IsCompositeRole).toInt())));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::LockTrackCommand(m_model, 1, true));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::MoveClipCommand(m_model, 1, 0, 0, 0));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::TrimClipInCommand(m_model, 1, 0, 266, false));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::TrimClipOutCommand(m_model, 1, 0, 266, false));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::SplitCommand(MAINCONTROLLER.multitrackModel(), 1, 0, 10));
         MAIN.undoStack()->undo();
@@ -2411,84 +2425,100 @@ void TimelineDock::unitTestCommand()
 //        MAIN.pushCommand(new Timeline::FadeOutCommand(m_model, 1, 0, 5));
 //        MAIN.undoStack()->undo();
 //    }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::AddTransitionCommand(m_model, 1, 0, m_position));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::TrimTransitionInCommand(m_model, 1, 0, 266));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::TrimTransitionOutCommand(m_model, 1, 2, -1));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::AddTransitionByTrimInCommand(m_model, 1, 0, 266));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::AddTransitionByTrimOutCommand(m_model, 1, 0, 266));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::AddTrackCommand(m_model, VideoTrackType));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::InsertTrackCommand(MAINCONTROLLER.multitrackModel(), 1));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::RemoveTrackCommand(MAINCONTROLLER.multitrackModel(), 1));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {;
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         Timeline::UpdateClipCommand* command = new Timeline::UpdateClipCommand(*this, m_model, 1, 0, 10);
         command->setXmlAfter(MLT.XML(MLT.producer()));
         MAIN.pushCommand(command);
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::RemoveTransitionCommand(m_model, 1, 0, 0, 266));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::RemoveTransitionsOnClipCommand(m_model, *this, 1, 0));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::MoveInsertClipCommand(m_model, 0, 1, 1, m_position));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), 0, "u",  105, 110,false));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::FilterAttachCommand(*(MAIN.timelineDock()->model()), MAIN.filterController()->metadataModel()->get(45), 0, 0, true,false));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::FilterMoveCommand(*(MAIN.timelineDock()->model()), 0, 1,false));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         key_frame_item paraFrom;
         paraFrom.keyFrame = 93;
@@ -2508,7 +2538,8 @@ void TimelineDock::unitTestCommand()
         MAIN.pushCommand(new Timeline::KeyFrameInsertCommand(*(MAIN.timelineDock()->model()), MLT.producer()->filter(0), keyFrameFrom, keyFrameAdd,false));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         key_frame_item para;
         para.keyFrame = 52;
@@ -2519,26 +2550,30 @@ void TimelineDock::unitTestCommand()
         MAIN.pushCommand(new Timeline::KeyFrameRemoveCommand(*(MAIN.timelineDock()->model()), MLT.producer()->filter(0), keyFrameRemove,false));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(new Timeline::KeyFrameUpdateCommand(*(MAIN.timelineDock()->model()), MLT.producer()->filter(0), 52, "u", "105", "121",false));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(
                 new Timeline::ClipsSelectCommand(*(MAIN.timelineDock()->model()), QList<int>(), 1, false,
                                                  m_model.selection().selectedClips, m_model.selection().selectedTrack, m_model.selection().isMultitrackSelected,false));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(
                     new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), 1, 1, "luma", "invert", "0",false)
                     );
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile)) {
+    if (!MLT.open(testFile))
+    {
         MAIN.open(MLT.producer());
         MAIN.pushCommand(
                     new Timeline::TransitionDurationSettingCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), 1, 1, 10,false)

@@ -32,6 +32,7 @@ class FilterItemInfo : public QObject
     Q_PROPERTY(QString filterType READ filterType WRITE setFilterType)
     Q_PROPERTY(QString name READ name WRITE setName)
     Q_PROPERTY(QString imageSourcePath READ imageSourcePath WRITE setImageSourcePath)
+    Q_PROPERTY(QString perviewSettingFilePath READ perviewSettingFilePath WRITE setPerviewSettingFilePath)
     Q_PROPERTY(bool visible READ visible WRITE setVisible)
 
 public:
@@ -44,6 +45,8 @@ public:
     Q_INVOKABLE void setName(const QString strName){m_name = strName;}
     Q_INVOKABLE QString imageSourcePath() const { return m_imageSourcePath; }
     Q_INVOKABLE void setImageSourcePath(const QString strImageSourcePath){m_imageSourcePath = strImageSourcePath;}
+    Q_INVOKABLE QString perviewSettingFilePath() const { return m_perviewSettingFilePath; }
+    Q_INVOKABLE void setPerviewSettingFilePath(const QString strPerviewSettingFilePath){m_perviewSettingFilePath = strPerviewSettingFilePath;}
     Q_INVOKABLE bool visible() const { return m_bVisible; }
     Q_INVOKABLE void setVisible(const bool visible){m_bVisible = visible;}
 
@@ -51,6 +54,7 @@ private:
     QString m_filterType;
     QString m_name;
     QString m_imageSourcePath;
+    QString m_perviewSettingFilePath;
     bool m_bVisible;
 };
 
@@ -86,7 +90,7 @@ public:
     void resetQview();
 
     Q_INVOKABLE void addFilterItem(int index);
-    Q_INVOKABLE void previewFilter(int idnex);
+    Q_INVOKABLE void previewFilter(QString objectName);
 
 private:
     MainInterface *m_mainWindow;

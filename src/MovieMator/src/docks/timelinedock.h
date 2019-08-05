@@ -251,7 +251,7 @@ public slots:
     void onShowFrame(const SharedFrame& frame);
     // 定位播放游标到位置 position处
     void onSeeked(int position);
-    // 在轨道 trackIndex后添加轨道
+    // 在轨道 trackIndex上添加当前播放的clip
     void append(int trackIndex);
     // 移除轨道 trackIndex上的剪辑 clipIndex
     void remove(int trackIndex, int clipIndex);

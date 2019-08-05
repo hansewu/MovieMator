@@ -13,6 +13,7 @@ public:
     AbstractCommand(MultitrackModel &model, QUndoCommand * parent = nullptr);
     void redo();
     void undo();
+    void saveStateAsXmlFile(QString original,QString currrent,QString commandName);
 
     virtual void redo_impl() = 0;
     virtual void undo_impl() = 0;

@@ -28,6 +28,7 @@ typedef struct {
     char name[256];
     char type[256];
     char imageSourcePath[256];
+    char perviewSettingFilePath[512];
     bool visible;
 } Filter_Info;
 
