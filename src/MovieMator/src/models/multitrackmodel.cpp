@@ -162,14 +162,6 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                     result = QString::fromUtf8(info->producer->get("moviemator:imageName"));
                     result += "-" + QString::fromUtf8(info->producer->get("moviemator:animationName"));
                 }
-
-                //重置时间线上文字模板显示的名字
-                QString textTemplateName = QString::fromUtf8(info->producer->get("moviemator:textTemplateName"));
-                if (!textTemplateName.isNull())
-                {
-                    result = textTemplateName;
-                }
-
                 return result;
             }
             case ResourceRole:
