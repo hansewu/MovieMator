@@ -25,10 +25,18 @@ BaseListView::BaseListView(QWidget *pParent) :
     setDragDropMode(QAbstractItemView::DragOnly);//listview只支持拖拽，不支持放下
     setEditTriggers(QAbstractItemView::NoEditTriggers);//禁用编辑，即禁止双击时编辑item中的文字
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//关闭竖直方向滚动条
+#ifdef Q_OS_MAC
+    setStyleSheet(//设置listview选中、滑过以及背景颜色
+            "QListView::item:selected{background-color:rgb(192,72,44); color:rgb(255,255,255);border-radius:4px;}"
+            "QListView::item:hover{background-color:rgb(192,72,44); color:rgb(255,255,255);border-radius:4px;}"
+            "QListView{background-color:transparent;color:rgb(214,214,214);}"
+            "QToolTip{background:rgb(205, 205, 205);}");  // 单独设置 tooltip的样式
+#else
     setStyleSheet(//设置listview选中、滑过以及背景颜色
             "QListView::item:selected{background-color:rgb(192,72,44); color:rgb(255,255,255);border-radius:4px;}"
             "QListView::item:hover{background-color:rgb(192,72,44); color:rgb(255,255,255);border-radius:4px;}"
             "QListView{background-color:transparent;color:rgb(214,214,214);}");
+#endif
 }
 
 void BaseListView::mousePressEvent(QMouseEvent *pEvent)
