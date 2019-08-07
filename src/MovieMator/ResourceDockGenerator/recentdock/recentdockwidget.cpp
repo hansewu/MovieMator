@@ -113,59 +113,8 @@ void RecentDockWidget::add(const QString &strFile)
 
         ui->comboBox_class->setCurrentText(m_listItemNames[nTypeIndex]);
 
-        resizeEvent(nullptr);
-//        onClassComboBoxActivated(ui->comboBox_class->currentIndex());
+        updateListViewSize();
     }
-}
-
-QString RecentDockWidget::remove(const QString &strFile)
-{
-    QString strName = Util::baseName(strFile);
-
-    if(m_recent.removeOne(strFile))
-    {
-        Settings.setRecent(m_recent);
-
-        FILE_HANDLE fileHandle = m_pMainInterface->openFile(strFile);
-        if(fileHandle)
-        {
-            FILE_TYPE fileType = m_pMainInterface->getFileType(fileHandle);
-            m_pMainInterface->destroyFileHandle(fileHandle);
-
-            BaseListView *pListView = m_pAllClassesListView->value(m_listItemNames[fileType]);
-            if(pListView == nullptr ||
-               (pListView->model() == nullptr) ||
-               (pListView->model()->rowCount() <= 0))
-            {
-                return strName;
-            }
-
-            QAbstractItemModel *pModel = const_cast<QAbstractItemModel*>(pListView->model());
-            BaseItemModel *pItemModel  = static_cast<BaseItemModel*>(pModel);
-            for(int j = 0; j < pListView->model()->rowCount(); j++)
-            {
-                QStandardItem *pItem = pItemModel->item(j);
-                if(pItem)
-                {
-                    QVariant userDataVariant = pItem->data(Qt::UserRole);
-                    QByteArray userByteArray = userDataVariant.value<QByteArray>();
-                    FileUserData *pUserData  = reinterpret_cast<FileUserData *>(userByteArray.data());
-
-                    if(pUserData->strFilePath == strFile)
-                    {
-                        pItemModel->removeRow(j);
-
-                        resizeEvent(nullptr);
-//                        onClassComboBoxActivated(ui->comboBox_class->currentIndex());
-
-                        return strName;
-                    }
-                }
-            }
-        }
-    }
-
-    return strName;
 }
 
 void RecentDockWidget::setProxyModel()
@@ -491,18 +440,23 @@ void RecentDockWidget::onLeftClickedItem(const QModelIndex &index)
 
 void RecentDockWidget::onClassComboBoxActivated(int nIndex)
 {
+    qDebug()<<"sll---------onClassComboBoxActivated--start";
     for(int i = nIndex; i < m_listItemNames.count(); i++)
     {
         QLayoutItem *pLayoutItem = ui->verticalLayout_scrollarea->itemAt(i * 2);
+        if (pLayoutItem == nullptr)
+        {
+            break;
+        }
         if (pLayoutItem)
         {
             if (pLayoutItem->layout() == nullptr)
             {
-                return;
+                break;
             }
             if (pLayoutItem->layout()->itemAt(0) == nullptr)
             {
-                return;
+                break;
             }
 
             QWidget *pWidget = pLayoutItem->layout()->itemAt(0)->widget();
@@ -512,12 +466,12 @@ void RecentDockWidget::onClassComboBoxActivated(int nIndex)
                 if(pLabel->text() == ui->comboBox_class->itemText(nIndex))
                 {
                     ui->scrollArea->verticalScrollBar()->setValue(pWidget->y());
-
-                    return;
+                    break;
                 }
             }
         }
     }
+    qDebug()<<"sll---------onClassComboBoxActivated--end";
 }
 
 void RecentDockWidget::onRightClickedItem(const QModelIndex &index, const QPoint &position)
@@ -615,9 +569,7 @@ void RecentDockWidget::on_actionRemove_triggered()
 
             m_pCurrentItem = nullptr;
 
-//            onClassComboBoxActivated(ui->comboBox_class->currentIndex());
-
-            resizeEvent(nullptr);
+            updateListViewSize();
         }
     }
 }
@@ -645,7 +597,7 @@ void RecentDockWidget::on_actionRemoveAll_triggered()
     }
     ui->comboBox_class->clear();
 
-    resizeEvent(nullptr);
+    updateListViewSize();
 }
 
 void RecentDockWidget::on_lineEdit_textChanged(const QString &strSearch)
@@ -659,9 +611,16 @@ void RecentDockWidget::on_lineEdit_textChanged(const QString &strSearch)
         }
     }
 
-    resizeEvent(nullptr);
-
-//    onClassComboBoxActivated(ui->comboBox_class->currentIndex());
+    //FIXME:此方法相对与目前已知的方法（定时器、线程），相对较好，但还需要优化（如何能准去知道dock中的widget位置已更新完成？）
+    //实现当搜索框中的关键此被清空时，依然能跳转到搜索前分类的位置
+    //实际上可以直接调用onClassComboBoxActivated函数进行跳转：onClassComboBoxActivated(ui->comboBox_class->currentIndex());
+    //但是由于在清除搜索框内容时，会不断的刷新可显示item（增加或者删除），更新需要一定的时间，但目前无法知道什么时候完成，
+    //造成在直接调用onClassComboBoxActivated跳转时，dock中的widget位置还未刷新完成，从而跳转失败（之前的位置）
+    //由于dock的resize操作可以立即重绘dock中的控件，因此目前模拟了一个dock resize的操作，先改变一个像素，然后在复原，主要用于触发resizeevent事件.进行立即重绘
+    //备注：也尝试过定时器，用一个大约10毫秒的定时器也可解决此问题，但由于设备性能不同，刷新完成时间不好确定，定时器方法不可缺
+    QSize originSize = size();
+    resize(originSize.width() + 1, originSize.height());
+    resize(originSize);
 }
 
 static RecentDockWidget *pInstance = nullptr;
