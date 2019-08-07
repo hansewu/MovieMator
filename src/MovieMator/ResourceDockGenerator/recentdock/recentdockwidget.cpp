@@ -566,7 +566,9 @@ QMap<QString, BaseItemModel *> * RecentDockWidget::createAllClassesItemModel()
 void RecentDockWidget::showMeun(const QStandardItem *pItem, const QPoint &position)
 {
     Q_UNUSED(position);
-    if(pItem)
+
+    // Samples没有右键功能
+    if(pItem && (!m_listProxyModel[0] || (pItem->model() != m_listProxyModel[0]->sourceModel())))
     {
         QMenu menu(this);
         menu.addAction(m_pRemoveAction);
@@ -629,8 +631,8 @@ void RecentDockWidget::on_actionRemoveAll_triggered()
 
     m_pCurrentItem = nullptr;
 
-    // 清空 listView的 model
-    for(int i = 0; i < m_listProxyModel.count(); i++)
+    // 清空 listView的 model，不清空 Samples
+    for(int i = 1; i < m_listProxyModel.count(); i++)
     {
         RecentItemModel *pModel = static_cast<RecentItemModel*>(m_listProxyModel[i]->sourceModel());
         if(pModel)
@@ -643,7 +645,13 @@ void RecentDockWidget::on_actionRemoveAll_triggered()
 
         hideModelTitle(i);
     }
+
     ui->comboBox_class->clear();
+    // Samples
+    if(m_listProxyModel[0]->sourceModel()->rowCount() > 0)
+    {
+        ui->comboBox_class->addItem(m_listItemNames[0]);
+    }
 
     resizeEvent(nullptr);
 }
