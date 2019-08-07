@@ -63,6 +63,36 @@ void BaseDockWidget::setupUi()
     qDebug()<<"sll-----setupUi---end";
 }
 
+void BaseDockWidget::updateListViewSize()
+{
+    qDebug()<<"sll-----updateListViewSize---start";
+    QMap<QString, BaseListView *>::const_iterator iter;
+    for (iter = m_pAllClassesListView->constBegin(); iter != m_pAllClassesListView->constEnd(); iter++)
+    {
+        BaseListView *pListView = iter.value();
+        pListView->setFixedWidth(ui->scrollArea->width() - ui->scrollArea->verticalScrollBar()->width());
+
+        int nGridHeight = pListView->gridSize().height();
+        int nGridWidth = pListView->gridSize().width();
+        if (nGridWidth <= 0)
+        {
+            continue;
+        }
+
+        int nListViewWidth  = pListView->size().width();
+        int nColumns        = (nListViewWidth / nGridWidth) < 1 ? 1 : (nListViewWidth / nGridWidth);
+        int nRowCount       = pListView->model()->rowCount();
+        int nRows           = (nRowCount % nColumns) > 0 ? (nRowCount / nColumns + 1) : (nRowCount / nColumns);
+
+        pListView->setFixedHeight(nRows * nGridHeight);
+    }
+
+    //listview大小变化时，保证依然在当前分类的listview上
+    onClassComboBoxActivated(ui->comboBox_class->currentIndex());
+
+    qDebug()<<"sll-----updateListViewSize---end";
+}
+
 void BaseDockWidget::setupTopBarUi()
 {
     qDebug()<<"sll-----setupOtherUi---start";
@@ -217,34 +247,15 @@ void BaseDockWidget::onRightClickedItem(const QModelIndex &index, const QPoint &
     qDebug()<<"sll-----showMenu---end";
 }
 
-//FIXME:此函数需要优化，存在魔法数字
 void BaseDockWidget::resizeEvent(QResizeEvent *pEvent)
 {
     qDebug()<<"sll-----resizeEvent---start";
-
-    QMap<QString, BaseListView *>::const_iterator iter;
-    for (iter = m_pAllClassesListView->constBegin(); iter != m_pAllClassesListView->constEnd(); iter++)
+    if (pEvent == nullptr)
     {
-        BaseListView *pListView = iter.value();
-        pListView->setFixedWidth(ui->scrollArea->width() - 5);
-
-        int nGridHeight = pListView->gridSize().height();
-        int nGridWidth = pListView->gridSize().width();
-        if (nGridWidth <= 0)
-        {
-            continue;
-        }
-
-        int nListViewWidth = pListView->size().width();
-        int nColumns = (nListViewWidth / nGridWidth) < 1 ? 1 : (nListViewWidth / nGridWidth);
-        int nRowCount = pListView->model()->rowCount();
-        int nRows = (nRowCount % nColumns) > 0 ? (nRowCount / nColumns + 1) : (nRowCount / nColumns);
-
-        pListView->setFixedHeight(nRows * nGridHeight);
+        return;
     }
 
-    //listview大小变化时，保证依然在当前分类的listview上
-    onClassComboBoxActivated(ui->comboBox_class->currentIndex());
+    updateListViewSize();
 
     QDockWidget::resizeEvent(pEvent);
 
@@ -293,6 +304,6 @@ void BaseDockWidget::onDockWidgetVisibilityChanged(bool bVisible)
 {
     if(bVisible)
     {
-        resizeEvent(nullptr);
+        updateListViewSize();
     }
 }

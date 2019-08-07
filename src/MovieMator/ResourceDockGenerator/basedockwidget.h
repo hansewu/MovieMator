@@ -25,6 +25,8 @@ public:
     virtual void setupUi() final;
 
 protected:
+    //更新listview的大小，主要时当dock大小变化时使用
+    virtual void updateListViewSize();
     //用于listview中的项目个数变化时，更新Dock的宽。此函数为重载基类QDockWidget的函数
     virtual void resizeEvent(QResizeEvent *pEvent);
 

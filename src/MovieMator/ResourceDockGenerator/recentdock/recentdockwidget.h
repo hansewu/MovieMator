@@ -21,8 +21,6 @@ public:
     void setProxyModel();
     // 外部调用的添加文件并显示在 dock里
     void add(const QString &strFile);
-    // 外部调用的移除功能
-    QString remove(const QString &strFile);
 
 protected:
     void setupTopBarUi();
