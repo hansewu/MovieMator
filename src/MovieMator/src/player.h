@@ -131,6 +131,8 @@ private:
     void retranslateUi(QWidget* widget);
     void adjustScrollBars(float horizontal, float vertical);
     double setVolume(int volume);
+    int getPlayDuration();
+    QString playDurationToTimeFormat(int nPlayDuration);
 
     QAction *actionPlay;
     QAction *actionPause;

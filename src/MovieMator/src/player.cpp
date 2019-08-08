@@ -730,7 +730,7 @@ void Player::onProducerOpened(bool play)
     // Workaround video not showing on Windows with Qt 5.5 upgrade.
     m_videoWidget->show();
 #endif
-    m_duration = MLT.producer()->get_length();
+    m_duration = getPlayDuration();
     m_isSeekable = MLT.isSeekable();
     MLT.producer()->set("ignore_points", 1);
     m_scrubber->setFramerate(MLT.profile().fps());
@@ -741,7 +741,7 @@ void Player::onProducerOpened(bool play)
 //    m_inPointLabel->setText("--:--:--:-- / ");
 //    m_selectedLabel->setText("--:--:--:--");
     if (m_isSeekable) {
-        m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(QString(MLT.producer()->get_length_time())));
+        m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(playDurationToTimeFormat(m_duration)));
         m_previousIn = MLT.isClip()? MLT.producer()->get_in() : -1;
         m_scrubber->setEnabled(true);
         m_scrubber->setInPoint(m_previousIn);
@@ -749,7 +749,7 @@ void Player::onProducerOpened(bool play)
         m_scrubber->setOutPoint(m_previousOut);
     }
     else {
-        m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(QString(MLT.producer()->get_length_time())));
+        m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(playDurationToTimeFormat(m_duration)));
         m_scrubber->setDisabled(true);
         // cause scrubber redraw
         m_scrubber->setScale(m_duration);
@@ -798,7 +798,7 @@ void Player::onMeltedUnitOpened()
 {
     m_isMeltedPlaying = -1; // unknown
     Q_ASSERT(MLT.producer());
-    m_duration = MLT.producer()->get_length();
+    m_duration = getPlayDuration();
     m_isSeekable = true;
     MLT.producer()->set("ignore_points", 1);
     m_scrubber->setFramerate(MLT.profile().fps());
@@ -807,7 +807,7 @@ void Player::onMeltedUnitOpened()
 //    m_progressBar->setRange(0,m_duration);
   //  m_inPointLabel->setText("--:--:--:-- / ");
   //  m_selectedLabel->setText("--:--:--:--");
-    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(QString(MLT.producer()->get_length_time())));
+    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(playDurationToTimeFormat(m_duration)));
     m_previousIn = MLT.producer()->get_in();
     m_scrubber->setEnabled(true);
     m_scrubber->setInPoint(m_previousIn);
@@ -829,12 +829,12 @@ void Player::onMeltedUnitOpened()
 
 void Player::onDurationChanged()
 {
-    m_duration = MLT.producer()->get_length();
+    m_duration = getPlayDuration();
     m_isSeekable = MLT.isSeekable();
     m_scrubber->setScale(m_duration);
     m_scrubber->setMarkers(QList<int>());
 //    m_progressBar->setRange(0, m_duration);
-    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(QString(MLT.producer()->get_length_time())));
+    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(playDurationToTimeFormat(m_duration)));
     if(qFuzzyIsNull(MLT.producer()->get_speed()))
 //    if (MLT.producer()->get_speed() == 0)
         seek(m_position);
@@ -1128,6 +1128,44 @@ double Player::setVolume(int volume)
     const double gain = double(volume) / VOLUME_KNEE;
     MLT.setVolume(gain);
     return gain;
+}
+
+int Player::getPlayDuration()
+{
+    Q_ASSERT(MLT.producer());
+    Q_ASSERT(MLT.producer()->is_valid());
+
+    int duration = 0;
+    if (MLT.producer() && MLT.producer()->is_valid())
+    {
+        //对于producer，其length是其能改变的最大长度，而不一定是实际长度，其实际长度只能用out或者playtime得到
+        //此处处理是为了解决播放非时间线上的producer时，使用producer的实际长度，而不是最大长度（实际解决图片预览时长为10分钟问题）
+        //当播放时间线时，MLT.producer()即为Multitrack，其out或者playtime都是无效值，只能通过length获取总时长
+        if (MLT.isMultitrack())
+        {
+            duration = MLT.producer()->get_length();
+        }
+        else
+        {
+            duration = MLT.producer()->get_playtime();
+        }
+    }
+
+    return duration;
+}
+
+QString Player::playDurationToTimeFormat(int nPlayDuration)
+{
+    Q_ASSERT(MLT.producer());
+    Q_ASSERT(MLT.producer()->is_valid());
+
+    QString strPlayTime = "00:00:00:000";
+    if (MLT.producer() && MLT.producer()->is_valid())
+    {
+        strPlayTime = QString(MLT.producer()->frames_to_time(nPlayDuration));
+    }
+
+    return strPlayTime;
 }
 
 void Player::moveVideoToScreen(int screen)
