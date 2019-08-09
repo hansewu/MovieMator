@@ -35,6 +35,20 @@
 
 static const int STATUS_ANIMATION_MS = 350;
 
+static QString covertFramesToTimeFormat(Mlt::Producer *pProducerMlt, int nFrames)
+{
+    Q_ASSERT(pProducerMlt);
+    Q_ASSERT(pProducerMlt->is_valid());
+
+    QString strTime = "00:00:00:000";
+    if (pProducerMlt && pProducerMlt->is_valid())
+    {
+        strTime = QString(pProducerMlt->frames_to_time(nFrames));
+    }
+
+    return strTime;
+}
+
 //Player::Player(QWidget *parent)
 //    : QWidget(parent)
 Player::Player(QWidget *parent)
@@ -741,7 +755,7 @@ void Player::onProducerOpened(bool play)
 //    m_inPointLabel->setText("--:--:--:-- / ");
 //    m_selectedLabel->setText("--:--:--:--");
     if (m_isSeekable) {
-        m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(playDurationToTimeFormat(m_duration)));
+        m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
         m_previousIn = MLT.isClip()? MLT.producer()->get_in() : -1;
         m_scrubber->setEnabled(true);
         m_scrubber->setInPoint(m_previousIn);
@@ -749,7 +763,7 @@ void Player::onProducerOpened(bool play)
         m_scrubber->setOutPoint(m_previousOut);
     }
     else {
-        m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(playDurationToTimeFormat(m_duration)));
+        m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
         m_scrubber->setDisabled(true);
         // cause scrubber redraw
         m_scrubber->setScale(m_duration);
@@ -807,7 +821,7 @@ void Player::onMeltedUnitOpened()
 //    m_progressBar->setRange(0,m_duration);
   //  m_inPointLabel->setText("--:--:--:-- / ");
   //  m_selectedLabel->setText("--:--:--:--");
-    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(playDurationToTimeFormat(m_duration)));
+    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
     m_previousIn = MLT.producer()->get_in();
     m_scrubber->setEnabled(true);
     m_scrubber->setInPoint(m_previousIn);
@@ -834,7 +848,7 @@ void Player::onDurationChanged()
     m_scrubber->setScale(m_duration);
     m_scrubber->setMarkers(QList<int>());
 //    m_progressBar->setRange(0, m_duration);
-    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(playDurationToTimeFormat(m_duration)));
+    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
     if(qFuzzyIsNull(MLT.producer()->get_speed()))
 //    if (MLT.producer()->get_speed() == 0)
         seek(m_position);
@@ -1135,7 +1149,7 @@ int Player::getPlayDuration()
     Q_ASSERT(MLT.producer());
     Q_ASSERT(MLT.producer()->is_valid());
 
-    int duration = 0;
+    int nFrameDuration = 0;
     if (MLT.producer() && MLT.producer()->is_valid())
     {
         //对于producer，其length是其能改变的最大长度，而不一定是实际长度，其实际长度只能用out或者playtime得到
@@ -1143,29 +1157,15 @@ int Player::getPlayDuration()
         //当播放时间线时，MLT.producer()即为Multitrack，其out或者playtime都是无效值，只能通过length获取总时长
         if (MLT.isMultitrack())
         {
-            duration = MLT.producer()->get_length();
+            nFrameDuration = MLT.producer()->get_length();
         }
         else
         {
-            duration = MLT.producer()->get_playtime();
+            nFrameDuration = MLT.producer()->get_playtime();
         }
     }
 
-    return duration;
-}
-
-QString Player::playDurationToTimeFormat(int nPlayDuration)
-{
-    Q_ASSERT(MLT.producer());
-    Q_ASSERT(MLT.producer()->is_valid());
-
-    QString strPlayTime = "00:00:00:000";
-    if (MLT.producer() && MLT.producer()->is_valid())
-    {
-        strPlayTime = QString(MLT.producer()->frames_to_time(nPlayDuration));
-    }
-
-    return strPlayTime;
+    return nFrameDuration;
 }
 
 void Player::moveVideoToScreen(int screen)
