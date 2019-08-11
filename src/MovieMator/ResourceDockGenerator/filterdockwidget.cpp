@@ -69,7 +69,7 @@ QMap<QString, BaseItemModel *> *FilterDockWidget::createAllClassesItemModel()
         FilterUserData *pFilterUserData = new FilterUserData;
         pFilterUserData->nFilterIndex = filterInfo.nIndexOfMetadataModel;
         QByteArray userDataByteArray;
-        userDataByteArray.append(reinterpret_cast<char *>(pFilterUserData), sizeof(pFilterUserData));
+        userDataByteArray.append(reinterpret_cast<char *>(pFilterUserData), sizeof(FilterUserData));
         pItem->setData(userDataByteArray, Qt::UserRole);
 
         pFilterItemModel->appendRow(pItem);
