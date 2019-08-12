@@ -41,7 +41,7 @@ public:
      //返回： NULL 失败，其他 成功
     virtual FILE_HANDLE openFile(QString filepath);
 
-    virtual void destroyFileHandle(FILE_HANDLE &fileHandle);
+    virtual void destroyFileHandle(FILE_HANDLE fileHandle);
 
     //0 成功 其他失败
     virtual int openFileAsProject(QString filepath);

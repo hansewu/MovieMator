@@ -91,6 +91,9 @@ MultitrackModel::MultitrackModel(QObject *parent)
 {
 //    connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));//sll:将modify放在mainwindow中建立连接，防止界面更新与数据操作顺序问题
     connect(this, SIGNAL(reloadRequested()), SLOT(reload()), Qt::QueuedConnection);
+
+    m_selection.selectedTrack = -1;
+    m_selection.isMultitrackSelected = false;
 }
 
 MultitrackModel::~MultitrackModel()
@@ -426,8 +429,6 @@ void MultitrackModel::setTrackHidden(int row, bool hidden)
     if (row < m_trackList.size()) {
         int i = m_trackList.at(row).mlt_index;
 
-        Q_ASSERT(m_tractor->track(i));
-
         QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
         Q_ASSERT(track);
         if (track) {
@@ -486,8 +487,6 @@ void MultitrackModel::setTrackLock(int row, bool lock)
     if (row < m_trackList.size()) {
         int i = m_trackList.at(row).mlt_index;
 
-        Q_ASSERT(m_tractor->track(i));
-
         QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
         Q_ASSERT(track);
         if(!track) return;
@@ -513,9 +512,8 @@ bool MultitrackModel::trimClipInValid(int trackIndex, int clipIndex, int delta, 
     bool result = true;
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    Q_ASSERT(track);
     if (track) {
         Mlt::Playlist playlist(*track);
         Q_ASSERT(playlist.is_valid());
@@ -668,10 +666,8 @@ bool MultitrackModel::trimClipOutValid(int trackIndex, int clipIndex, int delta,
 
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
-
+    Q_ASSERT(track);
     if (track) {
         Mlt::Playlist playlist(*track);
         Q_ASSERT(playlist.is_valid());
@@ -850,9 +846,8 @@ bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, i
 
     int i = m_trackList.at(toTrack).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    Q_ASSERT(track);
     if (track) {
         Mlt::Playlist playlist(*track);
         Q_ASSERT(playlist.is_valid());
@@ -1004,8 +999,6 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
     Q_ASSERT(trackIndex < m_trackList.size());
 
     int i = m_trackList.at(trackIndex).mlt_index;
-
-    Q_ASSERT(m_tractor->track(i));
 
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
@@ -1317,9 +1310,8 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
     int i = m_trackList.at(trackIndex).mlt_index;
     int clipPlaytime = clip.get_playtime();
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    Q_ASSERT(track);
     if (track) {
         Mlt::Playlist playlist(*track);
         Q_ASSERT(playlist.is_valid());
@@ -1421,9 +1413,8 @@ int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
     }
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    Q_ASSERT(track);
     if (track) {
         Mlt::Playlist playlist(*track);
         Q_ASSERT(playlist.is_valid());
@@ -1455,9 +1446,9 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex)
 
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    Q_ASSERT(track);
+
     int clipPlaytime = -1;
     int clipStart = -1;
 
@@ -1513,8 +1504,6 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
 
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
     if (track) {
@@ -1553,9 +1542,8 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
 
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    Q_ASSERT(track);
     if (track) {
         Mlt::Playlist playlist(*track);
         Q_ASSERT(playlist.is_valid());
@@ -1604,8 +1592,6 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
 
     if (clipIndex < 0) return;
     int i = m_trackList.at(trackIndex).mlt_index;
-
-    Q_ASSERT(m_tractor->track(i));
 
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
@@ -1702,8 +1688,6 @@ void MultitrackModel::overwriteFromPlaylist(Mlt::Playlist& from, int trackIndex,
 
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
     if (track) {
@@ -1773,9 +1757,8 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
 
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    Q_ASSERT(track);
     if (track) {
         Mlt::Playlist playlist(*track);
         Q_ASSERT(playlist.is_valid());
@@ -1860,7 +1843,6 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
     Q_ASSERT(m_tractor);
 
     int i = m_trackList.at(trackIndex).mlt_index;
-    Q_ASSERT(m_tractor->track(i));
 
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
@@ -1999,8 +1981,6 @@ int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position)
 
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
     if (track) {
@@ -2081,8 +2061,6 @@ void MultitrackModel::clearMixReferences(int trackIndex, int clipIndex)
     Q_ASSERT(m_tractor);
 
     int i = m_trackList.at(trackIndex).mlt_index;
-
-    Q_ASSERT(m_tractor->track(i));
 
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
@@ -2182,8 +2160,6 @@ void MultitrackModel::removeTransition(int trackIndex, int clipIndex)
 
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
     if (track) {
@@ -2253,8 +2229,6 @@ bool MultitrackModel::trimTransitionInValid(int trackIndex, int clipIndex, int d
     bool result = false;
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
     if (track) {
@@ -2290,9 +2264,8 @@ void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
 
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    Q_ASSERT(track);
     if (track) {
         Mlt::Playlist playlist(*track);
         Q_ASSERT(playlist.is_valid());
@@ -2352,8 +2325,6 @@ bool MultitrackModel::trimTransitionOutValid(int trackIndex, int clipIndex, int 
     bool result = false;
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
     if (track) {
@@ -2388,8 +2359,6 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
     Q_ASSERT(m_tractor);
 
     int i = m_trackList.at(trackIndex).mlt_index;
-
-    Q_ASSERT(m_tractor->track(i));
 
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
@@ -2461,8 +2430,6 @@ bool MultitrackModel::addTransitionByTrimInValid(int trackIndex, int clipIndex, 
     bool result = false;
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
     if (track) {
@@ -2493,8 +2460,6 @@ void MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int d
     Q_ASSERT(m_tractor);
 
     int i = m_trackList.at(trackIndex).mlt_index;
-
-    Q_ASSERT(m_tractor->track(i));
 
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
@@ -2547,8 +2512,6 @@ bool MultitrackModel::addTransitionByTrimOutValid(int trackIndex, int clipIndex,
     bool result = false;
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
     if (track) {
@@ -2583,7 +2546,7 @@ void MultitrackModel::addTransitionByTrimOut(int trackIndex, int clipIndex, int 
     Q_ASSERT(m_tractor);
 
     int i = m_trackList.at(trackIndex).mlt_index;
-    Q_ASSERT(m_tractor->track(i));
+
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
     if (track) {
@@ -3230,27 +3193,19 @@ int MultitrackModel::addTextTrack()
     return m_trackList.count() - 1;
 }
 
-void MultitrackModel::renumberOtherTracks(const Track& track) {
+void MultitrackModel::renumberOtherTracks(const Track& track)
+{
      int row = 0;
      foreach (Track t, m_trackList) {
          if (t.mlt_index > track.mlt_index)
              --m_trackList[row].mlt_index;
-         if (t.type == track.type && t.number > track.number) {
+         if (t.type == track.type && t.number > track.number)
+         {
              --m_trackList[row].number;
 
-             // Rename default track names.
-             QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(m_trackList[row].mlt_index));
-             Q_ASSERT(mltTrack);
-             QString trackNameTemplate = (t.type == VideoTrackType)? QString("V%1") : QString("A%1");
-             QString trackName = trackNameTemplate.arg(t.number + 1);
-             if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName) {
-                 trackName = trackNameTemplate.arg(m_trackList[row].number + 1);
-                 mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
-//                 QModelIndex modelIndex = index(row, 0);
-//                 QVector<int> roles;
-//                 roles << NameRole;
-//                 emit dataChanged(modelIndex, modelIndex, roles);
-             }
+             bool emitSignal = false;
+             renameTrack(t,row,emitSignal);
+
          }
          ++row;
      }
@@ -3262,7 +3217,8 @@ void MultitrackModel::removeTrack(int trackIndex)
     Q_ASSERT(trackIndex < m_trackList.size());
     Q_ASSERT(m_tractor);
 
-    if (trackIndex >= 0 && trackIndex < m_trackList.size()) {
+    if (trackIndex >= 0 && trackIndex < m_trackList.size())
+    {
         const Track& track = m_trackList.value(trackIndex);
         QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", track.mlt_index));
 
@@ -3284,27 +3240,39 @@ void MultitrackModel::removeTrack(int trackIndex)
         endRemoveRows();
 
         int row = 0;
-        foreach (Track t, m_trackList) {
-
-
-                // Rename default track names.
-                QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(m_trackList[row].mlt_index));
-                Q_ASSERT(mltTrack);
-                QString trackNameTemplate = (t.type == VideoTrackType)? QString("V%1") : QString("A%1");
-                QString trackName = trackNameTemplate.arg(t.number + 1);
-                if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName) {
-                    trackName = trackNameTemplate.arg(m_trackList[row].number + 1);
-                    mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
-                    QModelIndex modelIndex = index(row, 0);
-                    QVector<int> roles;
-                    roles << NameRole;
-                    emit dataChanged(modelIndex, modelIndex, roles);
-                }
+        foreach (Track t, m_trackList)
+        {
+            bool emitSignal = true;
+            renameTrack(t,row,emitSignal);
 
             ++row;
         }
     }
     emit modified();
+}
+
+void MultitrackModel::renameTrack(Track t, int trackIndex,bool emitSignal)
+{
+    // Rename default track names.
+    QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(m_trackList[trackIndex].mlt_index));
+    Q_ASSERT(mltTrack);
+    QString trackNameTemplate = (t.type == VideoTrackType)? QString("V%1") : QString("A%1");
+    QString trackName = trackNameTemplate.arg(t.number + 1);
+
+    if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName)
+    {
+        trackName = trackNameTemplate.arg(m_trackList[trackIndex].number + 1);
+        mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
+        if(emitSignal)
+        {
+            QModelIndex modelIndex = index(trackIndex, 0);
+            QVector<int> roles;
+            roles << NameRole;
+
+            emit dataChanged(modelIndex, modelIndex, roles);
+        }
+
+    }
 }
 
 void MultitrackModel::retainPlaylist()
@@ -3322,8 +3290,6 @@ void MultitrackModel::removeRegion(int trackIndex, int position, int length)
     Q_ASSERT(m_tractor);
 
     int i = m_trackList.at(trackIndex).mlt_index;
-
-    Q_ASSERT(m_tractor->track(i));
 
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
@@ -3400,7 +3366,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     }
 
     // Get the new track index.
-    Track& track = m_trackList[qMax(0, qMin(trackIndex, m_trackList.count() - 1))];
+    Track track = m_trackList[qMax(0, qMin(trackIndex, m_trackList.count() - 1))];
     int i = track.mlt_index;
     if (type == VideoTrackType)
         ++i;
@@ -3609,8 +3575,6 @@ int MultitrackModel::clipIndex(int trackIndex, int position)
 
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
     if (track) {
@@ -3632,8 +3596,6 @@ void MultitrackModel::refreshTrackList()
 
     // Add video tracks in reverse order.
     for (int i = 0; i < n; ++i) {
-        Q_ASSERT(m_tractor->track(i));
-
         QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
         Q_ASSERT(track);
         if (!track)
@@ -3662,8 +3624,6 @@ void MultitrackModel::refreshTrackList()
 
     // Add audio tracks.
     for (int i = 0; i < n; ++i) {
-        Q_ASSERT(m_tractor->track(i));
-
         QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
         Q_ASSERT(track);
         if (!track)
@@ -3700,9 +3660,9 @@ void MultitrackModel::getAudioLevels()
 
     for (int trackIx = 0; trackIx < m_trackList.size(); trackIx++) {
         int i = m_trackList.at(trackIx).mlt_index;
-        Q_ASSERT(m_tractor->track(i));
         QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
         Q_ASSERT(track);
+
         Mlt::Playlist playlist(*track);
         Q_ASSERT(playlist.is_valid());
         for (int clipIx = 0; clipIx < playlist.count(); clipIx++) {
@@ -3914,7 +3874,6 @@ void MultitrackModel::addFilter(int trackIndex, Mlt::Producer *filter)
         return;
 
     int i = m_trackList.at(trackIndex).mlt_index;
-    Q_ASSERT(m_tractor->track(i));
 
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
@@ -3946,7 +3905,7 @@ void MultitrackModel::addText(int trackIndex, Mlt::Producer *filter)
         return;
 
     int i = m_trackList.at(trackIndex).mlt_index;
-    Q_ASSERT(m_tractor->track(i));
+
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
     if (track) {
@@ -4007,10 +3966,7 @@ void MultitrackModel::setTransitionDuration(int trackIndex, int clipIndex, int d
     Q_ASSERT(m_tractor);
 
 
-    const Track& track = m_trackList.value(trackIndex);
-    Q_UNUSED(track)
     int i = m_trackList.at(trackIndex).mlt_index;
-    Q_ASSERT(m_tractor->track(i));
 
     QScopedPointer<Mlt::Producer> trackProducer(m_tractor->track(i));
     Q_ASSERT(trackProducer);
@@ -4104,7 +4060,7 @@ int MultitrackModel::moveInsertClipValid(int fromTrack, int toTrack, int clipInd
 
 
     int i = m_trackList.at(toTrack).mlt_index;
-    Q_ASSERT(m_tractor->track(i));
+
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
     if (track)
@@ -4252,7 +4208,7 @@ int MultitrackModel::getStartPositionOfClip(int trackIndex, int clipIndex)
 
     int position = -1;
     int i = m_trackList.at(trackIndex).mlt_index;
-    Q_ASSERT(m_tractor->track(i));
+
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     Q_ASSERT(track);
     if (track) {
@@ -4333,22 +4289,28 @@ Mlt::Producer* MultitrackModel::producer(Mlt::Producer *producer, Mlt::Profile& 
 
 Mlt::Producer* MultitrackModel::copiedProducer()
 {
-    return (m_copiedProducer!=nullptr) ? m_copiedProducer.data() : nullptr;
+    return (m_copiedProducer != nullptr) ? m_copiedProducer.data() : nullptr;
 }
 
-void MultitrackModel::setCopiedProducer(Mlt::Producer* producer)
+void MultitrackModel::setCopiedProducer(Mlt::Producer* pProducer)
 {
-    m_copiedProducer.reset(new Mlt::Producer(producer));
+    if(pProducer && pProducer->is_valid())
+    {
+        m_copiedProducer.reset(new Mlt::Producer(pProducer));
+    }
 }
 
 Mlt::Producer* MultitrackModel::selectedProducer()
 {
-    return (m_selectedProducer!=nullptr) ? m_selectedProducer.data() : nullptr;
+    return (m_selectedProducer != nullptr) ? m_selectedProducer.data() : nullptr;
 }
 
-void MultitrackModel::setSelectedProducer(Mlt::Producer* producer)
+void MultitrackModel::setSelectedProducer(Mlt::Producer* pProducer)
 {
-    m_selectedProducer.reset(new Mlt::Producer(producer));
+    if(pProducer && pProducer->is_valid())
+    {
+        m_selectedProducer.reset(new Mlt::Producer(pProducer));
+    }
 }
 
 void MultitrackModel::debugPrintState()
@@ -4395,9 +4357,8 @@ Mlt::Producer *MultitrackModel::getClipProducer(int trackIndex, int clipIndex)
 
     int i = m_trackList.at(trackIndex).mlt_index;
 
-    Q_ASSERT(m_tractor->track(i));
-
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    Q_ASSERT(track);
     if (track) {
         Mlt::Playlist playlist(*track);
         Q_ASSERT(playlist.is_valid());

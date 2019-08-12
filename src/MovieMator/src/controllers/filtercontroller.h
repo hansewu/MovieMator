@@ -53,6 +53,8 @@ public:
     //获取QmlMetadata
     QmlMetadata* getQmlMetadata(int index);
 
+    int currentFilterIndex() { return m_currentFilterIndex; }
+
 protected:
     //重写QObject的timerEvent方法，用于接收定时器事件，进行加载filter的meta以及更新filter和关闭定时器
     void timerEvent(QTimerEvent*);
@@ -98,7 +100,7 @@ public slots:
     void removeFilter(int row);
 
     //刷新当前的filter，当filter的参数或者关键帧变化时
-    void refreshCurrentFilter(Mlt::Filter *filter); //wzq
+    void refreshCurrentFilter(int filterIndex); //wzq
     //刷新滤镜的关键帧信息，当关键帧发生变化时。实际时通知qmlFilter更新关键帧信息
     void refreshKeyFrame(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame); //wzq
     void refreshNoAnimation(Mlt::Filter *filter, const QVector<key_frame_item> &listParameter);

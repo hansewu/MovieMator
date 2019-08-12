@@ -23,6 +23,7 @@
 #define COMMANDS_H
 
 #include "models/multitrackmodel.h"
+#include "models/attachedfiltersmodel.h"
 #include "docks/timelinedock.h"
 #include "undohelper.h"
 #include "qmlmetadata.h"
@@ -100,7 +101,7 @@ private:
     UndoHelper m_undoHelper;
 };
 
-//选中高亮clip
+//移除clip
 class LiftClipCommand : public AbstractCommand
 {
 public:
@@ -441,7 +442,7 @@ class ChangeBlendModeCommand : public QObject, public AbstractCommand
 {
     Q_OBJECT
 public:
-    ChangeBlendModeCommand(Mlt::Transition& transition, const QString& propertyName, const QString& mode, AbstractCommand* parent = nullptr);
+    ChangeBlendModeCommand(MultitrackModel& model, Mlt::Transition& transition, const QString& propertyName, const QString& mode, AbstractCommand* parent = nullptr);
     void redo_impl();
     void undo_impl();
 signals:
@@ -457,7 +458,7 @@ private:
 class UpdateClipCommand : public AbstractCommand
 {
 public:
-    UpdateClipCommand(TimelineDock& timeline, int trackIndex, int clipIndex, int position,
+    UpdateClipCommand(TimelineDock& timeline, MultitrackModel& model, int trackIndex, int clipIndex, int position,
         AbstractCommand * parent = nullptr);
     void setXmlAfter(const QString& xml) { m_xmlAfter = xml; }
     void setSpeedChanged(bool isSpeedChanged) {m_isSpeedChanged = isSpeedChanged;}
@@ -544,10 +545,10 @@ class FilterCommand: public AbstractCommand
 {
 
 public:
-    FilterCommand(Mlt::Filter* filter, QString name,  double from_value, double to_value, AbstractCommand * parent= nullptr);
-    FilterCommand(Mlt::Filter* filter, QString name,  int from_value, int to_value, AbstractCommand * parent= nullptr);
-    FilterCommand(Mlt::Filter* filter, QString name,  QString from_value, QString to_value, AbstractCommand * parent= nullptr);
-    FilterCommand(Mlt::Filter* filter, QString name,  QRectF from_value, QRectF to_value, AbstractCommand * parent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name,  double from_value, double to_value, bool isFirst,AbstractCommand * parent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name,  int from_value, int to_value, bool isFirst,AbstractCommand * parent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name,  QString from_value, QString to_value, bool isFirst,AbstractCommand * parent= nullptr);
+    FilterCommand(MultitrackModel& model, AttachedFiltersModel& attachedFiltersModel, int row, QString name,  QRectF from_value, QRectF to_value, bool isFirst,AbstractCommand * parent= nullptr);
 
     ~FilterCommand();
     void redo_impl();
@@ -557,18 +558,17 @@ protected:
 //    using AbstractCommand::mergeWith;
     bool mergeWith(const QUndoCommand *other);
 
-    int transitionValue(QVariant &varFrom, QVariant &varTo, Mlt::Filter* filter, QString name,  double from_value, double to_value);
+    int transitionValue(QVariant &varFrom, QVariant &varTo, QString name,  double from_value, double to_value);
 
     void notify();
     void set_value(QVariant value);
 protected:
-    Mlt::Filter* m_filter;
+    AttachedFiltersModel& m_attachedFiltersModel;
+    int         m_filterIndex;
     QString     m_keyName;
-
-    QVariant  m_from_value;
-    QVariant  m_to_value;
-
-    bool      m_bFirstExec;
+    QVariant    m_from_value;
+    QVariant    m_to_value;
+    bool        m_bFirstExec;
 };
 
 //选择添加滤镜
@@ -576,7 +576,7 @@ class FilterAttachCommand: public AbstractCommand
 {
 
 public:
-    FilterAttachCommand( QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, AbstractCommand * parent= nullptr);
+    FilterAttachCommand(MultitrackModel& model, QmlMetadata *meta, int rowIndex, int metaIndex, bool bAdd, bool isFirst, AbstractCommand * parent= nullptr);
    // ~FilterAttachCommand();
     void redo_impl();
     void undo_impl();
@@ -599,7 +599,7 @@ class FilterMoveCommand: public AbstractCommand
 {
 
 public:
-    FilterMoveCommand(int rowIndexFrom, int rowIndexTo, AbstractCommand * parent= nullptr);
+    FilterMoveCommand(MultitrackModel& model, int rowIndexFrom, int rowIndexTo, bool isFirst, AbstractCommand * parent= nullptr);
  //   ~FilterMoveCommand();
     void redo_impl();
     void undo_impl();
@@ -620,7 +620,7 @@ protected:
 class KeyFrameInsertCommand: public AbstractCommand
 {
 public:
-    KeyFrameInsertCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item>  &insert_value, AbstractCommand * parent = nullptr);
+    KeyFrameInsertCommand(MultitrackModel& model, Mlt::Filter* filter, const QVector<key_frame_item>  &from_value, const QVector<key_frame_item>  &insert_value, bool isFirst, AbstractCommand * parent = nullptr);
     ~KeyFrameInsertCommand();
     void redo_impl();
     void undo_impl();
@@ -642,7 +642,7 @@ private:
 class KeyFrameRemoveCommand: public AbstractCommand
 {
 public:
-    KeyFrameRemoveCommand(Mlt::Filter* filter, const QVector<key_frame_item>  &remove_value, AbstractCommand * parent = nullptr);
+    KeyFrameRemoveCommand(MultitrackModel& model, Mlt::Filter* filter, const QVector<key_frame_item>  &remove_value, bool isFirst, AbstractCommand * parent = nullptr);
     ~KeyFrameRemoveCommand();
     void redo_impl();
     void undo_impl();
@@ -663,7 +663,7 @@ private:
 class KeyFrameUpdateCommand: public AbstractCommand
 {
 public:
-    KeyFrameUpdateCommand(Mlt::Filter* filter, int nFrame, QString name, QString from_value, QString to_value, AbstractCommand * parent= nullptr);
+    KeyFrameUpdateCommand(MultitrackModel& model, Mlt::Filter* filter, int nFrame, QString name, QString from_value, QString to_value,bool isFirst, AbstractCommand * parent= nullptr);
     ~KeyFrameUpdateCommand();
     void redo_impl();
     void undo_impl();
@@ -690,9 +690,9 @@ class ClipsSelectCommand: public AbstractCommand
 {
 
 public:
-    ClipsSelectCommand(QList<int> newSelection, int newTrackIndex, bool isNewMultitrack,
+    ClipsSelectCommand(MultitrackModel& model, QList<int> newSelection, int newTrackIndex, bool isNewMultitrack,
                        QList<int> oldSelection, int oldTrackIndex, bool isOldMultitrack,
-                       AbstractCommand * parent= nullptr);
+                       bool isFirst,AbstractCommand * parent= nullptr);
 
     void redo_impl();
     void undo_impl();
@@ -705,11 +705,24 @@ protected:
 };
 
 
+//保存构造TransitionPropertyCommand的参数
+typedef struct {
+    int     nTrackIndex; //transition所在的轨道索引
+    int     nClipIndex; //transition在轨道上的索引
+
+    QString strTransitionName; //transition名字，视频luma、音频mix
+    QString strPropertyName; //要修改的属性名
+    QString strPropertyValue;
+    int     nInvertTransition;
+    double  dTransitionSoftness;
+} TransitionPropertyCommandParameters;
+
 //转场属性设置
 class TransitionPropertyCommand: public AbstractCommand
 {
 public:
-    TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel& model, int trackIndex, int clipIndex, const QString& transitionName, const QString& propertyName, const QString& propertyValue, int invert = 0, double softness = 0.0, AbstractCommand *parent = nullptr);
+    TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel& model, int trackIndex, int clipIndex, const QString& transitionName, const QString& propertyName, const QString& propertyValue, bool isFirst = true, int invert = 0, double softness = 0.0, AbstractCommand *parent = nullptr);
+    TransitionPropertyCommand(TimelineDock& timeline, MultitrackModel& model, const TransitionPropertyCommandParameters& parameters, bool bIsFirstRedo = true, AbstractCommand *parent = nullptr);
     void redo_impl();
     void undo_impl();
 
@@ -736,7 +749,7 @@ private:
 class TransitionDurationSettingCommand: public AbstractCommand
 {
 public:
-    TransitionDurationSettingCommand(TimelineDock &timeline, MultitrackModel& model, int trackIndex, int clipIndex, int duration, AbstractCommand *parent = nullptr);
+    TransitionDurationSettingCommand(TimelineDock &timeline, MultitrackModel& model, int trackIndex, int clipIndex, int duration, bool isFirst, AbstractCommand *parent = nullptr);
     void redo_impl();
     void undo_impl();
 

@@ -133,10 +133,10 @@ void TrackPropertiesWidget::on_blendModeCombo_currentIndexChanged(int index)
     if (index >= 0) {
         QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend"));
         if (transition && transition->is_valid()) {
-            Timeline::ChangeBlendModeCommand* command = new Timeline::ChangeBlendModeCommand(
+            Timeline::ChangeBlendModeCommand* command = new Timeline::ChangeBlendModeCommand(*(MAIN.timelineDock()->model()),
                 *transition, BLEND_PROPERTY_CAIROBLEND, ui->blendModeCombo->itemData(index).toString());
             connect(command, SIGNAL(modeChanged(QString&)), SLOT(onModeChanged(QString&)));
-            MAIN.undoStack()->push(command);
+            MAIN.pushCommand(command);
         }
     }
 }

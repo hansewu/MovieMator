@@ -33,6 +33,7 @@
 #include <QDebug>
 #include <QJsonArray>
 #include <QImage>
+#include <qpainter.h>
 
 EffectDock::EffectDock(MainInterface *main, QWidget *parent) :
     QDockWidget(parent),
@@ -139,6 +140,10 @@ EffectDock::~EffectDock()
     delete m_imageList;
     m_imageList = nullptr;
 
+    if (m_mainWindow) {
+        m_mainWindow->destroyFileHandle(m_effectFile);
+    }
+
 //    delete m_spacerItem;
 //    m_spacerItem = nullptr;
 
@@ -198,14 +203,17 @@ void EffectDock::readJsonFile(QString filePath, QJsonObject &jsonObj) {
     jsonObj = jsonDoc.object();
 }
 
-QString EffectDock::getImageClassType(QString srcStr, QJsonObject propertyInfo){
+QString EffectDock::getImageClassType(QString strClassName, QJsonObject propertyInfo)
+{
     QString result = "";
-    if (propertyInfo.isEmpty()) {
+    if (propertyInfo.isEmpty())
+    {
         return result;
     }
 
-    if (propertyInfo.contains(srcStr)) {
-        QJsonObject subObj = propertyInfo.value(srcStr).toObject();
+    if (propertyInfo.contains(strClassName))
+    {
+        QJsonObject subObj = propertyInfo.value(strClassName).toObject();
         result = subObj.value("type").toString();
     }
 
@@ -326,22 +334,58 @@ void EffectDock::addToTimeline()
     }
 }
 
-QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInfo) {
-    if (translationInfo.isEmpty()) {
+QString EffectDock::getTranslationStr(QString srcStr, QJsonObject translationInfo)
+{
+    if (translationInfo.isEmpty())
+    {
         return srcStr;
     }
 
-    QString result = srcStr;
-    if (translationInfo.contains(srcStr)) {
+    QString strResult = srcStr;
+    if (translationInfo.contains(srcStr))
+    {
         QJsonObject subObj = translationInfo.value(srcStr).toObject();
-        QString language = QLocale::system().name();
-        result = subObj.value(language).toString();
-        if (result.isEmpty()) {
-            result = subObj.value("en").toString();;
+        QString strLanguage = Settings.language();
+        if((strLanguage == "zh") || (strLanguage == "zh_CN"))
+        {
+            strLanguage = "zh_CN";     // Settings.language()有 "zh"没有 "zh_CN"
+        }
+        strResult = subObj.value(strLanguage).toString();
+        if (strResult.isEmpty())
+        {
+            strResult = subObj.value("en").toString();
         }
     }
 
-    return result;
+    return strResult;
+}
+
+QImage EffectDock::createThumbnail(QString filePath) {
+    int width = EffectListModel::THUMBNAIL_WIDTH;
+    int height = EffectListModel::THUMBNAIL_HEIGHT;
+    QString setting = Settings.playlistThumbnails();
+    QImage image;
+
+    image = QImage(width, height, QImage::Format_ARGB32);
+    QImage tempImage = QImage(filePath);
+    if (!tempImage.isNull()) {
+         QPainter painter(&image);
+         image.fill(QApplication::palette().base().color().rgb());
+
+         // draw the in thumbnail
+         QRect rect = tempImage.rect();
+         if (setting != "large") {
+             rect.setWidth(width);
+             rect.setHeight(height);
+         }
+         painter.drawImage(rect, tempImage);
+
+         painter.end();
+    } else {
+        image.fill(QApplication::palette().base().color().rgb());
+    }
+
+    return image;
 }
 
 void EffectDock::resetImage(QString effectFile, QString imageFile)
@@ -401,21 +445,25 @@ void EffectDock::resetImage(QString effectFile, QString imageFile)
         QString className = path.dirName();
 
         // 设置size滤镜参数
-        if(getImageClassType(className,m_imageClassPropertyInfo) == "A"){
+        if(getImageClassType(className,m_imageClassPropertyInfo) == "A")
+        {
             QDomNodeList filterList = domElement.elementsByTagName("filter");
             for(int k=0; k<filterList.count(); k++)
             {
                 QDomElement filter = filterList.at(k).toElement();
-                if(filter.text().contains("affineSizePosition")){
+                if(filter.text().contains("affineSizePosition"))
+                {
                     QDomNodeList propertyList = filter.elementsByTagName("property");
                     for(int m=0; m<propertyList.count(); m++)
                     {
                         QDomElement prop = propertyList.at(m).toElement();
-                        if(prop.attribute("name").contains("transition.distort")){
+                        if(prop.attribute("name").contains("transition.distort"))
+                        {
                             domNodedistort = prop.toElement().firstChild();
                             domNodedistort.setNodeValue("1");
                         }
-                        if(prop.attribute("name").contains("transition.rect_anim_relative")){
+                        if(prop.attribute("name").contains("transition.rect_anim_relative"))
+                        {
                             domNodeRect = prop.toElement().firstChild();
                             domNodeRect.setNodeValue("0.0 0.0 1.0 1.0 1");
                         }
@@ -423,7 +471,8 @@ void EffectDock::resetImage(QString effectFile, QString imageFile)
                     break;
                 }
             }
-        }else if(getImageClassType(className,m_imageClassPropertyInfo) == "B"){
+        }else if(getImageClassType(className,m_imageClassPropertyInfo) == "B")
+        {
             QDomNodeList filterList = domElement.elementsByTagName("filter");
             for(int k=0; k<filterList.count(); k++)
             {
@@ -433,14 +482,17 @@ void EffectDock::resetImage(QString effectFile, QString imageFile)
                     for(int m=0; m<propertyList.count(); m++)
                     {
                         QDomElement prop = propertyList.at(m).toElement();
-                        if(prop.attribute("name").contains("transition.distort")){
+                        if(prop.attribute("name").contains("transition.distort"))
+                        {
                             domNodedistort = prop.toElement().firstChild();
                             domNodedistort.setNodeValue("0");
                         }
-                        if(prop.attribute("name").contains("transition.rect_anim_relative")){
+                        if(prop.attribute("name").contains("transition.rect_anim_relative"))
+                        {
                             domNodeRect = prop.toElement().firstChild();
                             QString value = prop.toElement().text();
-                            if(!value.contains("~=")){
+                            if(!value.contains("~="))
+                            {
                                 QString newValue = value.split(" ")[0] + " " + value.split(" ")[1] + " " + "0.25 0.25 1";
                                 domNodeRect.setNodeValue(newValue);
                             }
@@ -487,6 +539,9 @@ void EffectDock::resetImage(QString effectFile, QString imageFile)
             {
                 return;
             }
+
+            m_mainWindow->destroyFileHandle(m_effectFile);
+
             m_effectFile = m_mainWindow->createFileWithXMLForDragAndDrop(doc.toString());
             return;
         }
@@ -523,8 +578,11 @@ void EffectDock::createEffectFile()
     }
     if(m_currentListView && m_currentIndex.isValid() && m_mainWindow)
     {
-        m_effectFile = qobject_cast<EffectListModel*>(m_currentListView->model())->fileAt(m_currentIndex.row());
-        imageFile = m_mainWindow->getFileName(m_effectFile);
+//        m_effectFile = qobject_cast<EffectListModel*>(m_currentListView->model())->fileAt(m_currentIndex.row());
+//        imageFile = m_mainWindow->getFileName(m_effectFile);
+        EffectListItemInfo *itemInfo = qobject_cast<EffectListModel*>(m_currentListView->model())->fileAt(m_currentIndex.row());
+        Q_ASSERT(itemInfo);
+        imageFile = itemInfo->effectImagePath();
     }
     if(!effectFile.isEmpty() && !imageFile.isEmpty())
     {
@@ -547,7 +605,11 @@ void EffectDock::createImageFileList(QFileInfoList &fileList, QString folderName
     EffectListModel *model = new EffectListModel(m_mainWindow, this);
     for(int i=0; i<fileList.count(); i++)
     {
-        model->append(m_mainWindow->openFile(fileList[i].filePath()));
+        EffectListItemInfo *itemInfo = new EffectListItemInfo();
+        itemInfo->setEffectImagePath(fileList[i].filePath());
+        itemInfo->setThumbnail(createThumbnail(fileList[i].filePath()));
+        model->append(itemInfo);
+//        model->append(m_mainWindow->openFile(fileList[i].filePath()));
     }
 
     appendListViewAndLabel(model, folderName);
@@ -623,6 +685,7 @@ void EffectDock::onListviewPressed(const QModelIndex &index)
     {
         m_mainWindow->playFile(m_effectFile);   // 按下就播放
     }
+
 }
 
 void EffectDock::onListviewClicked(const QModelIndex &)

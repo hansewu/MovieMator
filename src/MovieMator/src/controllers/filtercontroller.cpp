@@ -174,6 +174,7 @@ void FilterController::loadFrei0rFilterMetadata() {
 
                 meta->setName(tr("%1").arg(name.toUtf8().constData()));
                 meta->set_mlt_service(mlt_service_s);
+                meta->setObjectName(mlt_service_s.replace(QRegExp("\\."), "_"));
                 meta->keyframes()->clearParameter();
                 //parameters info
                 //if ( metadata )
@@ -337,8 +338,10 @@ QString FilterController::getFilterThumbnailPath(QString filterName, bool isAudi
         {"Reduce Noise", "降噪"},
     };
 
-    QLocale ql;
-    if(ql.language() == QLocale::Chinese)
+//    QLocale ql;
+//    if(ql.language() == QLocale::Chinese)
+    QString strLanguage = Settings.language();
+    if((strLanguage == "zh") || (strLanguage == "zh_CN"))
     {
         QMap<QString, QString>::const_iterator iter;
         for (iter = filterNameMap.constBegin(); iter != filterNameMap.constEnd(); ++iter )
@@ -365,25 +368,41 @@ QString FilterController::getFilterType(QString filterType)
 {
     const QMap<QString, QString> filterTypeMap =
     {
-        {"Common", "常用"},
-        {"Distortion", "扭曲"},
-        {"Art", "艺术"},
-        {"Color Adjustment", "调色"},
-        {"Transform", "变换"},
-        {"Black & White", "黑 & 白"},
-        {"Time Dimension Effect", "时间维度特效"},
-        {"Color Extraction", "色彩提取"},
-        {"Blur", "模糊"},
-        {"Color Depth", "颜色深度"},
-        {"Material", "材质"},
-        {"Other", "其它"},
-        {"Effect 2", "特效 2"},
-        {"Effect", "特效"},
-        {"Crop", "裁剪"},
+//        {"Common", "常用"},
+//        {"Distortion", "扭曲"},
+//        {"Art", "艺术"},
+//        {"Color Adjustment", "调色"},
+//        {"Transform", "变换"},
+//        {"Black & White", "黑 & 白"},
+//        {"Time Dimension Effect", "时间维度特效"},
+//        {"Color Extraction", "色彩提取"},
+//        {"Blur", "模糊"},
+//        {"Color Depth", "颜色深度"},
+//        {"Material", "材质"},
+//        {"Other", "其它"},
+//        {"Effect 2", "特效 2"},
+//        {"Effect", "特效"},
+//        {"Crop", "裁剪"},
+
+        {"1 Basic Processing", "常用"},
+        {"2 Text", "文字"},
+        {"3 Basic Coloring Tool",  "基础调色"},
+        {"4 Denoise and Blur", "降噪和模糊"},
+        {"5 Advanced Coloring Tool",  "高级调色"},
+        {"6 Light",  "光效"},
+        {"7 Distort",  "扭曲"},
+        {"8 Art",  "艺术"},
+        {"9 Effect",  "特效1"},
+        {"A Effect2",  "特效2"},
+        {"B Black & White",  "黑白"},
+        {"C Other",  "其它"},
+
     };
 
-    QLocale ql;
-    if(ql.language() == QLocale::Chinese)
+//    QLocale ql;
+//    if(ql.language() == QLocale::Chinese)
+    QString strLanguage = Settings.language();
+    if((strLanguage == "zh") || (strLanguage == "zh_CN"))
     {
         QMap<QString, QString>::const_iterator iter;
         for (iter = filterTypeMap.constBegin(); iter != filterTypeMap.constEnd(); ++iter )
@@ -525,35 +544,15 @@ void FilterController::setCurrentFilter(int attachedIndex)
     m_currentFilter.reset(filter);
 }
 
-void FilterController::refreshCurrentFilter(Mlt::Filter *filter)
+void FilterController::refreshCurrentFilter(int filterIndex)
 {
-    Q_ASSERT(filter);
-
+    //setCurrentFilter(filterIndex);
     if(m_currentFilterIndex == -1) return;
-
-    QmlFilter *qmlFilter = m_currentFilter.data();
-    if(!qmlFilter) return;
-
-    Mlt::Filter* mltFilter = qmlFilter->getMltFilter();
-    Q_ASSERT(mltFilter);
-    if(mltFilter->get_filter() != filter->get_filter())
-    {
-        return;
-    }
 
     QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
     Q_ASSERT(meta);
- /*   QmlFilter* qfilter = 0;
-    if (meta)
-    {
-        Mlt::Filter* mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
-        qfilter = new QmlFilter(mltFilter, meta);
-    }
-*/
- //   emit currentFilterAboutToChange();
-    emit currentFilterChanged(m_currentFilter.data(), meta, m_currentFilterIndex);
 
-//    m_currentFilter.reset(qfilter);
+    emit currentFilterChanged(m_currentFilter.data(), meta, m_currentFilterIndex);
 }
 
 void FilterController::refreshKeyFrame(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame)

@@ -96,17 +96,20 @@ QString Util::resourcesPath()
     return dir.absolutePath();
 }
 
-bool Util::isAudioFile(const QString& filePath) {
+bool Util::isAudioFile(const QString& strFilePath)
+{
     QList<QString> audioFormat;
     audioFormat<<"a52"<<"asf"<<"ac3"<<"aac"<<"au"<<"aiff"<<"aif"<<
                  "ape"<<"amr"<<"caf"<<"cda"<<"dts"<<"dvr-ms"<<"flac"<<
                  "m4r"<<"mp2"<<"mp3"<<"mmf"<<"m2a"<<"mp1"<<"mp1"<<"mpa"<<
                  "mod"<<"m4a"<<"mka"<<"ogg"<<"ra"<<"wma"<<"wav";
 
-    QFileInfo fileInfo(filePath);
-    QString suffix = fileInfo.suffix();
-    for(int i = 0; i < audioFormat.count(); i++) {
-        if(suffix.compare(audioFormat.at(i), Qt::CaseInsensitive) == 0) {
+    QFileInfo fileInfo(strFilePath);
+    QString strSuffix = fileInfo.suffix();
+    for (int i = 0; i < audioFormat.count(); i++)
+    {
+        if (strSuffix.compare(audioFormat.at(i), Qt::CaseInsensitive) == 0)
+        {
             return true;
         }
     }

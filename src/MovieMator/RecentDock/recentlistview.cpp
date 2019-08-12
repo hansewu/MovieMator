@@ -81,20 +81,20 @@ void RecentListView::mouseMoveEvent(QMouseEvent* event)
     if(viewModel && (selectedIndexes().count() > 0))
     {
         int row = proxyModel->mapToSource(selectedIndexes().first()).row();
-        QMimeData *mimeData = viewModel->mimeData(row);
+        QMimeData *mimeData = viewModel->getMimeData(row);
         Q_ASSERT(mimeData);
         if(!mimeData)
         {
             return;
         }
-        QImage thumbnail = viewModel->thumbnail(row);
+        FileItemInfo *itemInfo = viewModel->fileAt(row);
+        Q_ASSERT(itemInfo);
+        QImage thumbnail = itemInfo->fileThumbnail();
 
         drag.setMimeData(mimeData);
         drag.setPixmap(QPixmap::fromImage(thumbnail).scaled(80, 45));
         drag.setHotSpot(QPoint(0, 0));
         drag.exec(Qt::MoveAction);
-
-//        QListView::mouseMoveEvent(event);
     }
 }
 

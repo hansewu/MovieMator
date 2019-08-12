@@ -98,7 +98,9 @@ private:
     // 根据字符串 srcStr从 translationInfo中寻获取对应的翻译内容
     QString getTranslationStr(QString srcStr, QJsonObject translationInfo);
     // 根据字符串 srcStr从 propertyInfo中寻获取对应的翻译内容
-    QString getImageClassType(QString srcStr, QJsonObject propertyInfo);
+    QString getImageClassType(QString strClassName, QJsonObject propertyInfo);
+
+    QImage createThumbnail(QString filePath);
 
 private slots:
     // 响应 listView按下的槽函数

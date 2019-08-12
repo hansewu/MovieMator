@@ -23,6 +23,27 @@
 #include <QAbstractItemModel>
 #include "maininterface.h"
 
+class FileItemInfo : public QObject
+{
+    Q_OBJECT
+
+public:
+
+    explicit FileItemInfo(QObject *parent = nullptr){Q_UNUSED(parent);}
+
+    QString filePath() const {return  m_filePath;}
+    void setFilePath(const QString filePath) {m_filePath = filePath;}
+    FILE_TYPE fileType() const {return  m_fileType;}
+    void setFileType(const FILE_TYPE fileType) {m_fileType = fileType;}
+    QImage fileThumbnail() {return  m_fileThumbnail;}
+    void setFileThumbnail(const QImage thumbnail) {m_fileThumbnail = thumbnail;}
+
+private:
+    QString m_filePath;
+    FILE_TYPE m_fileType;
+    QImage m_fileThumbnail;
+};
+
 class RecentListModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -44,34 +65,32 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
     // model存放的数据
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-    // model的 mimeData
-    QMimeData *mimeData(const QModelIndexList &indexes) const;
-    // 第 index个model的 mimeData
-    QMimeData *mimeData(const int index) const;
+//    // model的 mimeData
+//    QMimeData *mimeData(const QModelIndexList &indexes) const;
+//    // 第 index个model的 mimeData
+//    QMimeData *mimeData(const int index) const;
     // model的 index
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
     // model的父项
     QModelIndex parent(const QModelIndex &child) const;
 
     // 向 model所在的 listView添加数据 fileHandle
-    void append(FILE_HANDLE fileHandle);
+    void append(FileItemInfo *fileItemInfo);
     // 在 row行向 model所在的 listView添加数据 fileHandle
-    void insert(FILE_HANDLE fileHandle, int row);
+    void insert(FileItemInfo *fileItemInfo, int row);
     // 移除 row行 model的数据
     void remove(int row);
     // 清空 model
     void clear();
 
     // 第 row行的数据
-    FILE_HANDLE fileAt(int row) const;
-    // 第 row行数据 FILE_HANDLE的文件名
-    QString fileName(int row) const;
-    // 第 row行数据 FILE_HANDLE的缩略图
-    QImage thumbnail(int row) const;
+    FileItemInfo *fileAt(int row) const;
+
+    QMimeData *getMimeData(const int index) const;
 
 private:
     // 存放 model的列表
-    QList<FILE_HANDLE> *m_recentList;
+    QList<FileItemInfo *> *m_recentList;
     // 主界面
     MainInterface *m_mainWindow;
 };

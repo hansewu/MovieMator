@@ -60,7 +60,8 @@ FILE_HANDLE MainInterface::openFile(QString filepath)
     return producer;
 }
 
-void MainInterface::destroyFileHandle(FILE_HANDLE &fileHandle) {
+
+void MainInterface::destroyFileHandle(FILE_HANDLE fileHandle) {
     if (fileHandle) {
         Mlt::Producer *producer = static_cast<Mlt::Producer*>(fileHandle);
         delete producer;
@@ -131,7 +132,7 @@ int MainInterface::addToTimeLine(FILE_HANDLE fileHandle)
 
     TimelineDock *timeline = MAIN.timelineDock();
 
-    MAIN.undoStack()->push(
+    MAIN.pushCommand(
                 new Timeline::AppendClipCommand(*(timeline->model()), timeline->currentTrack(),
                                             MLT.XML(producer)));
     return 0;
@@ -188,36 +189,40 @@ QString MainInterface::getFileName(FILE_HANDLE fileHandle)
 FILE_TYPE MainInterface::getFileType(FILE_HANDLE fileHandle)
 {
     Q_ASSERT(fileHandle);
-    FILE_TYPE result = FILE_TYPE_NONE;
-    Mlt::Producer *producer = static_cast<Mlt::Producer*>(fileHandle);  //(Mlt::Producer *)fileHandle;
-    if (!producer->is_valid()) {
-        return result;
+    FILE_TYPE fileType = FILE_TYPE_NONE;
+    Mlt::Producer *pProducer = static_cast<Mlt::Producer*>(fileHandle);
+    if (!pProducer || !pProducer->is_valid())
+    {
+        return fileType;
     }
 
-    int audio_index = producer->get_int("audio_index");
-    int video_index = producer->get_int("video_index");
-    if (video_index >= 0) {
-        if (audio_index == 0 && video_index == 0) {
-            //image
-            result = FILE_TYPE_IMAGE;
-        } else {
-            //video
-            QString resource = QString(producer->get("resource"));
-            if (Util::isAudioFile(resource)) {
-                result = FILE_TYPE_AUDIO;
-            } else {
-                 result = FILE_TYPE_VIDEO;
+    int nAudioIndex = pProducer->get_int("audio_index");
+    int nVideoIndex = pProducer->get_int("video_index");
+    if (nVideoIndex >= 0)
+    {
+        if (nVideoIndex == 0 && nAudioIndex == 0)
+        {
+            fileType = FILE_TYPE_IMAGE;
+        }
+        else
+        {
+            QString strResource = QString(pProducer->get("resource"));
+            if (Util::isAudioFile(strResource))//有封面的音频也会有video_index，因此还需要在做格式
+            {
+                fileType = FILE_TYPE_AUDIO;
+            }
+            else
+            {
+                fileType = FILE_TYPE_VIDEO;
             }
         }
-    } else if (audio_index >= 0) {
-        //audio
-        result = FILE_TYPE_AUDIO;
-    } else {
-        //
-        result = FILE_TYPE_NONE;
+    }
+    else if (nAudioIndex >= 0)
+    {
+        fileType = FILE_TYPE_AUDIO;
     }
 
-    return result;
+    return fileType;
 }
 
 //功能：获取文件时长
@@ -292,8 +297,15 @@ FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
          char* filter_name = filter->get("moviemator:filter");
          if (QString(filter_name) == "affineSizePosition") {
              hasSizeAndPositionFilter = true;
+
+             delete filter;
+             filter = nullptr;
+
              break;
          }
+
+         delete filter;
+         filter = nullptr;
     }
 
     if (resource == "template" && !hasSizeAndPositionFilter) {
@@ -317,6 +329,9 @@ FILE_HANDLE MainInterface::createFileWithXMLForDragAndDrop(QString xml)
         sizeAndPositionFilter->set("transition.halign", "left");
         sizeAndPositionFilter->set("transition.threads", 0);
         producer->attach(*sizeAndPositionFilter);
+
+        delete sizeAndPositionFilter;
+        sizeAndPositionFilter = nullptr;
     }
 
     return producer;
@@ -398,16 +413,34 @@ void MainInterface::previewAudioFilter(QmlMetadata *meta)
         QString propertyValue;
         propertyName = meta->keyframes()->parameter(k)->property();
         if(meta->keyframes()->parameter(k)->paraType() == "double")
-            propertyValue = QString::number(meta->keyframes()->parameter(k)->defaultValue().toDouble() * 100);
+            propertyValue = QString::number(meta->keyframes()->parameter(k)->defaultValue().toDouble() );
         else
             propertyValue = meta->keyframes()->parameter(k)->defaultValue();
         setFilterProperty(meta->keyframes()->parameter(k)->paraType(),propertyName,propertyValue,meta->keyframes()->parameter(k)->factorFunc(),pfilter,meta->path());
     }
     playFile(mltSettingFile);
+
+    destroyFileHandle(mltSettingFile);//释放临时的FILE_HANDLE
 }
 
 void MainInterface::previewFilter(int index)
 {
+//    for (int i=0;i<MAIN.filterController()->metadataModel()->rowCount();i++) {
+//        QmlMetadata *meta = MAIN.filterController()->getQmlMetadata(i);
+//        if(meta == nullptr) break;
+//        qDebug()<<"111111111111111111111-0:"+QString::number(i);
+//        qDebug()<<"name:"+meta->name();
+//        qDebug()<<"mlt_service:"+meta->mlt_service();
+//        qDebug()<<"objectName:"+meta->objectName();
+//        qDebug()<<"parameterCount:"+QString::number(meta->keyframes()->parameterCount());
+//        for (int j=0;j<meta->keyframes()->parameterCount();j++) {
+//            qDebug()<<"parameter:"+QString::number(j);
+//            qDebug()<<"parameter name:"+meta->keyframes()->parameter(j)->name();
+//            qDebug()<<"parameter property:"+meta->keyframes()->parameter(j)->property();
+//            qDebug()<<"parameter defaultValue:"+meta->keyframes()->parameter(j)->defaultValue();
+//        }
+//    }
+
 //    1 获取滤镜meta  默认按视频滤镜处理
     QmlMetadata *meta = MAIN.filterController()->getQmlMetadata(index);
     if(meta->isAudio()){
@@ -480,7 +513,9 @@ void MainInterface::previewFilter(int index)
                 break;
             }
         }
-        playFile(createFileWithXMLForDragAndDrop(doc.toString()));
+        FILE_HANDLE fileHandle = createFileWithXMLForDragAndDrop(doc.toString());
+        playFile(fileHandle);
+        destroyFileHandle(fileHandle);
         return;
     }
 
@@ -510,6 +545,12 @@ void MainInterface::previewFilter(int index)
     }
 
     playFile(mltSettingFile);
+
+    delete producer;
+    producer = nullptr;
+    mltSettingFile = nullptr;
+
+//    destroyFileHandle(mltSettingFile);//释放临时的FILE_HANDLE
 }
 
 double calculate(double value,QList<QString> funcList)

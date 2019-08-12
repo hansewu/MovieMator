@@ -96,9 +96,6 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_filterSettingsView(QmlUtilities::sharedEngine(), nullptr)
 {
     LOG_DEBUG() << "begin";
-    m_selection.selectedTrack = -1;
-    m_selection.isMultitrackSelected = false;
-
 
     ui->setupUi(this);
     setMinimumHeight(251);//toolbar+ruler+video+audio+30+margin 39+24+100+50+30+8
@@ -427,34 +424,26 @@ void TimelineDock::makeTracksTaller()
     QMetaObject::invokeMethod(m_quickView.rootObject(), "makeTracksTaller");
 }
 
-void TimelineDock::setSelection(QList<int> newSelection, int trackIndex, bool isMultitrack, bool bFromUndo)
+void TimelineDock::setSelection(QList<int> newSelection, int trackIndex, bool isMultitrack)
 {
-    if (newSelection != selection()
-            || trackIndex != m_selection.selectedTrack
-            || isMultitrack != m_selection.isMultitrackSelected)
+    if (newSelection != m_model.selection().selectedClips
+            || trackIndex != m_model.selection().selectedTrack
+            || isMultitrack != m_model.selection().isMultitrackSelected)
     {
         LOG_DEBUG() << "Changing selection to" << newSelection << " trackIndex" << trackIndex << "isMultitrack" << isMultitrack;
-        if(!bFromUndo)
-        {
-            MAIN.undoStack()->push(
-                new Timeline::ClipsSelectCommand(newSelection, trackIndex, isMultitrack,
-                                                 m_selection.selectedClips, m_selection.selectedTrack, m_selection.isMultitrackSelected));
-        }
-        m_selection.selectedClips = newSelection;
-        m_selection.selectedTrack = trackIndex;
-        m_selection.isMultitrackSelected = isMultitrack;
+        Selection aSelection;
+        aSelection.selectedClips = newSelection;
+        aSelection.selectedTrack = trackIndex;
+        aSelection.isMultitrackSelected = isMultitrack;
+        m_model.setSelection(aSelection);
 
         MLT.pause();
 
-        //MovieMator Pro
-//#ifdef MOVIEMATOR_PRO
         setCurrentFilter(nullptr, nullptr,0);
-//#endif
-        //end
 
         emit selectionChanged();
 
-        if (!m_selection.selectedClips.isEmpty())
+        if (!m_model.selection().selectedClips.isEmpty())
             emitSelectedFromSelection();
         else
             emit selected(nullptr);
@@ -466,23 +455,7 @@ QList<int> TimelineDock::selection() const
 {
     if (!m_quickView.rootObject())
         return QList<int>();
-    return m_selection.selectedClips;
-}
-
-void TimelineDock::saveAndClearSelection()
-{
-    m_savedSelection = m_selection;
-    m_selection.selectedClips = QList<int>();
-    m_selection.selectedTrack = -1;
-    m_selection.isMultitrackSelected = false;
-    emit selectionChanged();
-}
-
-void TimelineDock::restoreSelection()
-{
-    m_selection = m_savedSelection;
-    emit selectionChanged();
-    emitSelectedFromSelection();
+    return m_model.selection().selectedClips;
 }
 
 void TimelineDock::selectClipUnderPlayhead()
@@ -575,12 +548,12 @@ void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
     }
 
     if (location == TrimInPoint) {
-        MAIN.undoStack()->push(
+        MAIN.pushCommand(
             new Timeline::TrimClipInCommand(m_model, trackIndex, clipIndex, m_position - info->start, ripple));
         if (ripple)
             setPosition(info->start);
     } else {
-        MAIN.undoStack()->push(
+        MAIN.pushCommand(
             new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, info->start + info->frame_count - m_position, ripple));
     }
 }
@@ -594,13 +567,13 @@ bool TimelineDock::isRipple() const
 void TimelineDock::clearSelectionIfInvalid()
 {
 //    int count = clipCount(currentTrack());//应该使用和selection()中clip对应的track做处理，如果不对应则没有处理的必要，因为clip如果不在track上一个得到的数据是不对的
-    int count = clipCount(m_selection.selectedTrack);
+    int count = clipCount(m_model.selection().selectedTrack);
 
     QList<int> newSelection;
     foreach (int index, selection()) {
         if (index >= count)
             continue;
-        if (isBlank(m_selection.selectedTrack, index))
+        if (isBlank(m_model.selection().selectedTrack, index))
             continue;
 
         newSelection << index;
@@ -610,13 +583,13 @@ void TimelineDock::clearSelectionIfInvalid()
     //（1）The filter information of the new clip is error when a new clip is inserted at the beginning of the selected clip.
     //setSelection();
 
-    setSelection(newSelection, m_selection.selectedTrack);
+    setSelection(newSelection, m_model.selection().selectedTrack);
     emit selectionChanged();
 }
 
 void TimelineDock::insertTrack()
 {
-//    MAIN.undoStack()->push(
+//    MAIN.pushCommand(
 //                new Timeline::InsertTrackCommand(m_model, currentTrack()));
     MAINCONTROLLER.insertTrack(currentTrack());
 }
@@ -635,7 +608,7 @@ void TimelineDock::removeTrack()
 
 
     if (m_model.trackList().size() > 0 && trackNumber > 0)
-//        MAIN.undoStack()->push(
+//        MAIN.pushCommand(
 //                new Timeline::RemoveTrackCommand(m_model, currentTrack()));
         MAINCONTROLLER.removeTrack(trackIndex);
 
@@ -753,32 +726,32 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
         return;
     }
     m_updateCommand = nullptr;
-    MAIN.undoStack()->push(command);
+    MAIN.pushCommand(command);
 
     //setSelection(originSelection);
 }
 
 void TimelineDock::addAudioTrack()
 {
-    MAIN.undoStack()->push(
+    MAIN.pushCommand(
         new Timeline::AddTrackCommand(m_model, AudioTrackType));
 }
 
 void TimelineDock::addVideoTrack()
 {
-    MAIN.undoStack()->push(
+    MAIN.pushCommand(
         new Timeline::AddTrackCommand(m_model, VideoTrackType));
 }
 
 void TimelineDock::addFilterTrack()
 {
-    MAIN.undoStack()->push(
+    MAIN.pushCommand(
         new Timeline::AddTrackCommand(m_model, FilterTrackType));
 }
 
 void TimelineDock::addTextTrack()
 {
-    MAIN.undoStack()->push(
+    MAIN.pushCommand(
         new Timeline::AddTrackCommand(m_model, TextTrackType));
 }
 
@@ -814,44 +787,12 @@ void TimelineDock::append(int trackIndex)
         return;
     }
     if (MLT.isSeekableClip() || MLT.savedProducer()) {
-        MAIN.undoStack()->push(
-        new Timeline::AppendClipCommand(m_model, trackIndex,
-                MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer())));
+        Timeline::AppendClipCommand *appendCommand = new Timeline::AppendClipCommand(m_model, trackIndex,
+                                                                                     MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer()));
+        MAIN.pushCommand(appendCommand);
+        selectClipUnderPlayhead();
+        appendCommand->refreshSelection();
     }
-    selectClipUnderPlayhead();
-
-
-//    if (trackIndex < 0)
-//        trackIndex = currentTrack();
-//    if (isTrackLocked(trackIndex)) {
-//        pulseLockButtonOnTrack(trackIndex);
-//        return;
-//    }
-
-
-//    if (MLT.isSeekableClip())
-//        MAIN.undoStack()->push(
-//                                new Timeline::AppendCommand(m_model, trackIndex,
-//                                MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
-//    else
-//    {
-
-//        QList<FILE_HANDLE> fileList = RecentDock_getSelectedFiles();
-//        foreach (FILE_HANDLE fileHandle, fileList)
-//        {
-//            MAININTERFACE.addToTimeLine(fileHandle);
-//        }
-//        if (fileList.count() <= 0)
-//        {
-//            if (MLT.isSeekableClip() || MLT.savedProducer()) {
-//                MAIN.undoStack()->push(
-//                new Timeline::AppendCommand(m_model, trackIndex,
-//                        MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
-//            }
-//        }
-//    }
-//    selectClipUnderPlayhead();
-
 }
 
 void TimelineDock::remove(int trackIndex, int clipIndex)
@@ -874,7 +815,7 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
 
         MAIN.undoStack()->beginMacro("Remove from track");
         int newClipIndex = removeTransitionOnClipWithUndo(trackIndex, clipIndex);
-        MAIN.undoStack()->push(
+        MAIN.pushCommand(
             new Timeline::RemoveClipCommand(m_model, *this, trackIndex, newClipIndex, xml));
         MAIN.undoStack()->endMacro();
     }
@@ -910,7 +851,7 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
 
         int newClipIndex = removeTransitionOnClipWithUndo(trackIndex, clipIndex);
         QString xml = MLT.XML(clip.data());
-        MAIN.undoStack()->push(
+        MAIN.pushCommand(
             new Timeline::LiftClipCommand(m_model, *this, trackIndex, newClipIndex, xml));
 
         MAIN.undoStack()->endMacro();
@@ -1010,8 +951,8 @@ void TimelineDock::paste()
 {
     if(m_model.copiedProducer() != nullptr)
     {
-        QString xml = MLT.XML(m_model.copiedProducer());
-        insert(-1, m_position, xml);
+        QString strXml = MLT.XML(m_model.copiedProducer());
+        insert(-1, m_position, strXml);
     }
 }
 
@@ -1026,7 +967,7 @@ void TimelineDock::emitSelectedFromSelection()
     }
 
 //    int trackIndex = currentTrack();应该使用clip对应的track做一下的处理，如果clip不在track上，就没有处理的必要（undo、redo时会有此问题）
-    int trackIndex = m_selection.selectedTrack;
+    int trackIndex = m_model.selection().selectedTrack;
     int clipIndex = selection().isEmpty()? 0 : selection().first();
 //    Q_ASSERT(trackIndex >= 0);//允许无效值，因为m_selection.selectedTrack有可能还未初始化
     Q_ASSERT(clipIndex >= 0);
@@ -1039,7 +980,7 @@ void TimelineDock::emitSelectedFromSelection()
     Q_ASSERT(info->producer->is_valid());
     if (info && info->producer && info->producer->is_valid()) {
         delete m_updateCommand;
-        m_updateCommand = new Timeline::UpdateClipCommand(*this, trackIndex, clipIndex, info->start);
+        m_updateCommand = new Timeline::UpdateClipCommand(*this, m_model, trackIndex, clipIndex, info->start);
         // We need to set these special properties so time-based filters
         // can get information about the cut while still applying filters
         // to the cut parent.
@@ -1051,7 +992,18 @@ void TimelineDock::emitSelectedFromSelection()
         m_ignoreNextPositionChange = true;
 
         info->producer->set_in_and_out(info->frame_in, info->frame_out);
+
         emit selected(info->producer);
+
+        if(selection().isEmpty()
+           || (model()->selectedProducer() == nullptr)
+           || ((static_cast<void*>(model()->selectedProducer()->get_producer())
+                != static_cast<void*>(info->producer->get_producer()))))
+        {
+            // 同一个 producer就不刷新滤镜列表
+            model()->setSelectedProducer(info->producer);
+        }
+
         info->producer->set_in_and_out(0, -1);
 
         delete info;
@@ -1071,31 +1023,31 @@ void TimelineDock::remakeAudioLevels(int trackIndex, int clipIndex)
 
 void TimelineDock::setTrackName(int trackIndex, const QString &value)
 {
-    MAIN.undoStack()->push(
+    MAIN.pushCommand(
         new Timeline::NameTrackCommand(m_model, trackIndex, value));
 }
 
 void TimelineDock::toggleTrackMute(int trackIndex)
 {
-    MAIN.undoStack()->push(
+    MAIN.pushCommand(
         new Timeline::MuteTrackCommand(m_model, trackIndex));
 }
 
 void TimelineDock::toggleTrackHidden(int trackIndex)
 {
-    MAIN.undoStack()->push(
+    MAIN.pushCommand(
         new Timeline::HideTrackCommand(m_model, trackIndex));
 }
 
 void TimelineDock::setTrackComposite(int trackIndex, Qt::CheckState composite)
 {
-    MAIN.undoStack()->push(
+    MAIN.pushCommand(
         new Timeline::CompositeTrackCommand(m_model, trackIndex, composite));
 }
 
 void TimelineDock::setTrackLock(int trackIndex, bool lock)
 {
-    MAIN.undoStack()->push(
+    MAIN.pushCommand(
         new Timeline::LockTrackCommand(m_model, trackIndex, lock));
 }
 
@@ -1103,20 +1055,22 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
 {
     int newPosition;
     if (m_model.moveClipValid(fromTrack, toTrack, clipIndex, position)) {
-        MAIN.undoStack()->push(
-            new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, position));
+        Timeline::MoveClipCommand *moveCommand = new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, position);
+        MAIN.pushCommand(moveCommand);
         selectClipAtPosition(toTrack, position);
+        moveCommand->refreshSelection();
         return true;
     } else if (m_model.addTransitionValid(fromTrack, toTrack, clipIndex, position)) {
 
-        MAIN.undoStack()->push(
+        MAIN.pushCommand(
             new Timeline::AddTransitionCommand(m_model, fromTrack, clipIndex, position));
         emitSelectedFromSelection();
         return true;
     } else if ( ( newPosition = m_model.moveInsertClipValid(fromTrack, toTrack, clipIndex, position) )  >= 0) {
-        MAIN.undoStack()->push(
-                    new Timeline::MoveInsertClipCommand(m_model, fromTrack, toTrack, clipIndex, position));
+        Timeline::MoveInsertClipCommand *moveInsertCommand = new Timeline::MoveInsertClipCommand(m_model, fromTrack, toTrack, clipIndex, position);
+        MAIN.pushCommand(moveInsertCommand);
         selectClipAtPosition(toTrack, newPosition);
+        moveInsertCommand->refreshSelection();
         return true;
     } else {
         return false;
@@ -1129,22 +1083,22 @@ void TimelineDock::addFilterClipCommand(int TrackIndex, int clipIndex, QString s
     Q_UNUSED(clipIndex)
     Q_UNUSED(strFromXml)
     Q_UNUSED(strToXml)
- //   MAIN.undoStack()->push(new Timeline::FilterClipCommand(m_model, TrackIndex, clipIndex, strFromXml, strToXml));
+ //   MAIN.pushCommand(new Timeline::FilterClipCommand(m_model, TrackIndex, clipIndex, strFromXml, strToXml));
 }
 
 
 bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple)
 {
     if (!ripple && m_model.addTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
-        MAIN.undoStack()->push(
+        MAIN.pushCommand(
             new Timeline::AddTransitionByTrimInCommand(m_model, trackIndex, clipIndex, delta));
     }
     else if (m_model.trimTransitionOutValid(trackIndex, clipIndex, delta)) {
-        MAIN.undoStack()->push(
+        MAIN.pushCommand(
             new Timeline::TrimTransitionOutCommand(m_model, trackIndex, clipIndex, delta));
     }
     else if (m_model.trimClipInValid(trackIndex, clipIndex, delta, ripple)) {
-        MAIN.undoStack()->push(
+        MAIN.pushCommand(
             new Timeline::TrimClipInCommand(m_model, trackIndex, clipIndex, delta, ripple));
     }
     else return false;
@@ -1154,15 +1108,15 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta, bool rip
 bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple)
 {
     if (!ripple && m_model.addTransitionByTrimOutValid(trackIndex, clipIndex, delta)) {
-        MAIN.undoStack()->push(
+        MAIN.pushCommand(
             new Timeline::AddTransitionByTrimOutCommand(m_model, trackIndex, clipIndex, delta));
     }
     else if (m_model.trimTransitionInValid(trackIndex, clipIndex, delta)) {
-        MAIN.undoStack()->push(
+        MAIN.pushCommand(
             new Timeline::TrimTransitionInCommand(m_model, trackIndex, clipIndex, delta));
     }
     else if (m_model.trimClipOutValid(trackIndex, clipIndex, delta, ripple)) {
-        MAIN.undoStack()->push(
+        MAIN.pushCommand(
                 new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, delta, ripple));
     }
     else return false;
@@ -1182,9 +1136,11 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml)
             : MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer());
         if (position < 0)
             position = m_position;
-        MAIN.undoStack()->push(
-            new Timeline::InsertClipCommand(m_model, trackIndex, position, xmlToUse));
-         selectClipUnderPlayhead();
+
+        Timeline::InsertClipCommand *insertCommand = new Timeline::InsertClipCommand(m_model, trackIndex, position, xmlToUse);
+        MAIN.pushCommand(insertCommand);
+        selectClipUnderPlayhead();
+        insertCommand->refreshSelection();
     }
 }
 
@@ -1201,9 +1157,10 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
             : MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer());
         if (position < 0)
             position = m_position;
-        MAIN.undoStack()->push(
-            new Timeline::OverwriteClipCommand(m_model, trackIndex, position, xmlToUse));
+        Timeline::OverwriteClipCommand *overwriteCommand = new Timeline::OverwriteClipCommand(m_model, trackIndex, position, xmlToUse);
+        MAIN.pushCommand(overwriteCommand);
         selectClipUnderPlayhead();
+        overwriteCommand->refreshSelection();
     }
 }
 
@@ -1248,7 +1205,7 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
             if (!m_model.isTransition(playlist, clipIndex)) {
 //                QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
 //                if (info && m_position >= info->start + 2 && m_position < info->start + info->frame_count - 1 - 2) {
-//                    MAIN.undoStack()->push(
+//                    MAIN.pushCommand(
 //                        new Timeline::SplitCommand(m_model, trackIndex, clipIndex, m_position));
 //                }
                 MAINCONTROLLER.splitClip(trackIndex, clipIndex, m_position);
@@ -1264,8 +1221,8 @@ void TimelineDock::AttachedfilterChanged()
 {
     int trackIndex = currentTrack();;
     int clipIndex = -1;
-    if (m_selection.selectedClips.count() > 0)
-           clipIndex = m_selection.selectedClips[0];
+    if (m_model.selection().selectedClips.count() > 0)
+           clipIndex = m_model.selection().selectedClips[0];
 
     if (trackIndex < 0) return;
     if (clipIndex < 0) return;
@@ -1281,7 +1238,7 @@ void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
     }
     if (duration < 0) return;
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
-    MAIN.undoStack()->push(
+    MAIN.pushCommand(
         new Timeline::FadeInCommand(m_model, trackIndex, clipIndex, duration));
     emit fadeInChanged(duration);
 }
@@ -1294,7 +1251,7 @@ void TimelineDock::fadeOut(int trackIndex, int clipIndex, int duration)
     }
     if (duration < 0) return;
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
-    MAIN.undoStack()->push(
+    MAIN.pushCommand(
         new Timeline::FadeOutCommand(m_model, trackIndex, clipIndex, duration));
     emit fadeOutChanged(duration);
 }
@@ -1778,17 +1735,12 @@ void TimelineDock::appendFromPath(int trackIndex, const QString &path)
         MAIN.onFileOpened(path);
 
         qApp->processEvents();
-//            if (row == -1)
-//                MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(&p)));
-//            else
-//                MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(&p), insertNextAt++));
 
-        MAIN.undoStack()->push(
-            new Timeline::AppendClipCommand(m_model, trackIndex,
-                MLT.XML(p)));
+        Timeline::AppendClipCommand *appendCommand = new Timeline::AppendClipCommand(m_model, trackIndex, MLT.XML(p));
+        MAIN.pushCommand(appendCommand);
         selectClipUnderPlayhead();
+        appendCommand->refreshSelection();
 
-//        addTransitionOnClipAfterAppend();
         qApp->processEvents();
     }
 }
@@ -1844,7 +1796,7 @@ int TimelineDock::removeTransitionOnClip(int trackIndex, int clipIndex)
 
                         int position = playlist.clip_start(clipIndex - 1);
                         Q_UNUSED(position)
-//                        MAIN.undoStack()->push(
+//                        MAIN.pushCommand(
 //                                    new Timeline::RemoveTransitionCommand(m_model, trackIndex, clipIndex - 1, clipIndex - 1, position)
 //                                    );
                         m_model.removeTransition(trackIndex, clipIndex - 1);
@@ -1858,7 +1810,7 @@ int TimelineDock::removeTransitionOnClip(int trackIndex, int clipIndex)
                     {
                         int position = playlist.clip_start(clipIndex + 1);
                         Q_UNUSED(position)
-//                        MAIN.undoStack()->push(
+//                        MAIN.pushCommand(
 //                                    new Timeline::RemoveTransitionCommand(m_model, trackIndex, clipIndex + 1, clipIndex + 1, position)
 //                                    );
                         m_model.removeTransition(trackIndex, clipIndex + 1);
@@ -1904,7 +1856,7 @@ int TimelineDock::removeTransitionOnClipWithUndo(int trackIndex, int clipIndex)
                 }
 
                 if (hasTransition)
-                    MAIN.undoStack()->push(
+                    MAIN.pushCommand(
                                 new Timeline::RemoveTransitionsOnClipCommand(m_model, *this, trackIndex, clipIndex));
             }
         }
@@ -1943,7 +1895,7 @@ void TimelineDock::addTransitionOnClipAfterAppend()
         clipStart = playlist.clip_start(clipIndex);
         if (trackNumber == 0 && trackType == VideoTrackType)
             if (m_model.addTransitionValid(trackIndex, trackIndex, clipIndex, clipStart - int(MLT.profile().fps())))
-                MAIN.undoStack()->push(
+                MAIN.pushCommand(
                     new Timeline::AddTransitionCommand(m_model, trackIndex, clipIndex, clipStart - int(MLT.profile().fps())));
     }
 }
@@ -1952,8 +1904,8 @@ void TimelineDock::addTransitionOnClipAfterAppend()
 void TimelineDock::setTransitionDuration(int duration)
 {
     int trackIndex = currentTrack();
-    Q_ASSERT(!m_selection.selectedClips.isEmpty());
-    int clipIndex = m_selection.selectedClips[0];
+    Q_ASSERT(!m_model.selection().selectedClips.isEmpty());
+    int clipIndex = m_model.selection().selectedClips[0];
     m_model.setTransitionDuration(trackIndex, clipIndex, duration);
 }
 
@@ -1978,7 +1930,7 @@ void TimelineDock::removeTransition(int trackIndex, int transitionIndex)
         Q_ASSERT(playlist.is_valid());
         if (m_model.isTransition(playlist, transitionIndex)) {
             int position = playlist.clip_start(transitionIndex);
-            MAIN.undoStack()->push(
+            MAIN.pushCommand(
                         new Timeline::RemoveTransitionCommand(m_model, trackIndex, transitionIndex, transitionIndex, position)
                         );
         }
@@ -2330,7 +2282,287 @@ void TimelineDock::exportSelectedClipAsTemplate()
 {
     if(!isAClipSelected())
         return;
-    int trackIndex = m_selection.selectedTrack;
-    int clipIndex = m_selection.selectedClips[0];
+    int trackIndex = m_model.selection().selectedTrack;
+    int clipIndex = m_model.selection().selectedClips[0];
     exportAsTemplate(trackIndex, clipIndex);
 }
+
+bool replaceVideofilePath(QString filePath,QString originalStr,QString newStr){
+    QString strAll;
+    QStringList strList;
+    QFile readFile(filePath);
+    if(readFile.open((QIODevice::ReadOnly|QIODevice::Text)))
+    {
+     QTextStream stream(&readFile);
+     strAll=stream.readAll();
+    }
+    readFile.close();
+    QFile writeFile(filePath);
+    if(writeFile.open(QIODevice::WriteOnly|QIODevice::Text))
+    {
+         QTextStream stream(&writeFile);
+         strList=strAll.split("\n");
+         for(int i=0;i<strList.count();i++)
+         {
+             if(i==strList.count()-1)
+             {
+                 //最后一行不需要换行
+                 stream<<strList.at(i);
+             }
+             else
+             {
+                 if(strList.at(i).contains(originalStr))
+                 {
+                    QString tempStr=strList.at(i);
+                    tempStr.replace(0,tempStr.length(),newStr);
+                    stream<<tempStr<<'\n';
+                 }else {
+                    stream<<strList.at(i)<<'\n';
+                 }
+             }
+         }
+    }
+    writeFile.close();
+    return true;
+}
+
+void TimelineDock::unitTestCommand()
+{
+    //    替换工程文件中的资源文件的路径
+    QDir testFileDir = QDir(Util::resourcesPath() + "/template/unitTest/");
+    QString testFile = testFileDir.absoluteFilePath("test.mmp");
+    QString videoFilePath = testFileDir.absoluteFilePath("test.mp4");
+    QString newStr = QString("    <property name=\"resource\">")+videoFilePath+QString("</property>");
+    replaceVideofilePath(testFile,"test.mp4",newStr);
+
+    testFile = testFileDir.absoluteFilePath("test1.mmp");
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::OverwriteClipCommand(m_model, 1, 0, MLT.XML(MLT.savedProducer())));
+        MAIN.undoStack()->undo();
+    }
+
+    testFile = testFileDir.absoluteFilePath("test.mmp");
+
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        new Timeline::AppendClipCommand(m_model, 1,MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer()));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::InsertClipCommand(m_model, 1, m_position, MLT.XML(MLT.savedProducer())));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        lift(1,0); //LiftClipCommand
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::RemoveClipCommand(m_model, *this, 1, 0, MLT.XML(MLT.savedProducer())));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::NameTrackCommand(m_model, 1, "value"));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::MuteTrackCommand(m_model, 1));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::HideTrackCommand(m_model, 1));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::CompositeTrackCommand(m_model, 1,Qt::CheckState(m_model.data(m_model.index(1), MultitrackModel::IsCompositeRole).toInt())));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::LockTrackCommand(m_model, 1, true));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::MoveClipCommand(m_model, 1, 0, 0, 0));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::TrimClipInCommand(m_model, 1, 0, 266, false));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::TrimClipOutCommand(m_model, 1, 0, 266, false));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::SplitCommand(MAINCONTROLLER.multitrackModel(), 1, 0, 10));
+        MAIN.undoStack()->undo();
+    }
+//    if (!MLT.open(testFile)) {
+//        MAIN.open(MLT.producer());
+//        MAIN.pushCommand(new Timeline::FadeOutCommand(m_model, 1, 0, 5));
+//        MAIN.undoStack()->undo();
+//    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::AddTransitionCommand(m_model, 1, 0, m_position));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::TrimTransitionInCommand(m_model, 1, 0, 266));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::TrimTransitionOutCommand(m_model, 1, 2, -1));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::AddTransitionByTrimInCommand(m_model, 1, 0, 266));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::AddTransitionByTrimOutCommand(m_model, 1, 0, 266));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::AddTrackCommand(m_model, VideoTrackType));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::InsertTrackCommand(MAINCONTROLLER.multitrackModel(), 1));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::RemoveTrackCommand(MAINCONTROLLER.multitrackModel(), 1));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {;
+        MAIN.open(MLT.producer());
+        Timeline::UpdateClipCommand* command = new Timeline::UpdateClipCommand(*this, m_model, 1, 0, 10);
+        command->setXmlAfter(MLT.XML(MLT.producer()));
+        MAIN.pushCommand(command);
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::RemoveTransitionCommand(m_model, 1, 0, 0, 266));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::RemoveTransitionsOnClipCommand(m_model, *this, 1, 0));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::MoveInsertClipCommand(m_model, 0, 1, 1, m_position));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::FilterCommand(*(MAIN.timelineDock()->model()), *(MAIN.filterController()->attachedModel()), 0, "u",  105, 110,false));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::FilterAttachCommand(*(MAIN.timelineDock()->model()), MAIN.filterController()->metadataModel()->get(45), 0, 0, true,false));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::FilterMoveCommand(*(MAIN.timelineDock()->model()), 0, 1,false));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        key_frame_item paraFrom;
+        paraFrom.keyFrame = 93;
+        paraFrom.paraMap.insert("u", "107.5");
+
+        QVector<key_frame_item> keyFrameFrom;
+        keyFrameFrom.insert(0, paraFrom);
+
+
+        key_frame_item para;
+        para.keyFrame = 93;
+        para.paraMap.insert("u", "115");
+
+        QVector<key_frame_item> keyFrameAdd;
+        keyFrameAdd.insert(0, para);
+
+        MAIN.pushCommand(new Timeline::KeyFrameInsertCommand(*(MAIN.timelineDock()->model()), MLT.producer()->filter(0), keyFrameFrom, keyFrameAdd,false));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        key_frame_item para;
+        para.keyFrame = 52;
+        para.paraMap.insert("u", "105");
+
+        QVector<key_frame_item> keyFrameRemove;
+        keyFrameRemove.insert(0, para);
+        MAIN.pushCommand(new Timeline::KeyFrameRemoveCommand(*(MAIN.timelineDock()->model()), MLT.producer()->filter(0), keyFrameRemove,false));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(new Timeline::KeyFrameUpdateCommand(*(MAIN.timelineDock()->model()), MLT.producer()->filter(0), 52, "u", "105", "121",false));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(
+                new Timeline::ClipsSelectCommand(*(MAIN.timelineDock()->model()), QList<int>(), 1, false,
+                                                 m_model.selection().selectedClips, m_model.selection().selectedTrack, m_model.selection().isMultitrackSelected,false));
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(
+                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), 1, 1, "luma", "invert", "0",false)
+                    );
+        MAIN.undoStack()->undo();
+    }
+    if (!MLT.open(testFile)) {
+        MAIN.open(MLT.producer());
+        MAIN.pushCommand(
+                    new Timeline::TransitionDurationSettingCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), 1, 1, 10,false)
+                    );
+        MAIN.undoStack()->undo();
+    }
+
+    qDebug()<<"end";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -176,8 +176,8 @@ void LumaMixTransition::on_invertCheckBox_clicked(bool checked)
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {
         QString invertValue = checked ? "1" : "0";
-        MAIN.undoStack()->push(
-                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma", "invert", invertValue)
+        MAIN.pushCommand(
+                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma", "invert", invertValue,true)
                     );
     }
 }
@@ -190,12 +190,12 @@ void LumaMixTransition::on_softnessSlider_valueChanged(int value)
             qreal r = qreal(value) / 100.0;
             QColor color = QColor::fromRgbF(r, r, r);
             QString resource = QString("color:%1").arg(color.name());
-            MAIN.undoStack()->push(
-                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma", "resource", resource)
+            MAIN.pushCommand(
+                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma", "resource", resource,true)
                         );
         } else {
-            MAIN.undoStack()->push(
-                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma", "softness", QString::number(value / 100.0))
+            MAIN.pushCommand(
+                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma", "softness", QString::number(value / 100.0),true)
                         );
         }
     }
@@ -207,8 +207,8 @@ void LumaMixTransition::on_crossfadeRadioButton_toggled(bool checked)
     {
         QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
         if (transition && transition->is_valid()) {
-            MAIN.undoStack()->push(
-                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "mix", "start", "-1")
+            MAIN.pushCommand(
+                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "mix", "start", "-1",true)
                         );
         }
         ui->mixSlider->setDisabled(true);
@@ -223,8 +223,8 @@ void LumaMixTransition::on_mixRadioButton_toggled(bool checked)
         QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
         if (transition && transition->is_valid()) {
             int value = ui->mixSlider->value();
-            MAIN.undoStack()->push(
-                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "mix", "start", QString::number(value / 100.0))
+            MAIN.pushCommand(
+                        new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "mix", "start", QString::number(value / 100.0),true)
                         );
         }
         ui->mixSlider->setEnabled(true);
@@ -236,8 +236,8 @@ void LumaMixTransition::on_mixSlider_valueChanged(int value)
 {
     QScopedPointer<Mlt::Transition> transition(getTransition("mix"));
     if (transition && transition->is_valid()) {
-        MAIN.undoStack()->push(
-                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "mix", "start", QString::number(value / 100.0))
+        MAIN.pushCommand(
+                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "mix", "start", QString::number(value / 100.0),true)
                     );
     }
 }
@@ -345,16 +345,26 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
             softnessValue = ui->softnessSlider->value() / 100.0;
         }
 
-        MAIN.undoStack()->push(
-                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, "luma","resource", resourceValue, invertValue, softnessValue)
+        Timeline::TransitionPropertyCommandParameters commandParameters;
+
+        commandParameters.nTrackIndex            = m_trackIndex;
+        commandParameters.nClipIndex             = m_clipIndex;
+        commandParameters.strTransitionName      = "luma";
+        commandParameters.strPropertyName        = "resource";
+        commandParameters.strPropertyValue       = resourceValue;
+        commandParameters.nInvertTransition      = invertValue;
+        commandParameters.dTransitionSoftness    = softnessValue;
+
+        MAIN.pushCommand(
+                    new Timeline::TransitionPropertyCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), commandParameters)
                     );
     }
 }
 
 void LumaMixTransition::setTransitionDuration(int duration)
 {
-    MAIN.undoStack()->push(
-                new Timeline::TransitionDurationSettingCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, duration)
+    MAIN.pushCommand(
+                new Timeline::TransitionDurationSettingCommand(*(MAIN.timelineDock()), *(MAIN.timelineDock()->model()), m_trackIndex, m_clipIndex, duration,true)
                 );
 }
 

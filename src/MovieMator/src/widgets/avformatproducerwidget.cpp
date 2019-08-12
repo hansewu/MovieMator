@@ -79,6 +79,17 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
 
 AvformatProducerWidget::~AvformatProducerWidget()
 {
+    if (m_tempProducer)
+    {
+        delete m_tempProducer;
+        m_tempProducer = nullptr;
+    }
+    if (m_producer)
+    {
+        delete m_producer;
+        m_producer = nullptr;
+    }
+
     delete ui;
 }
 
@@ -156,23 +167,6 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
     MLT.seek(position);
     MLT.play(speed);
 //    setProducer(p);
-}
-
-void AvformatProducerWidget::recreateProducer()
-{
-    Mlt::Producer* p = producer(MLT.profile());
-    p->pass_list(*m_producer, "audio_index, video_index, force_aspect_ratio,"
-                 "video_delay, force_progressive, force_tff,"
-                 kAspectRatioNumerator ","
-                 kAspectRatioDenominator ","
-                 kShotcutHashProperty);
-    Mlt::Controller::copyFilters(*m_producer, *p);
-    if (m_producer->get_int(kMultitrackItemProperty)) {
-        emit producerChanged(p);
-        delete p;
-    } else {
-        reopen(p);
-    }
 }
 
 void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
@@ -378,7 +372,6 @@ void AvformatProducerWidget::on_videoTrackComboBox_activated(int index)
 
     if (m_tempProducer) {
         m_tempProducer->set("video_index", ui->videoTrackComboBox->itemData(index).toInt());
-//        recreateProducer();
         recreateTempProducer();
     }
 }
@@ -387,7 +380,6 @@ void AvformatProducerWidget::on_audioTrackComboBox_activated(int index)
 {
     if (m_tempProducer) {
         m_tempProducer->set("audio_index", ui->audioTrackComboBox->itemData(index).toInt());
-//        recreateProducer();
         recreateTempProducer();
     }
 
@@ -453,7 +445,6 @@ void AvformatProducerWidget::on_durationSpinBox_editingFinished()
         return;
     if (ui->durationSpinBox->value() == m_tempProducer->get_length())
         return;
-//    recreateProducer();
     recreateTempProducer();
 }
 
@@ -463,7 +454,6 @@ void AvformatProducerWidget::on_speedSpinBox_editingFinished()
     if (!m_tempProducer)
         return;
     m_recalcDuration = true;
-//    recreateProducer();
     recreateTempProducer();
 }
 
@@ -529,12 +519,10 @@ void AvformatProducerWidget::on_okButton_clicked()
     //使用用tempProducer发送producerChanged消息
     if (m_producer->get_int(kMultitrackItemProperty)) {
         recreateTempProducer();
+        Mlt::Controller::copyFilters(*m_producer, *m_tempProducer);
         emit producerChanged(m_tempProducer);
-        delete m_tempProducer;
-        m_tempProducer = nullptr;
     } else {
-        reopen(m_tempProducer);
-        m_tempProducer = nullptr;
+        reopen( new Mlt::Producer(m_tempProducer));
     }
     MAIN.onPropertiesDockTriggered(false);
 }
@@ -574,7 +562,6 @@ Mlt::Producer * AvformatProducerWidget::createTempProducer(Mlt::Profile& profile
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty);
-    Mlt::Controller::copyFilters(*m_producer, *p);
     return p;
 }
 
@@ -586,7 +573,6 @@ Mlt::Producer *AvformatProducerWidget::recreateTempProducer()
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty);
-    Mlt::Controller::copyFilters(*m_producer, *p);
     delete m_tempProducer;
     m_tempProducer = nullptr;
     m_tempProducer = p;

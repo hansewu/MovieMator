@@ -33,9 +33,6 @@ RECENTDOCKSHARED_EXPORT QDockWidget *RecentDock_initModule(MainInterface *main);
 //销毁模块
 RECENTDOCKSHARED_EXPORT void RecentDock_destroyModule();
 
-//获取选中的文件列表
-RECENTDOCKSHARED_EXPORT QList<FILE_HANDLE> RecentDock_getSelectedFiles();
-
 //添加文件
 RECENTDOCKSHARED_EXPORT void RecentDock_add(QString filePath);
 

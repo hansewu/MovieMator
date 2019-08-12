@@ -89,6 +89,14 @@ void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
     Q_ASSERT(producer);
 
     if (!producer) return;
+
+    // 当前时间线轨道上的 clip跟切换前的是同一个
+    Mlt::Producer *pSelectedProducer = MAIN.timelineDock()->model()->selectedProducer();
+    if(pSelectedProducer && (pSelectedProducer->get_producer() == producer->get_producer()))
+    {
+        return;
+    }
+
 //    Q_ASSERT(!producer || !m_producer || (producer->get_parent() != m_producer->get_parent()));
 //    if (!producer || !m_producer || (producer->get_parent() != m_producer->get_parent())) {
         reset(producer);
@@ -346,13 +354,17 @@ void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
     if (filter->is_valid()) {
         if (!meta->objectName().isEmpty())
             filter->set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
-//        if(meta->keyframes()->parameterCount() == 1)
-//        {
-//            if (filter->get_int("in") == 0 && filter->get_int("out") == 0)
-//                filter->set_in_and_out(0, MAIN.timelineDock()->getCurrentClipParentLength());
-//        }
-        // Put the filter after the last filter that is greater than or equal
-        // in sort order.
+
+        for (int j=0;j<meta->keyframes()->parameterCount();j++) {
+            QString property = meta->keyframes()->parameter(j)->property();
+            if(property == "")
+                property = QString::number(j);
+            QString value = meta->keyframes()->parameter(j)->defaultValue();
+            if(value.contains(".html"))
+                value = meta->path().absolutePath().append('/') + value;
+            filter->set(property.toUtf8().constData(),value.toUtf8().constData());
+        }
+
         insertIndex = 0;
         for (int i = m_metaList.count() - 1; i >= 0; i--)
         {
@@ -401,9 +413,9 @@ void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
         if(!bFromUndo)
         {
             int nCount = MAIN.undoStack()->count();
-             QUndoCommand *attachCommand = new Timeline::FilterAttachCommand(meta, m_metaList.count()-1, insertIndex, true);
+             QUndoCommand *attachCommand = new Timeline::FilterAttachCommand(*(MAIN.timelineDock()->model()), meta, m_metaList.count()-1, insertIndex, true,true);
 
-             MAIN.undoStack()->push(attachCommand);
+             MAIN.pushCommand(attachCommand);
              nCount = MAIN.undoStack()->count();
             LOG_DEBUG() << "MAIN.undoStack()->count() " <<  nCount;
         }
@@ -453,7 +465,7 @@ void AttachedFiltersModel::remove(int row, bool bFromUndo)
 
     if(!bFromUndo)
     {
-        MAIN.undoStack()->push(new Timeline::FilterAttachCommand(metaData, row, row, false));
+        MAIN.pushCommand(new Timeline::FilterAttachCommand(*(MAIN.timelineDock()->model()), metaData, row, row, false,true));
     }
 
     MAIN.timelineDock()->AttachedfilterChanged();
@@ -482,7 +494,7 @@ bool AttachedFiltersModel::move(int fromRow, int toRow, bool bFromUndo)
 
     if(!bFromUndo && bRet)
     {
-        MAIN.undoStack()->push(new Timeline::FilterMoveCommand(fromRow, toRowOld));
+        MAIN.pushCommand(new Timeline::FilterMoveCommand(*(MAIN.timelineDock()->model()), fromRow, toRowOld,true));
     }
     return bRet;
 }

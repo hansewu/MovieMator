@@ -35,6 +35,20 @@
 
 static const int STATUS_ANIMATION_MS = 350;
 
+static QString covertFramesToTimeFormat(Mlt::Producer *pProducerMlt, int nFrames)
+{
+    Q_ASSERT(pProducerMlt);
+    Q_ASSERT(pProducerMlt->is_valid());
+
+    QString strTime = "00:00:00:000";
+    if (pProducerMlt && pProducerMlt->is_valid())
+    {
+        strTime = QString(pProducerMlt->frames_to_time(nFrames));
+    }
+
+    return strTime;
+}
+
 //Player::Player(QWidget *parent)
 //    : QWidget(parent)
 Player::Player(QWidget *parent)
@@ -166,7 +180,7 @@ Player::Player(QWidget *parent)
     m_durationLabel = new QLabel(this);
     m_durationLabel->setToolTip(tr("Total Duration"));
     m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg("00:00:00:00"));
-    m_durationLabel->setFixedWidth(96);
+    m_durationLabel->setFixedWidth(100);
 
     hBoxLayout->addWidget(m_scrubber);
     hBoxLayout->addWidget(m_durationLabel);
@@ -177,9 +191,13 @@ Player::Player(QWidget *parent)
 //    vlayout->addLayout(hBoxLayout);
 //    vlayout->addWidget(progressWidget);
 
-    m_fitButton = new QPushButton();
+    m_fitButton        = new QPushButton();
     m_fullScreenButton = new QPushButton();
-    m_zoomSetButton = new QPushButton();
+    m_zoomSetButton    = new QPushButton();
+
+    m_fitButton->setToolTip(tr("Resize player to fit"));
+    m_fullScreenButton->setToolTip(tr("Full screen"));
+    m_zoomSetButton->setToolTip(tr("Set zoom scale"));
 
     m_fitButton->setToolTip(tr("Zoom to fit"));
     m_fullScreenButton->setToolTip(tr("Full screen"));
@@ -188,6 +206,7 @@ Player::Player(QWidget *parent)
     m_fitButton->setFixedSize(QSize(20, 20));
     m_fitButton->setIconSize(QSize(20, 20));
     m_fitButton->setFlat(true);
+
     m_fullScreenButton->setFixedSize(QSize(20, 20));
     m_fullScreenButton->setIconSize(QSize(20, 20));
     m_fullScreenButton->setFlat(true);
@@ -195,6 +214,7 @@ Player::Player(QWidget *parent)
     m_fullScreenButton->setVisible(false);
     m_fullScreenButton->setEnabled(false);
 #endif
+
     m_zoomSetButton->setFixedSize(QSize(20, 20));
     m_zoomSetButton->setIconSize(QSize(20, 20));
     m_zoomSetButton->setFlat(true);
@@ -204,17 +224,19 @@ Player::Player(QWidget *parent)
                               "QMenu::item:selected{background-color:rgb(192,72,44);}");
     m_zoomMenu->setWindowFlags(Qt::Popup | Qt::NoDropShadowWindowHint); // 消除阴影
 
-    const int size = 5;
-    QString zoomTitle[size] = {"10%", "25%", "50%", "100%", "200%"};
-    QActionGroup *actionGroup = new QActionGroup(this);
-    for(int i=0; i<size; i++)
+    const int nSize             = 5;
+    QString strZoomTitle[nSize] = {"10%", "25%", "50%", "100%", "200%"};
+    QActionGroup *actionGroup   = new QActionGroup(this);
+
+    for(int i = 0; i < nSize; i++)
     {
         QAction *action = new QAction(this);
-        action->setText(zoomTitle[i]);
+        action->setText(strZoomTitle[i]);
         action->setObjectName("actionZoom_" + QString::number(i));
         action->setCheckable(true);
         action->setChecked(false);
-        actionGroup->addAction(action);     // 互斥
+
+        actionGroup->addAction(action);     // 互斥        
         m_zoomMenu->addAction(action);
         connect(action, SIGNAL(triggered()), this, SLOT(onZoomActionTriggered()));
     }
@@ -280,25 +302,25 @@ Player::Player(QWidget *parent)
      m_volumeButton->setFlat(true);
      m_volumeButton->setStyleSheet("QPushButton{border-image: url(:/icons/light/32x32/player-volume.png)}"
                                    "QPushButton:pressed{border-image: url(:/icons/light/32x32/player-volume-pressed.png)}");
-     if(Settings.playerVolume()==0)
+     if(Settings.playerVolume() == 0)
      {
          m_volumeButton->setStyleSheet("QPushButton{border-image: url(:/icons/light/32x32/player-mute.png)}");
      }
+
      m_volumeButton->setCheckable(true);
-     m_volumeButton->setChecked(false);
-     m_bMute = false;
-     m_volumeButton->setFixedSize(QSize(20,20));
-     m_volumeButton->setIconSize(QSize(20,20));
+     m_volumeButton->setChecked(false);     
+     m_volumeButton->setFixedSize(QSize(20, 20));
+     m_volumeButton->setIconSize(QSize(20, 20));
      connect(m_volumeButton, SIGNAL(clicked()),this,SLOT(onShowVolumeSlider()));
 
+     m_bMute = false;
 
 //     m_volumeSlider = new QSlider(Qt::Horizontal);
      m_volumeSlider = new QSlider(Qt::Vertical);
      m_volumeSlider->setFocusPolicy(Qt::NoFocus);
      m_volumeSlider->setMinimumWidth(20);   // 30   //VOLUME_SLIDER_HEIGHT);
      m_volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-     m_volumeSlider->setRange(0,99);
-
+     m_volumeSlider->setRange(0, 99);
      m_volumeSlider->setValue(Settings.playerVolume());
 
      QString strStyle = "QSlider::add-page:vertical{background:rgb(15,114,103);border-radius: 4px}";
@@ -307,7 +329,7 @@ Player::Player(QWidget *parent)
      strStyle.append("QToolTip{background-color:rgb(255,255,210)}");
      m_volumeSlider->setStyleSheet(strStyle);
 
-     m_volumeSlider->setContentsMargins(0,0,10,0);
+     m_volumeSlider->setContentsMargins(0, 0, 10, 0);
      setVolume(m_volumeSlider->value());
 
      m_volumeSlider->setToolTip(tr("Adjust the audio volume"));
@@ -318,42 +340,42 @@ Player::Player(QWidget *parent)
     //add widget for player toolbar
 
     QGridLayout *toolbarlayout = new QGridLayout(this);
-    toolbarlayout->setContentsMargins(0,0,0,0);
+    toolbarlayout->setContentsMargins(0, 0, 0, 0);
     toolbarlayout->setSpacing(0);
 
     QWidget *toolWidget = new QWidget;
     toolWidget->setFixedHeight(52);
-    toolWidget->setContentsMargins(0,0,0,0);
+    toolWidget->setContentsMargins(0, 0, 0, 0);
     toolWidget->setStyleSheet(".QWidget{background-color:rgb(82,82,82); border: 0px;border-radius: 3px}");
 
 
     m_btnSeekPrevious = new QPushButton();//QIcon(":/icons/light/32x32/media-seek-backward.png"),"");
     m_btnSeekPrevious->setFlat(true);
-    m_btnSeekPrevious->setFixedSize(32,32);
-    m_btnSeekPrevious->setIconSize(QSize(32,32));
+    m_btnSeekPrevious->setFixedSize(12, 19);
+//    m_btnSeekPrevious->setIconSize(QSize(32,32));
     m_btnSeekPrevious->setToolTip(tr("Skip Previous"));
     connect(m_btnSeekPrevious, SIGNAL(clicked()), this, SLOT(on_actionSkipPrevious_triggered()));
-    m_btnSeekPrevious->setContentsMargins(0,0,0,0);
+    m_btnSeekPrevious->setContentsMargins(0, 0, 0, 0);
     m_btnSeekPrevious->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-seek-backward.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-seek-backward-pressed.png)}");
 
 
 
     m_btnSeekNext = new QPushButton();//QIcon();//":/icons/light/32x32/media-seek-forward.png"),"");
     m_btnSeekNext->setFlat(true);
-    m_btnSeekNext->setFixedSize(32,32);
-    m_btnSeekNext->setIconSize(QSize(32,32));
+    m_btnSeekNext->setFixedSize(12, 19);
+//    m_btnSeekNext->setIconSize(QSize(32,32));
     connect(m_btnSeekNext, SIGNAL(clicked()), this, SLOT(on_actionSkipNext_triggered()));
-    m_btnSeekNext->setContentsMargins(0,0,0,0);
+    m_btnSeekNext->setContentsMargins(0, 0, 0, 0);
     m_btnSeekNext->setToolTip(tr("Skip Next"));
     m_btnSeekNext->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-seek-forward.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-seek-forward-pressed.png)}");
 
 
     m_btnPlay = new QPushButton();//m_playIcon,"");
     m_btnPlay->setFlat(true);
-    m_btnPlay->setFixedSize(32,32);
-    m_btnPlay->setIconSize(QSize(32,32));
+    m_btnPlay->setFixedSize(16, 19);
+//    m_btnPlay->setIconSize(QSize(32,32));
     connect(m_btnPlay, SIGNAL(clicked()), this, SLOT(togglePlayPaused()));
-    m_btnPlay->setContentsMargins(0,0,0,0);
+    m_btnPlay->setContentsMargins(0, 0, 0, 0);
     m_btnPlay->setToolTip(tr("Start playback"));
     m_btnPlay->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-playback-start.png)}" );
 
@@ -377,78 +399,86 @@ Player::Player(QWidget *parent)
 
     m_btnPreFrame = new QPushButton();//QIcon(":/icons/light/32x32/media-seek-preframe.png"),"");
     m_btnPreFrame->setFlat(true);
-    m_btnPreFrame->setFixedSize(32,32);
-    m_btnPreFrame->setIconSize(QSize(32,32));
+    m_btnPreFrame->setFixedSize(12, 19);
+//    m_btnPreFrame->setIconSize(QSize(32,32));
     connect(m_btnPreFrame, SIGNAL(clicked()), this, SLOT(seekPreFrame()));
-    m_btnPreFrame->setContentsMargins(0,0,0,0);
-    m_btnPreFrame->setToolTip(tr("Previous frame"));
+    m_btnPreFrame->setContentsMargins(0, 0, 0, 0);
+    m_btnPreFrame->setToolTip(tr("Position to the previous frame"));
     m_btnPreFrame->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-seek-preframe.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-seek-preframe-pressed.png)}");
 
     m_btnNextFrame = new QPushButton();//QIcon(":/icons/light/32x32/media-seek-nextframe.png"),"");
     m_btnNextFrame->setFlat(true);
-    m_btnNextFrame->setFixedSize(32,32);
-    m_btnNextFrame->setIconSize(QSize(32,32));
+    m_btnNextFrame->setFixedSize(12, 19);
+//    m_btnNextFrame->setIconSize(QSize(32,32));
     connect(m_btnNextFrame, SIGNAL(clicked()), this, SLOT(seekNextFrame()));
-    m_btnNextFrame->setContentsMargins(0,0,0,0);
-    m_btnNextFrame->setToolTip(tr("Next frame"));
+    m_btnNextFrame->setContentsMargins(0, 0, 0, 0);
+    m_btnNextFrame->setToolTip(tr("Position to the next frame"));
     m_btnNextFrame->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-seek-nextframe.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-seek-nextframe-pressed.png)}");
 
 
 //    toolbarlayout->addWidget(m_videoScrollWidget,0,0,1,14);
-    toolbarlayout->addWidget(progressWidget,0,0,1,17);      // 14
+    toolbarlayout->addWidget(progressWidget, 0, 0, 1, 21);      // 14
 
-    QSpacerItem *spacer0 = new QSpacerItem(10,20);
-    toolbarlayout->addItem(spacer0, 1,0,1,1);
+    QSpacerItem *spacer0 = new QSpacerItem(10, 20);
+    toolbarlayout->addItem(spacer0, 1, 0, 1, 1);
 
 
-    toolbarlayout->addWidget(m_positionSpinner, 1,1,1,1);
+    toolbarlayout->addWidget(m_positionSpinner, 1, 1, 1, 1);
 
-    QSpacerItem *spacer1 = new QSpacerItem(100,20, QSizePolicy::Expanding);
-    toolbarlayout->addItem(spacer1, 1,2,1,1);
+    QSpacerItem *spacer1 = new QSpacerItem(100, 20, QSizePolicy::Expanding);
+    toolbarlayout->addItem(spacer1, 1, 2, 1, 1);
 
-    toolbarlayout->addWidget(m_btnSeekPrevious, 1,3,1,1);
+    QSpacerItem *spacer2 = new QSpacerItem(10, 20);
+    QSpacerItem *spacer3 = new QSpacerItem(10, 20);
+    QSpacerItem *spacer4 = new QSpacerItem(10, 20);
+    QSpacerItem *spacer5 = new QSpacerItem(10, 20);
+    toolbarlayout->addWidget(m_btnSeekPrevious, 1, 3, 1, 1);
+    toolbarlayout->addItem(spacer2, 1, 4, 1, 1);
 //    toolbarlayout->addWidget(m_btnRewind,1,4,1,1);
-    toolbarlayout->addWidget(m_btnPreFrame,1,4,1,1);
-    toolbarlayout->addWidget(m_btnPlay,1,5,1,1);
+    toolbarlayout->addWidget(m_btnPreFrame,1, 5, 1, 1);
+    toolbarlayout->addItem(spacer3, 1, 6, 1, 1);
+    toolbarlayout->addWidget(m_btnPlay, 1, 7, 1, 1);
+    toolbarlayout->addItem(spacer4, 1, 8, 1, 1);
 //    toolbarlayout->addWidget(m_btnFastForword,1,6,1,1);
-    toolbarlayout->addWidget(m_btnNextFrame,1,6,1,1);
-    toolbarlayout->addWidget(m_btnSeekNext,1,7,1,1);
+    toolbarlayout->addWidget(m_btnNextFrame,1, 9, 1, 1);
+    toolbarlayout->addItem(spacer5, 1, 10, 1, 1);
+    toolbarlayout->addWidget(m_btnSeekNext,1, 11, 1, 1);
 
-    QSpacerItem *spacer2 = new QSpacerItem(50,20, QSizePolicy::Expanding);
-    toolbarlayout->addItem(spacer2, 1,8,1,1);
+    QSpacerItem *spacer6 = new QSpacerItem(50, 20, QSizePolicy::Expanding);
+    toolbarlayout->addItem(spacer6, 1, 12, 1, 1);
 
 //    toolbarlayout->addWidget(m_zoomComBox,1,9,1,1);
-    toolbarlayout->addWidget(m_fitButton,1,9,1,1);
-    QSpacerItem *spacer3 = new QSpacerItem(15, 20);
-    toolbarlayout->addItem(spacer3,1,10,1,1);
-    toolbarlayout->addWidget(m_fullScreenButton,1,11,1,1);
+    toolbarlayout->addWidget(m_fitButton, 1, 13, 1, 1);
+    QSpacerItem *spacer7 = new QSpacerItem(15, 20);
+    toolbarlayout->addItem(spacer7, 1, 14, 1, 1);
+    toolbarlayout->addWidget(m_fullScreenButton, 1, 15, 1, 1);
 #ifdef Q_OS_WIN
-    QSpacerItem *spacer4 = new QSpacerItem(0, 20);
-    toolbarlayout->addItem(spacer4,1,12,1,1);
+    QSpacerItem *spacer8 = new QSpacerItem(0, 20);
+    toolbarlayout->addItem(spacer8, 1, 16, 1, 1);
 #else
-    QSpacerItem *spacer4 = new QSpacerItem(15, 20);
-    toolbarlayout->addItem(spacer4,1,12,1,1);
+    QSpacerItem *spacer8 = new QSpacerItem(15, 20);
+    toolbarlayout->addItem(spacer8, 1, 16, 1, 1);
 #endif
 //    toolbarlayout->addWidget(m_zoomComBox,1,13,1,1);
-    toolbarlayout->addWidget(m_zoomSetButton,1,13,1,1);
+    toolbarlayout->addWidget(m_zoomSetButton, 1, 17, 1, 1);
 
-    QSpacerItem *spacer5 = new QSpacerItem(15,20);   // 20, 20
-    toolbarlayout->addItem(spacer5, 1,14,1,1);      // 10
+    QSpacerItem *spacer9 = new QSpacerItem(15, 20);   // 20, 20
+    toolbarlayout->addItem(spacer9, 1, 18, 1, 1);      // 10
 
 //    toolbarlayout->addWidget(m_muteButton,1,11,1,1);
 //    toolbarlayout->addWidget(m_volumeSlider,1,12,1,1);
-    toolbarlayout->addWidget(m_volumeButton,1,15,1,1);
+    toolbarlayout->addWidget(m_volumeButton,1, 19, 1, 1);
 
-    QSpacerItem *spacer6 = new QSpacerItem(10,20);
-    toolbarlayout->addItem(spacer6, 1,16,1,1);      // 13
+    QSpacerItem *spacer10 = new QSpacerItem(10, 20);
+    toolbarlayout->addItem(spacer10, 1, 20, 1, 1);      // 13
 
     toolWidget->setLayout(toolbarlayout);
 
     m_playerLayout = new QVBoxLayout(this);
     m_playerLayout->setSpacing(0);
-    m_playerLayout->setContentsMargins(0,0,0,0);
+    m_playerLayout->setContentsMargins(0, 0, 0, 0);
     m_playerLayout->addWidget(m_videoScrollWidget, 1);
-    m_playerLayout->addWidget(toolWidget,1);
+    m_playerLayout->addWidget(toolWidget, 1);
 
 
 
@@ -718,7 +748,7 @@ void Player::onProducerOpened(bool play)
     // Workaround video not showing on Windows with Qt 5.5 upgrade.
     m_videoWidget->show();
 #endif
-    m_duration = MLT.producer()->get_length();
+    m_duration = getPlayDuration();
     m_isSeekable = MLT.isSeekable();
     MLT.producer()->set("ignore_points", 1);
     m_scrubber->setFramerate(MLT.profile().fps());
@@ -729,7 +759,7 @@ void Player::onProducerOpened(bool play)
 //    m_inPointLabel->setText("--:--:--:-- / ");
 //    m_selectedLabel->setText("--:--:--:--");
     if (m_isSeekable) {
-        m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(QString(MLT.producer()->get_length_time())));
+        m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
         m_previousIn = MLT.isClip()? MLT.producer()->get_in() : -1;
         m_scrubber->setEnabled(true);
         m_scrubber->setInPoint(m_previousIn);
@@ -737,7 +767,7 @@ void Player::onProducerOpened(bool play)
         m_scrubber->setOutPoint(m_previousOut);
     }
     else {
-        m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(QString(MLT.producer()->get_length_time())));
+        m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
         m_scrubber->setDisabled(true);
         // cause scrubber redraw
         m_scrubber->setScale(m_duration);
@@ -786,7 +816,7 @@ void Player::onMeltedUnitOpened()
 {
     m_isMeltedPlaying = -1; // unknown
     Q_ASSERT(MLT.producer());
-    m_duration = MLT.producer()->get_length();
+    m_duration = getPlayDuration();
     m_isSeekable = true;
     MLT.producer()->set("ignore_points", 1);
     m_scrubber->setFramerate(MLT.profile().fps());
@@ -795,7 +825,7 @@ void Player::onMeltedUnitOpened()
 //    m_progressBar->setRange(0,m_duration);
   //  m_inPointLabel->setText("--:--:--:-- / ");
   //  m_selectedLabel->setText("--:--:--:--");
-    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(QString(MLT.producer()->get_length_time())));
+    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
     m_previousIn = MLT.producer()->get_in();
     m_scrubber->setEnabled(true);
     m_scrubber->setInPoint(m_previousIn);
@@ -817,12 +847,12 @@ void Player::onMeltedUnitOpened()
 
 void Player::onDurationChanged()
 {
-    m_duration = MLT.producer()->get_length();
+    m_duration = getPlayDuration();
     m_isSeekable = MLT.isSeekable();
     m_scrubber->setScale(m_duration);
     m_scrubber->setMarkers(QList<int>());
 //    m_progressBar->setRange(0, m_duration);
-    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(QString(MLT.producer()->get_length_time())));
+    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
     if(qFuzzyIsNull(MLT.producer()->get_speed()))
 //    if (MLT.producer()->get_speed() == 0)
         seek(m_position);
@@ -980,12 +1010,12 @@ void Player::fastForward()//快进
 
 void Player::seekPreFrame()
 {
-    m_positionSpinner->setValue(m_positionSpinner->value()-1);
+    m_positionSpinner->setValue(m_positionSpinner->value() - 1);
 }
 
 void Player::seekNextFrame()
 {
-    m_positionSpinner->setValue(m_positionSpinner->value()+1);
+    m_positionSpinner->setValue(m_positionSpinner->value() + 1);
 }
 
 void Player::showPaused()
@@ -1118,6 +1148,30 @@ double Player::setVolume(int volume)
     return gain;
 }
 
+int Player::getPlayDuration()
+{
+    Q_ASSERT(MLT.producer());
+    Q_ASSERT(MLT.producer()->is_valid());
+
+    int nFrameDuration = 0;
+    if (MLT.producer() && MLT.producer()->is_valid())
+    {
+        //对于producer，其length是其能改变的最大长度，而不一定是实际长度，其实际长度只能用out或者playtime得到
+        //此处处理是为了解决播放非时间线上的producer时，使用producer的实际长度，而不是最大长度（实际解决图片预览时长为10分钟问题）
+        //当播放时间线时，MLT.producer()即为Multitrack，其out或者playtime都是无效值，只能通过length获取总时长
+        if (MLT.isMultitrack())
+        {
+            nFrameDuration = MLT.producer()->get_length();
+        }
+        else
+        {
+            nFrameDuration = MLT.producer()->get_playtime();
+        }
+    }
+
+    return nFrameDuration;
+}
+
 void Player::moveVideoToScreen(int screen)
 {
     if (screen == m_monitorScreen) return;
@@ -1231,9 +1285,9 @@ void Player::onShowVolumeSlider()
 {
     m_volumeButton->setChecked(true);
     m_volumePopup->show();              // 先显示再移动
-    int x = m_volumeButton->width()/2 - m_volumePopup->width()/2 -3;
-    int y = -m_volumePopup->height();
-    m_volumePopup->move(m_volumeButton->mapToGlobal(QPoint(x, y)));
+    int nPositionX = m_volumeButton->width() / 2 - m_volumePopup->width() / 2 - 3;
+    int nPositionY = - m_volumePopup->height();
+    m_volumePopup->move(m_volumeButton->mapToGlobal(QPoint(nPositionX, nPositionY)));
 }
 
 void Player::onMuteButtonToggled(bool checked)
@@ -1303,16 +1357,16 @@ void Player::onFullScreenButtonClicked()
 void Player::onShowZoomMenu()
 {
     m_zoomMenu->show();
-    int x = m_zoomSetButton->width()/2 - m_zoomMenu->width()/2;
-    int y = m_zoomSetButton->height();
-    m_zoomMenu->exec(m_zoomSetButton->mapToGlobal(QPoint(x, y)));
+    int nPositionX = m_zoomSetButton->width() / 2 - m_zoomMenu->width() / 2;
+    int nPositionY = m_zoomSetButton->height();
+    m_zoomMenu->exec(m_zoomSetButton->mapToGlobal(QPoint(nPositionX, nPositionY)));
 }
 
 void Player::onZoomActionTriggered()
 {
-    QString objName = sender()->objectName();
-    int i = objName.split("_")[1].toInt();
-    ZoomChanged(i);
+    QString strObjName = sender()->objectName();
+    int nIndex         = strObjName.split("_")[1].toInt();
+    ZoomChanged(nIndex);
 }
 
 void Player::toggleZoom(bool checked)
@@ -1386,10 +1440,13 @@ void Player::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key())
     {
-    case Qt::Key_Escape:
-        if (isFullScreen())
-            toggleFullScreen();
-        break;
+        case Qt::Key_Escape:
+            if (isFullScreen())
+                toggleFullScreen();
+            break;
+        default:
+            QWidget::keyPressEvent(event);
+            break;
     }
 }
 

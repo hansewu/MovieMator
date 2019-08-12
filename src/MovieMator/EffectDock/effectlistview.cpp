@@ -121,7 +121,10 @@ void EffectListView::mouseMoveEvent(QMouseEvent* event)
         mimeData->setData(m_mimeType, m_mimeData->data(m_mimeType));
         mimeData->setText(m_mimeData->text());
         drag.setMimeData(mimeData);
-        QImage thumbnail = viewModel->thumbnail(selectedIndexes().first().row());
+        EffectListItemInfo *itemInfo = viewModel->fileAt(selectedIndexes().first().row());
+        Q_ASSERT(itemInfo);
+        QImage thumbnail = itemInfo->thumbnail();//QImage(itemInfo->effectImagePath());
+//        QImage thumbnail = viewModel->thumbnail(selectedIndexes().first().row());
         drag.setPixmap(QPixmap::fromImage(thumbnail).scaled(80, 45));
 
         drag.setHotSpot(QPoint(0, 0));

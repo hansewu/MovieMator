@@ -58,8 +58,6 @@ public slots:
     void add(const QString&);
     // 移除文件 s，并从历史记录中删除
     QString remove(const QString& s);
-    // 获取选中的多个文件
-    QList<FILE_HANDLE> getSelected();
 
 private:
     // 界面大小改变事件
@@ -67,6 +65,8 @@ private:
 
     // 调整 m_addToTimelineButton的位置
     void positionAddToTimelineButton();
+    void loadRecentFile();
+
 private:
     // 界面 ui
     Ui::RecentDock *ui;
@@ -127,8 +127,6 @@ private slots:
     void onListviewActivated(const QModelIndex &index);
     // 按下 listView的槽函数
     void onListviewPressed(const QModelIndex &index);
-    // 单击 listView的槽函数
-    void onListviewClicked(const QModelIndex &index);
     // listView右键菜单的槽函数
     void onListviewCustomContextMenuRequested(const QPoint &pos);
 

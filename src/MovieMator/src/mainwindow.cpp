@@ -115,6 +115,8 @@
 
 #include "dialogs/videomodesettingsdialog.h"
 
+#include "commands/timelinecommands.h"
+
 #if defined (Q_OS_MAC)
     #include "securitybookmark/transport_security_bookmark.h"
 #endif
@@ -808,12 +810,6 @@ void MainWindow::onTimelineClipSelected()
 
     m_navigationPosition = t->centerOfClip(t->currentTrack(), t->selection().first());
 
-
-    // Switch to Project player.
-//    if (m_player->tabIndex() != Player::ProjectTabIndex) {
-//        t->saveAndClearSelection();
-//        m_player->onTabBarClicked(Player::ProjectTabIndex);
-//    }
 }
 
 void MainWindow::onAddAllToTimeline(Mlt::Playlist* playlist)
@@ -1545,7 +1541,7 @@ void MainWindow::open1(QString url, const Mlt::Properties *properties)
             LOG_INFO() << url;
         }
 
-     //   MAIN.undoStack()->push(new Playlist::AppendCommand(*(m_playlistDock->model()), MLT.XML()));
+     //   MAIN.pushCommand(new Playlist::AppendCommand(*(m_playlistDock->model()), MLT.XML()));
     //    MLT.producer()->set(kPlaylistIndexProperty, m_playlistDock->model()->playlist()->count());
     }
     else {
@@ -1604,7 +1600,7 @@ void MainWindow::open1(QString url, const Mlt::Properties *properties)
 //                }
 //                MLT.setImageDurationFromDefault(&p);
 //                MLT.getHash(p);
-//                MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.XML(&p)));
+//                MAIN.pushCommand(new Playlist::AppendCommand(*model, MLT.XML(&p)));
 //            }
 //            }
 //        }
@@ -1746,16 +1742,7 @@ void MainWindow::setMultitrackAsCurrentProducer()
         updateMarkers();
         m_player->setFocus();
         m_player->switchToTab(Player::ProjectTabIndex);
-
-        // 屏蔽轨道 clip的滤镜刷新
-        // 如果轨道刚添加 clip，或者轨道上选中的 clip没有变化
-        if(!m_timelineDock->model()->selectedProducer() ||
-                (static_cast<void*>(multitrack()->get_producer()) !=
-                 static_cast<void*>(m_timelineDock->model()->selectedProducer()->get_producer())))
-        {
-            m_timelineDock->model()->setSelectedProducer(multitrack());
-            m_timelineDock->emitSelectedFromSelection();
-        }
+        m_timelineDock->emitSelectedFromSelection();
     }
 }
 
@@ -2716,6 +2703,7 @@ QUndoStack* MainWindow::undoStack() const
 
 void MainWindow::pushCommand(QUndoCommand *command)
 {
+    Q_ASSERT(g_isInUndoRedoProcess == false);
     m_undoStack->push(command);
 }
 
@@ -2979,6 +2967,14 @@ void MainWindow::updateThumbnails()
 void MainWindow::on_actionUndo_triggered()
 {
     m_undoStack->undo();
+#ifndef NDEBUG
+    if(m_undoStack->count() <= 0)
+    {
+        m_timelineDock->unitTestCommand();
+    }
+#endif
+
+
 }
 
 void MainWindow::on_actionRedo_triggered()
@@ -3152,7 +3148,6 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         int trackIndex = m_timelineDock->selectedTrackIndex();
         int clipIndex = m_timelineDock->selection().at(0);
         w = new LumaMixTransition(producer->parent(), trackIndex, clipIndex, this);
-        connect(w, SIGNAL(setTransitionDuration(int)), m_timelineDock, SLOT(setTransitionDuration(int)));
         scrollArea->setWidget(w);
         return w;
     } else if (playlist_type == producer->type()) {
@@ -3566,10 +3561,12 @@ void MainWindow::onKeyerTriggered(QAction *action)
     Settings.setPlayerKeyerMode(action->data().toInt());
 }
 
-void MainWindow::changeProfile(QString profileName) {
+void MainWindow::changeProfile(QString strProfileName)
+{
     //检测是否和当前profile相等
-    QString currentPrefileName = Settings.playerProfile();
-    if (profileName == currentPrefileName) {
+    QString strCurrentPrefileName = Settings.playerProfile();
+    if (strProfileName == strCurrentPrefileName)
+    {
         return;
     }
 
@@ -3585,18 +3582,24 @@ void MainWindow::changeProfile(QString profileName) {
 #else
     dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
 #endif
+
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());
-    if (dialog.exec() == QMessageBox::Yes) {
+
+    if (dialog.exec() == QMessageBox::Yes)
+    {
         if (continueModified())
         {
             m_exitCode = EXIT_RESTART;
             //close project
             if (multitrack())
+            {
                 m_timelineDock->model()->close();
+            }
+
             //set profile
-            Settings.setPlayerProfile(profileName);
+            Settings.setPlayerProfile(strProfileName);
             QApplication::closeAllWindows();
             return;
         }
@@ -3883,10 +3886,6 @@ void MainWindow::on_actionClose_triggered()
 void MainWindow::onPlayerTabIndexChanged(int index)
 {
     Q_UNUSED(index);
-//    if (Player::SourceTabIndex == index)
-//        m_timelineDock->saveAndClearSelection();
-//    else
-//        m_timelineDock->restoreSelection();
 }
 
 void MainWindow::onUpgradeCheckFinished(QNetworkReply* reply)
@@ -4767,7 +4766,6 @@ void MainWindow::on_actionVideoMode_triggered()
 {
     VideoModeSettingsDialog videoModeSettingsDialog(this);
     videoModeSettingsDialog.setWindowModality(QmlApplication::dialogModality());
-    if (videoModeSettingsDialog.exec() == QDialog::Accepted) {
-        qDebug()<<"";
-    }
+
+    videoModeSettingsDialog.exec();
 }
