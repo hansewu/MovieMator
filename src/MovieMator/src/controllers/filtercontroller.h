@@ -30,6 +30,7 @@
 #include "models/attachedfiltersmodel.h"
 #include "qmlmetadata.h"
 #include "qmltypes/qmlfilter.h"
+#include "resourcedockgenerator_global.h"
 //#include <../frei0r.h>
 
 class QTimerEvent;
@@ -55,9 +56,11 @@ public:
 
     int currentFilterIndex() { return m_currentFilterIndex; }
 
-protected:
-    //重写QObject的timerEvent方法，用于接收定时器事件，进行加载filter的meta以及更新filter和关闭定时器
-    void timerEvent(QTimerEvent*);
+    //获取已加载的音频滤镜信息
+    QList<FilterInfo> getAudioFiltersInfo();
+
+    //获取已加载的视频滤镜信息
+    QList<FilterInfo> getVideoFiltersInfo();
 
 signals:
     void currentFilterAboutToChange(int index);
@@ -131,12 +134,15 @@ private:
 //    void getFrei0rPluginInfo(Mlt::Filter *filter, f0r_plugin_info_t &info);
 //    void getFrei0rParamInfo(Mlt::Filter *filter, int index, f0r_param_info_t &info);
 
-    //更新filterdock中filter的显示（包括音频滤镜dock和视频滤镜dock）
-    void updateFilterDock();
+    //获取已加载的滤镜信息，0：表示视频滤镜，1：表示音频滤镜
+    QList<FilterInfo> getFiltersInfo(int nFilterType = 0);
+
     //获取filter的缩略图路径
     QString getFilterThumbnailPath(QString filterName, bool isAudio = false);
     //获取filter的类型
     QString getFilterType(QString filterType);
+    //滤镜中文分类名
+    QString getFilterClassNameZH(QString strFilterType);
 
     //没有使用到
     QFuture<void> m_future;

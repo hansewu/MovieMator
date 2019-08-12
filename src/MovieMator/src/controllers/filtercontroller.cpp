@@ -35,9 +35,6 @@
 #include "qmltypes/qmlfilter.h"
 #include <MltFilter.h>
 #include <map>
-#include <filterdockinterface.h>
-#include <audiofilterdockinterface.h>
-#include <videofilterdockinterface.h>
 #include "mainwindow.h"
 #include "util.h"
 #include <assert.h>
@@ -47,12 +44,14 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
  m_attachedModel(this),
  m_currentFilterIndex(-1)
 {
-    startTimer(0);
     connect(&m_attachedModel, SIGNAL(changed()), this, SLOT(handleAttachedModelChange()));
     connect(&m_attachedModel, SIGNAL(modelAboutToBeReset()), this, SLOT(handleAttachedModelAboutToReset()));
     connect(&m_attachedModel, SIGNAL(rowsRemoved(const QModelIndex&,int,int)), this, SLOT(handleAttachedRowsRemoved(const QModelIndex&,int,int)));
     connect(&m_attachedModel, SIGNAL(rowsInserted(const QModelIndex&,int,int)), this, SLOT(handleAttachedRowsInserted(const QModelIndex&,int,int)), Qt::QueuedConnection);
     connect(&m_attachedModel, SIGNAL(duplicateAddFailed(int)), this, SLOT(handleAttachDuplicateFailed(int)));
+
+    loadFilterMetadata();
+
 }
 
 void FilterController::loadFilterMetadata() {
@@ -364,6 +363,38 @@ QString FilterController::getFilterThumbnailPath(QString filterName, bool isAudi
     return imageSourcePath;
 }
 
+QString FilterController::getFilterClassNameZH(QString strFilterType)
+{
+    const QMap<QString, QString> filterTypeMap =
+    {
+        {"Common", "常用"},
+        {"Distortion", "扭曲"},
+        {"Art", "艺术"},
+        {"Color Adjustment", "调色"},
+        {"Transform", "变换"},
+        {"Black & White", "黑 & 白"},
+        {"Time Dimension Effect", "时间维度特效"},
+        {"Color Extraction", "色彩提取"},
+        {"Blur", "模糊"},
+        {"Color Depth", "颜色深度"},
+        {"Material", "材质"},
+        {"Other", "其它"},
+        {"Effect 2", "特效 2"},
+        {"Effect", "特效"},
+        {"Crop", "裁剪"},
+    };
+
+    if (Settings.language() == "zh_CN")
+    {
+        if (filterTypeMap.contains(strFilterType))
+        {
+            strFilterType = filterTypeMap.value(strFilterType);
+        }
+    }
+
+    return strFilterType;
+}
+
 QString FilterController::getFilterType(QString filterType)
 {
     const QMap<QString, QString> filterTypeMap =
@@ -425,63 +456,67 @@ QmlMetadata* FilterController::getQmlMetadata(int index)
 
 }
 
-void FilterController::updateFilterDock()
+QList<FilterInfo> FilterController::getAudioFiltersInfo()
 {
-    int nFilterCount = m_metadataModel.rowCount();
-
-//    Filter_Info filterInfos[200];
-    VideoFilter_Info filterInfos[200];
-    assert(nFilterCount < 200);
-    for (int nIndex = 0; nIndex < nFilterCount; nIndex++)
-    {
-        QmlMetadata* metadataModel          = m_metadataModel.get(nIndex);
-        Q_ASSERT(metadataModel);
-        strcpy(filterInfos[nIndex].name, metadataModel->name().toStdString().c_str());
-
-        QString filterType = getFilterType(metadataModel->filterType());
-        strcpy(filterInfos[nIndex].type, filterType.toStdString().c_str());
-
-        QString imageSourcePath = metadataModel->thumbnail();
-        strcpy(filterInfos[nIndex].imageSourcePath, imageSourcePath.toStdString().c_str());
-
-        bool bVisible = true;
-        if (metadataModel->isHidden()) bVisible = false;
-        if (metadataModel->needsGPU() && !Settings.playerGPU()) bVisible = false;
-        if (!metadataModel->needsGPU() && Settings.playerGPU() && !metadataModel->gpuAlt().isEmpty()) bVisible = false;
-
-        filterInfos[nIndex].visible = bVisible;
-    }
-
-//    setFiltersInfo(filterInfos, nFilterCount);
-
-
-//    AudioFilter_Info audiofilterInfos[200];
-//    for (int nIndex = 0; nIndex < nFilterCount; nIndex++)
-//    {
-//        strcpy(audiofilterInfos[nIndex].name, filterInfos[nIndex].name);
-//        strcpy(audiofilterInfos[nIndex].type, filterInfos[nIndex].type);
-//        strcpy(audiofilterInfos[nIndex].imageSourcePath, filterInfos[nIndex].imageSourcePath);
-//        audiofilterInfos[nIndex].visible = filterInfos[nIndex].visible;
-//    }
-//    setAudioFiltersInfo(audiofilterInfos, nFilterCount);
-
-//    VideoFilter_Info videofilterInfos[200];
-//    for (int nIndex = 0; nIndex < nFilterCount; nIndex++)
-//    {
-//        strcpy(videofilterInfos[nIndex].name, filterInfos[nIndex].name);
-//        strcpy(videofilterInfos[nIndex].type, filterInfos[nIndex].type);
-//        strcpy(videofilterInfos[nIndex].imageSourcePath, filterInfos[nIndex].imageSourcePath);
-//        videofilterInfos[nIndex].visible = filterInfos[nIndex].visible;
-//    }
-    MAIN.setVideoFiltersInfo(filterInfos, nFilterCount);
-    MAIN.setAudioFiltersInfo(filterInfos, nFilterCount);
+    return getFiltersInfo(1);
 }
 
-void FilterController::timerEvent(QTimerEvent* event)
+QList<FilterInfo> FilterController::getVideoFiltersInfo()
 {
-    loadFilterMetadata();
-    updateFilterDock();
-    killTimer(event->timerId());
+    return getFiltersInfo(0);
+}
+
+QList<FilterInfo> FilterController::getFiltersInfo(int nFilterType)
+{
+    qDebug()<<"sll---------getFiltersInfo---start";
+
+    QList<FilterInfo> videoFiltersInfo = QList<FilterInfo>();
+
+    for (int nIndex = 0; nIndex < m_metadataModel.rowCount(); nIndex++)
+    {
+        QmlMetadata *pMetadata = m_metadataModel.get(nIndex);
+        Q_ASSERT(pMetadata);
+        if (pMetadata == nullptr)
+        {
+            continue;
+        }
+
+        FilterInfo filterInfo = {};
+
+        filterInfo.strName              = pMetadata->name();
+        filterInfo.strClassification    = getFilterClassNameZH(pMetadata->filterType());
+
+        QString strTempPath                    = pMetadata->thumbnail();
+        filterInfo.strThumbnailFilePath     = strTempPath.right(strTempPath.length() - 3);
+        filterInfo.nIndexOfMetadataModel    = nIndex;
+
+        bool bVisible = true;
+        if (pMetadata->isHidden()) bVisible = false;
+        if (pMetadata->needsGPU() && !Settings.playerGPU()) bVisible = false;
+        if (!pMetadata->needsGPU() && Settings.playerGPU() && !pMetadata->gpuAlt().isEmpty()) bVisible = false;
+
+        filterInfo.bVisible = bVisible;
+
+        if (nFilterType == 0)//视频滤镜
+        {
+
+            if ((filterInfo.bVisible == true) && (filterInfo.strClassification != ""))
+            {
+                videoFiltersInfo.append(filterInfo);
+            }
+        }
+        else if (nFilterType == 1)//音频滤镜
+        {
+            if ((filterInfo.bVisible == true) && (filterInfo.strClassification == ""))
+            {
+                videoFiltersInfo.append(filterInfo);
+            }
+        }
+    }
+
+    qDebug()<<"sll---------getFiltersInfo---end";
+
+    return videoFiltersInfo;
 }
 
 MetadataModel* FilterController::metadataModel()
@@ -810,7 +845,10 @@ void FilterController::addFilter(int nFilterIndex)
 
     int nCurrentFilter = nFilterIndex;
     if(nCurrentFilter == -1)
-        nCurrentFilter = getCurrentSelectedFilterIndex();
+    {
+//        nCurrentFilter = getCurrentSelectedFilterIndex();此函数得到的是一个恒值0
+        nCurrentFilter = 0;
+    }
 
     QmlMetadata *meta = m_metadataModel.get(nCurrentFilter);
 

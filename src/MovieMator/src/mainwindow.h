@@ -48,7 +48,6 @@ namespace Ui {
     class MainWindow;
 }
 class Player;
-//class RecentDock;
 class EncodeDock;
 class JobsDock;
 //class PlaylistDock;
@@ -145,10 +144,6 @@ public:
     //修改profile
     void changeProfile(QString strProfileName);
 
-    //
-    void setVideoFiltersInfo(void *vudioFilterInfos, int nVudioFilterCount);
-    void setAudioFiltersInfo(void *audioFilterInfos, int nAudioFilterCount);
-
 signals:
     //打开producer时发送此信号
     void producerOpened();
@@ -203,14 +198,12 @@ private:
     Player* m_player;//播放器
     QDockWidget* m_propertiesDock;//属性dock，目前已经弃用
     QDockWidget* m_simplePropertiesDock;//右侧属性dock中的clip属性dock
-    QDockWidget* m_recentDock;//左侧文件列表dock
-//    QDockWidget* m_resourceVideoFilterDock;//左侧视频滤镜列表dock
+    QDockWidget* m_resourceRecentDock;//左侧文件列表dock
     QDockWidget* m_resourceVideoFilterDock;//左侧视频滤镜列表dock
-//    QDockWidget* m_resourceAudioFilterDock;//左侧音频滤镜列表dock
     QDockWidget* m_resourceAudioFilterDock;//左侧音频滤镜列表dock
     QDockWidget* m_templateDock;//左侧模板dock，暂时无用
-    QDockWidget* m_effectDock;//左侧贴图列表dock
-    QDockWidget* m_resourceTextDock;//左侧贴图列表dock
+    QDockWidget* m_resourceTextDock;//文字Dock
+    QDockWidget* m_resourceStickerDock;//文字Dock
 //    QDockWidget* m_templateEditorDock;//右侧模板编辑dock，暂时无用
     EncodeDock* m_encodeDock;//导出文件dock
     JobsDock* m_jobsDock;//导出文件进度列表dock
@@ -253,8 +246,6 @@ private:
     QQuickWidget *m_quickWidgetForVoice;
     FilterWidget *m_filterWidget;
     TextManagerWidget *m_textManagerWidget;
-//    TextlistDock *m_textlistDock;
-    QDockWidget *m_textDock;
 
     //以下是工具栏上的按钮
     QToolButton *m_addButton;

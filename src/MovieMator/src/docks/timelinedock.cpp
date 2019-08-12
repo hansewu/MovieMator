@@ -45,9 +45,7 @@
 #include <QAction>
 #include <QFileDialog>
 
-
 #include "../maincontroller.h"
-#include <recentdockinterface.h>
 
 void TimelineDock::filterScrollChild(QObject* parent)
 {

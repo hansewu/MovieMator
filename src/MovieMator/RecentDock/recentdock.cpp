@@ -47,11 +47,13 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
     QString style2= "QLineEdit {padding-right: 20px; border: 1px; border-radius: 3px; background-color: rgb(100,100,100) ; }";
     ui->lineEdit->setStyleSheets(style1, style2);
 
-    m_listviewList = new QList<RecentListView*>;
-    m_modelList = new QList<RecentListModel*>;
-    m_currentListView = nullptr;
+    m_listviewList     = new QList<RecentListView*>;
+    m_modelList        = new QList<RecentListModel*>;
+    m_currentListView  = nullptr;
 
     loadRecentFile();
+
+    addBlackVideo();
 
     for(int i=0; i<num; i++)
     {
@@ -71,7 +73,7 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
         RecentListView *listView = new RecentListView();
         listView->setModel(proxyModel);
         listView->setViewMode(QListView::IconMode);
-        listView->setFocusPolicy(Qt::ClickFocus);
+        listView->setFocusPolicy(Qt::NoFocus);
         listView->setGridSize(QSize(95, 90));     // 120, 100
         listView->setUniformItemSizes(true);
         listView->setResizeMode(QListView::Adjust);
@@ -130,6 +132,7 @@ RecentDock::RecentDock(MainInterface *main, QWidget *parent) :
                                          "QPushButton:pressed{ border-image: url(:/icons/light/32x32/filter_add-a.png)}");
     m_addToTimelineButton->setFixedSize(QSize(27, 26));
     m_addToTimelineButton->setVisible(false);
+    m_addToTimelineButton->setFocusPolicy(Qt::NoFocus);
     connect(m_addToTimelineButton, SIGNAL(clicked()), this, SLOT(addToTimeline()));
 
     LOG_DEBUG() << "end";
@@ -274,6 +277,40 @@ void  RecentDock::positionAddToTimelineButton()
     m_addToTimelineButton->setGeometry(x, y, width, height);
 }
 
+void RecentDock::addBlackVideo()
+{
+    Q_ASSERT(m_modelList->at(0));
+    RecentListModel *pList = m_modelList->at(0);
+    if(!pList)
+    {
+        return;
+    }
+
+    QString strTemplateDir = Util::resourcesPath() + "/template/";
+    QDir dir(strTemplateDir + "samplevideo");
+    QFileInfoList files = dir.entryInfoList(QDir::Files | QDir::NoSymLinks);
+    if(files.count() > 0)
+    {
+        for(QFileInfo file : files)
+        {
+            FILE_HANDLE fileHandle = m_mainWindow->openFile(file.filePath());
+            if(fileHandle)
+            {
+                pList->append(fileHandle);
+            }
+        }
+    }
+
+    if(pList->rowCount() > 0)
+    {
+        m_flag[0] = true;
+    }
+    else
+    {
+        m_flag[0] = false;
+    }
+}
+
 void RecentDock::addToTimeline()
 {
     if (!m_currentListView || m_currentListView->model()->rowCount()<=0 || !m_currentIndex.isValid())
@@ -397,6 +434,7 @@ void RecentDock::add(const QString &s)
         resizeEvent(nullptr);
 
         m_mainWindow->destroyFileHandle(fileHandle);
+        m_addToTimelineButton->setVisible(false);
     }
 //    while (m_recent.count() > MaxItems)
 //    {
@@ -455,7 +493,7 @@ void RecentDock::on_lineEdit_textChanged(const QString& search)
         }
         m_proxyArray[i]->setFilterFixedString(search);
     }
-    Q_ASSERT(m_currentListView);
+//    Q_ASSERT(m_currentListView);  // 不用加，为空表示没有选中状态需要清空
     if(m_currentListView)
     {
         m_currentListView->clearSelection();

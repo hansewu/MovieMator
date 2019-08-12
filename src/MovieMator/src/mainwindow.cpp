@@ -46,8 +46,6 @@
 #include "widgets/avformatproducersimplewidget.h"
 #include "widgets/imageproducerwidget.h"
 #include "widgets/webvfxproducer.h"
-//#include "docks/recentdock.h"
-//#include <recentdock.h>
 #include "docks/encodedock.h"
 #include "docks/jobsdock.h"
 #include "jobqueue.h"
@@ -91,12 +89,7 @@
 #include "encodetaskqueue.h"
 #include "dialogs/invalidprojectdialog.h"
 #include "maininterface.h"
-#include <recentdockinterface.h>
-#include <filterdockinterface.h>
-#include <audiofilterdockinterface.h>
-#include <effectdockinterface.h>
-#include <videofilterdockinterface.h>
-#include <textdock.h>
+#include <resourcedockgenerator_global.h>
 #include "containerdock.h"
 #include "templateeidtor.h"
 #include <util.h>
@@ -614,30 +607,26 @@ MainWindow::MainWindow()
     initParentDockForPropteriesDock();
 
     LOG_DEBUG() << "RecentDock";
-    m_recentDock = RecentDock_initModule(&MainInterface::singleton());//new RecentDock();
-    addResourceDock(m_recentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file-highlight.png"));
+    m_resourceRecentDock = RDG_CreateRecentDock(&MainInterface::singleton());
+    addResourceDock(m_resourceRecentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file-highlight.png"));
 
-//    m_resourceVideoFilterDock = FilterDock_initModule(&MainInterface::singleton());
-//    addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
-
-//    m_resourceAudioFilterDock = AudioFilterDock_initModule(&MainInterface::singleton());
-//    addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
-
-    m_resourceAudioFilterDock = VideoFilterDock_initModule(&MainInterface::singleton(), 1);
-    addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
-
-    m_resourceVideoFilterDock = VideoFilterDock_initModule(&MainInterface::singleton(), 0);
+    LOG_DEBUG() << "VideoFilterDock";
+    m_resourceVideoFilterDock = RDG_CreateVideoFilterDock(&MainInterface::singleton());
     addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
+    RDG_SetVideoFiltersInfo( m_filterController->getVideoFiltersInfo());
 
-    //模板资源管理界面Dock
-//    m_templateDock = TemplateDock_initModule(&MainInterface::singleton());
-//    addResourceDock(m_templateDock, tr("Recent"), QIcon(":/icons/light/32x32/show-playlist.png"), QIcon(":/icons/light/32x32/show-playlist-highlight.png"));
+    LOG_DEBUG() << "AudioFilterDock";
+    m_resourceAudioFilterDock = RDG_CreateAudioFilterDock(&MainInterface::singleton());
+    addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
+    RDG_SetAudioFiltersInfo(m_filterController->getAudioFiltersInfo());
 
-    m_effectDock = EffectDock_initModule(&MainInterface::singleton());
-    addResourceDock(m_effectDock, tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
-
-    m_resourceTextDock = TextDock_initModule(&MainInterface::singleton());
+    LOG_DEBUG() << "TextDock";
+    m_resourceTextDock = RDG_CreateTextDock(&MainInterface::singleton());
     addResourceDock(m_resourceTextDock, tr("Text"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text-highlight.png"));
+
+    LOG_DEBUG() << "StickersDock";
+    m_resourceStickerDock = RDG_CreateStickerDock(&MainInterface::singleton());
+    addResourceDock(m_resourceStickerDock, tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
 
     m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
     m_propertiesDock->installEventFilter(this);
@@ -1000,7 +989,7 @@ void MainWindow::setupSettingsMenu()
 
     a = new QAction(QLocale::languageToString(QLocale::Chinese), m_languagesGroup);
     a->setCheckable(true);
-    a->setData("zh");
+    a->setData("zh_CN");
     ui->menuLanguage->addActions(m_languagesGroup->actions());
  /*   a = new QAction(QLocale::languageToString(QLocale::Czech), m_languagesGroup);
     a->setCheckable(true);
@@ -1680,7 +1669,7 @@ void MainWindow::removeVideo()
 //   m_textManagerWidget->addTextToTimeline(NULL);
 //   m_textlistDock->addTextToTimeline(NULL);
 //   m_playlistDock->on_removeButton_clicked();
-    RecentDock_removeSelectedItem();
+//    RecentDock_removeSelectedItem();
 }
 
 
@@ -3606,14 +3595,6 @@ void MainWindow::changeProfile(QString strProfileName)
     }
 }
 
-void MainWindow::setVideoFiltersInfo(void *vudioFilterInfos, int nVudioFilterCount) {
-    g_setVideoFiltersInfo(m_resourceVideoFilterDock, static_cast<VideoFilter_Info *>(vudioFilterInfos), nVudioFilterCount);
-}
-
-void MainWindow::setAudioFiltersInfo(void *audioFilterInfos, int nAudioFilterCount) {
-     g_setAudioFiltersInfo(m_resourceAudioFilterDock, static_cast<VideoFilter_Info *>(audioFilterInfos), nAudioFilterCount);
-}
-
 void MainWindow::onProfileTriggered(QAction *action)
 {
     Q_ASSERT(action);
@@ -4340,7 +4321,7 @@ void MainWindow::showPlaylistDock()
 void MainWindow::showRecentDock()
 {
 //    m_playlistDock->hide();
-    m_recentDock->show();
+//    m_recentDock->show();
 //    m_filtersDock->hide();
 //    m_recentDock->raise();
 }
@@ -4547,7 +4528,8 @@ void MainWindow::onFileOpened(QString filePath)
     }
     else
     {
-        RecentDock_add(filePath);
+//        RecentDock_add(filePath);
+        RDG_AddFileToRecentDock(filePath);
 #ifdef Q_OS_MAC
     create_security_bookmark(filePath.toUtf8().constData());
 #endif
@@ -4556,7 +4538,7 @@ void MainWindow::onFileOpened(QString filePath)
 
 void MainWindow::onOpenFailed(QString filePath)
 {
-    RecentDock_remove(filePath);
+//    RecentDock_remove(filePath);
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event)

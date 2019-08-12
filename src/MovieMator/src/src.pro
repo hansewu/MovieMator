@@ -299,46 +299,32 @@ TRANSLATIONS += \
      ../translations/mm_zh.ts \
 
 
-INCLUDEPATH = ../CuteLogger/include ../RecentDock ../FilterDock ../CommonUtil ../MltController ../QmlUtilities
-INCLUDEPATH += ../AudioFilterDock
-INCLUDEPATH += ../EffectDock ../EffectDock
+INCLUDEPATH = ../CuteLogger/include ../CommonUtil ../MltController ../QmlUtilities
 INCLUDEPATH += ../include
 INCLUDEPATH += ../Breakpad/breakpad/src
-INCLUDEPATH += ../VideoFilterDock
-INCLUDEPATH += ../TextDock
+INCLUDEPATH += ../ResourceDockGenerator
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
-        LIBS += -L../CuteLogger/debug -L../RecentDock/debug -L../FilterDock/debug -L../CommonUtil/debug -L../MltController/debug
+        LIBS += -L../CuteLogger/debug -L../CommonUtil/debug -L../MltController/debug
         LIBS += -L../QmlUtilities/debug
-        LIBS += -L../EffectDock/debug
-        LIBS += -L../AudioFilterDock/debug
         LIBS += -L../Breakpad/debug
-        LIBS += -L../VideoFilterDock/debug
-        LIBS += -L../TextDock/debug
+        LIBS += -L../ResourceDockGenerator/debug
     } else {
-        LIBS += -L../CuteLogger/release -L../RecentDock/release -L../FilterDock/release -L../CommonUtil/release -L../MltController/release
+        LIBS += -L../CuteLogger/release -L../CommonUtil/release -L../MltController/release
         LIBS += -L../QmlUtilities/release
-        LIBS += -L../EffectDock/release
-        LIBS += -L../AudioFilterDock/release
         LIBS += -L../Breakpad/release
-        LIBS += -L../VideoFilterDock/release
-        LIBS += -L../TextDock/release
+        LIBS += -L../ResourceDockGenerator/release
     }
 } else {
-    LIBS += -L../CuteLogger -L../RecentDock -L../FilterDock -L../CommonUtil -L../MltController -L../QmlUtilities #-L../mm
-    LIBS += -L../EffectDock
-    LIBS += -L../AudioFilterDock
+    LIBS += -L../CuteLogger -L../CommonUtil -L../MltController -L../QmlUtilities #-L../mm
     LIBS += -L../Breakpad
-    LIBS += -L../VideoFilterDock
-    LIBS += -L../TextDock
+    LIBS += -L../ResourceDockGenerator
 }
 
-LIBS += -lLogger -lpthread  -lRecentDock -lFilterDock -lAudioFilterDock -lCommonUtil -lMltController -lQmlUtilities
-LIBS += -lEffectDock
+LIBS += -lLogger -lpthread -lCommonUtil -lMltController -lQmlUtilities
 LIBS += -lBreakpad
-LIBS += -lVideoFilterDock
-LIBS += -lTextDock
+LIBS += -lResourceDockGenerator
 
 
 

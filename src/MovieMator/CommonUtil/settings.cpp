@@ -43,13 +43,11 @@ ShotcutSettings &ShotcutSettings::singleton()
 QString ShotcutSettings::language() const
 {
     return settings.value("language", QLocale::system().name()).toString();
-   // return "zh";
 }
 
 void ShotcutSettings::setLanguage(const QString& s)
 {
     settings.setValue("language", s);
-  //  qDebug()<<settings.value("language", QLocale::system().name());
 }
 
 double ShotcutSettings::imageDuration() const
