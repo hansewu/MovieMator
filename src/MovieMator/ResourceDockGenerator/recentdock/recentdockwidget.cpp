@@ -20,7 +20,7 @@ RecentDockWidget::RecentDockWidget(MainInterface *pMainInterface, QWidget *pPare
     m_pMainInterface(pMainInterface)
 {
     m_recent            = Settings.recent();
-    m_listItemNames     = {tr("0 Samples"), tr("1 Videos"), tr("2 Audios"), tr("3 Images")};
+    m_listItemNames     = {tr("1 Backgrounds"), tr("2 Videos"), tr("3 Audios"), tr("4 Images")};
 
     m_pRemoveAction     = new QAction(this);
     m_pRemoveAllAction  = new QAction(this);
