@@ -81,7 +81,7 @@ private:
     // 删除功能使用
     QStandardItem   *m_pCurrentItem;
 
-    QJsonObject     m_objTranslateInfo;
+    QJsonObject     m_backgroundTranslateInfo;
 };
 
 #endif // RECENTDOCKWIDGET_H
