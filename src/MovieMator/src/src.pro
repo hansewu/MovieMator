@@ -294,10 +294,6 @@ OTHER_FILES += \
     ../icons/dark/index.theme \
     ../icons/light/index.theme \
 
-TRANSLATIONS += \
-     ../translations/mm_en.ts \
-     ../translations/mm_zh.ts \
-
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil ../MltController ../QmlUtilities
 INCLUDEPATH += ../include
