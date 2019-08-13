@@ -5,6 +5,7 @@
 #include "resourcedockgenerator_global.h"
 
 #include <QAction>
+#include <QJsonObject>
 #include <QSortFilterProxyModel>
 
 class RecentDockWidget : public BaseDockWidget
@@ -79,6 +80,8 @@ private:
     QList<QSortFilterProxyModel*> m_listProxyModel;
     // 删除功能使用
     QStandardItem   *m_pCurrentItem;
+
+    QJsonObject     m_objTranslateInfo;
 };
 
 #endif // RECENTDOCKWIDGET_H

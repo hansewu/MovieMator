@@ -5,6 +5,7 @@
 #include "baselistview.h"
 #include "lineeditclear.h"
 #include "uiuserdef.h"
+#include "translationhelper.h"
 
 #include "util.h"
 #include "settings.h"
@@ -32,6 +33,9 @@ RecentDockWidget::RecentDockWidget(MainInterface *pMainInterface, QWidget *pPare
 
     connect(m_pRemoveAction, SIGNAL(triggered()), this, SLOT(on_actionRemove_triggered()));
     connect(m_pRemoveAllAction, SIGNAL(triggered()), this, SLOT(on_actionRemoveAll_triggered()));
+
+    QString strBackgroundsDir = Util::resourcesPath() + "/template/backgrounds";
+    TranslationHelper::readJsonFile(strBackgroundsDir + "/background_name_translation_info.json", m_objTranslateInfo);
 }
 
 RecentDockWidget::~RecentDockWidget()
@@ -187,7 +191,7 @@ void RecentDockWidget::setProxyModel()
 
 void RecentDockWidget::addBlackVideo()
 {
-    QDir dir(Util::resourcesPath() + "/template/sampleVideo");
+    QDir dir(Util::resourcesPath() + "/template/backgrounds/videos");
     if(dir.exists())
     {
         QFileInfoList fileList = dir.entryInfoList(QDir::Files | QDir::NoSymLinks);
@@ -284,6 +288,10 @@ int RecentDockWidget::setItemModelInfo(const QString &strFile)
 
         if(strFile.contains(Util::resourcesPath(), Qt::CaseInsensitive))
         {   // 黑场视频
+            QString strTrFileName = TranslationHelper::getTranslationStr(pItem->text(), m_objTranslateInfo);
+            pItem->setText(strTrFileName);
+            pItem->setToolTip(strTrFileName);
+
             nType = 0;
         }
         else
