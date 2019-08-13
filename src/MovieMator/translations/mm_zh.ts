@@ -555,7 +555,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../ResourceDockGenerator/basedockwidget.ui" line="70"/>
         <source>Classification:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">分类</translation>
     </message>
     <message>
         <location filename="../ResourceDockGenerator/basedockwidget.ui" line="142"/>
@@ -4932,37 +4932,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="23"/>
         <source>1 Backgrounds</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">1 背景</translation>
     </message>
     <message>
         <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="23"/>
         <source>2 Videos</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">2 视频</translation>
     </message>
     <message>
         <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="23"/>
         <source>3 Audios</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">3 音频</translation>
     </message>
     <message>
         <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="23"/>
         <source>4 Images</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">4 图片</translation>
     </message>
     <message>
         <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="29"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">删除</translation>
     </message>
     <message>
         <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="31"/>
         <source>Remove All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">删除所有</translation>
     </message>
     <message>
         <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="60"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">搜索</translation>
     </message>
 </context>
 <context>
@@ -5269,7 +5269,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ResourceDockGenerator/stickerdockwidget.cpp" line="31"/>
         <source>Animation:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">动画</translation>
     </message>
 </context>
 <context>

@@ -367,21 +367,18 @@ QString FilterController::getFilterClassNameZH(QString strFilterType)
 {
     const QMap<QString, QString> filterTypeMap =
     {
-        {"Common", "常用"},
-        {"Distortion", "扭曲"},
-        {"Art", "艺术"},
-        {"Color Adjustment", "调色"},
-        {"Transform", "变换"},
-        {"Black & White", "黑 & 白"},
-        {"Time Dimension Effect", "时间维度特效"},
-        {"Color Extraction", "色彩提取"},
-        {"Blur", "模糊"},
-        {"Color Depth", "颜色深度"},
-        {"Material", "材质"},
-        {"Other", "其它"},
-        {"Effect 2", "特效 2"},
-        {"Effect", "特效"},
-        {"Crop", "裁剪"},
+        {"1 Basic Processing", "1 常用"},
+        {"2 Text", "2 文字"},
+        {"3 Basic Coloring Tool",  "3 基础调色"},
+        {"4 Denoise and Blur", "4 降噪和模糊"},
+        {"5 Advanced Coloring Tool",  "5 高级调色"},
+        {"6 Light",  "6 光效"},
+        {"7 Distort",  "7 扭曲"},
+        {"8 Art",  "8 艺术"},
+        {"9 Effect",  "9 特效1"},
+        {"A Effect2",  "A 特效2"},
+        {"B Black & White",  "B 黑白"},
+        {"C Other",  "C 其它"},
     };
 
     if (Settings.language() == "zh_CN")
