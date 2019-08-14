@@ -499,6 +499,8 @@ QString Controller::XML(Service* service)
     c.set("no_meta", 1);
     c.set("store", "moviemator");
 
+    c.set("time_format", "clock");
+
 
     //wzq remove the bug in libmltxml consumer_xml.c
     //if ( resource != NULL && mlt_properties_get( properties, "root" ) == NULL )
