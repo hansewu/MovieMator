@@ -50,8 +50,8 @@ private slots:
     void on_lineEdit_textChanged(const QString &strSearch);
 
 private:
-    // 添加黑场视频
-    void addBlackVideo();
+    // 添加样例资源
+    void addSampleResource();
     // 生成图标
     QIcon getItemIcon(const QString &strFile);
     // 通过文件 strFile设置 item的内容，多个函数的共有内容

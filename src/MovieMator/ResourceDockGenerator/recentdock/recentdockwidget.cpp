@@ -189,7 +189,7 @@ void RecentDockWidget::setProxyModel()
     }
 }
 
-void RecentDockWidget::addBlackVideo()
+void RecentDockWidget::addSampleResource()
 {
     QDir dirBackgrounds(Util::resourcesPath() + "/template/backgrounds/videos");
     if(dirBackgrounds.exists())
@@ -566,7 +566,7 @@ QMap<QString, BaseItemModel *> * RecentDockWidget::createAllClassesItemModel()
         }
     }
 
-    addBlackVideo();
+    addSampleResource();
 
     return pFileDockListViewItemModel;
 }
