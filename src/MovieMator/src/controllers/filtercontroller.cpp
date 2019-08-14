@@ -415,7 +415,8 @@ QmlMetadata* FilterController::getQmlMetadata(int nIndex)
     {
         QmlMetadata *pMeta = m_metadataModel.get(nIndex);
         return pMeta;
-    }else
+    }
+    else
     {
         return nullptr;
     }
