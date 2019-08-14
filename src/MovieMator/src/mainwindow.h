@@ -135,10 +135,6 @@ public:
     Player *player() const {return m_player;}
     //获取导出文件dock
     EncodeDock* encodeDock() const {return m_encodeDock;}
-    //获取视频滤镜dock
-    FiltersDock* videoFilterDock() const {return m_propertiesVideoFilterDock;}
-    //获取音频滤镜dock
-    FiltersDock* audioFilterDock() const {return m_propertiesAudioFilterDock;}
 
     //设置整个时间线tractor为当前的producer
     Q_INVOKABLE void setMultitrackAsCurrentProducer();

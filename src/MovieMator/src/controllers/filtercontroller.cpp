@@ -409,12 +409,12 @@ QString FilterController::getFilterType(QString filterType)
 
     return filterType;
 }
-QmlMetadata* FilterController::getQmlMetadata(int index)
+QmlMetadata* FilterController::getQmlMetadata(int nIndex)
 {
-    if(index < m_metadataModel.rowCount())
+    if(nIndex < m_metadataModel.rowCount())
     {
-        QmlMetadata *meta = m_metadataModel.get(index);
-        return meta;
+        QmlMetadata *pMeta = m_metadataModel.get(nIndex);
+        return pMeta;
     }else {
         return nullptr;
     }

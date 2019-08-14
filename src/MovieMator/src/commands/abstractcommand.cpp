@@ -25,9 +25,9 @@ void AbstractCommand::redo()
 {
     g_isInUndoRedoProcess = true;
 
-#ifndef NDEBUG
-    m_originalXml = MLT.XML(MAIN.timelineDock()->model()->tractor());
-#endif
+//#ifndef NDEBUG
+//    m_originalXml = MLT.XML(MAIN.timelineDock()->model()->tractor());
+//#endif
 
     //设置操作时的选中状态
     if (m_bisFirstRedo == false)
@@ -69,12 +69,12 @@ void AbstractCommand::undo()
     //恢复选中状态
     MAIN.timelineDock()->setSelection(m_oldSelection.selectedClips, m_oldSelection.selectedTrack, m_oldSelection.isMultitrackSelected);
 
-#ifndef NDEBUG
-    m_currentXml = MLT.XML(MAIN.timelineDock()->model()->tractor());
+//#ifndef NDEBUG
+//    m_currentXml = MLT.XML(MAIN.timelineDock()->model()->tractor());
 
-    saveStateAsXmlFile(m_originalXml,m_currentXml,text());
-//    Q_ASSERT(m_currentXml == m_originalXml);
-#endif
+//    saveStateAsXmlFile(m_originalXml,m_currentXml,text());
+////    Q_ASSERT(m_currentXml == m_originalXml);
+//#endif
     g_isInUndoRedoProcess = false;
 }
 
