@@ -686,6 +686,163 @@ void EncodeDock::collectProperties(QDomElement& node, int realtime)
     delete p;
 }
 
+
+typedef struct {
+    int nFrameRateNum;
+    int nFrameRateDen;
+} FRAME_RATE;
+
+static int timeStringToFrames(const char *strTime, FRAME_RATE framerate)
+{
+    Q_ASSERT(strTime);
+    Q_ASSERT(framerate.nFrameRateDen > 0 && framerate.nFrameRateNum > 0);
+
+    Mlt::Properties mltProperties;
+    Mlt::Profile    mltProfile;
+
+    mltProfile.set_frame_rate(framerate.nFrameRateNum, framerate.nFrameRateDen);
+    mltProperties.set("_profile", mltProfile.get_profile(), 0);
+
+    return mltProperties.time_to_frames(strTime);
+}
+
+
+static int convertTimeToFramesWithNewFps(QString strOldTime, FRAME_RATE framerateOld, FRAME_RATE framerateNew)
+{
+    //clock格式（hh:mm:ss.sss）不转换
+    if ( (strOldTime.contains(":") && strOldTime.contains("."))
+         || (strOldTime.contains(":") && strOldTime.contains(","))
+         )
+        return -1;
+
+    int nFrameOld = timeStringToFrames(strOldTime.toUtf8().constData(), framerateOld);
+
+    double dFpsOld = framerateOld.nFrameRateNum * 1.0 / framerateOld.nFrameRateDen;
+    double dFpsNew = framerateNew.nFrameRateNum * 1.0 / framerateNew.nFrameRateDen;
+
+    int nFramesNew =  floor(nFrameOld * dFpsNew / dFpsOld);
+
+    return nFramesNew;
+}
+
+static void recaculateTimeAttribute(QDomElement &domElement, const QString &strAttributeName, FRAME_RATE framerateOld, FRAME_RATE framerateNew)
+{
+    Q_ASSERT(!domElement.isNull());
+
+    //处理dom属性
+    QDomAttr domAttr = domElement.attributeNode(strAttributeName);
+    if (!domAttr.isNull())
+    {
+        QString strOldTime = domAttr.value();
+
+        //hh:mm:ss:frame 格式的时间 和 帧数需要转换
+        int nFramesNew = convertTimeToFramesWithNewFps(strOldTime, framerateOld, framerateNew);
+        if (nFramesNew >= 0 )
+            domAttr.setValue(QString::number(nFramesNew));
+    }
+}
+
+
+static int recalculateTimeInDomElement(QDomElement domElement, FRAME_RATE framerateOld, FRAME_RATE framerateNew)
+{
+    Q_ASSERT(!domElement.isNull());
+    Q_ASSERT(framerateOld.nFrameRateDen > 0 && framerateOld.nFrameRateNum > 0);
+    Q_ASSERT(framerateNew.nFrameRateDen > 0 && framerateNew.nFrameRateNum > 0);
+
+    int nErrorCode = 1;
+
+    if ((framerateOld.nFrameRateDen == framerateNew.nFrameRateDen)
+            && (framerateOld.nFrameRateNum == framerateNew.nFrameRateNum))
+        return nErrorCode;
+
+    if (framerateOld.nFrameRateDen <= 0 || framerateOld.nFrameRateNum <= 0)
+        return nErrorCode;
+
+    if (framerateNew.nFrameRateDen <= 0 || framerateNew.nFrameRateNum <= 0)
+        return nErrorCode;
+
+
+    //process attributes of element
+    recaculateTimeAttribute(domElement, "in", framerateOld, framerateNew);
+    recaculateTimeAttribute(domElement, "out", framerateOld, framerateNew);
+    recaculateTimeAttribute(domElement, "length", framerateOld, framerateNew);
+
+    //process dom text of element
+    QString strElementName = domElement.attribute("name");
+    if (strElementName.compare("length", Qt::CaseInsensitive) == 0
+            || strElementName.compare("in", Qt::CaseInsensitive) == 0
+            || strElementName.compare("out", Qt::CaseInsensitive) == 0)
+    {
+        QDomNode   domNodeText = domElement.firstChild();
+        QString    strOldTime  = domNodeText.nodeValue();
+
+        int nFramesNew = convertTimeToFramesWithNewFps(strOldTime, framerateOld, framerateNew);
+        if (nFramesNew > 0)
+            domNodeText.setNodeValue(QString::number(nFramesNew));
+    }
+
+    //process child elements
+    QDomNodeList nodeListChildNode = domElement.childNodes();
+    for (int i = 0; i < nodeListChildNode.count(); i++)
+    {
+        QDomElement childElement = nodeListChildNode.at(i).toElement();
+        if (!childElement.isNull())
+            recalculateTimeInDomElement(childElement, framerateOld, framerateNew);
+    }
+    return 0;
+}
+
+//static int recalculateTimeInProjectFile(QString strProjectFile)
+//{
+//    int nErrorCode = 1;
+//    // parse xml
+//    QFile fileProject(strProjectFile);
+//    fileProject.open(QIODevice::ReadOnly);
+//    QDomDocument domdocumentProject(strProjectFile);
+//    domdocumentProject.setContent(&fileProject);
+//    fileProject.close();
+
+//    QDomElement domElementRoot = domdocumentProject.documentElement();
+//    FRAME_RATE  framerateOld;
+//    FRAME_RATE  framerateNew;
+
+//    QDomNodeList    domNodeListConsumers    = domdocumentProject.elementsByTagName("consumer");
+//    QDomNodeList    domNodeListProfiles     = domdocumentProject.elementsByTagName("profile");
+//    QDomElement     domElementProfile          = domNodeListProfiles.at(domNodeListProfiles.length() - 1).toElement();
+//    QDomElement     domElementConsumer         = domNodeListConsumers.at(domNodeListConsumers.length() - 1).toElement();
+
+//    framerateOld.nFrameRateNum = domElementProfile.attribute("frame_rate_num").toInt();
+//    framerateOld.nFrameRateDen = domElementProfile.attribute("frame_rate_den").toInt();
+
+//    if (!domElementConsumer.attribute("frame_rate_num").isEmpty() && !domElementConsumer.attribute("frame_rate_den").isEmpty())
+//    {
+//        framerateNew.nFrameRateNum = domElementConsumer.attribute("frame_rate_num").toInt();
+//        framerateNew.nFrameRateDen = domElementConsumer.attribute("frame_rate_den").toInt();
+//    }
+//    else if (!domElementConsumer.attribute("r").isEmpty())
+//    {
+//        framerateNew.nFrameRateNum = domElementConsumer.attribute("r").toInt();
+//        framerateNew.nFrameRateNum = 1;
+//    }
+//    else
+//    {
+//        Q_ASSERT(false);
+//        return nErrorCode;
+//    }
+
+//    nErrorCode = recalculateTimeInDomElement(domElementRoot, framerateOld, framerateNew);
+
+//    if (nErrorCode == 0)
+//    {
+//        fileProject.open(QIODevice::WriteOnly);
+//        QTextStream textStream(&fileProject);
+//        domdocumentProject.save(textStream, 2);
+//        fileProject.close();
+//    }
+
+//    return nErrorCode;
+//}
+
 MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target, int realtime, int pass)
 {
     // if image sequence, change filename to include number
@@ -714,6 +871,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
     QDomDocument dom(tmp.fileName());
     dom.setContent(&f1);
     f1.close();
+
 
     // add consumer element
     QDomElement consumerNode = dom.createElement("consumer");
@@ -753,6 +911,45 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
     QDomNodeList playlists = dom.elementsByTagName("playlist");
     for (int i = 0; i < playlists.length();++i)
         playlists.item(i).toElement().setAttribute("autoclose", 1);
+
+
+    FRAME_RATE  framerateOld;
+    FRAME_RATE  framerateNew;
+
+    QDomElement domElementProfile;
+    if (!profiles.isEmpty())
+    {
+        domElementProfile = profiles.at(profiles.length() - 1).toElement();
+        framerateOld.nFrameRateNum = domElementProfile.attribute("frame_rate_num").toInt();
+        framerateOld.nFrameRateDen = domElementProfile.attribute("frame_rate_den").toInt();
+    }
+    else
+        Q_ASSERT(false);
+
+    if (!consumerNode.attribute("frame_rate_num").isEmpty() && !consumerNode.attribute("frame_rate_den").isEmpty())
+    {
+        framerateNew.nFrameRateNum = consumerNode.attribute("frame_rate_num").toInt();
+        framerateNew.nFrameRateDen = consumerNode.attribute("frame_rate_den").toInt();
+    }
+    else if (!consumerNode.attribute("r").isEmpty())
+    {
+        framerateNew.nFrameRateNum = consumerNode.attribute("r").toInt();
+        framerateNew.nFrameRateDen = 1;
+    }
+    else
+        Q_ASSERT(false);
+
+
+    //根据输出帧率转换xml中保存的帧数
+    int nRet = recalculateTimeInDomElement(dom.documentElement(), framerateOld, framerateNew);
+    if (nRet == 0)
+    {
+        if (!domElementProfile.isNull())
+        {
+            domElementProfile.setAttribute("frame_rate_num", framerateNew.nFrameRateNum);
+            domElementProfile.setAttribute("frame_rate_den", framerateNew.nFrameRateDen);
+        }
+    }
 
     return new EncodeJob(target, dom.toString(2));
 }
