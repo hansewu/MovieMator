@@ -720,7 +720,7 @@ static int convertTimeToFramesWithNewFps(QString strOldTime, FRAME_RATE framerat
     double dFpsOld = framerateOld.nFrameRateNum * 1.0 / framerateOld.nFrameRateDen;
     double dFpsNew = framerateNew.nFrameRateNum * 1.0 / framerateNew.nFrameRateDen;
 
-    int nFramesNew =  floor(nFrameOld * dFpsNew / dFpsOld);
+    int nFramesNew =  floor(nFrameOld * dFpsNew / dFpsOld + 0.5);
 
     return nFramesNew;
 }
