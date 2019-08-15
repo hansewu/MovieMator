@@ -222,7 +222,7 @@ QString StickerDockWidget::getImageClassType(QString srcStr)
 {
     QJsonObject imageClassPropertyInfo;
     QString stickerDir = Util::resourcesPath() + "/template/sticker";
-    TranslationHelper::readJsonFile(stickerDir + "imageclass_property_info.json", imageClassPropertyInfo);
+    TranslationHelper::readJsonFile(stickerDir + "/imageclass_property_info.json", imageClassPropertyInfo);
 
     QString result = "";
     if (imageClassPropertyInfo.isEmpty())
