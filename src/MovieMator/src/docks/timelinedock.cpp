@@ -129,7 +129,10 @@ TimelineDock::TimelineDock(QWidget *parent) :
 #else
     connect(this, &QDockWidget::visibilityChanged, this, &TimelineDock::load);
 #endif
+
+    connect(&m_model, SIGNAL(selectionChanged(TIMELINE_SELECTION, TIMELINE_SELECTION)), this, SLOT(onSelectionChanged(TIMELINE_SELECTION, TIMELINE_SELECTION)));
     LOG_DEBUG() << "end";
+
 
     //filterScrollChild(this);//wzq
     //installEventFilter(this);//wzq
@@ -426,27 +429,36 @@ void TimelineDock::makeTracksTaller()
 
 void TimelineDock::setSelection(QList<int> newSelection, int trackIndex, bool isMultitrack)
 {
-    if (newSelection != m_model.selection().selectedClips
-            || trackIndex != m_model.selection().selectedTrack
-            || isMultitrack != m_model.selection().isMultitrackSelected)
+    int nClipIndexToSelect;
+    if (newSelection.count() > 0)
+        nClipIndexToSelect = newSelection.at(0);
+    else
+        nClipIndexToSelect = -1;
+
+    if (nClipIndexToSelect != m_model.selection().nIndexOfSelectedClip
+            || trackIndex != m_model.selection().nIndexOfSelectedTrack
+            || isMultitrack != m_model.selection().bIsMultitrackSelected)
     {
         LOG_DEBUG() << "Changing selection to" << newSelection << " trackIndex" << trackIndex << "isMultitrack" << isMultitrack;
-        Selection aSelection;
-        aSelection.selectedClips = newSelection;
-        aSelection.selectedTrack = trackIndex;
-        aSelection.isMultitrackSelected = isMultitrack;
+        TIMELINE_SELECTION aSelection;
+        if (newSelection.count() > 0)
+            aSelection.nIndexOfSelectedClip = newSelection[0];
+        else
+            aSelection.nIndexOfSelectedClip = -1;
+        aSelection.nIndexOfSelectedTrack = trackIndex;
+        aSelection.bIsMultitrackSelected = isMultitrack;
         m_model.setSelection(aSelection);
 
         MLT.pause();
 
         setCurrentFilter(nullptr, nullptr,0);
 
-        emit selectionChanged();
+        //emit selectionChanged();
 
-        if (!m_model.selection().selectedClips.isEmpty())
-            emitSelectedFromSelection();
-        else
-            emit selected(nullptr);
+//        if (m_model.selection().nIndexOfSelectedClip >= 0)
+//            emitSelectedFromSelection();
+//        else
+//            emit selected(nullptr);
     }
 
 }
@@ -455,7 +467,10 @@ QList<int> TimelineDock::selection() const
 {
     if (!m_quickView.rootObject())
         return QList<int>();
-    return m_model.selection().selectedClips;
+    QList<int> listSelection;
+    if (m_model.selection().nIndexOfSelectedClip >= 0)
+        listSelection.append(m_model.selection().nIndexOfSelectedClip);
+    return listSelection;
 }
 
 void TimelineDock::selectClipUnderPlayhead()
@@ -567,13 +582,13 @@ bool TimelineDock::isRipple() const
 void TimelineDock::clearSelectionIfInvalid()
 {
 //    int count = clipCount(currentTrack());//应该使用和selection()中clip对应的track做处理，如果不对应则没有处理的必要，因为clip如果不在track上一个得到的数据是不对的
-    int count = clipCount(m_model.selection().selectedTrack);
+    int count = clipCount(m_model.selection().nIndexOfSelectedTrack);
 
     QList<int> newSelection;
     foreach (int index, selection()) {
         if (index >= count)
             continue;
-        if (isBlank(m_model.selection().selectedTrack, index))
+        if (isBlank(m_model.selection().nIndexOfSelectedTrack, index))
             continue;
 
         newSelection << index;
@@ -583,8 +598,8 @@ void TimelineDock::clearSelectionIfInvalid()
     //（1）The filter information of the new clip is error when a new clip is inserted at the beginning of the selected clip.
     //setSelection();
 
-    setSelection(newSelection, m_model.selection().selectedTrack);
-    emit selectionChanged();
+    setSelection(newSelection, m_model.selection().nIndexOfSelectedTrack);
+    //emit selectionChanged();
 }
 
 void TimelineDock::insertTrack()
@@ -790,8 +805,6 @@ void TimelineDock::append(int trackIndex)
         Timeline::AppendClipCommand *appendCommand = new Timeline::AppendClipCommand(m_model, trackIndex,
                                                                                      MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer()));
         MAIN.pushCommand(appendCommand);
-        selectClipUnderPlayhead();
-        appendCommand->refreshSelection();
     }
 }
 
@@ -966,14 +979,13 @@ void TimelineDock::emitSelectedFromSelection()
         return;
     }
 
-//    int trackIndex = currentTrack();应该使用clip对应的track做一下的处理，如果clip不在track上，就没有处理的必要（undo、redo时会有此问题）
-    int trackIndex = m_model.selection().selectedTrack;
-    int clipIndex = selection().isEmpty()? 0 : selection().first();
-//    Q_ASSERT(trackIndex >= 0);//允许无效值，因为m_selection.selectedTrack有可能还未初始化
-    Q_ASSERT(clipIndex >= 0);
+    int trackIndex = m_model.selection().nIndexOfSelectedTrack;
+    int clipIndex = m_model.selection().nIndexOfSelectedClip;
     if (trackIndex < 0 || clipIndex < 0) {
+        emit selected(nullptr);
         return;
     }
+
     Mlt::ClipInfo* info = getClipInfo(trackIndex, clipIndex);
     Q_ASSERT(info);
     Q_ASSERT(info->producer);
@@ -1057,20 +1069,16 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
     if (m_model.moveClipValid(fromTrack, toTrack, clipIndex, position)) {
         Timeline::MoveClipCommand *moveCommand = new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, position);
         MAIN.pushCommand(moveCommand);
-        selectClipAtPosition(toTrack, position);
-        moveCommand->refreshSelection();
         return true;
     } else if (m_model.addTransitionValid(fromTrack, toTrack, clipIndex, position)) {
 
         MAIN.pushCommand(
             new Timeline::AddTransitionCommand(m_model, fromTrack, clipIndex, position));
-        emitSelectedFromSelection();
+        //emitSelectedFromSelection();
         return true;
     } else if ( ( newPosition = m_model.moveInsertClipValid(fromTrack, toTrack, clipIndex, position) )  >= 0) {
         Timeline::MoveInsertClipCommand *moveInsertCommand = new Timeline::MoveInsertClipCommand(m_model, fromTrack, toTrack, clipIndex, position);
         MAIN.pushCommand(moveInsertCommand);
-        selectClipAtPosition(toTrack, newPosition);
-        moveInsertCommand->refreshSelection();
         return true;
     } else {
         return false;
@@ -1139,8 +1147,6 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml)
 
         Timeline::InsertClipCommand *insertCommand = new Timeline::InsertClipCommand(m_model, trackIndex, position, xmlToUse);
         MAIN.pushCommand(insertCommand);
-        selectClipUnderPlayhead();
-        insertCommand->refreshSelection();
     }
 }
 
@@ -1159,8 +1165,6 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
             position = m_position;
         Timeline::OverwriteClipCommand *overwriteCommand = new Timeline::OverwriteClipCommand(m_model, trackIndex, position, xmlToUse);
         MAIN.pushCommand(overwriteCommand);
-        selectClipUnderPlayhead();
-        overwriteCommand->refreshSelection();
     }
 }
 
@@ -1221,8 +1225,8 @@ void TimelineDock::AttachedfilterChanged()
 {
     int trackIndex = currentTrack();;
     int clipIndex = -1;
-    if (m_model.selection().selectedClips.count() > 0)
-           clipIndex = m_model.selection().selectedClips[0];
+    if (m_model.selection().nIndexOfSelectedClip >= 0)
+           clipIndex = m_model.selection().nIndexOfSelectedClip;
 
     if (trackIndex < 0) return;
     if (clipIndex < 0) return;
@@ -1738,8 +1742,6 @@ void TimelineDock::appendFromPath(int trackIndex, const QString &path)
 
         Timeline::AppendClipCommand *appendCommand = new Timeline::AppendClipCommand(m_model, trackIndex, MLT.XML(p));
         MAIN.pushCommand(appendCommand);
-        selectClipUnderPlayhead();
-        appendCommand->refreshSelection();
 
         qApp->processEvents();
     }
@@ -1904,8 +1906,8 @@ void TimelineDock::addTransitionOnClipAfterAppend()
 void TimelineDock::setTransitionDuration(int duration)
 {
     int trackIndex = currentTrack();
-    Q_ASSERT(!m_model.selection().selectedClips.isEmpty());
-    int clipIndex = m_model.selection().selectedClips[0];
+    Q_ASSERT(m_model.selection().nIndexOfSelectedClip >= 0);
+    int clipIndex = m_model.selection().nIndexOfSelectedClip;
     m_model.setTransitionDuration(trackIndex, clipIndex, duration);
 }
 
@@ -2279,8 +2281,8 @@ void TimelineDock::exportSelectedClipAsTemplate()
 {
     if(!isAClipSelected())
         return;
-    int trackIndex = m_model.selection().selectedTrack;
-    int clipIndex = m_model.selection().selectedClips[0];
+    int trackIndex = m_model.selection().nIndexOfSelectedTrack;
+    int clipIndex = m_model.selection().nIndexOfSelectedClip;
     exportAsTemplate(trackIndex, clipIndex);
 }
 
@@ -2556,14 +2558,14 @@ void TimelineDock::unitTestCommand()
         MAIN.pushCommand(new Timeline::KeyFrameUpdateCommand(*(MAIN.timelineDock()->model()), MLT.producer()->filter(0), 52, "u", "105", "121",false));
         MAIN.undoStack()->undo();
     }
-    if (!MLT.open(testFile))
-    {
-        MAIN.open(MLT.producer());
-        MAIN.pushCommand(
-                new Timeline::ClipsSelectCommand(*(MAIN.timelineDock()->model()), QList<int>(), 1, false,
-                                                 m_model.selection().selectedClips, m_model.selection().selectedTrack, m_model.selection().isMultitrackSelected,false));
-        MAIN.undoStack()->undo();
-    }
+//    if (!MLT.open(testFile))
+//    {
+//        MAIN.open(MLT.producer());
+//        MAIN.pushCommand(
+//                new Timeline::ClipsSelectCommand(*(MAIN.timelineDock()->model()), QList<int>(), 1, false,
+//                                                 m_model.selection().selectedClips, m_model.selection().selectedTrack, m_model.selection().isMultitrackSelected,false));
+//        MAIN.undoStack()->undo();
+//    }
     if (!MLT.open(testFile))
     {
         MAIN.open(MLT.producer());
@@ -2585,7 +2587,11 @@ void TimelineDock::unitTestCommand()
 }
 
 
-
+void TimelineDock::onSelectionChanged(TIMELINE_SELECTION selectionOld, TIMELINE_SELECTION selectionNew)
+{
+    emit selectionChanged();
+    emitSelectedFromSelection();
+}
 
 
 

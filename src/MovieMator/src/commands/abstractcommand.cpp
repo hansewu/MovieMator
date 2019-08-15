@@ -7,15 +7,13 @@
 #include <QDateTime>
 #include "util.h"
 #include <QDomDocument>
-#include "mainwindow.h"
-#include "docks/timelinedock.h"
 
 bool g_isInUndoRedoProcess = false;
 
-AbstractCommand::AbstractCommand(MultitrackModel &model, QUndoCommand * parent)
-    : QUndoCommand (parent)
-    , m_model(model)
-    , m_oldSelection(m_model.selection())
+AbstractCommand::AbstractCommand(MultitrackModel &modelMultitrack, QUndoCommand * pParent)
+    : QUndoCommand (pParent)
+    , m_modelMultitrack(modelMultitrack)
+    , m_selectionOld(m_modelMultitrack.selection())
     , m_bisFirstRedo(true)
 {
     //Q_ASSERT(g_isInUndoRedoProcess == false); //UpdateClipCommand 创建后并不会立即push，此处添加assert创建UpdateClipCommand时会出错。在pushcommand的时候添加。
@@ -26,13 +24,13 @@ void AbstractCommand::redo()
     g_isInUndoRedoProcess = true;
 
 //#ifndef NDEBUG
-//    m_originalXml = MLT.XML(MAIN.timelineDock()->model()->tractor());
+//    m_strXmlOriginal = MLT.XML(MAIN.timelineDock()->model()->tractor());
 //#endif
 
     //设置操作时的选中状态
     if (m_bisFirstRedo == false)
     {
-        MAIN.timelineDock()->setSelection(m_oldSelection.selectedClips, m_oldSelection.selectedTrack, m_oldSelection.isMultitrackSelected);
+        m_modelMultitrack.setSelection(m_selectionOld);
     }
 
     //取消consumer
@@ -46,12 +44,12 @@ void AbstractCommand::redo()
     //记录操作之后的选中状态
     if (m_bisFirstRedo == true)
     {
-        m_newSelection = m_model.selection();
+        m_selectionNew = m_modelMultitrack.selection();
         m_bisFirstRedo = false;
     }
     else
     {
-        MAIN.timelineDock()->setSelection(m_newSelection.selectedClips, m_newSelection.selectedTrack, m_newSelection.isMultitrackSelected);
+        m_modelMultitrack.setSelection(m_selectionNew);
     }
 
     g_isInUndoRedoProcess = false;
@@ -60,6 +58,10 @@ void AbstractCommand::redo()
 void AbstractCommand::undo()
 {
     g_isInUndoRedoProcess = true;
+
+    //恢复选中状态
+    m_modelMultitrack.setSelection(m_selectionNew);
+
     MLT.consumer()->set_cancelled(1);
     w_enter_critical();
     MLT.consumer()->set_cancelled(0);
@@ -67,64 +69,57 @@ void AbstractCommand::undo()
     w_leave_critical();
 
     //恢复选中状态
-    MAIN.timelineDock()->setSelection(m_oldSelection.selectedClips, m_oldSelection.selectedTrack, m_oldSelection.isMultitrackSelected);
-
+    m_modelMultitrack.setSelection(m_selectionOld);
 //#ifndef NDEBUG
-//    m_currentXml = MLT.XML(MAIN.timelineDock()->model()->tractor());
-
-//    saveStateAsXmlFile(m_originalXml,m_currentXml,text());
-////    Q_ASSERT(m_currentXml == m_originalXml);
+//    m_strXmlCurrent = MLT.XML(MAIN.timelineDock()->model()->tractor());
+//    saveStateAsXmlFile(m_strXmlOriginal,m_strXmlCurrent,text());
+////    Q_ASSERT(m_strXmlCurrent == m_strXmlOriginal);
 //#endif
     g_isInUndoRedoProcess = false;
 }
 
 
-void AbstractCommand::refreshSelection()
-{
-    m_newSelection = m_model.selection();
-}
+//static void saveStateAsXmlFile(QString original,QString currrent,QString commandName)
+//{
+//    QDomDocument doc;
+//    if(doc.setContent(original))
+//    {
+//        original = doc.toString();
+//    }
+//    if(doc.setContent(currrent))
+//    {
+//        currrent = doc.toString();
+//    }
 
-void AbstractCommand::saveStateAsXmlFile(QString original,QString currrent,QString commandName)
-{
-    QDomDocument doc;
-    if(doc.setContent(original))
-    {
-        original = doc.toString();
-    }
-    if(doc.setContent(currrent))
-    {
-        currrent = doc.toString();
-    }
+//    QString folderName = commandName;
 
-    QString folderName = commandName;
+//    QDateTime now = QDateTime::currentDateTime();
+//    QString strNow =now.toString("MMdd-hhmmss");
+//    folderName = strNow + folderName;
 
-    QDateTime now = QDateTime::currentDateTime();
-    QString strNow =now.toString("MMdd-hhmmss");
-    folderName = strNow + folderName;
+//    if(original != currrent)
+//    {
+//        folderName = folderName + "-Error";
+//    }
 
-    if(original != currrent)
-    {
-        folderName = folderName + "-Error";
-    }
+//    QDir dir = Util::logFolderPath();
+//    dir.mkdir(folderName);
+//    dir.cd(folderName);
 
-    QDir dir = Util::logFolderPath();
-    dir.mkdir(folderName);
-    dir.cd(folderName);
+//    QString originalPath = dir.absoluteFilePath("original.mmp");
+//    QFile originalFile(originalPath);
+//    originalFile.open(QIODevice::WriteOnly | QIODevice::Text);
+//    originalFile.write(original.toUtf8());
+//    originalFile.close();
 
-    QString originalPath = dir.absoluteFilePath("original.mmp");
-    QFile originalFile(originalPath);
-    originalFile.open(QIODevice::WriteOnly | QIODevice::Text);
-    originalFile.write(original.toUtf8());
-    originalFile.close();
+//    QString currentPath = dir.absoluteFilePath("current.mmp");
+//    QFile currentFile(currentPath);
+//    currentFile.open(QIODevice::WriteOnly | QIODevice::Text);
+//    currentFile.write(currrent.toUtf8());
+//    currentFile.close();
 
-    QString currentPath = dir.absoluteFilePath("current.mmp");
-    QFile currentFile(currentPath);
-    currentFile.open(QIODevice::WriteOnly | QIODevice::Text);
-    currentFile.write(currrent.toUtf8());
-    currentFile.close();
-
-    qDebug()<<"original:";
-    qDebug()<<original;
-    qDebug()<<"currrent:";
-    qDebug()<<currrent;
-}
+//    qDebug()<<"original:";
+//    qDebug()<<original;
+//    qDebug()<<"currrent:";
+//    qDebug()<<currrent;
+//}

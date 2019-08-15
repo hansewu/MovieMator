@@ -134,7 +134,6 @@ int MainController::appendToTimelineFromPath(int trackIndex, const QString &path
                                                                                      MLT.XML(p));
         MAIN.pushCommand(appendCommand);
         MAIN.timelineDock()->selectClipUnderPlayhead();
-        appendCommand->refreshSelection();
 
         qApp->processEvents();
 
