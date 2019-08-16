@@ -2957,14 +2957,12 @@ void MainWindow::updateThumbnails()
 void MainWindow::on_actionUndo_triggered()
 {
     m_undoStack->undo();
-#ifndef NDEBUG
-    if(m_undoStack->count() <= 0)
-    {
-        m_timelineDock->unitTestCommand();
-    }
-#endif
-
-
+//#ifndef NDEBUG
+//    if(m_undoStack->count() <= 0)
+//    {
+//        m_timelineDock->unitTestCommand();
+//    }
+//#endif
 }
 
 void MainWindow::on_actionRedo_triggered()
