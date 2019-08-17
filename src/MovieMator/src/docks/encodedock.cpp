@@ -710,10 +710,10 @@ static int timeStringToFrames(const char *strTime, FRAME_RATE framerate)
 static int convertTimeToFramesWithNewFps(QString strOldTime, FRAME_RATE framerateOld, FRAME_RATE framerateNew)
 {
     //clock格式（hh:mm:ss.sss）不转换
-    if ( (strOldTime.contains(":") && strOldTime.contains("."))
-         || (strOldTime.contains(":") && strOldTime.contains(","))
-         )
-        return -1;
+//    if ( (strOldTime.contains(":") && strOldTime.contains("."))
+//         || (strOldTime.contains(":") && strOldTime.contains(","))
+//         )
+//        return -1;
 
     int nFrameOld = timeStringToFrames(strOldTime.toUtf8().constData(), framerateOld);
 
@@ -725,20 +725,52 @@ static int convertTimeToFramesWithNewFps(QString strOldTime, FRAME_RATE framerat
     return nFramesNew;
 }
 
-static void recaculateTimeAttribute(QDomElement &domElement, const QString &strAttributeName, FRAME_RATE framerateOld, FRAME_RATE framerateNew)
+static void recaculateTimeAttribute(QDomElement &domElement, FRAME_RATE framerateOld, FRAME_RATE framerateNew)
 {
     Q_ASSERT(!domElement.isNull());
 
-    //处理dom属性
-    QDomAttr domAttr = domElement.attributeNode(strAttributeName);
-    if (!domAttr.isNull())
+    //处理dom in out属性
+    QDomAttr domAttrOut = domElement.attributeNode("out");
+    if (!domAttrOut.isNull())
     {
-        QString strOldTime = domAttr.value();
+        int nFrameIn = 0;
+        int nFrameOut = 0;
+        int nFrameLength = 0;
 
-        //hh:mm:ss:frame 格式的时间 和 帧数需要转换
-        int nFramesNew = convertTimeToFramesWithNewFps(strOldTime, framerateOld, framerateNew);
-        if (nFramesNew >= 0 )
-            domAttr.setValue(QString::number(nFramesNew));
+        QString strOldTimeOut = domAttrOut.value();
+        nFrameOut = timeStringToFrames(strOldTimeOut.toUtf8().constData(), framerateOld);
+
+        QDomAttr domAttrIn = domElement.attributeNode("in");
+        if (!domAttrIn.isNull())
+        {
+            QString strOldTimeIn = domAttrIn.value();
+            nFrameIn = timeStringToFrames(strOldTimeIn.toUtf8().constData(), framerateOld);
+        }
+
+        if (nFrameOut > 0)
+            nFrameLength = nFrameOut - nFrameIn + 1;
+
+        double dFpsOld = framerateOld.nFrameRateNum * 1.0 / framerateOld.nFrameRateDen;
+        double dFpsNew = framerateNew.nFrameRateNum * 1.0 / framerateNew.nFrameRateDen;
+
+        int nFrameLengthNew =  floor(nFrameLength * dFpsNew / dFpsOld + 0.5);
+        int nFrameInNew = floor(nFrameIn * dFpsNew / dFpsOld + 0.5);
+        int nFrameOutNew = nFrameInNew + nFrameLengthNew - 1;
+
+        domAttrOut.setValue(QString::number(nFrameOutNew));
+        if (!domAttrIn.isNull())
+            domAttrIn.setValue(QString::number(nFrameInNew));
+    }
+
+    //处理length属性
+    QDomAttr domAttrLength = domElement.attributeNode("length");
+    if (!domAttrLength.isNull())
+    {
+        QString strOldTimeLength = domAttrLength.value();
+
+        int nFramesLengthNew = convertTimeToFramesWithNewFps(strOldTimeLength, framerateOld, framerateNew);
+        if (nFramesLengthNew >= 0 )
+            domAttrLength.setValue(QString::number(nFramesLengthNew));
     }
 }
 
@@ -763,9 +795,8 @@ static int recalculateTimeInDomElement(QDomElement domElement, FRAME_RATE framer
 
 
     //process attributes of element
-    recaculateTimeAttribute(domElement, "in", framerateOld, framerateNew);
-    recaculateTimeAttribute(domElement, "out", framerateOld, framerateNew);
-    recaculateTimeAttribute(domElement, "length", framerateOld, framerateNew);
+    recaculateTimeAttribute(domElement, framerateOld, framerateNew);
+
 
     //process dom text of element
     QString strElementName = domElement.attribute("name");
