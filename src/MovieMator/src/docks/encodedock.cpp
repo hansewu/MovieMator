@@ -727,7 +727,7 @@ static int convertTimeToFramesWithNewFps(QString strOldTime, FRAME_RATE framerat
 
     if (qFuzzyIsNull(dFramesNew - floor(dFramesNew)))
         nFramesNew = floor(dFramesNew);
-    else if(rand()/RAND_MAX > dFramesNew - floor(dFramesNew))
+    else if(rand()*1.0/RAND_MAX > dFramesNew - floor(dFramesNew))
         nFramesNew = floor(dFramesNew);
     else
         nFramesNew = floor(dFramesNew) + 1;
