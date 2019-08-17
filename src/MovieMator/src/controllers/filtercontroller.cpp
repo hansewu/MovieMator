@@ -727,7 +727,7 @@ void FilterController::addCropFilter()
 void FilterController::addVolumeFilter()
 {
 
-    QmlMetadata *meta = metadataForUniqueId("volume");
+    QmlMetadata *meta = metadataForUniqueId("audioGainVolume");
     Q_ASSERT(meta);
     m_attachedModel.add(meta);
 }
