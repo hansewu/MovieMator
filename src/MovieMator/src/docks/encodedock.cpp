@@ -715,12 +715,22 @@ static int convertTimeToFramesWithNewFps(QString strOldTime, FRAME_RATE framerat
 //         )
 //        return -1;
 
+    int nFramesNew = 0;
     int nFrameOld = timeStringToFrames(strOldTime.toUtf8().constData(), framerateOld);
 
     double dFpsOld = framerateOld.nFrameRateNum * 1.0 / framerateOld.nFrameRateDen;
     double dFpsNew = framerateNew.nFrameRateNum * 1.0 / framerateNew.nFrameRateDen;
 
-    int nFramesNew =  floor(nFrameOld * dFpsNew / dFpsOld + 0.5);
+    double dFramesNew =  nFrameOld * dFpsNew / dFpsOld;
+
+    srand(time(NULL));
+
+    if (qFuzzyIsNull(dFramesNew - floor(dFramesNew)))
+        nFramesNew = floor(dFramesNew);
+    else if(rand()/RAND_MAX > dFramesNew - floor(dFramesNew))
+        nFramesNew = floor(dFramesNew);
+    else
+        nFramesNew = floor(dFramesNew) + 1;
 
     return nFramesNew;
 }
@@ -750,11 +760,8 @@ static void recaculateTimeAttribute(QDomElement &domElement, FRAME_RATE framerat
         if (nFrameOut > 0)
             nFrameLength = nFrameOut - nFrameIn + 1;
 
-        double dFpsOld = framerateOld.nFrameRateNum * 1.0 / framerateOld.nFrameRateDen;
-        double dFpsNew = framerateNew.nFrameRateNum * 1.0 / framerateNew.nFrameRateDen;
-
-        int nFrameLengthNew =  floor(nFrameLength * dFpsNew / dFpsOld + 0.5);
-        int nFrameInNew = floor(nFrameIn * dFpsNew / dFpsOld + 0.5);
+        int nFrameLengthNew = convertTimeToFramesWithNewFps(QString::number(nFrameLength), framerateOld, framerateNew);
+        int nFrameInNew = convertTimeToFramesWithNewFps(QString::number(nFrameIn), framerateOld, framerateNew);
         int nFrameOutNew = nFrameInNew + nFrameLengthNew - 1;
 
         domAttrOut.setValue(QString::number(nFrameOutNew));
@@ -800,9 +807,7 @@ static int recalculateTimeInDomElement(QDomElement domElement, FRAME_RATE framer
 
     //process dom text of element
     QString strElementName = domElement.attribute("name");
-    if (strElementName.compare("length", Qt::CaseInsensitive) == 0
-            || strElementName.compare("in", Qt::CaseInsensitive) == 0
-            || strElementName.compare("out", Qt::CaseInsensitive) == 0)
+    if (strElementName.compare("length", Qt::CaseInsensitive) == 0)
     {
         QDomNode   domNodeText = domElement.firstChild();
         QString    strOldTime  = domNodeText.nodeValue();
