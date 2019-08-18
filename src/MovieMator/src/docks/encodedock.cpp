@@ -659,7 +659,8 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 p->set("frame_rate_den", 1001);
             }
             else
-                p->set("r", ui->fpsSpinner->value());
+                p->set("r", qFloor(ui->fpsSpinner->value()));
+
             if (ui->videoCodecCombo->currentText() == "prores" || ui->formatCombo->currentText() == "image2")
                 p->set("threads", 1);
             else if (ui->videoCodecThreadsSpinner->value() == 0
