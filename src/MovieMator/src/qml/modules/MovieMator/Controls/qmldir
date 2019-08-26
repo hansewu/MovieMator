@@ -1,6 +1,7 @@
 module MovieMator.Controls
 ColorPicker 1.0 ColorPicker.qml
 Preset 1.0 Preset.qml
+InfoDialog 1.0 InfoDialog.qml
 ToolTip 1.0 ToolTip.qml
 UndoButton 1.0 UndoButton.qml
 TimeSpinner 1.0 TimeSpinner.qml
@@ -9,3 +10,12 @@ SliderSpinner 1.0 SliderSpinner.qml
 RectangleControl 1.0 RectangleControl.qml
 SimplePropertyUI 1.0 SimplePropertyUI.qml
 KeyFrame 1.0 KeyFrame.qml
+KeyFrameControl 1.0 KeyFrameControl.qml
+CustomFilterButton 1.0 CustomFilterButton.qml
+YFKeyFrame 1.0 YFKeyFrame.qml
+SeparatorLine 1.0 SeparatorLine.qml
+GridMenu 1.0 GridMenu.qml
+NewPreset 1.0 NewPreset.qml
+MyListView 1.0 MyListView.qml
+MyComboBox 1.0 MyComboBox.qml
+FilterComboBox 1.0 FilterComboBox.qml

@@ -1,4 +1,25 @@
-
+/*
+ * Copyright (c) 2013-2016 Meltytech, LLC
+ * Author: Dan Dennedy <dan@dennedy.org>
+ *
+ * Copyright (c) 2016-2019 EffectMatrix Inc.
+ * Author: wyl <wyl@pylwyl.local>
+ * Author: fuyunhuaxin <2446010587@qq.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ 
 import QtQuick 2.1
 import QtQuick.Dialogs 1.1
 import QtQuick.Controls 1.0
@@ -11,75 +32,13 @@ Item {
     width: 300
     height: 250
     property string settingsSavePath: settings.savePath
-    property bool bEnableControls: keyFrame.bKeyFrame  ||  (!filter.getKeyFrameNumber())
-
-
     Component.onCompleted: {
-            shakinessSlider.value = filter.getDouble('shakiness')
-            accuracySlider.value = filter.getDouble('accuracy')
-            button.enabled = !hasAnalysisCompleted()
-            setStatus(false)
-
-        var keyFrameCount = filter.getKeyFrameCountOnProject("anim-shakiness");
-        if(keyFrameCount > 0)
-        {
-            var index=0
-            for(index=0; index<keyFrameCount;index++)
-            {
-                var nFrame = filter.getKeyFrameOnProjectOnIndex(index, "anim-shakiness");
-                var keyValue = filter.getKeyValueOnProjectOnIndex(index, "anim-shakiness");
-                filter.setKeyFrameParaValue(nFrame, "shakiness", keyValue)
-
-                keyValue = filter.getKeyValueOnProjectOnIndex(index, "anim-accuracy");
-                filter.setKeyFrameParaValue(nFrame, "accuracy", keyValue)
-
-                keyValue = filter.getKeyValueOnProjectOnIndex(index, "anim-Zoom");
-                filter.setKeyFrameParaValue(nFrame, "Zoom", keyValue)
-            }
-            filter.combineAllKeyFramePara();
-        }
+        keyFrame.initFilter(layoutRoot)
     }
 
     function hasAnalysisCompleted() {
             return (filter.get("results").length > 0 &&
                     filter.get("filename").indexOf(filter.get("results")) !== -1)
-        }
-
-    function setKeyFrameValue(bKeyFrame)
-    {
-        var nFrame = keyFrame.getCurrentFrame();
-        if(bKeyFrame)
-        {
-
-            var contrastValue = shakinessSlider.value;
-            filter.setKeyFrameParaValue(nFrame,"shakiness", contrastValue.toString() )
-
-            contrastValue = accuracySlider.value;
-            filter.setKeyFrameParaValue(nFrame, "accuracy", contrastValue.toString())
-
-            contrastValue = zoomSlider.value;
-            filter.setKeyFrameParaValue(nFrame, "zoom", contrastValue.toString())
-            filter.setKeyFrameParaValue(nFrame, "refresh", "1")
-
-            filter.combineAllKeyFramePara();
-        }
-        else
-        {
-            //Todo, delete the keyframe date of the currentframe
-            filter.removeKeyFrameParaValue(nFrame);
-            if(!filter.getKeyFrameNumber())
-            {
-                filter.anim_set("shakiness","")
-                filter.anim_set("accuracy","")
-                filter.anim_set("zoom","")
-                filter.anim_set("refresh","")
-                
-            }
-            filter.set('shakiness', shakinessSlider.value)
-            filter.set('accuracy', accuracySlider.value)
-            filter.set('zoom', zoomSlider.value)
-            filter.set("refresh", 1);
-        }
     }
 
     function setStatus( inProgress ) {
@@ -153,171 +112,125 @@ Item {
     }
 
     GridLayout {
+        id: layoutRoot
         columns: 3
         anchors.fill: parent
-        anchors.margins: 8
+        anchors.margins: 18
+        rowSpacing: 13
 
-        KeyFrame{
-             id: keyFrame
-             Layout.columnSpan:3
-        // 	currentPosition: filterDock.getCurrentPosition()
-             onSetAsKeyFrame:
-             {
-                setKeyFrameValue(bKeyFrame)
-             }
-
-             onLoadKeyFrame:
-             {
-                 var stablizeValue = filter.getKeyFrameParaDoubleValue(keyFrameNum, "shakiness");
-                 if(stablizeValue != -1.0)
-                 {
-                     shakinessSlider.value = stablizeValue
-                 }
-
-                 stablizeValue = filter.getKeyFrameParaDoubleValue(keyFrameNum, "accuracy");
-                 if(stablizeValue != -1.0)
-                 {
-                      accuracySlider.value = stablizeValue
-                 }
-
-                 stablizeValue = filter.getKeyFrameParaDoubleValue(keyFrameNum, "zoom");
-                 if(stablizeValue != -1.0)
-                 {
-                      zoomSlider.value = stablizeValue
-                 }
-
-             }
-         }
+        YFKeyFrame{
+            id: keyFrame
+            Layout.columnSpan:3
+            onSyncUIDataToProject:{
+                keyFrame.syncDataToProject(layoutRoot)
+            }
+            onRefreshUI:{
+                keyFrame.updateParamsUI(layoutRoot)
+            }
+        }
 
         Label {
             text: qsTr('<b>Analyze Options</b>')
             Layout.columnSpan: 3
-            color: bEnableControls?'#ffffff': '#828282'
+            color: '#ffffff'
+            font.pixelSize: 15
         }
 
         Label {
             text: qsTr('Shakiness')
             Layout.alignment: Qt.AlignRight
-            color: bEnableControls?'#ffffff': '#828282'
+            color: '#ffffff'
         }
         SliderSpinner {
-            enabled: bEnableControls
+            objectName: 'shakinessSlider'
             id: shakinessSlider
             minimumValue: 1
             maximumValue: 10
             tickmarksEnabled: true
             stepSize: 1
-            value: filter.getDouble('shakiness')
+            // value: filter.getDouble('shakiness')
             onValueChanged:
             {
-                if(keyFrame.bKeyFrame)
-                {
-                    var nFrame = keyFrame.getCurrentFrame();
-                    filter.setKeyFrameParaValue(nFrame,"shakiness", value.toString() )
-                    filter.combineAllKeyFramePara()
-                }
-                else
-                    filter.set('shakiness', value)
-
-              //  setKeyFrameValue(keyFrame.bKeyFrame)
+                keyFrame.controlValueChanged(shakinessSlider)
             }
         }
         UndoButton {
-            enabled: bEnableControls
-            onClicked: {
-                shakinessSlider.value = 4
-                setKeyFrameValue(keyFrame.bKeyFrame)
-            }
+            onClicked: shakinessSlider.value = 4
         }
 
         Label {
             text: qsTr('Accuracy')
             Layout.alignment: Qt.AlignRight
-            color: bEnableControls?'#ffffff': '#828282'
+            color: '#ffffff'
         }
         SliderSpinner {
+            objectName: 'accuracySlider'
             id: accuracySlider
-            enabled: bEnableControls
             minimumValue: 1
             maximumValue: 15
             tickmarksEnabled: true
             stepSize: 1
-            value: filter.getDouble('accuracy')
+            // value: filter.getDouble('accuracy')
             onValueChanged:{
-                if(keyFrame.bKeyFrame)
-                {
-                    var nFrame = keyFrame.getCurrentFrame();
-                    filter.setKeyFrameParaValue(nFrame,"accuracy", value.toString() )
-                    filter.combineAllKeyFramePara()
-                }
-                else
-                    filter.set('accuracy', value)
-
-               // setKeyFrameValue(keyFrame.bKeyFrame)
+                keyFrame.controlValueChanged(accuracySlider)
             }
         }
         UndoButton {
-            enabled: bEnableControls
-            onClicked: {
-                accuracySlider.value = 4
-                setKeyFrameValue(keyFrame.bKeyFrame)
-            }
+            onClicked: accuracySlider.value = 4
+        }
+
+        SeparatorLine {
+            Layout.fillWidth: true 
+            Layout.columnSpan: 3
         }
 
         Label {
             text: qsTr('<b>Filter Options</b>')
             Layout.columnSpan: 3
-            color: bEnableControls?'#ffffff': '#828282'
+            color: '#ffffff'
+            font.pixelSize: 15
         }
 
         Label {
             text: qsTr('Zoom')
             Layout.alignment: Qt.AlignRight
-            color: bEnableControls?'#ffffff': '#828282'
+            color: '#ffffff'
         }
         SliderSpinner {
+            objectName: 'zoomSlider'
             id: zoomSlider
-            enabled: bEnableControls
             minimumValue: -50
             maximumValue: 50
             decimals: 1
             suffix: ' %'
-            value: filter.getDouble('zoom')
+            // value: filter.getDouble('zoom')
             onValueChanged: {
-                if(keyFrame.bKeyFrame)
-                {
-                    var nFrame = keyFrame.getCurrentFrame();
-                    filter.setKeyFrameParaValue(nFrame,"zoom", value.toString() )
-                    filter.combineAllKeyFramePara()
-                }
-                else
-                    filter.set('zoom', value)
-               // setKeyFrameValue(keyFrame.bKeyFrame)
+                keyFrame.controlValueChanged(zoomSlider)
             }
         }
         UndoButton {
-            enabled: bEnableControls
-            onClicked: {
-                zoomSlider.value = 0
-                setKeyFrameValue(keyFrame.bKeyFrame)
-            }
+            onClicked: zoomSlider.value = 0
+        }
+
+        SeparatorLine {
+            Layout.fillWidth: true 
+            Layout.columnSpan: 3
         }
 
         Button {
             id: button
-            enabled: bEnableControls
             text: qsTr('Analyze')
             Layout.alignment: Qt.AlignRight
             onClicked: {
                 button.enabled = false
-             //   fileDialog.folder = settings.savePath
+//                fileDialog.folder = settings.savePath
                 fileDialog.open()
             }
         }
         Label {
             id: status
             Layout.columnSpan: 2
-            color: bEnableControls?'#ffffff': '#828282'
+            color: '#ffffff'
             Component.onCompleted: {
                 setStatus(false)
             }

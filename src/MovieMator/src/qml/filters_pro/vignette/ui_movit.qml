@@ -1,3 +1,23 @@
+/*
+ * Copyright (c) 2014-2016 Meltytech, LLC
+ *
+ * Copyright (c) 2016-2019 EffectMatrix Inc.
+ * Author: wyl <wyl@pylwyl.local>
+ * Author: fuyunhuaxin <2446010587@qq.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 import QtQuick 2.1
 import QtQuick.Controls 1.0
@@ -7,105 +27,33 @@ import MovieMator.Controls 1.0
 Item {
     width: 300
     height: 250
-    property bool bEnableControls: keyFrame.bKeyFrame  ||  (!filter.getKeyFrameNumber())
-
-    function setKeyFrameValue(bKeyFrame)
-     {
-         var nFrame = keyFrame.getCurrentFrame();
-         if(bKeyFrame)
-         {
-
-             var contrastValue = radiusSlider.value;
-             filter.setKeyFrameParaValue(nFrame, "radius", (contrastValue/100).toString())
-
-             contrastValue = innerSlider.value;
-             filter.setKeyFrameParaValue(nFrame, "inner_radius", (contrastValue/100).toString())
-
-             filter.combineAllKeyFramePara();
-         }
-         else
-         {
-             //Todo, delete the keyframe date of the currentframe
-             filter.removeKeyFrameParaValue(nFrame);
-             if(!filter.getKeyFrameNumber())
-             {
-                filter.anim_set("radius","")
-                filter.anim_set("inner_radius","")
-                
-             }
-             filter.set("radius", radiusSlider.value/100);
-             filter.set("inner_radius", innerSlider.value/100);
-
-         }
-     }
 
     Component.onCompleted: {
-        if (filter.isNew)
-            filter.savePreset(preset.parameters)
-
-        var keyFrameCount = filter.getKeyFrameCountOnProject("anim-radius");
-        if(keyFrameCount > 0)
-        {
-            var index=0
-            for(index=0; index<keyFrameCount;index++)
-            {
-                var nFrame = filter.getKeyFrameOnProjectOnIndex(index, "anim-radius");
-                var keyValue = filter.getKeyValueOnProjectOnIndex(index, "anim-radius");
-
-                filter.setKeyFrameParaValue(nFrame, "radius", keyValue)
-
-                keyValue = filter.getKeyValueOnProjectOnIndex(index, "anim-inner_radius");
-                filter.setKeyFrameParaValue(nFrame, "inner_radius", keyValue)
-            }
-            filter.combineAllKeyFramePara();
-        }
-        else
-        {
-            filter.set("radius", radiusSlider.value/100);
-            filter.set("inner_radius", innerSlider.value/100);
-        }
-
+        keyFrame.initFilter(layoutRoot)
     }
-
     GridLayout {
+        id: layoutRoot
         columns: 3
         anchors.fill: parent
         anchors.margins: 8
 
-        KeyFrame{
-             id: keyFrame
-             Layout.columnSpan:3
-        // 	currentPosition: filterDock.getCurrentPosition()
-             onSetAsKeyFrame:
-             {
-                setKeyFrameValue(bKeyFrame)
-             }
-
-             onLoadKeyFrame:
-             {
-                 var vignetteValue = filter.getKeyFrameParaDoubleValue(keyFrameNum, "radius");
-                 if(vignetteValue != -1.0)
-                 {
-                     radiusSlider.value = vignetteValue* 100.0
-                 }
-
-                 vignetteValue = filter.getKeyFrameParaDoubleValue(keyFrameNum, "inner_radius");
-                 if(vignetteValue != -1.0)
-                 {
-                      innerSlider.value = vignetteValue* 100.0
-                 }
-
-             }
+        YFKeyFrame{
+            id: keyFrame
+            Layout.columnSpan:3
+            onSyncUIDataToProject:{
+                keyFrame.syncDataToProject(layoutRoot)
+            }
+            onRefreshUI:{
+                keyFrame.updateParamsUI(layoutRoot)
+            }
         }
-
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
-            color: bEnableControls?'#ffffff': '#828282'
+            color: '#ffffff'
         }
         Preset {
             id: preset
-            enabled: bEnableControls
             Layout.columnSpan: 2
             parameters: ['radius', 'inner_radius']
             onPresetSelected: {
@@ -117,49 +65,42 @@ Item {
         Label {
             text: qsTr('Outer radius')
             Layout.alignment: Qt.AlignRight
-            color: bEnableControls?'#ffffff': '#828282'
+            color: '#ffffff'
         }
         SliderSpinner {
+            objectName: 'radiusSlider'
             id: radiusSlider
-            enabled: bEnableControls
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
             value: filter.getDouble('radius') * 100
-            onValueChanged:{
-                setKeyFrameValue(keyFrame.bKeyFrame)
+            onValueChanged: {
+                keyFrame.controlValueChanged(radiusSlider)
             }
+            
         }
         UndoButton {
-            enabled: bEnableControls
-            onClicked:{
-                 radiusSlider.value = 30
-                 setKeyFrameValue(keyFrame.bKeyFrame)
-            }
+            onClicked: radiusSlider.value = 30
         }
 
         Label {
             text: qsTr('Inner radius')
             Layout.alignment: Qt.AlignRight
-            color: bEnableControls?'#ffffff': '#828282'
+            color: '#ffffff'
         }
         SliderSpinner {
+            objectName: 'innerSlider'
             id: innerSlider
-            enabled: bEnableControls
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
             value: filter.getDouble('inner_radius') * 100
             onValueChanged: {
-                setKeyFrameValue(keyFrame.bKeyFrame)
+                keyFrame.controlValueChanged(innerSlider)
             }
         }
         UndoButton {
-            enabled: bEnableControls
-            onClicked: {
-                innerSlider.value = 30
-                setKeyFrameValue(keyFrame.bKeyFrame)
-            }
+            onClicked: innerSlider.value = 30
         }
 
         Item {

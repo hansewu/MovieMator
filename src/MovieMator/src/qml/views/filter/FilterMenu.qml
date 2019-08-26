@@ -1,3 +1,26 @@
+/*
+ * Copyright (c) 2014-2015 Meltytech, LLC
+ * Author: Brian Matherly <code@brianmatherly.com>
+ *
+ * Copyright (c) 2016-2019 EffectMatrix Inc.
+ * Author: vgawen <gdb_1986@163.com>
+ *
+ * Copyright (c) 2016-2019 EffectMatrix Inc.
+ * Author: wyl <wyl@pylwyl.local>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 import QtQuick 2.2
 import QtQuick.Window 2.1
@@ -15,11 +38,39 @@ Window {
 
     signal filterSelected(int index)
 
-    function popup(triggerItem) {
-        var menuRect = Logic.calcMenuRect(triggerItem, toolBar.height + 2)
+    function popup(triggerItem, pos) {
+        var menuRect = Logic.calcMenuRect(triggerItem, toolBar.height + 2, pos)
         filterWindow.x = menuRect.x
         filterWindow.y = menuRect.y
         filterWindow.height = menuRect.height
+
+        // 时间线工具栏添加滤镜按钮和滤镜界面的添加按钮会互相影响，
+        // 会导致激活的滤镜类型与列表对应不上；
+        // 判断是哪种滤镜，把对应按钮的选中状态和图片切换一下。
+        if((typeof metadatamodel == 'undefined')||(typeof metadatamodel.metadataFilterType == 'undefined')){
+            throw new Error("metadata is abnormal"+metadatamodel)
+        }
+
+        if (metadatamodel.metadataFilterType == MovieMator.MetadataModel.FavoritesFilter) {
+            favButton.checked = true
+            favButton.iconSource = 'qrc:///icons/light/32x32/bookmarks-highlight.png'
+            vidButton.iconSource = 'qrc:///icons/light/32x32/video-television.png'
+            audButton.iconSource = 'qrc:///icons/light/32x32/speaker.png'
+        }        
+        else if(metadatamodel.metadataFilterType == MovieMator.MetadataModel.VideoFilter) {
+            vidButton.checked = true
+            vidButton.iconSource = 'qrc:///icons/light/32x32/video-television-highlight.png'
+            favButton.iconSource = 'qrc:///icons/light/32x32/bookmarks.png'
+            audButton.iconSource = 'qrc:///icons/light/32x32/speaker.png'
+        }
+        else if(metadatamodel.metadataFilterType == MovieMator.MetadataModel.AudioFilter) {
+            audButton.checked = true
+            audButton.iconSource = 'qrc:///icons/light/32x32/speaker-highlight.png'
+            vidButton.iconSource = 'qrc:///icons/light/32x32/video-television.png'
+            favButton.iconSource = 'qrc:///icons/light/32x32/bookmarks.png'
+        }
+        // End
+
         filterWindow.show()
         filterWindow.requestActivate()
     }
@@ -55,6 +106,31 @@ Window {
 //            anchors.bottomMargin: 10
            spacing: 2
 
+
+            Component {
+                id: sectionDelegate
+
+                Item {
+                    height: sectionText.implicitHeight + 4
+                    width: parent ? parent.width : undefined
+                    Rectangle {
+                        anchors.fill: parent
+                        color: activePalette.alternateBase
+                    }
+                    Label {
+                        id: sectionText
+                        anchors.fill: parent
+                        anchors.topMargin: 2
+                        anchors.leftMargin: 4
+                        text: section
+                        color: activePalette.windowText
+                        font.bold: true
+                    }
+                }
+            }
+
+
+
             ScrollView {
                 id: scrollView
                 width: parent.width
@@ -70,13 +146,14 @@ Window {
                     }
 
                     anchors.fill: parent
-                    model: metadatamodel
-                    delegate: FilterMenuDelegate {}
+                    model: filterWindow.visible ? metadatamodel : 0 // 消除 metadatamodel未定义的警告
+                    delegate: FilterMenuDelegate{}
+                    section.property: vidButton.checked ? "filterTypeDisplay" : ""
+                    section.delegate: sectionDelegate
                     boundsBehavior: Flickable.StopAtBounds
                     snapMode: ListView.SnapToItem
                     currentIndex: -1
                     focus: true
-
                 }
 
                 style: ScrollViewStyle {
@@ -139,12 +216,11 @@ Window {
                     exclusiveGroup: typeGroup
                     onCheckedChanged: {
                         if (checked) {
-                            metadatamodel.filter = MovieMator.MetadataModel.FavoritesFilter
+                            metadatamodel.metadataFilterType = MovieMator.MetadataModel.FavoritesFilter
                             favButton.iconSource = 'qrc:///icons/light/32x32/bookmarks-highlight.png'
 
                             vidButton.iconSource = 'qrc:///icons/light/32x32/video-television.png'
                             audButton.iconSource = 'qrc:///icons/light/32x32/speaker.png'
-
                         }
 
                     }
@@ -160,10 +236,10 @@ Window {
                     exclusiveGroup: typeGroup
                     onCheckedChanged: {
                         if (checked) {
-                            metadatamodel.filter = MovieMator.MetadataModel.VideoFilter
+                            metadatamodel.metadataFilterType = MovieMator.MetadataModel.VideoFilter
                             vidButton.iconSource = 'qrc:///icons/light/32x32/video-television-highlight.png'
                             favButton.iconSource = 'qrc:///icons/light/32x32/bookmarks.png'
-                            audButton.iconSource = 'qrc:///icons/light/32x32/speaker.png'
+                            audButton.iconSource = 'qrc:///icons/light/32x32/speaker.png' 
                         }
                     }
                 }
@@ -178,12 +254,11 @@ Window {
                     exclusiveGroup: typeGroup
                     onCheckedChanged: {
                         if (checked) {
-                            metadatamodel.filter = MovieMator.MetadataModel.AudioFilter
+                            metadatamodel.metadataFilterType = MovieMator.MetadataModel.AudioFilter
                             audButton.iconSource = 'qrc:///icons/light/32x32/speaker-highlight.png'
 
                             vidButton.iconSource = 'qrc:///icons/light/32x32/video-television.png'
                             favButton.iconSource = 'qrc:///icons/light/32x32/bookmarks.png'
-
                         }
                     }
                 }

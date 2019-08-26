@@ -447,13 +447,13 @@ win32:target.path = $$PREFIX
 INSTALLS += target
 
 win32 {
-    qmlfiles.files = $$PWD/moviemator_qml/moviemator/qml
+    qmlfiles.files = $$PWD/qml
     qmlfiles.path = $$PREFIX/share/moviemator
     INSTALLS += qmlfiles
 }
 
 mac {
-    qmlfiles.files = $$PWD/../../../../shotcut/moviemator_qml/moviemator/qml
+    qmlfiles.files = $$PWD/qml
     qmlfiles.path = $$PREFIX/share/MovieMator
     INSTALLS += qmlfiles
 }

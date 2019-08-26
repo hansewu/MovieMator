@@ -71,7 +71,7 @@ Item {
             id: colorButton
             width: 20
             height: 20
-            property var color: "black"
+            property string color: "black"
             style: ButtonStyle {
                 background: Rectangle {
                     implicitWidth: 24

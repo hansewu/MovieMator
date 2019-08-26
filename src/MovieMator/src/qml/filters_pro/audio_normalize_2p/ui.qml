@@ -1,4 +1,25 @@
-
+/*
+ * Copyright (c) 2013-2015 Meltytech, LLC
+ * Author: Brian Matherly <pez4brian@yahoo.com>
+ *
+ * Copyright (c) 2016-2019 EffectMatrix Inc.
+ * Author: wyl <wyl@pylwyl.local>
+ * Author: fuyunhuaxin <2446010587@qq.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ 
 import QtQuick 2.1
 import QtQuick.Dialogs 1.1
 import QtQuick.Controls 1.0
@@ -9,8 +30,6 @@ Item {
     width: 300
     height: 250
     
-    property bool bEnableControls: keyFrame.bKeyFrame  ||  (!filter.getKeyFrameNumber())
-
     function setStatus( inProgress ) {
         if (inProgress) {
             status.text = qsTr('Analyzing...')
@@ -21,29 +40,6 @@ Item {
         else
         {
             status.text = qsTr('Click "Analyze" to use this filter.')
-        }
-    }
-
-    function setKeyFrameValue(bKeyFrame)
-    {
-        var nFrame = keyFrame.getCurrentFrame();
-        var contrastValue = programSlider.value;
-        if(bKeyFrame)
-        {
-
-            filter.setKeyFrameParaValue(nFrame,"program", contrastValue.toString() );
-            filter.combineAllKeyFramePara();
-        }
-        else
-        {
-            //Todo, delete the keyframe date of the currentframe
-            filter.removeKeyFrameParaValue(nFrame);
-            if(!filter.getKeyFrameNumber())
-            {
-                filter.anim_set("program","")
-            }
-
-            filter.set("program", contrastValue);
         }
     }
 
@@ -59,57 +55,29 @@ Item {
         anchors.fill: parent
         anchors.margins: 8
 
-        KeyFrame{
-             id: keyFrame
-             Layout.columnSpan:3
-               // 	currentPosition: filterDock.getCurrentPosition()
-             onSetAsKeyFrame:
-             {
-                 setKeyFrameValue(bKeyFrame)
-             }
-
-             onLoadKeyFrame:
-             {
-                  var sliderValue = filter.getKeyFrameParaDoubleValue(keyFrameNum, "program");
-                  if(gammaKeyValue != -1.0)
-                  {
-                      programSlider.value = sliderValue
-                  }
-
-             }
-        }
         RowLayout {
             Label {
                 text: qsTr('Target Loudness')
-                color: bEnableControls?'#ffffff': '#828282'
+                color: '#ffffff'
             }
             SliderSpinner {
                 id: programSlider
-                enabled: bEnableControls
                 minimumValue: -50.0
                 maximumValue: -10.0
                 decimals: 1
                 suffix: ' LUFS'
                 spinnerWidth: 100
                 value: filter.getDouble('program')
-                onValueChanged: {
-                   // filter.set('program', value)
-                    setKeyFrameValue(keyFrame.bKeyFrame)
-                }
+                onValueChanged: filter.set('program', value)
             }
             UndoButton {
-                enabled: bEnableControls
-                onClicked: {
-                    programSlider.value = -23.0
-                    setKeyFrameValue(keyFrame.bKeyFrame)
-                }
+                onClicked: programSlider.value = -23.0
             }
         }
 
         RowLayout {
             Button {
                 id: button
-                enabled: bEnableControls
                 text: qsTr('Analyze')
 
                 onClicked: {
@@ -119,7 +87,6 @@ Item {
             }
             Label {
                 id: status
-                color: bEnableControls?'#ffffff': '#828282'
                 Component.onCompleted: {
                     setStatus(false)
                 }
@@ -131,3 +98,4 @@ Item {
         }
     }
 }
+

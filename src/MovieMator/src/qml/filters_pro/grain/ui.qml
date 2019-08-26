@@ -1,136 +1,87 @@
-
+/*
+ * Copyright (c) 2015 Meltytech, LLC
+ * Author: Amy Dennedy
+ *
+ * Copyright (c) 2016-2019 EffectMatrix Inc.
+ * Author: wyl <wyl@pylwyl.local>
+ * Author: fuyunhuaxin <2446010587@qq.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ 
 import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
 import MovieMator.Controls 1.0
 
 Item {
-    property bool bEnableControls: keyFrame.bKeyFrame  ||  (!filter.getKeyFrameNumber())
-
     width: 300
     height: 250
     Component.onCompleted: {
-        console.log("11... ")
-        if (filter.isNew) {
-            // Set default parameter values
-            filter.set('noise', 40)
-            filter.set('contrast', 100)
-            filter.set('brightness', 83)
-            filter.savePreset(preset.parameters)
-        }
-        setControls()
+        keyFrame.initFilter(layoutRoot)
     }
 
     function setControls() {
-
-
-
-        var keyFrameCount = filter.getKeyFrameCountOnProject("anim-noise");
-        console.log("1....., keyFrameCount:")
-        console.log(keyFrameCount)
+        var keyFrameCount = filter.getKeyFrameCountOnProject("noise");
         if(keyFrameCount > 0)
         {
             var index=0
             for(index=0; index<keyFrameCount;index++)
             {
-                var nFrame = filter.getKeyFrameOnProjectOnIndex(index, "anim-noise");
-                var keyValue = filter.getKeyValueOnProjectOnIndex(index, "anim-noise");
+                var nFrame = filter.getKeyFrameOnProjectOnIndex(index, "noise");
+                var keyValue = filter.getKeyValueOnProjectOnIndex(index, "noise");
 
-                filter.setKeyFrameParaValue(nFrame, "noise", keyValue)
+                filter.cache_setKeyFrameParaValue(nFrame, "noise", keyValue)
 
-                keyValue = filter.getKeyValueOnProjectOnIndex(index, "anim-brightness");
-                filter.setKeyFrameParaValue(nFrame, "brightness", keyValue)
+                keyValue = filter.getKeyValueOnProjectOnIndex(index, "brightness");
+                filter.cache_setKeyFrameParaValue(nFrame, "brightness", keyValue)
             }
 
-            filter.combineAllKeyFramePara();
-            console.log(filter.getKeyValueOnProjectOnIndex(0, "anim-noise"))
-            console.log(filter.getKeyValueOnProjectOnIndex(0, "anim-brightness"))
-
-            noiseSlider.value = filter.getKeyValueOnProjectOnIndex(0, "anim-noise")
-            brightnessSlider.value = filter.getKeyValueOnProjectOnIndex(0, "anim-brightness")
+            filter.syncCacheToProject();
+            noiseSlider.value = filter.getKeyValueOnProjectOnIndex(0, "noise")
+            brightnessSlider.value = filter.getKeyValueOnProjectOnIndex(0, "brightness")
         }
         else
         {
-            console.log("12...")
-            console.log(filter.get('noise'))
-            console.log(filter.get('brightness'))
-
             noiseSlider.value = filter.get('noise')
             brightnessSlider.value = filter.get('brightness')
         }
     }
-
-    function setKeyFrameValue(bKeyFrame)
-    {
-        var nFrame = keyFrame.getCurrentFrame();
-        if(bKeyFrame)
-        {
-            console.log("3....")
-            console.log(noiseSlider.value)
-            console.log(brightnessSlider.value)
-            filter.setKeyFrameParaValue(nFrame, "noise", noiseSlider.value.toString())
-            filter.setKeyFrameParaValue(nFrame, "brightness", brightnessSlider.value.toString())
-
-            filter.combineAllKeyFramePara();
-        }
-        else
-        {
-            //Todo, delete the keyframe date of the currentframe
-            filter.removeKeyFrameParaValue(nFrame);
-             if(!filter.getKeyFrameNumber())
-            {
-                console.log("4......")
-                filter.anim_set("noise","")
-                filter.anim_set("brightness","")
-            }
-            filter.set("noise", noiseSlider.value);
-            filter.set("brightness", brightnessSlider.value);
-
-        }
-    }
-
     GridLayout {
+        id: 'layoutRoot'
         columns: 3
         anchors.fill: parent
         anchors.margins: 8
 
-        KeyFrame{
-             id: keyFrame
-             Layout.columnSpan:3
-        // 	currentPosition: filterDock.getCurrentPosition()
-             onSetAsKeyFrame:
-             {
-                 console.log("9.... setKeyFrameValue will be called")
-                setKeyFrameValue(bKeyFrame)
-             }
+        YFKeyFrame{
+            id: keyFrame
+            Layout.columnSpan:3
+            onSyncUIDataToProject:{
+                keyFrame.syncDataToProject(layoutRoot)
+            }
+            onRefreshUI:{
+                keyFrame.updateParamsUI(layoutRoot)
+            }
+        }
 
-             onLoadKeyFrame:
-             {
-                 var grainValue = filter.getKeyFrameParaDoubleValue(keyFrameNum, "noise");
-                 if(grainValue != -1.0)
-                 {
-                     console.log("5.... grainValue:")
-                     console.log(grainValue)
-                     noiseSlider.value = grainValue
-                 }
-
-                 grainValue = filter.getKeyFrameParaDoubleValue(keyFrameNum, "brightness");
-                 if(grainValue != -1.0)
-                 {
-                      console.log("12....")
-                      console.log(grainValue)
-                      brightnessSlider.value = grainValue
-                 }
-             }
-         }
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
-            color: bEnableControls?'#ffffff': '#828282'
+            color: '#ffffff'
         }
         Preset {
             id: preset
-            enabled: bEnableControls
             parameters: ['noise', 'brightness']
             Layout.columnSpan: 2
             onPresetSelected: setControls()
@@ -139,69 +90,40 @@ Item {
         Label {
             text: qsTr('Noise')
             Layout.alignment: Qt.AlignRight
-            color: bEnableControls?'#ffffff': '#828282'
+            color: '#ffffff'
         }
         SliderSpinner {
+            objectName: 'noiseSlider'
             id: noiseSlider
-            enabled: bEnableControls
             minimumValue: 1
             maximumValue: 200
             suffix: ' %'
             value: filter.get('noise')
             onValueChanged: {
-                console.log("6... setKeyFrameValue will be called")
-                if(keyFrame.bKeyFrame)
-                {
-                    var nFrame = keyFrame.getCurrentFrame();
-                    filter.setKeyFrameParaValue(nFrame, "noise",value.toString())
-                    filter.combineAllKeyFramePara()
-
-                }
-                else
-                    filter.set('noise', value)
-
-               // setKeyFrameValue(keyFrame.bKeyFrame)
+                keyFrame.controlValueChanged(noiseSlider)
             }
         }
         UndoButton {
-            enabled: bEnableControls
-            onClicked: {
-                noiseSlider.value = 40
-                setKeyFrameValue(keyFrame.bKeyFrame)
-            }
+            onClicked: noiseSlider.value = 40
         }
 
         Label {
             text: qsTr('Brightness')
             Layout.alignment: Qt.AlignRight
-            color: bEnableControls?'#ffffff': '#828282'
+            color: '#ffffff'
         }
         SliderSpinner {
+            objectName: 'brightnessSlider'
             id: brightnessSlider
-            enabled: bEnableControls
             minimumValue: 0
             maximumValue: 400
             value: filter.get('brightness')
             onValueChanged:{
-                console.log("7... setKeyFrameValue will be called")
-                if(keyFrame.bKeyFrame)
-                {
-                    var nFrame = keyFrame.getCurrentFrame();
-                    filter.setKeyFrameParaValue(nFrame, "brightness",value.toString())
-                    filter.combineAllKeyFramePara()
-
-                }
-                else
-                    filter.set('brightness', value)
-              //  setKeyFrameValue(keyFrame.bKeyFrame)
+                keyFrame.controlValueChanged(brightnessSlider)
             }
         }
         UndoButton {
-            enabled: bEnableControls
-            onClicked: {
-                brightnessSlider.value = 83
-                setKeyFrameValue(keyFrame.bKeyFrame)
-            }
+            onClicked: brightnessSlider.value = 83
 
         }
 

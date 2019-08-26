@@ -1,3 +1,23 @@
+/*
+ * Copyright (c) 2014 Meltytech, LLC
+ * Author: Dan Dennedy <dan@dennedy.org>
+ *
+ * Copyright (c) 2016-2019 EffectMatrix Inc.
+ * Author: vgawen <gdb_1986@163.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 import QtQuick 2.1
 
@@ -21,7 +41,8 @@ Item {
         if (aspectRatio === 0.0) {
             bottomRightHandle.x = topLeftHandle.x + Math.round(rect.width * widthScale) - handleSize
             bottomRightHandle.y = topLeftHandle.y + Math.round(rect.height * heightScale) - handleSize
-        } else if (aspectRatio > 1.0) {
+        } else if (aspectRatio > profile.width/profile.height) {       // 原来 aspectRation > 1.0的情况
+        // 宽图片的 aspectRatio > profile.width/profile.height 时才需要这样处理，其他宽图片不需要这样处理
             bottomRightHandle.x = topLeftHandle.x + Math.round(rect.width * widthScale) - handleSize
             bottomRightHandle.y = topLeftHandle.y + Math.round(rect.width * widthScale / aspectRatio) - handleSize
         } else {

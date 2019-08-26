@@ -1,3 +1,24 @@
+/*
+ * Copyright (c) 2013-2016 Meltytech, LLC
+ * Author: Dan Dennedy <dan@dennedy.org>
+ *
+ * Copyright (c) 2016-2019 EffectMatrix Inc.
+ * Author: vgawen <gdb_1986@163.com>
+ * Author: WanYuanCN <ebthon@hotmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 import QtQuick 2.2
 import QtQml.Models 2.1
@@ -15,75 +36,142 @@ Rectangle {
     //color: activePalette.window
     color: backgroundColor
 
+    // 单击轨道上 clip的信号
     signal clipClicked()
 
-    function zoomIn() {
+    // 时间线滚轮缩放之放大
+    function zoomIn(wheelx) {
 //        scaleSlider.value += 0.0625
-        toolbar.scaleSliderValue += 0.0625
-        for (var i = 0; i < tracksRepeater.count; i++)
-            tracksRepeater.itemAt(i).redrawWaveforms()
+
+        toolbar.flag = true
+        toolbar.wheelx = wheelx
+        toolbar.scaleValue = multitrack.scaleFactor
+
+        // toolbar.scaleSliderValue += 0.0625
+        toolbar.scaleSliderValue = toolbar.scaleCopy + 0.0625
+        toolbar.scaleCopy = toolbar.scaleSliderValue
+
+        console.assert(tracksRepeater);
+        if(!tracksRepeater) return;
+        for (var i = 0; i < tracksRepeater.count; i++){
+            console.assert(tracksRepeater.itemAt(i));
+            if(tracksRepeater.itemAt(i))
+                tracksRepeater.itemAt(i).redrawWaveforms()
+        }
     }
 
-    function zoomOut() {
+    // 时间线滚轮缩放之缩小
+    function zoomOut(wheelx) {
 //        scaleSlider.value -= 0.0625
-        toolbar.scaleSliderValue -= 0.0625
-        for (var i = 0; i < tracksRepeater.count; i++)
-            tracksRepeater.itemAt(i).redrawWaveforms()
+
+        toolbar.flag = true
+        toolbar.wheelx = wheelx
+        toolbar.scaleValue = multitrack.scaleFactor
+        
+        // toolbar.scaleSliderValue -= 0.0625
+        if(toolbar.scaleCopy != 0){
+            toolbar.scaleSliderValue = toolbar.scaleCopy - 0.0625
+            toolbar.scaleCopy = toolbar.scaleSliderValue
+        }
+
+        console.assert(tracksRepeater);
+        if(!tracksRepeater) return;
+        for (var i = 0; i < tracksRepeater.count; i++){
+            console.assert(tracksRepeater.itemAt(i));
+            if(tracksRepeater.itemAt(i))
+                tracksRepeater.itemAt(i).redrawWaveforms()
+        }
     }
 
+    // 把时间线重置为原来大小
     function resetZoom() {
 //        scaleSlider.value = 1.0
         toolbar.scaleSliderValue = 1.0
-        for (var i = 0; i < tracksRepeater.count; i++)
-            tracksRepeater.itemAt(i).redrawWaveforms()
+        console.assert(tracksRepeater);
+        if(!tracksRepeater) return;
+        for (var i = 0; i < tracksRepeater.count; i++){
+            console.assert(tracksRepeater.itemAt(i));
+            if(tracksRepeater.itemAt(i))
+                tracksRepeater.itemAt(i).redrawWaveforms()
+        }
     }
 
+    // 增加时间线轨道的高度
     function makeTracksTaller() {
         multitrack.trackHeight += 20
     }
 
+    // 降低时间线轨道的高度
     function makeTracksShorter() {
         multitrack.trackHeight = Math.max(30, multitrack.trackHeight - 20)
     }
 
+    // 当操作被锁定的轨道时播放轨道头的锁定按钮缩放动画
+    // timelinedock.cpp/clip.qml调用
     function pulseLockButtonOnTrack(index) {
-        trackHeaderRepeater.itemAt(index).pulseLockButton()
+        console.assert(trackHeaderRepeater.itemAt(index));
+        if(trackHeaderRepeater.itemAt(index))
+            trackHeaderRepeater.itemAt(index).pulseLockButton()
     }
 
+    // 选择多个轨道
     function selectMultitrack() {
-        for (var i = 0; i < trackHeaderRepeater.count; i++)
-            trackHeaderRepeater.itemAt(i).selected = false
+        console.assert(trackHeaderRepeater);
+        if(!trackHeaderRepeater) return;
+        for (var i = 0; i < trackHeaderRepeater.count; i++){
+            console.assert(trackHeaderRepeater.itemAt(i));
+            if(trackHeaderRepeater.itemAt(i))
+                trackHeaderRepeater.itemAt(i).selected = false
+        }
         cornerstone.selected = true
     }
 
-    property int headerWidth: 92
+    // 轨道头的宽度（定值）
+    property int headerWidth: 108    //92
+    // 当前（选中）轨道的序号
     property int currentTrack: 0
+    // 被选中的轨道的背景颜色
     property color selectedTrackColor: Qt.rgba(80/255, 81/255, 82/255, 1.0)
+    // 轨道的普通状态下的颜色
     property color normalColor: Qt.rgba(49/255, 50/255, 52/255, 1.0)
+    // ？？？
     property color handleColor: Qt.rgba(92/255, 93/255, 94/255, 1.0)
+    // 背景色？？？
     property color backgroundColor: Qt.rgba(37/255, 38/255, 39/255, 1.0)
+    // 轨道数量
     property alias trackCount: tracksRepeater.count
+    // 禁用鼠标滚动（滚动条/缩放功能）
     property bool stopScrolling: false
 
+    // MovieMator的主题色（蓝色）
     property color moviematorBlue: Qt.rgba(153/255, 216/255, 234/255, 1.0)//Qt.rgba(23/255, 92/255, 118/255, 1.0)
 //    property var selection: []
+    // 波纹
     property alias ripple: toolbar.ripple
 
-    onCurrentTrackChanged: timeline.selection = []
+    // 当前轨道发生变化时响应的函数
+    onCurrentTrackChanged: {
+        console.assert(timeline);
+        if(timeline)
+            timeline.selection = []
+    }
 
+    // 时间线右键时弹出菜单
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
-        onClicked: menu.popup()
+        onClicked: trackmenu.popup()    // menu.popup()
     }
 
+    // 时间线可接收拖放内容的区域
     DropArea {
         id: dropArea
         property bool hasUrls
         property bool hasAbstractItem
         property string teststring: 'dropArea'
+        keys: ["application/mlt+xml", "application/x-qabstractitemmodeldatalist", "text/uri-list"]//只接收整个三个源来的拖拽
         anchors.fill: parent
-
+        // 取消拖放
         function endDrop()
         {
             Drag.cancel()
@@ -153,6 +241,7 @@ Rectangle {
 
 
 
+    // 时间线上方的工具栏菜单
     TimelineToolbar {
         id: toolbar
         width: parent.width - 2
@@ -168,8 +257,15 @@ Rectangle {
             rightMargin: 1
         }
         z: 0
+
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.RightButton
+            onClicked: menu.popup()
+        }
     }
 
+    // 刻度尺 Ruler
     Row {
         anchors {
             top: toolbar.bottom
@@ -241,14 +337,15 @@ Rectangle {
                             current: index === currentTrack
                             onIsLockedChanged: tracksRepeater.itemAt(index).isLocked = isLocked
                             onClicked: {
-//                                timeline.selection = []
                                 currentTrack = index
-                                timeline.selectTrackHead(currentTrack)
+                                console.assert(timeline);
+                                if(timeline){
+                                    timeline.selectTrackHead(currentTrack)
+                                }
                                 toolbar.hasClipOrTrackSelected = true
-//                                cornerstone.selected = false
-//                                for (var i = 0; i < trackHeaderRepeater.count; i++)
-//                                    trackHeaderRepeater.itemAt(i).selected = false
-//                                selected = true
+                                for (var i = 0; i < trackHeaderRepeater.count; i++) {//设置当前选中trackhead的选中状态
+                                    trackHeaderRepeater.itemAt(i).selected = (i == currentTrack)
+                                }
                             }
                         }
                     }
@@ -276,12 +373,17 @@ Rectangle {
             // This provides continuous scrubbing and scimming at the left/right edges.
             focus: true
             hoverEnabled: true
-            onClicked: timeline.position = (scrollView.flickableItem.contentX + mouse.x) / multitrack.scaleFactor
+            onClicked: {
+                console.assert(timeline);
+                if(timeline)
+                    timeline.position = (scrollView.flickableItem.contentX + mouse.x) / multitrack.scaleFactor
+            }
             property bool scim: false
             onReleased: scim = false
             onExited: scim = false
             onPositionChanged: {
-                if (mouse.modifiers === Qt.ShiftModifier || mouse.buttons === Qt.LeftButton) {
+                console.assert(timeline);
+                if ((mouse.modifiers === Qt.ShiftModifier || mouse.buttons === Qt.LeftButton) && timeline) {
                     timeline.position = (scrollView.flickableItem.contentX + mouse.x) / multitrack.scaleFactor
                     scim = true
                 }
@@ -295,6 +397,9 @@ Rectangle {
                 repeat: true
                 running: parent.scim && parent.containsMouse && (parent.mouseX < 50 || parent.mouseX > parent.width - 50)
                 onTriggered: {
+                    console.assert(timeline);
+                    if(!timeline)
+                        return;
                     if (parent.mouseX < 50)
                         timeline.position -= 10
                     else
@@ -317,9 +422,9 @@ Rectangle {
                     verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
                     Ruler {
                         id: ruler
-                        width: (tracksContainer.width < width) ? width : tracksContainer.width
-                        index: index
+                        width: scrollView.width
                         timeScale: multitrack.scaleFactor
+                        startX: scrollView.flickableItem.contentX
                     }
                 }
                 ScrollView {
@@ -328,16 +433,12 @@ Rectangle {
                     height: root.height - ruler.height - toolbar.height - 1 - 1//下留白 与ruler的space
                     //flickableItem.interactive: false  //wzq
 
-
                     style: ScrollViewStyle {
                         handle:
                             Rectangle {
                                 implicitWidth: 14
                                 implicitHeight: 14
-//                                border.width: 3
-//                                border.color:'transparent'// activePalette.window
                                 color: 'transparent'//'#989898'
-//                                radius: 7
                                 Rectangle {
                                     anchors.margins: 3
                                     anchors.fill: parent
@@ -349,23 +450,15 @@ Rectangle {
                         scrollBarBackground: Rectangle {
                             implicitWidth: 14
                             implicitHeight: 14
-                       //     border.width: 2
-                       //     border.color: normalColor//activePalette.window
                             color: 'transparent'//'#505050'//normalColor
                         }
                         decrementControl: Rectangle {
                             implicitWidth: 0
                             implicitHeight: 0
-
-//                            border.width: 2
-//                            border.color: activePalette.window
-
                         }
                         incrementControl: Rectangle {
                             implicitWidth: 0
                             implicitHeight: 0
-//                            border.width: 2
-//                            border.color: activePalette.window
                         }
                         corner: Rectangle {
                             implicitWidth: 14
@@ -374,35 +467,32 @@ Rectangle {
                             border.width: 0
                             color: 'transparent'//normalColor
                         }
-
                     }
 
                     Item {
-                        width: ((tracksContainer.width + headerWidth) < width) ? width : (tracksContainer.width + headerWidth)
+                        width: ((tracksContainer.width + headerWidth) < scrollView.width) ? scrollView.width : (tracksContainer.width + headerWidth)
                         height: trackHeaders.height + 30 // 30 is padding
 
                         MouseArea
                         {
-                                                   anchors.fill: parent
-                                                   propagateComposedEvents: true
-                                                   onPressed: mouse.accepted = false
-                                                   onReleased: mouse.accepted = false
-                                                   onClicked: mouse.accepted = false
-                                                   onDoubleClicked: mouse.accepted = false
-                                                   onPressAndHold: mouse.accepted = false
-                                                   onWheel:
-                                                   {
-                                                       if (wheel.angleDelta.y < 0)
-                                                       {
-                                                            root.zoomIn()
-                                                       }
-                                                       else if(wheel.angleDelta.y > 0)
-                                                       {
-                                                           root.zoomOut()
-                                                        }
-
-                                                   }
-
+                            anchors.fill: parent
+                            propagateComposedEvents: true
+                            onPressed: mouse.accepted = false
+                            onReleased: mouse.accepted = false
+                            onClicked: mouse.accepted = false
+                            onDoubleClicked: mouse.accepted = false
+                            onPressAndHold: mouse.accepted = false
+                            onWheel:
+                            {
+                                if (wheel.angleDelta.y < 0)
+                                {
+                                    root.zoomIn(tracksArea.mouseX)
+                                }
+                                else if(wheel.angleDelta.y > 0)
+                                {
+                                    root.zoomOut(tracksArea.mouseX)
+                                }
+                            }
                         }
 
                         Column {
@@ -413,7 +503,7 @@ Rectangle {
                             Repeater {
                                 model: multitrack
                                 delegate: Rectangle {
-                                    width: (tracksContainer.width < width) ? width : tracksContainer.width
+                                    width: (tracksContainer.width < scrollView.width) ? scrollView.width : tracksContainer.width
                                     color: (index === currentTrack)? selectedTrackColor : normalColor//(index % 2)? activePalette.alternateBase : activePalette.base
                                     height: Logic.trackHeight(video)
                                 }
@@ -429,15 +519,15 @@ Rectangle {
             }
 
             CornerSelectionShadow {
-                y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - scrollView.flickableItem.contentY : 0
-                clip: timeline.selection.length ?
+                y: tracksRepeater.count ? (tracksRepeater.itemAt(currentTrack) ? tracksRepeater.itemAt(currentTrack).y : 0) + ruler.height - scrollView.flickableItem.contentY : 0
+                clip: (timeline && timeline.selection.length) ?
                         tracksRepeater.itemAt(currentTrack).clipAt(timeline.selection[0]) : null
                 opacity: clip && clip.x + clip.width < scrollView.flickableItem.contentX ? 1 : 0
             }
 
             CornerSelectionShadow {
-                y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - scrollView.flickableItem.contentY : 0
-                clip: timeline.selection.length ?
+                y: tracksRepeater.count ? (tracksRepeater.itemAt(currentTrack) ? tracksRepeater.itemAt(currentTrack).y : 0) + ruler.height - scrollView.flickableItem.contentY : 0
+                clip: (timeline && timeline.selection.length) ?
                         tracksRepeater.itemAt(currentTrack).clipAt(timeline.selection[timeline.selection.length - 1]) : null
                 opacity: clip && clip.x > scrollView.flickableItem.contentX + scrollView.width ? 1 : 0
                 anchors.right: parent.right
@@ -446,17 +536,17 @@ Rectangle {
 
             Rectangle {
                 id: cursor
-                visible: timeline.position > -1
-                color: activePalette.text
+                visible: x >= 0     // timeline.position > -1
+                color: "#C0482C"    // activePalette.text
                 width: 1
                 height: root.height - scrollView.__horizontalScrollBar.height - toolbar.height
-                x: timeline.position * multitrack.scaleFactor - scrollView.flickableItem.contentX
+                x: timeline ? timeline.position * multitrack.scaleFactor - scrollView.flickableItem.contentX : 0
                 y: 0
             }
             TimelinePlayhead {
                 id: playhead
-                visible: timeline.position > -1
-                x: timeline.position * multitrack.scaleFactor - scrollView.flickableItem.contentX - 5
+                visible: x >= -5        // timeline.position > -1
+                x: timeline ? timeline.position * multitrack.scaleFactor - scrollView.flickableItem.contentX - 5 : 0
                 y: 0
                 width: 11
                 height: 5
@@ -465,6 +555,8 @@ Rectangle {
     }
 
 
+    // 拖放时在轨道上显示 clip的占用区域
+    // （会显示 append和 insert文字）
     Rectangle {
         id: dropTarget
         height: multitrack.trackHeight
@@ -482,6 +574,7 @@ Rectangle {
         }
     }
 
+    // 显示（延迟或超前）时间的小气泡
     Rectangle {
         id: bubbleHelp
         property alias text: bubbleHelpLabel.text
@@ -512,6 +605,8 @@ Rectangle {
             anchors.centerIn: parent
         }
         function show(x, y, text) {
+            console.assert(scrollView);
+            if(!scrollView) return;
             bubbleHelp.x = x + tracksArea.x - scrollView.flickableItem.contentX - bubbleHelpLabel.width
             bubbleHelp.y = y + tracksArea.y - scrollView.flickableItem.contentY - bubbleHelpLabel.height+18
             bubbleHelp.text = text
@@ -535,31 +630,134 @@ Rectangle {
         fast: true
     }
 
+    // 右键的菜单
     Menu {
         id: menu
         MenuItem {
             text: qsTr('Add Audio Track')
             shortcut: 'Ctrl+U'
-            onTriggered: timeline.addAudioTrack()
+            onTriggered: {
+                console.assert(timeline);
+                if(timeline)
+                    timeline.addAudioTrack()
+            }
         }
         MenuItem {
             text: qsTr('Add Video Track')
             shortcut: 'Ctrl+Y'
-            onTriggered: timeline.addVideoTrack()
+            onTriggered: {
+                console.assert(timeline);
+                if(timeline)
+                    timeline.addVideoTrack()
+            }
         }
         MenuItem {
             text: qsTr('Insert Track')
-            onTriggered: timeline.insertTrack()
+            onTriggered: {
+                console.assert(timeline);
+                if(timeline)
+                    timeline.insertTrack()
+            }
         }
         MenuItem {
             enabled: !multitrack.defaultTrack
             text: qsTr('Remove Track')
-            onTriggered: timeline.removeTrack()
+            onTriggered: {
+                console.assert(timeline);
+                if(timeline)
+                    timeline.removeTrack()
+            }
         }
 
     }
 
+    // 轨道菜单
+    Menu {
+        id: trackmenu
+        // 切割
+        MenuItem {
+            text: qsTr('Split')
+            shortcut: 'S'
+            onTriggered: {
+                console.assert(timeline);
+                if(timeline)
+                    timeline.splitClip(currentTrack)
+            }
+        }
+        // 追加资源
+        MenuItem {
+            text: qsTr('Append');
+            shortcut: 'A'
+            onTriggered: {
+                console.assert(timeline);
+                if(timeline)
+                    timeline.append(currentTrack)
+            }
+        }
+        MenuSeparator { }
+        // 粘贴
+        MenuItem {
+            text: qsTr('Paste')
+            shortcut: 'Ctrl+V'
+            onTriggered: {
+                console.assert(mainwindow);
+                if(mainwindow)
+                    mainwindow.on_actionPaste_triggered()
+            }
+        }
+        MenuSeparator { }
+        // 增加视频轨道
+        MenuItem {
+            text: qsTr('New Video Track')
+            shortcut: 'Ctrl+Y'
+            onTriggered: {
+                console.assert(timeline);
+                if(timeline)
+                    timeline.addVideoTrack()
+            }
+        }
+        // 增加音频轨道
+        MenuItem {
+            text: qsTr('New Audio Track')
+            shortcut: 'Ctrl+U'
+            onTriggered: {
+                console.assert(timeline);
+                if(timeline)
+                    timeline.addAudioTrack()
+            }
+        }
+        // 删除轨道
+        MenuItem {
+            text: qsTr('Delete Track')
+            onTriggered: {
+                console.assert(timeline);
+                if(timeline)
+                    timeline.removeTrack()
+            }
+        }
+        MenuSeparator { }
+        // 轨道关闭视频
+        MenuItem {
+            text: qsTr('Hide')
+            onTriggered: {
+                console.assert(timeline);
+                if(timeline)
+                    timeline.toggleTrackHidden(currentTrack)
+            }
+        }
+        // 轨道关闭音频
+        MenuItem {
+            text: qsTr('Mute')
+            onTriggered: {
+                console.assert(timeline);
+                if(timeline)
+                    timeline.toggleTrackMute(currentTrack)
+            }
+        }
+    }
 
+
+    // 轨道模型
     DelegateModel {
         id: trackDelegateModel
         model: multitrack
@@ -570,10 +768,13 @@ Rectangle {
             isAudio: audio
             isCurrentTrack: currentTrack === index
             timeScale: multitrack.scaleFactor
-            selection: timeline.selection
+            selection: timeline ? timeline.selection : 0
             onClipClicked: {
                 currentTrack = track.DelegateModel.itemsIndex
-                timeline.selection = [ clip.DelegateModel.itemsIndex ]
+                console.assert(timeline);
+                if(timeline){
+                    timeline.setSelection([clip.DelegateModel.itemsIndex], currentTrack, false)
+                }
                 root.clipClicked()
                 toolbar.hasClipOrTrackSelected = true
 
@@ -581,6 +782,8 @@ Rectangle {
 
             onClipDragged: {
                 // This provides continuous scrolling at the left/right edges.
+                console.assert(scrollView);
+                if(!scrollView) return;
                 if (x > scrollView.flickableItem.contentX + scrollView.width - 50) {
                     scrollTimer.item = clip
                     scrollTimer.backwards = false
@@ -598,7 +801,7 @@ Rectangle {
                 // Show distance moved as time in a "bubble" help.
                 var track = tracksRepeater.itemAt(clip.trackIndex)
                 var delta = Math.round((clip.x - clip.originalX) / multitrack.scaleFactor)
-                var s = timeline.timecode(Math.abs(delta))
+                var s = timeline ? timeline.timecode(Math.abs(delta)) : ''
                 // remove leading zeroes
                 if (s.substring(0, 3) === '00:')
                     s = s.substring(3)
@@ -611,16 +814,23 @@ Rectangle {
             }
             onClipDraggedToTrack: {
                 var i = clip.trackIndex + direction
-                if (i >= 0  && i < tracksRepeater.count) {
+                console.assert(tracksRepeater);
+                if (tracksRepeater && i >= 0  && i < tracksRepeater.count) {
                     var track = tracksRepeater.itemAt(i)
                     clip.reparent(track)
                     clip.trackIndex = track.DelegateModel.itemsIndex
                 }
             }
             onCheckSnap: {
-                for (var i = 0; i < tracksRepeater.count; i++)
-                    tracksRepeater.itemAt(i).snapClip(clip)
+                console.assert(tracksRepeater);
+                if(!tracksRepeater) return;
+                for (var i = 0; i < tracksRepeater.count; i++){
+                    console.assert(tracksRepeater.itemAt(i));
+                    if(tracksRepeater)
+                        tracksRepeater.itemAt(i).snapClip(clip)
+                }
             }
+            // 轨道被锁定时显示的图片
             Image {
                 anchors.fill: parent
                 source: "qrc:///icons/light/16x16/track-locked.png"
@@ -632,13 +842,16 @@ Rectangle {
                     anchors.fill: parent
                     onPressed: {
                         mouse.accepted = true
-                        trackHeaderRepeater.itemAt(index).pulseLockButton()
+                        console.assert(trackHeaderRepeater.itemAt(index));
+                        if(trackHeaderRepeater.itemAt(index))
+                            trackHeaderRepeater.itemAt(index).pulseLockButton()
                     }
                 }
             }
         }
     }
 
+    // 连接 timelineDock.cpp的槽函数
     Connections {
         target: timeline
         onPositionChanged: if (!stopScrolling) Logic.scrollIfNeeded()
@@ -646,10 +859,21 @@ Rectangle {
         onDropped: Logic.dropped()
         onDropAccepted: Logic.acceptDrop(xml)
         onSelectionChanged: {
+            console.assert(timeline);
+            if(!timeline)   return;
             cornerstone.selected = timeline.isMultitrackSelected()
-            var selectedTrack = timeline.selectedTrack()
-            for (var i = 0; i < trackHeaderRepeater.count; i++)
-                trackHeaderRepeater.itemAt(i).selected = (i === selectedTrack)
+            // var selectedTrack = timeline.selectedTrackIndex()
+            // for (var i = 0; i < trackHeaderRepeater.count; i++)
+            //     trackHeaderRepeater.itemAt(i).selected = (i === selectedTrack)
+
+            var isAClipSelected = timeline.isAClipSelected()
+            if (isAClipSelected === true) {//如果选中clip则清除trackhead的选中状态
+                for (var i = 0; i < trackHeaderRepeater.count; i++) {
+                    trackHeaderRepeater.itemAt(i).selected = false
+                }
+            }
+            if (isAClipSelected === false)
+                toolbar.hasClipOrTrackSelected = false
         }
     }
 
@@ -662,11 +886,13 @@ Rectangle {
         target: scrollView.flickableItem
         onContentYChanged:
         {
-            headerScrollView.flickableItem.contentY = scrollView.flickableItem.contentY
+            console.assert(headerScrollView);
+            if(headerScrollView)
+                headerScrollView.flickableItem.contentY = scrollView.flickableItem.contentY
         }
         onContentXChanged:
         {
-            rulerScrollView.flickableItem.contentX =  scrollView.flickableItem.contentX
+//            rulerScrollView.flickableItem.contentX =  scrollView.flickableItem.contentX
         }
     }
 
@@ -674,12 +900,15 @@ Rectangle {
         target: headerScrollView.flickableItem
         onContentYChanged:
         {
-            scrollView.flickableItem.contentY = headerScrollView.flickableItem.contentY
+            console.assert(scrollView);
+            if(scrollView)
+                scrollView.flickableItem.contentY = headerScrollView.flickableItem.contentY
         }
     }
 
 
     // This provides continuous scrolling at the left/right edges.
+    // 拖放 clip时滚动条的定时器
     Timer {
         id: scrollTimer
         interval: 25
@@ -690,6 +919,8 @@ Rectangle {
         onTriggered: {
             var delta = backwards? -10 : 10
             if (item) item.x += delta
+            console.assert(scrollView);
+            if(!scrollView) return;
             scrollView.flickableItem.contentX += delta
             if (scrollView.flickableItem.contentX <= 0)
                 stop()

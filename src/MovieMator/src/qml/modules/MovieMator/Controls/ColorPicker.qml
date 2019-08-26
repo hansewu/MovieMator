@@ -1,3 +1,23 @@
+/*
+ * Copyright (c) 2014 Meltytech, LLC
+ * Author: Brian Matherly <pez4brian@yahoo.com>
+ *
+ * Copyright (c) 2016-2019 EffectMatrix Inc.
+ * Author: vgawen <gdb_1986@163.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 import QtQuick 2.2
 import QtQuick.Controls 1.1
@@ -10,11 +30,29 @@ RowLayout {
     property string value: "white"
     property bool alpha: false
     property alias eyedropper: pickerButton.visible
-    
+    property string temporaryColor: "black"
+
     signal pickStarted
-    
+    signal cancel()
+
     SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
-    
+
+    function updateColor(oldColor, newColor) {
+        // Make a copy of the current value.
+        var myColor = Qt.darker(oldColor, 1.0)
+        // Ignore alpha when comparing.
+        myColor.a = newColor.a
+        // If the user changed color but left alpha at 0,
+        // they probably want to reset alpha to opaque.
+        if (newColor.a === 0 && !Qt.colorEqual(newColor, myColor)) {
+            newColor.a = 1.0
+        }
+        // Assign the new color value. Unlike docs say, using currentColor
+        // is actually more cross-platform compatible.
+
+        return newColor
+    }
+
     ColorPickerItem {
         id: pickerItem
         onColorPicked: {
@@ -22,7 +60,7 @@ RowLayout {
             pickerButton.checked = false
         }
     }
-    
+
     Button {
         id: colorButton
         implicitWidth: 20
@@ -32,34 +70,51 @@ RowLayout {
                 border.width: 1
                 border.color: 'gray'
                 radius: 3
-                color: value
+                color: temporaryColor
             }
         }
         onClicked: colorDialog.visible = true
         tooltip: qsTr('Click to open color dialog')
     }
-    
+
     ColorDialog {
         id: colorDialog
         title: qsTr("Please choose a color")
         showAlphaChannel: alpha
         color: value
-        onAccepted: {
-            if (alpha) {
-                var alphaHex = Math.round(255 * currentColor.a).toString(16)
-                if (alphaHex.length === 1)
-                    alphaHex = '0' + alphaHex
-                value = '#' + alphaHex + currentColor.toString().substr(1)
-            } else {
-                value = currentColor
-            }
+        onCurrentColorChanged: {
+            var newColor = updateColor(temporaryColor, currentColor)
+            temporaryColor = newColor
         }
+        onRejected: {
+            temporaryColor = color
+            cancel()
+        }
+        onAccepted: {
+//            updateColor(value, currentColor)
+//            // Make a copy of the current value.
+//            var myColor = Qt.darker(value, 1.0)
+//            // Ignore alpha when comparing.
+//            myColor.a = currentColor.a
+//            // If the user changed color but left alpha at 0,
+//            // they probably want to reset alpha to opaque.
+//            if (currentColor.a === 0 && !Qt.colorEqual(currentColor, myColor))
+//                currentColor.a = 255
+//            // Assign the new color value. Unlike docs say, using currentColor
+//            // is actually more cross-platform compatible.
+//            value = currentColor
+            var newColor = updateColor(value, currentColor)
+            currentColor.a = newColor.a
+            value = newColor
+            temporaryColor = newColor
+        }
+        modality: Qt.ApplicationModal
     }
-    
+
     Button {
         id: pickerButton
-     //   iconName: 'color-picker'
-        iconSource: 'qrc:///icons/light/32x32/color-picker.png'
+        iconName: 'color-picker'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/color-picker.png'
         tooltip: '<p>' + qsTr("Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.") + '</p>'
         implicitWidth: 20
         implicitHeight: 20

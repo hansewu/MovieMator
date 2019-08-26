@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2015-2016 Meltytech, LLC
+ *
+ * Copyright (c) 2016-2019 EffectMatrix Inc.
+ * Author: wyl <wyl@pylwyl.local>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 import QtQuick 2.1
 import QtQuick.Controls 1.0
@@ -8,64 +27,64 @@ Item {
     width: 300
     height: 250
     Component.onCompleted: {
-        if (filter.isNew) {
-            // Set preset parameter values
-            filter.set('0', 40)
-            filter.set('1', 4)
-            filter.set('2', 0.9)
-            filter.set('3', 0.75)
-            filter.set('4', 0)
-            filter.set('5', -22)
-            filter.set('6', -28)
-            filter.savePreset(preset.parameters, qsTr('Quick fix'))
+        // if (filter.isNew) {
+        //     // Set preset parameter values
+        //     filter.set('0', 40)
+        //     filter.set('1', 4)
+        //     filter.set('2', 0.9)
+        //     filter.set('3', 0.75)
+        //     filter.set('4', 0)
+        //     filter.set('5', -22)
+        //     filter.set('6', -28)
+        //     filter.savePreset(preset.parameters, qsTr('Quick fix'))
 
-            filter.set('0', 50)
-            filter.set('1', 1.5)
-            filter.set('2', 0.1)
-            filter.set('3', 0.75)
-            filter.set('4', -1.5)
-            filter.set('5', -10)
-            filter.set('6', -20)
-            filter.savePreset(preset.parameters, qsTr('Small hall'))
+        //     filter.set('0', 50)
+        //     filter.set('1', 1.5)
+        //     filter.set('2', 0.1)
+        //     filter.set('3', 0.75)
+        //     filter.set('4', -1.5)
+        //     filter.set('5', -10)
+        //     filter.set('6', -20)
+        //     filter.savePreset(preset.parameters, qsTr('Small hall'))
 
-            filter.set('0', 40)
-            filter.set('1', 20)
-            filter.set('2', 0.5)
-            filter.set('3', 0.75)
-            filter.set('4', 0)
-            filter.set('5', -10)
-            filter.set('6', -30)
-            filter.savePreset(preset.parameters, qsTr('Large hall'))
+        //     filter.set('0', 40)
+        //     filter.set('1', 20)
+        //     filter.set('2', 0.5)
+        //     filter.set('3', 0.75)
+        //     filter.set('4', 0)
+        //     filter.set('5', -10)
+        //     filter.set('6', -30)
+        //     filter.savePreset(preset.parameters, qsTr('Large hall'))
 
-            filter.set('0', 6)
-            filter.set('1', 15)
-            filter.set('2', 0.9)
-            filter.set('3', 0.1)
-            filter.set('4', -10)
-            filter.set('5', -10)
-            filter.set('6', -10)
-            filter.savePreset(preset.parameters, qsTr('Sewer'))
+        //     filter.set('0', 6)
+        //     filter.set('1', 15)
+        //     filter.set('2', 0.9)
+        //     filter.set('3', 0.1)
+        //     filter.set('4', -10)
+        //     filter.set('5', -10)
+        //     filter.set('6', -10)
+        //     filter.savePreset(preset.parameters, qsTr('Sewer'))
 
-            filter.set('0', 6)
-            filter.set('1', 15)
-            filter.set('2', 0.9)
-            filter.set('3', .1)
-            filter.set('4', -10)
-            filter.set('5', -10)
-            filter.set('6', -10)
-            filter.savePreset(preset.parameters, qsTr('Church'))
+        //     filter.set('0', 6)
+        //     filter.set('1', 15)
+        //     filter.set('2', 0.9)
+        //     filter.set('3', .1)
+        //     filter.set('4', -10)
+        //     filter.set('5', -10)
+        //     filter.set('6', -10)
+        //     filter.savePreset(preset.parameters, qsTr('Church'))
 
-            // Set default parameter values
-            filter.set('0', 30)
-            filter.set('1', 7.5)
-            filter.set('2', 0.5)
-            filter.set('3', 0.75)
-            filter.set('4', 0)
-            filter.set('5', -10)
-            filter.set('6', -17.5)
-            filter.savePreset(preset.parameters)
-        }
-        setControls()
+        //     // Set default parameter values
+        //     filter.set('0', 30)
+        //     filter.set('1', 7.5)
+        //     filter.set('2', 0.5)
+        //     filter.set('3', 0.75)
+        //     filter.set('4', 0)
+        //     filter.set('5', -10)
+        //     filter.set('6', -17.5)
+        //     filter.savePreset(preset.parameters)
+        // }
+        // setControls()
     }
 
     function setControls() {
@@ -109,7 +128,7 @@ Item {
             spinnerWidth: 80
             value: filter.getDouble('0')
             onValueChanged: {
-               filter.set('0', value)
+                filter.set('0', value)
             }
         }
         UndoButton {
