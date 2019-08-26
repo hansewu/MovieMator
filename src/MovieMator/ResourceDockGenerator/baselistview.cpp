@@ -42,11 +42,28 @@ BaseListView::BaseListView(QWidget *pParent) :
 
 void BaseListView::mousePressEvent(QMouseEvent *pEvent)
 {
-    if ((pEvent->button() == Qt::LeftButton)
-            && indexAt(pEvent->pos()).isValid())
+    QModelIndex index = indexAt(pEvent->pos());
+
+    if ((pEvent->button() == Qt::LeftButton) && index.isValid())
     {
-        m_dragStart     = pEvent->pos();
-        m_bCanStartDrag = true;
+        // item的坐标范围
+        QRect itemDelegateRect = rectForIndex(index);
+        // item上添加按钮的坐标范围
+        QRect decorationRect   = QRect( itemDelegateRect.left() + itemDelegateRect.width() - LISTVIEW_ITEM_ADDBTNSIZE,
+                                        itemDelegateRect.top(),
+                                        LISTVIEW_ITEM_ADDBTNSIZE,
+                                        LISTVIEW_ITEM_ADDBTNSIZE );
+
+        // 判断鼠标点击的是否是添加按钮
+        if(decorationRect.contains(pEvent->pos()))
+        {   // 鼠标位置在添加按钮的坐标范围内，禁止拖动
+            m_bCanStartDrag = false;
+        }
+        else
+        {   // 鼠标位置不在添加按钮的坐标范围内
+            m_dragStart     = pEvent->pos();
+            m_bCanStartDrag = true;
+        }
     }
     else
     {
