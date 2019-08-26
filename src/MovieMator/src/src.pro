@@ -294,10 +294,6 @@ OTHER_FILES += \
     ../icons/dark/index.theme \
     ../icons/light/index.theme \
 
-TRANSLATIONS += \
-     ../translations/mm_en.ts \
-     ../translations/mm_zh.ts \
-
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil ../MltController ../QmlUtilities
 INCLUDEPATH += ../include
@@ -435,7 +431,7 @@ isEmpty(MOVIEMATOR_VERSION) {
      win32:MOVIEMATOR_VERSION = adhoc
 }
 #DEFINES += MOVIEMATOR_VERSION=\\\"$$MOVIEMATOR_VERSION\\\"
-DEFINES += MOVIEMATOR_VERSION=\\\"2.6.4\\\"
+DEFINES += MOVIEMATOR_VERSION=\\\"2.7.0\\\"
 
 
 unix:!mac:isEmpty(PREFIX) {

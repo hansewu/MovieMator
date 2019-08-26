@@ -5,6 +5,7 @@
 #include "baselistview.h"
 #include "lineeditclear.h"
 #include "uiuserdef.h"
+#include "translationhelper.h"
 
 #include "util.h"
 #include "settings.h"
@@ -20,7 +21,7 @@ RecentDockWidget::RecentDockWidget(MainInterface *pMainInterface, QWidget *pPare
     m_pMainInterface(pMainInterface)
 {
     m_recent            = Settings.recent();
-    m_listItemNames     = {tr("0 Samples"), tr("1 Videos"), tr("2 Audios"), tr("3 Images")};
+    m_listItemNames     = {tr("1 Backgrounds"), tr("2 Videos"), tr("3 Audios"), tr("4 Images")};
 
     m_pRemoveAction     = new QAction(this);
     m_pRemoveAllAction  = new QAction(this);
@@ -32,6 +33,9 @@ RecentDockWidget::RecentDockWidget(MainInterface *pMainInterface, QWidget *pPare
 
     connect(m_pRemoveAction, SIGNAL(triggered()), this, SLOT(on_actionRemove_triggered()));
     connect(m_pRemoveAllAction, SIGNAL(triggered()), this, SLOT(on_actionRemoveAll_triggered()));
+
+    QString strBackgroundsDir = Util::resourcesPath() + "/template/backgrounds";
+    TranslationHelper::readJsonFile(strBackgroundsDir + "/background_name_translation_info.json", m_backgroundTranslateInfo);
 }
 
 RecentDockWidget::~RecentDockWidget()
@@ -185,12 +189,12 @@ void RecentDockWidget::setProxyModel()
     }
 }
 
-void RecentDockWidget::addBlackVideo()
+void RecentDockWidget::addSampleResource()
 {
-    QDir dir(Util::resourcesPath() + "/template/sampleVideo");
-    if(dir.exists())
+    QDir dirBackgrounds(Util::resourcesPath() + "/template/backgrounds/videos");
+    if(dirBackgrounds.exists())
     {
-        QFileInfoList fileList = dir.entryInfoList(QDir::Files | QDir::NoSymLinks);
+        QFileInfoList fileList = dirBackgrounds.entryInfoList(QDir::Files | QDir::NoSymLinks);
         if(fileList.count() > 0)
         {
             for(QFileInfo file : fileList)
@@ -284,6 +288,10 @@ int RecentDockWidget::setItemModelInfo(const QString &strFile)
 
         if(strFile.contains(Util::resourcesPath(), Qt::CaseInsensitive))
         {   // 黑场视频
+            QString strTrFileName = TranslationHelper::getTranslationStr(pItem->text(), m_backgroundTranslateInfo);
+            pItem->setText(strTrFileName);
+            pItem->setToolTip(strTrFileName);
+
             nType = 0;
         }
         else
@@ -558,7 +566,7 @@ QMap<QString, BaseItemModel *> * RecentDockWidget::createAllClassesItemModel()
         }
     }
 
-    addBlackVideo();
+    addSampleResource();
 
     return pFileDockListViewItemModel;
 }

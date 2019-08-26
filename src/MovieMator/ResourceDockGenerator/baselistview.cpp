@@ -12,7 +12,8 @@ BaseListView::BaseListView(QWidget *pParent) :
     QListView (pParent)
 {
     //FIXME:mac上字体显示太小
-    setFont(QFont(font().family(), LISTVIEW_ITEM_FONTSIZE));//设置listview的字体大小，主要作用与item上的文字
+    // Mac下字体显示太小，使用默认字体大小，Windows和 Mac下看上去效果都很好
+//    setFont(QFont(font().family(), LISTVIEW_ITEM_FONTSIZE));//设置listview的字体大小，主要作用与item上的文字
     setViewMode(QListView::IconMode);//使用大尺寸的图标及名字显示item
     setGridSize(QSize(LISTVIEW_GRIDSIZE_WIDTH, LISTVIEW_GRIDSIZE_HEIGHT));//设置网格中每个item的宽高
     setFocusPolicy(Qt::NoFocus);//listview不接受焦点事件

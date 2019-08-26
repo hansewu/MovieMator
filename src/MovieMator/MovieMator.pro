@@ -16,3 +16,6 @@ ResourceDockGenerator.depends = CommonUtil
 src.depends = CuteLogger CommonUtil QmlUtilities MltController Breakpad ResourceDockGenerator
 
 
+TRANSLATIONS += \
+     ./translations/mm_en.ts \
+     ./translations/mm_zh.ts
