@@ -16,6 +16,7 @@ typedef struct {
     QString strName;
     QString strClassification;
     QString strThumbnailFilePath;
+    QString strPerviewSettingFilePath;//滤镜预览文件路径
     int nIndexOfMetadataModel;//保存filter在metadataModel中索引
     bool bVisible;
 } FilterInfo;

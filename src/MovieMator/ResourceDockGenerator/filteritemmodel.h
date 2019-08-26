@@ -6,6 +6,7 @@
 struct FilterUserData
 {
     int nFilterIndex;
+    QString strPerviewFilePath;
 };
 
 class FilterItemModel : public BaseItemModel

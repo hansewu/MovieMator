@@ -486,10 +486,9 @@ QList<FilterInfo> FilterController::getFiltersInfo(int nFilterType)
         filterInfo.strThumbnailFilePath     = strTempPath.right(strTempPath.length() - 3);
         filterInfo.nIndexOfMetadataModel    = nIndex;
 
-//        QString strObjectName = metadataModel->objectName();
-//        QDir commonFileDir = QDir(Util::resourcesPath() + "/template/filters/preview/");
-//        QString filePath = commonFileDir.absoluteFilePath(strObjectName + ".mlt");
-//        strcpy(filterInfos[nIndex].perviewSettingFilePath, filePath.toStdString().c_str());
+        QString strObjectName = pMetadata->objectName();
+        QDir commonFileDir = QDir(Util::resourcesPath() + "/template/filters/preview/");
+        filterInfo.strPerviewSettingFilePath = commonFileDir.absoluteFilePath(strObjectName + ".mlt");
 
         bool bVisible = true;
         if (pMetadata->isHidden()) bVisible = false;

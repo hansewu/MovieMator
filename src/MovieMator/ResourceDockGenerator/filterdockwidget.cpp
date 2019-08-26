@@ -68,6 +68,7 @@ QMap<QString, BaseItemModel *> *FilterDockWidget::createAllClassesItemModel()
 
         FilterUserData *pFilterUserData = new FilterUserData;
         pFilterUserData->nFilterIndex = filterInfo.nIndexOfMetadataModel;
+        pFilterUserData->strPerviewFilePath = filterInfo.strPerviewSettingFilePath;
         QByteArray userDataByteArray;
         userDataByteArray.append(reinterpret_cast<char *>(pFilterUserData), sizeof(FilterUserData));
         pItem->setData(userDataByteArray, Qt::UserRole);
@@ -112,7 +113,7 @@ void FilterDockWidget::preview(const QStandardItem *pItem)
     Q_ASSERT(m_pMainInterface);
     if (m_pMainInterface)
     {
-        m_pMainInterface->previewFilter(pFilterUserData->nFilterIndex);
+        previewFilter(pFilterUserData->strPerviewFilePath);
     }
 
     qDebug()<<"sll-----preview---end";
@@ -156,6 +157,13 @@ QString FilterDockWidget::getQmlDirPath() {
     dir.cd("moviemator");
     dir.cd("qml");
     return dir.absolutePath();
+}
+
+void FilterDockWidget::previewFilter(QString strPerviewSettingFilePath)
+{
+    FILE_HANDLE mltSettingFile = m_pMainInterface->openFile(strPerviewSettingFilePath);
+    m_pMainInterface->playFile(mltSettingFile);
+    m_pMainInterface->destroyFileHandle(mltSettingFile);
 }
 
 static FilterDockWidget *pVideoDockInstance = nullptr;

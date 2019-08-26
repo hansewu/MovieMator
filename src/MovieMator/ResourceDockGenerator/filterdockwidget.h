@@ -23,6 +23,7 @@ protected:
 private:
     void readTranslatJsFile(QString jsFilePath);
     QString getQmlDirPath();
+    void previewFilter(QString strPerviewSettingFilePath);
 
 private:
     MainInterface *m_pMainInterface;
