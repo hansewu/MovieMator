@@ -116,6 +116,9 @@ private:
     //当前的producer发生改变时，重置attachedfiltersmodel
     void reset(Mlt::Producer *producer = nullptr);
 
+    //给新添加的滤镜设置缺省参数
+    void setDefaultValueForAllParemeters(Mlt::Filter* pFilter,QmlMetadata* pMetadata);
+
     //拖拽的filter的索引
     int m_dropRow;
     //移除的filter的索引

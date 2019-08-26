@@ -34,7 +34,7 @@ colorhalftone:A Effect2
 colorize:5 Advanced Coloring Tool
 colortap:8 Art
 composition:8 Art
-contrast0r:5 Advanced Coloring Tool
+contrast0r:3 Basic Coloring Tool
 curves:5 Advanced Coloring Tool
 d90stairsteppingfix:5 Advanced Coloring Tool
 darken:8 Art
@@ -94,7 +94,7 @@ R:B Black & White
 RGB:8 Art
 rgbnoise:A Effect2
 rgbsplit0r:A Effect2
-saturat0r:5 Advanced Coloring Tool
+saturat0r:3 Basic Coloring Tool
 saturation:5 Advanced Coloring Tool
 scanline0r:A Effect2
 screen:8 Art

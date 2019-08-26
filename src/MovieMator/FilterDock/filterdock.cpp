@@ -99,6 +99,7 @@ int FilterDock::updateFilters(Filter_Info * filterInfos, int nFilterCount)
         filterInfo->setName(QString(filterInfos[i].name));
         filterInfo->setFilterType(QString(filterInfos[i].type));
         filterInfo->setImageSourcePath(QString(filterInfos[i].imageSourcePath));
+        filterInfo->setPerviewSettingFilePath(QString(filterInfos[i].perviewSettingFilePath));
 
         m_pFilterInfo->addFilterItemInfo(filterInfo);
     }
@@ -112,9 +113,11 @@ void FilterDock::addFilterItem(int index)
     m_mainWindow->addFilter(index);
 }
 
-void FilterDock::previewFilter(int index)
+void FilterDock::previewFilter(QString perviewSettingFilePath)
 {
-    m_mainWindow->previewFilter(index);
+    FILE_HANDLE mltSettingFile = m_mainWindow->openFile(perviewSettingFilePath);
+    m_mainWindow->playFile(mltSettingFile);
+    m_mainWindow->destroyFileHandle(mltSettingFile);
 }
 
 void FiltersInfo::addFilterItemInfo(FilterItemInfo *filterInfo)

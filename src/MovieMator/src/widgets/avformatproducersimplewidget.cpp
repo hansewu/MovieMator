@@ -87,9 +87,20 @@ AvformatProducerSimpleWidget::~AvformatProducerSimpleWidget()
     if (m_tempProducer)
         delete m_tempProducer;
     m_tempProducer = nullptr;
+
     if (m_producer)
         delete  m_producer;
     m_producer = nullptr;
+
+    if (m_timer)
+    {
+        m_timer->stop();
+        delete m_timer;
+    }
+
+    if (m_opacityEffect)
+        delete m_opacityEffect;
+
     delete ui;
 }
 
@@ -282,16 +293,15 @@ void AvformatProducerSimpleWidget::on_okButton_clicked()
     Mlt::Producer *producer = createProducer(MLT.profile(), m_tempProducer, speed);
 //    adjustProducer(producer);//调节Producer属性（包括Producer入点出点，滤镜入点出点，转场，关键帧）
 
-    //使用用tempProducer发送producerChanged消息
+    //发送producerChanged消息
     if (producer->get_int(kMultitrackItemProperty)) {
-        Mlt::Controller::copyFilters(*producer, *m_tempProducer);
+        Mlt::Controller::copyFilters(*m_producer, *producer);
         emit producerChanged(producer);
         delete producer;
     } else {
         reopen(producer);
     }
 
-    stopTimer();
 }
 
 

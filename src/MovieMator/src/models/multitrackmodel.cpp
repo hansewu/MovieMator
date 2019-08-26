@@ -92,8 +92,9 @@ MultitrackModel::MultitrackModel(QObject *parent)
 //    connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));//sll:将modify放在mainwindow中建立连接，防止界面更新与数据操作顺序问题
     connect(this, SIGNAL(reloadRequested()), SLOT(reload()), Qt::QueuedConnection);
 
-    m_selection.selectedTrack = -1;
-    m_selection.isMultitrackSelected = false;
+    m_selection.nIndexOfSelectedClip = -1;
+    m_selection.nIndexOfSelectedTrack = -1;
+    m_selection.bIsMultitrackSelected = false;
 }
 
 MultitrackModel::~MultitrackModel()
@@ -977,6 +978,7 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int po
         }
     }
     if (result) {
+        setSelection(toTrack, getClipOfPosition(toTrack, position));
         emit modified();
         MLT.refreshConsumer();
     }
@@ -1184,6 +1186,9 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int posi
             playlist.insert(clip.parent(), targetIndex, in, out);
             endInsertRows();
         }
+
+        setSelection(trackIndex, getClipOfPosition(trackIndex, position));
+
         QModelIndex index = createIndex(targetIndex, 0, quintptr(trackIndex));
         AudioLevelsTask::start(clip.parent(), this, index);
         emit modified();
@@ -1393,6 +1398,8 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
             emit modified();
             emit seeked(playlist.clip_start(result));
         }
+
+        setSelection(trackIndex, getClipOfPosition(trackIndex, position));
     }
     return result;
 }
@@ -1426,8 +1433,12 @@ int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
         beginInsertRows(index(trackIndex), i, i);
         playlist.append(clip.parent(), in, out);
         endInsertRows();
+
         QModelIndex index = createIndex(i, 0, quintptr(trackIndex));
         AudioLevelsTask::start(clip.parent(), this, index);
+
+        setSelection(trackIndex, i);
+
         emit modified();
         emit seeked(playlist.clip_start(i));
         return i;
@@ -4167,6 +4178,8 @@ int MultitrackModel::moveInsertClip(int fromTrack, int toTrack, int clipIndex, i
         beginRemoveRows(parentIndex, clipIndex, clipIndex);
         fromPlaylist.remove(clipIndex);
         endRemoveRows();
+
+        setSelection(toTrack, getClipOfPosition(toTrack, position));
     }
 
     consolidateBlanksAllTracks();
@@ -4412,4 +4425,68 @@ void MultitrackModel::setTransitionProperty(int trackIndex, int clipIndex, const
     transition->set(propertyName.toUtf8().constData(), propertyValue.toUtf8().constData());
 
     MLT.refreshConsumer();
+}
+
+int MultitrackModel::setSelection(TIMELINE_SELECTION selectionNew)
+{
+    if( selectionNew.bIsMultitrackSelected != m_selection.bIsMultitrackSelected
+            || selectionNew.nIndexOfSelectedClip != m_selection.nIndexOfSelectedClip
+            || selectionNew.nIndexOfSelectedTrack != m_selection.nIndexOfSelectedTrack )
+    {
+        TIMELINE_SELECTION selectionOld = m_selection;
+        m_selection = selectionNew;
+        emit selectionChanged(selectionOld, selectionNew);
+    }
+    return 0;
+}
+
+int MultitrackModel::setSelection(int nIndexOfTrack, int nClipIndexToSelect)
+{
+    TIMELINE_SELECTION selectionNew;
+    selectionNew.nIndexOfSelectedClip = nClipIndexToSelect;
+    selectionNew.nIndexOfSelectedTrack = nIndexOfTrack;
+    selectionNew.bIsMultitrackSelected = false;
+    setSelection(selectionNew);
+    return 0;
+}
+
+int MultitrackModel::setSelection(int nTrackIndexToSelect)
+{
+    TIMELINE_SELECTION selectionNew;
+    selectionNew.nIndexOfSelectedClip = -1;
+    selectionNew.nIndexOfSelectedTrack = nTrackIndexToSelect;
+    selectionNew.bIsMultitrackSelected = false;
+    setSelection(selectionNew);
+    return 0;
+}
+
+int MultitrackModel::selectMultitrack()
+{
+    TIMELINE_SELECTION selectionNew;
+    selectionNew.nIndexOfSelectedClip = -1;
+    selectionNew.nIndexOfSelectedTrack = -1;
+    selectionNew.bIsMultitrackSelected = true;
+    setSelection(selectionNew);
+    return 0;
+}
+
+int MultitrackModel::getClipOfPosition(int nIndexOfTrack, int nFramePostion)
+{
+    Q_ASSERT(nIndexOfTrack >= 0);
+
+    Q_ASSERT(m_tractor);
+
+    int nResult = -1;
+
+    int nTrackIndexMlt = m_trackList.at(nIndexOfTrack).mlt_index;
+
+    QScopedPointer<Mlt::Producer> trackProducer(m_tractor->track(nTrackIndexMlt));
+    Q_ASSERT(trackProducer);
+    if (trackProducer)
+    {
+        Mlt::Playlist mltPlaylist(*trackProducer);
+        Q_ASSERT(mltPlaylist.is_valid());
+        nResult = mltPlaylist.get_clip_index_at(nFramePostion);
+    }
+    return nResult;
 }

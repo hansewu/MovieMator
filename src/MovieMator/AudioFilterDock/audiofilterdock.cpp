@@ -97,6 +97,7 @@ int AudioFilterDock::updateAudioFilters(AudioFilter_Info * AudioFilterInfos, int
         AudioFilterInfo->setName(QString(AudioFilterInfos[i].name));
         AudioFilterInfo->setAudioFilterType(QString(AudioFilterInfos[i].type));
         AudioFilterInfo->setImageSourcePath(QString(AudioFilterInfos[i].imageSourcePath));
+        AudioFilterInfo->setPerviewSettingFilePath(QString(AudioFilterInfos[i].perviewSettingFilePath));
 
         m_pAudioFilterInfo->addAudioFilterItemInfo(AudioFilterInfo);
     }
@@ -109,9 +110,11 @@ void AudioFilterDock::addAudioFilterItem(int index)
     m_mainWindow->addFilter(index);
 }
 
-void AudioFilterDock::previewFilter(int index)
+void AudioFilterDock::previewFilter(QString perviewSettingFilePath)
 {
-    m_mainWindow->previewFilter(index);
+    FILE_HANDLE mltSettingFile = m_mainWindow->openFile(perviewSettingFilePath);
+    m_mainWindow->playFile(mltSettingFile);
+    m_mainWindow->destroyFileHandle(mltSettingFile);
 }
 
 void AudioFiltersInfo::addAudioFilterItemInfo(AudioFilterItemInfo *AudioFilterInfo)

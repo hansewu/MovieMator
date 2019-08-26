@@ -116,11 +116,11 @@ public:
     // 是否波纹（ripple）（视频/音频剪辑、空白剪辑）
     bool isRipple() const;
     // 当前选中的是否含有多个轨道
-    Q_INVOKABLE bool isMultitrackSelected() const { return m_model.selection().isMultitrackSelected; }
+    Q_INVOKABLE bool isMultitrackSelected() const { return m_model.selection().bIsMultitrackSelected; }
     // 选中的轨道的序号
-    Q_INVOKABLE int selectedTrackIndex() const { return m_model.selection().selectedTrack; }
+    Q_INVOKABLE int selectedTrackIndex() const { return m_model.selection().nIndexOfSelectedTrack; }
     // 选中的剪辑是否为空    
-    Q_INVOKABLE bool isAClipSelected() const {return !m_model.selection().selectedClips.isEmpty();} // selectedAClip()
+    Q_INVOKABLE bool isAClipSelected() const {return m_model.selection().nIndexOfSelectedClip >= 0;} // selectedAClip()
     // 选中轨道 trackIndex在位置 position处的剪辑
     void selectClipAtPosition(int trackIndex, int position);
     // 获取当前轨道选中剪辑的位置（播放游标-剪辑起始位置）
@@ -251,7 +251,7 @@ public slots:
     void onShowFrame(const SharedFrame& frame);
     // 定位播放游标到位置 position处
     void onSeeked(int position);
-    // 在轨道 trackIndex后添加轨道
+    // 在轨道 trackIndex上添加当前播放的clip
     void append(int trackIndex);
     // 移除轨道 trackIndex上的剪辑 clipIndex
     void remove(int trackIndex, int clipIndex);
@@ -392,6 +392,8 @@ public slots:
     // 无实现，是否保留
     // 【无内容，FilterClipCommand也没有任何实现】
     void addFilterClipCommand(int TrackIndex, int clipIndex, QString strFromXml, QString strToXml);
+
+    void onSelectionChanged(TIMELINE_SELECTION selectionOld, TIMELINE_SELECTION selectionNew);
 
 protected:
     // 拖动进入 timelinedock的事件

@@ -52,7 +52,7 @@ public:
     //通过uniqueId获取QmlMetadata，与metadataForService有重复的地方
     QmlMetadata* metadataForUniqueId(const char *uniqueId);
     //获取QmlMetadata
-    QmlMetadata* getQmlMetadata(int index);
+    QmlMetadata* getQmlMetadata(int nIndex);
 
     int currentFilterIndex() { return m_currentFilterIndex; }
 

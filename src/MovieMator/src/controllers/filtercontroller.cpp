@@ -198,23 +198,19 @@ void FilterController::loadFrei0rFilterMetadata() {
 //                                LOG_DEBUG() << "param F0R_PARAM_BOOL" << meta->name() << QString::number(mlt_properties_get_int(param_pro, "default"));
                             }
                             else if(parmType == "float")
-                                {
-                                    param->setParaType("double");
-                                    param->setMinimum(QString::fromUtf8(mlt_properties_get(param_pro, "minimum")).toDouble());
-                                    param->setMaximum(QString::fromUtf8(mlt_properties_get(param_pro, "maximum")).toDouble());
-                                    param->setDefaultValue(QString::number(mlt_properties_get_double(param_pro, "default")));
-
-//                                    LOG_DEBUG() << "param F0R_PARAM_DOUBLE" << meta->name() << QString::number(mlt_properties_get_double(param_pro, "default"));
-                                }
+                            {
+                                param->setParaType("double");
+                                param->setMinimum(QString::fromUtf8(mlt_properties_get(param_pro, "minimum")).toDouble());
+                                param->setMaximum(QString::fromUtf8(mlt_properties_get(param_pro, "maximum")).toDouble());
+                                param->setDefaultValue(QString::number(mlt_properties_get_double(param_pro, "default")));
+                            }
                             else if(parmType == "color")
-                                {
-                                    param->setParaType("color");
-                                    mlt_rect rect = mlt_properties_get_rect(param_pro, "default");
-                                    QString sValue = QString("%1 %2 %3 %4 %5").arg(rect.x).arg(rect.y).arg(rect.w).arg(rect.h).arg(rect.o);
-                                    param->setDefaultValue(sValue);
-
-//                                    LOG_DEBUG() << "param F0R_PARAM_COLOR" << meta->name() << sValue;
-                                }
+                            {
+                                param->setParaType("color");
+                                mlt_rect rect = mlt_properties_get_rect(param_pro, "default");
+                                QString sValue = QString("%1 %2 %3 %4 %5").arg(rect.x).arg(rect.y).arg(rect.w).arg(rect.h).arg(rect.o);
+                                param->setDefaultValue(sValue);
+                            }
                             else if(parmType == "string")
                             {
                                 param->setParaType("string");
@@ -445,12 +441,15 @@ QString FilterController::getFilterType(QString filterType)
 
     return filterType;
 }
-QmlMetadata* FilterController::getQmlMetadata(int index)
+QmlMetadata* FilterController::getQmlMetadata(int nIndex)
 {
-    if(index < m_metadataModel.rowCount()){
-        QmlMetadata *meta = m_metadataModel.get(index);
-        return meta;
-    }else {
+    if(nIndex < m_metadataModel.rowCount())
+    {
+        QmlMetadata *pMeta = m_metadataModel.get(nIndex);
+        return pMeta;
+    }
+    else
+    {
         return nullptr;
     }
 
@@ -490,6 +489,11 @@ QList<FilterInfo> FilterController::getFiltersInfo(int nFilterType)
         filterInfo.strThumbnailFilePath     = strTempPath.right(strTempPath.length() - 3);
         filterInfo.nIndexOfMetadataModel    = nIndex;
 
+//        QString strObjectName = metadataModel->objectName();
+//        QDir commonFileDir = QDir(Util::resourcesPath() + "/template/filters/preview/");
+//        QString filePath = commonFileDir.absoluteFilePath(strObjectName + ".mlt");
+//        strcpy(filterInfos[nIndex].perviewSettingFilePath, filePath.toStdString().c_str());
+
         bool bVisible = true;
         if (pMetadata->isHidden()) bVisible = false;
         if (pMetadata->needsGPU() && !Settings.playerGPU()) bVisible = false;
@@ -499,7 +503,6 @@ QList<FilterInfo> FilterController::getFiltersInfo(int nFilterType)
 
         if (nFilterType == 0)//视频滤镜
         {
-
             if ((filterInfo.bVisible == true) && (filterInfo.strClassification != ""))
             {
                 videoFiltersInfo.append(filterInfo);
@@ -512,6 +515,7 @@ QList<FilterInfo> FilterController::getFiltersInfo(int nFilterType)
                 videoFiltersInfo.append(filterInfo);
             }
         }
+
     }
 
     qDebug()<<"sll---------getFiltersInfo---end";
@@ -769,7 +773,7 @@ void FilterController::addCropFilter()
 void FilterController::addVolumeFilter()
 {
 
-    QmlMetadata *meta = metadataForUniqueId("volume");
+    QmlMetadata *meta = metadataForUniqueId("audioGainVolume");
     Q_ASSERT(meta);
     m_attachedModel.add(meta);
 }
