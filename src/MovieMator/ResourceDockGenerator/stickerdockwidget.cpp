@@ -28,12 +28,13 @@ void StickerDockWidget::setupTopBarUi()
     QHBoxLayout *pAnimationWidgetLayout = new QHBoxLayout();
 
     //动画标签
-    QLabel *pAnimationLabel = new QLabel(tr("Animation:"));
-    pAnimationWidgetLayout->addWidget(pAnimationLabel);
+//    QLabel *pAnimationLabel = new QLabel(tr("Animation:"));
+//    pAnimationWidgetLayout->addWidget(pAnimationLabel);
 
     //动画combobox
     m_pAnimationCombobox = new QComboBox();
     m_pAnimationCombobox->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
+    m_pAnimationCombobox->setMinimumWidth(COMBOBOX_WIDTH);
     pAnimationWidgetLayout->addWidget(m_pAnimationCombobox);
     pAnimationWidgetLayout->setSpacing(10);
 
@@ -74,6 +75,7 @@ void StickerDockWidget::setupAnimationComboboxData()
     {
         QString strItemName = TranslationHelper::getTranslationStr(animationFileInfo.baseName(), animationTranslateInfo);
         m_pAnimationCombobox->addItem(strItemName, QVariant(animationFileInfo.filePath()));
+        m_pAnimationCombobox->setItemData(m_pAnimationCombobox->count()-1, strItemName, Qt::ToolTipRole);
     }
 
     qDebug()<<"sll-----setupAnimationComboboxData---end";
@@ -421,6 +423,9 @@ void StickerDockWidget::onAnimationComboBoxActivated(int nIndex) {
 
     qDebug()<<"sll----animationFilePath = "<<strAnimationFilePath;
     emit currentSelectedAnimationChanged(strAnimationFilePath);//用于更新拖拽数据
+
+    m_pAnimationCombobox->setToolTip(m_pAnimationCombobox->currentText());
+
     qDebug()<<"sll-----onAnimationComboBoxActivated---start";
 }
 

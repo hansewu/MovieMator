@@ -13,6 +13,7 @@
 #include <QDir>
 #include <QMenu>
 #include <QDebug>
+#include <QLabel>
 #include <QPainter>
 #include <QScrollBar>
 

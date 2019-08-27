@@ -9,4 +9,7 @@
 #define LISTVIEW_ITEM_ADDBTNSIZE 30
 #define LISTVIEW_ITEM_FONTSIZE 8
 
+// stickerdock的动画下拉列表宽度
+#define COMBOBOX_WIDTH 160
+
 #endif // UIUSERDEF_H
