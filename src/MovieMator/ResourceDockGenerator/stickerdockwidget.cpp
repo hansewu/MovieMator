@@ -34,7 +34,7 @@ void StickerDockWidget::setupTopBarUi()
     //动画combobox
     m_pAnimationCombobox = new QComboBox();
     m_pAnimationCombobox->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
-    m_pAnimationCombobox->setMinimumWidth(COMBOBOX_WIDTH);
+    m_pAnimationCombobox->setMinimumWidth(ANIMATION_COMBOBOX_WIDTH);
     pAnimationWidgetLayout->addWidget(m_pAnimationCombobox);
     pAnimationWidgetLayout->setSpacing(10);
 
