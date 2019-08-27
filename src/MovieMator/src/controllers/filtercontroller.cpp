@@ -62,18 +62,21 @@ QList<QString> strToList(QString strSrc)
     return strSrc.split(",");
 }
 
-void FilterController::loadFilterParameter(QmlMetadata *pmetadata)
+void FilterController::loadFilterParameter(QmlMetadata *pMetadata)
 {
     bool bFrei0r = false;
-    if(pmetadata->mlt_service().contains("frei0r"))
+    if(pMetadata->mlt_service().contains("frei0r"))
         bFrei0r = true;
 
     mlt_repository repository   = mlt_factory_repository();
     mlt_properties metadata = nullptr;
-    if(pmetadata->mlt_service() == "affine")
-        metadata = mlt_repository_metadata( repository, transition_type, pmetadata->mlt_service().toUtf8().constData());
+    if(pMetadata->mlt_service() == "affine")
+        metadata = mlt_repository_metadata( repository, transition_type, pMetadata->mlt_service().toUtf8().constData());
     else
-        metadata = mlt_repository_metadata( repository, filter_type, pmetadata->mlt_service().toUtf8().constData());
+        metadata = mlt_repository_metadata( repository, filter_type, pMetadata->mlt_service().toUtf8().constData());
+    Q_ASSERT(metadata);
+
+    if(metadata == nullptr) return;
 
     mlt_properties params = static_cast<mlt_properties>(mlt_properties_get_data(metadata, "parameters", nullptr));
     if ( params )
@@ -127,7 +130,7 @@ void FilterController::loadFilterParameter(QmlMetadata *pmetadata)
             }
 
             pParameter->setProperty(QString::fromUtf8(mlt_properties_get(paramProperties, "identifier")));
-            if(pmetadata->mlt_service() == "affine")
+            if(pMetadata->mlt_service() == "affine")
                 pParameter->setProperty("transition."+pParameter->property());
             pParameter->setName(QString::fromUtf8(mlt_properties_get(paramProperties, "title")));
             pParameter->setExplanation(QString::fromUtf8(mlt_properties_get(paramProperties, "description")));
@@ -136,7 +139,7 @@ void FilterController::loadFilterParameter(QmlMetadata *pmetadata)
             pParameter->setControlType(QString::fromUtf8(mlt_properties_get(paramProperties, "controlType")));
             pParameter->setFactorFunc(strToList(QString::fromUtf8(mlt_properties_get(paramProperties, "factorFunc"))));
 
-            pmetadata->keyframes()->appendParameter(pParameter);
+            pMetadata->keyframes()->appendParameter(pParameter);
         }
     }
 }
@@ -237,7 +240,7 @@ void FilterController::loadFrei0rFilterMetadata()
             {
                 std::map<QString, QString>::iterator iter = filterTypes.find(strLibName.mid(0, strLibName.length() - 3));
 #ifdef Q_OS_WIN
-                iter       = filterTypes.find(libName.mid(0, libName.length() - 4));
+                iter       = filterTypes.find(strLibName.mid(0, strLibName.length() - 4));
 #endif
                 if (iter != filterTypes.end())
                 {
@@ -252,7 +255,7 @@ void FilterController::loadFrei0rFilterMetadata()
 
                 QString strMltService       = "frei0r." + strLibName.mid(0, strLibName.length() - 3);
 #ifdef Q_OS_WIN
-                strMltService       = "frei0r." + libName.mid(0, libName.length() - 4);
+                strMltService       = "frei0r." + strLibName.mid(0, strLibName.length() - 4);
 #endif
 
 //                    Mlt::Properties *metadata = MLT.repository()->metadata(filter_type, mlt_service_s.toUtf8().constData());
