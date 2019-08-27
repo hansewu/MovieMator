@@ -16,21 +16,5 @@ Metadata {
     qml: "ui.qml"
     gpuAlt: "movit.opacity"
     filterType: qsTr('1 Basic Processing')
-    keyframes {
-        allowAnimateIn: true
-        allowAnimateOut: true
-        simpleProperties: ['alpha']
-        parameters: [
-            Parameter {
-                name: qsTr('Level')
-                property: 'alpha'
-                objectName: 'slider'
-                controlType: 'SliderSpinner'
-                paraType: 'double'
-                defaultValue: '1'
-                value: '0'
-                factorFunc:  ['c:100.0']
-            }
-        ]
-    }
+
 }

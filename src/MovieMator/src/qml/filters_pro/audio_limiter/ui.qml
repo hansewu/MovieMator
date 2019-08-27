@@ -30,15 +30,6 @@ Item {
     width: 300
     height: 250
     Component.onCompleted: {
-        if (filter.isNew) {
-            // Set default parameter values
-            filter.set('0', 0)
-            filter.set('1', 0)
-            filter.set('2', .51)
-            filter.savePreset(preset.parameters)
-        }
-        setControls()
-        timer.start()
     }
 
     function setControls() {
@@ -208,7 +199,7 @@ Item {
             Layout.fillWidth: true
             id: grGauge
             minimumValue: -24
-            value: 0
+            value: filter.get('3[0]') * -1.0
             maximumValue: 0
             orientation: Qt.Horizontal
             style: gaugeStyle

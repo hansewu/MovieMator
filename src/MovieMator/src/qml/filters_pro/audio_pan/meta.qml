@@ -15,21 +15,4 @@ Metadata {
     mlt_service: 'panner'
     objectName: 'audioPan'
     qml: 'ui.qml'
-    keyframes {
-       allowAnimateIn: true
-       allowAnimateOut: true
-       simpleProperties: ['start']
-       parameters: [
-           Parameter {
-               name: qsTr('*')
-               property: 'start'
-               objectName: '*'
-               controlType: 'SliderSpinner'
-               paraType: 'double'
-               defaultValue: '0'
-               value: '0'
-               factorFunc:  []
-           }
-       ]
-   }
 }

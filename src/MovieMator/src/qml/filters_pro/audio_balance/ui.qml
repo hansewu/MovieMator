@@ -29,11 +29,7 @@ Item {
     width: 300
     height: 250
     Component.onCompleted: {
-        if (filter.isNew) {
-            // Set default parameter values
-            filter.set('start', 0.5)
-            slider.value = filter.getDouble('start') * 1000
-        }
+
     }
 
     ColumnLayout {

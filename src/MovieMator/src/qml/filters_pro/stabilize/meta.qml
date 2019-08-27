@@ -16,56 +16,6 @@ Metadata {
     isClipOnly: true
     isGpuCompatible: false
     isFavorite: false
-//    allowMultiple: false
     filterType: qsTr('1 Basic Processing')
-    keyframes {
-        allowTrim: false
-        allowAnimateIn: true
-        allowAnimateOut: true
-        simpleProperties: ['shakiness','accuracy','Zoom','refresh']
-        parameters: [
-            Parameter {
-                name: qsTr('shakiness')
-                property: 'shakiness'
-                objectName: 'shakinessSlider'
-                controlType: 'SliderSpinner'
-                paraType: 'double'
-                defaultValue: '1.0'
-                value: '0'
-                factorFunc:  []
-            },
-            Parameter {
-                name: qsTr('accuracy')
-                property: 'accuracy'
-                objectName: 'accuracySlider'
-                controlType: 'SliderSpinner'
-                paraType: 'double'
-                defaultValue: '1.0'
-                value: '0'
-                factorFunc:  []
-            },
-            Parameter {
-                name: qsTr('Zoom')
-                property: 'zoom'
-                objectName: 'zoomSlider'
-                controlType: 'SliderSpinner'
-                paraType: 'double'
-                defaultValue: '0'
-                value: '0'
-                factorFunc:  []
-            }
-            // ,
-            // Parameter {
-            //     name: qsTr('refresh')
-            //     property: 'refresh'
-            //     objectName: 'sliderBlue'
-            //     controlType: 'SliderSpinner'
-            //     paraType: 'int'
-            //     defaultValue: '80'
-            //     value: '0'
-            //     factorFunc:  []
-            // }
-        ]
-    }
     objectName: 'stabilize'
 }

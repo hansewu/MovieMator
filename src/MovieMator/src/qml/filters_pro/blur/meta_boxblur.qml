@@ -15,33 +15,5 @@ Metadata {
     qml: "ui_boxblur.qml"
     gpuAlt: "movit.blur"
     filterType: qsTr('4 Denoise and Blur')
-    keyframes {
-        minimumVersion: '3'
-        allowAnimateIn: true
-        allowAnimateOut: true
-        simpleProperties: ['hori', 'vert']
-        parameters: [
-            Parameter {
-                name: qsTr('Width')
-                property: 'hori'
-                objectName: 'wslider'
-                controlType: 'SliderSpinner'
-                paraType: 'double'
-                defaultValue: '2'
-                value: '0'
-                factorFunc:  []
-            },
-            Parameter {
-                name: qsTr('Height')
-                property: 'vert'
-                objectName: 'hslider'
-                controlType: 'SliderSpinner'
-                paraType: 'double'
-                defaultValue: '2'
-                value: '0'
-                factorFunc:  []
-            }
-        ]
-    }
     objectName: 'boxblur'
 }

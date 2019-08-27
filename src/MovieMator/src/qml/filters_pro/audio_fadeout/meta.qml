@@ -18,52 +18,5 @@ Metadata {
     isFavorite: true
     allowMultiple: false
     freeVersion: true
-    keyframes {
-        allowTrim: false
-        allowAnimateIn: true
-        simpleProperties: ['start']
-        parameters: [
-           Parameter {
-               name: qsTr('*')
-               property: 'gain'
-               objectName: '*'
-               controlType: 'SliderSpinner'
-               paraType: 'double'
-               defaultValue: '1.0'
-               value: '0'
-               factorFunc:  ['c:100.0']
-           },
-           Parameter {
-               name: qsTr('*')
-               property: 'end'
-               objectName: '*'
-               controlType: 'SliderSpinner'
-               paraType: 'double'
-               defaultValue: '0'
-               value: '0'
-               factorFunc:  []
-           }
-           ,
-           Parameter {
-               name: qsTr('*')
-               property: 'in'
-               objectName: '*'
-               controlType: 'SliderSpinner'
-               paraType: 'double'
-               defaultValue: '-23'
-               value: '0'
-               factorFunc:  ['c:100.0']
-           },
-           Parameter {
-               name: qsTr('*')
-               property: 'out'
-               objectName: '*'
-               controlType: 'SliderSpinner'
-               paraType: 'double'
-               defaultValue: '772'
-               value: '0'
-               factorFunc:  ['c:100.0']
-           }
-        ]
-    }
+    
 }

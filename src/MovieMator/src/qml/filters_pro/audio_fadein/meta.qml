@@ -18,51 +18,5 @@ Metadata {
     isFavorite: true
     allowMultiple: false
     freeVersion: true
-    keyframes {
-        allowTrim: false
-        allowAnimateIn: true
-        simpleProperties: ['start']
-        parameters: [
-           Parameter {
-               name: qsTr('Center frequency')
-               property: 'gain'
-               objectName: '*'
-               controlType: 'SliderSpinner'
-               paraType: 'double'
-               defaultValue: '0'
-               value: '0'
-               factorFunc:  ['c:100.0']
-           },
-           Parameter {
-               name: qsTr('Center frequency')
-               property: 'end'
-               objectName: '*'
-               controlType: 'SliderSpinner'
-               paraType: 'double'
-               defaultValue: '1'
-               value: '0'
-               factorFunc:  []
-           },
-           Parameter {
-               name: qsTr('Center frequency')
-               property: 'in'
-               objectName: '*'
-               controlType: 'SliderSpinner'
-               paraType: 'double'
-               defaultValue: '0'
-               value: '0'
-               factorFunc:  ['c:100.0']
-           },
-           Parameter {
-               name: qsTr('Center frequency')
-               property: 'out'
-               objectName: '*'
-               controlType: 'SliderSpinner'
-               paraType: 'double'
-               defaultValue: '23'
-               value: '0'
-               factorFunc:  ['c:100.0']
-           }
-        ]
-    }
+    
 }

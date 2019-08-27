@@ -28,15 +28,6 @@ Item {
     width: 300
     height: 250
     Component.onCompleted: {
-        if (filter.isNew) {
-            // Set default parameter values
-            filter.set('0', 322)
-            filter.set('1', 322)
-            filter.set('2', 1)
-            filter.set('wetness', 1.0)
-            filter.savePreset(preset.parameters)
-        }
-        setControls()
     }
 
     function setControls() {

@@ -15,22 +15,5 @@ Metadata {
     gpuAlt: "movit.mirror"
     qml: "ui.qml"
     filterType: qsTr('9 Effect')
-    keyframes {
-        allowAnimateIn: true
-        allowAnimateOut: true
-        simpleProperties: ['disable']
-        parameters: [
-            Parameter {
-                name: qsTr('mirror')
-                property: 'mirror'
-                objectName: '*'
-                controlType: ''
-                paraType: 'string'
-                defaultValue: 'flip'
-                value: ''
-                factorFunc:  []
-            }
-        ]
-    }
     objectName: 'mirror'
 }

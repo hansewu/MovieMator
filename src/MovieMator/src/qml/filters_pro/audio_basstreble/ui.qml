@@ -32,15 +32,6 @@ Item {
     SystemPalette { id: activePalette }
 
     Component.onCompleted: {
-        if (filter.isNew) {
-            // Set default parameter values
-            filter.set('0', 0)
-            filter.set('1', 0)
-            filter.set('2', 0)
-            filter.set('wetness', 1.0)
-            filter.savePreset(preset.parameters)
-        }
-        setControls()
     }
 
     function setControls() {

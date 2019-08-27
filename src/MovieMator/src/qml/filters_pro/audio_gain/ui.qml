@@ -31,9 +31,6 @@ Item {
     property string gainParameter: 'gain'
     Component.onCompleted: {
         if (filter.isNew) {
-            // Set default parameter values
-            filter.set(gainParameter, 1.0)
-            slider.value = toDb(filter.getDouble(gainParameter))
         }
     }
 
