@@ -54,37 +54,134 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
 
 }
 
-void FilterController::loadFilterMetadata() {
+QList<QString> strToList(QString strSrc)
+{
+    strSrc = strSrc.replace("'","");
+    strSrc = strSrc.replace("[","");
+    strSrc = strSrc.replace("]","");
+    return strSrc.split(",");
+}
+
+void FilterController::loadFilterParameter(QmlMetadata *meta)
+{
+    bool bFrei0r = false;
+    if(meta->mlt_service().contains("frei0r"))
+        bFrei0r = true;
+
+    mlt_repository repository   = mlt_factory_repository();
+    mlt_properties metadata = nullptr;
+    if(meta->mlt_service() == "affine")
+        metadata = mlt_repository_metadata( repository, transition_type, meta->mlt_service().toUtf8().constData());
+    else
+        metadata = mlt_repository_metadata( repository, filter_type, meta->mlt_service().toUtf8().constData());
+
+    mlt_properties params = static_cast<mlt_properties>(mlt_properties_get_data(metadata, "parameters", nullptr));
+    if ( params )
+    {
+        int n = mlt_properties_count( params );
+        for ( int nIndex = 0; nIndex < n; nIndex++ )
+        {
+            mlt_properties paramProperties = static_cast<mlt_properties>(mlt_properties_get_data( params, mlt_properties_get_name(params, nIndex), nullptr ));
+
+            QmlKeyframesParameter * param = new QmlKeyframesParameter();
+            Q_ASSERT(param);
+
+            QString strAdjustedByControls = QString::fromUtf8(mlt_properties_get(paramProperties, "bAdjustedByControls"));
+            if((strAdjustedByControls != "0")&&(!bFrei0r)) continue;
+
+            QString strParmType = QString::fromUtf8(mlt_properties_get(paramProperties, "type"));
+            if (strParmType == "boolean")
+            {
+                param->setParaType("bool");
+                param->setMinimum(QString::fromUtf8(mlt_properties_get(paramProperties, "minimum")).toDouble());
+                param->setMaximum(QString::fromUtf8(mlt_properties_get(paramProperties, "maximum")).toDouble());
+                param->setDefaultValue(QString::number(mlt_properties_get_int(paramProperties, "default")));
+            }
+            else if(strParmType == "float" || strParmType == "integer")
+            {
+                param->setParaType("double");
+                param->setMinimum(QString::fromUtf8(mlt_properties_get(paramProperties, "minimum")).toDouble());
+                param->setMaximum(QString::fromUtf8(mlt_properties_get(paramProperties, "maximum")).toDouble());
+                param->setDefaultValue(QString::number(mlt_properties_get_double(paramProperties, "default")));
+            }
+            else if(strParmType == "color")
+            {
+                param->setParaType("color");
+                mlt_rect rect = mlt_properties_get_rect(paramProperties, "default");
+                QString strValue = QString("%1 %2 %3 %4 %5").arg(rect.x).arg(rect.y).arg(rect.w).arg(rect.h).arg(rect.o);
+                param->setDefaultValue(strValue);
+            }
+            else if(strParmType == "string")
+            {
+                param->setParaType("string");
+                param->setDefaultValue(QString::fromUtf8(mlt_properties_get(paramProperties, "default")));
+            }
+            else if(strParmType == "position")
+            {
+                param->setParaType("position");
+            }
+            else if(strParmType == "rect")
+            {
+                param->setParaType("rect");
+                param->setDefaultValue(QString::number(mlt_properties_get_double(paramProperties, "default")));
+            }
+
+            param->setProperty(QString::fromUtf8(mlt_properties_get(paramProperties, "identifier")));
+            if(meta->mlt_service() == "affine")
+                param->setProperty("transition."+param->property());
+            param->setName(QString::fromUtf8(mlt_properties_get(paramProperties, "title")));
+            param->setExplanation(QString::fromUtf8(mlt_properties_get(paramProperties, "description")));
+
+            param->setObjectName(QString::fromUtf8(mlt_properties_get(paramProperties, "objectName")));
+            param->setControlType(QString::fromUtf8(mlt_properties_get(paramProperties, "controlType")));
+            param->setFactorFunc(strToList(QString::fromUtf8(mlt_properties_get(paramProperties, "factorFunc"))));
+
+            meta->keyframes()->appendParameter(param);
+        }
+    }
+}
+
+void FilterController::loadFilterMetadata()
+{
     QDir dir = QmlUtilities::qmlDir();
     dir.cd("filters_pro");
-    foreach (QString dirName, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Executable)) {
-        if (dirName == "frei0r")
+    foreach (QString strDirName, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Executable))
+    {
+        if (strDirName == "frei0r")
         {
             loadFrei0rFilterMetadata();
             continue;
         }
+//        if(strDirName == "webvfx")
+//        {
+//            continue;
+//        }
 
         QDir subdir = dir;
-        subdir.cd(dirName);
+        subdir.cd(strDirName);
         subdir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
         subdir.setNameFilters(QStringList("meta*.qml"));
-        foreach (QString fileName, subdir.entryList()) {
-            LOG_DEBUG() << "reading filter metadata" << dirName << fileName;
-            QQmlComponent component(QmlUtilities::sharedEngine(), subdir.absoluteFilePath(fileName));
+        foreach (QString strFileName, subdir.entryList()) {
+            LOG_DEBUG() << "reading filter metadata" << strDirName << strFileName;
+            QQmlComponent component(QmlUtilities::sharedEngine(), subdir.absoluteFilePath(strFileName));
             QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
-            if (meta) {
+            if (meta)
+            {
                 // Check if mlt_service is available.
-                if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
-
-                    QString thumbnail = getFilterThumbnailPath(meta->name(), meta->isAudio());
-                    meta->setThumbnail(thumbnail);
-//                    LOG_DEBUG() << "added filter" << meta->name();
+                if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData()))
+                {
+                    QString strThumbnail = getFilterThumbnailPath(meta->name(), meta->isAudio());
+                    meta->setThumbnail(strThumbnail);
                     meta->loadSettings();
                     meta->setPath(subdir);
                     meta->setParent(nullptr);
+
+                    loadFilterParameter(meta);
+
                     addMetadata(meta);
                 }
-            } else if (!meta) {
+            } else if (!meta)
+            {
                 LOG_WARNING() << component.errorString();
             }
         }
@@ -106,7 +203,8 @@ void FilterController::readFilterTypeFromFile(QString &pFilePath, std::map<QStri
     file.close();
 }
 
-void FilterController::loadFrei0rFilterMetadata() {
+void FilterController::loadFrei0rFilterMetadata()
+{
     QDir dir = QmlUtilities::qmlDir();
     dir.cd("filters_pro");
     QDir subdir = dir;
@@ -162,81 +260,31 @@ void FilterController::loadFrei0rFilterMetadata() {
 
                 if (metadata)
                 {
-                QString producerType = QString::fromUtf8(mlt_properties_get( metadata, "type"));
-                if (producerType == "filter")         //frei0r只开放出filter的库
+                QString strProducerType = QString::fromUtf8(mlt_properties_get( metadata, "type"));
+                if (strProducerType == "filter")         //frei0r只开放出filter的库
                     meta->setType(QmlMetadata::Filter);
                 else
                     continue;
 
-                QString name        = QString::fromUtf8(mlt_properties_get( metadata, "title"));
-                QString description = QString::fromUtf8(mlt_properties_get( metadata, "description"));
+                QString strName        = QString::fromUtf8(mlt_properties_get( metadata, "title"));
+                QString strDescription = QString::fromUtf8(mlt_properties_get( metadata, "description"));
 
-                meta->setName(tr("%1").arg(name.toUtf8().constData()));
+                meta->setName(tr("%1").arg(strName.toUtf8().constData()));
                 meta->set_mlt_service(mlt_service_s);
                 meta->setObjectName(mlt_service_s.replace(QRegExp("\\."), "_"));
                 meta->keyframes()->clearParameter();
                 //parameters info
                 //if ( metadata )
                 //{
-                    mlt_properties params = static_cast<mlt_properties>(mlt_properties_get_data(metadata, "parameters", nullptr));
-                    if ( params )
-                    {
-                        int n = mlt_properties_count( params );
-                        for ( int nIndex = 0; nIndex < n; nIndex++ )
-                        {
-                            mlt_properties param_pro = static_cast<mlt_properties>(mlt_properties_get_data( params, mlt_properties_get_name(params, nIndex), nullptr ));
-
-                            QmlKeyframesParameter * param = new QmlKeyframesParameter();
-                            Q_ASSERT(param);
-                            QString parmType = QString::fromUtf8(mlt_properties_get(param_pro, "type"));
-                            if (parmType == "boolean")
-                            {
-                                param->setParaType("bool");
-                                param->setMinimum(QString::fromUtf8(mlt_properties_get(param_pro, "minimum")).toDouble());
-                                param->setMaximum(QString::fromUtf8(mlt_properties_get(param_pro, "maximum")).toDouble());
-                                param->setDefaultValue(QString::number(mlt_properties_get_int(param_pro, "default")));
-//                                LOG_DEBUG() << "param F0R_PARAM_BOOL" << meta->name() << QString::number(mlt_properties_get_int(param_pro, "default"));
-                            }
-                            else if(parmType == "float")
-                            {
-                                param->setParaType("double");
-                                param->setMinimum(QString::fromUtf8(mlt_properties_get(param_pro, "minimum")).toDouble());
-                                param->setMaximum(QString::fromUtf8(mlt_properties_get(param_pro, "maximum")).toDouble());
-                                param->setDefaultValue(QString::number(mlt_properties_get_double(param_pro, "default")));
-                            }
-                            else if(parmType == "color")
-                            {
-                                param->setParaType("color");
-                                mlt_rect rect = mlt_properties_get_rect(param_pro, "default");
-                                QString sValue = QString("%1 %2 %3 %4 %5").arg(rect.x).arg(rect.y).arg(rect.w).arg(rect.h).arg(rect.o);
-                                param->setDefaultValue(sValue);
-                            }
-                            else if(parmType == "string")
-                            {
-                                param->setParaType("string");
-                                param->setDefaultValue(QString::fromUtf8(mlt_properties_get(param_pro, "default")));
-
-//                              LOG_DEBUG() << "param F0R_PARAM_STRING" << meta->name() << QString::fromUtf8(mlt_properties_get(param_pro, "default"));
-                            }
-                            else if(parmType == "position")
-                            {
-                                param->setParaType("position");
-                            }
-
-                            param->setName(QString::fromUtf8(mlt_properties_get(param_pro, "title")));
-                            param->setExplanation(QString::fromUtf8(mlt_properties_get(param_pro, "description")));
-//                          param->setControlType(QString::fromUtf8(mlt_properties_get(param_pro, "widget")));
-
-                            meta->keyframes()->appendParameter(param);
-                        }
-                    }
+                loadFilterParameter(meta);
                 //}
 
                 // Check if mlt_service is available.
-                if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
+                if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData()))
+                {
 //                    LOG_DEBUG() << "added filter 2" << meta->name();
-                    QString thumbnail = getFilterThumbnailPath(meta->name(), meta->isAudio());
-                    meta->setThumbnail(thumbnail);
+                    QString strThumbnail = getFilterThumbnailPath(meta->name(), meta->isAudio());
+                    meta->setThumbnail(strThumbnail);
 
                     meta->loadSettings();
                     meta->setPath(subdir);
@@ -244,7 +292,8 @@ void FilterController::loadFrei0rFilterMetadata() {
                     addMetadata(meta);
                 }
                 }
-            } else if (!meta) {
+            } else if (!meta)
+            {
                 LOG_WARNING() << component.errorString();
             }
         }

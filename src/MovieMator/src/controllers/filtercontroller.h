@@ -134,6 +134,9 @@ private:
 //    void getFrei0rPluginInfo(Mlt::Filter *filter, f0r_plugin_info_t &info);
 //    void getFrei0rParamInfo(Mlt::Filter *filter, int index, f0r_param_info_t &info);
 
+    //根据mlt_service加载滤镜参数
+    void loadFilterParameter(QmlMetadata *meta);
+
     //获取已加载的滤镜信息，0：表示视频滤镜，1：表示音频滤镜
     QList<FilterInfo> getFiltersInfo(int nFilterType = 0);
 
