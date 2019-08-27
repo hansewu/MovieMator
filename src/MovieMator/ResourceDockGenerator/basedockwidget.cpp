@@ -111,7 +111,6 @@ void BaseDockWidget::setupAllClassesUi(QMap<QString, BaseItemModel *> *pAllClass
     {
         //无分类时移除分类控件
         ui->comboBox_class->setHidden(true);
-        ui->classlabe->setHidden(true);
 
         //创建一个分类的lsitview
         BaseListView *pOneClassListView = createClassListView(pAllClassesItemModel->first());

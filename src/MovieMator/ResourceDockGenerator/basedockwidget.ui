@@ -50,28 +50,6 @@
          <number>10</number>
         </property>
         <item>
-         <widget class="QLabel" name="classlabe">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Classification:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QComboBox" name="comboBox_class">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
