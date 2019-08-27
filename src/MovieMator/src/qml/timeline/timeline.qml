@@ -630,9 +630,37 @@ Rectangle {
         fast: true
     }
 
+    Component {
+        id: menuStyle
+        MenuStyle {
+            property int fontSize: 15
+            property string fontFamily: "微软雅黑"
+            property color fontColor: activePalette.text
+
+            itemDelegate.background: Rectangle {
+                color: styleData.selected ? activePalette.highlight : activePalette.base
+            }
+
+            itemDelegate.label: Label {
+                text: styleData.text
+                color: fontColor
+                font.pixelSize: fontSize
+                font.family: fontFamily
+            }
+
+            itemDelegate.shortcut: Label {
+                text: styleData.shortcut
+                color: fontColor
+                font.pixelSize: fontSize
+                font.family: fontFamily
+            }
+        }
+    }
+
     // 右键的菜单
     Menu {
         id: menu
+        style: menuStyle
         MenuItem {
             text: qsTr('Add Audio Track')
             shortcut: 'Ctrl+U'
@@ -668,12 +696,12 @@ Rectangle {
                     timeline.removeTrack()
             }
         }
-
     }
 
     // 轨道菜单
     Menu {
         id: trackmenu
+        style: menuStyle
         // 切割
         MenuItem {
             text: qsTr('Split')
