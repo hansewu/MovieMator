@@ -28,18 +28,7 @@ Item {
     width: 300
     height: 250
     Component.onCompleted: {
-        if (filter.isNew) {
-            // Set default parameter values
-            filter.set('0', 0)
-            filter.set('1', 100)
-            filter.set('2', 400)
-            filter.set('3', 0)
-            filter.set('4', 1)
-            filter.set('5', 3.25)
-            filter.set('6', 0)
-            filter.savePreset(preset.parameters)
-        }
-        setControls()
+
     }
 
     function setControls() {

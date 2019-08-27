@@ -27,72 +27,72 @@ Metadata {
     mlt_service: 'avfilter.smartblur'
     qml: 'ui.qml'
     filterType: qsTr('4 Denoise and Blur')
-    keyframes {
-        allowAnimateIn: true
-        allowAnimateOut: true
-        simpleProperties: ['av.luma_radius','av.chroma_radius','av.luma_strength','av.chroma_strength','av.luma_threshold','av.chroma_threshold']
-        parameters: [
-            Parameter {
-                name: qsTr('luma_radius')
-                property: 'av.luma_radius'
-                objectName: 'smartblur1'
-                controlType: 'SliderSpinner'
-                paraType: 'double'
-                defaultValue: '2.5'
-                value: '0'
-                factorFunc:  []
-            },
-            Parameter {
-                name: qsTr('chroma_radius')
-                property: 'av.chroma_radius'
-                objectName: 'smartblur2'
-                controlType: 'SliderSpinner'
-                paraType: 'double'
-                defaultValue: '2.5'
-                value: '0'
-                factorFunc:  []
-            },
-            Parameter {
-                name: qsTr('luma_strength')
-                property: 'av.luma_strength'
-                objectName: 'smartblur3'
-                controlType: 'SliderSpinner'
-                paraType: 'double'
-                defaultValue: '0.5'
-                value: '0'
-                factorFunc:  []
-            },
-            Parameter {
-                name: qsTr('chroma_strength')
-                property: 'av.chroma_strength'
-                objectName: 'smartblur4'
-                controlType: 'SliderSpinner'
-                paraType: 'double'
-                defaultValue: '0.5'
-                value: '0'
-                factorFunc:  []
-            },
-            Parameter {
-                name: qsTr('luma_threshold')
-                property: 'av.luma_threshold'
-                objectName: 'smartblur5'
-                controlType: 'SliderSpinner'
-                paraType: 'double'
-                defaultValue: '3.0'
-                value: '0'
-                factorFunc:  []
-            },
-            Parameter {
-                name: qsTr('chroma_threshold')
-                property: 'av.chroma_threshold'
-                objectName: 'smartblur6'
-                controlType: 'SliderSpinner'
-                paraType: 'double'
-                defaultValue: '3.0'
-                value: '0'
-                factorFunc:  []
-            }
-        ]
-    }
     objectName: 'reduceNoise'
+    // keyframes {
+    //     allowAnimateIn: true
+    //     allowAnimateOut: true
+    //     simpleProperties: ['av.luma_radius','av.chroma_radius','av.luma_strength','av.chroma_strength','av.luma_threshold','av.chroma_threshold']
+    //     parameters: [
+    //         Parameter {
+    //             name: qsTr('luma_radius')
+    //             property: 'av.luma_radius'
+    //             objectName: 'smartblur1'
+    //             controlType: 'SliderSpinner'
+    //             paraType: 'double'
+    //             defaultValue: '2.5'
+    //             value: '0'
+    //             factorFunc:  []
+    //         },
+    //         Parameter {
+    //             name: qsTr('chroma_radius')
+    //             property: 'av.chroma_radius'
+    //             objectName: 'smartblur2'
+    //             controlType: 'SliderSpinner'
+    //             paraType: 'double'
+    //             defaultValue: '2.5'
+    //             value: '0'
+    //             factorFunc:  []
+    //         },
+    //         Parameter {
+    //             name: qsTr('luma_strength')
+    //             property: 'av.luma_strength'
+    //             objectName: 'smartblur3'
+    //             controlType: 'SliderSpinner'
+    //             paraType: 'double'
+    //             defaultValue: '0.5'
+    //             value: '0'
+    //             factorFunc:  []
+    //         },
+    //         Parameter {
+    //             name: qsTr('chroma_strength')
+    //             property: 'av.chroma_strength'
+    //             objectName: 'smartblur4'
+    //             controlType: 'SliderSpinner'
+    //             paraType: 'double'
+    //             defaultValue: '0.5'
+    //             value: '0'
+    //             factorFunc:  []
+    //         },
+    //         Parameter {
+    //             name: qsTr('luma_threshold')
+    //             property: 'av.luma_threshold'
+    //             objectName: 'smartblur5'
+    //             controlType: 'SliderSpinner'
+    //             paraType: 'double'
+    //             defaultValue: '3.0'
+    //             value: '0'
+    //             factorFunc:  []
+    //         },
+    //         Parameter {
+    //             name: qsTr('chroma_threshold')
+    //             property: 'av.chroma_threshold'
+    //             objectName: 'smartblur6'
+    //             controlType: 'SliderSpinner'
+    //             paraType: 'double'
+    //             defaultValue: '3.0'
+    //             value: '0'
+    //             factorFunc:  []
+    //         }
+    //     ]
+    // }
 }

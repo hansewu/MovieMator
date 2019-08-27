@@ -27,64 +27,7 @@ Item {
     width: 300
     height: 250
     Component.onCompleted: {
-        // if (filter.isNew) {
-        //     // Set preset parameter values
-        //     filter.set('0', 40)
-        //     filter.set('1', 4)
-        //     filter.set('2', 0.9)
-        //     filter.set('3', 0.75)
-        //     filter.set('4', 0)
-        //     filter.set('5', -22)
-        //     filter.set('6', -28)
-        //     filter.savePreset(preset.parameters, qsTr('Quick fix'))
 
-        //     filter.set('0', 50)
-        //     filter.set('1', 1.5)
-        //     filter.set('2', 0.1)
-        //     filter.set('3', 0.75)
-        //     filter.set('4', -1.5)
-        //     filter.set('5', -10)
-        //     filter.set('6', -20)
-        //     filter.savePreset(preset.parameters, qsTr('Small hall'))
-
-        //     filter.set('0', 40)
-        //     filter.set('1', 20)
-        //     filter.set('2', 0.5)
-        //     filter.set('3', 0.75)
-        //     filter.set('4', 0)
-        //     filter.set('5', -10)
-        //     filter.set('6', -30)
-        //     filter.savePreset(preset.parameters, qsTr('Large hall'))
-
-        //     filter.set('0', 6)
-        //     filter.set('1', 15)
-        //     filter.set('2', 0.9)
-        //     filter.set('3', 0.1)
-        //     filter.set('4', -10)
-        //     filter.set('5', -10)
-        //     filter.set('6', -10)
-        //     filter.savePreset(preset.parameters, qsTr('Sewer'))
-
-        //     filter.set('0', 6)
-        //     filter.set('1', 15)
-        //     filter.set('2', 0.9)
-        //     filter.set('3', .1)
-        //     filter.set('4', -10)
-        //     filter.set('5', -10)
-        //     filter.set('6', -10)
-        //     filter.savePreset(preset.parameters, qsTr('Church'))
-
-        //     // Set default parameter values
-        //     filter.set('0', 30)
-        //     filter.set('1', 7.5)
-        //     filter.set('2', 0.5)
-        //     filter.set('3', 0.75)
-        //     filter.set('4', 0)
-        //     filter.set('5', -10)
-        //     filter.set('6', -17.5)
-        //     filter.savePreset(preset.parameters)
-        // }
-        // setControls()
     }
 
     function setControls() {

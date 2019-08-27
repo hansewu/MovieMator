@@ -33,10 +33,10 @@ Item {
 
     Component.onCompleted: {
         if (filter.isNew) {
-            var fadeDuration = Math.ceil(settings.videoInDuration * profile.fps)
-            filter.set('level', '0=0; %1=1'.arg(fadeDuration - 1))
+            duration = Math.ceil(settings.videoInDuration * profile.fps)
+            filter.set('level', '0=0; %1=1'.arg(duration - 1))
             filter.set('alpha', 1)
-            filter.setInAndOut(filter.producerIn, filter.getDouble('in') + fadeDuration - 1)
+            filter.setInAndOut(filter.producerIn, filter.getDouble('in') + duration - 1)
         }
         alphaCheckbox.checked = filter.get('alpha') !== 1
     }

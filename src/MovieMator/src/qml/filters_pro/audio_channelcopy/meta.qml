@@ -15,29 +15,4 @@ Metadata {
     mlt_service: "channelcopy"
     objectName: 'audioChannelCopy'
     qml: "ui.qml"
-    keyframes {
-       allowAnimateIn: true
-       allowAnimateOut: true
-       simpleProperties: ['start']
-       parameters: [
-           Parameter {
-               name: qsTr('*')
-               property: 'from'
-               objectName: '*'
-               paraType: 'double'
-               defaultValue: '0'
-               value: '0'
-               factorFunc:  []
-           },
-           Parameter {
-               name: qsTr('*')
-               property: 'to'
-               objectName: '*'
-               paraType: 'double'
-               defaultValue: '1'
-               value: '0'
-               factorFunc:  []
-           }
-       ]
-   }
 }

@@ -15,41 +15,4 @@ Metadata {
     mlt_service: "channelcopy"
     objectName: 'audioSwapChannels'
     qml: "ui.qml"
-    keyframes {
-       allowAnimateIn: true
-       allowAnimateOut: true
-       simpleProperties: ['start']
-       parameters: [
-           Parameter {
-               name: qsTr('*')
-               property: 'swap'
-               objectName: '*'
-               controlType: 'SliderSpinner'
-               paraType: 'double'
-               defaultValue: '1'
-               value: '0'
-               factorFunc:  []
-           },
-           Parameter {
-               name: qsTr('*')
-               property: 'from'
-               objectName: '*'
-               controlType: 'SliderSpinner'
-               paraType: 'double'
-               defaultValue: '0'
-               value: '0'
-               factorFunc:  []
-           },
-           Parameter {
-               name: qsTr('*')
-               property: 'top'
-               objectName: '*'
-               controlType: 'SliderSpinner'
-               paraType: 'double'
-               defaultValue: '1'
-               value: '0'
-               factorFunc:  []
-           }
-       ]
-   }
 }

@@ -34,15 +34,15 @@ Item {
     width: 300
     height: 250
     Component.onCompleted: {
-        if (filter.isNew) {
-            filter.set("av.luma_radius", radiusDefault)
-            filter.set("av.chroma_radius", radiusDefault)
-            filter.set("av.luma_strength", strengthDefault)
-            filter.set("av.chroma_strength", strengthDefault)
-            filter.set("av.luma_threshold", thresholdDefault)
-            filter.set("av.chroma_threshold", thresholdDefault)
-            filter.savePreset(defaultParameters)
-        }
+        // if (filter.isNew) {
+        //     filter.set("av.luma_radius", radiusDefault)
+        //     filter.set("av.chroma_radius", radiusDefault)
+        //     filter.set("av.luma_strength", strengthDefault)
+        //     filter.set("av.chroma_strength", strengthDefault)
+        //     filter.set("av.luma_threshold", thresholdDefault)
+        //     filter.set("av.chroma_threshold", thresholdDefault)
+        //     filter.savePreset(defaultParameters)
+        // }
 
         var keyFrameCount = filter.getKeyFrameCountOnProject("av.luma_radius");
         console.log("1......")
@@ -219,7 +219,6 @@ Item {
                     filter.set("av.luma_threshold", value)
                     filter.set("av.chroma_threshold", value)
                 }
-                
             }
         }
         UndoButton {

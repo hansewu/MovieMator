@@ -83,7 +83,7 @@ Item {
         SliderSpinner {
             objectName: 'rotationSlider'
             id: rotationSlider
-            minimumValue: -360
+            minimumValue: 0
             maximumValue: 360
             decimals: 1
             spinnerWidth: 80
@@ -105,7 +105,7 @@ Item {
             objectName: 'scaleSlider'
             id: scaleSlider
             minimumValue: 0.1
-            maximumValue: 800
+            maximumValue: 200
             decimals: 1
             spinnerWidth: 80
             suffix: ' %'
@@ -130,8 +130,8 @@ Item {
         SliderSpinner {
             objectName: 'xOffsetSlider'
             id: xOffsetSlider
-            minimumValue: -2000
-            maximumValue: 2000
+            minimumValue: -1000
+            maximumValue: 1000
             spinnerWidth: 80
             onValueChanged:{
                 keyFrame.controlValueChanged(xOffsetSlider) 
@@ -148,8 +148,8 @@ Item {
         SliderSpinner {
             objectName: 'yOffsetSlider'
             id: yOffsetSlider
-            minimumValue: -2000
-            maximumValue: 2000
+            minimumValue: -1000
+            maximumValue: 1000
             spinnerWidth: 80
             onValueChanged:{
                 keyFrame.controlValueChanged(yOffsetSlider) 
@@ -171,7 +171,7 @@ Item {
             //iconSource: "qrc:///icons/light/32x32/rotate-90.png"
             Layout.alignment: Qt.AlignRight
             onClicked: {
-               // rotationSlider.value = 80  据说是有时设置不进去，先屏蔽再看看有没有问题，以下设置180，270相同
+                rotationSlider.value = 80
                 rotationSlider.value = 90
             }
             implicitWidth: 56
@@ -195,7 +195,7 @@ Item {
             //iconSource: "qrc:///icons/light/32x32/rotate-180.png"
             Layout.alignment: Qt.AlignCenter
             onClicked: {
-               // rotationSlider.value = 170 
+                rotationSlider.value = 170
                 rotationSlider.value = 180
             }
             implicitWidth: 56
@@ -231,7 +231,7 @@ Item {
             //iconSource: "qrc:///icons/light/32x32/rotate-270.png"
             Layout.alignment: Qt.AlignRight
             onClicked: {
-             //   rotationSlider.value = 260
+                rotationSlider.value = 260
                 rotationSlider.value = 270
             }
             implicitWidth: 56

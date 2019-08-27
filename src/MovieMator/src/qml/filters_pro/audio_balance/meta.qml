@@ -15,21 +15,4 @@ Metadata {
     mlt_service: 'panner'
     objectName: 'audioBalance'
     qml: 'ui.qml'
-   keyframes {
-       allowAnimateIn: true
-       allowAnimateOut: true
-       simpleProperties: ['start']
-       parameters: [
-           Parameter {
-               name: qsTr('start')
-               property: 'start'
-               objectName: 'slider'
-               controlType: 'SliderSpinner'
-               paraType: 'double'
-               defaultValue: '0.5'
-               value: '0'
-               factorFunc:  ['c:1000.0']
-           }
-       ]
-   }
 }

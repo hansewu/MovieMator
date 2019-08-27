@@ -19,30 +19,5 @@ Metadata {
     allowMultiple: false
     filterType: qsTr('1 Basic Processing')
     freeVersion: true
-    keyframes {
-        allowTrim: false
-        allowAnimateIn: true
-        parameters: [
-            Parameter {
-                name: qsTr('out')
-                property: 'out'
-                objectName: '*'
-                controlType: ''
-                paraType: 'double'
-                defaultValue: '23'
-                value: ''
-                factorFunc:  []
-            },
-            Parameter {
-                name: qsTr('alpha')
-                property: 'alpha'
-                objectName: '*'
-                controlType: ''
-                paraType: 'double'
-                defaultValue: '1.0'
-                value: ''
-                factorFunc:  []
-            }
-        ]
-    }
+
 }

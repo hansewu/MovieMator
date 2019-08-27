@@ -11,26 +11,9 @@ import com.moviemator.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Overlay HTML")
-    mlt_service: "webvfx"
+    mlt_service: "webvfx_overlay"
     qml: "ui.qml"
     isFavorite: true
     filterType: qsTr('9 Effect')
     objectName: 'overlayHTML'
-    keyframes {
-        allowAnimateIn: true
-        allowAnimateOut: true
-        simpleProperties: ['disable']
-        parameters: [
-            Parameter {
-                name: qsTr('disable')
-                property: 'disable'
-                objectName: '*'
-                controlType: ''
-                paraType: 'double'
-                defaultValue: '1'
-                value: ''
-                factorFunc:  []
-            }
-        ]
-    }
 }

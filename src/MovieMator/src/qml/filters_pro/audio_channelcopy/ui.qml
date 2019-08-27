@@ -29,13 +29,7 @@ Item {
     property string fromParameter: 'from'
     property string toParameter: 'to'
     Component.onCompleted: {
-        if (filter.isNew) {
-            // Set default parameter values
-            combo.currentIndex = 0
-        } else {
-            // Initialize parameter values
-            combo.currentIndex = filter.get(fromParameter) * 1
-        }
+
     }
 
     ColumnLayout {

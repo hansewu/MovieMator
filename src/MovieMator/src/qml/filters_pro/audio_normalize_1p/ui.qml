@@ -31,16 +31,7 @@ Item {
     width: 300
     height: 250
     Component.onCompleted: {
-        if (filter.isNew) {
-            // Set default parameter values
-            filter.set('target_loudness', -23.0)
-            filter.set('window', 10.0)
-            filter.set('max_gain', 15.0)
-            filter.set('min_gain', -15.0)
-            filter.set('max_rate', 3.0)
-            filter.savePreset(preset.parameters)
-        }
-        setControls()
+
         timer.start()
     }
 

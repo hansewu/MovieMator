@@ -28,12 +28,6 @@ Item {
     width: 300
     height: 250
     Component.onCompleted: {
-        if (filter.isNew) {
-            // Set default parameter values
-            combo.currentIndex = 0
-            filter.set('start', 0)
-            slider.value = 0
-        }
     }
 
     GridLayout {

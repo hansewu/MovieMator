@@ -14,34 +14,6 @@ Metadata {
     mlt_service: "sepia"
     qml: 'ui.qml'
     isFavorite: true
-//    allowMultiple: false
     filterType: qsTr('5 Advanced Coloring Tool')
-    keyframes {
-        allowAnimateIn: true
-        allowAnimateOut: true
-        simpleProperties: ['u','v']
-        parameters: [
-            Parameter {
-                name: qsTr('u')
-                property: 'u'
-                objectName: 'sliderBlue'
-                controlType: 'SliderSpinner'
-                paraType: 'double'
-                defaultValue: '80'
-                value: '0'
-                factorFunc:  []
-            },
-            Parameter {
-                name: qsTr('v')
-                property: 'v'
-                objectName: 'sliderRed'
-                controlType: 'SliderSpinner'
-                paraType: 'double'
-                defaultValue: '160'
-                value: '0'
-                factorFunc:  []
-            }
-        ]
-    }
     objectName: 'sepiaTone'
 }
