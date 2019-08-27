@@ -1129,6 +1129,7 @@ Rectangle {
 */
     Menu {
         id: menu
+        style: menuStyle
         // 切割
         MenuItem {
             visible: !isTransition
