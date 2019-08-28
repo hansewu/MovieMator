@@ -630,29 +630,31 @@ Rectangle {
         fast: true
     }
 
-    Component {
+    Component
+    {
         id: menuStyle
-        MenuStyle {
-            property int fontSize: 15
-            property string fontFamily: "微软雅黑"
+        MenuStyle
+        {
+            property int nFontSize: 15
             property color fontColor: activePalette.text
 
-            itemDelegate.background: Rectangle {
+            itemDelegate.background: Rectangle
+            {
                 color: styleData.selected ? activePalette.highlight : activePalette.base
             }
 
-            itemDelegate.label: Label {
+            itemDelegate.label: Label
+            {
                 text: styleData.text
                 color: fontColor
-                font.pixelSize: fontSize
-                font.family: fontFamily
+                font.pixelSize: nFontSize
             }
 
-            itemDelegate.shortcut: Label {
+            itemDelegate.shortcut: Label
+            {
                 text: styleData.shortcut
                 color: fontColor
-                font.pixelSize: fontSize
-                font.family: fontFamily
+                font.pixelSize: nFontSize
             }
         }
     }
