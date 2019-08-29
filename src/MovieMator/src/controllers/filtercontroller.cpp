@@ -70,12 +70,12 @@ void FilterController::loadFilterParameter(QmlMetadata *pMetadata)
 
     mlt_repository repository   = mlt_factory_repository();
     mlt_properties metadata = nullptr;
-    if(pMetadata->mlt_service() == "affine")
+    if((pMetadata->mlt_service() == "affine")||(pMetadata->mlt_service() == "size_position"))
         metadata = mlt_repository_metadata( repository, transition_type, pMetadata->mlt_service().toUtf8().constData());
     else
         metadata = mlt_repository_metadata( repository, filter_type, pMetadata->mlt_service().toUtf8().constData());
-    Q_ASSERT(metadata);
 
+    Q_ASSERT(metadata);
     if(metadata == nullptr) return;
 
     mlt_properties params = static_cast<mlt_properties>(mlt_properties_get_data(metadata, "parameters", nullptr));
@@ -130,7 +130,7 @@ void FilterController::loadFilterParameter(QmlMetadata *pMetadata)
             }
 
             pParameter->setProperty(QString::fromUtf8(mlt_properties_get(paramProperties, "identifier")));
-            if(pMetadata->mlt_service() == "affine")
+            if((pMetadata->mlt_service() == "affine")||(pMetadata->mlt_service() == "size_position"))
                 pParameter->setProperty("transition."+pParameter->property());
             pParameter->setName(QString::fromUtf8(mlt_properties_get(paramProperties, "title")));
             pParameter->setExplanation(QString::fromUtf8(mlt_properties_get(paramProperties, "description")));
@@ -138,6 +138,22 @@ void FilterController::loadFilterParameter(QmlMetadata *pMetadata)
             pParameter->setObjectName(QString::fromUtf8(mlt_properties_get(paramProperties, "objectName")));
             pParameter->setControlType(QString::fromUtf8(mlt_properties_get(paramProperties, "controlType")));
             pParameter->setFactorFunc(strToList(QString::fromUtf8(mlt_properties_get(paramProperties, "factorFunc"))));
+
+            if (pMetadata->objectName() == "dynamicText")
+            {
+                if (pMetadata->keyframes())
+                {
+                    for (int i = 0; i < pMetadata->keyframes()->parameterCount(); i++)
+                    {
+                        QmlKeyframesParameter *pKeyframesParameter = pMetadata->keyframes()->paramAt(i);
+                        if (pKeyframesParameter && pKeyframesParameter->name() == "size")
+                        {
+                            double dNewHeight = double(MLT.profile().height() * pKeyframesParameter->defaultValue().toFloat());
+                            pKeyframesParameter->setDefaultValue(QString::number(dNewHeight));
+                        }
+                    }
+                }
+            }
 
             pMetadata->keyframes()->appendParameter(pParameter);
         }
