@@ -139,22 +139,6 @@ void FilterController::loadFilterParameter(QmlMetadata *pMetadata)
             pParameter->setControlType(QString::fromUtf8(mlt_properties_get(paramProperties, "controlType")));
             pParameter->setFactorFunc(strToList(QString::fromUtf8(mlt_properties_get(paramProperties, "factorFunc"))));
 
-            if (pMetadata->objectName() == "dynamicText")
-            {
-                if (pMetadata->keyframes())
-                {
-                    for (int i = 0; i < pMetadata->keyframes()->parameterCount(); i++)
-                    {
-                        QmlKeyframesParameter *pKeyframesParameter = pMetadata->keyframes()->paramAt(i);
-                        if (pKeyframesParameter && pKeyframesParameter->name() == "size")
-                        {
-                            double dNewHeight = double(MLT.profile().height() * pKeyframesParameter->defaultValue().toFloat());
-                            pKeyframesParameter->setDefaultValue(QString::number(dNewHeight));
-                        }
-                    }
-                }
-            }
-
             pMetadata->keyframes()->appendParameter(pParameter);
         }
     }
