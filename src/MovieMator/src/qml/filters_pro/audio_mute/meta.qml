@@ -13,7 +13,7 @@ Metadata {
     objectName: 'muteVolume'
     isAudio: true
     name: qsTr("Mute")
-    mlt_service: "volume"
+    mlt_service: "muteVolume"
     qml: "ui.qml"
     isFavorite: true
 }
