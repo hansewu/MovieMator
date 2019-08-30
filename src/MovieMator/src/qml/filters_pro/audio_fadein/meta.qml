@@ -13,7 +13,7 @@ Metadata {
     isAudio: true
     objectName: 'fadeInVolume'
     name: qsTr("Fade In Audio")
-    mlt_service: "volume"
+    mlt_service: "fadeInVolume"
     qml: "ui.qml"
     isFavorite: true
     allowMultiple: false

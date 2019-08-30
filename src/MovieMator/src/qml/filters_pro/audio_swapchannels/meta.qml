@@ -12,7 +12,7 @@ Metadata {
     type: Metadata.Filter
     isAudio: true
     name: qsTr("Swap Channels")
-    mlt_service: "channelcopy"
+    mlt_service: "channelswap"
     objectName: 'audioSwapChannels'
     qml: "ui.qml"
 }

@@ -12,7 +12,7 @@ Metadata {
     type: Metadata.Filter
     isAudio: true
     name: qsTr("Balance")
-    mlt_service: 'panner'
+    mlt_service: 'balancePanner'
     objectName: 'audioBalance'
     qml: 'ui.qml'
 }
