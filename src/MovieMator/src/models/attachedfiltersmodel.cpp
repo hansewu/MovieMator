@@ -424,6 +424,8 @@ void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
         m_metaList.insert(insertIndex, meta);
 
         endInsertRows();
+
+        emit filterAdded(insertIndex);
         emit changed();
 
         if(!bFromUndo)
@@ -475,6 +477,8 @@ void AttachedFiltersModel::remove(int row, bool bFromUndo)
     m_metaList.removeAt(row);
 
     endRemoveRows();
+
+    emit filterRemoved(row);
     emit changed();
 
     delete filter;
@@ -563,9 +567,11 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
 
                 //如果当前的producer是模板，且其中有sizeAndProducer滤镜时，自动选中sizeAndProducer滤镜
                 QString templateFlag = QString(m_producer->get("moviemator:template"));
-                if (templateFlag == "template") {
+                if (templateFlag == "template")
+                {
                     char* filter_name = filter->get("moviemator:filter");
-                    if (QString(filter_name) == "affineSizePosition") {
+                    if (QString(filter_name) == "affineSizePosition")
+                    {
                         MAIN.onShowPropertiesVideoFilterDock();
                         MAIN.timelineDock()->selectSizeAndPositionFilter(newIndex);
 //                        selectIndex = newIndex;
@@ -578,8 +584,8 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
 
     endResetModel();
 
-//    if (selectIndex >= 0)
-//        MAIN.timelineDock()->selectSizeAndPositionFilter(selectIndex);
+    emitFiltersLoaded();
+
     emit trackTitleChanged();
     emit isProducerSelectedChanged();
     emit readyChanged();
@@ -602,13 +608,44 @@ void AttachedFiltersModel::setFilter(AttachedMetadataFilter filter)
 
 bool AttachedFiltersModel::isVisible(int row) const
 {
-    if(row < 0) return false;
+    if(row < 0)
+        return false;
 
-    if(m_metaList.count() <= row) return false;
+    if(m_metaList.count() <= row)
+        return false;
+
     QmlMetadata* meta = m_metaList.at(row);
     Q_ASSERT(meta);
-    if(!meta) return false;
-    if (m_filter == AudioFilter && !meta->isAudio()) return false;
-    if (m_filter == VideoFilter && meta->isAudio()) return false;
-    return true;
+    if(!meta)
+        return false;
+
+    return !meta->isAudio();
+}
+
+void AttachedFiltersModel::emitFiltersLoaded()
+{
+    if (!m_producer || !m_producer->is_valid())
+        return;
+
+    QString strProducerType = QString::fromUtf8(m_producer->get(kProducerTypeProperty));
+
+    if (strProducerType.compare("text-template", Qt::CaseInsensitive) == 0)
+    {
+        for (int i = 0; i < m_metaList.count(); i++)
+        {
+            QmlMetadata *pMetaData = m_metaList.at(i);
+            QString strMltService = pMetaData->mlt_service();
+            if (strMltService.compare("dynamictext", Qt::CaseInsensitive) == 0)
+            {
+                emit filtersLoadedForTextTemplateProducer(i);
+                break;
+            }
+        }
+    }
+    else
+    {
+        emit filtersLoaded();
+    }
+
+    return;
 }

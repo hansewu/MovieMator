@@ -137,7 +137,6 @@ Rectangle {
             throw new Error("attachedFiltersView.model.model is abnormal")
             return
         }
-        attachedFiltersView.model.model.remove(index)
         dataView.model.model.remove(modelIndex)
         if(attachedFiltersView.model.model.count <= 0)
             removeLastFilter(modelIndex)
@@ -221,9 +220,21 @@ Rectangle {
             oldAudioId = audioFiltersList.get(index).id
         }
     }
+
     //重新选中当前索引对应的滤镜
     function reLoadFilter(){
         chooseFilter(getCurrentFilterIndex())
+    }
+
+    function isVideoFilter(nModelIndex)
+    {
+        console.log("isVideoFilter -- ", nModelIndex, videoFiltersList.count)
+        for (var i = 0; i < videoFiltersList.count; i++)
+        {
+            if (videoFiltersList.get(i).modelIndex === nModelIndex)
+                return true
+        }
+        return false
     }
     
     GridView {
@@ -239,44 +250,73 @@ Rectangle {
             }
         }
     }
-    //filter列表中filter发生删除、添加操作时，触发此函数进行处理（更新attachedfiltersmodel等）
-    Connections { 
-        target: visualModel0.items
-        onChanged: {
-            if(draged) return
-            for(var i=0;i < inserted.length;i++){
-                var index = inserted[i].index
+
+    Connections
+    {
+        target: attachedfiltersmodel
+
+        onFiltersLoadedForTextTemplateProducer:
+        {
+            updateModelData()
+            chooseFilter(nTextFilterIndex);
+        }
+
+        onFiltersLoaded:
+        {
+            updateModelData()
+            chooseFilter(0);
+        }
+
+        onFilterAdded:
+        {
+            updateModelData()
+            if( (attachedfiltersmodel.isVisible(nAttachedFilterIndex) && isvideo) //添加的视频滤镜，并且当前是视频滤镜Dock
+                    || (!attachedfiltersmodel.isVisible(nAttachedFilterIndex) && !isvideo) )
+            {
+                var filterIndex = nAttachedFilterIndex;
+                if(!attachedfiltersmodel.isVisible(nAttachedFilterIndex)) //音频滤镜
+                {
+                    filterIndex = nAttachedFilterIndex - videoFiltersList.count
+                }
+                chooseFilter(filterIndex)
+            }
+            else
+            {
+                attachedFiltersView.currentIndex = getCurrentFilterIndex()
+            }
+        }
+
+        onFilterRemoved:
+        {
+            //判断删除的是视频滤镜还是音频滤镜
+            if( (isVideoFilter(nAttachedFilterIndex) && isvideo) || (!isVideoFilter(nAttachedFilterIndex) && !isvideo) )
+            {
                 updateModelData()
-                if(attachedfiltersmodel.isVisible(index) === isvideo){
-                    if(!attachedfiltersmodel.isVisible(index)){
-                        index = index - videoFiltersList.count
+
+                var removedIndex = nAttachedFilterIndex
+
+                if(filterType === audioType)
+                    removedIndex = nAttachedFilterIndex - videoFiltersList.count
+
+                if(removedIndex === attachedFiltersView.currentIndex)
+                {
+                    if(visualModel.model.count > 0)
+                    {
+                        if(removedIndex >= visualModel.model.count)
+                        {
+                            chooseFilter(removedIndex-1)
+                        }
+                        else
+                        {
+                            chooseFilter(removedIndex)
+                        }
                     }
-                    chooseFilter(index)
-                }else{
-                    attachedFiltersView.currentIndex = getCurrentFilterIndex()
                 }
             }
-            for(var j=0;j<removed.length;j++){
-                var removedIndex = removed[j].index
-                if(filterType === audioType)
-                    removedIndex = removedIndex - videoFiltersList.count
+            else
+            {
                 updateModelData()
-                if(attachedfiltersmodel.isVisible(removedIndex) === isvideo){
-                    if(removedIndex === attachedFiltersView.currentIndex){
-                        if(visualModel.model.count > 0){
-                            if(removedIndex >= visualModel.model.count)
-                                chooseFilter(removedIndex-1)
-                            else
-                                chooseFilter(removedIndex)
-                        }else{
-                            switchFilterType((filterType === videoType)?audioType:videoType)
-                        }
-                    }else{
-                        chooseFilter(getCurrentFilterIndex())
-                    }
-                }else{
-                    attachedFiltersView.currentIndex = getCurrentFilterIndex()
-                }
+                attachedFiltersView.currentIndex = getCurrentFilterIndex()
             }
         }
     }
