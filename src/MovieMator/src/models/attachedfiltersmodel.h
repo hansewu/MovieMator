@@ -85,8 +85,9 @@ public:
     AttachedMetadataFilter filter() const { return m_filter; }
     //设置filter的类型
     void setFilter(AttachedMetadataFilter);
-    //检测第row个滤镜是否可见
+    //检测第row个滤镜是否是视频滤镜
     Q_INVOKABLE bool isVisible(int row) const;
+
 signals:
     //当m_metaList中的数据发生变化时（添加、删除、移动等），发出此信号
     void changed();
@@ -100,6 +101,13 @@ signals:
     void isProducerSelectedChanged();
     //filter的类型发生改变时发出此信号
     void filterChanged();
+
+    void filtersLoaded();
+    void filtersLoadedForTextTemplateProducer(int nTextFilterIndex);
+
+    void filterAdded(int nAttachedFilterIndex);
+    void filterRemoved(int nAttachedFilterIndex);
+
 
 public slots:
     //添加filter到m_metaList中，通过QmlMetadata创建新的filter设置到当前的producer上，并将meta保存到m_metaList中，
@@ -118,6 +126,9 @@ private:
 
     //给新添加的滤镜设置缺省参数
     void setDefaultValueForAllParemeters(Mlt::Filter* pFilter,QmlMetadata* pMetadata);
+
+    //加载producer的滤镜时发送消息
+    void emitFiltersLoaded();
 
     //拖拽的filter的索引
     int m_dropRow;
