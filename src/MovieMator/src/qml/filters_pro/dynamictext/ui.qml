@@ -157,7 +157,7 @@ Item {
         {
             rect = filter.getAnimRectValue(position, rectProperty)
         }
-        return Qt.rect(rect.x * profile.width, rect.y * profile.height, rect.width * profile.width, rect.height * profile.height)
+        return Qt.rect(Math.round(rect.x * profile.width), Math.round(rect.y * profile.height), Math.round(rect.width * profile.width), Math.round(rect.height * profile.height))
     }
 
     function getRelativeRect(absoluteRect) 
