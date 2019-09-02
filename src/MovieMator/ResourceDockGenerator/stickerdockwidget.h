@@ -25,7 +25,7 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent *pEvent);
-    QMap<QString, BaseItemModel *> *createAllClassesItemModel();
+    QUnsortMap<QString, BaseItemModel *> *createAllClassesItemModel();
     void addItemToTimeline(const QStandardItem *pItem);
     void preview(const QStandardItem *pItem);
     void setupTopBarUi();

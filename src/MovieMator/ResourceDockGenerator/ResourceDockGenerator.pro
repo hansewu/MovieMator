@@ -57,7 +57,8 @@ HEADERS += \
     filteritemmodel.h \
     recentdock/recentdockwidget.h \
     recentdock/recentitemmodel.h \
-    recentdock/lineeditclear.h
+    recentdock/lineeditclear.h \
+    qunsortmap.h
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 INCLUDEPATH += ../src

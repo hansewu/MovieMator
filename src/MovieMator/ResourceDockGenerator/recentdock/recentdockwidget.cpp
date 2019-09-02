@@ -22,7 +22,7 @@ RecentDockWidget::RecentDockWidget(MainInterface *pMainInterface, QWidget *pPare
     m_pMainInterface(pMainInterface)
 {
     m_recent            = Settings.recent();
-    m_listItemNames     = {tr("1 Backgrounds"), tr("2 Videos"), tr("3 Audios"), tr("4 Images")};
+    m_listItemNames     = {tr("Backgrounds"), tr("Videos"), tr("Audios"), tr("Images")};
 
     m_pRemoveAction     = new QAction(this);
     m_pRemoveAllAction  = new QAction(this);
@@ -542,14 +542,13 @@ void RecentDockWidget::onRightClickedItem(const QModelIndex &index, const QPoint
     }
 }
 
-QMap<QString, BaseItemModel *> * RecentDockWidget::createAllClassesItemModel()
+QUnsortMap<QString, BaseItemModel *> * RecentDockWidget::createAllClassesItemModel()
 {
-    QMap<QString, BaseItemModel*> *pFileDockListViewItemModel = new QMap<QString, BaseItemModel*>();
-    for( int i = 0; i < m_listItemNames.count(); i++ )
+    QUnsortMap<QString, BaseItemModel*> *pFileDockListViewItemModel = new QUnsortMap<QString, BaseItemModel*>();
+    for( QString strItemName : m_listItemNames )
     {
         RecentItemModel *pItemModel = new RecentItemModel(m_pMainInterface, this);
-        pFileDockListViewItemModel->insert(m_listItemNames[i], pItemModel);
-        pFileDockListViewItemModel->setSharable(true);
+        pFileDockListViewItemModel->append(strItemName, pItemModel);
 
         QSortFilterProxyModel *pProxyModel = new QSortFilterProxyModel(this);
         pProxyModel->setSourceModel(pItemModel);
