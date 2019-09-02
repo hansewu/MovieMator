@@ -55,7 +55,7 @@ void BaseDockWidget::setupUi()
     setupTopBarUi();
 
     //创建所有分类的数据
-    QUnsortMap<QString, BaseItemModel *> *pAllClassesItemModel = createAllClassesItemModel();
+    UnsortMap<QString, BaseItemModel *> *pAllClassesItemModel = createAllClassesItemModel();
 
     //创建所有分类的UI
     setupAllClassesUi(pAllClassesItemModel);
@@ -75,7 +75,7 @@ void BaseDockWidget::showMeun(const QStandardItem *pItem, const QPoint &position
     Q_UNUSED(position);
 }
 
-void BaseDockWidget::setupAllClassesUi(QUnsortMap<QString, BaseItemModel *> *pAllClassesItemModel)
+void BaseDockWidget::setupAllClassesUi(UnsortMap<QString, BaseItemModel *> *pAllClassesItemModel)
 {
     //创建所有分类的listview
     Q_ASSERT(pAllClassesItemModel);

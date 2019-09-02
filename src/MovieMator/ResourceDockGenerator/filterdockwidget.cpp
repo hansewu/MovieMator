@@ -20,10 +20,10 @@ FilterDockWidget::FilterDockWidget(int nFilterDockType, MainInterface *pMainInte
     qDebug()<<"sll-----FilterDockWidget构造---end";
 }
 
-QUnsortMap<QString, BaseItemModel *> *FilterDockWidget::createAllClassesItemModel()
+UnsortMap<QString, BaseItemModel *> *FilterDockWidget::createAllClassesItemModel()
 {
     qDebug()<<"sll-----createAllClassesItemModel---start";
-    QUnsortMap<QString, BaseItemModel *> *pFilterDockListViewItemModel = new QUnsortMap<QString, BaseItemModel *>;
+    UnsortMap<QString, BaseItemModel *> *pFilterDockListViewItemModel = new UnsortMap<QString, BaseItemModel *>;
 
     foreach (FilterInfo filterInfo, m_filtersInfo)
     {
