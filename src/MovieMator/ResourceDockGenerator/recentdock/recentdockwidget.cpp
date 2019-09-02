@@ -542,9 +542,9 @@ void RecentDockWidget::onRightClickedItem(const QModelIndex &index, const QPoint
     }
 }
 
-QUnsortMap<QString, BaseItemModel *> * RecentDockWidget::createAllClassesItemModel()
+UnsortMap<QString, BaseItemModel *> * RecentDockWidget::createAllClassesItemModel()
 {
-    QUnsortMap<QString, BaseItemModel*> *pFileDockListViewItemModel = new QUnsortMap<QString, BaseItemModel*>();
+    UnsortMap<QString, BaseItemModel*> *pFileDockListViewItemModel = new UnsortMap<QString, BaseItemModel*>();
     for( QString strItemName : m_listItemNames )
     {
         RecentItemModel *pItemModel = new RecentItemModel(m_pMainInterface, this);

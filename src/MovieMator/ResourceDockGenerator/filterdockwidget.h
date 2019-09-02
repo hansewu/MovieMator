@@ -16,7 +16,7 @@ public:
     void setFiltersInfo(QList<FilterInfo> filtersInfo);
 
 protected:
-    QUnsortMap<QString, BaseItemModel *> *createAllClassesItemModel();
+    UnsortMap<QString, BaseItemModel *> *createAllClassesItemModel();
     void addItemToTimeline(const QStandardItem *pItem);
     void preview(const QStandardItem *pItem);
 

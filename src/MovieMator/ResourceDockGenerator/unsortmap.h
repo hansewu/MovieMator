@@ -1,15 +1,15 @@
-#ifndef QUNSORTMAP_H
-#define QUNSORTMAP_H
+#ifndef UNSORTMAP_H
+#define UNSORTMAP_H
 
 #include <QMap>
 
 template <class Key, class T>
-class QUnsortMap
+class UnsortMap
 {
 public:
-    explicit QUnsortMap();
+    explicit UnsortMap();
 
-    virtual ~QUnsortMap();
+    virtual ~UnsortMap();
 
     // 是否含有 key
     bool contains(const Key &key);
@@ -36,53 +36,53 @@ private:
 };
 
 template <class Key, class T>
-QUnsortMap<Key, T>::QUnsortMap()
+UnsortMap<Key, T>::UnsortMap()
 {
 
 }
 
 template <class Key, class T>
-QUnsortMap<Key, T>::~QUnsortMap()
+UnsortMap<Key, T>::~UnsortMap()
 {
 
 }
 
 template <class Key, class T>
-bool QUnsortMap<Key, T>::contains(const Key &key)
+bool UnsortMap<Key, T>::contains(const Key &key)
 {
     return m_keys.contains(key);
 }
 
 template <class Key, class T>
-T QUnsortMap<Key, T>::value(const Key &key)
+T UnsortMap<Key, T>::value(const Key &key)
 {
     return m_values.value(key);
 }
 
 template <class Key, class T>
-QList<Key> QUnsortMap<Key, T>::keys()
+QList<Key> UnsortMap<Key, T>::keys()
 {
     return m_keys;
 }
 
 template <class Key, class T>
-void QUnsortMap<Key, T>::insert(int nIndex, const Key &key, const T &value)
+void UnsortMap<Key, T>::insert(int nIndex, const Key &key, const T &value)
 {
     m_keys.insert(nIndex, key);
     m_values.insert(key, value);
 }
 
 template <class Key, class T>
-void QUnsortMap<Key, T>::append(const Key &key, const T &value)
+void UnsortMap<Key, T>::append(const Key &key, const T &value)
 {
     m_keys.append(key);
     m_values.insert(key, value);
 }
 
 template <class Key, class T>
-int QUnsortMap<Key, T>::count() const
+int UnsortMap<Key, T>::count() const
 {
     return m_keys.count();
 }
 
-#endif // QUNSORTMAP_H
+#endif // UNSORTMAP_H

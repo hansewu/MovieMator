@@ -108,11 +108,11 @@ QIcon StickerDockWidget::getListViewItemIcon(const QString strFilePath)
     return QPixmap::fromImage(iconImage);
 }
 
-QUnsortMap<QString, BaseItemModel *> *StickerDockWidget::createAllClassesItemModel()
+UnsortMap<QString, BaseItemModel *> *StickerDockWidget::createAllClassesItemModel()
 {
     qDebug()<<"sll-----createAllClassesItemModel---start";
 
-    QUnsortMap<QString, BaseItemModel *> *pStickerDockListViewItemModel = new QUnsortMap<QString, BaseItemModel *>;
+    UnsortMap<QString, BaseItemModel *> *pStickerDockListViewItemModel = new UnsortMap<QString, BaseItemModel *>;
 
     QString strStickerDir = Util::resourcesPath() + "/template/sticker";
 
