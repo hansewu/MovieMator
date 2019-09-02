@@ -337,9 +337,10 @@ void AttachedFiltersModel::setDefaultValueForAllParemeters(Mlt::Filter* pFilter,
 
     if (pMetadata->objectName() == "dynamicText")
     {
-        pFilter->set("size",MLT.profile().height() * 0.1958);
+        mlt_rect rectGeometry = pFilter->get_rect("geometry");
+        int nSize = static_cast<int>(MLT.profile().height() * rectGeometry.h + 0.5);
+        pFilter->set("size",nSize);
     }
-
 }
 
 void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
