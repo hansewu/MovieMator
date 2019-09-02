@@ -21,10 +21,10 @@ TextDockWidget::~TextDockWidget()
     qDebug()<<"sll-----TextDockWidget析构---end";
 }
 
-QMap<QString, BaseItemModel *> *TextDockWidget::createAllClassesItemModel()
+QUnsortMap<QString, BaseItemModel *> *TextDockWidget::createAllClassesItemModel()
 {
     qDebug()<<"sll-----createAllClassesItemModel---start";
-    QMap<QString, BaseItemModel *> *pTextDockListViewItemModel = new QMap<QString, BaseItemModel *>;
+    QUnsortMap<QString, BaseItemModel *> *pTextDockListViewItemModel = new QUnsortMap<QString, BaseItemModel *>;
 
     QString strTextDir = Util::resourcesPath() + "/template/text";
 
@@ -69,7 +69,7 @@ QMap<QString, BaseItemModel *> *TextDockWidget::createAllClassesItemModel()
 
         qDebug()<<"sll-----className = "<<strClassName;
 
-        pTextDockListViewItemModel->insert(strClassName, pItemMode);
+        pTextDockListViewItemModel->append(strClassName, pItemMode);
     }
 
     qDebug()<<"sll-----createAllClassesItemModel---end";

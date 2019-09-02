@@ -55,7 +55,7 @@ void BaseDockWidget::setupUi()
     setupTopBarUi();
 
     //创建所有分类的数据
-    QMap<QString, BaseItemModel *> *pAllClassesItemModel = createAllClassesItemModel();
+    QUnsortMap<QString, BaseItemModel *> *pAllClassesItemModel = createAllClassesItemModel();
 
     //创建所有分类的UI
     setupAllClassesUi(pAllClassesItemModel);
@@ -75,7 +75,7 @@ void BaseDockWidget::showMeun(const QStandardItem *pItem, const QPoint &position
     Q_UNUSED(position);
 }
 
-void BaseDockWidget::setupAllClassesUi(QMap<QString, BaseItemModel *> *pAllClassesItemModel)
+void BaseDockWidget::setupAllClassesUi(QUnsortMap<QString, BaseItemModel *> *pAllClassesItemModel)
 {
     //创建所有分类的listview
     Q_ASSERT(pAllClassesItemModel);
@@ -84,27 +84,26 @@ void BaseDockWidget::setupAllClassesUi(QMap<QString, BaseItemModel *> *pAllClass
         return;
     }
 
-    bool hasClass = (pAllClassesItemModel->keys().count() > 1) ? true : false;
+    bool hasClass = (pAllClassesItemModel->count() > 1) ? true : false;
 
     if (hasClass)
     {
         //创建各分类listview，并添加到UI
-        QMap<QString, BaseItemModel *>::const_iterator iter;
-        for (iter = pAllClassesItemModel->constBegin(); iter != pAllClassesItemModel->constEnd(); iter++)
+        for (QString strItemName : pAllClassesItemModel->keys())
         {
             //创建分类名控件
-            QHBoxLayout *classLabelLayout = createClassLabel(iter.key());
+            QHBoxLayout *classLabelLayout = createClassLabel(strItemName);
             ui->verticalLayout_scrollarea->addLayout(classLabelLayout);
 
             //设置分类combobox的数据项
-            ui->comboBox_class->addItem(iter.key());
+            ui->comboBox_class->addItem(strItemName);
 
             //创建一个分类的lsitview
-            BaseListView *pOneClassListView = createClassListView(iter.value());
+            BaseListView *pOneClassListView = createClassListView(pAllClassesItemModel->value(strItemName));
             ui->verticalLayout_scrollarea->addWidget(pOneClassListView);
 
             //保存listview到map
-            m_pAllClassesListView->insert(iter.key(), pOneClassListView);
+            m_pAllClassesListView->insert(strItemName, pOneClassListView);
         }
     }
     else
@@ -113,11 +112,12 @@ void BaseDockWidget::setupAllClassesUi(QMap<QString, BaseItemModel *> *pAllClass
         ui->comboBox_class->setHidden(true);
 
         //创建一个分类的lsitview
-        BaseListView *pOneClassListView = createClassListView(pAllClassesItemModel->first());
+        QString strItemName             = pAllClassesItemModel->keys().first();
+        BaseListView *pOneClassListView = createClassListView(pAllClassesItemModel->value(strItemName));
         ui->verticalLayout_scrollarea->addWidget(pOneClassListView);
 
         //保存listview到map，
-        m_pAllClassesListView->insert(pAllClassesItemModel->firstKey(), pOneClassListView);
+        m_pAllClassesListView->insert(strItemName, pOneClassListView);
     }
 
     //在dock底部添加伸缩布局控件，控制dock中控件的数值布局是靠顶部的

@@ -20,18 +20,17 @@ FilterDockWidget::FilterDockWidget(int nFilterDockType, MainInterface *pMainInte
     qDebug()<<"sll-----FilterDockWidget构造---end";
 }
 
-
-QMap<QString, BaseItemModel *> *FilterDockWidget::createAllClassesItemModel()
+QUnsortMap<QString, BaseItemModel *> *FilterDockWidget::createAllClassesItemModel()
 {
     qDebug()<<"sll-----createAllClassesItemModel---start";
-    QMap<QString, BaseItemModel *> *pFilterDockListViewItemModel = new QMap<QString, BaseItemModel *>;
+    QUnsortMap<QString, BaseItemModel *> *pFilterDockListViewItemModel = new QUnsortMap<QString, BaseItemModel *>;
 
     foreach (FilterInfo filterInfo, m_filtersInfo)
     {
         if (!pFilterDockListViewItemModel->contains(filterInfo.strClassification))
         {
             FilterItemModel *pNewFilterItemModel = new FilterItemModel(this);
-            pFilterDockListViewItemModel->insert(filterInfo.strClassification, pNewFilterItemModel);
+            pFilterDockListViewItemModel->append(filterInfo.strClassification, pNewFilterItemModel);
         }
 
         FilterItemModel *pFilterItemModel = qobject_cast<FilterItemModel *>(pFilterDockListViewItemModel->value(filterInfo.strClassification));

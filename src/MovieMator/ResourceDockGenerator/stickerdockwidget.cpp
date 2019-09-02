@@ -108,11 +108,11 @@ QIcon StickerDockWidget::getListViewItemIcon(const QString strFilePath)
     return QPixmap::fromImage(iconImage);
 }
 
-QMap<QString, BaseItemModel *> *StickerDockWidget::createAllClassesItemModel()
+QUnsortMap<QString, BaseItemModel *> *StickerDockWidget::createAllClassesItemModel()
 {
     qDebug()<<"sll-----createAllClassesItemModel---start";
 
-    QMap<QString, BaseItemModel *> *pStickerDockListViewItemModel = new QMap<QString, BaseItemModel *>;
+    QUnsortMap<QString, BaseItemModel *> *pStickerDockListViewItemModel = new QUnsortMap<QString, BaseItemModel *>;
 
     QString strStickerDir = Util::resourcesPath() + "/template/sticker";
 
@@ -155,7 +155,7 @@ QMap<QString, BaseItemModel *> *StickerDockWidget::createAllClassesItemModel()
 
         qDebug()<<"sll-----className = "<<strClassName;
 
-        pStickerDockListViewItemModel->insert(strClassName, pItemMode);
+        pStickerDockListViewItemModel->append(strClassName, pItemMode);
     }
 
     qDebug()<<"sll-----createAllClassesItemModel---end";

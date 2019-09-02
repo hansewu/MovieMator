@@ -2,6 +2,7 @@
 #define BASEDOCKWIDGET_H
 
 #include <QDockWidget>
+#include "QUnsortMap.h"
 
 class QListView;
 class BaseItemModel;
@@ -32,7 +33,7 @@ protected:
     virtual void setupTopBarUi();
 
     //创建所有分类的数据
-    virtual QMap<QString, BaseItemModel *> *createAllClassesItemModel() = 0;
+    virtual QUnsortMap<QString, BaseItemModel*> *createAllClassesItemModel() = 0;
 
     //添加资源到时间线
     virtual void addItemToTimeline(const QStandardItem *pItem) = 0;
@@ -62,7 +63,7 @@ private slots:
 
 private:
     //创建所有分类的UI
-    void setupAllClassesUi(QMap<QString, BaseItemModel *> *pAllClassesItemModel);
+    void setupAllClassesUi(QUnsortMap<QString, BaseItemModel *> *pAllClassesItemModel);
 
     //创建一个分类的listview
     BaseListView *createClassListView(BaseItemModel *pItemModel);

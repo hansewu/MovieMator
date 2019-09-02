@@ -31,7 +31,7 @@ protected:
 
     void addItemToTimeline(const QStandardItem *pItem);
 
-    QMap<QString, BaseItemModel *> *createAllClassesItemModel();
+    QUnsortMap<QString, BaseItemModel *> *createAllClassesItemModel();
 
     void showMeun(const QStandardItem *pItem, const QPoint &position);
 
