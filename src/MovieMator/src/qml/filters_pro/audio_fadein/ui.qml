@@ -33,7 +33,7 @@ Item {
     Component.onCompleted: {
         if (filter.isNew) {
             duration = Math.ceil(settings.audioInDuration * profile.fps)
-            filter.setInAndOut(filter.producerIn, filter.getDouble('in') + duration - 1)
+            filter.setInAndOut(filter.producerIn, filter.producerIn + duration - 1)
         }
     }
 
