@@ -63,34 +63,35 @@ void AudioLevelsTask::start(Mlt::Producer& producer, MultitrackModel* model, con
     Q_UNUSED(index);
     Q_UNUSED(force);
 
-    return;
-  //  clock_t begin, duration;
+    if (producer.is_valid() && index.isValid())
+    {
+        AudioLevelsTask* pAudioLevelsTask = new AudioLevelsTask(producer, model, index);
 
-  //  begin = clock();
-//    if (producer.is_valid() && index.isValid()) {
-//        AudioLevelsTask* task = new AudioLevelsTask(producer, model, index);
-//        tasksListMutex.lock();
-//        // See if there is already a task for this MLT service and resource.
-//        foreach (AudioLevelsTask* t, tasksList) {
-//            if (*t == *task) {
-//                // If so, then just add ourselves to be notified upon completion.
-//                delete task;
-//                task = nullptr;
-//                t->m_producers << ProducerAndIndex(new Mlt::Producer(producer), index);
-//                break;
-//            }
-//        }
-//        if (task) {
-//            // Otherwise, start a new audio levels generation thread.
-//            task->m_isForce = force;
-//            tasksList << task;
-//            QThreadPool::globalInstance()->start(task);
-//        }
-//        tasksListMutex.unlock();
-//    }
-  //  duration = clock() - begin;
+        tasksListMutex.lock();
 
-    //qDebug() << "函数AudioLevelsTask Start的运行时间大约为：" << duration*1000/CLOCKS_PER_SEC << " ms";
+        // See if there is already a task for this MLT service and resource.
+        foreach (AudioLevelsTask* pTask, tasksList)
+        {
+            if (*pTask == *pAudioLevelsTask)
+            {
+                // If so, then just add ourselves to be notified upon completion.
+                delete pAudioLevelsTask;
+                pAudioLevelsTask = nullptr;
+                pTask->m_producers << ProducerAndIndex(new Mlt::Producer(producer), index);
+                break;
+            }
+        }
+
+        if (pAudioLevelsTask)
+        {
+            // Otherwise, start a new audio levels generation thread.
+            pAudioLevelsTask->m_isForce = force;
+            tasksList << pAudioLevelsTask;
+            QThreadPool::globalInstance()->start(pAudioLevelsTask);
+        }
+
+        tasksListMutex.unlock();
+    }
 }
 
 void AudioLevelsTask::closeAll()
