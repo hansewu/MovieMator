@@ -581,7 +581,7 @@ void QmlFilter::setInAndOut(int in, int out)
         return;
     }
     Q_ASSERT(m_filter);
-    if (m_filter->get_int("in") == 0 && m_filter->get_int("out") == 0)
+    if (m_filter->get_int("in") != in || m_filter->get_int("out") != out)
         m_filter->set_in_and_out(in, out);
 }
 

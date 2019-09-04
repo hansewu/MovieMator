@@ -343,7 +343,13 @@ int TimelineDock::currentTrack() const
 //    Q_ASSERT(m_quickView.rootObject());
     if (!m_quickView.rootObject())
         return 0;
-    return m_quickView.rootObject()->property("currentTrack").toInt();
+    int nCurrentTrack = m_quickView.rootObject()->property("currentTrack").toInt();
+    if(nCurrentTrack >= m_model.trackList().count())
+    {
+        nCurrentTrack = 0;
+        m_quickView.rootObject()->setProperty("currentTrack", nCurrentTrack);
+    }
+    return nCurrentTrack;//m_quickView.rootObject()->property("currentTrack").toInt();
 }
 
 void TimelineDock::zoomIn()
