@@ -44,6 +44,8 @@ protected:
     //显示右键菜单
     virtual void showMeun(const QStandardItem *pItem, const QPoint &position);
 
+    virtual void clearNotCurrentSelection(const QModelIndex &index);
+
 protected slots:
     //左键单击item右上角的添加按钮
     virtual void onLeftClickedAddButtonInItem(const QModelIndex &index);
@@ -56,6 +58,9 @@ protected slots:
 
     //右键点击item
     virtual void onRightClickedItem(const QModelIndex &index, const QPoint &position);
+
+    // 双击 item
+    virtual void onDoubleClickedItem(const QModelIndex &index);
 
 private slots:
     //切换dock时，自适应调节dock的宽
