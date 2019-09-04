@@ -125,6 +125,13 @@ Rectangle {
     Drag.proposedAction: Qt.MoveAction
     opacity: Drag.active? 0.5 : 1.0
 
+    //声音波形颜色
+    function getWaveColor()
+    {
+        var waveColor = clipRoot.selected ? '#e47b62' : '#50a097'
+        return isBlank? 'transparent' : isTransition? '#8c953f' : waveColor
+    }
+
     // clip的背景色
     function getColor() {
 //        return isBlank? 'transparent' : isTransition? 'mediumpurple' : isAudio? 'darkseagreen' : root.moviematorBlue
@@ -139,14 +146,15 @@ Rectangle {
     }
 
     // 重定位所在轨道为轨道 track
-    function reparent(track) {
+    function reparent(track)
+    {
         console.assert(track);
         if(!track) return;
         Drag.active = false
         parent = track
         isAudio = track.isAudio
         height = track.height
-     //   generateWaveform()
+        generateWaveform()
     }
 
     // 终止拖动
@@ -155,17 +163,22 @@ Rectangle {
     }
 
     // 生成 clip的波形
-    function generateWaveform() {
+    function generateWaveform()
+    {
         // This is needed to make the model have the correct count.
         // Model as a property expression is not working in all cases.
-        console.assert(waveform.maxWidth>0);
-        if(waveform.maxWidth>0)
+        console.assert(waveform.maxWidth > 0);
+        if(waveform.maxWidth > 0)
+        {
             waveformRepeater.model = Math.ceil(waveform.innerWidth / waveform.maxWidth)
+        }
 //        for (var i = 0; i < waveformRepeater.count; i++)
         // console.assert(waveformRepeater.count>0);   // waveformRepeater.count可以为 0
         // console.assert(waveformRepeater.itemAt(0));  // waveformRepeater可以没有元素
-        if(waveformRepeater.count>0 && waveformRepeater.itemAt(0))
+        if((waveformRepeater.count > 0) && waveformRepeater.itemAt(0))
+        {
             waveformRepeater.itemAt(0).update()
+        }
     }
 
     // clip的缩略图
@@ -183,49 +196,48 @@ Rectangle {
     onAudioLevelsChanged: generateWaveform()
 
     // 出点位置的 clip缩略图
-    Image {
+    Image
+    {
         id: outThumbnail
         visible: settings.timelineShowThumbnails
         anchors.right: parent.right
         anchors.top: parent.top
-        //anchors.topMargin: parent.border.width
-        //anchors.rightMargin: parent.border.width
+        anchors.topMargin: parent.border.width
+        anchors.rightMargin: parent.border.width + 1
         anchors.bottom: parent.bottom
-        //anchors.bottomMargin: parent.border.width
-        anchors.margins: 6
+        anchors.bottomMargin: parent.height / 2
         width: height * 16.0/9.0
         fillMode: Image.PreserveAspectFit
         source: isText ? textThumbnail : imagePath(outPoint)
     }
 
     // 入点位置的 clip缩略图
-    Image {
+    Image
+    {
         id: inThumbnail
         visible: settings.timelineShowThumbnails
         anchors.left: parent.left
         anchors.top: parent.top
-        //anchors.topMargin: parent.border.width
-        //anchors.leftMargin: parent.border.width
+        anchors.topMargin: parent.border.width
         anchors.bottom: parent.bottom
-        //anchors.bottomMargin: parent.border.width
-        anchors.margins: 6
+        anchors.bottomMargin: parent.height / 2
         width: height * 16.0/9.0
         fillMode: Image.PreserveAspectFit
         source: isText ? textThumbnail : imagePath(inPoint)
     }
 
     // clip中间位置的缩略图
-    Image {
+    Image
+    {
         id: centerThumbnail
         visible: settings.timelineShowThumbnails
-        anchors.left: parent.left
         anchors.top: parent.top
-        //anchors.topMargin: parent.border.width
-        //anchors.leftMargin: parent.width/2 - width / 2
-
+        anchors.topMargin: parent.border.width
         anchors.bottom: parent.bottom
-        //anchors.bottomMargin: parent.border.width
-        anchors.margins: 6
+        anchors.bottomMargin: parent.height / 2
+        anchors.left: parent.left
+        anchors.leftMargin: parent.width / 2 - width / 2
+        anchors.right: parent.right
         width: height * 16.0/9.0
         fillMode: Image.PreserveAspectFit
         source: isText ? textThumbnail : imagePath((outPoint+inPoint)/2)
@@ -272,12 +284,14 @@ Rectangle {
         property int maxWidth: 10000
         property int innerWidth: clipRoot.width - clipRoot.border.width * 2
 
-        Repeater {
+        Repeater
+        {
             id: waveformRepeater
-            TimelineWaveform {
+            TimelineWaveform
+            {
                 width: Math.min(waveform.innerWidth, waveform.maxWidth)
                 height: waveform.height
-                fillColor: getColor()
+                fillColor: getWaveColor()
                 property int channels: 2
                 inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
                 outPoint: inPoint + Math.round(width / timeScale * speed) * channels
@@ -288,18 +302,19 @@ Rectangle {
 
 
 
-//    Rectangle {
-//        // audio peak line
-//        width: parent.width - parent.border.width * 2
-//        visible: !isBlank && !isTransition
-//        height: 1
-//        anchors.left: parent.left
-//        anchors.bottom: parent.bottom
-//        anchors.leftMargin: parent.border.width
-//        anchors.bottomMargin: waveform.height * 0.9
-//        color: Qt.darker(parent.color)
-//        opacity: 0.7
-//    }
+    Rectangle
+    {
+        // audio peak line
+        width: parent.width - parent.border.width * 2
+        visible: !isBlank && !isTransition
+        height: 1
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        anchors.leftMargin: parent.border.width
+        anchors.bottomMargin: waveform.height * 0.9
+        color: Qt.darker(parent.color)
+        opacity: 0.7
+    }
 
 //    Rectangle {
 //        // text background

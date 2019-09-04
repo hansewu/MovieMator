@@ -132,45 +132,43 @@ public:
 
     void paint(QPainter *painter)
     {
-        //clock_t begin, duration;
-
         Q_ASSERT(painter);
-        QVariantList data = m_audioLevels.toList();
+        QVariantList levelsData = m_audioLevels.toList();
 
-        if (data.isEmpty())
+        if (levelsData.isEmpty())
+        {
             return;
-//begin = clock();
-  //      duration = clock() - begin;
+        }
 
         // In and out points are # frames at current fps,
         // but audio levels are created at 25 fps.
         // Scale in and out point to 25 fps.
-        const int inPoint = qRound(m_inPoint / MLT.profile().fps() * 25.0);
-        const int outPoint = qRound(m_outPoint / MLT.profile().fps() * 25.0);
-        const qreal indicesPrPixel = qreal(outPoint - inPoint) / width();
+        const int nInPoint              = qRound(m_inPoint / MLT.profile().fps() * 25.0);
+        const int nOutPoint             = qRound(m_outPoint / MLT.profile().fps() * 25.0);
+        const qreal indicesPrPixel      = qreal(nOutPoint - nInPoint) / width();
 
         QPainterPath path;
         path.moveTo(-1, height());
         int i = 0;
         for (; i < width(); ++i)
-
         {
-            int idx = inPoint + int(i * indicesPrPixel);
-            if (idx + 1 >= data.length())
+            int idx = nInPoint + int(i * indicesPrPixel);
+            if (idx + 1 >= levelsData.length())
+            {
                 break;
-            qreal level = qMax(data.at(idx).toReal(), data.at(idx + 1).toReal()) / 256;
+            }
+
+            qreal level = qMax(levelsData.at(idx).toReal(), levelsData.at(idx + 1).toReal()) / 256;
             path.lineTo(i, height() - level * height());
         }
         path.lineTo(i, height());
-        // painter->fillPath(path, m_color.lighter());
+
+//        painter->fillPath(path, m_color.lighter());
+        painter->fillPath(path, m_color);
 
         QPen pen(painter->pen());
         pen.setColor(m_color.darker());
         painter->strokePath(path, pen);
-
-
-
-        //qDebug() << "paint 运行时间大约为：    "<< duration * 1000 / CLOCKS_PER_SEC << " ms";
     }
 
 signals:
