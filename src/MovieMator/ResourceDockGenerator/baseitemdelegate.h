@@ -28,6 +28,21 @@ signals:
     void addItem(const QModelIndex &index);
     void selectItem(const QModelIndex &index);
     void rightClickItem(const QModelIndex &index, const QPoint &position);
+    // 双击信号
+    void doubleClickItem(const QModelIndex &index);
+
+private slots:
+    // 单击槽函数，根据鼠标位置发送添加/选中信号
+    void singleClicked();
+    // 重置 m_bIsDoubleClicked为 false
+    void resetDoubleClicked();
+
+private:
+    bool        m_bIsDoubleClicked;   // 是否双击
+    QTimer      *m_pClickedTimer;     // 定时器，判断是单击/双击
+
+    QModelIndex m_selectedIndex;      // 选中的 index，用于单击事件
+    bool        m_bIsAddButton;       // 是否添加按钮
 };
 
 #endif // BASEITEMDELEGATE_H

@@ -463,6 +463,8 @@ void RecentDockWidget::onLeftClickedAddButtonInItem(const QModelIndex &index)
         {
             addItemToTimeline(pStandardItem);
         }
+
+        clearNotCurrentSelection(index);
     }
 }
 
@@ -477,19 +479,7 @@ void RecentDockWidget::onLeftClickedItem(const QModelIndex &index)
 
         m_pCurrentItem                 = pStandardItem;
 
-        QMap<QString, BaseListView *>::const_iterator iter;
-        for (iter = m_pAllClassesListView->constBegin(); iter != m_pAllClassesListView->constEnd(); iter++)
-        {
-            BaseListView *pListView = iter.value();
-            if(pListView)
-            {
-                BaseItemModel *pTempItemModel = static_cast<BaseItemModel *>(pListView->model());
-                if (pTempItemModel != pBaseItemModel)
-                {
-                    pListView->clearSelection();
-                }
-            }
-        }
+        clearNotCurrentSelection(index);
 
         if(pStandardItem)
         {

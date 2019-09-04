@@ -75,6 +75,22 @@ void BaseDockWidget::showMeun(const QStandardItem *pItem, const QPoint &position
     Q_UNUSED(position);
 }
 
+void BaseDockWidget::clearNotCurrentSelection(const QModelIndex &index)
+{
+    QMap<QString, BaseListView *>::const_iterator iter;
+    for (iter = m_pAllClassesListView->constBegin(); iter != m_pAllClassesListView->constEnd(); iter++)
+    {
+        BaseListView *pListView = iter.value();
+        if(pListView)
+        {
+            if (index.model() != pListView->model())
+            {
+                pListView->clearSelection();
+            }
+        }
+    }
+}
+
 void BaseDockWidget::setupAllClassesUi(UnsortMap<QString, BaseItemModel *> *pAllClassesItemModel)
 {
     //创建所有分类的listview
@@ -161,6 +177,7 @@ BaseListView *BaseDockWidget::createClassListView(BaseItemModel *pItemModel)
     connect(pItemDelegate, &BaseItemDelegate::addItem, this, &BaseDockWidget::onLeftClickedAddButtonInItem);
     connect(pItemDelegate, &BaseItemDelegate::selectItem, this, &BaseDockWidget::onLeftClickedItem);
     connect(pItemDelegate, &BaseItemDelegate::rightClickItem, this, &BaseDockWidget::onRightClickedItem);
+    connect(pItemDelegate, &BaseItemDelegate::doubleClickItem, this, &BaseDockWidget::onDoubleClickedItem);
 
     return pListView;
 }
@@ -175,6 +192,9 @@ void BaseDockWidget::onLeftClickedAddButtonInItem(const QModelIndex &index)
 
     addItemToTimeline(pStandardItem);
 
+    // 清空非当前选中状态
+    clearNotCurrentSelection(index);
+
     qDebug()<<"sll-----addItemToTimeline---end";
 }
 
@@ -187,16 +207,7 @@ void BaseDockWidget::onLeftClickedItem(const QModelIndex &index)
     QStandardItem *standardItem         = standardItemModel->itemFromIndex(index);
 
     //因为每个分类由一个listview显示，因此在从一个分类中的选中项切换到另一个分类中的选中项时，需要手动清除前一个listview中的选中项
-    QMap<QString, BaseListView *>::const_iterator iter;
-    for (iter = m_pAllClassesListView->constBegin(); iter != m_pAllClassesListView->constEnd(); iter++)
-    {
-        BaseListView *pListView          = iter.value();
-        BaseItemModel *pTempItemModel    = static_cast<BaseItemModel *>(pListView->model());
-        if (pTempItemModel != standardItemModel)
-        {
-            pListView->clearSelection();
-        }
-    }
+    clearNotCurrentSelection(index);
 
     preview(standardItem);
 
@@ -214,6 +225,12 @@ void BaseDockWidget::onRightClickedItem(const QModelIndex &index, const QPoint &
     showMeun(pStandardItem, position);
 
     qDebug()<<"sll-----showMenu---end";
+}
+
+void BaseDockWidget::onDoubleClickedItem(const QModelIndex &index)
+{
+    // 调用添加按钮的功能
+    onLeftClickedAddButtonInItem(index);
 }
 
 //FIXME:此函数需要优化，存在魔法数字
