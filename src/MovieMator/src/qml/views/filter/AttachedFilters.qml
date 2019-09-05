@@ -228,7 +228,6 @@ Rectangle {
 
     function isVideoFilter(nModelIndex)
     {
-        console.log("isVideoFilter -- ", nModelIndex, videoFiltersList.count)
         for (var i = 0; i < videoFiltersList.count; i++)
         {
             if (videoFiltersList.get(i).modelIndex === nModelIndex)
