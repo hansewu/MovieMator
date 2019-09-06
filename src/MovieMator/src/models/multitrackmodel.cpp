@@ -1501,6 +1501,9 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex)
                 }
             }
             emit modified();
+
+            // 删除后不选中任何 clip
+            setSelection(trackIndex, -1);
         }
     }
 }
@@ -1539,6 +1542,9 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
             consolidateBlanks(playlist, trackIndex);
 
             emit modified();
+
+            // 删除后不选中任何 clip
+            setSelection(trackIndex, -1);
         }
     }
 }
@@ -2198,6 +2204,9 @@ void MultitrackModel::removeTransition(int trackIndex, int clipIndex)
         roles << DurationRole;
         emit dataChanged(modelIndex, modelIndex, roles);
         emit modified();
+
+        // 删除后不选中任何 clip
+        setSelection(trackIndex, -1);
     }
 }
 

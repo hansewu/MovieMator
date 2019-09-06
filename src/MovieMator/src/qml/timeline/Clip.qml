@@ -458,6 +458,14 @@ Rectangle {
             console.assert(mainwindow);
             if(mainwindow)
                 mainwindow.setMultitrackAsCurrentProducer()
+
+            // 如果当前选中的是转场，就显示属性界面
+            if(isTransition)
+            {
+                console.assert(timeline);
+                if(timeline)
+                    timeline.onShowProperties(trackIndex, index)
+            }
         }
     }
 
@@ -1322,18 +1330,6 @@ Rectangle {
             }
         }
 
-
-        //转场菜单
-        MenuItem {
-//            text: qsTr(!isTransition ? 'Properties' : 'Transition Settings')     // qsTr('Properties')
-            text: !isTransition ? qsTr('Properties') : qsTr('Transition Settings')
-            visible: isTransition
-            onTriggered: {
-                console.assert(timeline);
-                if(timeline)
-                    timeline.onShowProperties(trackIndex, index)
-            }
-        }
         // 移除菜单（只对转场有效）
         MenuItem {
             visible: isTransition
