@@ -464,7 +464,7 @@ void RecentDockWidget::onLeftClickedAddButtonInItem(const QModelIndex &index)
             addItemToTimeline(pStandardItem);
         }
 
-        clearNotCurrentSelection(index);
+        clearSelectionOfNotCurrentListView(index);
     }
 }
 
@@ -479,7 +479,7 @@ void RecentDockWidget::onLeftClickedItem(const QModelIndex &index)
 
         m_pCurrentItem                 = pStandardItem;
 
-        clearNotCurrentSelection(index);
+        clearSelectionOfNotCurrentListView(index);
 
         if(pStandardItem)
         {

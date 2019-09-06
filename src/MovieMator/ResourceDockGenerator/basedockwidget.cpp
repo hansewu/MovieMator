@@ -75,7 +75,7 @@ void BaseDockWidget::showMeun(const QStandardItem *pItem, const QPoint &position
     Q_UNUSED(position);
 }
 
-void BaseDockWidget::clearNotCurrentSelection(const QModelIndex &index)
+void BaseDockWidget::clearSelectionOfNotCurrentListView(const QModelIndex &index)
 {
     QMap<QString, BaseListView *>::const_iterator iter;
     for (iter = m_pAllClassesListView->constBegin(); iter != m_pAllClassesListView->constEnd(); iter++)
@@ -193,7 +193,7 @@ void BaseDockWidget::onLeftClickedAddButtonInItem(const QModelIndex &index)
     addItemToTimeline(pStandardItem);
 
     // 清空非当前选中状态
-    clearNotCurrentSelection(index);
+    clearSelectionOfNotCurrentListView(index);
 
     qDebug()<<"sll-----addItemToTimeline---end";
 }
@@ -207,7 +207,7 @@ void BaseDockWidget::onLeftClickedItem(const QModelIndex &index)
     QStandardItem *standardItem         = standardItemModel->itemFromIndex(index);
 
     //因为每个分类由一个listview显示，因此在从一个分类中的选中项切换到另一个分类中的选中项时，需要手动清除前一个listview中的选中项
-    clearNotCurrentSelection(index);
+    clearSelectionOfNotCurrentListView(index);
 
     preview(standardItem);
 
