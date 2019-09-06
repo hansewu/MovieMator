@@ -583,6 +583,9 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         int out = info->frame_out;
         playlist.resize_clip(clipIndex, in, out);
 
+        info->producer->set(kFilterInProperty, in);
+        info->producer->set(kFilterOutProperty, out);
+
         // Adjust all filters that have an explicit duration.
         int n = info->producer->filter_count();
         for (int j = 0; j < n; j++) {
@@ -789,6 +792,9 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         int in = info->frame_in;
         int out = info->frame_out - delta;
         playlist.resize_clip(clipIndex, in, out);
+
+        info->producer->set(kFilterInProperty, in);
+        info->producer->set(kFilterOutProperty, out);
 
         // Adjust all filters that have an explicit duration.
         int n = info->producer->filter_count();
