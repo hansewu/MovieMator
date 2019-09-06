@@ -44,7 +44,7 @@ protected:
     //显示右键菜单
     virtual void showMeun(const QStandardItem *pItem, const QPoint &position);
 
-    virtual void clearNotCurrentSelection(const QModelIndex &index);
+    virtual void clearSelectionOfNotCurrentListView(const QModelIndex &index);
 
 protected slots:
     //左键单击item右上角的添加按钮

@@ -12,13 +12,22 @@ BaseItemDelegate::BaseItemDelegate(QObject *pParent) :
 {
     qDebug()<<"sll-----BaseItemDelegate构造---start";
 
+    m_bIsAddButton     = false;
     m_bIsDoubleClicked = false;
 
     m_pClickedTimer    = new QTimer(this);
     m_pClickedTimer->setSingleShot(true);
     connect(m_pClickedTimer, SIGNAL(timeout()), this, SLOT(singleClicked()));
 
+    m_pSelectedIndex    = nullptr;
+
     qDebug()<<"sll-----BaseItemDelegate构造---end";
+}
+
+BaseItemDelegate::~BaseItemDelegate()
+{
+    delete m_pSelectedIndex;
+    m_pSelectedIndex = nullptr;
 }
 
 void BaseItemDelegate::paint(QPainter *pPainter,
@@ -59,16 +68,6 @@ bool BaseItemDelegate::editorEvent(QEvent *pEvent,
                                     LISTVIEW_ITEM_ADDBTNSIZE);
     QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(pEvent);
 
-    m_selectedIndex         = index;
-    if (decorationRect.contains(mouseEvent->pos()))
-    {
-        m_bIsAddButton      = true;
-    }
-    else
-    {
-        m_bIsAddButton      = false;
-    }
-
     if (pEvent->type() == QEvent::MouseButtonRelease)
     {
         if(mouseEvent->button() == Qt::LeftButton)
@@ -79,6 +78,21 @@ bool BaseItemDelegate::editorEvent(QEvent *pEvent,
             }
             else
             {   // 单击
+                if(index.isValid())
+                {
+                    delete m_pSelectedIndex;
+                    m_pSelectedIndex = new QPersistentModelIndex(index);
+                }
+
+                if (decorationRect.contains(mouseEvent->pos()))
+                {
+                    m_bIsAddButton = true;
+                }
+                else
+                {
+                    m_bIsAddButton = false;
+                }
+
                 // 鼠标释放 300ms之后没有触发双击事件，视为单击
                 m_pClickedTimer->start(300);
             }
@@ -129,13 +143,18 @@ QSize BaseItemDelegate::sizeHint(const QStyleOptionViewItem &option,
 
 void BaseItemDelegate::singleClicked()
 {
+    if(m_pSelectedIndex == nullptr || !m_pSelectedIndex->isValid())
+    {
+        return;
+    }
+
     if(m_bIsAddButton)
     {
-        emit addItem(m_selectedIndex);
+        emit addItem(*m_pSelectedIndex);
     }
     else
     {
-        emit selectItem(m_selectedIndex);
+        emit selectItem(*m_pSelectedIndex);
     }
 }
 
