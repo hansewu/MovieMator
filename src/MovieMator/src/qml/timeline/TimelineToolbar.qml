@@ -362,33 +362,6 @@ ToolBar {
                 }
             }
 
-            // Add -转场设置按钮（原转场属性）
-            CustomToolbutton {
-                id: transitionButton
-                action: setTransitionAction
-                visible: true
-                bEnabled: hasClipOrTrackSelected && tracksRepeater.itemAt(currentTrack).clipAt(timeline.selection[0]).isTransition
-
-                implicitWidth: 44
-                implicitHeight: 44
-
-                customText:qsTr('Transition Settings')
-
-                customIconSource: 'qrc:///timeline/timeline-toolbar-transition-n.png'
-                pressedIconSource: 'qrc:///timeline/timeline-toolbar-transition-p.png'
-                disabledIconSource: 'qrc:///timeline/timeline-toolbar-transition-d.png'
-            }
-            // Add -End
-
-            Rectangle {
-                implicitWidth: 44
-                implicitHeight: 44
-                color: 'transparent'
-                Image {
-                    anchors.centerIn: parent
-                    source: 'qrc:///timeline/timeline-toolbar-separator.png'
-                }
-            }
             // Add -显示所有 Clips
             CustomToolbutton {
                 id: allClipsButton
@@ -772,21 +745,6 @@ ToolBar {
             console.assert(timeline);
             if(timeline){
                 filterMenu.popup(filterButton, timeline.dockPosition);
-            }
-        }
-    }
-    // Add -End
-
-    // Add -转场设置按钮
-    Action {
-        id: setTransitionAction
-        tooltip: qsTr("Set the transition property")
-        enabled: hasClipOrTrackSelected
-        onTriggered: {
-            console.assert(timeline);
-            // 只有点击转场才会弹出转场设置（属性）框，普通clip不弹属性框
-            if(timeline && tracksRepeater.itemAt(currentTrack).clipAt(timeline.selection[0]).isTransition){
-                timeline.onShowProperties(currentTrack, timeline.selection[0])
             }
         }
     }
