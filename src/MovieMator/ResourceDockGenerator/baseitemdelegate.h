@@ -9,7 +9,6 @@ class BaseItemDelegate : public QStyledItemDelegate
 
 public:
     explicit BaseItemDelegate(QObject *pParent = nullptr);
-    ~BaseItemDelegate();
 
     // painting
     void paint(QPainter *pPainter,
@@ -42,7 +41,7 @@ private:
     bool                  m_bIsAddButton;       // 是否添加按钮
     bool                  m_bIsDoubleClicked;   // 是否双击
     QTimer                *m_pClickedTimer;     // 定时器，判断是单击/双击
-    QPersistentModelIndex *m_pSelectedIndex;    // 选中的 index，用于单击事件
+    QPersistentModelIndex m_selectedIndex;      // 选中的 index，用于单击事件
 };
 
 #endif // BASEITEMDELEGATE_H

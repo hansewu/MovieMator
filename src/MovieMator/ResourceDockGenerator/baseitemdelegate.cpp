@@ -19,15 +19,7 @@ BaseItemDelegate::BaseItemDelegate(QObject *pParent) :
     m_pClickedTimer->setSingleShot(true);
     connect(m_pClickedTimer, SIGNAL(timeout()), this, SLOT(singleClicked()));
 
-    m_pSelectedIndex    = nullptr;
-
     qDebug()<<"sll-----BaseItemDelegate构造---end";
-}
-
-BaseItemDelegate::~BaseItemDelegate()
-{
-    delete m_pSelectedIndex;
-    m_pSelectedIndex = nullptr;
 }
 
 void BaseItemDelegate::paint(QPainter *pPainter,
@@ -80,8 +72,7 @@ bool BaseItemDelegate::editorEvent(QEvent *pEvent,
             {   // 单击
                 if(index.isValid())
                 {
-                    delete m_pSelectedIndex;
-                    m_pSelectedIndex = new QPersistentModelIndex(index);
+                    m_selectedIndex = QPersistentModelIndex(index);
                 }
 
                 if (decorationRect.contains(mouseEvent->pos()))
@@ -143,18 +134,18 @@ QSize BaseItemDelegate::sizeHint(const QStyleOptionViewItem &option,
 
 void BaseItemDelegate::singleClicked()
 {
-    if(m_pSelectedIndex == nullptr || !m_pSelectedIndex->isValid())
+    if(!m_selectedIndex.isValid())
     {
         return;
     }
 
     if(m_bIsAddButton)
     {
-        emit addItem(*m_pSelectedIndex);
+        emit addItem(m_selectedIndex);
     }
     else
     {
-        emit selectItem(*m_pSelectedIndex);
+        emit selectItem(m_selectedIndex);
     }
 }
 
