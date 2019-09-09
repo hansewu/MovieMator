@@ -459,7 +459,7 @@ Rectangle {
             if(mainwindow)
                 mainwindow.setMultitrackAsCurrentProducer()
 
-            // 如果当前选中的是转场，就显示属性界面
+            // 如果当前界面是转场的滤镜界面，点击转场时切换到属性界面
             if(isTransition)
             {
                 console.assert(timeline);

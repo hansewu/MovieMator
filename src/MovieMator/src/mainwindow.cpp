@@ -3136,6 +3136,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         int clipIndex = m_timelineDock->selection().at(0);
         w = new LumaMixTransition(producer->parent(), trackIndex, clipIndex, this);
         scrollArea->setWidget(w);
+        // 转场就显示属性界面
+        showPropertiesDock();
         return w;
     } else if (playlist_type == producer->type()) {
         w = new TrackPropertiesWidget(*producer, this);
