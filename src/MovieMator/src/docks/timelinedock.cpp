@@ -1020,12 +1020,6 @@ void TimelineDock::emitSelectedFromSelection()
             model()->setSelectedProducer(info->producer);
         }
 
-        // 如果选中的是转场，切换到转场的属性界面
-        if(info->producer->parent().get(kShotcutTransitionProperty))
-        {
-            onShowProperties(trackIndex, clipIndex);
-        }
-
         info->producer->set_in_and_out(0, -1);
 
         delete info;
