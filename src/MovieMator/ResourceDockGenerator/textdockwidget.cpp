@@ -6,6 +6,7 @@
 
 #include <qdir.h>
 #include <qdebug.h>
+#include <settings.h>
 
 TextDockWidget::TextDockWidget(MainInterface *pMainInterface, QWidget *pParent) :
     BaseDockWidget(pParent),
@@ -34,7 +35,13 @@ UnsortMap<QString, BaseItemModel *> *TextDockWidget::createAllClassesItemModel()
     QJsonObject textFileNameTranslateInfo;
     TranslationHelper::readJsonFile(strTextDir + "/textfile_name_translation_info.json", textFileNameTranslateInfo);
 
-    QDir textTemplateFileDir(strTextDir + "/template");
+    QString strTemplateFolder = "/template";
+    if(Settings.language() != "zh_CN")
+    {
+        strTemplateFolder = "/template_en";
+    }
+
+    QDir textTemplateFileDir(strTextDir + strTemplateFolder);
     QFileInfoList allClassFolderInfo = textTemplateFileDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
     foreach (QFileInfo oneClassFolderInfo, allClassFolderInfo)
     {
