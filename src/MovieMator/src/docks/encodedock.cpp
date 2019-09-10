@@ -949,42 +949,48 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
     for (int i = 0; i < playlists.length();++i)
         playlists.item(i).toElement().setAttribute("autoclose", 1);
 
-
-    FRAME_RATE  framerateOld;
-    FRAME_RATE  framerateNew;
-
-    QDomElement domElementProfile;
-    if (!profiles.isEmpty())
+    if(!ui->disableVideoCheckbox->isChecked())
     {
-        domElementProfile = profiles.at(profiles.length() - 1).toElement();
-        framerateOld.nFrameRateNum = domElementProfile.attribute("frame_rate_num").toInt();
-        framerateOld.nFrameRateDen = domElementProfile.attribute("frame_rate_den").toInt();
-    }
-    else
-        Q_ASSERT(false);
+        FRAME_RATE  framerateOld;
+        FRAME_RATE  framerateNew;
 
-    if (!consumerNode.attribute("frame_rate_num").isEmpty() && !consumerNode.attribute("frame_rate_den").isEmpty())
-    {
-        framerateNew.nFrameRateNum = consumerNode.attribute("frame_rate_num").toInt();
-        framerateNew.nFrameRateDen = consumerNode.attribute("frame_rate_den").toInt();
-    }
-    else if (!consumerNode.attribute("r").isEmpty())
-    {
-        framerateNew.nFrameRateNum = consumerNode.attribute("r").toInt();
-        framerateNew.nFrameRateDen = 1;
-    }
-    else
-        Q_ASSERT(false);
-
-
-    //根据输出帧率转换xml中保存的帧数
-    int nRet = recalculateTimeInDomElement(dom.documentElement(), framerateOld, framerateNew);
-    if (nRet == 0)
-    {
-        if (!domElementProfile.isNull())
+        QDomElement domElementProfile;
+        if (!profiles.isEmpty())
         {
-            domElementProfile.setAttribute("frame_rate_num", framerateNew.nFrameRateNum);
-            domElementProfile.setAttribute("frame_rate_den", framerateNew.nFrameRateDen);
+            domElementProfile = profiles.at(profiles.length() - 1).toElement();
+            framerateOld.nFrameRateNum = domElementProfile.attribute("frame_rate_num").toInt();
+            framerateOld.nFrameRateDen = domElementProfile.attribute("frame_rate_den").toInt();
+        }
+        else
+        {
+            Q_ASSERT(false);
+        }
+
+        if (!consumerNode.attribute("frame_rate_num").isEmpty() && !consumerNode.attribute("frame_rate_den").isEmpty())
+        {
+            framerateNew.nFrameRateNum = consumerNode.attribute("frame_rate_num").toInt();
+            framerateNew.nFrameRateDen = consumerNode.attribute("frame_rate_den").toInt();
+        }
+        else if (!consumerNode.attribute("r").isEmpty())
+        {
+            framerateNew.nFrameRateNum = consumerNode.attribute("r").toInt();
+            framerateNew.nFrameRateDen = 1;
+        }
+        else
+        {
+            Q_ASSERT(false);
+        }
+
+
+        //根据输出帧率转换xml中保存的帧数
+        int nRet = recalculateTimeInDomElement(dom.documentElement(), framerateOld, framerateNew);
+        if (nRet == 0)
+        {
+            if (!domElementProfile.isNull())
+            {
+                domElementProfile.setAttribute("frame_rate_num", framerateNew.nFrameRateNum);
+                domElementProfile.setAttribute("frame_rate_den", framerateNew.nFrameRateDen);
+            }
         }
     }
 
