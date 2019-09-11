@@ -613,12 +613,12 @@ MainWindow::MainWindow()
     LOG_DEBUG() << "VideoFilterDock";
     m_resourceVideoFilterDock = RDG_CreateVideoFilterDock(&MainInterface::singleton());
     addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
-    RDG_SetVideoFiltersInfo( m_filterController->getVideoFiltersInfo());
+//    RDG_SetVideoFiltersInfo( m_filterController->getVideoFiltersInfo());
 
     LOG_DEBUG() << "AudioFilterDock";
     m_resourceAudioFilterDock = RDG_CreateAudioFilterDock(&MainInterface::singleton());
     addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
-    RDG_SetAudioFiltersInfo(m_filterController->getAudioFiltersInfo());
+//    RDG_SetAudioFiltersInfo(m_filterController->getAudioFiltersInfo());
 
     LOG_DEBUG() << "TextDock";
     m_resourceTextDock = RDG_CreateTextDock(&MainInterface::singleton());
@@ -4750,4 +4750,10 @@ void MainWindow::on_actionVideoMode_triggered()
     videoModeSettingsDialog.setWindowModality(QmlApplication::dialogModality());
 
     videoModeSettingsDialog.exec();
+}
+
+void MainWindow::loadFiltersInfo()
+{
+    RDG_SetVideoFiltersInfo(m_filterController->getVideoFiltersInfo());
+    RDG_SetAudioFiltersInfo(m_filterController->getAudioFiltersInfo());
 }
