@@ -144,6 +144,9 @@ public:
     //修改profile
     void changeProfile(QString strProfileName);
 
+    //加载filtersInfo
+    void loadFiltersInfo();
+
 signals:
     //打开producer时发送此信号
     void producerOpened();

@@ -124,6 +124,10 @@ private slots:
     //接收m_attachedModel的duplicateAddFailed信号，即当m_attachedModel中重复添加filter失败时触发，并设置当前滤镜为index
     void handleAttachDuplicateFailed(int index);
 
+protected:
+    //重写QObject的timerEvent方法，用于接收定时器事件，进行加载filter的meta以及更新filter和关闭定时器
+    void timerEvent(QTimerEvent*);
+
 private:
     //加载所有滤镜的metadata到m_metadataModel中
     void loadFilterMetadata();
