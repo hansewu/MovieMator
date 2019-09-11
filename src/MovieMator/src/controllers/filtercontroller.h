@@ -68,6 +68,8 @@ signals:
     void currentFilterChanged(QObject* filter, QmlMetadata* meta, int index);
     //添加失败时，通知界面更新状态显示信息
     void statusChanged(QString);
+    //filtersInfo已加载完成的信号
+    void filtersInfoLoaded();
 
 public slots:
     //接收时间线选中producer的消息（selected），并将选中的producer传递给AttachedFiltersModel

@@ -433,6 +433,9 @@ MainWindow::MainWindow()
 
     LOG_DEBUG() << "FilterController";
     m_filterController = new FilterController(this);
+
+    connect(m_filterController,SIGNAL(filtersInfoLoaded()),this,SLOT(onFiltersInfoLoaded()));
+
     m_propertiesVideoFilterDock = new FiltersDock(m_filterController->metadataModel(), m_filterController->attachedModel(),true, this);
     m_propertiesVideoFilterDock->setExtraQmlContextProperty("mainwindow", this);
     m_propertiesVideoFilterDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
@@ -4752,7 +4755,7 @@ void MainWindow::on_actionVideoMode_triggered()
     videoModeSettingsDialog.exec();
 }
 
-void MainWindow::loadFiltersInfo()
+void MainWindow::onFiltersInfoLoaded()
 {
     RDG_SetVideoFiltersInfo(m_filterController->getVideoFiltersInfo());
     RDG_SetAudioFiltersInfo(m_filterController->getAudioFiltersInfo());
