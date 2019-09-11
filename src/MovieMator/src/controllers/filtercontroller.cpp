@@ -56,7 +56,7 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
 void FilterController::timerEvent(QTimerEvent* event)
 {
     loadFilterMetadata();
-    MAIN.loadFiltersInfo();
+    emit filtersInfoLoaded();
     killTimer(event->timerId());
 }
 

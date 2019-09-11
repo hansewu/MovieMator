@@ -144,9 +144,6 @@ public:
     //修改profile
     void changeProfile(QString strProfileName);
 
-    //加载filtersInfo
-    void loadFiltersInfo();
-
 signals:
     //打开producer时发送此信号
     void producerOpened();
@@ -376,6 +373,8 @@ public slots:
 
     void on_tasksDockTriggered(bool);
 
+    //接收filtersInfo已加载的消息
+    void onFiltersInfoLoaded();
 
 #ifdef MOVIEMATOR_PRO
 #ifndef SHARE_VERSION
