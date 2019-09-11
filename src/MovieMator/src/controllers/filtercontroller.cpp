@@ -631,7 +631,9 @@ void FilterController::setCurrentFilter(int attachedIndex)
 
     emit currentFilterAboutToChange(m_currentFilterIndex);
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
-    m_currentFilter.reset(filter);
+
+    setCurrentFilter(filter);
+    //m_currentFilter.reset(filter);
 }
 
 void FilterController::refreshCurrentFilter(int filterIndex)
@@ -775,7 +777,8 @@ void FilterController::handleAttachedRowsInserted(const QModelIndex&, int first,
     filter->setIsNew(true);
     emit currentFilterAboutToChange(m_currentFilterIndex);
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
-    m_currentFilter.reset(filter);
+    //m_currentFilter.reset(filter);
+    setCurrentFilter(filter);
 }
 
 void FilterController::handleAttachDuplicateFailed(int index)
@@ -931,3 +934,13 @@ void FilterController::removeFilter(int row)
     m_attachedModel.remove(row);
 }
 
+void FilterController::setCurrentFilter(QmlFilter *pQmlFilter)
+{
+    if (m_currentFilter)
+        disconnect(m_currentFilter.data(), SIGNAL(filterPropertyValueChanged()));
+
+    m_currentFilter.reset(pQmlFilter);
+
+    if (m_currentFilter)
+        connect(m_currentFilter.data(), SIGNAL(filterPropertyValueChanged()), this, SIGNAL(filterPropertyValueChanged()));
+}
