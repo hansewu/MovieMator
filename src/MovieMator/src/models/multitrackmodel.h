@@ -272,6 +272,8 @@ private:
     //    给轨道重新命名
     void renameTrack(Track t, int trackIndex,bool emitSignal);
 
+    QString getTextTemplateCaption(Mlt::Producer &textTemplateProducer) const;
+
 private slots:
     void adjustBackgroundDuration();
 

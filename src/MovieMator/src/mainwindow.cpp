@@ -497,6 +497,8 @@ MainWindow::MainWindow()
     connect(m_timelineDock, SIGNAL(showFilterDock()), this, SLOT(onShowPropertiesVideoFilterDock()));
     connect(m_timelineDock, SIGNAL(showFilterDock()), this, SLOT(onShowPropertiesAudioFilterDock()));
 
+    connect(m_filterController, SIGNAL(filterPropertyValueChanged()), m_timelineDock, SLOT(AttachedfilterChanged()));
+
 
 //#ifdef MOVIEMATOR_PRO
     connect(m_propertiesVideoFilterDock, SIGNAL(changePosition(int)), m_timelineDock, SLOT(changePostionFromFilter(int)));

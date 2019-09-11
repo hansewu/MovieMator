@@ -69,6 +69,9 @@ signals:
     //添加失败时，通知界面更新状态显示信息
     void statusChanged(QString);
 
+    //添加滤镜属性改变
+    void filterPropertyValueChanged();
+
 public slots:
     //接收时间线选中producer的消息（selected），并将选中的producer传递给AttachedFiltersModel
     void setProducer(Mlt::Producer *producer = nullptr);
@@ -146,6 +149,8 @@ private:
     QString getFilterType(QString filterType);
     //滤镜中文分类名
     QString getFilterClassNameZH(QString strFilterType);
+
+    void setCurrentFilter(QmlFilter *pQmlFilter);
 
     //没有使用到
     QFuture<void> m_future;
