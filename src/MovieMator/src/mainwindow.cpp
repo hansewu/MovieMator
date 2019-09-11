@@ -3130,7 +3130,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new PlasmaWidget(this);
     else if (service == "frei0r.test_pat_B")
         w = new ColorBarsWidget(this);
-    else if (service == "webvfx")
+    else if (service.contains("webvfx"))
         w = new WebvfxProducer(this);
     else if (service == "tone")
         w = new ToneProducerWidget(this);

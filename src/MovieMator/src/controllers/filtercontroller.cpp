@@ -56,7 +56,7 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
 void FilterController::timerEvent(QTimerEvent* event)
 {
     loadFilterMetadata();
-    emit filtersInfoLoaded();
+
     killTimer(event->timerId());
 }
 
@@ -194,7 +194,9 @@ void FilterController::loadFilterMetadata()
                 LOG_WARNING() << component.errorString();
             }
         }
-    };
+    }
+
+    emit filtersInfoLoaded();
 }
 
 void FilterController::readFilterTypeFromFile(QString &pFilePath, std::map<QString, QString> &filterTypes)
