@@ -272,7 +272,7 @@ private:
     //    给轨道重新命名
     void renameTrack(Track t, int trackIndex,bool emitSignal);
 
-    QString getTextTemplateCaption(Mlt::Producer &textTemplateProducer) const;
+    QString getClipCaption(Mlt::Producer &producerClip) const;
 
 private slots:
     void adjustBackgroundDuration();

@@ -167,16 +167,13 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                     result += "-" + QString::fromUtf8(info->producer->get("moviemator:animationName"));
                 }
 
-                //获取文字模版显示内容
-                QString strCaptionTextTamplate;
+                //获取clip在时间线上显示的名字
+                QString strClipCaption;
                 if (info->producer && info->producer->is_valid())
-                {
-                    QString strProducerType = QString::fromUtf8(info->producer->get(kProducerTypeProperty));
-                    if (strProducerType.compare("text-template", Qt::CaseInsensitive) == 0)
-                        strCaptionTextTamplate = getTextTemplateCaption(*(info->producer));
-                }
-                if (!strCaptionTextTamplate.isEmpty())
-                    result = strCaptionTextTamplate;
+                    strClipCaption = getClipCaption(*(info->producer));
+
+                if (!strClipCaption.isEmpty())
+                    result = strClipCaption;
 
                 return result;
             }
@@ -4519,38 +4516,37 @@ int MultitrackModel::getClipOfPosition(int nIndexOfTrack, int nFramePostion)
     return nResult;
 }
 
-QString MultitrackModel::getTextTemplateCaption(Mlt::Producer &textTemplateProducer) const
+QString MultitrackModel::getClipCaption(Mlt::Producer &producerClip) const
 {
     QString strProducerCaption("");
 
-    Q_ASSERT(textTemplateProducer.is_valid());
-    if (!textTemplateProducer.is_valid())
+    Q_ASSERT(producerClip.is_valid());
+    if (!producerClip.is_valid())
         return strProducerCaption;
 
-    QString strProducerType = QString::fromUtf8(textTemplateProducer.get(kProducerTypeProperty));
-    if (strProducerType.compare("text-template", Qt::CaseInsensitive) != 0)
-        return strProducerCaption;
-
-
-
-    int nFilterCount = textTemplateProducer.filter_count();
-    for (int i = 0; i < nFilterCount; i++)
+    QString strProducerType = QString::fromUtf8(producerClip.get(kProducerTypeProperty));
+    if (strProducerType.compare("text-template", Qt::CaseInsensitive) == 0)
     {
-        Mlt::Filter* pMltFilter = textTemplateProducer.filter(i);
-        Q_ASSERT(pMltFilter);
 
-        if (pMltFilter && pMltFilter->is_valid() && (strcmp(pMltFilter->get("mlt_service"), "dynamictext") == 0))
+        int nFilterCount = producerClip.filter_count();
+        for (int i = 0; i < nFilterCount; i++)
         {
-            char *pStrText = pMltFilter->get("argument");
-            if (pStrText)
-            {
-                if (!strProducerCaption.isEmpty())
-                    strProducerCaption.append(" ");
-                strProducerCaption.append(pStrText);
-            }
-        }
+            Mlt::Filter* pMltFilter = producerClip.filter(i);
+            Q_ASSERT(pMltFilter);
 
-        delete pMltFilter;
+            if (pMltFilter && pMltFilter->is_valid() && (strcmp(pMltFilter->get("mlt_service"), "dynamictext") == 0))
+            {
+                char *pStrText = pMltFilter->get("argument");
+                if (pStrText)
+                {
+                    if (!strProducerCaption.isEmpty())
+                        strProducerCaption.append(" ");
+                    strProducerCaption.append(pStrText);
+                }
+            }
+
+            delete pMltFilter;
+        }
     }
 
     strProducerCaption.replace(QRegExp("[\r\n]"), " ");
