@@ -234,7 +234,7 @@ void MltXmlChecker::processProperties()
         m_properties = newProperties;
         newProperties.clear();
         foreach (MltProperty p, m_properties) {
-            if (p.first == "resource" && mlt_service == "webvfx") {
+            if (p.first == "resource" && mlt_service.contains("webvfx")) {
                 fixWebVfxPath(p.second);
 
             // Fix some properties if re-linked file.

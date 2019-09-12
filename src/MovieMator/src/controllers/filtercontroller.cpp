@@ -44,14 +44,20 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
  m_attachedModel(this),
  m_currentFilterIndex(-1)
 {
+    startTimer(0);
+
     connect(&m_attachedModel, SIGNAL(changed()), this, SLOT(handleAttachedModelChange()));
     connect(&m_attachedModel, SIGNAL(modelAboutToBeReset()), this, SLOT(handleAttachedModelAboutToReset()));
     connect(&m_attachedModel, SIGNAL(rowsRemoved(const QModelIndex&,int,int)), this, SLOT(handleAttachedRowsRemoved(const QModelIndex&,int,int)));
     connect(&m_attachedModel, SIGNAL(rowsInserted(const QModelIndex&,int,int)), this, SLOT(handleAttachedRowsInserted(const QModelIndex&,int,int)), Qt::QueuedConnection);
     connect(&m_attachedModel, SIGNAL(duplicateAddFailed(int)), this, SLOT(handleAttachDuplicateFailed(int)));
+}
 
+void FilterController::timerEvent(QTimerEvent* event)
+{
     loadFilterMetadata();
 
+    killTimer(event->timerId());
 }
 
 QList<QString> strToList(QString strSrc)
@@ -188,7 +194,9 @@ void FilterController::loadFilterMetadata()
                 LOG_WARNING() << component.errorString();
             }
         }
-    };
+    }
+
+    emit filtersInfoLoaded();
 }
 
 void FilterController::readFilterTypeFromFile(QString &pFilePath, std::map<QString, QString> &filterTypes)

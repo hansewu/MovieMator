@@ -373,6 +373,8 @@ public slots:
 
     void on_tasksDockTriggered(bool);
 
+    //接收filtersInfo已加载的消息
+    void onFiltersInfoLoaded();
 
 #ifdef MOVIEMATOR_PRO
 #ifndef SHARE_VERSION

@@ -68,6 +68,8 @@ signals:
     void currentFilterChanged(QObject* filter, QmlMetadata* meta, int index);
     //添加失败时，通知界面更新状态显示信息
     void statusChanged(QString);
+    //filtersInfo已加载完成的信号
+    void filtersInfoLoaded();
 
     //添加滤镜属性改变
     void filterPropertyValueChanged();
@@ -126,6 +128,10 @@ private slots:
     void handleAttachedRowsInserted(const QModelIndex & parent, int first, int last);
     //接收m_attachedModel的duplicateAddFailed信号，即当m_attachedModel中重复添加filter失败时触发，并设置当前滤镜为index
     void handleAttachDuplicateFailed(int index);
+
+protected:
+    //重写QObject的timerEvent方法，用于接收定时器事件，进行加载filter的meta以及更新filter和关闭定时器
+    void timerEvent(QTimerEvent*);
 
 private:
     //加载所有滤镜的metadata到m_metadataModel中
