@@ -106,9 +106,17 @@ void ColorProducerWidget::loadPreset(Mlt::Properties& p)
 
 void ColorProducerWidget::on_preset_selected(void* p)
 {
-    Mlt::Properties* properties = static_cast<Mlt::Properties*>(p);
-    loadPreset(*properties);
-    delete properties;
+//    Mlt::Properties* properties = static_cast<Mlt::Properties*>(p);
+//    loadPreset(*properties);
+//    delete properties;
+    QMetaObject::invokeMethod(this, "loadPreset", Qt::QueuedConnection, Q_ARG(void*, p));
+}
+
+void ColorProducerWidget::loadPreset(void *pPreset)
+{
+    Mlt::Properties* pMltProperties = static_cast<Mlt::Properties*>(pPreset);
+    loadPreset(*pMltProperties);
+    delete pMltProperties;
 }
 
 void ColorProducerWidget::on_preset_saveClicked()

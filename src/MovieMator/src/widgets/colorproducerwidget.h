@@ -47,6 +47,8 @@ private slots:
     void on_preset_selected(void* p);
     void on_preset_saveClicked();
 
+    void loadPreset(void *pPreset);
+
 private:
     Ui::ColorProducerWidget *ui;
 };
