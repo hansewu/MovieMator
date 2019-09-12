@@ -269,7 +269,7 @@ Mlt::Producer * ImageProducerWidget::createTempProducer(Mlt::Profile& profile)
         kAspectRatioNumerator "," kAspectRatioDenominator ","
         kShotcutResourceProperty ", resource, ttl, length," kShotcutSequenceProperty ", in, out");
 
-    Mlt::Controller::copyFilters(*m_producer, *p);
+//    Mlt::Controller::copyFilters(*m_producer, *p);
     return p;
 }
 
@@ -279,6 +279,7 @@ void ImageProducerWidget::on_okButton_clicked()
     p->pass_list(*m_tempProducer, "force_aspect_ratio,"
     kAspectRatioNumerator "," kAspectRatioDenominator ","
     kShotcutResourceProperty ", resource, ttl, length," kShotcutSequenceProperty);
+    Mlt::Controller::copyFilters(*m_producer, *p);
     reopen(p);
 //    MAIN.onPropertiesDockTriggered(false);
 }
