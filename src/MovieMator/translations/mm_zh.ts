@@ -4945,22 +4945,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="25"/>
         <source>Backgrounds</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">背景</translation>
     </message>
     <message>
         <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="25"/>
         <source>Videos</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">视频</translation>
     </message>
     <message>
         <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="25"/>
         <source>Audios</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">音频</translation>
     </message>
     <message>
         <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="25"/>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">图片</translation>
     </message>
     <message>
         <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="31"/>
