@@ -55,19 +55,19 @@
 <context>
     <name>AttachedFilters</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="54"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="55"/>
+        <location filename="../src/qml/views/filter/AttachedFilters.qml" line="54"/>
+        <location filename="../src/qml/views/filter/AttachedFilters.qml" line="55"/>
         <source>Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="54"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="56"/>
+        <location filename="../src/qml/views/filter/AttachedFilters.qml" line="54"/>
+        <location filename="../src/qml/views/filter/AttachedFilters.qml" line="56"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AttachedFilters.qml" line="406"/>
+        <location filename="../src/qml/views/filter/AttachedFilters.qml" line="445"/>
         <source>Remove selected filter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -105,12 +105,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/models/attachedfiltersmodel.cpp" line="326"/>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="350"/>
         <source>Tips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/models/attachedfiltersmodel.cpp" line="326"/>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="350"/>
         <source>Tips
 
 To apply the filter, please first select the clip by clicking on it on the timeline.</source>
@@ -120,13 +120,13 @@ To apply the filter, please first select the clip by clicking on it on the timel
 <context>
     <name>AudioFiltersUI</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AudioFiltersUI.qml" line="80"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AudioFiltersUI.qml" line="103"/>
+        <location filename="../src/qml/views/filter/AudioFiltersUI.qml" line="87"/>
+        <location filename="../src/qml/views/filter/AudioFiltersUI.qml" line="110"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/AudioFiltersUI.qml" line="263"/>
+        <location filename="../src/qml/views/filter/AudioFiltersUI.qml" line="288"/>
         <source>Filters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -539,13 +539,8 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ResourceDockGenerator/basedockwidget.ui" line="70"/>
-        <source>Classification:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ResourceDockGenerator/basedockwidget.ui" line="142"/>
-        <location filename="../ResourceDockGenerator/basedockwidget.ui" line="145"/>
+        <location filename="../ResourceDockGenerator/basedockwidget.ui" line="120"/>
+        <location filename="../ResourceDockGenerator/basedockwidget.ui" line="123"/>
         <source>Add to timeline</source>
         <translation type="unfinished"></translation>
     </message>
@@ -553,93 +548,83 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>Clip</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1075"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1199"/>
         <source>Split</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1086"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1210"/>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1097"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1221"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1111"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1235"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1136"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1260"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1152"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1276"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1163"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1287"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1178"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1302"/>
         <source>New Video Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1189"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1313"/>
         <source>New Audio Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1200"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1324"/>
         <source>Delete Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1214"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1338"/>
         <source>Zoom to Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1222"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1346"/>
         <source>Add Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1231"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1355"/>
         <source>Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1241"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1365"/>
         <source>Mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1264"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1376"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1122"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1246"/>
         <source>Ripple Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1253"/>
-        <source>Transition Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/Clip.qml" line="1253"/>
-        <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -704,17 +689,17 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>ColorPicker</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/ColorPicker.qml" line="77"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/ColorPicker.qml" line="77"/>
         <source>Click to open color dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/ColorPicker.qml" line="82"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/ColorPicker.qml" line="82"/>
         <source>Please choose a color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/ColorPicker.qml" line="118"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/ColorPicker.qml" line="118"/>
         <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1455,7 +1440,7 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1504"/>
-        <location filename="../src/docks/encodedock.cpp" line="1437"/>
+        <location filename="../src/docks/encodedock.cpp" line="1677"/>
         <source>Delete Preset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1486,9 +1471,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1587"/>
-        <location filename="../src/docks/encodedock.cpp" line="1338"/>
-        <location filename="../src/docks/encodedock.cpp" line="1345"/>
-        <location filename="../src/docks/encodedock.cpp" line="1465"/>
+        <location filename="../src/docks/encodedock.cpp" line="1578"/>
+        <location filename="../src/docks/encodedock.cpp" line="1585"/>
+        <location filename="../src/docks/encodedock.cpp" line="1705"/>
         <source>Stream</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1499,7 +1484,7 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1601"/>
-        <location filename="../src/docks/encodedock.cpp" line="1219"/>
+        <location filename="../src/docks/encodedock.cpp" line="1459"/>
         <source>Export File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1537,60 +1522,60 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="426"/>
-        <location filename="../src/docks/encodedock.cpp" line="1123"/>
+        <location filename="../src/docks/encodedock.cpp" line="1363"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="778"/>
+        <location filename="../src/docks/encodedock.cpp" line="1018"/>
         <source>MovieMator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="809"/>
+        <location filename="../src/docks/encodedock.cpp" line="1049"/>
         <source>http://moviemator.net</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1198"/>
+        <location filename="../src/docks/encodedock.cpp" line="1438"/>
         <source>Stop Capture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1200"/>
-        <location filename="../src/docks/encodedock.cpp" line="1219"/>
-        <location filename="../src/docks/encodedock.cpp" line="1464"/>
+        <location filename="../src/docks/encodedock.cpp" line="1440"/>
+        <location filename="../src/docks/encodedock.cpp" line="1459"/>
+        <location filename="../src/docks/encodedock.cpp" line="1704"/>
         <source>Capture File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1219"/>
+        <location filename="../src/docks/encodedock.cpp" line="1459"/>
         <source>*.%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1333"/>
-        <location filename="../src/docks/encodedock.cpp" line="1354"/>
+        <location filename="../src/docks/encodedock.cpp" line="1573"/>
+        <location filename="../src/docks/encodedock.cpp" line="1594"/>
         <source>Stop Stream</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1346"/>
+        <location filename="../src/docks/encodedock.cpp" line="1586"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1386"/>
+        <location filename="../src/docks/encodedock.cpp" line="1626"/>
         <source>Add Export Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1438"/>
+        <location filename="../src/docks/encodedock.cpp" line="1678"/>
         <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1593"/>
+        <location filename="../src/docks/encodedock.cpp" line="1833"/>
         <source>KiB (%1s)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1715,17 +1700,17 @@ in temporal compression</source>
 <context>
     <name>FilterConfigView</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FilterConfigView.qml" line="138"/>
+        <location filename="../src/qml/views/filter/FilterConfigView.qml" line="138"/>
         <source>Nothing selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FilterConfigView.qml" line="151"/>
+        <location filename="../src/qml/views/filter/FilterConfigView.qml" line="151"/>
         <source>Add a filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FilterConfigView.qml" line="168"/>
+        <location filename="../src/qml/views/filter/FilterConfigView.qml" line="168"/>
         <source>Remove selected filter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1733,12 +1718,12 @@ in temporal compression</source>
 <context>
     <name>FilterController</name>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="174"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="285"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="733"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="799"/>
         <source>Only one %1 filter is allowed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1746,32 +1731,32 @@ in temporal compression</source>
 <context>
     <name>FilterManagerView</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/resourceManager/FilterManagerView.qml" line="45"/>
+        <location filename="../src/qml/views/resourceManager/FilterManagerView.qml" line="45"/>
         <source>Show favorite filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/resourceManager/FilterManagerView.qml" line="63"/>
+        <location filename="../src/qml/views/resourceManager/FilterManagerView.qml" line="63"/>
         <source>Show video filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/resourceManager/FilterManagerView.qml" line="78"/>
+        <location filename="../src/qml/views/resourceManager/FilterManagerView.qml" line="78"/>
         <source>Show audio filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/resourceManager/FilterManagerView.qml" line="95"/>
+        <location filename="../src/qml/views/resourceManager/FilterManagerView.qml" line="95"/>
         <source>Close menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/resourceManager/FilterManagerView.qml" line="173"/>
+        <location filename="../src/qml/views/resourceManager/FilterManagerView.qml" line="173"/>
         <source>Add to timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/resourceManager/FilterManagerView.qml" line="179"/>
+        <location filename="../src/qml/views/resourceManager/FilterManagerView.qml" line="179"/>
         <source>Preview</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1779,22 +1764,22 @@ in temporal compression</source>
 <context>
     <name>FilterMenu</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FilterMenu.qml" line="214"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="214"/>
         <source>Show favorite filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FilterMenu.qml" line="235"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="235"/>
         <source>Show video filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FilterMenu.qml" line="253"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="253"/>
         <source>Show audio filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FilterMenu.qml" line="274"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="274"/>
         <source>Close menu</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1810,13 +1795,13 @@ in temporal compression</source>
 <context>
     <name>FiltersUI</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FiltersUI.qml" line="84"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FiltersUI.qml" line="107"/>
+        <location filename="../src/qml/views/filter/FiltersUI.qml" line="92"/>
+        <location filename="../src/qml/views/filter/FiltersUI.qml" line="115"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/FiltersUI.qml" line="299"/>
+        <location filename="../src/qml/views/filter/FiltersUI.qml" line="327"/>
         <source>Filters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2207,7 +2192,7 @@ the list. This does not stop a currently running job. Right-
 <context>
     <name>KeyFrame</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrame.qml" line="75"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrame.qml" line="75"/>
         <source>Auto set as key frame at postion</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2215,47 +2200,47 @@ the list. This does not stop a currently running job. Right-
 <context>
     <name>KeyFrameControl</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="300"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="300"/>
         <source>Prev key frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="224"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="224"/>
         <source>Add key frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="110"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="110"/>
         <source>KeyFrame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="140"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="140"/>
         <source>Enable Key Frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="184"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="184"/>
         <source>Auto Add Key Frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="257"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="257"/>
         <source>Remove key frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="336"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="336"/>
         <source>Next key frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="365"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="365"/>
         <source>Confirm Removing Keyframes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="366"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="366"/>
         <source>This will remove all keyframes.&lt;p&gt;Do you still want to do this?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2523,9 +2508,9 @@ duration of the transition.</source>
     <name>MainWindow</name>
     <message>
         <location filename="../src/mainwindow.ui" line="26"/>
-        <location filename="../src/mainwindow.cpp" line="706"/>
-        <location filename="../src/mainwindow.cpp" line="713"/>
-        <location filename="../src/mainwindow.cpp" line="1902"/>
+        <location filename="../src/mainwindow.cpp" line="711"/>
+        <location filename="../src/mainwindow.cpp" line="718"/>
+        <location filename="../src/mainwindow.cpp" line="1907"/>
         <source>MovieMator Video Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2697,7 +2682,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="372"/>
-        <location filename="../src/mainwindow.cpp" line="3207"/>
+        <location filename="../src/mainwindow.cpp" line="3212"/>
         <source>Enter Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2718,8 +2703,8 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="399"/>
-        <location filename="../src/mainwindow.cpp" line="631"/>
-        <location filename="../src/mainwindow.cpp" line="650"/>
+        <location filename="../src/mainwindow.cpp" line="636"/>
+        <location filename="../src/mainwindow.cpp" line="655"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2735,7 +2720,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="435"/>
-        <location filename="../src/mainwindow.cpp" line="513"/>
+        <location filename="../src/mainwindow.cpp" line="518"/>
         <source>History</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2989,7 +2974,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="885"/>
-        <location filename="../src/mainwindow.cpp" line="4193"/>
+        <location filename="../src/mainwindow.cpp" line="4198"/>
         <source>Feedback</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3010,7 +2995,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="906"/>
-        <location filename="../src/mainwindow.cpp" line="4221"/>
+        <location filename="../src/mainwindow.cpp" line="4226"/>
         <source>Buy a License Code</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3084,87 +3069,87 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="696"/>
+        <location filename="../src/mainwindow.cpp" line="701"/>
         <source>MovieMator Video Editor Pro (Unregistered)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="698"/>
+        <location filename="../src/mainwindow.cpp" line="703"/>
         <source>MovieMator Video Editor Pro (Personal)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="702"/>
-        <location filename="../src/mainwindow.cpp" line="704"/>
-        <location filename="../src/mainwindow.cpp" line="711"/>
+        <location filename="../src/mainwindow.cpp" line="707"/>
+        <location filename="../src/mainwindow.cpp" line="709"/>
+        <location filename="../src/mainwindow.cpp" line="716"/>
         <source>MovieMator Video Editor Pro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="880"/>
+        <location filename="../src/mainwindow.cpp" line="885"/>
         <source>Non-Broadcast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="891"/>
+        <location filename="../src/mainwindow.cpp" line="896"/>
         <source>DVD Widescreen NTSC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="892"/>
+        <location filename="../src/mainwindow.cpp" line="897"/>
         <source>DVD Widescreen PAL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="897"/>
+        <location filename="../src/mainwindow.cpp" line="902"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="916"/>
+        <location filename="../src/mainwindow.cpp" line="921"/>
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="947"/>
+        <location filename="../src/mainwindow.cpp" line="952"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="950"/>
+        <location filename="../src/mainwindow.cpp" line="955"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="953"/>
+        <location filename="../src/mainwindow.cpp" line="958"/>
         <source>External</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="970"/>
+        <location filename="../src/mainwindow.cpp" line="975"/>
         <source>DeckLink Keyer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1144"/>
-        <location filename="../src/mainwindow.cpp" line="1146"/>
-        <location filename="../src/mainwindow.cpp" line="3786"/>
+        <location filename="../src/mainwindow.cpp" line="1149"/>
+        <location filename="../src/mainwindow.cpp" line="1151"/>
+        <location filename="../src/mainwindow.cpp" line="3791"/>
         <source>Failed to open </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1172"/>
+        <location filename="../src/mainwindow.cpp" line="1177"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1225"/>
+        <location filename="../src/mainwindow.cpp" line="1230"/>
         <source>Repairing the project failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1237"/>
+        <location filename="../src/mainwindow.cpp" line="1242"/>
         <source>MovieMator noticed some problems in your project.
 Do you want MovieMator to try to repair it?
 
@@ -3173,347 +3158,347 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1278"/>
+        <location filename="../src/mainwindow.cpp" line="1283"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1416"/>
+        <location filename="../src/mainwindow.cpp" line="1421"/>
         <source>For reasons of copyright protection, you can not import vob or m4p files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1613"/>
-        <location filename="../src/mainwindow.cpp" line="3766"/>
+        <location filename="../src/mainwindow.cpp" line="1618"/>
+        <location filename="../src/mainwindow.cpp" line="3771"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1885"/>
-        <location filename="../src/mainwindow.cpp" line="1887"/>
-        <location filename="../src/mainwindow.cpp" line="1889"/>
-        <location filename="../src/mainwindow.cpp" line="1891"/>
-        <location filename="../src/mainwindow.cpp" line="1893"/>
-        <location filename="../src/mainwindow.cpp" line="1895"/>
+        <location filename="../src/mainwindow.cpp" line="1890"/>
+        <location filename="../src/mainwindow.cpp" line="1892"/>
+        <location filename="../src/mainwindow.cpp" line="1894"/>
+        <location filename="../src/mainwindow.cpp" line="1896"/>
+        <location filename="../src/mainwindow.cpp" line="1898"/>
         <location filename="../src/mainwindow.cpp" line="1900"/>
-        <location filename="../src/mainwindow.cpp" line="1902"/>
+        <location filename="../src/mainwindow.cpp" line="1905"/>
+        <location filename="../src/mainwindow.cpp" line="1907"/>
         <source>%1[*] - %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="234"/>
         <location filename="../src/mainwindow.ui" line="237"/>
-        <location filename="../src/mainwindow.cpp" line="759"/>
-        <location filename="../src/mainwindow.cpp" line="1939"/>
-        <location filename="../src/mainwindow.cpp" line="1970"/>
+        <location filename="../src/mainwindow.cpp" line="764"/>
+        <location filename="../src/mainwindow.cpp" line="1944"/>
+        <location filename="../src/mainwindow.cpp" line="1975"/>
         <source>About MovieMator Video Editor Pro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="761"/>
-        <location filename="../src/mainwindow.cpp" line="1953"/>
-        <location filename="../src/mainwindow.cpp" line="1984"/>
+        <location filename="../src/mainwindow.cpp" line="766"/>
+        <location filename="../src/mainwindow.cpp" line="1958"/>
+        <location filename="../src/mainwindow.cpp" line="1989"/>
         <source>About MovieMator Video Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="700"/>
+        <location filename="../src/mainwindow.cpp" line="705"/>
         <source>MovieMator Video Editor Pro (Business)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1612"/>
+        <location filename="../src/mainwindow.cpp" line="1617"/>
         <source>All supported files(*.mmp *.png *.bmp *.tiff *.jpeg *.gif *.jpg *.3gp *.3gp2 *.3g2 *.3gpp *.a52  *.avi *.asf  *.ac3 *.aac *.au *.aiff *.aif *.ape *.amr *.caf *.cda *.dat *.divx *.dsm *.dv *.dts *.dvr-ms *.flac  *.fli  *.flc *.flv *.f4v *.gif *.ifo *.m4r *.mp2 *.mp3 *.mmf *.mp4 *.mov *.mpg *.mpeg *.m1v *.mpeg1 *.mpeg2 *.m2a *.mp1  *.m2p *.m2v *.mpv *.mpa *.mpeg4*.mod *.m2ts *.mts *.m4v *.m4a *.mxf *.mkv *.mka *.ogg *.ogv*.ogm *.oga *.qt *.rmvb *.rm *.ra *.ram *.tod  *.ts *.vob *.wma *.wav *.wmv *.webm *.wtv)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1940"/>
-        <location filename="../src/mainwindow.cpp" line="1971"/>
+        <location filename="../src/mainwindow.cpp" line="1945"/>
+        <location filename="../src/mainwindow.cpp" line="1976"/>
         <source>&lt;h1&gt;MovieMator Video Editor Pro %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=%2&gt;MovieMator Video Editor Pro&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2019 effectmatrix, Inc&lt;/p&gt;&lt;p&gt;Based on Shotcut v16.06 Copyright &amp;copy; 2011-2016 Meltytech, LLC.&lt;/p&gt;&lt;p&gt;Licensed under the GNU General Public License v3.0&lt;/p&gt;&lt;/small&gt;&lt;small&gt;&lt;p /&gt;&lt;p&gt;&lt;a href=&quot;http://www.moviemator.net/develop/third-party.html&quot;&gt;Related Information&lt;/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;mailto:market@effectmatrix.com&quot;&gt;Feedback&lt;/a&gt;&lt;/p&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1954"/>
-        <location filename="../src/mainwindow.cpp" line="1985"/>
+        <location filename="../src/mainwindow.cpp" line="1959"/>
+        <location filename="../src/mainwindow.cpp" line="1990"/>
         <source>&lt;h1&gt;MovieMator Video Editor %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=%2&gt;MovieMator Video Editor&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2019 effectmatrix, Inc&lt;/p&gt;&lt;p&gt;Based on Shotcut v16.06 Copyright &amp;copy; 2011-2016 Meltytech, LLC.&lt;/p&gt;&lt;p&gt;Licensed under the GNU General Public License v3.0&lt;/p&gt;&lt;/small&gt;&lt;small&gt;&lt;p /&gt;&lt;p&gt;&lt;a href=&quot;http://www.moviemator.net/develop/third-party.html&quot;&gt;Related Information&lt;/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;mailto:market@effectmatrix.com&quot;&gt;Feedback&lt;/a&gt;&lt;/p&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2594"/>
-        <location filename="../src/mainwindow.cpp" line="2627"/>
+        <location filename="../src/mainwindow.cpp" line="2599"/>
+        <location filename="../src/mainwindow.cpp" line="2632"/>
         <source>Saved %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2604"/>
+        <location filename="../src/mainwindow.cpp" line="2609"/>
         <source>Save MMP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2604"/>
+        <location filename="../src/mainwindow.cpp" line="2609"/>
         <source>MMP (*.mmp)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2619"/>
+        <location filename="../src/mainwindow.cpp" line="2624"/>
         <source>Unable to save empty file, but saved its name for future.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="645"/>
+        <location filename="../src/mainwindow.cpp" line="650"/>
         <source>Simple Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4056"/>
-        <location filename="../src/mainwindow.cpp" line="4467"/>
+        <location filename="../src/mainwindow.cpp" line="4061"/>
+        <location filename="../src/mainwindow.cpp" line="4472"/>
         <source>http://www.macvideostudio.com/quickly-start-movie-video-editing-mac.html</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4710"/>
+        <location filename="../src/mainwindow.cpp" line="4715"/>
         <source>Save Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2638"/>
+        <location filename="../src/mainwindow.cpp" line="2643"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="611"/>
+        <location filename="../src/mainwindow.cpp" line="616"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="615"/>
-        <location filename="../src/mainwindow.cpp" line="654"/>
+        <location filename="../src/mainwindow.cpp" line="620"/>
+        <location filename="../src/mainwindow.cpp" line="659"/>
         <source>Video Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="620"/>
-        <location filename="../src/mainwindow.cpp" line="656"/>
+        <location filename="../src/mainwindow.cpp" line="625"/>
+        <location filename="../src/mainwindow.cpp" line="661"/>
         <source>Audio Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="625"/>
+        <location filename="../src/mainwindow.cpp" line="630"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="629"/>
+        <location filename="../src/mainwindow.cpp" line="634"/>
         <source>Stickers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2670"/>
+        <location filename="../src/mainwindow.cpp" line="2675"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2736"/>
+        <location filename="../src/mainwindow.cpp" line="2741"/>
         <source>To export video, you must add one or more files to timeline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2992"/>
+        <location filename="../src/mainwindow.cpp" line="2995"/>
         <source>http://moviemator.net</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3210"/>
+        <location filename="../src/mainwindow.cpp" line="3215"/>
         <source>Exit Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3223"/>
+        <location filename="../src/mainwindow.cpp" line="3228"/>
         <source>GPU Processing is not supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3396"/>
+        <location filename="../src/mainwindow.cpp" line="3401"/>
         <source>You must restart MovieMator to switch to the new language.
 Do you want to change language now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3466"/>
+        <location filename="../src/mainwindow.cpp" line="3471"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3475"/>
+        <location filename="../src/mainwindow.cpp" line="3480"/>
         <source>You must restart MovieMator to switch using GPU processing.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3565"/>
-        <location filename="../src/mainwindow.cpp" line="3605"/>
+        <location filename="../src/mainwindow.cpp" line="3570"/>
+        <location filename="../src/mainwindow.cpp" line="3610"/>
         <source>You must restart MovieMator to change the video mode.
 Do you want to change video mode now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3767"/>
+        <location filename="../src/mainwindow.cpp" line="3772"/>
         <source>MMP (*.mmp);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3827"/>
+        <location filename="../src/mainwindow.cpp" line="3832"/>
         <source>You must restart MovieMator to change the display method.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3849"/>
+        <location filename="../src/mainwindow.cpp" line="3854"/>
         <source>Application Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3882"/>
+        <location filename="../src/mainwindow.cpp" line="3887"/>
         <source>MovieMator version %1 is available! Click here to get it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3886"/>
+        <location filename="../src/mainwindow.cpp" line="3891"/>
         <source>You are running the latest version of MovieMator.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3896"/>
+        <location filename="../src/mainwindow.cpp" line="3901"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3953"/>
+        <location filename="../src/mainwindow.cpp" line="3958"/>
         <source>Export EDL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3953"/>
+        <location filename="../src/mainwindow.cpp" line="3958"/>
         <source>EDL (*.edl)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3994"/>
+        <location filename="../src/mainwindow.cpp" line="3999"/>
         <source>A JavaScript error occurred during export.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3997"/>
+        <location filename="../src/mainwindow.cpp" line="4002"/>
         <source>Failed to open export-edl.js</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4145"/>
+        <location filename="../src/mainwindow.cpp" line="4150"/>
         <source>Open a video, audio or image file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4145"/>
+        <location filename="../src/mainwindow.cpp" line="4150"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4157"/>
+        <location filename="../src/mainwindow.cpp" line="4162"/>
         <source>Undo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4164"/>
+        <location filename="../src/mainwindow.cpp" line="4169"/>
         <source>Redo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4172"/>
+        <location filename="../src/mainwindow.cpp" line="4177"/>
         <source>Save Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4179"/>
+        <location filename="../src/mainwindow.cpp" line="4184"/>
         <source>Export video, audio or image file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4179"/>
+        <location filename="../src/mainwindow.cpp" line="4184"/>
         <source>Export Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4186"/>
+        <location filename="../src/mainwindow.cpp" line="4191"/>
         <source>Tutorials</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4359"/>
-        <location filename="../src/mainwindow.cpp" line="4413"/>
+        <location filename="../src/mainwindow.cpp" line="4364"/>
+        <location filename="../src/mainwindow.cpp" line="4418"/>
         <source>http://moviemator.net/buynow.html</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4710"/>
+        <location filename="../src/mainwindow.cpp" line="4715"/>
         <source>Template (*.mlt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="944"/>
-        <location filename="../src/mainwindow.cpp" line="4186"/>
+        <location filename="../src/mainwindow.cpp" line="4191"/>
         <source>Tutorial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4193"/>
+        <location filename="../src/mainwindow.cpp" line="4198"/>
         <source>Send us your suggestions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4215"/>
+        <location filename="../src/mainwindow.cpp" line="4220"/>
         <source>Enter Licensse Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4215"/>
+        <location filename="../src/mainwindow.cpp" line="4220"/>
         <source>Register</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4221"/>
+        <location filename="../src/mainwindow.cpp" line="4226"/>
         <source>Buy Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4231"/>
+        <location filename="../src/mainwindow.cpp" line="4236"/>
         <source>Upgrade to Pro version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4231"/>
+        <location filename="../src/mainwindow.cpp" line="4236"/>
         <source>Upgrade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4236"/>
+        <location filename="../src/mainwindow.cpp" line="4241"/>
         <source>Get Total Video Converter Pro - a great video converter and dvd burner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4236"/>
+        <location filename="../src/mainwindow.cpp" line="4241"/>
         <source>Great Converter &amp; DVD Burner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4379"/>
+        <location filename="../src/mainwindow.cpp" line="4384"/>
         <source>Execute Python File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4379"/>
+        <location filename="../src/mainwindow.cpp" line="4384"/>
         <source>Python File (*.py)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3539,7 +3524,7 @@ Do you want to restart now?</source>
 <context>
     <name>MultitrackModel</name>
     <message>
-        <location filename="../src/models/multitrackmodel.cpp" line="3933"/>
+        <location filename="../src/models/multitrackmodel.cpp" line="3969"/>
         <source>&lt;p&gt;The time code of the file cannot be read. Please convert it to MP4 before adding the file. &lt;/p&gt;&lt;p&gt;Recommend:&lt;a href=&quot;http://www.effectmatrix.com/total-video-converter&quot;&gt;Total Video Converter&lt;/a&gt;&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3570,44 +3555,44 @@ Do you want to restart now?</source>
 <context>
     <name>NewPreset</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/NewPreset.qml" line="56"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/NewPreset.qml" line="56"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/NewPreset.qml" line="62"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/NewPreset.qml" line="62"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/NewPreset.qml" line="72"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/NewPreset.qml" line="72"/>
         <source>Save Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/NewPreset.qml" line="87"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/NewPreset.qml" line="87"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/NewPreset.qml" line="109"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/NewPreset.qml" line="144"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/NewPreset.qml" line="109"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/NewPreset.qml" line="144"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/NewPreset.qml" line="114"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/NewPreset.qml" line="157"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/NewPreset.qml" line="114"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/NewPreset.qml" line="157"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/NewPreset.qml" line="126"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/NewPreset.qml" line="126"/>
         <source>Delete Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/NewPreset.qml" line="135"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/NewPreset.qml" line="135"/>
         <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3955,44 +3940,44 @@ Do you want to restart now?</source>
 <context>
     <name>Preset</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="100"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/Preset.qml" line="100"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="106"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/Preset.qml" line="106"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="116"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/Preset.qml" line="116"/>
         <source>Save Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="133"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/Preset.qml" line="149"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="155"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="190"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/Preset.qml" line="171"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/Preset.qml" line="206"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="160"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="201"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/Preset.qml" line="176"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/Preset.qml" line="220"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="172"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/Preset.qml" line="188"/>
         <source>Delete Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/Preset.qml" line="181"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/Preset.qml" line="197"/>
         <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4270,37 +4255,37 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>RecentDockWidget</name>
     <message>
-        <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="23"/>
-        <source>1 Backgrounds</source>
+        <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="25"/>
+        <source>Backgrounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="23"/>
-        <source>2 Videos</source>
+        <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="25"/>
+        <source>Videos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="23"/>
-        <source>3 Audios</source>
+        <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="25"/>
+        <source>Audios</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="23"/>
-        <source>4 Images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="29"/>
-        <source>Remove</source>
+        <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="25"/>
+        <source>Images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="31"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="33"/>
         <source>Remove All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="60"/>
+        <location filename="../ResourceDockGenerator/recentdock/recentdockwidget.cpp" line="65"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4389,7 +4374,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SaveDefaultButton</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/SaveDefaultButton.qml" line="27"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/SaveDefaultButton.qml" line="27"/>
         <source>Set as default</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4453,7 +4438,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SimplePropertyUI</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/SimplePropertyUI.qml" line="20"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/SimplePropertyUI.qml" line="20"/>
         <source>Custom Properties</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4461,83 +4446,83 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SizePositionUI</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="100"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="101"/>
         <source>Bottom Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="107"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="108"/>
         <source>Bottom Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="114"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="115"/>
         <source>Top Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="121"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="122"/>
         <source>Top Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="403"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="385"/>
         <source>Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="478"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="460"/>
         <source>Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="504"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="486"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="421"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="403"/>
         <source>Size mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="428"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="578"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="410"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="560"/>
         <source>Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="447"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="429"/>
         <source>Fill</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="461"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="443"/>
         <source>Distort</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="541"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="523"/>
         <source>1:1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="616"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="598"/>
         <source>FitCrop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="653"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="635"/>
         <source>Tile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="703"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="685"/>
         <source>May I have your attention please</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionUI.qml" line="704"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionUI.qml" line="686"/>
         <source>Change mode will remove all of the key frames, are you sure to do?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4545,28 +4530,20 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SizePositionVUI</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/SizePositionVUI.qml" line="76"/>
+        <location filename="../src/qml/filters_pro/size_position/SizePositionVUI.qml" line="76"/>
         <source>Auto set as key frame at postion</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>StickerDockWidget</name>
-    <message>
-        <location filename="../ResourceDockGenerator/stickerdockwidget.cpp" line="31"/>
-        <source>Animation:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TextManagerView</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/resourceManager/TextManagerView.qml" line="146"/>
+        <location filename="../src/qml/views/resourceManager/TextManagerView.qml" line="146"/>
         <source>Add to timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/resourceManager/TextManagerView.qml" line="152"/>
+        <location filename="../src/qml/views/resourceManager/TextManagerView.qml" line="152"/>
         <source>Preview</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4595,12 +4572,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TimeSpinner</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/TimeSpinner.qml" line="47"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/TimeSpinner.qml" line="47"/>
         <source>Decrement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/TimeSpinner.qml" line="65"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/TimeSpinner.qml" line="65"/>
         <source>Increment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4613,32 +4590,32 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="262"/>
+        <location filename="../src/docks/timelinedock.cpp" line="265"/>
         <source>This track is locked</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="848"/>
+        <location filename="../src/docks/timelinedock.cpp" line="867"/>
         <source>Lift from track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1211"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1221"/>
         <source>You cannot split a transition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1694"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1704"/>
         <source>For reasons of copyright protection, you can not import vob or m4p files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2255"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2263"/>
         <source>Save Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2255"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2263"/>
         <source>Template (*.xml)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4708,181 +4685,171 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TimelineToolbar</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="99"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="99"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="120"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="120"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="131"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="131"/>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="143"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="143"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="156"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="156"/>
         <source>Split</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="186"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="186"/>
         <source>Toggle snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="196"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="196"/>
         <source>Scrub while dragging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="207"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="207"/>
         <source>Ripple trim and drop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="208"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="208"/>
         <source>Ripple</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="220"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="220"/>
         <source>Change the position and size of the clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="221"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="221"/>
         <source>Resize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="239"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="239"/>
         <source>Rotate clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="240"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="240"/>
         <source>Rotate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="258"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="258"/>
         <source>Crop clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="259"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="259"/>
         <source>Crop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="312"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="313"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="312"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="313"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="330"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="330"/>
         <source>Add Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="347"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="347"/>
         <source>Add Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="375"/>
-        <source>Transition Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="402"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="375"/>
         <source>Zoom to Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="532"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="505"/>
         <source>Display a menu of additional actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="540"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="513"/>
         <source>Cut - Copy the current clip to the Source
 player and ripple delete it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="553"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="526"/>
         <source>Copy - Copy the current clip to the Source player (C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="566"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="539"/>
         <source>Paste - Insert clip into the current track
 shifting following clips to the right (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="578"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="552"/>
         <source>Append to the current track (A)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="594"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="568"/>
         <source>Remove current clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="614"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="588"/>
         <source>Insert clip into the current track
 shifting following clips to the right (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="634"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="608"/>
         <source>Split At Playhead (S)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="646"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="620"/>
         <source>Change clip&apos;s position and size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="728"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="702"/>
         <source>Zoom out timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="741"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="715"/>
         <source>Zoom in timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="754"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="728"/>
         <source>Add text to video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="768"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="742"/>
         <source>Add filter to video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="782"/>
-        <source>Set the transition property</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TimelineToolbar.qml" line="799"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="758"/>
         <source>Show all clips</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4928,17 +4895,17 @@ shifting following clips to the right (V)</source>
 <context>
     <name>TrackHead</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TrackHead.qml" line="189"/>
+        <location filename="../src/qml/timeline/TrackHead.qml" line="189"/>
         <source>Mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TrackHead.qml" line="227"/>
+        <location filename="../src/qml/timeline/TrackHead.qml" line="227"/>
         <source>Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/TrackHead.qml" line="280"/>
+        <location filename="../src/qml/timeline/TrackHead.qml" line="280"/>
         <source>Lock track</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5050,7 +5017,7 @@ shifting following clips to the right (V)</source>
 <context>
     <name>UndoButton</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/UndoButton.qml" line="27"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/UndoButton.qml" line="27"/>
         <source>Reset to default</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5490,7 +5457,7 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>YFKeyFrame</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/modules/MovieMator/Controls/YFKeyFrame.qml" line="361"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/YFKeyFrame.qml" line="416"/>
         <source>Auto set as key frame at postion</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5498,32 +5465,32 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>audioloudnessscope</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/scopes/audioloudness/audioloudnessscope.qml" line="118"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="118"/>
         <source>Momentary Loudness.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/scopes/audioloudness/audioloudnessscope.qml" line="152"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="152"/>
         <source>Short-term Loudness.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/scopes/audioloudness/audioloudnessscope.qml" line="186"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="186"/>
         <source>Integrated Loudness.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/scopes/audioloudness/audioloudnessscope.qml" line="220"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="220"/>
         <source>Loudness Range.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/scopes/audioloudness/audioloudnessscope.qml" line="254"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="254"/>
         <source>Peak.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/scopes/audioloudness/audioloudnessscope.qml" line="288"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="288"/>
         <source>True Peak.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5531,7 +5498,7 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>filterview</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/views/filter/filterview.qml" line="201"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="201"/>
         <source>Nothing selected</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5572,745 +5539,460 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>meta</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_balance/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_balance/meta.qml" line="14"/>
         <source>Balance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_bandpass/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_bandpass/meta.qml" line="14"/>
         <source>Band Pass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_basstreble/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_basstreble/meta.qml" line="14"/>
         <source>Bass &amp; Treble</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_channelcopy/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_channelcopy/meta.qml" line="14"/>
         <source>Copy Channel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/meta.qml" line="14"/>
         <source>Compressor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_delay/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_delay/meta.qml" line="14"/>
         <source>Delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_expander/meta.qml" line="14"/>
         <source>Expander</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_fadein/meta.qml" line="15"/>
+        <location filename="../src/qml/filters_pro/audio_fadein/meta.qml" line="15"/>
         <source>Fade In Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_fadeout/meta.qml" line="15"/>
+        <location filename="../src/qml/filters_pro/audio_fadeout/meta.qml" line="15"/>
         <source>Fade Out Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_gain/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_gain/meta.qml" line="14"/>
         <source>Gain / Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_highpass/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_highpass/meta.qml" line="14"/>
         <source>High Pass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_limiter/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_limiter/meta.qml" line="14"/>
         <source>Limiter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_lowpass/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_lowpass/meta.qml" line="14"/>
         <source>Low Pass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_mono/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_mono/meta.qml" line="14"/>
         <source>Downmix</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_mute/meta.qml" line="15"/>
+        <location filename="../src/qml/filters_pro/audio_mute/meta.qml" line="15"/>
         <source>Mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/meta.qml" line="14"/>
         <source>Normalize: One Pass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_2p/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_2p/meta.qml" line="14"/>
         <source>Normalize: Two Pass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_notch/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_notch/meta.qml" line="14"/>
         <source>Notch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_pan/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_pan/meta.qml" line="14"/>
         <source>Pan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/meta.qml" line="14"/>
         <source>Reverb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_swapchannels/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/audio_swapchannels/meta.qml" line="14"/>
         <source>Swap Channels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/brightness/meta.qml" line="13"/>
+        <location filename="../src/qml/filters_pro/brightness/meta.qml" line="13"/>
         <source>Brightness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/meta.qml" line="13"/>
+        <location filename="../src/qml/filters_pro/brightness/meta.qml" line="18"/>
+        <location filename="../src/qml/filters_pro/color/meta.qml" line="18"/>
+        <location filename="../src/qml/filters_pro/sepia/meta.qml" line="17"/>
+        <source>5 Advanced Coloring Tool</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/color/meta.qml" line="13"/>
         <source>Color Grading</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/contrast/meta.qml" line="13"/>
-        <source>Contrast</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/meta.qml" line="13"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/meta.qml" line="20"/>
+        <location filename="../src/qml/filters_pro/crop/meta.qml" line="13"/>
         <source>Crop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="14"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="19"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/meta.qml" line="17"/>
+        <location filename="../src/qml/filters_pro/crop/meta.qml" line="20"/>
+        <location filename="../src/qml/filters_pro/fadein_brightness/meta.qml" line="20"/>
+        <location filename="../src/qml/filters_pro/fadein_movit/meta.qml" line="20"/>
+        <location filename="../src/qml/filters_pro/fadeout_brightness/meta.qml" line="20"/>
+        <location filename="../src/qml/filters_pro/fadeout_movit/meta.qml" line="20"/>
+        <location filename="../src/qml/filters_pro/opacity/meta.qml" line="18"/>
+        <location filename="../src/qml/filters_pro/rotate/meta.qml" line="19"/>
+        <location filename="../src/qml/filters_pro/stabilize/meta.qml" line="19"/>
+        <source>1 Basic Processing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/dynamictext/meta.qml" line="14"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="72"/>
-        <source>transition fix_rotate_x</source>
+        <location filename="../src/qml/filters_pro/dynamictext/meta.qml" line="19"/>
+        <location filename="../src/qml/filters_pro/webvfx_threejs_text/meta.qml" line="17"/>
+        <source>2 Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="78"/>
-        <source>transition scale_x</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="84"/>
-        <source>transition scale_aspect_ratio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="91"/>
-        <source>transition ox</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="97"/>
-        <source>transition oy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="103"/>
-        <source>transparent alpha</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadein_brightness/meta.qml" line="14"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadein_movit/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/fadein_brightness/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/fadein_movit/meta.qml" line="14"/>
         <source>Fade In Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadeout_brightness/meta.qml" line="14"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadeout_movit/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/fadeout_brightness/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/fadeout_movit/meta.qml" line="14"/>
         <source>Fade Out Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/grain/meta.qml" line="13"/>
+        <location filename="../src/qml/filters_pro/grain/meta.qml" line="13"/>
         <source>Old Film: Grain</source>
         <translation type="unfinished">Old Film-Grain</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/invert/meta.qml" line="13"/>
+        <location filename="../src/qml/filters_pro/grain/meta.qml" line="16"/>
+        <location filename="../src/qml/filters_pro/mirror/meta.qml" line="17"/>
+        <location filename="../src/qml/filters_pro/movit_diffusion/meta.qml" line="17"/>
+        <location filename="../src/qml/filters_pro/webvfx/meta.qml" line="17"/>
+        <location filename="../src/qml/filters_pro/webvfx_ruttetraizer/meta.qml" line="17"/>
+        <source>9 Effect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/invert/meta.qml" line="13"/>
         <source>Invert Colors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/mirror/meta.qml" line="13"/>
+        <location filename="../src/qml/filters_pro/invert/meta.qml" line="16"/>
+        <location filename="../src/qml/filters_pro/webvfx_circular_frame/meta.qml" line="17"/>
+        <source>6 Light</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/mirror/meta.qml" line="13"/>
         <source>Mirror</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/movit_diffusion/meta.qml" line="13"/>
+        <location filename="../src/qml/filters_pro/movit_diffusion/meta.qml" line="13"/>
         <source>Diffusion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/opacity/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/opacity/meta.qml" line="14"/>
         <source>Opacity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/rotate/meta.qml" line="14"/>
         <source>Rotate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sepia/meta.qml" line="13"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sepia/meta.qml" line="18"/>
+        <location filename="../src/qml/filters_pro/sepia/meta.qml" line="13"/>
         <source>Sepia Tone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/meta.qml" line="27"/>
+        <location filename="../src/qml/filters_pro/smartblur/meta.qml" line="26"/>
         <source>Reduce Noise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/meta.qml" line="13"/>
+        <location filename="../src/qml/filters_pro/smartblur/meta.qml" line="29"/>
+        <source>4 Denoise and Blur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/stabilize/meta.qml" line="13"/>
         <source>Stabilize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/wave/meta.qml" line="13"/>
+        <location filename="../src/qml/filters_pro/wave/meta.qml" line="13"/>
         <source>Wave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/meta.qml" line="13"/>
+        <location filename="../src/qml/filters_pro/wave/meta.qml" line="19"/>
+        <source>7 Distort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/webvfx/meta.qml" line="13"/>
         <source>Overlay HTML</source>
         <translation type="unfinished">Overlay</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_circular_frame/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/webvfx_circular_frame/meta.qml" line="14"/>
         <source>Circular Frame (HTML)</source>
         <translation type="unfinished">Circular Frame</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_circular_frame/meta.qml" line="35"/>
-        <source>color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/meta.qml" line="14"/>
         <source>3D Text (HTML)</source>
-        <translation type="unfinished">3D Text</translation>
+        <translation type="obsolete">3D Text</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/brightness/meta.qml" line="19"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/meta.qml" line="18"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/contrast/meta.qml" line="19"/>
-        <source>Color Adjustment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/brightness/meta.qml" line="26"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/contrast/meta.qml" line="26"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/contrast/meta.qml" line="36"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/contrast/meta.qml" line="46"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/contrast/meta.qml" line="56"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/contrast/meta.qml" line="66"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/contrast/meta.qml" line="76"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/opacity/meta.qml" line="25"/>
-        <source>Level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/grain/meta.qml" line="24"/>
-        <source>noise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/grain/meta.qml" line="34"/>
-        <source>brightness</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/meta.qml" line="28"/>
-        <source>Rotation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/meta.qml" line="38"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/meta.qml" line="48"/>
-        <source>Scale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/meta.qml" line="58"/>
-        <source>X offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/meta.qml" line="68"/>
-        <source>Y offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sepia/meta.qml" line="25"/>
-        <source>u</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sepia/meta.qml" line="35"/>
-        <source>v</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/meta.qml" line="20"/>
-        <source>Stabilization</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/meta.qml" line="28"/>
-        <source>shakiness</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/meta.qml" line="38"/>
-        <source>accuracy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/meta.qml" line="48"/>
-        <source>Zoom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/wave/meta.qml" line="18"/>
-        <source>Distortion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/wave/meta.qml" line="25"/>
-        <source>wave</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/wave/meta.qml" line="35"/>
-        <source>speed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/wave/meta.qml" line="45"/>
-        <source>deformX</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/wave/meta.qml" line="55"/>
-        <source>deformY</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_circular_frame/meta.qml" line="24"/>
-        <source>Radius</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/meta.qml" line="22"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/meta.qml" line="32"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/meta.qml" line="42"/>
-        <source>Shadows (Lift)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/meta.qml" line="52"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/meta.qml" line="62"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/meta.qml" line="72"/>
-        <source>Midtones (Gamma)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/meta.qml" line="82"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/meta.qml" line="92"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/meta.qml" line="102"/>
-        <source>Highlights (Gain)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/meta.qml" line="65"/>
-        <source>Letter Spaceing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/meta.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/webvfx_ruttetraizer/meta.qml" line="14"/>
         <source>Rutt-Etra-Izer (HTML)</source>
         <translation type="unfinished">Rutt-Etra-Izer</translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadein_brightness/meta.qml" line="20"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadein_movit/meta.qml" line="20"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadeout_brightness/meta.qml" line="20"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadeout_movit/meta.qml" line="20"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/grain/meta.qml" line="16"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/invert/meta.qml" line="16"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/movit_diffusion/meta.qml" line="17"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/opacity/meta.qml" line="18"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/meta.qml" line="30"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/meta.qml" line="17"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_circular_frame/meta.qml" line="17"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/meta.qml" line="17"/>
-        <source>Effect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/mirror/meta.qml" line="17"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/meta.qml" line="19"/>
-        <source>Transform</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/frei0r/meta.qml" line="6"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/frei0r/meta.qml" line="16"/>
+        <location filename="../src/qml/filters_pro/frei0r/meta.qml" line="6"/>
+        <location filename="../src/qml/filters_pro/frei0r/meta.qml" line="16"/>
         <source>*</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/frei0r/meta.qml" line="9"/>
-        <source>Common</source>
+        <location filename="../src/qml/filters_pro/frei0r/meta.qml" line="9"/>
+        <source>C Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/webvfx_threejs_text/meta.qml" line="14"/>
+        <source>Text3D(Eng.)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>meta_affine</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/meta_affine.qml" line="16"/>
+        <location filename="../src/qml/filters_pro/size_position/meta_affine.qml" line="16"/>
         <source>Size and Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/meta_affine.qml" line="23"/>
-        <source>Transform</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/meta_affine.qml" line="31"/>
-        <source>Position / Size</source>
+        <location filename="../src/qml/filters_pro/size_position/meta_affine.qml" line="23"/>
+        <source>1 Basic Processing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>meta_boxblur</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/blur/meta_boxblur.qml" line="13"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/blur/meta_boxblur.qml" line="17"/>
+        <location filename="../src/qml/filters_pro/blur/meta_boxblur.qml" line="13"/>
         <source>Blur</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/blur/meta_boxblur.qml" line="25"/>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/blur/meta_boxblur.qml" line="35"/>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>meta_frei0r</name>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/glow/meta_frei0r.qml" line="13"/>
-        <source>Glow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/saturation/meta_frei0r.qml" line="13"/>
-        <source>Saturation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/meta_frei0r.qml" line="13"/>
-        <source>Sharpen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/white/meta_frei0r.qml" line="13"/>
-        <source>White Balance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/glow/meta_frei0r.qml" line="17"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/meta_frei0r.qml" line="17"/>
-        <source>Effect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/glow/meta_frei0r.qml" line="24"/>
-        <source>Blur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/saturation/meta_frei0r.qml" line="17"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/white/meta_frei0r.qml" line="18"/>
-        <source>Color Adjustment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/saturation/meta_frei0r.qml" line="24"/>
-        <source>Level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/meta_frei0r.qml" line="24"/>
-        <source>Amount</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/meta_frei0r.qml" line="34"/>
-        <source>Size</source>
+        <location filename="../src/qml/filters_pro/blur/meta_boxblur.qml" line="17"/>
+        <source>4 Denoise and Blur</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>meta_frei0r_coloradj</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/meta_frei0r_coloradj.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/color/meta_frei0r_coloradj.qml" line="14"/>
         <source>Color Grading</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/meta_frei0r_coloradj.qml" line="18"/>
-        <source>Color Adjustment</source>
+        <location filename="../src/qml/filters_pro/color/meta_frei0r_coloradj.qml" line="18"/>
+        <source>5 Advanced Coloring Tool</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>meta_movit</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/blur/meta_movit.qml" line="13"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/blur/meta_movit.qml" line="17"/>
+        <location filename="../src/qml/filters_pro/blur/meta_movit.qml" line="13"/>
         <source>Blur</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/brightness/meta_movit.qml" line="13"/>
+        <location filename="../src/qml/filters_pro/blur/meta_movit.qml" line="17"/>
+        <source>4 Denoise and Blur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/brightness/meta_movit.qml" line="13"/>
         <source>Brightness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/meta_movit.qml" line="13"/>
+        <location filename="../src/qml/filters_pro/brightness/meta_movit.qml" line="19"/>
+        <source>3 Basic Coloring Tool</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/color/meta_movit.qml" line="13"/>
         <source>Color Grading</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/contrast/meta_movit.qml" line="13"/>
-        <source>Contrast</source>
+        <location filename="../src/qml/filters_pro/color/meta_movit.qml" line="18"/>
+        <source>5 Advanced Coloring Tool</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/meta_movit.qml" line="13"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/meta_movit.qml" line="18"/>
+        <location filename="../src/qml/filters_pro/crop/meta_movit.qml" line="13"/>
         <source>Crop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/glow/meta_movit.qml" line="13"/>
-        <source>Glow</source>
+        <location filename="../src/qml/filters_pro/crop/meta_movit.qml" line="18"/>
+        <location filename="../src/qml/filters_pro/opacity/meta_movit.qml" line="18"/>
+        <location filename="../src/qml/filters_pro/size_position/meta_movit.qml" line="21"/>
+        <source>1 Basic Processing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/mirror/meta_movit.qml" line="13"/>
+        <location filename="../src/qml/filters_pro/mirror/meta_movit.qml" line="13"/>
         <source>Mirror</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/opacity/meta_movit.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/mirror/meta_movit.qml" line="17"/>
+        <source>9 Effect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/opacity/meta_movit.qml" line="14"/>
         <source>Opacity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/saturation/meta_movit.qml" line="13"/>
-        <source>Saturation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/meta_movit.qml" line="13"/>
-        <source>Sharpen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/meta_movit.qml" line="14"/>
+        <location filename="../src/qml/filters_pro/size_position/meta_movit.qml" line="14"/>
         <source>Size and Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/meta_movit.qml" line="13"/>
+        <location filename="../src/qml/filters_pro/vignette/meta_movit.qml" line="13"/>
         <source>Vignette</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/white/meta_movit.qml" line="13"/>
-        <source>White Balance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/glow/meta_movit.qml" line="17"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/opacity/meta_movit.qml" line="18"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/meta_movit.qml" line="17"/>
-        <source>Effect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/blur/meta_movit.qml" line="24"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/glow/meta_movit.qml" line="24"/>
+        <location filename="../src/qml/filters_pro/blur/meta_movit.qml" line="24"/>
         <source>Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/brightness/meta_movit.qml" line="19"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/meta_movit.qml" line="18"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/contrast/meta_movit.qml" line="19"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/saturation/meta_movit.qml" line="17"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/meta_movit.qml" line="17"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/white/meta_movit.qml" line="18"/>
-        <source>Color Adjustment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/brightness/meta_movit.qml" line="26"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/contrast/meta_movit.qml" line="26"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/opacity/meta_movit.qml" line="25"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/saturation/meta_movit.qml" line="24"/>
+        <location filename="../src/qml/filters_pro/brightness/meta_movit.qml" line="26"/>
+        <location filename="../src/qml/filters_pro/opacity/meta_movit.qml" line="25"/>
         <source>Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/glow/meta_movit.qml" line="34"/>
-        <source>Highlight blurriness</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/glow/meta_movit.qml" line="44"/>
-        <source>Highlight cutoff</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/meta_movit.qml" line="24"/>
-        <source>Circle radius</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/meta_movit.qml" line="34"/>
-        <source>Gaussian radius</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/meta_movit.qml" line="44"/>
-        <source>Correlation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/meta_movit.qml" line="54"/>
-        <source>Noise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/meta_movit.qml" line="29"/>
+        <location filename="../src/qml/filters_pro/size_position/meta_movit.qml" line="29"/>
         <source>Position / Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/meta_movit.qml" line="24"/>
+        <location filename="../src/qml/filters_pro/vignette/meta_movit.qml" line="17"/>
+        <source>6 Light</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/vignette/meta_movit.qml" line="24"/>
         <source>Outer radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/meta_movit.qml" line="34"/>
+        <location filename="../src/qml/filters_pro/vignette/meta_movit.qml" line="34"/>
         <source>Inner radius</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/mirror/meta_movit.qml" line="17"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/size_position/meta_movit.qml" line="21"/>
-        <source>Transform</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>meta_oldfilm</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/meta_oldfilm.qml" line="13"/>
+        <location filename="../src/qml/filters_pro/vignette/meta_oldfilm.qml" line="13"/>
         <source>Vignette</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/meta_oldfilm.qml" line="17"/>
-        <source>Color Adjustment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/meta_oldfilm.qml" line="25"/>
-        <source>Radius</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/meta_oldfilm.qml" line="35"/>
-        <source>Feathering</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/meta_oldfilm.qml" line="55"/>
-        <source>Opacity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/meta_oldfilm.qml" line="45"/>
-        <source>mode</source>
+        <location filename="../src/qml/filters_pro/vignette/meta_oldfilm.qml" line="17"/>
+        <source>6 Light</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>text_outline</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_outline.qml" line="22"/>
+        <location filename="../src/qml/htmleditor/text_outline.qml" line="22"/>
         <source>Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_outline.qml" line="34"/>
+        <location filename="../src/qml/htmleditor/text_outline.qml" line="34"/>
         <source>pixels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_outline.qml" line="37"/>
+        <location filename="../src/qml/htmleditor/text_outline.qml" line="37"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_outline.qml" line="73"/>
+        <location filename="../src/qml/htmleditor/text_outline.qml" line="73"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_outline.qml" line="85"/>
+        <location filename="../src/qml/htmleditor/text_outline.qml" line="85"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_outline.qml" line="92"/>
+        <location filename="../src/qml/htmleditor/text_outline.qml" line="92"/>
         <source>Please choose a color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6318,44 +6000,44 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>text_shadow</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_shadow.qml" line="22"/>
+        <location filename="../src/qml/htmleditor/text_shadow.qml" line="22"/>
         <source>Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_shadow.qml" line="34"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_shadow.qml" line="49"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_shadow.qml" line="64"/>
+        <location filename="../src/qml/htmleditor/text_shadow.qml" line="34"/>
+        <location filename="../src/qml/htmleditor/text_shadow.qml" line="49"/>
+        <location filename="../src/qml/htmleditor/text_shadow.qml" line="64"/>
         <source>pixels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_shadow.qml" line="37"/>
+        <location filename="../src/qml/htmleditor/text_shadow.qml" line="37"/>
         <source>Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_shadow.qml" line="52"/>
+        <location filename="../src/qml/htmleditor/text_shadow.qml" line="52"/>
         <source>Softness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_shadow.qml" line="67"/>
+        <location filename="../src/qml/htmleditor/text_shadow.qml" line="67"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_shadow.qml" line="103"/>
+        <location filename="../src/qml/htmleditor/text_shadow.qml" line="103"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_shadow.qml" line="119"/>
+        <location filename="../src/qml/htmleditor/text_shadow.qml" line="119"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/htmleditor/text_shadow.qml" line="126"/>
+        <location filename="../src/qml/htmleditor/text_shadow.qml" line="126"/>
         <source>Please choose a color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6363,68 +6045,68 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="574"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="694"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="569"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="719"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="574"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="569"/>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="642"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="667"/>
         <source>Add Audio Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="651"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="676"/>
         <source>Add Video Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="660"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="685"/>
         <source>Insert Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="669"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="694"/>
         <source>Remove Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="684"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="709"/>
         <source>Split</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="705"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="730"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="716"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="741"/>
         <source>New Video Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="726"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="751"/>
         <source>New Audio Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="736"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="761"/>
         <source>Delete Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="746"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="771"/>
         <source>Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/timeline/timeline.qml" line="755"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="780"/>
         <source>Mute</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6432,951 +6114,935 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>ui</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_balance/ui.qml" line="45"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_pan/ui.qml" line="60"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_pan/ui.qml" line="67"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/ui.qml" line="201"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1321"/>
+        <location filename="../src/qml/filters_pro/audio_balance/ui.qml" line="41"/>
+        <location filename="../src/qml/filters_pro/audio_pan/ui.qml" line="54"/>
+        <location filename="../src/qml/filters_pro/audio_pan/ui.qml" line="61"/>
+        <location filename="../src/qml/filters_pro/crop/ui.qml" line="200"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1460"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_balance/ui.qml" line="54"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_pan/ui.qml" line="61"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_pan/ui.qml" line="75"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/ui.qml" line="218"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1339"/>
+        <location filename="../src/qml/filters_pro/audio_balance/ui.qml" line="50"/>
+        <location filename="../src/qml/filters_pro/audio_pan/ui.qml" line="55"/>
+        <location filename="../src/qml/filters_pro/audio_pan/ui.qml" line="69"/>
+        <location filename="../src/qml/filters_pro/crop/ui.qml" line="218"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1478"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_bandpass/ui.qml" line="55"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_basstreble/ui.qml" line="175"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="74"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_delay/ui.qml" line="53"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/ui.qml" line="61"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_highpass/ui.qml" line="53"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_limiter/ui.qml" line="66"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_lowpass/ui.qml" line="55"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="89"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_notch/ui.qml" line="55"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="106"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/ui.qml" line="129"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/contrast/ui.qml" line="89"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/ui.qml" line="88"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="830"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/grain/ui.qml" line="79"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="62"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sepia/ui.qml" line="56"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/ui.qml" line="127"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/wave/ui.qml" line="54"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="65"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="73"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/white/ui.qml" line="100"/>
+        <location filename="../src/qml/filters_pro/audio_bandpass/ui.qml" line="46"/>
+        <location filename="../src/qml/filters_pro/audio_basstreble/ui.qml" line="166"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="62"/>
+        <location filename="../src/qml/filters_pro/audio_delay/ui.qml" line="45"/>
+        <location filename="../src/qml/filters_pro/audio_expander/ui.qml" line="50"/>
+        <location filename="../src/qml/filters_pro/audio_highpass/ui.qml" line="46"/>
+        <location filename="../src/qml/filters_pro/audio_limiter/ui.qml" line="57"/>
+        <location filename="../src/qml/filters_pro/audio_lowpass/ui.qml" line="48"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="80"/>
+        <location filename="../src/qml/filters_pro/audio_notch/ui.qml" line="46"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/ui.qml" line="49"/>
+        <location filename="../src/qml/filters_pro/color/ui.qml" line="129"/>
+        <location filename="../src/qml/filters_pro/crop/ui.qml" line="83"/>
+        <location filename="../src/qml/filters_pro/grain/ui.qml" line="79"/>
+        <location filename="../src/qml/filters_pro/rotate/ui.qml" line="62"/>
+        <location filename="../src/qml/filters_pro/sepia/ui.qml" line="56"/>
+        <location filename="../src/qml/filters_pro/smartblur/ui.qml" line="127"/>
+        <location filename="../src/qml/filters_pro/wave/ui.qml" line="54"/>
+        <location filename="../src/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="76"/>
+        <location filename="../src/qml/filters_pro/webvfx_threejs_text/ui.qml" line="72"/>
         <source>Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_bandpass/ui.qml" line="67"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_notch/ui.qml" line="67"/>
+        <location filename="../src/qml/filters_pro/audio_bandpass/ui.qml" line="58"/>
+        <location filename="../src/qml/filters_pro/audio_notch/ui.qml" line="58"/>
         <source>Center frequency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_bandpass/ui.qml" line="86"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_notch/ui.qml" line="86"/>
+        <location filename="../src/qml/filters_pro/audio_bandpass/ui.qml" line="77"/>
+        <location filename="../src/qml/filters_pro/audio_notch/ui.qml" line="77"/>
         <source>Bandwidth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_bandpass/ui.qml" line="105"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_highpass/ui.qml" line="83"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_lowpass/ui.qml" line="88"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_notch/ui.qml" line="105"/>
+        <location filename="../src/qml/filters_pro/audio_bandpass/ui.qml" line="96"/>
+        <location filename="../src/qml/filters_pro/audio_highpass/ui.qml" line="76"/>
+        <location filename="../src/qml/filters_pro/audio_lowpass/ui.qml" line="81"/>
+        <location filename="../src/qml/filters_pro/audio_notch/ui.qml" line="96"/>
         <source>Rolloff rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_bandpass/ui.qml" line="123"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_delay/ui.qml" line="108"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_highpass/ui.qml" line="101"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_lowpass/ui.qml" line="107"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_notch/ui.qml" line="123"/>
+        <location filename="../src/qml/filters_pro/audio_bandpass/ui.qml" line="114"/>
+        <location filename="../src/qml/filters_pro/audio_delay/ui.qml" line="100"/>
+        <location filename="../src/qml/filters_pro/audio_highpass/ui.qml" line="94"/>
+        <location filename="../src/qml/filters_pro/audio_lowpass/ui.qml" line="100"/>
+        <location filename="../src/qml/filters_pro/audio_notch/ui.qml" line="114"/>
         <source>Dry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_bandpass/ui.qml" line="133"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_delay/ui.qml" line="118"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_highpass/ui.qml" line="111"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_lowpass/ui.qml" line="117"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_notch/ui.qml" line="133"/>
+        <location filename="../src/qml/filters_pro/audio_bandpass/ui.qml" line="124"/>
+        <location filename="../src/qml/filters_pro/audio_delay/ui.qml" line="110"/>
+        <location filename="../src/qml/filters_pro/audio_highpass/ui.qml" line="104"/>
+        <location filename="../src/qml/filters_pro/audio_lowpass/ui.qml" line="110"/>
+        <location filename="../src/qml/filters_pro/audio_notch/ui.qml" line="124"/>
         <source>Wet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_basstreble/ui.qml" line="208"/>
+        <location filename="../src/qml/filters_pro/audio_basstreble/ui.qml" line="199"/>
         <source>Bass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_basstreble/ui.qml" line="230"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1364"/>
+        <location filename="../src/qml/filters_pro/audio_basstreble/ui.qml" line="221"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1503"/>
         <source>Middle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_basstreble/ui.qml" line="252"/>
+        <location filename="../src/qml/filters_pro/audio_basstreble/ui.qml" line="243"/>
         <source>Treble</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_channelcopy/ui.qml" line="46"/>
+        <location filename="../src/qml/filters_pro/audio_channelcopy/ui.qml" line="40"/>
         <source>Copy from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_channelcopy/ui.qml" line="60"/>
+        <location filename="../src/qml/filters_pro/audio_channelcopy/ui.qml" line="54"/>
         <source>Left to right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_channelcopy/ui.qml" line="61"/>
+        <location filename="../src/qml/filters_pro/audio_channelcopy/ui.qml" line="55"/>
         <source>Right to left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="86"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/ui.qml" line="73"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="74"/>
+        <location filename="../src/qml/filters_pro/audio_expander/ui.qml" line="62"/>
         <source>RMS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="89"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/ui.qml" line="76"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="77"/>
+        <location filename="../src/qml/filters_pro/audio_expander/ui.qml" line="65"/>
         <source>The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="97"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/ui.qml" line="84"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="85"/>
+        <location filename="../src/qml/filters_pro/audio_expander/ui.qml" line="73"/>
         <source>Peak</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="109"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/ui.qml" line="96"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="97"/>
+        <location filename="../src/qml/filters_pro/audio_expander/ui.qml" line="85"/>
         <source>Attack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="129"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/ui.qml" line="116"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_limiter/ui.qml" line="122"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="117"/>
+        <location filename="../src/qml/filters_pro/audio_expander/ui.qml" line="105"/>
+        <location filename="../src/qml/filters_pro/audio_limiter/ui.qml" line="113"/>
         <source>Release</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="149"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/ui.qml" line="136"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/ui.qml" line="199"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="137"/>
+        <location filename="../src/qml/filters_pro/audio_expander/ui.qml" line="125"/>
+        <location filename="../src/qml/filters_pro/smartblur/ui.qml" line="199"/>
         <source>Threshold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="152"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/ui.qml" line="139"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="140"/>
+        <location filename="../src/qml/filters_pro/audio_expander/ui.qml" line="128"/>
         <source>The point at which the compressor will start to kick in.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="171"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/ui.qml" line="158"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="159"/>
+        <location filename="../src/qml/filters_pro/audio_expander/ui.qml" line="147"/>
         <source>Ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="174"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/ui.qml" line="161"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="162"/>
+        <location filename="../src/qml/filters_pro/audio_expander/ui.qml" line="150"/>
         <source>The gain reduction ratio used when the signal level exceeds the threshold.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="192"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/ui.qml" line="179"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="180"/>
+        <location filename="../src/qml/filters_pro/audio_expander/ui.qml" line="168"/>
         <source>Knee radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="195"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/ui.qml" line="182"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="229"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="183"/>
+        <location filename="../src/qml/filters_pro/audio_expander/ui.qml" line="171"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/ui.qml" line="172"/>
         <source>The distance from the threshold where the knee curve starts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="214"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="202"/>
         <source>Makeup gain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="217"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="205"/>
         <source>The gain of the makeup input signal.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="293"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_limiter/ui.qml" line="201"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="281"/>
+        <location filename="../src/qml/filters_pro/audio_limiter/ui.qml" line="192"/>
         <source>Gain Reduction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="296"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_limiter/ui.qml" line="204"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="284"/>
+        <location filename="../src/qml/filters_pro/audio_limiter/ui.qml" line="195"/>
         <source>Status indicator showing the gain reduction applied by the compressor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_compressor/ui.qml" line="312"/>
+        <location filename="../src/qml/filters_pro/audio_compressor/ui.qml" line="300"/>
         <source>About dynamic range compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_delay/ui.qml" line="65"/>
+        <location filename="../src/qml/filters_pro/audio_delay/ui.qml" line="57"/>
         <source>Delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_delay/ui.qml" line="68"/>
+        <location filename="../src/qml/filters_pro/audio_delay/ui.qml" line="60"/>
         <source>The neutral delay time is 2 seconds. Times above 2 seconds will have reduced quality and times below will have increased CPU usage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_delay/ui.qml" line="87"/>
+        <location filename="../src/qml/filters_pro/audio_delay/ui.qml" line="79"/>
         <source>Feedback</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/ui.qml" line="201"/>
+        <location filename="../src/qml/filters_pro/audio_expander/ui.qml" line="190"/>
         <source>Attenuation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_expander/ui.qml" line="204"/>
+        <location filename="../src/qml/filters_pro/audio_expander/ui.qml" line="193"/>
         <source>The gain of the output signal. Used to correct for excessive amplitude caused by the extra dynamic range.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_fadein/ui.qml" line="49"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_fadeout/ui.qml" line="48"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadein_brightness/ui.qml" line="50"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadein_movit/ui.qml" line="50"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadeout_brightness/ui.qml" line="52"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadeout_movit/ui.qml" line="53"/>
+        <location filename="../src/qml/filters_pro/audio_fadein/ui.qml" line="46"/>
+        <location filename="../src/qml/filters_pro/audio_fadeout/ui.qml" line="46"/>
+        <location filename="../src/qml/filters_pro/fadein_brightness/ui.qml" line="50"/>
+        <location filename="../src/qml/filters_pro/fadein_movit/ui.qml" line="50"/>
+        <location filename="../src/qml/filters_pro/fadeout_brightness/ui.qml" line="59"/>
+        <location filename="../src/qml/filters_pro/fadeout_movit/ui.qml" line="53"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_gain/ui.qml" line="54"/>
+        <location filename="../src/qml/filters_pro/audio_gain/ui.qml" line="51"/>
         <source>Gain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_highpass/ui.qml" line="64"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_lowpass/ui.qml" line="67"/>
+        <location filename="../src/qml/filters_pro/audio_highpass/ui.qml" line="57"/>
+        <location filename="../src/qml/filters_pro/audio_lowpass/ui.qml" line="60"/>
         <source>Cutoff frequency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_limiter/ui.qml" line="78"/>
+        <location filename="../src/qml/filters_pro/audio_limiter/ui.qml" line="69"/>
         <source>Input gain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_limiter/ui.qml" line="81"/>
+        <location filename="../src/qml/filters_pro/audio_limiter/ui.qml" line="72"/>
         <source>Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_limiter/ui.qml" line="100"/>
+        <location filename="../src/qml/filters_pro/audio_limiter/ui.qml" line="91"/>
         <source>Limit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_limiter/ui.qml" line="103"/>
+        <location filename="../src/qml/filters_pro/audio_limiter/ui.qml" line="94"/>
         <source>The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_limiter/ui.qml" line="125"/>
+        <location filename="../src/qml/filters_pro/audio_limiter/ui.qml" line="116"/>
         <source>The time taken for the limiter&apos;s attenuation to return to 0 dB&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="101"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_2p/ui.qml" line="60"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="92"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_2p/ui.qml" line="60"/>
         <source>Target Loudness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="104"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="95"/>
         <source>The target loudness of the output in LUFS.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="121"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="112"/>
         <source>Analysis Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="124"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="115"/>
         <source>The amount of history to use to calculate the input loudness.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="141"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="132"/>
         <source>Maximum Gain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="144"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="135"/>
         <source>The maximum that the gain can be increased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="161"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="152"/>
         <source>Minimum Gain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="164"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="155"/>
         <source>The maximum that the gain can be decreased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="181"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="172"/>
         <source>Maximum Rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="184"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="175"/>
         <source>The maximum rate that the gain can be changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="259"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="250"/>
         <source>Input Loudness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="262"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="253"/>
         <source>Status indicator showing the loudness measured on the input.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="278"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="269"/>
         <source>Output Gain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="281"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="272"/>
         <source>Status indicator showing the gain being applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="296"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="287"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_1p/ui.qml" line="299"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_1p/ui.qml" line="290"/>
         <source>Status indicator showing when the loudness measurement is reset.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_2p/ui.qml" line="35"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/ui.qml" line="46"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_2p/ui.qml" line="35"/>
+        <location filename="../src/qml/filters_pro/stabilize/ui.qml" line="46"/>
         <source>Analyzing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_2p/ui.qml" line="38"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/ui.qml" line="50"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_2p/ui.qml" line="38"/>
+        <location filename="../src/qml/filters_pro/stabilize/ui.qml" line="50"/>
         <source>Analysis complete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_2p/ui.qml" line="42"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_2p/ui.qml" line="42"/>
         <source>Click &quot;Analyze&quot; to use this filter.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_normalize_2p/ui.qml" line="81"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/ui.qml" line="222"/>
+        <location filename="../src/qml/filters_pro/audio_normalize_2p/ui.qml" line="81"/>
+        <location filename="../src/qml/filters_pro/stabilize/ui.qml" line="222"/>
         <source>Analyze</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_pan/ui.qml" line="45"/>
+        <location filename="../src/qml/filters_pro/audio_pan/ui.qml" line="39"/>
         <source>Channel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="39"/>
-        <source>Quick fix</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="48"/>
-        <source>Small hall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="57"/>
-        <source>Large hall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="66"/>
-        <source>Sewer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="75"/>
-        <source>Church</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="118"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/ui.qml" line="61"/>
         <source>Room size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="121"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/ui.qml" line="64"/>
         <source>The size of the room, in meters. Excessivly large, and excessively small values will make it sound a bit unrealistic.Values of around 30 sound good.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="139"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/ui.qml" line="82"/>
         <source>Reverb time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="160"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/ui.qml" line="103"/>
         <source>Damping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="163"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/ui.qml" line="106"/>
         <source>This controls the high frequency damping (a lowpass filter), values near 1 will make it sound very bright, values near 0 will make it sound very dark.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="182"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/ui.qml" line="125"/>
         <source>Input bandwidth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="185"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/ui.qml" line="128"/>
         <source>This is like a damping control for the input, it has a similar effect to the damping control, but is subtly different.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="204"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/ui.qml" line="147"/>
         <source>Dry signal level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="207"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/ui.qml" line="150"/>
         <source>The amount of dry signal to be mixed with the reverberated signal.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="226"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/ui.qml" line="169"/>
         <source>Early reflection level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="247"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/ui.qml" line="190"/>
         <source>Tail level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="250"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/ui.qml" line="193"/>
         <source>The quantity of early reflections (scatter reflections directly from the source).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/audio_reverb/ui.qml" line="270"/>
+        <location filename="../src/qml/filters_pro/audio_reverb/ui.qml" line="213"/>
         <source>About reverb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/brightness/ui.qml" line="54"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/grain/ui.qml" line="111"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="78"/>
+        <location filename="../src/qml/filters_pro/brightness/ui.qml" line="92"/>
+        <location filename="../src/qml/filters_pro/grain/ui.qml" line="111"/>
+        <location filename="../src/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="89"/>
         <source>Brightness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/ui.qml" line="148"/>
+        <location filename="../src/qml/filters_pro/color/ui.qml" line="148"/>
         <source>Shadows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/ui.qml" line="157"/>
+        <location filename="../src/qml/filters_pro/color/ui.qml" line="157"/>
         <source>Midtones</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/ui.qml" line="166"/>
+        <location filename="../src/qml/filters_pro/color/ui.qml" line="166"/>
         <source>Highlights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/contrast/ui.qml" line="108"/>
-        <source>Contrast</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1330"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1469"/>
         <source>Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/ui.qml" line="144"/>
+        <location filename="../src/qml/filters_pro/crop/ui.qml" line="140"/>
         <source>Center bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/ui.qml" line="167"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1355"/>
+        <location filename="../src/qml/filters_pro/crop/ui.qml" line="164"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1494"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/ui.qml" line="184"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1374"/>
+        <location filename="../src/qml/filters_pro/crop/ui.qml" line="182"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1513"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="863"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="86"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="859"/>
+        <location filename="../src/qml/filters_pro/webvfx_threejs_text/ui.qml" line="85"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="916"/>
-        <source>Insert field</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="931"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="906"/>
         <source>Timecode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="932"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="907"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="933"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="908"/>
         <source>File date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="934"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="909"/>
         <source>File name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="957"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="100"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="925"/>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="965"/>
+        <source>Style &gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="966"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1580"/>
+        <source>detail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1019"/>
+        <location filename="../src/qml/filters_pro/webvfx_threejs_text/ui.qml" line="101"/>
         <source>Font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1030"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1074"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1031"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="155"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1075"/>
+        <location filename="../src/qml/filters_pro/webvfx_threejs_text/ui.qml" line="156"/>
         <source>Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1032"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1076"/>
         <source>Light</source>
         <comment>thin font stroke</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1050"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1094"/>
         <source>Shear X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1076"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1222"/>
         <source>Shadow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1082"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1228"/>
         <source>Distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1104"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1250"/>
         <source>Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1146"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1544"/>
+        <source>Animation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1578"/>
+        <source>Animation &gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1140"/>
         <source>Outline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1166"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="96"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1160"/>
+        <location filename="../src/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="108"/>
         <source>Thickness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1194"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1180"/>
         <source>Background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1223"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1201"/>
         <source>Padding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1258"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1304"/>
+        <source>Blur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1328"/>
+        <source>Glow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1369"/>
+        <source>Range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1397"/>
         <source>Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1286"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="202"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1425"/>
+        <location filename="../src/qml/filters_pro/webvfx_threejs_text/ui.qml" line="203"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1315"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1454"/>
         <source>X fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1392"/>
-        <source>Position Animation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1555"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1758"/>
         <source>Transparent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadein_brightness/ui.qml" line="90"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadein_movit/ui.qml" line="77"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadeout_brightness/ui.qml" line="92"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/fadeout_movit/ui.qml" line="79"/>
+        <location filename="../src/qml/filters_pro/fadein_brightness/ui.qml" line="94"/>
+        <location filename="../src/qml/filters_pro/fadein_movit/ui.qml" line="77"/>
+        <location filename="../src/qml/filters_pro/fadeout_brightness/ui.qml" line="102"/>
+        <location filename="../src/qml/filters_pro/fadeout_movit/ui.qml" line="79"/>
         <source>Adjust opacity instead of fade with black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/grain/ui.qml" line="91"/>
+        <location filename="../src/qml/filters_pro/grain/ui.qml" line="91"/>
         <source>Noise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/movit_diffusion/ui.qml" line="37"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_circular_frame/ui.qml" line="63"/>
+        <location filename="../src/qml/filters_pro/movit_diffusion/ui.qml" line="37"/>
+        <location filename="../src/qml/filters_pro/webvfx_circular_frame/ui.qml" line="63"/>
         <source>Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/movit_diffusion/ui.qml" line="56"/>
+        <location filename="../src/qml/filters_pro/movit_diffusion/ui.qml" line="56"/>
         <source>Blurriness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/opacity/ui.qml" line="53"/>
+        <location filename="../src/qml/filters_pro/opacity/ui.qml" line="53"/>
         <source>Opacity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1424"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="80"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1627"/>
+        <location filename="../src/qml/filters_pro/rotate/ui.qml" line="80"/>
         <source>Rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1435"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="90"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1638"/>
+        <location filename="../src/qml/filters_pro/rotate/ui.qml" line="90"/>
         <source> °</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1448"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="100"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="149"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1651"/>
+        <location filename="../src/qml/filters_pro/rotate/ui.qml" line="100"/>
+        <location filename="../src/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="164"/>
         <source>Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1478"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1681"/>
         <source>Aspect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1505"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="127"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1708"/>
+        <location filename="../src/qml/filters_pro/rotate/ui.qml" line="127"/>
         <source>X offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1529"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="145"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1732"/>
+        <location filename="../src/qml/filters_pro/rotate/ui.qml" line="145"/>
         <source>Y offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sepia/ui.qml" line="71"/>
+        <location filename="../src/qml/filters_pro/sepia/ui.qml" line="71"/>
         <source>Yellow-Blue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sepia/ui.qml" line="93"/>
+        <location filename="../src/qml/filters_pro/sepia/ui.qml" line="93"/>
         <source>Cyan-Red</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/ui.qml" line="138"/>
+        <location filename="../src/qml/filters_pro/smartblur/ui.qml" line="138"/>
         <source>Blur Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/ui.qml" line="140"/>
+        <location filename="../src/qml/filters_pro/smartblur/ui.qml" line="140"/>
         <source>The radius of the gaussian blur.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/ui.qml" line="168"/>
+        <location filename="../src/qml/filters_pro/smartblur/ui.qml" line="168"/>
         <source>Blur Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/ui.qml" line="170"/>
+        <location filename="../src/qml/filters_pro/smartblur/ui.qml" line="170"/>
         <source>The strength of the gaussian blur.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/smartblur/ui.qml" line="202"/>
+        <location filename="../src/qml/filters_pro/smartblur/ui.qml" line="202"/>
         <source>If the difference between the original pixel and the blurred pixel is less than threshold, the pixel will be replaced with the blurred pixel.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/ui.qml" line="54"/>
+        <location filename="../src/qml/filters_pro/stabilize/ui.qml" line="54"/>
         <source>Click Analyze to use this filter.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/ui.qml" line="79"/>
+        <location filename="../src/qml/filters_pro/stabilize/ui.qml" line="79"/>
         <source>Select a file to store analysis results.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/ui.qml" line="133"/>
+        <location filename="../src/qml/filters_pro/stabilize/ui.qml" line="133"/>
         <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/ui.qml" line="140"/>
+        <location filename="../src/qml/filters_pro/stabilize/ui.qml" line="140"/>
         <source>Shakiness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/ui.qml" line="162"/>
+        <location filename="../src/qml/filters_pro/stabilize/ui.qml" line="162"/>
         <source>Accuracy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/ui.qml" line="188"/>
+        <location filename="../src/qml/filters_pro/stabilize/ui.qml" line="188"/>
         <source>&lt;b&gt;Filter Options&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/stabilize/ui.qml" line="195"/>
+        <location filename="../src/qml/filters_pro/stabilize/ui.qml" line="195"/>
         <source>Zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/wave/ui.qml" line="71"/>
+        <location filename="../src/qml/filters_pro/wave/ui.qml" line="71"/>
         <source>Amplitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/wave/ui.qml" line="90"/>
+        <location filename="../src/qml/filters_pro/wave/ui.qml" line="90"/>
         <source>Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/wave/ui.qml" line="127"/>
+        <location filename="../src/qml/filters_pro/wave/ui.qml" line="127"/>
         <source>Deform horizontally?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/wave/ui.qml" line="150"/>
+        <location filename="../src/qml/filters_pro/wave/ui.qml" line="150"/>
         <source>Deform vertically?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="84"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="84"/>
         <source>No File Loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="86"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="86"/>
         <source>No HTML file loaded. Click &quot;Open&quot; or &quot;New&quot; to load a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="147"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="147"/>
         <source>&lt;b&gt;File:&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="164"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="164"/>
         <source>For Advanced Users: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="165"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="165"/>
         <source>If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="171"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="171"/>
         <source>Use WebVfx JavaScript extension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="185"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="185"/>
         <source>Confirm Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="186"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="186"/>
         <source>Do you still want to use this?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="197"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="197"/>
         <source>Open...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="200"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="200"/>
         <source>Open HTML File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="204"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="204"/>
         <source>Load an existing HTML file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="209"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="209"/>
         <source>New...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="212"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="212"/>
         <source>Save HTML File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="216"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="216"/>
         <source>Load new HTML file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="228"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="228"/>
         <source>Edit...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx/ui.qml" line="248"/>
+        <location filename="../src/qml/filters_pro/webvfx/ui.qml" line="248"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_circular_frame/ui.qml" line="81"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="176"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1278"/>
+        <location filename="../src/qml/filters_pro/webvfx_circular_frame/ui.qml" line="81"/>
+        <location filename="../src/qml/filters_pro/webvfx_threejs_text/ui.qml" line="177"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="113"/>
+        <location filename="../src/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="126"/>
         <source>Density</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="131"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="225"/>
+        <location filename="../src/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="145"/>
+        <location filename="../src/qml/filters_pro/webvfx_threejs_text/ui.qml" line="226"/>
         <source>Depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="166"/>
+        <location filename="../src/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="182"/>
         <source>X Axis Rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="184"/>
+        <location filename="../src/qml/filters_pro/webvfx_ruttetraizer/ui.qml" line="201"/>
         <source>Y Axis Rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="36"/>
-        <source>3D Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="170"/>
+        <location filename="../src/qml/filters_pro/webvfx_threejs_text/ui.qml" line="171"/>
         <source>Beveled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="249"/>
+        <location filename="../src/qml/filters_pro/webvfx_threejs_text/ui.qml" line="250"/>
         <source>Tilt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="273"/>
+        <location filename="../src/qml/filters_pro/webvfx_threejs_text/ui.qml" line="274"/>
         <source>Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/webvfx_threejs_text/ui.qml" line="297"/>
+        <location filename="../src/qml/filters_pro/webvfx_threejs_text/ui.qml" line="298"/>
         <source>Vertical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/white/ui.qml" line="120"/>
-        <source>Neutral color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/white/ui.qml" line="146"/>
-        <source>Color temperature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7385,42 +7051,42 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1349"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1488"/>
         <source>Vertical fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/crop/ui.qml" line="131"/>
+        <location filename="../src/qml/filters_pro/crop/ui.qml" line="127"/>
         <source>Center </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="653"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="652"/>
         <source>Auto set as key frame at postion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="930"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="905"/>
         <source>default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/ui.qml" line="1126"/>
+        <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1120"/>
         <source>Letter Spaceing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="170"/>
+        <location filename="../src/qml/filters_pro/rotate/ui.qml" line="170"/>
         <source>Rotate 90°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="194"/>
+        <location filename="../src/qml/filters_pro/rotate/ui.qml" line="194"/>
         <source>Rotate 180°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/rotate/ui.qml" line="230"/>
+        <location filename="../src/qml/filters_pro/rotate/ui.qml" line="230"/>
         <source>Rotate 270°</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7428,65 +7094,35 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>ui_boxblur</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/blur/ui_boxblur.qml" line="53"/>
+        <location filename="../src/qml/filters_pro/blur/ui_boxblur.qml" line="53"/>
         <source>Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/blur/ui_boxblur.qml" line="73"/>
+        <location filename="../src/qml/filters_pro/blur/ui_boxblur.qml" line="73"/>
         <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ui_frei0r</name>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/glow/ui_frei0r.qml" line="55"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/saturation/ui_frei0r.qml" line="55"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/ui_frei0r.qml" line="56"/>
-        <source>Preset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/glow/ui_frei0r.qml" line="68"/>
-        <source>Blur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/saturation/ui_frei0r.qml" line="74"/>
-        <source>Saturation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/ui_frei0r.qml" line="75"/>
-        <source>Amount</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/ui_frei0r.qml" line="96"/>
-        <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ui_frei0r_coloradj</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/ui_frei0r_coloradj.qml" line="64"/>
+        <location filename="../src/qml/filters_pro/color/ui_frei0r_coloradj.qml" line="64"/>
         <source>Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/ui_frei0r_coloradj.qml" line="78"/>
+        <location filename="../src/qml/filters_pro/color/ui_frei0r_coloradj.qml" line="78"/>
         <source>Shadows (Lift)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/ui_frei0r_coloradj.qml" line="79"/>
+        <location filename="../src/qml/filters_pro/color/ui_frei0r_coloradj.qml" line="79"/>
         <source>Midtones (Gamma)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/color/ui_frei0r_coloradj.qml" line="80"/>
+        <location filename="../src/qml/filters_pro/color/ui_frei0r_coloradj.qml" line="80"/>
         <source>Highlights (Gain)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7494,65 +7130,27 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>ui_movit</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/blur/ui_movit.qml" line="54"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/glow/ui_movit.qml" line="72"/>
+        <location filename="../src/qml/filters_pro/blur/ui_movit.qml" line="54"/>
         <source>Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/brightness/ui_movit.qml" line="52"/>
+        <location filename="../src/qml/filters_pro/brightness/ui_movit.qml" line="52"/>
         <source>Brightness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/glow/ui_movit.qml" line="56"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/ui_movit.qml" line="52"/>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/ui_movit.qml" line="51"/>
+        <location filename="../src/qml/filters_pro/vignette/ui_movit.qml" line="51"/>
         <source>Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/glow/ui_movit.qml" line="93"/>
-        <source>Highlight blurriness</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/glow/ui_movit.qml" line="114"/>
-        <source>Highlight cutoff</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/saturation/ui_movit.qml" line="54"/>
-        <source>Saturation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/ui_movit.qml" line="69"/>
-        <source>Circle radius</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/ui_movit.qml" line="92"/>
-        <source>Gaussian radius</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/ui_movit.qml" line="114"/>
-        <source>Correlation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/sharpen/ui_movit.qml" line="135"/>
-        <source>Noise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/ui_movit.qml" line="66"/>
+        <location filename="../src/qml/filters_pro/vignette/ui_movit.qml" line="66"/>
         <source>Outer radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/ui_movit.qml" line="87"/>
+        <location filename="../src/qml/filters_pro/vignette/ui_movit.qml" line="87"/>
         <source>Inner radius</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7560,27 +7158,27 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>ui_oldfilm</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/ui_oldfilm.qml" line="51"/>
+        <location filename="../src/qml/filters_pro/vignette/ui_oldfilm.qml" line="51"/>
         <source>Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/ui_oldfilm.qml" line="73"/>
+        <location filename="../src/qml/filters_pro/vignette/ui_oldfilm.qml" line="73"/>
         <source>Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/ui_oldfilm.qml" line="93"/>
+        <location filename="../src/qml/filters_pro/vignette/ui_oldfilm.qml" line="93"/>
         <source>Feathering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/ui_oldfilm.qml" line="130"/>
+        <location filename="../src/qml/filters_pro/vignette/ui_oldfilm.qml" line="130"/>
         <source>Non-linear feathering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/vignette/ui_oldfilm.qml" line="136"/>
+        <location filename="../src/qml/filters_pro/vignette/ui_oldfilm.qml" line="136"/>
         <source>Opacity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7588,7 +7186,7 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>vui</name>
     <message>
-        <location filename="../../../../shotcut/moviemator_qml/moviemator/qml/filters_pro/dynamictext/vui.qml" line="140"/>
+        <location filename="../src/qml/filters_pro/dynamictext/vui.qml" line="140"/>
         <source>Auto set as key frame at postion</source>
         <translation type="unfinished"></translation>
     </message>
