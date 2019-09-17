@@ -154,5 +154,5 @@ function trackHeight(isVideo)
 {
 //    return isAudio? Math.max(40, multitrack.trackHeight) : multitrack.trackHeight * 2
 //    return isVideo? multitrack.trackHeight * 2 : Math.max(30, multitrack.trackHeight);
-    return isVideo? 80 : Math.max(50, multitrack.trackHeight);
+    return isVideo? 50 : Math.max(30, multitrack.trackHeight);
 }

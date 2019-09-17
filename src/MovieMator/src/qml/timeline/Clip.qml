@@ -154,7 +154,7 @@ Rectangle {
         parent = track
         isAudio = track.isAudio
         height = track.height
-        generateWaveform()
+//        generateWaveform()
     }
 
     // 终止拖动
@@ -196,48 +196,88 @@ Rectangle {
     onAudioLevelsChanged: generateWaveform()
 
     // 出点位置的 clip缩略图
+    //有音频波形时出点缩略图
+//    Image
+//    {
+//        id: outThumbnail
+//        visible: settings.timelineShowThumbnails
+//        anchors.right: parent.right
+//        anchors.top: parent.top
+//        anchors.topMargin: parent.border.width
+//        anchors.rightMargin: parent.border.width + 1
+//        anchors.bottom: parent.bottom
+//        anchors.bottomMargin: parent.height / 2
+//        width: height * 16.0/9.0
+//        fillMode: Image.PreserveAspectFit
+//        source: isText ? textThumbnail : imagePath(outPoint)
+//    }
     Image
     {
         id: outThumbnail
         visible: settings.timelineShowThumbnails
         anchors.right: parent.right
         anchors.top: parent.top
-        anchors.topMargin: parent.border.width
-        anchors.rightMargin: parent.border.width + 1
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: parent.height / 2
+        anchors.margins: 6
         width: height * 16.0/9.0
         fillMode: Image.PreserveAspectFit
         source: isText ? textThumbnail : imagePath(outPoint)
     }
 
     // 入点位置的 clip缩略图
+    //有音频波形时如电缩略图
+//    Image
+//    {
+//        id: inThumbnail
+//        visible: settings.timelineShowThumbnails
+//        anchors.left: parent.left
+//        anchors.top: parent.top
+//        anchors.topMargin: parent.border.width
+//        anchors.bottom: parent.bottom
+//        anchors.bottomMargin: parent.height / 2
+//        width: height * 16.0/9.0
+//        fillMode: Image.PreserveAspectFit
+//        source: isText ? textThumbnail : imagePath(inPoint)
+//    }
     Image
     {
         id: inThumbnail
         visible: settings.timelineShowThumbnails
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.topMargin: parent.border.width
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: parent.height / 2
+        anchors.margins: 6
         width: height * 16.0/9.0
         fillMode: Image.PreserveAspectFit
         source: isText ? textThumbnail : imagePath(inPoint)
     }
 
     // clip中间位置的缩略图
+    //有音频波形时中间缩略图
+//    Image
+//    {
+//        id: centerThumbnail
+//        visible: settings.timelineShowThumbnails
+//        anchors.top: parent.top
+//        anchors.topMargin: parent.border.width
+//        anchors.bottom: parent.bottom
+//        anchors.bottomMargin: parent.height / 2
+//        anchors.left: parent.left
+//        anchors.leftMargin: parent.width / 2 - width / 2
+//        anchors.right: parent.right
+//        width: height * 16.0/9.0
+//        fillMode: Image.PreserveAspectFit
+//        source: isText ? textThumbnail : imagePath((outPoint+inPoint)/2)
+//    }
     Image
     {
         id: centerThumbnail
         visible: settings.timelineShowThumbnails
-        anchors.top: parent.top
-        anchors.topMargin: parent.border.width
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: parent.height / 2
         anchors.left: parent.left
         anchors.leftMargin: parent.width / 2 - width / 2
-        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.margins: 6
         width: height * 16.0/9.0
         fillMode: Image.PreserveAspectFit
         source: isText ? textThumbnail : imagePath((outPoint+inPoint)/2)
@@ -302,19 +342,19 @@ Rectangle {
 
 
 
-    Rectangle
-    {
-        // audio peak line
-        width: parent.width - parent.border.width * 2
-        visible: !isBlank && !isTransition
-        height: 1
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        anchors.leftMargin: parent.border.width
-        anchors.bottomMargin: waveform.height * 0.9
-        color: Qt.darker(parent.color)
-        opacity: 0.7
-    }
+//    Rectangle
+//    {
+//        // audio peak line
+//        width: parent.width - parent.border.width * 2
+//        visible: !isBlank && !isTransition
+//        height: 1
+//        anchors.left: parent.left
+//        anchors.bottom: parent.bottom
+//        anchors.leftMargin: parent.border.width
+//        anchors.bottomMargin: waveform.height * 0.9
+//        color: Qt.darker(parent.color)
+//        opacity: 0.7
+//    }
 
 //    Rectangle {
 //        // text background
