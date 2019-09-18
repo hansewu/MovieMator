@@ -50,7 +50,7 @@ Item {
                 id: timeSpinner
                 minimumValue: 1
                 maximumValue: 5000
-                // value: filter.getDouble('out') - filter.getDouble('in') + 1
+                value: filter.getDouble('out') - filter.getDouble('in') + 1
                 onValueChanged: {
                     if(blockUpdate){
                         blockUpdate = false
