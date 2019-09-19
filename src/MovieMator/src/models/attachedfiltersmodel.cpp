@@ -313,6 +313,7 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
             m_metaList.move(sourceRow, destinationRow);
             endMoveRows();
             emit changed();
+            emit filterMoved(sourceRow, destinationRow);
             return true;
         }
     }
@@ -503,6 +504,9 @@ bool AttachedFiltersModel::move(int fromRow, int toRow, bool bFromUndo)
         fromRow = m_metaList.count() - 1;
 
     int toRowOld = toRow;
+
+    if (fromRow == toRow)
+        return false;
 
     if (fromRow < 0 || toRow < 0 || fromRow > m_metaList.length() || toRow >  m_metaList.length())
     {

@@ -107,6 +107,7 @@ signals:
 
     void filterAdded(int nAttachedFilterIndex);
     void filterRemoved(int nAttachedFilterIndex);
+    void filterMoved(int nAttachedFilterIndexFrom, int nAttachedFilterIndexTo);
 
 
 public slots:

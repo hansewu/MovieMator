@@ -268,6 +268,8 @@ Rectangle {
 
         onFilterAdded:
         {
+            if (draged)
+                return;
             updateModelData()
             if( (attachedfiltersmodel.isVisible(nAttachedFilterIndex) && isvideo) //添加的视频滤镜，并且当前是视频滤镜Dock
                     || (!attachedfiltersmodel.isVisible(nAttachedFilterIndex) && !isvideo) )
@@ -315,6 +317,27 @@ Rectangle {
             else
             {
                 updateModelData()
+                attachedFiltersView.currentIndex = getCurrentFilterIndex()
+            }
+        }
+
+        onFilterMoved:
+        {
+            if (draged)
+                return;
+            updateModelData()
+            if( (attachedfiltersmodel.isVisible(nAttachedFilterIndexTo) && isvideo) //添加的视频滤镜，并且当前是视频滤镜Dock
+                    || (!attachedfiltersmodel.isVisible(nAttachedFilterIndexTo) && !isvideo) )
+            {
+                var filterIndex = nAttachedFilterIndexTo;
+                if(!attachedfiltersmodel.isVisible(nAttachedFilterIndexTo)) //音频滤镜
+                {
+                    filterIndex = nAttachedFilterIndexTo - videoFiltersList.count
+                }
+                chooseFilter(filterIndex)
+            }
+            else
+            {
                 attachedFiltersView.currentIndex = getCurrentFilterIndex()
             }
         }
@@ -510,9 +533,9 @@ Rectangle {
                     DropArea {
                         anchors { fill: parent}
                         onEntered: {
-                            visualModel.items.move(drag.source.visualIndex, delegateRoot.visualIndex)
-                            changeOrder(drag.source.visualIndex, delegateRoot.visualIndex)
                             draged = true
+                            visualModel.items.move(drag.source.visualIndex, delegateRoot.visualIndex)
+                            changeOrder(delegateRoot.visualIndex, drag.source.visualIndex)
                         }
                     }
                 }
