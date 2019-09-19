@@ -471,6 +471,7 @@ MainWindow::MainWindow()
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
 
     connect(m_filterController->attachedModel(), SIGNAL(changed()), SLOT(onFilterModelChanged()));
+    connect(m_filterController->attachedModel(), SIGNAL(filtersLoadedForTextTemplateProducer(int)), SLOT(onShowPropertiesVideoFilterDock()));
     connect(m_propertiesVideoFilterDock, SIGNAL(filterParameterChanged()), SLOT(onFilterModelChanged()));
     connect(m_propertiesAudioFilterDock, SIGNAL(filterParameterChanged()), SLOT(onFilterModelChanged()));
     connect(m_filterController, SIGNAL(statusChanged(QString)), this, SLOT(showStatusMessage(QString)));
