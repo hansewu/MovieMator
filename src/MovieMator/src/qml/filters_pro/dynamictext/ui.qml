@@ -674,13 +674,14 @@ Item {
         //导入上次工程保存的关键帧
         loadSavedKeyFrameNew()
 
-        if (filter.isNew) {
-            if (application.OS === 'Windows')
-                filter.set('family', 'Verdana')
+        // Windows下更改默认字体后需要撤销两次才能删除，改为 attachedfiltersmodel里设置默认字体
+//        if (filter.isNew) {
+//            if (application.OS === 'Windows')
+//                filter.set('family', 'Verdana')
 
-            //resetFilterPara()
-            console.log("Component.onCompleted filter.isNew")
-        }
+//            //resetFilterPara()
+//            console.log("Component.onCompleted filter.isNew")
+//        }
 
         setControls()
         setKeyframedControls()

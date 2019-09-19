@@ -340,6 +340,10 @@ void AttachedFiltersModel::setDefaultValueForAllParemeters(Mlt::Filter* pFilter,
         mlt_rect rectGeometry = pFilter->get_rect("geometry");
         int nSize = static_cast<int>(MLT.profile().height() * rectGeometry.h + 0.5);
         pFilter->set("size",nSize);
+        // Widnows下通过 qml更改默认字体需要撤销两次才能删除，在这里就正常了
+#ifdef Q_OS_WIN
+    pFilter->set("family", "Verdana");
+#endif
     }
 }
 
