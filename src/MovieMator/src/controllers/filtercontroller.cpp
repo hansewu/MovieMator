@@ -132,7 +132,7 @@ void FilterController::loadFilterParameter(QmlMetadata *pMetadata)
             else if(strParmType == "rect")
             {
                 pParameter->setParaType("rect");
-                pParameter->setDefaultValue(QString::number(mlt_properties_get_double(paramProperties, "default")));
+                pParameter->setDefaultValue(QString::fromUtf8(mlt_properties_get(paramProperties, "default")));
             }
 
             pParameter->setProperty(QString::fromUtf8(mlt_properties_get(paramProperties, "identifier")));
