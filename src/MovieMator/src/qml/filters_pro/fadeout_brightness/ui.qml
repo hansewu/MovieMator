@@ -31,8 +31,10 @@ Item {
     property alias duration: timeSpinner.value
     property int blockUpdate: 0
 
-    Component.onCompleted: {
-        if (filter.isNew) {
+    Component.onCompleted: 
+    {
+        if (filter.isNew) 
+        {
             duration = Math.ceil(settings.videoOutDuration * profile.fps)
             var out = filter.producerOut
             var inFrame = out - duration + 1
@@ -42,8 +44,10 @@ Item {
         }
     }
 
-    function isInited(){
-        if(blockUpdate < 2){
+    function isInited()
+    {
+        if(blockUpdate < 2)
+        {
             blockUpdate += 1
             return false
         }
@@ -65,7 +69,10 @@ Item {
                 maximumValue: 5000
                 value: filter.getDouble('out') - filter.getDouble('in') + 1
                 onValueChanged: {
-                    if(isInited()){
+                    if(filter.isNew && (!isInited()))
+                    {}
+                    else
+                    {
                         var inFrame = filter.getDouble('out') - duration + 1
                         filter.set('in', inFrame)
                         if (filter.get('alpha') != 1)
@@ -73,7 +80,6 @@ Item {
                         else
                             filter.set('level', '0=1; %1=0'.arg(duration - 1))
                     }
-                    
                 }
                 onSetDefaultClicked: {
                     duration = Math.ceil(settings.videoOutDuration * profile.fps)
