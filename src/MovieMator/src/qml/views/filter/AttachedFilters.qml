@@ -47,7 +47,7 @@ Rectangle {
     property string oldAudioId:''
     property bool draged: false
     //当前语言是否中文
-    property bool translate2CH: ("zh_CN" === Qt.locale().name)
+    property bool translate2CH: (("zh_CN" === settings.language) || ("zh" === settings.language))
     // property bool translate2CH: false
    
     property bool isvideo:true
