@@ -36,7 +36,7 @@ UnsortMap<QString, BaseItemModel *> *TextDockWidget::createAllClassesItemModel()
     TranslationHelper::readJsonFile(strTextDir + "/textfile_name_translation_info.json", textFileNameTranslateInfo);
 
     QString strTemplateFolder = "/template";
-    if(Settings.language() != "zh_CN")
+    if((Settings.language() != "zh_CN") && (Settings.language() != "zh"))
     {
         strTemplateFolder = "/template_en";
     }

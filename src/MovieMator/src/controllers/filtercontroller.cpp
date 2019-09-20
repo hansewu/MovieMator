@@ -440,7 +440,7 @@ QString FilterController::getFilterClassNameZH(QString strFilterType)
         {"C Other",  "C 其它"},
     };
 
-    if (Settings.language() == "zh_CN")
+    if ((Settings.language() == "zh_CN") || (Settings.language() == "zh"))
     {
         if (filterTypeMap.contains(strFilterType))
         {

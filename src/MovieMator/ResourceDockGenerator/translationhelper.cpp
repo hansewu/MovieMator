@@ -43,12 +43,22 @@ QString TranslationHelper::getTranslationStr(QString srcStr, QJsonObject transla
     QString result = srcStr;
     if (translationInfo.contains(srcStr))
     {
-        QJsonObject subObj = translationInfo.value(srcStr).toObject();
-        QString language = Settings.language();     // QLocale::system().name();
-        result = subObj.value(language).toString();
+        QJsonObject subObj  = translationInfo.value(srcStr).toObject();
+        QString strLanguage = Settings.language();
+
+        if((strLanguage == "zh") || (strLanguage == "zh_CN"))
+        {
+            strLanguage = "zh_CN";
+        }
+        else
+        {
+            strLanguage = "en";
+        }
+        result = subObj.value(strLanguage).toString();
+
         if (result.isEmpty())
         {
-            result = subObj.value("en").toString();;
+            result = subObj.value("en").toString();
         }
     }
 
