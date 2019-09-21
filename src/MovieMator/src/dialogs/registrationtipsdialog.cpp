@@ -33,9 +33,9 @@ RegistrationTipsDialog::RegistrationTipsDialog(QWidget *parent) :
         "p, li { white-space: pre-wrap; }\n"
         "</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
         "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"
-                                "<span style=\" font-family:'.Helvetica Neue DeskInterface'; font-size:13pt;\">Movie Mator Video Editor is available for individual use free of charge.</span></p>\n"
+                                "<span style=\" font-family:'.Helvetica Neue DeskInterface'; font-size:13pt;\">Moviemator Video Editor is free for personal usage.</span></p>\n"
         "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0p"
-                                "x;\"><span style=\" font-family:'.Helvetica Neue DeskInterface'; font-size:13pt;\">If necessary or commercial, please register to remove the watermark.</span></p>\n"
+                                "x;\"><span style=\" font-family:'.Helvetica Neue DeskInterface'; font-size:13pt;\">For commercial purpose or if necessary, pls register to remove the watermark.</span></p>\n"
         "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'.Helvetica Neue DeskInterface'; font-size:13pt;\"><br /></p></body></html>", nullptr));
 
     // 隐藏购买按钮
@@ -43,7 +43,7 @@ RegistrationTipsDialog::RegistrationTipsDialog(QWidget *parent) :
     ui->buynowButton->setEnabled(false);
 
     // 保留注册按钮，并改为 移除水印
-    ui->registerButton->setText(tr("Remove the watermark"));
+    ui->registerButton->setText(tr("Remove Watermark"));
     ui->registerButton->setIcon(QIcon());
 
     // 更改按钮顺序：继续 移除水印
