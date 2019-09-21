@@ -4320,7 +4320,7 @@ void MainWindow::customizeToolbar()
     gridLayout->addItem(spacer3, 0, buttonIndex++, 1, 1);
 
 #if SHARE_VERSION
-#if MOVIEMATOR_PRO || MOVIEMATOR_FREE
+#if MOVIEMATOR_PRO || (MOVIEMATOR_FREE && !defined(Q_OS_MAC))
     if (Registration.registrationType() == Registration_None)
     {
         gridLayout->addWidget(m_activateButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
