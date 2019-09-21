@@ -1082,11 +1082,11 @@ void EncodeDock::addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProject
 #if MOVIEMATOR_FREE
         pSoftwareNameTextFilter->set("geometry", 0.854375, 0, 0.13125, 0.115);
         pSoftwareNameTextFilter->set("bgcolour", 0, 0, 255, 255);
-        pSoftwareNameTextFilter->set("transparent_alpha", 0.2);
+        pSoftwareNameTextFilter->set("transparent_alpha", 0.25);
 
         pHomePagetextFilter->set("geometry", 0.860438, 0.0825, 0.1196876, 0.0494444);
         pHomePagetextFilter->set("bgcolour", 0, 0, 255, 255);
-        pHomePagetextFilter->set("transparent_alpha", 0.2);
+        pHomePagetextFilter->set("transparent_alpha", 0.25);
 #endif
 
         pService->attach(*pSoftwareNameTextFilter);
