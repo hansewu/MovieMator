@@ -395,14 +395,18 @@ mac {
 
 
 win32 {
-    #free share 国区版本
-#    DEFINES += SHARE_VERSION=1
-#    DEFINES += MOVIEMATOR_FREE=1
-
-    #pro share
-    DEFINES += STEAM=1
-    DEFINES += MOVIEMATOR_PRO=1
+     #中国网站版
+    DEFINES += MOVIEMATOR_FREE=1
     DEFINES += SHARE_VERSION=1
+
+    #国外网站版
+#    DEFINES += MOVIEMATOR_PRO=1
+#    DEFINES += SHARE_VERSION=1
+
+    #steam版
+#    DEFINES += STEAM=1
+#    DEFINES += MOVIEMATOR_PRO=1
+#    DEFINES += SHARE_VERSION=1
 }
 
 win32 {
