@@ -346,12 +346,12 @@ mac {
 #    QMAKE_INFO_PLIST = ../Info-Free.plist
 #    ICON = ../icons/moviemator.icns
 
-    #free share
+    #share 国区免费版本
 #    DEFINES += SHARE_VERSION=1
 #    DEFINES += MOVIEMATOR_FREE=1
-#    TARGET = "MovieMator Video Editor Lite"
-#    QMAKE_INFO_PLIST = ../Info-Free-share.plist
-#    ICON = ../icons/moviemator.icns
+#    TARGET = "MovieMator Video Editor Pro"
+#    QMAKE_INFO_PLIST = ../Info_share.plist
+#    ICON = ../icons/moviemator-pro.icns
 
     #pro appstore
 #    DEFINES += MOVIEMATOR_PRO=1
