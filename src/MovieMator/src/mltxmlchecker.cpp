@@ -82,7 +82,7 @@ MltXmlChecker::MltXmlChecker()
 bool MltXmlChecker::check(const QString& fileName)
 {
     LOG_DEBUG() << "begin";
-#ifdef MOVIEMATOR_PRO
+#if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
 #ifndef SHARE_VERSION
     m_nUnbookmarkedFileCount = 0;
 
@@ -348,7 +348,7 @@ static QString getPrefix(const QString& name, const QString& value)
     return QString();
 }
 
-#ifdef MOVIEMATOR_PRO
+#if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
   #ifndef SHARE_VERSION
 //void MltXmlChecker::checkUnbookmarkedFiles(QString& filename)
 //{
@@ -453,7 +453,7 @@ void MltXmlChecker::checkUnlinkedFile(const QString& mlt_service)
         m_unlinkedFilesModel.appendRow(item);
     }
     }
-#ifdef MOVIEMATOR_PRO
+#if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
 #ifndef SHARE_VERSION
     else if (!hasAccessPermission(m_resource.info.filePath())) {
         m_nUnbookmarkedFileCount++;

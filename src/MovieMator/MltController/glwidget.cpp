@@ -782,16 +782,16 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
             QMetaObject::invokeMethod(widget->m_frameRenderer, "showFrame", Qt::QueuedConnection, Q_ARG(Mlt::Frame, frame));
         }
     }
-#if MOVIEMATOR_FREE
-    //Free版到5分钟暂停预览
-    //如果是时间线预览暂停
-    if (frame.get_position() == 5* 60 * MLT.profile().fps() - 1   && MLT.isMultitrack() )
-    {
-        GLWidget* widget = static_cast<GLWidget*>(self);
-        widget->pause();
+//#if MOVIEMATOR_FREE
+//    //Free版到5分钟暂停预览
+//    //如果是时间线预览暂停
+//    if (frame.get_position() == 5* 60 * MLT.profile().fps() - 1   && MLT.isMultitrack() )
+//    {
+//        GLWidget* widget = static_cast<GLWidget*>(self);
+//        widget->pause();
 
-    }
-#endif
+//    }
+//#endif
 
 
 }

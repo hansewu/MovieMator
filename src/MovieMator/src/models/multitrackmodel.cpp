@@ -3969,11 +3969,13 @@ bool MultitrackModel::checkClip(Mlt::Producer &clip)
                            tr("<p>The time code of the file cannot be read. Please convert it to MP4 before adding the file. </p>"
                               "<p>Recommend:<a href=\"http://www.effectmatrix.com/total-video-converter\">Total Video Converter</a></p>"),
                            QMessageBox::Ok, &(MAIN));
-#if MOVIEMATOR_PRO
+
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
-        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-#endif
+//#if MOVIEMATOR_PRO
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#else
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+//#endif
         dialog.setWindowModality(Qt::WindowModal);
         dialog.setDefaultButton(QMessageBox::Ok);
         int r = dialog.exec();

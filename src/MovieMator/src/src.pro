@@ -395,7 +395,7 @@ mac {
 
 
 win32 {
-    #free share
+    #free share 国区版本
 #    DEFINES += SHARE_VERSION=1
 #    DEFINES += MOVIEMATOR_FREE=1
 

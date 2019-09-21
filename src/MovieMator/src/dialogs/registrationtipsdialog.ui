@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>573</width>
-    <height>270</height>
+    <height>285</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,67 +22,18 @@
   <property name="minimumSize">
    <size>
     <width>573</width>
-    <height>270</height>
+    <height>285</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>573</width>
-    <height>270</height>
+    <height>285</height>
    </size>
   </property>
   <property name="windowTitle">
    <string/>
   </property>
-  <widget class="QPushButton" name="buynowButton">
-   <property name="geometry">
-    <rect>
-     <x>310</x>
-     <y>210</y>
-     <width>115</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Buy Now</string>
-   </property>
-   <property name="icon">
-    <iconset resource="../../icons/resources.qrc">
-     <normaloff>:/icons/light/32x32/toolbar-buynow.png</normaloff>:/icons/light/32x32/toolbar-buynow.png</iconset>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>32</width>
-     <height>32</height>
-    </size>
-   </property>
-   <property name="default">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="registerButton">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>210</y>
-     <width>171</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Enter License Code</string>
-   </property>
-   <property name="icon">
-    <iconset resource="../../icons/resources.qrc">
-     <normaloff>:/icons/light/32x32/toolbar-activate.png</normaloff>:/icons/light/32x32/toolbar-activate.png</iconset>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>32</width>
-     <height>32</height>
-    </size>
-   </property>
-  </widget>
   <widget class="QTextEdit" name="textEdit">
    <property name="enabled">
     <bool>false</bool>
@@ -91,12 +42,18 @@
     <rect>
      <x>30</x>
      <y>20</y>
-     <width>521</width>
-     <height>171</height>
+     <width>511</width>
+     <height>185</height>
     </rect>
    </property>
    <property name="frameShape">
     <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="verticalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
    </property>
    <property name="html">
     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -109,18 +66,110 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'.Helvetica Neue DeskInterface'; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="evaluateButton">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>210</y>
-     <width>115</width>
-     <height>32</height>
+     <x>30</x>
+     <y>230</y>
+     <width>511</width>
+     <height>43</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Not Now</string>
-   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="registerButton">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Enter License Code</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../../icons/resources.qrc">
+        <normaloff>:/icons/light/32x32/toolbar-activate.png</normaloff>:/icons/light/32x32/toolbar-activate.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="buynowButton">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Buy Now</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../../icons/resources.qrc">
+        <normaloff>:/icons/light/32x32/toolbar-buynow.png</normaloff>:/icons/light/32x32/toolbar-buynow.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="default">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="evaluateButton">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Not Now</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources>

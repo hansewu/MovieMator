@@ -253,9 +253,9 @@ void FiltersDock::setPosition(int position)
 
 bool FiltersDock::proVersion()
 {
-#if MOVIEMATOR_FREE
-    return false;
-#endif
+//#if MOVIEMATOR_FREE
+//    return false;
+//#endif
     return true;
 }
 

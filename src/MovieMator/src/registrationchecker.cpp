@@ -48,7 +48,7 @@ RegistrationChecker& RegistrationChecker::singleton()
 RegistrationType RegistrationChecker::registerWithLicense(QString &email, QString &licenseCode)
 {
 //    RegistrationType type = Registration_Commercial; //ecc_verify_register_info((char *)licenseCode.toUtf8().constData());
-#if defined(SHARE_VERSION) && defined(MOVIEMATOR_PRO) && (!defined(STEAM))
+#if defined(SHARE_VERSION) && (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE)) && (!defined(STEAM))
          RegistrationType type = ecc_verify_register_info(const_cast<char*>(licenseCode.toUtf8().constData()));
 #else
     RegistrationType type = Registration_Commercial;

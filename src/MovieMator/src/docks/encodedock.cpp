@@ -1008,10 +1008,8 @@ void EncodeDock::addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProject
 
     //添加水印滤镜
 #if SHARE_VERSION
-#if MOVIEMATOR_PRO
     Mlt::Filter *pSoftwareNameTextFilter = nullptr;
     Mlt::Filter *pHomePagetextFilter     = nullptr;
-
     if (Registration.registrationType() == Registration_None)
     {
         //显示软件名
@@ -1021,8 +1019,9 @@ void EncodeDock::addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProject
 
         Q_ASSERT(pSoftwareNameTextFilter);
         pSoftwareNameTextFilter->set("argument", strSoftwareNameTemp.c_str());
-        pSoftwareNameTextFilter->set("geometry", 0.684375, 0, 0.328125, 0.2875);
-        pSoftwareNameTextFilter->set("family", "Arial");
+#ifdef Q_OS_WIN
+        pSoftwareNameTextFilter->set("family", "微软雅黑");
+#endif
         pSoftwareNameTextFilter->set("size", 207);
         pSoftwareNameTextFilter->set("weight", 750);
         pSoftwareNameTextFilter->set("letter_spaceing", 0);
@@ -1031,7 +1030,6 @@ void EncodeDock::addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProject
         pSoftwareNameTextFilter->set("shadow_distance", 0);
         pSoftwareNameTextFilter->set("shadow_angle", 44);
         pSoftwareNameTextFilter->set("fgcolour", 255, 255, 255, 255);
-        pSoftwareNameTextFilter->set("bgcolour", 0, 128, 128, 128);
         pSoftwareNameTextFilter->set("olcolour", 255, 187, 66, 48);
         pSoftwareNameTextFilter->set("pad", 0);
         pSoftwareNameTextFilter->set("halign", "center");
@@ -1042,8 +1040,6 @@ void EncodeDock::addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProject
         pSoftwareNameTextFilter->set("trans_ox", 0);
         pSoftwareNameTextFilter->set("trans_oy", 0);
         pSoftwareNameTextFilter->set("trans_scale_aspect_ratio", 1);
-        pSoftwareNameTextFilter->set("transparent_alpha", 1);
-        pService->attach(*pSoftwareNameTextFilter);
 
         //显示主页网址
         QString strHomePage     = tr("http://moviemator.net");
@@ -1051,8 +1047,9 @@ void EncodeDock::addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProject
 
         Q_ASSERT(pHomePagetextFilter);
         pHomePagetextFilter->set("argument", strHomePage.toLatin1().data());
-        pHomePagetextFilter->set("geometry", 0.698438, 0.1725, 0.299219, 0.123611);
-        pHomePagetextFilter->set("family", "Arial");
+#ifdef Q_OS_WIN
+        pHomePagetextFilter->set("family", "微软雅黑");
+#endif
         pHomePagetextFilter->set("size", 89);
         pHomePagetextFilter->set("weight", 750);
         pHomePagetextFilter->set("letter_spaceing", 0);
@@ -1061,7 +1058,6 @@ void EncodeDock::addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProject
         pHomePagetextFilter->set("shadow_distance", 0);
         pHomePagetextFilter->set("shadow_angle", 44);
         pHomePagetextFilter->set("fgcolour", 255, 255, 255, 255);
-        pHomePagetextFilter->set("bgcolour", 0, 128, 128, 128);
         pHomePagetextFilter->set("olcolour", 255, 187, 66, 48);
         pHomePagetextFilter->set("pad", 0);
         pHomePagetextFilter->set("halign", "center");
@@ -1072,10 +1068,30 @@ void EncodeDock::addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProject
         pHomePagetextFilter->set("trans_ox", 0);
         pHomePagetextFilter->set("trans_oy", 0);
         pHomePagetextFilter->set("trans_scale_aspect_ratio", 1);
+
+#if MOVIEMATOR_PRO
+        pSoftwareNameTextFilter->set("geometry", 0.684375, 0, 0.328125, 0.2875);
+        pSoftwareNameTextFilter->set("bgcolour", 0, 128, 128, 128);
+        pSoftwareNameTextFilter->set("transparent_alpha", 1);
+
+        pHomePagetextFilter->set("geometry", 0.698438, 0.1725, 0.299219, 0.123611);
+        pHomePagetextFilter->set("bgcolour", 0, 128, 128, 128);
         pHomePagetextFilter->set("transparent_alpha", 1);
+#endif
+
+#if MOVIEMATOR_FREE
+        pSoftwareNameTextFilter->set("geometry", 0.854375, 0, 0.13125, 0.115);
+        pSoftwareNameTextFilter->set("bgcolour", 0, 0, 255, 255);
+        pSoftwareNameTextFilter->set("transparent_alpha", 0.2);
+
+        pHomePagetextFilter->set("geometry", 0.860438, 0.0825, 0.1196876, 0.0494444);
+        pHomePagetextFilter->set("bgcolour", 0, 0, 255, 255);
+        pHomePagetextFilter->set("transparent_alpha", 0.2);
+#endif
+
+        pService->attach(*pSoftwareNameTextFilter);
         pService->attach(*pHomePagetextFilter);
     }
-#endif
 #endif
 
     //保存已添加水印的工程为xml工程文件
@@ -1083,7 +1099,7 @@ void EncodeDock::addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProject
 
     //从当前工程中移除水印
 #if SHARE_VERSION
-#if MOVIEMATOR_PRO
+#if MOVIEMATOR_PRO || MOVIEMATOR_FREE
     if (Registration.registrationType() == Registration_None)
     {
         pService->detach(*pSoftwareNameTextFilter);
@@ -1423,7 +1439,7 @@ void EncodeDock::on_encodeButton_clicked()
 
     //提示购买注册
 #if SHARE_VERSION
-#if MOVIEMATOR_PRO
+#if MOVIEMATOR_PRO || MOVIEMATOR_FREE
     if (Registration.registrationType() == Registration_None)
     {
         this->hide();
@@ -1678,11 +1694,13 @@ void EncodeDock::on_removePresetButton_clicked()
                        tr("Are you sure you want to delete %1?").arg(preset),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
-#if MOVIEMATOR_PRO
-        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
-    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-#endif
+
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#if MOVIEMATOR_PRO
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#else
+//    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+//#endif
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());

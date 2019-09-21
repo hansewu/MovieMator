@@ -154,11 +154,12 @@ public:
 
         setOrganizationName("effectmatrix");
         setOrganizationDomain("effectmatrix.com");
-#if MOVIEMATOR_PRO
         setApplicationName("MovieMator Pro");
-#else
-        setApplicationName("MovieMator");
-#endif
+//#if MOVIEMATOR_PRO
+//        setApplicationName("MovieMator Pro");
+//#else
+//        setApplicationName("MovieMator");
+//#endif
         setApplicationVersion(MOVIEMATOR_VERSION);
         setAttribute(Qt::AA_UseHighDpiPixmaps);
         setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
@@ -438,11 +439,11 @@ int main(int argc, char **argv)
 //    splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
 //    splash.show();
 // 宏定义警告，不消除
-#if MOVIEMATOR_FREE
-    g_splash = new MMSplashScreen(QPixmap(":/splash-free.png"));
-#else
+//#if MOVIEMATOR_FREE
+//    g_splash = new MMSplashScreen(QPixmap(":/splash-free.png"));
+//#else
     g_splash = new MMSplashScreen(QPixmap(":/splash.png"));
-#endif
+//#endif
     g_splash->showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
     g_splash->show();
 
@@ -558,29 +559,29 @@ int main(int argc, char **argv)
 
 
 
-#ifdef MOVIEMATOR_FREE
-//    if (Settings.firstUse())
+//#ifdef MOVIEMATOR_FREE
+////    if (Settings.firstUse())
+////    {
+////        a.mainWindow->showUpgradeToProPromptDialog();
+////    }
+
+//    QDateTime lastUse = Settings.lastUse();
+//    QDateTime currentTime = QDateTime::currentDateTime();
+//    if (lastUse.isNull())
 //    {
 //        a.mainWindow->showUpgradeToProPromptDialog();
 //    }
+//    else
+//    {
 
-    QDateTime lastUse = Settings.lastUse();
-    QDateTime currentTime = QDateTime::currentDateTime();
-    if (lastUse.isNull())
-    {
-        a.mainWindow->showUpgradeToProPromptDialog();
-    }
-    else
-    {
-
-        int days = lastUse.daysTo(currentTime);
-        if (days > 1)
-        {
-            a.mainWindow->showUpgradeToProPromptDialog();
-        }
-    }
-    Settings.setLastUse(currentTime);
-#endif
+//        int days = lastUse.daysTo(currentTime);
+//        if (days > 1)
+//        {
+//            a.mainWindow->showUpgradeToProPromptDialog();
+//        }
+//    }
+//    Settings.setLastUse(currentTime);
+//#endif
 
 
 //    MAINCONTROLLER.initPythonQt();
