@@ -32,7 +32,7 @@ RegistrationDialog::RegistrationDialog(QWidget *parent) :
     ui->setupUi(this);
 
 #if MOVIEMATOR_FREE
-    ui->buynowButton->setText(tr("Get code"));
+    ui->buynowButton->setText(tr("Get License Code"));
 #endif
 }
 
