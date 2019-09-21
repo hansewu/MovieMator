@@ -24,6 +24,40 @@ RegistrationTipsDialog::RegistrationTipsDialog(QWidget *parent) :
     ui(new Ui::RegistrationTipsDialog)
 {
     ui->setupUi(this);
+
+    // 国区版本
+#ifdef MOVIEMATOR_FREE
+    ui->textEdit->setHtml(QApplication::translate("RegistrationTipsDialog",
+        "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+        "p, li { white-space: pre-wrap; }\n"
+        "</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+        "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"
+                                "<span style=\" font-family:'.Helvetica Neue DeskInterface'; font-size:13pt;\">Movie Mator Video Editor is available for individual use free of charge.</span></p>\n"
+        "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0p"
+                                "x;\"><span style=\" font-family:'.Helvetica Neue DeskInterface'; font-size:13pt;\">If necessary or commercial, please register to remove the watermark.</span></p>\n"
+        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'.Helvetica Neue DeskInterface'; font-size:13pt;\"><br /></p></body></html>", nullptr));
+
+    // 隐藏购买按钮
+    ui->buynowButton->setVisible(false);
+    ui->buynowButton->setEnabled(false);
+
+    // 保留注册按钮，并改为 移除水印
+    ui->registerButton->setText(tr("Remove the watermark"));
+    ui->registerButton->setIcon(QIcon());
+
+    // 更改按钮顺序：继续 移除水印
+    ui->horizontalLayout->removeItem(ui->horizontalSpacer);
+    ui->horizontalLayout->removeWidget(ui->registerButton);
+    ui->horizontalLayout->removeWidget(ui->evaluateButton);
+
+    ui->horizontalLayout->addItem(ui->horizontalSpacer);
+    ui->horizontalLayout->addWidget(ui->evaluateButton);
+    ui->horizontalLayout->addWidget(ui->registerButton);
+
+    // 设置移除水印为默认按钮
+    ui->registerButton->setAutoDefault(true);
+#endif
 }
 
 RegistrationTipsDialog::~RegistrationTipsDialog()

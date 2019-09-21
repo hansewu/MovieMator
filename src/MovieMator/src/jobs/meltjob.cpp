@@ -80,12 +80,13 @@ void MeltJob::start()
     args << "-abort";
     args << xmlPath();
 
-#ifndef MOVIEMATOR_PRO
-    int length = 5*60*MLT.profile().fps() - 1;
-    QString out = QString("out=%1").arg(length);
+    // 导出视频 5分钟时长限制
+//#ifndef MOVIEMATOR_PRO
+//    int length = 5*60*MLT.profile().fps() - 1;
+//    QString out = QString("out=%1").arg(length);
 
-    args << out;
-#endif
+//    args << out;
+//#endif
 
     LOG_DEBUG() << meltPath.absoluteFilePath() << args;
 

@@ -277,7 +277,7 @@ private:
     //pro版功能提示对话框
     ProFeaturePromptDialog *m_proFeaturePromptDialog;
     UpgradeToProPromptDialog *m_upgradeToProPromptDialog;
-#ifdef MOVIEMATOR_PRO
+#if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
 #ifndef SHARE_VERSION
     InvalidProjectDialog *m_invalidProjectDiaog;//无效的工程提示对话框
 #endif
@@ -376,7 +376,7 @@ public slots:
     //接收filtersInfo已加载的消息
     void onFiltersInfoLoaded();
 
-#ifdef MOVIEMATOR_PRO
+#if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
 #ifndef SHARE_VERSION
     void showInvalidProjectDialog();
 #endif

@@ -30,6 +30,10 @@ RegistrationDialog::RegistrationDialog(QWidget *parent) :
     ui(new Ui::RegistrationDialog)
 {
     ui->setupUi(this);
+
+#if MOVIEMATOR_FREE
+    ui->buynowButton->setText(tr("Get code"));
+#endif
 }
 
 RegistrationDialog::~RegistrationDialog()

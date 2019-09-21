@@ -57,7 +57,7 @@ public:
     QString tempFileName() const { return m_tempFile.fileName(); }
     QStandardItemModel& unlinkedFilesModel() { return m_unlinkedFilesModel; }
 
-#ifdef MOVIEMATOR_PRO
+#if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
 #ifndef SHARE_VERSION
     bool hasUnbookmarkedFile(){return m_nUnbookmarkedFileCount;}
 #endif
@@ -75,8 +75,8 @@ private:
     bool fixUnlinkedFile(QString& value);
     void fixStreamIndex(QString& value);
 
-#ifdef MOVIEMATOR_PRO
-  #ifndef SHARE_VERSION
+#if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
+#ifndef SHARE_VERSION
     int  m_nUnbookmarkedFileCount;
 //    void checkUnbookmarkedFiles(QString& filename);
 
@@ -115,7 +115,7 @@ private:
         }
     } m_resource;
 
-#ifdef MOVIEMATOR_PRO
+#if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
 //    Mlt::Profile* m_profile;
 #endif
 };

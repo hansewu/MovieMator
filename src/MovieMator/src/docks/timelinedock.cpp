@@ -2192,10 +2192,10 @@ int TimelineDock::getPositionOnClip(int position)
 int TimelineDock::timeToFrames(QString timecode)
 {
     // 宏定义警告，无法消除
-#if MOVIEMATOR_FREE
-    if (MAIN.multitrack())
-        return MAIN.multitrack()->time_to_frames(timecode.toUtf8().constData());
-#endif
+//#if MOVIEMATOR_FREE
+//    if (MAIN.multitrack())
+//        return MAIN.multitrack()->time_to_frames(timecode.toUtf8().constData());
+//#endif
     Q_UNUSED(timecode)
     return 0;
 }

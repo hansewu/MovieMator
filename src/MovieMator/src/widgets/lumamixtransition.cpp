@@ -107,12 +107,12 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, int trackIndex, in
     ui->label_preview->setMovie(m_previewMovie);
     m_previewMovie->start();
 
-#if MOVIEMATOR_FREE
-    for (int i = 1; i < ui->lumaCombo->count(); i++)
-    {
-        ui->lumaCombo->setItemData(i, QBrush(Qt::gray), Qt::TextColorRole);
-    }
-#endif
+//#if MOVIEMATOR_FREE
+//    for (int i = 1; i < ui->lumaCombo->count(); i++)
+//    {
+//        ui->lumaCombo->setItemData(i, QBrush(Qt::gray), Qt::TextColorRole);
+//    }
+//#endif
 
     ui->label_2->setStyleSheet("background-color:rgb(46,46,46);");
     ui->line->setStyleSheet("color:black;");
@@ -288,14 +288,14 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
     m_previewMovie->setFileName( QString(":/transitions/%1.gif").arg(ui->lumaCombo->currentIndex()) );
     m_previewMovie->start();
 
-#if MOVIEMATOR_FREE
-    if (index != kLumaComboDissolveIndex)
-    {
-        //专业版功能，提示升级
-        MAIN.showProFeaturePromptDialog();
-        return;
-    }
-#endif
+//#if MOVIEMATOR_FREE
+//    if (index != kLumaComboDissolveIndex)
+//    {
+//        //专业版功能，提示升级
+//        MAIN.showProFeaturePromptDialog();
+//        return;
+//    }
+//#endif
 
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {

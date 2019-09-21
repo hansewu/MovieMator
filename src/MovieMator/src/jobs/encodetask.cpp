@@ -57,7 +57,7 @@ void EncodeTask::start()
     m_producer->set_speed(1.0);
 
 #if SHARE_VERSION
-#if MOVIEMATOR_PRO
+#if MOVIEMATOR_PRO || MOVIEMATOR_FREE
     //加水印
     if (Registration.registrationType() == Registration_None)
     {
@@ -79,18 +79,18 @@ void EncodeTask::start()
 #endif
 #endif
 
-
-#ifndef MOVIEMATOR_PRO
-    int length = 5*60*MLT.profile().fps();
-    if ( m_duration > length)
-    {
-    //m_producer->set_in_and_out(0, length);
-        m_cut = m_producer->cut(0, length - 1);
-        m_duration = length;
-        m_consumer->connect(*m_cut);
-    }
-    //m_producer->set("length", length);
-#endif
+// 5分钟时长限制
+//#ifndef MOVIEMATOR_PRO
+//    int length = 5*60*MLT.profile().fps();
+//    if ( m_duration > length)
+//    {
+//    //m_producer->set_in_and_out(0, length);
+//        m_cut = m_producer->cut(0, length - 1);
+//        m_duration = length;
+//        m_consumer->connect(*m_cut);
+//    }
+//    //m_producer->set("length", length);
+//#endif
 
 
     int ret = m_consumer->start();
@@ -174,7 +174,7 @@ void EncodeTask::onEndOfStream()
 void EncodeTask::resetProducer()
 {
 #if SHARE_VERSION
-#if MOVIEMATOR_PRO
+#if MOVIEMATOR_PRO || MOVIEMATOR_FREE
     if (Registration.registrationType() == Registration_None)
     {
         if (m_textFilter)
@@ -188,11 +188,11 @@ void EncodeTask::resetProducer()
 #endif
     m_producer->set_speed(0);
 
-#ifndef MOVIEMATOR_PRO
-    if (m_cut)
-    {
-        m_cut->clear();
-        m_cut = NULL;
-    }
-#endif
+//#ifndef MOVIEMATOR_PRO
+//    if (m_cut)
+//    {
+//        m_cut->clear();
+//        m_cut = NULL;
+//    }
+//#endif
 }

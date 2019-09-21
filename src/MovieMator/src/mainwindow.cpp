@@ -120,7 +120,7 @@
 
 #if SHARE_VERSION
 
-#if MOVIEMATOR_PRO
+#if MOVIEMATOR_PRO || MOVIEMATOR_FREE
 //const QString g_homePage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
 //const QString g_buynowPage = "http://www.macvideostudio.com/purchase/moviemator-video-editor-pro.html";
 const QString g_homePage = QObject::tr("http://moviemator.net");
@@ -132,7 +132,7 @@ const QString g_buynowPage = "http://www.macvideostudio.com/video-editor-free-ed
 
 #else
 
-#if MOVIEMATOR_PRO
+#if MOVIEMATOR_PRO || MOVIEMATOR_FREE
 const QString g_homePage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
 const QString g_buynowPage = "http://www.macvideostudio.com/video-editor-free-editing-software.html";
 #else
@@ -146,7 +146,7 @@ const QString g_buynowPage = "http://www.macvideostudio.com/video-editor-free-ed
 
 #if SHARE_VERSION
 
-#if MOVIEMATOR_PRO
+#if MOVIEMATOR_PRO || MOVIEMATOR_FREE
 const QString g_homePage = "http://www.macvideostudio.com/mac-video-editor-moviemator-pro.html";
 const QString g_buynowPage = "http://www.macvideostudio.com/purchase/buy-video-editor-moviemator-pro.html";
 
@@ -157,7 +157,7 @@ const QString g_buynowPage = "http://www.macvideostudio.com/purchase/buy-video-e
 
 #else
 
-#if MOVIEMATOR_PRO
+#if MOVIEMATOR_PRO || MOVIEMATOR_FREE
 const QString g_homePage = "http://www.macvideostudio.com/video-editor-moviemator-appstore.html";
 const QString g_buynowPage = "http://www.macvideostudio.com/purchase/buy-video-editor-moviemator-pro.html";
 #else
@@ -676,7 +676,7 @@ MainWindow::MainWindow()
     m_upgradeToProPromptDialog = new UpgradeToProPromptDialog();
     m_upgradeToProPromptDialog->setWindowModality(QmlApplication::dialogModality());
 
-#ifdef MOVIEMATOR_PRO
+#if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
 #ifndef SHARE_VERSION
     m_invalidProjectDiaog = new InvalidProjectDialog();
     m_invalidProjectDiaog->setWindowModality(QmlApplication::dialogModality());
@@ -709,15 +709,16 @@ MainWindow::MainWindow()
     else
         setWindowTitle(tr("MovieMator Video Editor Pro"));
 #else
-    setWindowTitle(tr("MovieMator Video Editor"));
+//    setWindowTitle(tr("MovieMator Video Editor"));
+    setWindowTitle(tr("MovieMator Video Editor Pro"));
 #endif
 
-#else
-#if MOVIEMATOR_PRO
-    setWindowTitle(tr("MovieMator Video Editor Pro"));
-#else
-    setWindowTitle(tr("MovieMator Video Editor"));
-#endif
+//#else
+//#if MOVIEMATOR_PRO
+//    setWindowTitle(tr("MovieMator Video Editor Pro"));
+//#else
+//    setWindowTitle(tr("MovieMator Video Editor"));
+//#endif
 #endif
 
 //    LOG_DEBUG() << "init pythonqt";
@@ -752,8 +753,10 @@ void MainWindow::configureUI()
 #endif
 
 #ifndef MOVIEMATOR_PRO
+#ifndef MOVIEMATOR_FREE
     ui->actionBuy_a_License_Code->setVisible(false);
     ui->actionEnter_License_Code->setVisible(false);
+#endif
 #endif
 
 #if STEAM
@@ -761,11 +764,12 @@ void MainWindow::configureUI()
     ui->actionEnter_License_Code->setVisible(false);
 #endif
 
-#if MOVIEMATOR_PRO
     ui->actionAbout_TVE->setText(tr("About MovieMator Video Editor Pro"));
-#else
-    ui->actionAbout_TVE->setText(tr("About MovieMator Video Editor"));
-#endif
+//#if MOVIEMATOR_PRO
+//    ui->actionAbout_TVE->setText(tr("About MovieMator Video Editor Pro"));
+//#else
+//    ui->actionAbout_TVE->setText(tr("About MovieMator Video Editor"));
+//#endif
 
 #if defined(Q_OS_WIN)
     ui->actionGet_Total_Video_Converter_Pro->setVisible(false);
@@ -1180,11 +1184,13 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker& checker)
            QMessageBox::No |
            QMessageBox::Yes,
            this);
-#if MOVIEMATOR_PRO
+
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
-        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-#endif
+//#if MOVIEMATOR_PRO
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#else
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+//#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
@@ -1247,11 +1253,13 @@ bool MainWindow::isXmlRepaired(MltXmlChecker& checker, QString& fileName)
            QMessageBox::No |
            QMessageBox::Yes,
            this);
-#if MOVIEMATOR_PRO
+
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
-        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-#endif
+//#if MOVIEMATOR_PRO
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#else
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+//#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
@@ -1283,11 +1291,13 @@ bool MainWindow::checkAutoSave(QString &url)
         QMessageBox dialog(QMessageBox::Question, qApp->applicationName(),
            tr("Auto-saved files exist. Do you want to recover them now?"),
            QMessageBox::No | QMessageBox::Yes, nullptr);
-#if MOVIEMATOR_PRO
+
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
-        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-#endif
+//#if MOVIEMATOR_PRO
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#else
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+//#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
@@ -1422,11 +1432,13 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
                                      tr("For reasons of copyright protection, you can not import vob or m4p files"),
                                      QMessageBox::Ok,
                                      this);
-#if MOVIEMATOR_PRO
+
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
-        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-#endif
+//#if MOVIEMATOR_PRO
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#else
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+//#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Ok);
         int r = dialog.exec();
@@ -1442,7 +1454,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
             if (!isCompatibleWithGpuMode(checker))
                 return;
         }
-#ifdef MOVIEMATOR_PRO
+#if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
 #ifndef SHARE_VERSION
         if(checker.hasUnbookmarkedFile())
         {
@@ -1898,15 +1910,17 @@ void MainWindow::setCurrentFile(const QString &filename)
     else
         setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro"));
 #else
-    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor"));
+//    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor"));
+    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro"));
 #endif
 
 #else
-#if MOVIEMATOR_PRO
     setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro"));
-#else
-    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg(tr("MovieMator Video Editor")));
-#endif
+//#if MOVIEMATOR_PRO
+//    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro"));
+//#else
+//    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg(tr("MovieMator Video Editor")));
+//#endif
 #endif
 }
 
@@ -1940,8 +1954,6 @@ void MainWindow::setCurrentFile(const QString &filename)
 void MainWindow::on_actionAbout_TVE_triggered()
 {
 #if SHARE_VERSION
-
-#if MOVIEMATOR_PRO
     QMessageBox::about(this, tr("About MovieMator Video Editor Pro"),
              tr("<h1>MovieMator Video Editor Pro %1</h1>"
                 "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor Pro</a></p>"
@@ -1955,24 +1967,38 @@ void MainWindow::on_actionAbout_TVE_triggered()
                 "<p><a href=\"http://www.moviemator.net/develop/third-party.html\">Related Information</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"mailto:market@effectmatrix.com\">Feedback</a></p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
-#else
-    QMessageBox::about(this, tr("About MovieMator Video Editor"),
-             tr("<h1>MovieMator Video Editor %1</h1>"
-                "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor</a></p>"
-                "<p />"
-                "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
-                "<p>Based on Shotcut v16.06 Copyright &copy; 2011-2016 Meltytech, LLC.</p>"
-                "<p>Licensed under the GNU General Public License v3.0</p>"
-                "</small>"
-                "<small>"
-                "<p />"
-                "<p><a href=\"http://www.moviemator.net/develop/third-party.html\">Related Information</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"mailto:market@effectmatrix.com\">Feedback</a></p>"
-                "</small>"
-                ).arg(qApp->applicationVersion()).arg(g_homePage));
-#endif
+
+//#if MOVIEMATOR_PRO
+//    QMessageBox::about(this, tr("About MovieMator Video Editor Pro"),
+//             tr("<h1>MovieMator Video Editor Pro %1</h1>"
+//                "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor Pro</a></p>"
+//                "<p />"
+//                "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
+//                "<p>Based on Shotcut v16.06 Copyright &copy; 2011-2016 Meltytech, LLC.</p>"
+//                "<p>Licensed under the GNU General Public License v3.0</p>"
+//                "</small>"
+//                "<small>"
+//                "<p />"
+//                "<p><a href=\"http://www.moviemator.net/develop/third-party.html\">Related Information</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"mailto:market@effectmatrix.com\">Feedback</a></p>"
+//                "</small>"
+//                ).arg(qApp->applicationVersion()).arg(g_homePage));
+//#else
+//    QMessageBox::about(this, tr("About MovieMator Video Editor"),
+//             tr("<h1>MovieMator Video Editor %1</h1>"
+//                "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor</a></p>"
+//                "<p />"
+//                "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
+//                "<p>Based on Shotcut v16.06 Copyright &copy; 2011-2016 Meltytech, LLC.</p>"
+//                "<p>Licensed under the GNU General Public License v3.0</p>"
+//                "</small>"
+//                "<small>"
+//                "<p />"
+//                "<p><a href=\"http://www.moviemator.net/develop/third-party.html\">Related Information</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"mailto:market@effectmatrix.com\">Feedback</a></p>"
+//                "</small>"
+//                ).arg(qApp->applicationVersion()).arg(g_homePage));
+//#endif
 
 #else
-#if MOVIEMATOR_PRO
     QMessageBox::about(this, tr("About MovieMator Video Editor Pro"),
              tr("<h1>MovieMator Video Editor Pro %1</h1>"
                 "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor Pro</a></p>"
@@ -1986,21 +2012,35 @@ void MainWindow::on_actionAbout_TVE_triggered()
                 "<p><a href=\"http://www.moviemator.net/develop/third-party.html\">Related Information</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"mailto:market@effectmatrix.com\">Feedback</a></p>"
                 "</small>"
                 ).arg(qApp->applicationVersion()).arg(g_homePage));
-#else
-    QMessageBox::about(this, tr("About MovieMator Video Editor"),
-             tr("<h1>MovieMator Video Editor %1</h1>"
-                "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor</a></p>"
-                "<p />"
-                "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
-                "<p>Based on Shotcut v16.06 Copyright &copy; 2011-2016 Meltytech, LLC.</p>"
-                "<p>Licensed under the GNU General Public License v3.0</p>"
-                "</small>"
-                "<small>"
-                "<p />"
-                "<p><a href=\"http://www.moviemator.net/develop/third-party.html\">Related Information</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"mailto:market@effectmatrix.com\">Feedback</a></p>"
-                "</small>"
-                ).arg(qApp->applicationVersion()).arg(g_homePage));
-#endif
+//#if MOVIEMATOR_PRO
+//    QMessageBox::about(this, tr("About MovieMator Video Editor Pro"),
+//             tr("<h1>MovieMator Video Editor Pro %1</h1>"
+//                "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor Pro</a></p>"
+//                "<p />"
+//                "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
+//                "<p>Based on Shotcut v16.06 Copyright &copy; 2011-2016 Meltytech, LLC.</p>"
+//                "<p>Licensed under the GNU General Public License v3.0</p>"
+//                "</small>"
+//                "<small>"
+//                "<p />"
+//                "<p><a href=\"http://www.moviemator.net/develop/third-party.html\">Related Information</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"mailto:market@effectmatrix.com\">Feedback</a></p>"
+//                "</small>"
+//                ).arg(qApp->applicationVersion()).arg(g_homePage));
+//#else
+//    QMessageBox::about(this, tr("About MovieMator Video Editor"),
+//             tr("<h1>MovieMator Video Editor %1</h1>"
+//                "<small><p>Product Home Page: <a href=%2>MovieMator Video Editor</a></p>"
+//                "<p />"
+//                "<p>Copyright &copy; 2016-2019 effectmatrix, Inc</p>"
+//                "<p>Based on Shotcut v16.06 Copyright &copy; 2011-2016 Meltytech, LLC.</p>"
+//                "<p>Licensed under the GNU General Public License v3.0</p>"
+//                "</small>"
+//                "<small>"
+//                "<p />"
+//                "<p><a href=\"http://www.moviemator.net/develop/third-party.html\">Related Information</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"mailto:market@effectmatrix.com\">Feedback</a></p>"
+//                "</small>"
+//                ).arg(qApp->applicationVersion()).arg(g_homePage));
+//#endif
 
 #endif
 }
@@ -2647,11 +2687,13 @@ bool MainWindow::continueModified()
                                      QMessageBox::Cancel |
                                      QMessageBox::Save,
                                      this);
-#if MOVIEMATOR_PRO
+
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
-        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-#endif
+//#if MOVIEMATOR_PRO
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#else
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+//#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Save);
         dialog.setEscapeButton(QMessageBox::Cancel);
@@ -2678,11 +2720,13 @@ bool MainWindow::continueJobsRunning()
                                      QMessageBox::No |
                                      QMessageBox::Yes,
                                      this);
-#if MOVIEMATOR_PRO
+
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
-        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-#endif
+//#if MOVIEMATOR_PRO
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#else
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+//#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
@@ -2731,9 +2775,9 @@ void MainWindow::onEncodeTriggered(bool checked)
         if(bHasClipInTimeline)
         {
             m_encodeDock->show();
-#if MOVIEMATOR_FREE
-            showUpgradeToProPromptDialog();
-#endif
+//#if MOVIEMATOR_FREE
+//            showUpgradeToProPromptDialog();
+//#endif
         }
         else
         {
@@ -2742,11 +2786,13 @@ void MainWindow::onEncodeTriggered(bool checked)
                                          tr("To export video, you must add one or more files to timeline."),
                                          QMessageBox::Ok,
                                          this);
-#if MOVIEMATOR_PRO
-        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
-        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-#endif
+
+            dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#if MOVIEMATOR_PRO
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#else
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+//#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Ok);
         int r = dialog.exec();
@@ -3403,11 +3449,13 @@ void MainWindow::onLanguageTriggered(QAction* action)
                           "Do you want to change language now?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
-#if MOVIEMATOR_PRO
-        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
-    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-#endif
+
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#if MOVIEMATOR_PRO
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#else
+//    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+//#endif
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());
@@ -3482,11 +3530,13 @@ void MainWindow::on_actionGPU_triggered(bool checked)
                           "Do you want to restart now?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
-#if MOVIEMATOR_PRO
-        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
-    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-#endif
+
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#if MOVIEMATOR_PRO
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#else
+//    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+//#endif
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());
@@ -3572,11 +3622,13 @@ void MainWindow::changeProfile(QString strProfileName)
                           "Do you want to change video mode now?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
-#if MOVIEMATOR_PRO
-        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
-    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-#endif
+
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#if MOVIEMATOR_PRO
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#else
+//    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+//#endif
 
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
@@ -3612,11 +3664,13 @@ void MainWindow::onProfileTriggered(QAction *action)
                           "Do you want to change video mode now?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
-#if MOVIEMATOR_PRO
-        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
-    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-#endif
+
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#if MOVIEMATOR_PRO
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#else
+//    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+//#endif
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());
@@ -4212,7 +4266,7 @@ void MainWindow::customizeToolbar()
 
 
 #if SHARE_VERSION
-#if MOVIEMATOR_PRO
+#if MOVIEMATOR_PRO || (MOVIEMATOR_FREE && !defined(Q_OS_MAC))
     if (Registration.registrationType() == Registration_None)
     {
         m_activateButton = createToolButton(":/icons/light/32x32/toolbar-activate.png",
@@ -4221,28 +4275,31 @@ void MainWindow::customizeToolbar()
                                             tr("Register"), tr("Enter Licensse Code"));
         connect(m_activateButton, SIGNAL(clicked()), this, SLOT(onActivateButton_clicked()));
 
+        // 国区版不要购买按钮
+#if MOVIEMATOR_PRO
         m_buynowButton = createToolButton(":/icons/light/32x32/toolbar-buynow.png",
                                           ":/icons/light/32x32/toolbar-buynow-pressed.png",
                                           ":/icons/light/32x32/toolbar-buynow.png",
                                           tr("Buy Now"), tr("Buy a License Code"));
         connect(m_buynowButton, SIGNAL(clicked()), this, SLOT(onBuynowButton_clicked()));
+#endif
     }
 #endif
 #endif
 
-#if MOVIEMATOR_FREE
-#if defined(Q_OS_MAC)
-    m_upgradeButton = createToolButton(":/icons/light/32x32/toolbar-upgrade.png",
-                                       ":/icons/light/32x32/toolbar-upgrade-pressed.png",
-                                       "", tr("Upgrade"), tr("Upgrade to Pro version"));
-    connect(m_upgradeButton, SIGNAL(clicked()), this, SLOT(upgradeToProVersion()));
+//#if MOVIEMATOR_FREE
+//#if defined(Q_OS_MAC)
+//    m_upgradeButton = createToolButton(":/icons/light/32x32/toolbar-upgrade.png",
+//                                       ":/icons/light/32x32/toolbar-upgrade-pressed.png",
+//                                       "", tr("Upgrade"), tr("Upgrade to Pro version"));
+//    connect(m_upgradeButton, SIGNAL(clicked()), this, SLOT(upgradeToProVersion()));
 
-    m_tvcProButton = createToolButton(":/icons/light/32x32/toolbar-tvcpro.png",
-                                      ":/icons/light/32x32/toolbar-tvcpro-pressed.png",
-                                      "", tr("Great Converter & DVD Burner"), tr("Get Total Video Converter Pro - a great video converter and dvd burner"));
-    connect(m_tvcProButton, SIGNAL(clicked()), this, SLOT(on_actionGet_Total_Video_Converter_Pro_triggered()));
-#endif
-#endif
+//    m_tvcProButton = createToolButton(":/icons/light/32x32/toolbar-tvcpro.png",
+//                                      ":/icons/light/32x32/toolbar-tvcpro-pressed.png",
+//                                      "", tr("Great Converter & DVD Burner"), tr("Get Total Video Converter Pro - a great video converter and dvd burner"));
+//    connect(m_tvcProButton, SIGNAL(clicked()), this, SLOT(on_actionGet_Total_Video_Converter_Pro_triggered()));
+//#endif
+//#endif
 
     int buttonIndex = 0;
     QSpacerItem *spacer1 = new QSpacerItem(50,20);
@@ -4263,11 +4320,13 @@ void MainWindow::customizeToolbar()
     gridLayout->addItem(spacer3, 0, buttonIndex++, 1, 1);
 
 #if SHARE_VERSION
-#if MOVIEMATOR_PRO
+#if MOVIEMATOR_PRO || MOVIEMATOR_FREE
     if (Registration.registrationType() == Registration_None)
     {
         gridLayout->addWidget(m_activateButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+#if MOVIEMATOR_PRO
         gridLayout->addWidget(m_buynowButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+#endif
         QSpacerItem *spacer4 = new QSpacerItem(50,20);
         gridLayout->addItem(spacer4, 0, buttonIndex++, 1, 1);
     }
@@ -4276,17 +4335,17 @@ void MainWindow::customizeToolbar()
 
 
 
-#if MOVIEMATOR_FREE
-#if defined(Q_OS_MAC)
-    gridLayout->addWidget(m_tvcProButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
-    QSpacerItem *spacer4 = new QSpacerItem(50,20);
-    gridLayout->addItem(spacer4, 0, buttonIndex++, 1, 1);
+//#if MOVIEMATOR_FREE
+//#if defined(Q_OS_MAC)
+//    gridLayout->addWidget(m_tvcProButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+//    QSpacerItem *spacer4 = new QSpacerItem(50,20);
+//    gridLayout->addItem(spacer4, 0, buttonIndex++, 1, 1);
 
-    gridLayout->addWidget(m_upgradeButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
-    QSpacerItem *spacer5 = new QSpacerItem(50,20);
-    gridLayout->addItem(spacer5, 0, buttonIndex++, 1, 1);
-#endif
-#endif
+//    gridLayout->addWidget(m_upgradeButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
+//    QSpacerItem *spacer5 = new QSpacerItem(50,20);
+//    gridLayout->addItem(spacer5, 0, buttonIndex++, 1, 1);
+//#endif
+//#endif
 
     gridLayout->addWidget(m_helpButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     gridLayout->addWidget(m_emailButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
@@ -4431,7 +4490,7 @@ void MainWindow::upgradeToProVersion()
 
 }
 
-#ifdef MOVIEMATOR_PRO
+#if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
 #ifndef SHARE_VERSION
 void MainWindow::showInvalidProjectDialog()
 {
