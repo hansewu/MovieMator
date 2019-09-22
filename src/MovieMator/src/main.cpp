@@ -448,62 +448,24 @@ int main(int argc, char **argv)
     g_splash->show();
 
 
-    clock_t begin, duration;
-    begin = clock();
-
-#if defined(Q_OS_MAC)
-//    //copy qml files
-    QDir dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
-
-    QDir appDir0(qApp->applicationDirPath());
-    appDir0.cdUp();
-    appDir0.cd("Resources");
-    //QmlUtilities::sharedEngine()->addImportPath(appDir.path());
-
-    QString dstArchivePath = dir.path().append("/resource.zip");
-    QFile::remove(dstArchivePath);
-
-    QString sharePath = dir.path().append("/share");
-    removeDir(sharePath);
-
-    QFile::copy(appDir0.path().append("/resource"), dstArchivePath);
-//    QFile::copy(appDir0.path().append("/resource.zip"), dstArchivePath);
-    QStringList args;
-    args << "-o";
-    args << dstArchivePath;
-    args << "-d";
-    args << dir.path();
-    QProcess unzip;
-
-    QDir appDir1(qApp->applicationDirPath());
-//    QmlUtilities::sharedEngine()->addImportPath(appDir1.path().append("/qt_lib/qt_qml"));
-//    QmlUtilities::sharedEngine()->addPluginPath(appDir1.path().append("/qt_lib/plugins"));
-
-    unzip.start("/usr/bin/unzip", args);
-
-    unzip.waitForFinished();
-
-    QmlUtilities::sharedEngine()->addImportPath(dir.path().append("/qt_qml"));
-
-#endif
-    //    清空xml日志文件夹
+    //清空xml日志文件夹
     QDir logDir = Util::logFolderPath();
     logDir.removeRecursively();
-
-    duration = clock() - begin;
-    printf("copy qml --- %ld\n", duration);
 
     //copy text filter presets
     copyTextFilterPresetFile();
 
     QDir appDir(qApp->applicationDirPath());
+
 #if defined(Q_OS_MAC)
     appDir.cdUp();
     appDir.cd("Resources");
 #endif
+
     appDir.cd("share");
     appDir.cd("mlt");
     setenv("MLT_DATA", appDir.path().toUtf8().constData(), 1);
+
 
 #if defined(Q_OS_MAC)
     resolve_security_bookmark();
@@ -524,7 +486,6 @@ int main(int argc, char **argv)
 
 
 
-    begin = clock();
 
     a.mainWindow = &MAIN;
 
@@ -544,8 +505,6 @@ int main(int argc, char **argv)
 
     a.mainWindow->setFullScreen(a.isFullScreen);
 
-    duration = clock() - begin;
-    printf("show main --- %ld\n", duration);
 
     g_splash->finish(a.mainWindow);
     delete g_splash;

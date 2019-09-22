@@ -76,7 +76,7 @@ LIBS += -lLogger -lCommonUtil
 
 mac {
     QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/
-    QMAKE_RPATHDIR += @executable_path/qt_lib/lib
+    QMAKE_RPATHDIR += @executable_path/../Frameworks
 }
 
 win32 {

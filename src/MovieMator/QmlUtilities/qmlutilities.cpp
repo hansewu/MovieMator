@@ -79,16 +79,14 @@ void QmlUtilities::setCommonProperties(QQmlContext* context)
 
 QDir QmlUtilities::qmlDir()
 {
-//    QDir dir(qApp->applicationDirPath());
-//    dir.cdUp();
-//    dir.cd("Resources");
 
     QDir dir(qApp->applicationDirPath());
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     dir.cdUp();
 #elif defined(Q_OS_MAC)
-    dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+    dir.cdUp();
+    dir.cd("Resources");
 #endif
     dir.cd("share");
     dir.cd("moviemator");

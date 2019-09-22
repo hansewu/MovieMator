@@ -388,7 +388,7 @@ mac {
     QMAKE_LFLAGS += -Wl,/usr/lib/libcrypto.0.9.8.dylib
 #    INCLUDEPATH += /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7
 #    LIBS += -F/System/Library/Frameworks -framework Python
-    QMAKE_RPATHDIR += @executable_path/qt_lib/lib
+    QMAKE_RPATHDIR += @executable_path/../Frameworks
 #    QT_PLUGIN_PATH += @executable_path/qt_lib/plugins/
 #    QT_QPA_PLATFORM_PLUGIN_PATH = @executable_path/qt_lib/plugins/platforms/
 }
