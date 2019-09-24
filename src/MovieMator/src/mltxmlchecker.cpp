@@ -85,7 +85,6 @@ bool MltXmlChecker::check(const QString& fileName)
 #if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
 #ifndef SHARE_VERSION
     m_nUnbookmarkedFileCount = 0;
-
 #endif
 #endif
     QFile file(fileName);
@@ -117,9 +116,6 @@ bool MltXmlChecker::check(const QString& fileName)
     }
     if (m_tempFile.isOpen()) {
         m_tempFile.close();
-//        m_tempFile.open();
-//        LOG_DEBUG() << m_tempFile.readAll().constData();
-//        m_tempFile.close();
     }
     LOG_DEBUG() << "end";
 
@@ -385,6 +381,13 @@ static QString getPrefix(const QString& name, const QString& value)
 
 bool MltXmlChecker::hasAccessPermission(const QString &filename)
 {
+    QString strApplicationDataPath = Util::applicationUserDataPath();
+    QString strApplicationResourcePath = Util::resourcesPath();
+
+    //程序自身的资源
+    if (filename.startsWith(strApplicationDataPath, Qt::CaseInsensitive) || filename.startsWith(strApplicationResourcePath, Qt::CaseInsensitive))
+        return true;
+
     return has_access_permission(filename.toUtf8().constData());
 }
 
@@ -438,30 +441,32 @@ void MltXmlChecker::checkUnlinkedFile(const QString& mlt_service)
     if (!m_resource.info.filePath().isEmpty() && !isNetworkResource(m_resource.info.filePath()))
 
     // file does not exist
-
     if (!m_resource.info.exists())
     // not already in the model
     {
-    if (m_unlinkedFilesModel.findItems(m_resource.info.filePath(),
-            Qt::MatchFixedString | Qt::MatchCaseSensitive).isEmpty()) {
-        LOG_ERROR()<< "file not found: " << m_resource.info.filePath();
+        if (m_unlinkedFilesModel.findItems(m_resource.info.filePath(),
+                Qt::MatchFixedString | Qt::MatchCaseSensitive).isEmpty())
+        {
+            LOG_ERROR()<< "file not found: " << m_resource.info.filePath();
 
-        QIcon icon(":/icons/oxygen/32x32/status/task-reject.png");
-        QStandardItem* item = new QStandardItem(icon, m_resource.info.filePath());
-        item->setToolTip(item->text());
-        item->setData(m_resource.hash, ShotcutHashRole);
-        m_unlinkedFilesModel.appendRow(item);
+            QIcon icon(":/icons/oxygen/32x32/status/task-reject.png");
+            QStandardItem* item = new QStandardItem(icon, m_resource.info.filePath());
+            item->setToolTip(item->text());
+            item->setData(m_resource.hash, ShotcutHashRole);
+            m_unlinkedFilesModel.appendRow(item);
+        }
     }
-    }
+
 #if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
 #ifndef SHARE_VERSION
-    else if (!hasAccessPermission(m_resource.info.filePath())) {
+    else if (!hasAccessPermission(m_resource.info.filePath()))
+    {
         m_nUnbookmarkedFileCount++;
     }
 #endif
 #endif
-    LOG_DEBUG()<<"file name:"<<m_resource.info.filePath();
 
+    LOG_DEBUG()<<"file name:"<<m_resource.info.filePath();
 }
 
 bool MltXmlChecker::fixUnlinkedFile(QString& value)

@@ -86,6 +86,12 @@ QString Util::templatePath()
     return  dir.absolutePath();
 }
 
+QString Util::applicationUserDataPath()
+{
+    QDir dirUserData(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    return dirUserData.absolutePath();
+}
+
 QString Util::resourcesPath()
 {
     QDir dir(qApp->applicationDirPath());
