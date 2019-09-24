@@ -450,7 +450,7 @@ void Controller::saveXML(const QString& filename, Service* service, bool withRel
         int ignore = s.get_int("ignore_points");
         if (ignore)
             s.set("ignore_points", 0);
-//        c.set("time_format", "clock");
+        c.set("time_format", "clock");
 
         c.set("no_meta", 1);
 
@@ -499,7 +499,7 @@ QString Controller::XML(Service* service)
     c.set("no_meta", 1);
     c.set("store", "moviemator");
 
-//    c.set("time_format", "clock");
+    c.set("time_format", "clock");
 
 
     //wzq remove the bug in libmltxml consumer_xml.c
