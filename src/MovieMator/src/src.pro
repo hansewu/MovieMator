@@ -115,7 +115,8 @@ SOURCES += main.cpp\
     CrashHandler/CrashHandler.cpp \
 #    templateeidtor.cpp \
     commands/abstractcommand.cpp \
-    dialogs/videomodesettingsdialog.cpp
+    dialogs/videomodesettingsdialog.cpp \
+    dialogs/packprojectwindow.cpp
 
 HEADERS  += mainwindow.h \
     scrubbar.h \
@@ -227,7 +228,8 @@ HEADERS  += mainwindow.h \
     eccregister/CEccRegister.h \
     commands/abstractcommand.h \
     CrashHandler/CrashHandler.h \
-    dialogs/videomodesettingsdialog.h
+    dialogs/videomodesettingsdialog.h \
+    dialogs/packprojectwindow.h
 
 mac {
     SOURCES += securitybookmark/SecurityBookmark.mm \
@@ -299,6 +301,7 @@ INCLUDEPATH = ../CuteLogger/include ../CommonUtil ../MltController ../QmlUtiliti
 INCLUDEPATH += ../include
 INCLUDEPATH += ../Breakpad/breakpad/src
 INCLUDEPATH += ../ResourceDockGenerator
+INCLUDEPATH += ../QuaZip
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
@@ -306,21 +309,25 @@ debug_and_release {
         LIBS += -L../QmlUtilities/debug
         LIBS += -L../Breakpad/debug
         LIBS += -L../ResourceDockGenerator/debug
+        LIBS += -L../QuaZip/debug
     } else {
         LIBS += -L../CuteLogger/release -L../CommonUtil/release -L../MltController/release
         LIBS += -L../QmlUtilities/release
         LIBS += -L../Breakpad/release
         LIBS += -L../ResourceDockGenerator/release
+        LIBS += -L../QuaZip/release
     }
 } else {
     LIBS += -L../CuteLogger -L../CommonUtil -L../MltController -L../QmlUtilities #-L../mm
     LIBS += -L../Breakpad
     LIBS += -L../ResourceDockGenerator
+    LIBS += -L../QuaZip
 }
 
 LIBS += -lLogger -lpthread -lCommonUtil -lMltController -lQmlUtilities
 LIBS += -lBreakpad
 LIBS += -lResourceDockGenerator
+LIBS += -lQuaZip
 
 
 

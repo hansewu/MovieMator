@@ -114,7 +114,7 @@
     #include "securitybookmark/transport_security_bookmark.h"
 #endif
 
-
+#include "dialogs/packprojectwindow.h"
 
 #if defined(Q_OS_WIN)
 
@@ -675,6 +675,8 @@ MainWindow::MainWindow()
     m_proFeaturePromptDialog->setWindowModality(QmlApplication::dialogModality());
     m_upgradeToProPromptDialog = new UpgradeToProPromptDialog();
     m_upgradeToProPromptDialog->setWindowModality(QmlApplication::dialogModality());
+
+    m_pPackProjectWindow = new PackProjectWindow(this);
 
 #if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
 #ifndef SHARE_VERSION
@@ -4821,4 +4823,12 @@ void MainWindow::onFiltersInfoLoaded()
 {
     RDG_SetVideoFiltersInfo(m_filterController->getVideoFiltersInfo());
     RDG_SetAudioFiltersInfo(m_filterController->getAudioFiltersInfo());
+}
+
+void MainWindow::on_actionPack_triggered()
+{
+    if(m_pPackProjectWindow)
+    {
+        m_pPackProjectWindow->packProject();
+    }
 }

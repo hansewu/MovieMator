@@ -78,6 +78,7 @@ class QUndoCommand;
 class ContainerDock;
 class QToolButton;
 class TemplateEidtor;
+class PackProjectWindow;
 
 //class TextlistDock;
 
@@ -297,6 +298,8 @@ private:
     ContainerDock *m_propertiesDockContainer;//包裹右侧所有dock的容器dock
 
     TemplateEidtor *m_templateEditor;//暂时无用
+
+    PackProjectWindow *m_pPackProjectWindow;
 
 public slots:
     void open(Mlt::Producer* producer);//打开producer
@@ -521,6 +524,7 @@ private slots:
 
     void on_actionNewProject_triggered();
     void on_actionVideoMode_triggered();
+    void on_actionPack_triggered();
 };
 
 #define MAIN MainWindow::singleton()

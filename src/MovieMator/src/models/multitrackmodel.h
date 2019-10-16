@@ -164,6 +164,9 @@ public:
     int selectMultitrack();//选中 Multitrack
     int getClipOfPosition(int nIndexOfTrack, int nFramePostion);//获取轨道 上 nFramePostion 位置的 clip 索引
 
+    static QStringList getResourceList(char* mmpFile);
+    static int zipPackResourceList(const QString &strZipName, const QStringList &fileList, int (*pCallback)(int, void*), void* pUserData);
+
 signals:
     void created();
     void loaded();
