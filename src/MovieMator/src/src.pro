@@ -115,7 +115,8 @@ SOURCES += main.cpp\
     CrashHandler/CrashHandler.cpp \
 #    templateeidtor.cpp \
     commands/abstractcommand.cpp \
-    dialogs/videomodesettingsdialog.cpp
+    dialogs/videomodesettingsdialog.cpp \
+    dialogs/packprojectwindow.cpp
 
 HEADERS  += mainwindow.h \
     scrubbar.h \
@@ -227,7 +228,8 @@ HEADERS  += mainwindow.h \
     eccregister/CEccRegister.h \
     commands/abstractcommand.h \
     CrashHandler/CrashHandler.h \
-    dialogs/videomodesettingsdialog.h
+    dialogs/videomodesettingsdialog.h \
+    dialogs/packprojectwindow.h
 
 mac {
     SOURCES += securitybookmark/SecurityBookmark.mm \
@@ -299,6 +301,7 @@ INCLUDEPATH = ../CuteLogger/include ../CommonUtil ../MltController ../QmlUtiliti
 INCLUDEPATH += ../include
 INCLUDEPATH += ../Breakpad/breakpad/src
 INCLUDEPATH += ../ResourceDockGenerator
+INCLUDEPATH += ../QuaZip
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
@@ -306,21 +309,25 @@ debug_and_release {
         LIBS += -L../QmlUtilities/debug
         LIBS += -L../Breakpad/debug
         LIBS += -L../ResourceDockGenerator/debug
+        LIBS += -L../QuaZip/debug
     } else {
         LIBS += -L../CuteLogger/release -L../CommonUtil/release -L../MltController/release
         LIBS += -L../QmlUtilities/release
         LIBS += -L../Breakpad/release
         LIBS += -L../ResourceDockGenerator/release
+        LIBS += -L../QuaZip/release
     }
 } else {
     LIBS += -L../CuteLogger -L../CommonUtil -L../MltController -L../QmlUtilities #-L../mm
     LIBS += -L../Breakpad
     LIBS += -L../ResourceDockGenerator
+    LIBS += -L../QuaZip
 }
 
 LIBS += -lLogger -lpthread -lCommonUtil -lMltController -lQmlUtilities
 LIBS += -lBreakpad
 LIBS += -lResourceDockGenerator
+LIBS += -lQuaZip
 
 
 
@@ -346,12 +353,12 @@ mac {
 #    QMAKE_INFO_PLIST = ../Info-Free.plist
 #    ICON = ../icons/moviemator.icns
 
-    #free share
+    #share 国区免费版本
 #    DEFINES += SHARE_VERSION=1
 #    DEFINES += MOVIEMATOR_FREE=1
-#    TARGET = "MovieMator Video Editor Lite"
-#    QMAKE_INFO_PLIST = ../Info-Free-share.plist
-#    ICON = ../icons/moviemator.icns
+#    TARGET = "MovieMator Video Editor Pro"
+#    QMAKE_INFO_PLIST = ../Info_share.plist
+#    ICON = ../icons/moviemator-pro.icns
 
     #pro appstore
 #    DEFINES += MOVIEMATOR_PRO=1
@@ -388,21 +395,25 @@ mac {
     QMAKE_LFLAGS += -Wl,/usr/lib/libcrypto.0.9.8.dylib
 #    INCLUDEPATH += /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7
 #    LIBS += -F/System/Library/Frameworks -framework Python
-    QMAKE_RPATHDIR += @executable_path/qt_lib/lib
+    QMAKE_RPATHDIR += @executable_path/../Frameworks
 #    QT_PLUGIN_PATH += @executable_path/qt_lib/plugins/
 #    QT_QPA_PLATFORM_PLUGIN_PATH = @executable_path/qt_lib/plugins/platforms/
 }
 
 
 win32 {
-    #free share
-#    DEFINES += SHARE_VERSION=1
-#    DEFINES += MOVIEMATOR_FREE=1
-
-    #pro share
-    DEFINES += STEAM=1
-    DEFINES += MOVIEMATOR_PRO=1
+     #中国网站版
+    DEFINES += MOVIEMATOR_FREE=1
     DEFINES += SHARE_VERSION=1
+
+    #国外网站版
+#    DEFINES += MOVIEMATOR_PRO=1
+#    DEFINES += SHARE_VERSION=1
+
+    #steam版
+#    DEFINES += STEAM=1
+#    DEFINES += MOVIEMATOR_PRO=1
+#    DEFINES += SHARE_VERSION=1
 }
 
 win32 {
@@ -431,7 +442,7 @@ isEmpty(MOVIEMATOR_VERSION) {
      win32:MOVIEMATOR_VERSION = adhoc
 }
 #DEFINES += MOVIEMATOR_VERSION=\\\"$$MOVIEMATOR_VERSION\\\"
-DEFINES += MOVIEMATOR_VERSION=\\\"2.7.0\\\"
+DEFINES += MOVIEMATOR_VERSION=\\\"2.8.0\\\"
 
 
 unix:!mac:isEmpty(PREFIX) {

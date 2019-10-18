@@ -35,12 +35,16 @@
 #include <Logger.h>
 #include <QMessageBox>
 #include <QtDebug>
+
 #include "../maincontroller.h"
 
 #include "../controllers/filtercontroller.h"
 
 #include "../docks/timelinedock.h"
 
+#include "qdom.h"
+#include "JlCompress.h"
+#include <QCryptographicHash>
 
 static const quintptr NO_PARENT_ID = quintptr(-1);
 static const char* kShotcutDefaultTransition = "lumaMix";
@@ -166,6 +170,15 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                     result = QString::fromUtf8(info->producer->get("moviemator:imageName"));
                     result += "-" + QString::fromUtf8(info->producer->get("moviemator:animationName"));
                 }
+
+                //获取clip在时间线上显示的名字
+                QString strClipCaption;
+                if (info->producer && info->producer->is_valid())
+                    strClipCaption = getClipCaption(*(info->producer));
+
+                if (!strClipCaption.isEmpty())
+                    result = strClipCaption;
+
                 return result;
             }
             case ResourceRole:
@@ -1768,6 +1781,7 @@ void MultitrackModel::AttachedfilterChanged(int trackIndex, int clipIndex)
     QModelIndex modelIndex = createIndex(clipIndex, 0, quintptr(trackIndex));
     QVector<int> roles;
     roles << HasFilterRole;
+    roles << NameRole; //更新clip显示名字
     emit dataChanged(modelIndex, modelIndex, roles);
 }
 
@@ -3959,11 +3973,13 @@ bool MultitrackModel::checkClip(Mlt::Producer &clip)
                            tr("<p>The time code of the file cannot be read. Please convert it to MP4 before adding the file. </p>"
                               "<p>Recommend:<a href=\"http://www.effectmatrix.com/total-video-converter\">Total Video Converter</a></p>"),
                            QMessageBox::Ok, &(MAIN));
-#if MOVIEMATOR_PRO
+
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
-        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-#endif
+//#if MOVIEMATOR_PRO
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
+//#else
+//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+//#endif
         dialog.setWindowModality(Qt::WindowModal);
         dialog.setDefaultButton(QMessageBox::Ok);
         int r = dialog.exec();
@@ -4504,4 +4520,203 @@ int MultitrackModel::getClipOfPosition(int nIndexOfTrack, int nFramePostion)
         nResult = mltPlaylist.get_clip_index_at(nFramePostion);
     }
     return nResult;
+}
+
+QString MultitrackModel::getClipCaption(Mlt::Producer &producerClip) const
+{
+    QString strProducerCaption("");
+
+    Q_ASSERT(producerClip.is_valid());
+    if (!producerClip.is_valid())
+        return strProducerCaption;
+
+    QString strProducerType = QString::fromUtf8(producerClip.get(kProducerTypeProperty));
+    if (strProducerType.compare("text-template", Qt::CaseInsensitive) == 0)
+    {
+
+        int nFilterCount = producerClip.filter_count();
+        for (int i = 0; i < nFilterCount; i++)
+        {
+            Mlt::Filter* pMltFilter = producerClip.filter(i);
+            Q_ASSERT(pMltFilter);
+
+            if (pMltFilter && pMltFilter->is_valid() && (strcmp(pMltFilter->get("mlt_service"), "dynamictext") == 0))
+            {
+                char *pStrText = pMltFilter->get("argument");
+                if (pStrText)
+                {
+                    if (!strProducerCaption.isEmpty())
+                        strProducerCaption.append(" ");
+                    strProducerCaption.append(pStrText);
+                }
+            }
+
+            delete pMltFilter;
+        }
+    }
+
+    strProducerCaption.replace(QRegExp("[\r\n]"), " ");
+    strProducerCaption.replace(QRegExp("[\\s]+"), " ");
+
+    return strProducerCaption;
+}
+
+
+static void saveFileByContent(QFile &file, const QString &strContent)
+{
+    if(file.open(QIODevice::ReadWrite))
+    {
+        if(file.resize(0))
+        {
+            file.write(strContent.toUtf8().constData());
+        }
+    }
+    file.close();
+}
+
+QStringList MultitrackModel::getResourceList(char* mmpFile)
+{
+    QStringList filesList;
+
+    QFile file(mmpFile);
+    if (!file.exists())
+    {
+        qDebug() << "File is not exist." << file.fileName();
+        return filesList;
+    }
+
+    QDomDocument doc;
+    QString strError;
+    if (!doc.setContent(&file, &strError))
+    {
+        qDebug() << strError;
+        file.close();
+        return filesList;
+    }
+    file.close();
+
+    QDomNodeList nodeListMlt = doc.elementsByTagName("mlt");
+    QDomElement elementMlt   = nodeListMlt.at(0).toElement();
+    if(elementMlt.hasAttribute("root"))
+    {   // delete root="MovieMator"
+        elementMlt.removeAttribute("root");
+    }
+
+    QDomNodeList nodeListProducer = doc.elementsByTagName("producer");
+
+    QString strPath;
+    QString strFileName;
+    QFileInfo fileInfo;
+
+    for (int i = 0; i < nodeListProducer.count(); i++)
+    {
+        QDomElement domElement = nodeListProducer.at(i).toElement();
+
+        QDomNodeList nodeListProperty = domElement.elementsByTagName("property");
+        for (int j = 0; j < nodeListProperty.count(); j++)
+        {
+            QDomElement element = nodeListProperty.at(j).toElement();
+
+            if (element.attribute("name").contains("resource"))
+            {
+                QDomNode domNodeResource = element.toElement().firstChild();
+
+                strPath = domNodeResource.nodeValue();
+                fileInfo.setFile(strPath);
+
+                strFileName = fileInfo.fileName();
+
+                if(strPath.endsWith(".html", Qt::CaseInsensitive))
+                {   // save the directory that contains this HTML file
+                    strPath     = fileInfo.absolutePath();
+                    strFileName = QFileInfo(strPath).fileName() + "/" + strFileName;
+                }
+
+                if(fileInfo.isDir() || fileInfo.isFile())
+                {   // only save file or directory
+                    filesList.append(strPath);
+
+                    // modify the absolute path by relative path
+                    QByteArray hash = QCryptographicHash::hash(strPath.toUtf8(), QCryptographicHash::Md5).toHex();
+                    domNodeResource.setNodeValue(QString::fromStdString(hash.toStdString()) + "/" + strFileName);
+                }
+            }
+        }
+    }
+
+    // modify the mmp file content
+    saveFileByContent(file, doc.toString());
+
+    filesList.removeDuplicates();        // remove the duplicate items
+    filesList.append(file.fileName());   // append the mmp file
+
+    return filesList;
+}
+
+int MultitrackModel::zipPackResourceList(const QString &strZipName, const QStringList &fileList, int (*pCallback)(int, void*), void *pUserData)
+{
+    QuaZip zip(strZipName);
+    QDir().mkpath(QFileInfo(strZipName).absolutePath());
+    if(!zip.open(QuaZip::mdCreate))
+    {
+        QFile::remove(strZipName);
+
+        qDebug() << "Error: Can't open zip file." << strZipName;
+        return 1;
+    }
+
+    QDateTime currentTime  = QDateTime::currentDateTime();
+    QString strCurrentTime = currentTime.toString("yyyy_MM_dd_hh_mm_ss_zzz");
+    QString strPrefix      = "Project_" + strCurrentTime;
+
+    QFileInfo info;
+    QByteArray hash;
+    QString strFileDest;
+    Q_FOREACH (QString strFile, fileList)
+    {
+        info.setFile(strFile);
+        hash        = QCryptographicHash::hash(strFile.toUtf8().constData(), QCryptographicHash::Md5).toHex();
+        strFileDest = strPrefix + "/" + QString::fromStdString(hash.toStdString()) + "/" + info.fileName();
+
+        if(info.isFile())       // file
+        {
+            if(strFile.endsWith(".mmp", Qt::CaseInsensitive))     // project file
+            {
+                strFileDest = strPrefix + "/" + info.fileName();
+            }
+
+            if (!JlCompress::compressFile(&zip, strFile, strFileDest, pCallback, pUserData))
+            {
+                QFile::remove(strZipName);
+
+                qDebug() << "Error: Compress file failed." << strFile;
+                return 1;
+            }
+        }
+        else if(info.isDir())   // folder: contains html file
+        {
+            if (!JlCompress::compressDir(&zip, strFile, strFileDest, pCallback, pUserData))
+            {
+                QFile::remove(strZipName);
+
+                qDebug() << "Error: Compress folder failed." << strFile;
+                return 1;
+            }
+        }
+        else
+        {
+            qDebug() << "Invalid file or folder!" << strFile;
+        }
+    }
+
+    zip.close();
+    if(zip.getZipError() != 0)
+    {
+        QFile::remove(strZipName);
+
+        qDebug() << "Error: ZipError is not 0.";
+        return 1;
+    }
+
+    return 0;
 }

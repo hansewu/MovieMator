@@ -7,13 +7,14 @@ SUBDIRS = CuteLogger \
     src \
     Breakpad \
     CrashReporter \
-    ResourceDockGenerator
+    ResourceDockGenerator \
+    QuaZip
 cache()
 CommonUtil.depends = CuteLogger
 QmlUtilities.depends = CommonUtil
 MltController.depends = QmlUtilities
 ResourceDockGenerator.depends = CommonUtil
-src.depends = CuteLogger CommonUtil QmlUtilities MltController Breakpad ResourceDockGenerator
+src.depends = CuteLogger CommonUtil QmlUtilities MltController Breakpad ResourceDockGenerator QuaZip
 
 
 TRANSLATIONS += \
