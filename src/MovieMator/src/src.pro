@@ -15,6 +15,7 @@ SOURCES += main.cpp\
     scrubbar.cpp \
     openotherdialog.cpp \
     controllers/filtercontroller.cpp \
+    widgets/htmleffectproducerwidget.cpp \
     widgets/plasmawidget.cpp \
     widgets/lissajouswidget.cpp \
     widgets/isingwidget.cpp \
@@ -121,6 +122,7 @@ HEADERS  += mainwindow.h \
     scrubbar.h \
     openotherdialog.h \
     controllers/filtercontroller.h \
+    widgets/htmleffectproducerwidget.h \
     widgets/plasmawidget.h \
     abstractproducerwidget.h \
     widgets/lissajouswidget.h \
@@ -239,6 +241,7 @@ mac {
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
+    widgets/htmleffectproducerwidget.ui \
     widgets/plasmawidget.ui \
     widgets/lissajouswidget.ui \
     widgets/isingwidget.ui \

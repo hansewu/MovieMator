@@ -27,6 +27,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     basedockwidget.cpp \
+    htmleffectdockwidget.cpp \
+    htmleffectitemmodel.cpp \
     textdockwidget.cpp \
     baselistview.cpp \
     baseitemdelegate.cpp \
@@ -42,6 +44,8 @@ SOURCES += \
     recentdock/lineeditclear.cpp
 
 HEADERS += \
+        htmleffectdockwidget.h \
+        htmleffectitemmodel.h \
         resourcedockgenerator_global.h \ 
     basedockwidget.h \
     textdockwidget.h \

@@ -463,7 +463,7 @@ int main(int argc, char **argv)
     QFile::remove(dstArchivePath);
 
     QString sharePath = dir.path().append("/share");
-    removeDir(sharePath);
+//    removeDir(sharePath);
 
     QFile::copy(appDir0.path().append("/resource"), dstArchivePath);
 //    QFile::copy(appDir0.path().append("/resource.zip"), dstArchivePath);

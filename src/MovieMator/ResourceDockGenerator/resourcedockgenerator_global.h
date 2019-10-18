@@ -21,6 +21,8 @@ typedef struct {
     bool bVisible;
 } FilterInfo;
 
+RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *RDG_CreateHtmlEffectDock(MainInterface *pMainInterface);
+
 RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *RDG_CreateTextDock(MainInterface *pMainInterface);
 
 RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *RDG_CreateStickerDock(MainInterface *pMainInterface);

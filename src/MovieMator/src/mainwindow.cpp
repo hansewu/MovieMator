@@ -46,6 +46,7 @@
 #include "widgets/avformatproducersimplewidget.h"
 #include "widgets/imageproducerwidget.h"
 #include "widgets/webvfxproducer.h"
+#include "widgets/htmleffectproducerwidget.h"
 #include "docks/encodedock.h"
 #include "docks/jobsdock.h"
 #include "jobqueue.h"
@@ -63,6 +64,7 @@
 #include "docks/timelinedock.h"
 #include "widgets/lumamixtransition.h"
 #include "qmltypes/mmqmlutilities.h"
+#include "qmltypes/qmlprofile.h"
 #include <qmlapplication.h>
 #include "autosavefile.h"
 //#include <commands/playlistcommands.h>
@@ -417,6 +419,7 @@ MainWindow::MainWindow()
     connect(m_timelineDock, SIGNAL(clipOpened(Mlt::Producer*)), SLOT(openCut(Mlt::Producer*)));
     connect(m_timelineDock->model(), SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
     connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), SLOT(loadProducerWidget(Mlt::Producer*)));
+    connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), SLOT(onClipSelected(Mlt::Producer*)));
     connect(m_timelineDock, SIGNAL(selectionChanged()), SLOT(onTimelineSelectionChanged()));
     connect(m_timelineDock, SIGNAL(clipCopied()), SLOT(onClipCopied()));
 //    connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onTimelineDockTriggered()));
@@ -634,6 +637,11 @@ MainWindow::MainWindow()
     m_resourceStickerDock = RDG_CreateStickerDock(&MainInterface::singleton());
     addResourceDock(m_resourceStickerDock, tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
 
+    LOG_DEBUG() << "HtmlEffectDock";
+    m_resourceHtmlEffectDock = RDG_CreateHtmlEffectDock(&MainInterface::singleton());
+    addResourceDock(m_resourceHtmlEffectDock, tr("HtmlEffect"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
+
+
     m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
     m_propertiesDock->installEventFilter(this);
     m_propertiesDock->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
@@ -665,11 +673,8 @@ MainWindow::MainWindow()
     //m_templateEditorDock = TemplateEditorDock_initModule(&MainInterface::singleton());
     //addPropertiesDock(m_templateEditorDock, tr("Template"), QIcon(":/icons/light/32x32/show-filters.png"), QIcon(":/icons/light/32x32/show-filters-highlight.png"));
 
-
-
     m_registrationTipsDialog = new RegistrationTipsDialog();
     m_registrationDialog = new RegistrationDialog();
-
 
     m_proFeaturePromptDialog = new ProFeaturePromptDialog();
     m_proFeaturePromptDialog->setWindowModality(QmlApplication::dialogModality());
@@ -3090,11 +3095,14 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         return  w;
     }  
 
+    QString strProduecerType(producer->get("moviemator:producer_type"));
     QString service(producer->get("mlt_service"));
     QString resource = QString::fromUtf8(producer->get("resource"));
     QString shotcutProducer(producer->get(kShotcutProducerProperty));
 
-    if (resource.startsWith("video4linux2:"))
+    if(strProduecerType == "html-effect")
+        w = new HtmlEffectProducerWidget(this);
+    else if (resource.startsWith("video4linux2:"))
         w = new Video4LinuxWidget(this);
     else if (resource.startsWith("pulse:"))
         w = new PulseAudioWidget(this);
@@ -4762,4 +4770,34 @@ void MainWindow::onFiltersInfoLoaded()
 {
     RDG_SetVideoFiltersInfo(m_filterController->getVideoFiltersInfo());
     RDG_SetAudioFiltersInfo(m_filterController->getAudioFiltersInfo());
+}
+
+void MainWindow::onClipSelected(Mlt::Producer* producer)
+{
+    if(producer)
+    {
+        Mlt::GLWidget* videoWidget = static_cast<Mlt::GLWidget*>(&(MLT));
+        if(QString(producer->get("moviemator:producer_type")) == "html-effect")
+        {
+            QDir dir = QmlUtilities::qmlDir();
+            dir.cd("filters_pro");
+            dir.cd("webvfx");
+            QString strVuiFilePath = dir.absoluteFilePath("vui.qml");
+
+            QQmlContext *context = videoWidget->rootContext();
+            context->setContextProperty("profile", &QmlProfile::singleton());
+
+            int a = producer->filter_count();
+            Mlt::Filter* mltFilter = producer->filter(a-1);
+            QmlFilter* filter = new QmlFilter(producer->filter(a-1), new QmlMetadata());
+            context->setContextProperty("filter", filter);
+
+            videoWidget->setSource(strVuiFilePath);
+        }
+        else
+        {
+            videoWidget->setSource(QUrl(""));
+        }
+    }
+
 }

@@ -99,7 +99,13 @@ void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
 
 //    Q_ASSERT(!producer || !m_producer || (producer->get_parent() != m_producer->get_parent()));
 //    if (!producer || !m_producer || (producer->get_parent() != m_producer->get_parent())) {
+
+    QString strProduecerType(producer->get("moviemator:producer_type"));
+    if(strProduecerType != "html-effect")
+    {
         reset(producer);
+    }
+
 //    }
 }
 
@@ -357,7 +363,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta, bool bFromUndo)
     }
 
     Q_ASSERT(meta);
-    Q_ASSERT(m_producer);
+//    Q_ASSERT(m_producer);
 
 
     if (!m_producer || !m_producer->is_valid())
