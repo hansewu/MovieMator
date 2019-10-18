@@ -66,7 +66,7 @@
      <x>0</x>
      <y>0</y>
      <width>1020</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -80,6 +80,7 @@
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
     <addaction name="actionExportEDL"/>
+    <addaction name="actionPack"/>
     <addaction name="actionClose"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -964,7 +965,12 @@
    <property name="text">
     <string>Video Mode</string>
    </property>
-  </action>  
+  </action>
+  <action name="actionPack">
+   <property name="text">
+    <string>Package</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

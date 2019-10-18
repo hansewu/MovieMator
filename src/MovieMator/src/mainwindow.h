@@ -78,6 +78,7 @@ class QUndoCommand;
 class ContainerDock;
 class QToolButton;
 class TemplateEidtor;
+class PackProjectWindow;
 
 //class TextlistDock;
 
@@ -277,7 +278,7 @@ private:
     //pro版功能提示对话框
     ProFeaturePromptDialog *m_proFeaturePromptDialog;
     UpgradeToProPromptDialog *m_upgradeToProPromptDialog;
-#ifdef MOVIEMATOR_PRO
+#if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
 #ifndef SHARE_VERSION
     InvalidProjectDialog *m_invalidProjectDiaog;//无效的工程提示对话框
 #endif
@@ -297,6 +298,8 @@ private:
     ContainerDock *m_propertiesDockContainer;//包裹右侧所有dock的容器dock
 
     TemplateEidtor *m_templateEditor;//暂时无用
+
+    PackProjectWindow *m_pPackProjectWindow;
 
 public slots:
     void open(Mlt::Producer* producer);//打开producer
@@ -376,7 +379,7 @@ public slots:
     //接收filtersInfo已加载的消息
     void onFiltersInfoLoaded();
 
-#ifdef MOVIEMATOR_PRO
+#if (defined(MOVIEMATOR_PRO) || defined(MOVIEMATOR_FREE))
 #ifndef SHARE_VERSION
     void showInvalidProjectDialog();
 #endif
@@ -521,6 +524,7 @@ private slots:
 
     void on_actionNewProject_triggered();
     void on_actionVideoMode_triggered();
+    void on_actionPack_triggered();
 };
 
 #define MAIN MainWindow::singleton()
