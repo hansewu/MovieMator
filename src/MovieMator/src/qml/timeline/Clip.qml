@@ -264,7 +264,7 @@ Rectangle {
         anchors.bottomMargin: parent.height / 2
         anchors.left: parent.left
         anchors.leftMargin: parent.width / 2 - width / 2
-        anchors.right: parent.right
+//        anchors.right: parent.right
         width: height * 16.0/9.0
         fillMode: Image.PreserveAspectFit
         source: isText ? textThumbnail : imagePath((outPoint+inPoint)/2)
