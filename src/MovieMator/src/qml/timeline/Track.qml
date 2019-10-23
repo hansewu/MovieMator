@@ -65,7 +65,7 @@ Rectangle {
         console.assert(repeater);
         if(!repeater) return;
         for (var i = 0; i < repeater.count; i++){
-            console.assert(repeater.imteAt(i));
+            console.assert(repeater.itemAt(i));
             if(repeater.itemAt(i))
                 repeater.itemAt(i).generateWaveform()
         }

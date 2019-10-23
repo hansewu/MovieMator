@@ -128,6 +128,7 @@ public:
         setMipmap(true);
         setAntialiasing(QPainter::Antialiasing);
         connect(this, SIGNAL(propertyChanged()), this, SLOT(update()));
+        connect(this, SIGNAL(outPointChanged()), this, SLOT(update()));
     }
 
     void paint(QPainter *painter)

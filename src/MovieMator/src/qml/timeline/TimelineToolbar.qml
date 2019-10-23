@@ -60,6 +60,8 @@ ToolBar {
     property alias actionAddFilter: addFilterAction
     property alias actionShowAllClips: showAllClipsAction
 
+    signal zoomScaleValueChanged();
+
     id: root
     SystemPalette { id: activePalette }
     width: 200
@@ -481,7 +483,18 @@ ToolBar {
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
         z: 2
-        onValueChanged: flag ? Logic.scrollIfZoomNeeded(wheelx, scaleValue) : Logic.scrollIfNeeded()
+        onValueChanged:
+        {
+            if (flag)
+            {
+                Logic.scrollIfZoomNeeded(wheelx, scaleValue)
+            }
+            else
+            {
+                Logic.scrollIfNeeded()
+                zoomScaleValueChanged();
+            }
+        }
     }
 
     // Add -滤镜菜单

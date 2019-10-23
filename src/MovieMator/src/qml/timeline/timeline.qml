@@ -263,6 +263,19 @@ Rectangle {
             acceptedButtons: Qt.RightButton
             onClicked: menu.popup()
         }
+
+        onZoomScaleValueChanged:
+        {
+            console.assert(tracksRepeater);
+            if(!tracksRepeater) return;
+            for (var i = 0; i < tracksRepeater.count; i++){
+                console.assert(tracksRepeater.itemAt(i));
+                if(tracksRepeater.itemAt(i))
+                {
+                    tracksRepeater.itemAt(i).redrawWaveforms()
+                }
+            }
+        }
     }
 
     // 刻度尺 Ruler
