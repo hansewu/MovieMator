@@ -56,8 +56,13 @@ UnsortMap<QString, BaseItemModel *> *TextDockWidget::createAllClassesItemModel()
             QString strFileName = TranslationHelper::getTranslationStr(templateFileInfo.baseName(), textFileNameTranslateInfo);
             pItem->setText(strFileName);
 
-            qDebug()<<"sll----------"<<strTextDir + "/thumbnail/" + oneClassFolderInfo.fileName() + "/" + templateFileInfo.baseName() + ".jpg";
-            QIcon icon = QIcon(strTextDir + "/thumbnail/" + oneClassFolderInfo.fileName() + "/" + templateFileInfo.baseName() + ".jpg");
+            QString thumbnailFolderName = "/thumbnail/";
+            if((Settings.language() != "zh_CN") && (Settings.language() != "zh"))
+            {
+                thumbnailFolderName = "/thumbnail_en/";
+            }
+            qDebug()<<"sll----------"<<strTextDir + thumbnailFolderName + oneClassFolderInfo.fileName() + "/" + templateFileInfo.baseName() + ".jpg";
+            QIcon icon = QIcon(strTextDir + thumbnailFolderName + oneClassFolderInfo.fileName() + "/" + templateFileInfo.baseName() + ".jpg");
             pItem->setIcon(icon);
 
             QString strToolTip = strFileName;
