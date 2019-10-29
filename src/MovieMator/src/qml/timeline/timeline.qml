@@ -812,6 +812,8 @@ Rectangle {
             isCurrentTrack: currentTrack === index
             timeScale: multitrack.scaleFactor
             selection: timeline ? timeline.selection : 0
+            visableX: scrollView.flickableItem.contentX
+            visableWidth: scrollView.width
             onClipClicked: {
                 currentTrack = track.DelegateModel.itemsIndex
                 console.assert(timeline);

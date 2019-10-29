@@ -120,6 +120,7 @@ class TimelineWaveform : public QQuickPaintedItem
     Q_PROPERTY(QColor fillColor MEMBER m_color NOTIFY propertyChanged)
     Q_PROPERTY(int inPoint MEMBER m_inPoint NOTIFY inPointChanged)
     Q_PROPERTY(int outPoint MEMBER m_outPoint NOTIFY outPointChanged)
+    Q_PROPERTY(bool visible MEMBER m_visible NOTIFY visableChanged)
 
 
 public:
@@ -129,11 +130,19 @@ public:
         setAntialiasing(QPainter::Antialiasing);
         connect(this, SIGNAL(propertyChanged()), this, SLOT(update()));
         connect(this, SIGNAL(outPointChanged()), this, SLOT(update()));
+        connect(this, SIGNAL(visableChanged()), this, SLOT(update()));
     }
 
     void paint(QPainter *painter)
     {
         Q_ASSERT(painter);
+
+        if (m_visible == false)
+        {
+            return;
+        }
+
+        setRenderTarget(QQuickPaintedItem::FramebufferObject);
         QVariantList levelsData = m_audioLevels.toList();
 
         if (levelsData.isEmpty())
@@ -176,12 +185,14 @@ signals:
     void propertyChanged();
     void inPointChanged();
     void outPointChanged();
+    void visableChanged();
 
 private:
     QVariant m_audioLevels;
     int m_inPoint;
     int m_outPoint;
     QColor m_color;
+    bool m_visible;
 };
 
 void registerTimelineItems()

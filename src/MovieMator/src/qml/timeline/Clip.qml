@@ -78,6 +78,9 @@ Rectangle {
     // clip是否为动画标签？？？？？
     property bool isAnimSticker: false
 
+    property real visableX: 0.0
+    property real visableWidth: 0.0
+
 
     // clip单击信号
     signal clicked(var clip)
@@ -145,6 +148,36 @@ Rectangle {
         return isBlank? 'transparent' : isTransition? '#8c953f': '#C0482C'
     }
 
+    function isVisable(index)
+    {
+        if (isBlank)
+        {
+            return false
+        }
+
+        if (index < waveformRepeater.count)
+        {
+            var itemStartX = index * waveform.maxWidth + originalX
+            var channels = waveformRepeater.itemAt(index).channels
+            var itemWidth = (waveformRepeater.itemAt(index).outPoint - waveformRepeater.itemAt(index).inPoint) / channels / speed * timeScale
+            var itemEndX = itemStartX + itemWidth
+
+            var visableStartX = visableX
+            var visableEndX = visableX + visableWidth
+
+
+            if (((itemStartX < visableStartX) && (itemEndX > visableStartX)) ||
+                    (itemStartX >= visableStartX && itemEndX <= visableEndX) ||
+                    (itemStartX < visableEndX && itemEndX > visableEndX))
+            {
+                return true
+            }
+            else
+            {
+                return false
+            }
+        }
+    }
     // 重定位所在轨道为轨道 track
     function reparent(track)
     {
@@ -321,7 +354,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.margins: parent.border.width
         opacity: 0.7
-        property int maxWidth: 10000
+        property int maxWidth: 5000
         property int innerWidth: clipRoot.width - clipRoot.border.width * 2
 
         Repeater
@@ -336,6 +369,7 @@ Rectangle {
                 inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
                 outPoint: inPoint + Math.round(width / timeScale * speed) * channels
                 levels: audioLevels
+                visible: isVisable(index)
             }
         }
     }

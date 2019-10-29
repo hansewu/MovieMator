@@ -49,6 +49,9 @@ Rectangle {
     // 选中的各个 clip（选中的多个剪辑）
     property var selection
 
+    property real visableX:0.0
+    property real visableWidth: 0.0
+
     // 轨道上的clip被点击时发出的信号
     signal clipClicked(var clip, var track)
     // clip从轨道被拖动时发出的信号
@@ -118,6 +121,8 @@ Rectangle {
             selected: trackRoot.isCurrentTrack && trackRoot.selection.indexOf(index) !== -1
             hasFilter: model.hasFilter || false
             isAnimSticker: model.isAnimSticker || false
+            visableX: trackRoot.visableX
+            visableWidth: trackRoot.visableWidth
 
             onClicked: trackRoot.clipClicked(clip, trackRoot);
             onMoved: {
