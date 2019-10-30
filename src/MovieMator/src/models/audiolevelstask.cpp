@@ -30,6 +30,7 @@
 #include <QTime>
 #include <Logger.h>
 #include <QDebug>
+#include "settings.h"
 
 static QList<AudioLevelsTask*> tasksList;
 static QMutex tasksListMutex;
@@ -58,39 +59,44 @@ AudioLevelsTask::~AudioLevelsTask()
 
 void AudioLevelsTask::start(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index, bool force)
 {
-    Q_UNUSED(producer);
-    Q_UNUSED(model);
-    Q_UNUSED(index);
-    Q_UNUSED(force);
-
-    if (producer.is_valid() && index.isValid())
+    if (Settings.timelineShowWaveforms())
     {
-        AudioLevelsTask* pAudioLevelsTask = new AudioLevelsTask(producer, model, index);
-
-        tasksListMutex.lock();
-
-        // See if there is already a task for this MLT service and resource.
-        foreach (AudioLevelsTask* pTask, tasksList)
+        QString serviceName = producer.get("mlt_service");
+        if (serviceName == "pixbuf" || serviceName == "qimage" || serviceName == "webvfx"
+            || serviceName == "color"|| serviceName.startsWith("frei0r"))
         {
-            if (*pTask == *pAudioLevelsTask)
+            return;
+        }
+
+        if (producer.is_valid() && index.isValid())
+        {
+            AudioLevelsTask* pAudioLevelsTask = new AudioLevelsTask(producer, model, index);
+
+            tasksListMutex.lock();
+
+            // See if there is already a task for this MLT service and resource.
+            foreach (AudioLevelsTask* pTask, tasksList)
             {
-                // If so, then just add ourselves to be notified upon completion.
-                delete pAudioLevelsTask;
-                pAudioLevelsTask = nullptr;
-                pTask->m_producers << ProducerAndIndex(new Mlt::Producer(producer), index);
-                break;
+                if (*pTask == *pAudioLevelsTask)
+                {
+                    // If so, then just add ourselves to be notified upon completion.
+                    delete pAudioLevelsTask;
+                    pAudioLevelsTask = nullptr;
+                    pTask->m_producers << ProducerAndIndex(new Mlt::Producer(producer), index);
+                    break;
+                }
             }
-        }
 
-        if (pAudioLevelsTask)
-        {
-            // Otherwise, start a new audio levels generation thread.
-            pAudioLevelsTask->m_isForce = force;
-            tasksList << pAudioLevelsTask;
-            QThreadPool::globalInstance()->start(pAudioLevelsTask);
-        }
+            if (pAudioLevelsTask)
+            {
+                // Otherwise, start a new audio levels generation thread.
+                pAudioLevelsTask->m_isForce = force;
+                tasksList << pAudioLevelsTask;
+                QThreadPool::globalInstance()->start(pAudioLevelsTask);
+            }
 
-        tasksListMutex.unlock();
+            tasksListMutex.unlock();
+        }
     }
 }
 

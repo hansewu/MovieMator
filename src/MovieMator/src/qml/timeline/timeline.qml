@@ -711,6 +711,26 @@ Rectangle {
                     timeline.removeTrack()
             }
         }
+        MenuItem {
+            text: qsTr('Show Audio Waveforms')
+            checkable: true
+            checked: settings.timelineShowWaveforms
+            onTriggered: {
+                if (checked) {
+                    if (settings.timelineShowWaveforms) {
+                        settings.timelineShowWaveforms = checked
+                        for (var i = 0; i < tracksRepeater.count; i++)
+                            tracksRepeater.itemAt(i).redrawWaveforms()
+                    } else {
+                        settings.timelineShowWaveforms = checked
+                        for (i = 0; i < tracksRepeater.count; i++)
+                            tracksRepeater.itemAt(i).remakeWaveforms()
+                    }
+                } else {
+                    settings.timelineShowWaveforms = checked
+                }
+            }
+        }
     }
 
     // 轨道菜单

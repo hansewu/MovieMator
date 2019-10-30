@@ -1028,13 +1028,17 @@ void TimelineDock::emitSelectedFromSelection()
 
 void TimelineDock::remakeAudioLevels(int trackIndex, int clipIndex)
 {
-    QModelIndex modelIndex = m_model.index(clipIndex, 0, m_model.index(trackIndex));
-    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
-    Q_ASSERT(info);
-    if (!info) {
-        return;
+    if (Settings.timelineShowWaveforms())
+    {
+        QModelIndex modelIndex = m_model.index(clipIndex, 0, m_model.index(trackIndex));
+        QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+        Q_ASSERT(info);
+        if (!info)
+        {
+            return;
+        }
+        AudioLevelsTask::start(*info->producer, &m_model, modelIndex, /* force */ true);
     }
-    AudioLevelsTask::start(*info->producer, &m_model, modelIndex, /* force */ true);
 }
 
 void TimelineDock::setTrackName(int trackIndex, const QString &value)

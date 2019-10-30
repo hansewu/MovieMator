@@ -74,6 +74,14 @@ Rectangle {
         }
     }
 
+    function remakeWaveforms()
+    {
+        for (var i = 0; i < repeater.count; i++)
+        {
+            timeline.remakeAudioLevels(trackRoot.DelegateModel.itemsIndex, i)
+        }
+    }
+
     // ？？？
     function snapClip(clip) {
         Logic.snapClip(clip, repeater)
