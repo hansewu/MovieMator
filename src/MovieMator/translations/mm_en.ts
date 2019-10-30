@@ -548,82 +548,82 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>Clip</name>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1199"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1233"/>
         <source>Split</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1210"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1244"/>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1221"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1255"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1235"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1269"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1260"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1294"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1276"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1310"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1287"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1321"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1302"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1336"/>
         <source>New Video Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1313"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1347"/>
         <source>New Audio Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1324"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1358"/>
         <source>Delete Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1338"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1372"/>
         <source>Zoom to Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1346"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1380"/>
         <source>Add Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1355"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1389"/>
         <source>Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1365"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1399"/>
         <source>Mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1376"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1410"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="1246"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="1280"/>
         <source>Ripple Delete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4187,7 +4187,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mltxmlchecker.cpp" line="114"/>
+        <location filename="../src/mltxmlchecker.cpp" line="113"/>
         <source>The file is not a MLT XML file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4584,22 +4584,22 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1221"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1225"/>
         <source>You cannot split a transition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1704"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1708"/>
         <source>For reasons of copyright protection, you can not import vob or m4p files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2263"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2267"/>
         <source>Save Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2263"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2267"/>
         <source>Template (*.xml)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4669,171 +4669,171 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TimelineToolbar</name>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="99"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="101"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="120"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="122"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="131"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="133"/>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="143"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="145"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="156"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="158"/>
         <source>Split</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="186"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="188"/>
         <source>Toggle snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="196"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="198"/>
         <source>Scrub while dragging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="207"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="209"/>
         <source>Ripple trim and drop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="208"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="210"/>
         <source>Ripple</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="220"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="222"/>
         <source>Change the position and size of the clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="221"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="223"/>
         <source>Resize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="239"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="241"/>
         <source>Rotate clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="240"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="242"/>
         <source>Rotate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="258"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="260"/>
         <source>Crop clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="259"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="261"/>
         <source>Crop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="312"/>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="313"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="314"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="315"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="330"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="332"/>
         <source>Add Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="347"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="349"/>
         <source>Add Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="375"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="377"/>
         <source>Zoom to Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="505"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="518"/>
         <source>Display a menu of additional actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="513"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="526"/>
         <source>Cut - Copy the current clip to the Source
 player and ripple delete it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="526"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="539"/>
         <source>Copy - Copy the current clip to the Source player (C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="539"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="552"/>
         <source>Paste - Insert clip into the current track
 shifting following clips to the right (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="552"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="565"/>
         <source>Append to the current track (A)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="568"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="581"/>
         <source>Remove current clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="588"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="601"/>
         <source>Insert clip into the current track
 shifting following clips to the right (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="608"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="621"/>
         <source>Split At Playhead (S)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="620"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="633"/>
         <source>Change clip&apos;s position and size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="702"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="715"/>
         <source>Zoom out timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="715"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="728"/>
         <source>Zoom in timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="728"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="741"/>
         <source>Add text to video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="742"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="755"/>
         <source>Add filter to video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="758"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="771"/>
         <source>Show all clips</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6029,68 +6029,73 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="569"/>
-        <location filename="../src/qml/timeline/timeline.qml" line="719"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="582"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="752"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="569"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="582"/>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="667"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="680"/>
         <source>Add Audio Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="676"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="689"/>
         <source>Add Video Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="685"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="698"/>
         <source>Insert Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="694"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="707"/>
         <source>Remove Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="709"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="715"/>
+        <source>Show Audio Waveforms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/timeline/timeline.qml" line="742"/>
         <source>Split</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="730"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="763"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="741"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="774"/>
         <source>New Video Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="751"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="784"/>
         <source>New Audio Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="761"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="794"/>
         <source>Delete Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="771"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="804"/>
         <source>Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="780"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="813"/>
         <source>Mute</source>
         <translation type="unfinished"></translation>
     </message>
