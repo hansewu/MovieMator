@@ -86,7 +86,7 @@ int MainController::appendToTimelineFromPath(int trackIndex, const QString &path
 {
 #if SHARE_VERSION
 #else
-    if (path.endsWith(".vob", Qt::CaseInsensitive) || path.endsWith(".m4p", Qt::CaseInsensitive))
+    if (path.endsWith(".vob", Qt::CaseInsensitive) || path.endsWith(".m4p", Qt::CaseInsensitive)  || path.endsWith(".m4v", Qt::CaseInsensitive))
     {
         QMessageBox dialog(QMessageBox::NoIcon,
                                      qApp->applicationName(),

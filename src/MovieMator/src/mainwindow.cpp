@@ -1425,7 +1425,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
 
 #if SHARE_VERSION
 #else
-    if (url.endsWith(".vob", Qt::CaseInsensitive) || url.endsWith(".m4p", Qt::CaseInsensitive))
+    if (url.endsWith(".vob", Qt::CaseInsensitive) || url.endsWith(".m4p", Qt::CaseInsensitive)  || url.endsWith(".m4v", Qt::CaseInsensitive))
     {
         QMessageBox dialog(QMessageBox::NoIcon,
                                      qApp->applicationName(),
