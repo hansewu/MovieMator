@@ -431,7 +431,7 @@ int main(int argc, char **argv)
     Application a(argc, argv);
 
 
-#if defined (QT_NO_DEBUG) && defined (SHARE_VERSION) //appstore版本不使用
+#if defined (QT_NO_DEBUG) && defined (SHARE_VERSION) && !defined(Q_OS_MAC) //appstore版本不使用
     CrashManager::CrashHandler::instance()->Init(QDir::tempPath());
 #endif
 
