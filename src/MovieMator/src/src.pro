@@ -235,7 +235,13 @@ mac {
     SOURCES += securitybookmark/SecurityBookmark.mm \
                 ../iRate/iRate.mm
     HEADERS += securitybookmark/SecurityBookmark.h \
-                ../iRate/iRate.h
+                ../iRate/iRate.h \
+                inapp/IAP.h \
+                inapp/iap_c_interface.h
+
+    OBJECTIVE_SOURCES += \
+                inapp/IAP.mm \
+                inapp/iap_c_interface.mm
 }
 
 
@@ -386,6 +392,7 @@ mac {
 #    LIBS += -L$$MLT_PREFIX/lib -lmlt++ -lmlt -lSDL
 #    LIBS += -lexif -lmltqt
     LIBS += "-framework Cocoa"
+    LIBS += "-framework StoreKit"
     LIBS += -L$$PWD/../../../../build/ecc -lregister
 
     QMAKE_LFLAGS += -Wl,/usr/lib/libcrypto.0.9.8.dylib
@@ -473,3 +480,4 @@ DISTFILES += \
 
 
 include(../win32debug.pri)
+
