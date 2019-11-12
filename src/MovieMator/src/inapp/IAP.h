@@ -40,4 +40,7 @@
 - (void)verifyReceiptOnThread;
 
 - (void)verifyRestoreOnThread;
+
+//返回值：0成功；-1失败。
+- (int)verifyInappReceiptLocally;
 @end

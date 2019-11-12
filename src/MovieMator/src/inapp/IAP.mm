@@ -7,19 +7,12 @@
 //
 
 #import "IAP.h"
-//#include "EventAdapter.h"
-//#import "ResourceManager.h"
-//#import "BaiduGameStat.h"
-//#import "CommFunction.h"
+#import "XYAppReceipt.h"
 
 
-
-
-@implementation IAP
-
-#define SERVER_URL @"http://www.totalrar.com/iap/iap.php"
 //#define SERVER_URL @"http://192.168.2.103/iap/iap.php"
 
+@implementation IAP
 
 + (IAP *)sharedInstance
 {
@@ -478,7 +471,6 @@
 //            [storage setBool:NO forKey:ENTRANCE_ONLINE_PRODUCT];
 //            [storage synchronize];
 //        }else {
-//            [self removeProduct:productID :[coins intValue]];
 //        }
         
 //    }else {
@@ -738,14 +730,24 @@
 //    }
 }
 
--(void)removeProduct:(NSString *)productIdentifier :(int)nCoins
-{    
-}
 
 - (void)onShowShoppingView
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowShoppingView" object:nil userInfo:nil];
 }
 
+- (int)verifyInappReceiptLocally
+{
+    XYAppReceipt *appReceipt = [XYAppReceipt bundleReceipt];
+    if (appReceipt == nil)
+        return -1;
+
+    if (![appReceipt containsActiveAutoRenewableSubscriptionOfProductIdentifier:MONTHLY_SUBSCRIPTION forDate:[NSDate date]]
+            && ![appReceipt containsActiveAutoRenewableSubscriptionOfProductIdentifier:THRERE_MONTH_SUBSCRIPTION forDate:[NSDate date]]
+            && ![appReceipt containsActiveAutoRenewableSubscriptionOfProductIdentifier:YEARLY_SUBSCRIPTION forDate:[NSDate date]])
+        return -1;
+
+    return 0;
+}
 
 @end
