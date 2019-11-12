@@ -20,13 +20,37 @@
 #ifndef IAP_C_INTERFACE_H
 #define IAP_C_INTERFACE_H
 
+#define STRING_LENGTH 128
+typedef struct {
+    char identifier[STRING_LENGTH];
+    char name[STRING_LENGTH];
+    char description[STRING_LENGTH];
+    char price[STRING_LENGTH];
+} INAPP_PRODUCT_INFO;
+
+//用户是否允许购买
+//允许返回1，不允许返回0
 int inapp_is_authorized_for_payments();
 
+//拉取产品信息
+void inapp_fetch_product_infomation();
 
-int inapp_fetch_product_infomation();
+//返回产品数量
+int inapp_get_product_count();
+
+//获取产品信息
+//返回产品信息数组，失败返回NULL
+INAPP_PRODUCT_INFO *inapp_get_product_information();
+
+//购买产品
+void inapp_add_payment(const char *product_identifer/*, callbackfunc*/);
+
+//恢复购买
+void inapp_restore_purchase(/*callbackfunc*/);
+
+//验证收据信息
+//返回值：0成功；-1失败。
+int inapp_verify_receipt();
 
 
-
-
-
-#endif // IAP_C_INTERFACE_H
+#endif //IAP_C_INTERFACE_H

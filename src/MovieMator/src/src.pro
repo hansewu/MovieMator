@@ -237,11 +237,13 @@ mac {
     HEADERS += securitybookmark/SecurityBookmark.h \
                 ../iRate/iRate.h \
                 inapp/IAP.h \
-                inapp/iap_c_interface.h
+                inapp/iap_c_interface.h \
+                inapp/XYAppReceipt.h
 
     OBJECTIVE_SOURCES += \
                 inapp/IAP.mm \
-                inapp/iap_c_interface.mm
+                inapp/iap_c_interface.mm \
+                inapp/XYAppReceipt.mm
 }
 
 
@@ -478,6 +480,6 @@ DISTFILES += \
     ../translations/mm_en.qm \
     ../translations/mm_zh.qm
 
-
 include(../win32debug.pri)
+
 
