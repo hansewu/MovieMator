@@ -113,6 +113,7 @@
 
 #if defined (Q_OS_MAC)
     #include "securitybookmark/transport_security_bookmark.h"
+    #include "dialogs/inappdialog.h"
 #endif
 
 
@@ -674,6 +675,10 @@ MainWindow::MainWindow()
 
     m_registrationTipsDialog = new RegistrationTipsDialog();
     m_registrationDialog = new RegistrationDialog();
+
+#if defined(Q_OS_MAC)
+    m_pInAppDialog = new InAppDialog();
+#endif
 
 
     m_proFeaturePromptDialog = new ProFeaturePromptDialog();
@@ -4839,3 +4844,15 @@ void MainWindow::onFiltersInfoLoaded()
     RDG_SetVideoFiltersInfo(m_filterController->getVideoFiltersInfo());
     RDG_SetAudioFiltersInfo(m_filterController->getAudioFiltersInfo());
 }
+
+#if defined (Q_OS_MAC)
+void MainWindow::showInAppDialog()
+{
+    m_pInAppDialog->show();
+}
+
+InAppDialog *MainWindow::inAppDialog()
+{
+    return m_pInAppDialog;
+}
+#endif

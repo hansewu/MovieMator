@@ -79,6 +79,10 @@ class ContainerDock;
 class QToolButton;
 class TemplateEidtor;
 
+#if defined (Q_OS_MAC)
+class InAppDialog;
+#endif
+
 //class TextlistDock;
 
 //软件主窗口类
@@ -145,6 +149,10 @@ public:
 
     //修改profile
     void changeProfile(QString strProfileName);
+
+#if defined (Q_OS_MAC)
+    InAppDialog *inAppDialog();
+#endif
 
 signals:
     //打开producer时发送此信号
@@ -301,6 +309,10 @@ private:
 
     TemplateEidtor *m_templateEditor;//暂时无用
 
+#if defined (Q_OS_MAC)
+    InAppDialog *m_pInAppDialog;
+#endif
+
 public slots:
     void open(Mlt::Producer* producer);//打开producer
 
@@ -398,6 +410,10 @@ public slots:
     void addPlayer();//添加播放器到主界面
 
     void loadTemplateInfo(Mlt::Producer *producer);//空函数，暂时无用
+
+#if defined (Q_OS_MAC)
+    void showInAppDialog();
+#endif
 
 private slots:
 

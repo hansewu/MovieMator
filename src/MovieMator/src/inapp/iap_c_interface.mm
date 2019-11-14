@@ -20,15 +20,53 @@
 #include "IAP.h"
 
 //EventAdapter，接收IAP消息，调用回调函数
-//@interface IAPEventAdapter: public NSObject
-//{
-//}
-//- (void)setRestoreCallback:(CallbackFunc);
-//- (void)setPurchaseCallback:(CallbackFunc);
-//- (IAPEventAdapter *)sharedInstance;
+@interface IAPEventAdapter: NSObject
+{
+    InAppPurchaseCallback   inappCallback;
+    void                    *inappCallbackObj;
+}
++ (IAPEventAdapter *)sharedInstance;
 
-//#end
+- (void)setTransactionCallback:(InAppPurchaseCallback)callback callbackObject:(void *)aCallbackObj;
+- (void)finishTransaction:(id)notification;
+@end
 
+@implementation IAPEventAdapter
++ (IAPEventAdapter*)sharedInstance
+{
+    static IAPEventAdapter *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[IAPEventAdapter alloc] init];
+
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter addObserver: sharedInstance
+                               selector: @selector (finishTransaction:)
+                                   name: @"FINISH_TRANSACTION"
+                                 object: nil];
+    });
+    return sharedInstance;
+}
+
+- (void)dealloc
+{
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter removeObserver:self name:@"FINISH_TRANSACTION" object:nil];
+    [super dealloc];
+}
+
+- (void)setTransactionCallback:(InAppPurchaseCallback)callback callbackObject:(void *)aCallbackObj
+{
+    inappCallback = callback;
+    inappCallbackObj = aCallbackObj;
+}
+
+- (void)finishTransaction:(id)notification
+{
+    inappCallback(inappCallbackObj, 0);
+}
+
+@end
 
 
 int inapp_is_authorized_for_payments()
@@ -84,13 +122,15 @@ INAPP_PRODUCT_INFO *inapp_get_product_information()
 }
 
 //购买产品
-void inapp_add_payment(const char *product_identifer/*, callbackfunc*/)
+void inapp_add_payment(const char *product_identifer, InAppPurchaseCallback inapp_callback, void *callbackObj)
 {
+    [[IAPEventAdapter sharedInstance] setTransactionCallback:inapp_callback callbackObject:callbackObj];
     [[IAP sharedInstance] buyProduct: [NSString stringWithUTF8String:product_identifer]];
 }
 
 //恢复购买
-void inapp_restore_purchase(/*callbackfunc*/)
+void inapp_restore_purchase(InAppPurchaseCallback inapp_callback, void *callbackObj)
 {
+    [[IAPEventAdapter sharedInstance] setTransactionCallback:inapp_callback callbackObject:callbackObj];
     [[IAP sharedInstance] restoreCompletedTransactions];
 }
