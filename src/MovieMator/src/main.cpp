@@ -490,7 +490,7 @@ int main(int argc, char **argv)
     a.mainWindow = &MAIN;
 
 
-    a.mainWindow->createMultitrackModelIfNeeded();
+//    a.mainWindow->createMultitrackModelIfNeeded();
 
     int screen_width    = QApplication::desktop()->screenGeometry().width();
     int screen_height   = QApplication::desktop()->screenGeometry().height();
@@ -509,6 +509,9 @@ int main(int argc, char **argv)
     g_splash->finish(a.mainWindow);
     delete g_splash;
     g_splash = nullptr;
+
+    a.mainWindow->setProjectAspectRatio();
+    a.mainWindow->createMultitrackModelIfNeeded();
 
     if (!a.resourceArg.isEmpty())
         a.mainWindow->open(a.resourceArg);

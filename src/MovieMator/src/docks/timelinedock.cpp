@@ -162,10 +162,10 @@ void TimelineDock::setPosition(int position)
 
 QString TimelineDock::timecode(int frames)
 {
-    Q_ASSERT(MLT.producer());
-    Q_ASSERT(MLT.producer()->is_valid());
+//    Q_ASSERT(MLT.producer());
+//    Q_ASSERT(MLT.producer()->is_valid());
 
-    if (MLT.producer())
+    if (MLT.producer() && MLT.producer()->is_valid())
         return MLT.producer()->frames_to_time(frames, mlt_time_smpte);
     return QString("");
 }

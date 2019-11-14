@@ -107,6 +107,7 @@
 #include <QQmlContext>
 
 #include "dialogs/videomodesettingsdialog.h"
+#include "dialogs/aspectratiosettingsdialog.h"
 
 #include "commands/timelinecommands.h"
 
@@ -1393,6 +1394,14 @@ void MainWindow::setProfile(const QString &profile_name)
     LOG_DEBUG() << profile_name;
     MLT.setProfile(profile_name);
     emit profileChanged();
+}
+
+void MainWindow::setProjectAspectRatio()
+{
+    AspectRatioSettingsDialog aspectRationSettingsDialog(this);
+    aspectRationSettingsDialog.setWindowModality(QmlApplication::dialogModality());
+
+    aspectRationSettingsDialog.exec();
 }
 
 static void autosaveTask(MainWindow* p)
@@ -4810,6 +4819,7 @@ void MainWindow::loadTemplateInfo(Mlt::Producer *producer)
 
 void MainWindow::on_actionNewProject_triggered()
 {
+    setProjectAspectRatio();
     on_actionClose_triggered();
 }
 

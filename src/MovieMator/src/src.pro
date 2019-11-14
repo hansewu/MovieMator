@@ -115,7 +115,8 @@ SOURCES += main.cpp\
     CrashHandler/CrashHandler.cpp \
 #    templateeidtor.cpp \
     commands/abstractcommand.cpp \
-    dialogs/videomodesettingsdialog.cpp
+    dialogs/videomodesettingsdialog.cpp \
+    dialogs/aspectratiosettingsdialog.cpp
 
 HEADERS  += mainwindow.h \
     scrubbar.h \
@@ -227,7 +228,8 @@ HEADERS  += mainwindow.h \
     eccregister/CEccRegister.h \
     commands/abstractcommand.h \
     CrashHandler/CrashHandler.h \
-    dialogs/videomodesettingsdialog.h
+    dialogs/videomodesettingsdialog.h \
+    dialogs/aspectratiosettingsdialog.h
 
 mac {
     SOURCES += securitybookmark/SecurityBookmark.mm \
@@ -280,7 +282,8 @@ FORMS    += mainwindow.ui \
     dialogs/invalidprojectdialog.ui \
     docks/encodetaskdock.ui \
     widgets/avformatproducersimplewidget.ui \
-    dialogs/videomodesettingsdialog.ui
+    dialogs/videomodesettingsdialog.ui \
+    dialogs/aspectratiosettingsdialog.ui
 
 RESOURCES += \
     ../icons/resources.qrc \
