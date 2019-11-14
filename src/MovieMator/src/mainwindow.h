@@ -118,6 +118,8 @@ public:
     //设置软件的profile为profile_name
     void setProfile(const QString& profile_name);
 
+    void setProjectAspectRatio();
+
     //重写QMainWindow的键盘按下事件，处理主界面的键盘按下事件
     void keyPressEvent(QKeyEvent*);
     //重写QMainWindow的键盘松开事件，处理主界面的键盘松开按键事件
