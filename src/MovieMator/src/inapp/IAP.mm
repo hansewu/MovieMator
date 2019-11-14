@@ -202,7 +202,6 @@
                 break;
         }
     }
-    
 }
 
 - (void)completeTransaction:(SKPaymentTransaction *)transaction {
@@ -218,10 +217,10 @@
     
     if ([productIdentifier length] > 0) {
         
-        NSLog(@"开启productIdentifier功能");
-        int nCoins = 0;
+//        NSLog(@"开启productIdentifier功能");
+//        int nCoins = 0;
         
-        NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
+//        NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
         
 //        if ([productIdentifier isEqualToString:VIP_PRODUCT_1]) {
 //            NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
@@ -279,9 +278,8 @@
 //        }
 
         //[self addPurchaseRecord:transaction.payment.productIdentifier :transaction.transactionIdentifier :transaction.transactionReceipt :nCoins];
-        
         // 向自己的服务器验证购买凭证
-        [self verifyReceiptOnThread];
+        //[self verifyReceiptOnThread];
     }
     
     // Remove the transaction from the payment queue.
@@ -290,25 +288,25 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"FINISH_TRANSACTION" object:nil];
 }
 
-- (void)failedTransaction:(SKPaymentTransaction *)transaction {
-//    if(transaction.error.code != SKErrorPaymentCancelled) {
-//        NSLog(@"购买失败 %ld", (long)transaction.error.code);
-//    } else {
-//        NSLog(@"用户取消交易");
-//        if ([transaction.payment.productIdentifier isEqualToString:SAVEWORLD_PRODUCT]) {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"CLEAN_WORLDS" object:nil];
-//        }
-//    }
-//    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"FINISH_TRANSACTION" object:nil];
-
+- (void)failedTransaction:(SKPaymentTransaction *)transaction
+{
+    if(transaction.error.code != SKErrorPaymentCancelled)
+    {
+        NSLog(@"购买失败 %ld", (long)transaction.error.code);
+    }
+    else
+    {
+        NSLog(@"用户取消交易");
+    }
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FINISH_TRANSACTION" object:nil];
 }
 
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
 //    // 对于已购商品，处理恢复购买的逻辑
     
-//    NSLog(@"restore: %@", transaction.originalTransaction.payment.productIdentifier);
-//    NSLog(@"transactionIdentifier: %@", transaction.originalTransaction.transactionIdentifier);
+    NSLog(@"restore: %@", transaction.originalTransaction.payment.productIdentifier);
+    NSLog(@"transactionIdentifier: %@", transaction.originalTransaction.transactionIdentifier);
     
 //    NSLog(@"恢复productIdentifier功能");
 //    if ([transaction.originalTransaction.payment.productIdentifier isEqualToString:VIP_PRODUCT_1]) {
@@ -353,9 +351,9 @@
 //    [self addRestoreRecord:transaction.originalTransaction.payment.productIdentifier :transaction.originalTransaction.transactionIdentifier];
 //    [self verifyRestoreOnThread];
     
-//    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
     
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"FINISH_TRANSACTION" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FINISH_TRANSACTION" object:nil];
 }
 
 - (void)verifyReceiptOnThread

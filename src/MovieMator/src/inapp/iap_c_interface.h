@@ -28,6 +28,9 @@ typedef struct {
     char price[STRING_LENGTH];
 } INAPP_PRODUCT_INFO;
 
+//result：内购结果，没有使用。
+typedef void (*InAppPurchaseCallback)(void *caller, int result);
+
 //用户是否允许购买
 //允许返回1，不允许返回0
 int inapp_is_authorized_for_payments();
@@ -43,10 +46,10 @@ int inapp_get_product_count();
 INAPP_PRODUCT_INFO *inapp_get_product_information();
 
 //购买产品
-void inapp_add_payment(const char *product_identifer/*, callbackfunc*/);
+void inapp_add_payment(const char *product_identifer, InAppPurchaseCallback inapp_callback, void *callbackObj);
 
 //恢复购买
-void inapp_restore_purchase(/*callbackfunc*/);
+void inapp_restore_purchase(InAppPurchaseCallback inapp_callback, void *callbackObj);
 
 //验证收据信息
 //返回值：0成功；-1失败。

@@ -116,7 +116,8 @@ SOURCES += main.cpp\
 #    templateeidtor.cpp \
     commands/abstractcommand.cpp \
     dialogs/videomodesettingsdialog.cpp \
-    dialogs/aspectratiosettingsdialog.cpp
+    dialogs/aspectratiosettingsdialog.cpp \
+    widgets/twolinebutton.cpp
 
 HEADERS  += mainwindow.h \
     scrubbar.h \
@@ -229,21 +230,28 @@ HEADERS  += mainwindow.h \
     commands/abstractcommand.h \
     CrashHandler/CrashHandler.h \
     dialogs/videomodesettingsdialog.h \
-    dialogs/aspectratiosettingsdialog.h
-
+    dialogs/aspectratiosettingsdialog.h \
+    widgets/twolinebutton.h
 mac {
-    SOURCES += securitybookmark/SecurityBookmark.mm \
-                ../iRate/iRate.mm
+    SOURCES += \
+                dialogs/inappdialog.cpp
+
     HEADERS += securitybookmark/SecurityBookmark.h \
                 ../iRate/iRate.h \
                 inapp/IAP.h \
                 inapp/iap_c_interface.h \
-                inapp/XYAppReceipt.h
+                inapp/XYAppReceipt.h \
+                dialogs/inappdialog.h
 
     OBJECTIVE_SOURCES += \
                 inapp/IAP.mm \
                 inapp/iap_c_interface.mm \
-                inapp/XYAppReceipt.mm
+                inapp/XYAppReceipt.mm \
+                securitybookmark/SecurityBookmark.mm \
+                ../iRate/iRate.mm
+
+    FORMS    += \
+                dialogs/inappdialog.ui
 }
 
 
