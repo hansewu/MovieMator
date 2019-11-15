@@ -492,6 +492,17 @@ void ShotcutSettings::setLastUse(QDateTime lastUse)
     settings.setValue("kLastUse", lastUse);
 }
 
+bool ShotcutSettings::isSubscribed()
+{
+    return settings.value("subscribed", false).toBool();
+}
+
+void ShotcutSettings::setIsSubscribed(bool bSubscribed)
+{
+    settings.setValue("subscribed", bSubscribed);
+}
+
+
 void ShotcutSettings::sync()
 {
     settings.sync();

@@ -155,6 +155,9 @@ public:
     QDateTime lastUse() const;
     void setLastUse(QDateTime lastUse);
 
+    bool isSubscribed();
+    void setIsSubscribed(bool bSubscribed);
+
     void sync();
 
     void remove(const QString &key);

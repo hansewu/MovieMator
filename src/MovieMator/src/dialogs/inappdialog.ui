@@ -43,8 +43,16 @@
      <height>65</height>
     </rect>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {border: 1px solid #0F7267; border-radius: 4px;} 
+QPushButton:hover { background-color:#0F7267; }
+QPushButton:pressed {background-color:#0A5A50; }</string>
+   </property>
    <property name="text">
-    <string>PushButton</string>
+    <string/>
    </property>
    <property name="autoDefault">
     <bool>false</bool>
@@ -62,8 +70,16 @@
      <height>65</height>
     </rect>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {border: 1px solid #0F7267; border-radius: 4px;} 
+QPushButton:hover { background-color:#0F7267; }
+QPushButton:pressed {background-color:#0A5A50; }</string>
+   </property>
    <property name="text">
-    <string>PushButton</string>
+    <string/>
    </property>
    <property name="autoDefault">
     <bool>false</bool>
@@ -78,8 +94,16 @@
      <height>65</height>
     </rect>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {border: 1px solid #0F7267; border-radius: 4px;} 
+QPushButton:hover { background-color:#0F7267; }
+QPushButton:pressed {background-color:#0A5A50; }</string>
+   </property>
    <property name="text">
-    <string>PushButton</string>
+    <string/>
    </property>
    <property name="autoDefault">
     <bool>false</bool>
@@ -115,7 +139,7 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;解锁 MovieMator Video Editor&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;保存没有水印的视频，获取最佳编辑体验。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;输出时长无限制，保存没有水印的视频，获取最佳编辑体验。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QPushButton" name="termOfUseButton">
@@ -222,8 +246,19 @@ p, li { white-space: pre-wrap; }
      <height>65</height>
     </rect>
    </property>
+   <property name="mouseTracking">
+    <bool>false</bool>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {border: 1px solid #0F7267; border-radius: 4px;} 
+QPushButton:hover { background-color:#0F7267; }
+QPushButton:pressed {background-color:#0A5A50; }</string>
+   </property>
    <property name="text">
-    <string>PushButton</string>
+    <string/>
    </property>
    <property name="autoDefault">
     <bool>false</bool>

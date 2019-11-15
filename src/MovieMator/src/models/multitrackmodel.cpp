@@ -3971,11 +3971,9 @@ bool MultitrackModel::checkClip(Mlt::Producer &clip)
                            QMessageBox::Ok, &(MAIN));
 
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
         dialog.setWindowModality(Qt::WindowModal);
         dialog.setDefaultButton(QMessageBox::Ok);
         int r = dialog.exec();

@@ -413,6 +413,7 @@ public slots:
 
 #if defined (Q_OS_MAC)
     void showInAppDialog();
+    void on_actionSubscription_triggered();
 #endif
 
 private slots:

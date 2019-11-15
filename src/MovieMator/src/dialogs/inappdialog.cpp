@@ -30,10 +30,15 @@ static void inAppCallback(void *caller, int result)
     InAppDialog *dialog = (InAppDialog *)caller;
 
     //验证收据
-//    if (inapp_verify_receipt() == 0)
-//        Settings.set
-
-    dialog->done(0);
+    if (inapp_verify_receipt() == 0)
+    {
+        Settings.setIsSubscribed(true);
+        dialog->done(0);
+    }
+    else
+    {
+        Settings.setIsSubscribed(false);
+    }
 }
 
 InAppDialog::InAppDialog(QWidget *parent) :

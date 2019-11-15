@@ -352,18 +352,18 @@ LIBS += -lResourceDockGenerator
 mac {
 #    DEFINES += STEAM=1
     #pro share
-    DEFINES += MOVIEMATOR_PRO=1
-    DEFINES += SHARE_VERSION=1
-    QMAKE_INFO_PLIST = ../Info_share.plist
-    ICON = ../icons/moviemator-pro.icns
-    TARGET = "MovieMator Video Editor Pro"
+#    DEFINES += MOVIEMATOR_PRO=1
+#    DEFINES += SHARE_VERSION=1
+#    QMAKE_INFO_PLIST = ../Info_share.plist
+#    ICON = ../icons/moviemator-pro.icns
+#    TARGET = "MovieMator Video Editor Pro"
 
 
     #free appstore
-#    DEFINES += MOVIEMATOR_FREE=1
-#    TARGET = "MovieMator Video Editor Lite"
-#    QMAKE_INFO_PLIST = ../Info-Free.plist
-#    ICON = ../icons/moviemator.icns
+    DEFINES += MOVIEMATOR_FREE=1
+    TARGET = "MovieMator Video Editor"
+    QMAKE_INFO_PLIST = ../Info-Free.plist
+    ICON = ../icons/moviemator.icns
 
     #share 国区免费版本
 #    DEFINES += SHARE_VERSION=1

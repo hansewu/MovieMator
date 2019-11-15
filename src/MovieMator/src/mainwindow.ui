@@ -26,7 +26,7 @@
    <string>MovieMator Video Editor</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../icons/crashreporter.qrc">
+   <iconset resource="../icons/resources.qrc">
     <normaloff>:/icons/moviemator-logo-64.png</normaloff>:/icons/moviemator-logo-64.png</iconset>
   </property>
   <property name="iconSize">
@@ -110,6 +110,7 @@
     <addaction name="actionBuy_a_License_Code"/>
     <addaction name="actionEnter_License_Code"/>
     <addaction name="actionExecute_Python"/>
+    <addaction name="actionSubscription"/>
     <addaction name="separator"/>
     <addaction name="actionGet_Total_Video_Converter_Pro"/>
     <addaction name="actionGet_Total_Video_Player"/>
@@ -964,11 +965,18 @@
    <property name="text">
     <string>Video Mode</string>
    </property>
-  </action>  
+  </action>
+  <action name="actionSubscription">
+   <property name="text">
+    <string>Subscription</string>
+   </property>
+   <property name="toolTip">
+    <string>Subscription</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../icons/crashreporter.qrc"/>
   <include location="../icons/resources.qrc"/>
  </resources>
  <connections>

@@ -221,7 +221,7 @@ static NSURL *_appleRootCertificateURL = nil;
     
     if (!p7) return nil;
     
-    NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle bundleForClass:[self class]] URLForResource:@"XYIAPKit" withExtension:@"bundle"]];
+    NSBundle *bundle = [NSBundle mainBundle];
     NSData *data;
     NSURL *certificateURL = _appleRootCertificateURL ? : [bundle URLForResource:@"AppleIncRootCertificate" withExtension:@"cer"];
     
@@ -377,6 +377,9 @@ static NSURL *_appleRootCertificateURL = nil;
 
 - (BOOL)isActiveAutoRenewableSubscriptionForDate:(NSDate*)date
 {
+
+    NSLog(@"Subscription: %@, expire: %@", self.productIdentifier, self.subscriptionExpirationDate);
+
     NSAssert(self.subscriptionExpirationDate != nil, @"The product %@ is not an auto-renewable subscription.", self.productIdentifier);
     
     if (self.cancellationDate) return NO;

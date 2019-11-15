@@ -299,7 +299,7 @@
         NSLog(@"用户取消交易");
     }
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"FINISH_TRANSACTION" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FAILED_TRANSACTION" object:nil];
 }
 
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
