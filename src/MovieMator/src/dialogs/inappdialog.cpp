@@ -47,8 +47,8 @@ InAppDialog::InAppDialog(QWidget *parent) :
     ui(new Ui::InAppDialog)
 {
     ui->setupUi(this);
-    ui->useFreeVersionButton->setMainTitle(tr("Use Free Version"));
-    ui->useFreeVersionButton->setSubTitle(tr("Videos will be saved with a wartermark"));
+    ui->useFreeVersionButton->setMainTitle(tr("Use Trial"));
+    ui->useFreeVersionButton->setSubTitle(tr("Output videos of 5 minutes at most and will be saved with a watermark"));
     ui->useFreeVersionButton->setAccessoryTitle(tr("Free"));
 }
 
