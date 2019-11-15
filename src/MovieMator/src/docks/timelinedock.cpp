@@ -1708,9 +1708,8 @@ void TimelineDock::appendFromPath(int trackIndex, const QString &path)
                                      tr("For reasons of copyright protection, you can not import vob or m4p files"),
                                      QMessageBox::Ok,
                                      this);
-#if MOVIEMATOR_PRO
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
 #endif
         dialog.setWindowModality(QmlApplication::dialogModality());

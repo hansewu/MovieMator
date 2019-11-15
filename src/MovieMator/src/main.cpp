@@ -49,6 +49,11 @@
 #include "CrashHandler/CrashHandler.h"
 #include "util.h"
 
+#if defined(Q_OS_MAC)
+#include "inapp/iap_c_interface.h"
+#include "dialogs/inappdialog.h"
+#endif
+
 #ifdef Q_OS_WIN
 extern "C"
 {
@@ -428,6 +433,22 @@ int main(int argc, char **argv)
 
     setenv("QT_DEVICE_PIXEL_RATIO", "auto", 1);
 //    setenv("QT_SCALE_FACTOR", "2", 1);
+
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+    int nRet = inapp_verify_receipt();
+    if (nRet >= 0)
+    {
+        Settings.setIsSubscribed(true);
+    }
+    else
+    {
+        Settings.setIsSubscribed(false);
+    }
+
+    if (inapp_is_authorized_for_payments())
+        inapp_fetch_product_infomation();
+#endif
+
     Application a(argc, argv);
 
 
@@ -435,15 +456,17 @@ int main(int argc, char **argv)
     CrashManager::CrashHandler::instance()->Init(QDir::tempPath());
 #endif
 
+
+
 //   MMSplashScreen splash(QPixmap(":/splash.png"));
 //    splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
 //    splash.show();
 // 宏定义警告，不消除
-//#if MOVIEMATOR_FREE
-//    g_splash = new MMSplashScreen(QPixmap(":/splash-free.png"));
-//#else
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+    g_splash = new MMSplashScreen(QPixmap(":/splash-free.png"));
+#else
     g_splash = new MMSplashScreen(QPixmap(":/splash.png"));
-//#endif
+#endif
     g_splash->showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
     g_splash->show();
 
@@ -550,6 +573,30 @@ int main(int argc, char **argv)
 //    PythonQtObjectPtr mainContext = PythonQt::self()->getMainModule();
 //    PythonQtScriptingConsole console(NULL, mainContext);
 //    console.show();
+
+
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+    nRet = inapp_verify_receipt();
+    if (nRet >= 0)
+    {
+        Settings.setIsSubscribed(true);
+    }
+    else
+    {
+        Settings.setIsSubscribed(false);
+    }
+
+    if (!Settings.isSubscribed())
+    {
+        //如果获取产品信息成功，显示订阅界面
+        int nProductCount = inapp_get_product_count();
+        if(nProductCount > 0)
+        {
+            a.mainWindow->showInAppDialog();
+        }
+    }
+#endif
+
 
     int result = a.exec();
 

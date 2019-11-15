@@ -29,6 +29,7 @@
 
 - (void)setTransactionCallback:(InAppPurchaseCallback)callback callbackObject:(void *)aCallbackObj;
 - (void)finishTransaction:(id)notification;
+- (void)failedTransaction:(id)notification;
 @end
 
 @implementation IAPEventAdapter
@@ -44,6 +45,10 @@
                                selector: @selector (finishTransaction:)
                                    name: @"FINISH_TRANSACTION"
                                  object: nil];
+        [notificationCenter addObserver: sharedInstance
+                               selector: @selector (failedTransaction:)
+                                   name: @"FAILED_TRANSACTION"
+                                 object: nil];
     });
     return sharedInstance;
 }
@@ -52,6 +57,7 @@
 {
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter removeObserver:self name:@"FINISH_TRANSACTION" object:nil];
+    [notificationCenter removeObserver:self name:@"FAILED_TRANSACTION" object:nil];
     [super dealloc];
 }
 
@@ -64,6 +70,10 @@
 - (void)finishTransaction:(id)notification
 {
     inappCallback(inappCallbackObj, 0);
+}
+- (void)failedTransaction:(id)notification
+{
+    inappCallback(inappCallbackObj, -1);
 }
 
 @end

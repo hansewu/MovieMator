@@ -28,7 +28,7 @@ typedef struct {
     char price[STRING_LENGTH];
 } INAPP_PRODUCT_INFO;
 
-//result：内购结果，没有使用。
+//result：内购结果，0成功，-1失败。
 typedef void (*InAppPurchaseCallback)(void *caller, int result);
 
 //用户是否允许购买

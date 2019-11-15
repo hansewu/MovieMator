@@ -705,8 +705,8 @@ MainWindow::MainWindow()
 
     LOG_DEBUG() << "setWindowTitle";
 
-#if SHARE_VERSION
 
+#if SHARE_VERSION
 #if MOVIEMATOR_PRO
     if (Registration.registrationType() == Registration_None)
         setWindowTitle(tr("MovieMator Video Editor Pro (Unregistered)"));
@@ -719,16 +719,16 @@ MainWindow::MainWindow()
     else
         setWindowTitle(tr("MovieMator Video Editor Pro"));
 #else
-//    setWindowTitle(tr("MovieMator Video Editor"));
+    //setWindowTitle(tr("MovieMator Video Editor"));
     setWindowTitle(tr("MovieMator Video Editor Pro"));
 #endif
 
-//#else
-//#if MOVIEMATOR_PRO
-//    setWindowTitle(tr("MovieMator Video Editor Pro"));
-//#else
-//    setWindowTitle(tr("MovieMator Video Editor"));
-//#endif
+#else
+#if MOVIEMATOR_PRO
+    setWindowTitle(tr("MovieMator Video Editor Pro"));
+#else
+    setWindowTitle(tr("MovieMator Video Editor"));
+#endif
 #endif
 
 //    LOG_DEBUG() << "init pythonqt";
@@ -762,16 +762,14 @@ void MainWindow::configureUI()
     ui->actionEnter_License_Code->setVisible(false);
 #endif
 
-#ifndef MOVIEMATOR_PRO
-#ifndef MOVIEMATOR_FREE
-    ui->actionBuy_a_License_Code->setVisible(false);
-    ui->actionEnter_License_Code->setVisible(false);
-#endif
-#endif
-
 #if STEAM
     ui->actionBuy_a_License_Code->setVisible(false);
     ui->actionEnter_License_Code->setVisible(false);
+#endif
+
+    ui->actionSubscription->setVisible(false);
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSIOn)
+    ui->actionSubscription->setVisible(true);
 #endif
 
     ui->actionAbout_TVE->setText(tr("About MovieMator Video Editor Pro"));
@@ -1196,11 +1194,9 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker& checker)
            this);
 
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
@@ -1265,11 +1261,9 @@ bool MainWindow::isXmlRepaired(MltXmlChecker& checker, QString& fileName)
            this);
 
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
@@ -1303,11 +1297,9 @@ bool MainWindow::checkAutoSave(QString &url)
            QMessageBox::No | QMessageBox::Yes, nullptr);
 
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
@@ -1455,11 +1447,9 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
                                      this);
 
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Ok);
         int r = dialog.exec();
@@ -1936,12 +1926,12 @@ void MainWindow::setCurrentFile(const QString &filename)
 #endif
 
 #else
-    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro"));
-//#if MOVIEMATOR_PRO
-//    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro"));
-//#else
-//    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg(tr("MovieMator Video Editor")));
-//#endif
+
+#if MOVIEMATOR_PRO
+    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg(tr("MovieMator Video Editor Pro")));
+#else
+    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg(tr("MovieMator Video Editor")));
+#endif
 #endif
 }
 
@@ -2710,11 +2700,9 @@ bool MainWindow::continueModified()
                                      this);
 
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Save);
         dialog.setEscapeButton(QMessageBox::Cancel);
@@ -2743,11 +2731,9 @@ bool MainWindow::continueJobsRunning()
                                      this);
 
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
@@ -2809,15 +2795,13 @@ void MainWindow::onEncodeTriggered(bool checked)
                                          this);
 
             dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
-        dialog.setWindowModality(QmlApplication::dialogModality());
-        dialog.setDefaultButton(QMessageBox::Ok);
-        int r = dialog.exec();
-        Q_UNUSED(r);
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+            dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.setDefaultButton(QMessageBox::Ok);
+            int r = dialog.exec();
+            Q_UNUSED(r);
         }
  //       m_encodeDock->eventFilter(m_encodeDock, new QEvent(QEvent::NonClientAreaMouseButtonDblClick));
      //   m_encodeDock->raise();
@@ -3472,11 +3456,9 @@ void MainWindow::onLanguageTriggered(QAction* action)
                        this);
 
     dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());
@@ -3553,11 +3535,9 @@ void MainWindow::on_actionGPU_triggered(bool checked)
                        this);
 
     dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());
@@ -3645,11 +3625,9 @@ void MainWindow::changeProfile(QString strProfileName)
                        this);
 
     dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
 
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
@@ -3687,11 +3665,9 @@ void MainWindow::onProfileTriggered(QAction *action)
                        this);
 
     dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());
@@ -4460,6 +4436,7 @@ void MainWindow::on_actionEnter_License_Code_triggered()
     this->onActivateButton_clicked();
 }
 
+
 void MainWindow::on_actionExecute_Python_triggered()
 {
     QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Execute Python File"), ".", tr("Python File (*.py)"));
@@ -4846,9 +4823,23 @@ void MainWindow::onFiltersInfoLoaded()
 }
 
 #if defined (Q_OS_MAC)
+
+void MainWindow::on_actionSubscription_triggered()
+{
+    this->showInAppDialog();
+}
+
 void MainWindow::showInAppDialog()
 {
-    m_pInAppDialog->show();
+    int nProductCount = inapp_get_product_count();
+    if(nProductCount > 0)
+    {
+        //SubscribeWindow.show();
+        INAPP_PRODUCT_INFO *productInfos = inapp_get_product_information();
+        m_pInAppDialog->setInAppProductInfo(productInfos, nProductCount);
+        free(productInfos);
+    }
+    m_pInAppDialog->exec();
 }
 
 InAppDialog *MainWindow::inAppDialog()
