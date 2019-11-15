@@ -57,7 +57,7 @@
     <message>
         <location filename="../src/dialogs/aspectratiosettingsdialog.ui" line="14"/>
         <source>Set the project aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">设置工程宽高比</translation>
     </message>
     <message>
         <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="45"/>
