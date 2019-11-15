@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>458</width>
-    <height>540</height>
+    <width>500</width>
+    <height>550</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,14 +21,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>458</width>
-    <height>540</height>
+    <width>500</width>
+    <height>550</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>458</width>
-    <height>540</height>
+    <width>500</width>
+    <height>550</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -39,8 +39,8 @@
     <rect>
      <x>20</x>
      <y>150</y>
-     <width>421</width>
-     <height>65</height>
+     <width>461</width>
+     <height>62</height>
     </rect>
    </property>
    <property name="focusPolicy">
@@ -48,7 +48,7 @@
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {border: 1px solid #0F7267; border-radius: 4px;} 
-QPushButton:hover { background-color:#0F7267; }
+QPushButton:hover { background-color:#1A7F67; }
 QPushButton:pressed {background-color:#0A5A50; }</string>
    </property>
    <property name="text">
@@ -66,8 +66,8 @@ QPushButton:pressed {background-color:#0A5A50; }</string>
     <rect>
      <x>20</x>
      <y>220</y>
-     <width>421</width>
-     <height>65</height>
+     <width>461</width>
+     <height>62</height>
     </rect>
    </property>
    <property name="focusPolicy">
@@ -75,7 +75,7 @@ QPushButton:pressed {background-color:#0A5A50; }</string>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {border: 1px solid #0F7267; border-radius: 4px;} 
-QPushButton:hover { background-color:#0F7267; }
+QPushButton:hover { background-color:#1A7F67; }
 QPushButton:pressed {background-color:#0A5A50; }</string>
    </property>
    <property name="text">
@@ -90,8 +90,8 @@ QPushButton:pressed {background-color:#0A5A50; }</string>
     <rect>
      <x>20</x>
      <y>290</y>
-     <width>421</width>
-     <height>65</height>
+     <width>461</width>
+     <height>62</height>
     </rect>
    </property>
    <property name="focusPolicy">
@@ -99,7 +99,7 @@ QPushButton:pressed {background-color:#0A5A50; }</string>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {border: 1px solid #0F7267; border-radius: 4px;} 
-QPushButton:hover { background-color:#0F7267; }
+QPushButton:hover { background-color:#1A7F67; }
 QPushButton:pressed {background-color:#0A5A50; }</string>
    </property>
    <property name="text">
@@ -116,8 +116,8 @@ QPushButton:pressed {background-color:#0A5A50; }</string>
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>20</y>
-     <width>421</width>
+     <y>10</y>
+     <width>461</width>
      <height>71</height>
     </rect>
    </property>
@@ -138,18 +138,21 @@ QPushButton:pressed {background-color:#0A5A50; }</string>
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;解锁 MovieMator Video Editor&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;输出时长无限制，保存没有水印的视频，获取最佳编辑体验。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;Unlock MovieMator Video Editor&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To save videos with no watermark &amp;amp; no duration limitation and get the best video editing experience.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QPushButton" name="termOfUseButton">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>490</y>
+     <y>500</y>
      <width>111</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
    </property>
    <property name="styleSheet">
     <string notr="true">text-decoration: underline; </string>
@@ -170,11 +173,14 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="privacyPolicyButton">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>490</y>
+     <x>170</x>
+     <y>500</y>
      <width>113</width>
      <height>32</height>
     </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
    </property>
    <property name="styleSheet">
     <string notr="true">text-decoration: underline; </string>
@@ -192,11 +198,14 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="restorePurchaseButton">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>490</y>
+     <x>320</x>
+     <y>500</y>
      <width>141</width>
      <height>32</height>
     </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
    </property>
    <property name="styleSheet">
     <string notr="true">text-decoration: underline; </string>
@@ -219,12 +228,15 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>20</x>
      <y>360</y>
-     <width>421</width>
-     <height>131</height>
+     <width>461</width>
+     <height>141</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(0, 0, 0, 0);</string>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
    </property>
    <property name="frameShape">
     <enum>QFrame::NoFrame</enum>
@@ -234,7 +246,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'PingFang SC';&quot;&gt;订阅将在确认购买后从您的iTunes账户中收取。订阅每月、每三个月或每年收费一次，价格以选择的订阅套餐为准。订阅将在当前账期结束前24小时内自动续订。订阅将自动续订，除非在当前账期结束前至少提前24小时关闭自动续订。您可以前往iTunes账户设置，管理自己的订阅和关闭自动续订。&lt;/span&gt; &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Subscriptions will be charged to your iTunes account as soon as the purchase is confirmed. Subscriptions are billed monthly, once every 3 month or annually at the rate selected depending on the subscription plan. Subscriptions will renew automatically within 24 hours of the end of the current subscription period. Subscriptions will renew automatically unless auto-renew is turned off at lease 24 hours prior to the end of the current billing period. You may manage your subscription and turn off auto-renewal by going to your iTunes Account Settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="TwoLineButton" name="useFreeVersionButton">
@@ -242,8 +254,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>20</x>
      <y>80</y>
-     <width>421</width>
-     <height>65</height>
+     <width>461</width>
+     <height>62</height>
     </rect>
    </property>
    <property name="mouseTracking">
@@ -254,7 +266,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {border: 1px solid #0F7267; border-radius: 4px;} 
-QPushButton:hover { background-color:#0F7267; }
+QPushButton:hover { background-color:#1A7F67; }
 QPushButton:pressed {background-color:#0A5A50; }</string>
    </property>
    <property name="text">
