@@ -20,6 +20,7 @@
 #include "ui_inappdialog.h"
 #include "../widgets/twolinebutton.h"
 #include <settings.h>
+#include <QDesktopServices>
 
 #define MONTHLY_SUBSCRIPTION "net.moviemator.moviemator.monthly_subscription"
 #define THRERE_MONTH_SUBSCRIPTION "net.moviemator.moviemator.3month_subscription"
@@ -113,12 +114,12 @@ void InAppDialog::on_restorePurchaseButton_clicked()
 
 void InAppDialog::on_privacyPolicyButton_clicked()
 {
-
+    QDesktopServices::openUrl(QUrl("http://moviemator.net/privacy.html"));
 }
 
 void InAppDialog::on_termOfUseButton_clicked()
 {
-
+    QDesktopServices::openUrl(QUrl("http://moviemator.net/terms-of-service.html"));
 }
 
 void InAppDialog::on_useFreeVersionButton_clicked()

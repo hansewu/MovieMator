@@ -32,6 +32,7 @@
 #include <Logger.h>
 #include "mainwindow.h"
 #include "dialogs/textviewerdialog.h"
+#include <settings.h>
 
 MeltJob::MeltJob(const QString& name, const QString& xml)
     : AbstractJob(name)
@@ -81,12 +82,14 @@ void MeltJob::start()
     args << xmlPath();
 
     // 导出视频 5分钟时长限制
-//#ifndef MOVIEMATOR_PRO
-//    int length = 5*60*MLT.profile().fps() - 1;
-//    QString out = QString("out=%1").arg(length);
-
-//    args << out;
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+    if (!Settings.isSubscribed())
+    {
+        int length = 5*60*MLT.profile().fps() - 1;
+        QString out = QString("out=%1").arg(length);
+        args << out;
+    }
+#endif
 
     LOG_DEBUG() << meltPath.absoluteFilePath() << args;
 
