@@ -1399,7 +1399,10 @@ void MainWindow::setProfile(const QString &profile_name)
 void MainWindow::setProjectAspectRatio()
 {
     AspectRatioSettingsDialog aspectRationSettingsDialog(this);
-    aspectRationSettingsDialog.setWindowModality(QmlApplication::dialogModality());
+
+#ifdef Q_OS_WIN
+     aspectRationSettingsDialog.setWindowModality(QmlApplication::dialogModality());
+ #endif
 
     aspectRationSettingsDialog.exec();
 }
