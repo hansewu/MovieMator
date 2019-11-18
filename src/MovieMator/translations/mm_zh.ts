@@ -62,27 +62,27 @@
     <message>
         <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="45"/>
         <source>16:9(Landscape)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">16:9(宽屏)</translation>
     </message>
     <message>
         <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="46"/>
         <source>9:16(Portrait)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">9:16(竖屏)</translation>
     </message>
     <message>
         <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="47"/>
         <source>4:3(Classic)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">4:3(标准)</translation>
     </message>
     <message>
         <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="48"/>
         <source>3:4(E-store)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">3:4(电商)</translation>
     </message>
     <message>
         <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="49"/>
         <source>1:1(Square)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">1:1(方形)</translation>
     </message>
 </context>
 <context>
