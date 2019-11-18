@@ -55,5 +55,7 @@ void inapp_restore_purchase(InAppPurchaseCallback inapp_callback, void *callback
 //返回值：0成功；-1失败。
 int inapp_verify_receipt();
 
+//刷新收据
+void inapp_refresh_receipt();
 
 #endif //IAP_C_INTERFACE_H

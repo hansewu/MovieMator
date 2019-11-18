@@ -144,3 +144,8 @@ void inapp_restore_purchase(InAppPurchaseCallback inapp_callback, void *callback
     [[IAPEventAdapter sharedInstance] setTransactionCallback:inapp_callback callbackObject:callbackObj];
     [[IAP sharedInstance] restoreCompletedTransactions];
 }
+
+void inapp_refresh_receipt()
+{
+    [[IAP sharedInstance] refreshReceipt];
+}
