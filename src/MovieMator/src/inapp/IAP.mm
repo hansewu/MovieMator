@@ -748,4 +748,16 @@
     return 0;
 }
 
+
+- (void)refreshReceipt
+{
+    SKReceiptRefreshRequest *refreshReceiptRequest = [[SKReceiptRefreshRequest alloc] initWithReceiptProperties:@{}];
+    refreshReceiptRequest.delegate = self;
+    [refreshReceiptRequest start];
+}
+
+- (void)requestDidFinish:(SKRequest *)request
+{
+}
+
 @end

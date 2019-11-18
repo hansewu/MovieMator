@@ -14,7 +14,7 @@
 #define YEARLY_SUBSCRIPTION @"net.moviemator.moviemator.yearly_subscription"
 
 
-@interface IAP : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver>
+@interface IAP : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver, SKRequestDelegate>
 {
     BOOL m_bFirstRecharge;
 }
@@ -43,4 +43,6 @@
 
 //返回值：0成功；-1失败。
 - (int)verifyInappReceiptLocally;
+
+- (void)refreshReceipt;
 @end
