@@ -22,9 +22,9 @@
 #include <settings.h>
 #include <QDesktopServices>
 
-#define MONTHLY_SUBSCRIPTION "net.moviemator.moviemator.monthly_subscription"
-#define THRERE_MONTH_SUBSCRIPTION "net.moviemator.moviemator.3month_subscription"
-#define YEARLY_SUBSCRIPTION "net.moviemator.moviemator.yearly_subscription"
+#define MONTHLY_SUBSCRIPTION "net.moviemator.moviemator.subscription_one_month"
+#define THRERE_MONTH_SUBSCRIPTION "net.moviemator.moviemator.subscription_three_months"
+#define YEARLY_SUBSCRIPTION "net.moviemator.moviemator.subscription_one_year"
 
 static void inAppCallback(void *caller, int result)
 {
@@ -50,6 +50,7 @@ InAppDialog::InAppDialog(QWidget *parent) :
     ui->useFreeVersionButton->setMainTitle(tr("Use Trial"));
     ui->useFreeVersionButton->setSubTitle(tr("Output videos of 5 minutes at most and will be saved with a watermark"));
     ui->useFreeVersionButton->setAccessoryTitle(tr("Free"));
+    ui->paymentTipsTextEdit->setHidden(true);
 }
 
 InAppDialog::~InAppDialog()

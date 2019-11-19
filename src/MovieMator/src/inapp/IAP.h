@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
 
-#define MONTHLY_SUBSCRIPTION @"net.moviemator.moviemator.monthly_subscription"
-#define THRERE_MONTH_SUBSCRIPTION @"net.moviemator.moviemator.3month_subscription"
-#define YEARLY_SUBSCRIPTION @"net.moviemator.moviemator.yearly_subscription"
+#define MONTHLY_SUBSCRIPTION @"net.moviemator.moviemator.subscription_one_month"
+#define THRERE_MONTH_SUBSCRIPTION @"net.moviemator.moviemator.subscription_three_months"
+#define YEARLY_SUBSCRIPTION @"net.moviemator.moviemator.subscription_one_year"
 
 
 @interface IAP : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver, SKRequestDelegate>

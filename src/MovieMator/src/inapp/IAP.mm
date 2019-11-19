@@ -740,12 +740,42 @@
     if (appReceipt == nil)
         return -1;
 
-    if (![appReceipt containsActiveAutoRenewableSubscriptionOfProductIdentifier:MONTHLY_SUBSCRIPTION forDate:[NSDate date]]
-            && ![appReceipt containsActiveAutoRenewableSubscriptionOfProductIdentifier:THRERE_MONTH_SUBSCRIPTION forDate:[NSDate date]]
-            && ![appReceipt containsActiveAutoRenewableSubscriptionOfProductIdentifier:YEARLY_SUBSCRIPTION forDate:[NSDate date]])
-        return -1;
+    //自动订阅验证
+//    if (![appReceipt containsActiveAutoRenewableSubscriptionOfProductIdentifier:MONTHLY_SUBSCRIPTION forDate:[NSDate date]]
+//            && ![appReceipt containsActiveAutoRenewableSubscriptionOfProductIdentifier:THRERE_MONTH_SUBSCRIPTION forDate:[NSDate date]]
+//            && ![appReceipt containsActiveAutoRenewableSubscriptionOfProductIdentifier:YEARLY_SUBSCRIPTION forDate:[NSDate date]])
+//        return -1;
 
-    return 0;
+    //非自动订阅验证
+    NSDate *purchaseDate = [appReceipt originalPurchaseDate:MONTHLY_SUBSCRIPTION];
+    NSDate *expirationDate = nil;
+    if (purchaseDate)
+    {
+        NSLog(@"Subscription: %@, purchase date: %@", MONTHLY_SUBSCRIPTION, purchaseDate);
+        expirationDate = [NSDate dateWithTimeInterval:31*24*60*60 sinceDate:purchaseDate];
+        if ([[NSDate date] compare:expirationDate] != NSOrderedDescending)
+            return 0;
+    }
+
+    purchaseDate = [appReceipt originalPurchaseDate:THRERE_MONTH_SUBSCRIPTION];
+    if (purchaseDate)
+    {
+        NSLog(@"Subscription: %@, purchase date: %@", THRERE_MONTH_SUBSCRIPTION, purchaseDate);
+        expirationDate = [NSDate dateWithTimeInterval:3*31*24*60*60 sinceDate:purchaseDate];
+        if ([[NSDate date] compare:expirationDate] != NSOrderedDescending)
+            return 0;
+    }
+
+    purchaseDate = [appReceipt originalPurchaseDate:YEARLY_SUBSCRIPTION];
+    if (purchaseDate)
+    {
+        NSLog(@"Subscription: %@, purchase date: %@", YEARLY_SUBSCRIPTION, purchaseDate);
+        expirationDate = [NSDate dateWithTimeInterval:366*24*60*60 sinceDate:purchaseDate];
+        if ([[NSDate date] compare:expirationDate] != NSOrderedDescending)
+            return 0;
+    }
+
+    return -1;
 }
 
 
@@ -758,6 +788,7 @@
 
 - (void)requestDidFinish:(SKRequest *)request
 {
+
 }
 
 @end

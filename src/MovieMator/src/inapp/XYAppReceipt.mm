@@ -170,6 +170,16 @@ static NSURL *_appleRootCertificateURL = nil;
     return [lastTransaction isActiveAutoRenewableSubscriptionForDate:date];
 }
 
+- (NSDate *)originalPurchaseDate:(NSString *)productIdentifier
+{
+    for (XYAppReceiptIAP *iap in self.inAppPurchases)
+    {
+        if (![iap.productIdentifier isEqualToString:productIdentifier]) continue;
+        return iap.originalPurchaseDate;
+    }
+    return nil;
+}
+
 - (BOOL)verifyReceiptHash
 {
     return YES;
