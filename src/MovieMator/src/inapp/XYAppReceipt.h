@@ -69,6 +69,9 @@
  */
 - (BOOL)containsActiveAutoRenewableSubscriptionOfProductIdentifier:(NSString *)productIdentifier forDate:(NSDate *)date;
 
+
+- (NSDate *)originalPurchaseDate:(NSString *)productIdentifier;
+
 /** Returns wheter the receipt hash corresponds to the device's GUID by calcuting the expected hash using the GUID, bundleIdentifierData and opaqueValue.
  @return YES if the hash contained in the receipt corresponds to the device's GUID, NO otherwise.
  */
