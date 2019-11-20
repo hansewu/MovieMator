@@ -151,11 +151,18 @@ Player::Player(QWidget *parent)
 #endif
 
     // Add the scrub bar.
-    m_scrubber = new ScrubBar();
-    m_scrubber->setOrientation(Qt::Horizontal);
+//    m_scrubber = new ScrubBar();
+//    m_scrubber->setOrientation(Qt::Horizontal);
+//    m_scrubber->setFocusPolicy(Qt::NoFocus);
+//    m_scrubber->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+////    m_scrubber->setFixedHeight(8);
+
+    m_scrubber = new ScrubBar(this);
     m_scrubber->setFocusPolicy(Qt::NoFocus);
+    m_scrubber->setObjectName("scrubBar");
     m_scrubber->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
-//    m_scrubber->setFixedHeight(8);
+    m_scrubber->setFixedHeight(20);
+//    vlayout->addWidget(m_scrubber);
 
 
     m_positionSpinner = new TimeSpinBox(this);
@@ -765,6 +772,8 @@ void Player::onProducerOpened(bool play)
         m_scrubber->setInPoint(m_previousIn);
         m_previousOut = MLT.isClip()? MLT.producer()->get_out() : -1;
         m_scrubber->setOutPoint(m_previousOut);
+
+        checkCroppedOfCurrentProducer();
     }
     else {
         m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
@@ -1454,4 +1463,25 @@ void Player::mouseDoubleClickEvent(QMouseEvent *event)
 {
     Q_UNUSED(event)
     toggleFullScreen();
+}
+
+void Player::checkCroppedOfCurrentProducer()
+{
+    //只允许在播放器中裁剪音频和视频
+    Mlt::Producer *pProducer = MLT.producer();
+    if (pProducer && pProducer->is_valid())
+    {
+        int nAudioIndex = pProducer->get_int("audio_index");
+        int nVideoIndex = pProducer->get_int("video_index");
+        if (nAudioIndex == 0 && nVideoIndex == 0)
+        {
+            m_scrubber->setInPoint(-1);
+            m_scrubber->setOutPoint(-1);
+        }
+    }
+    else
+    {
+        m_scrubber->setInPoint(-1);
+        m_scrubber->setOutPoint(-1);
+    }
 }
