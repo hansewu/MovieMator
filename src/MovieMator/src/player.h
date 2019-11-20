@@ -222,6 +222,8 @@ private slots:
     void onZoomActionTriggered();
 
     void onShowVolumeSlider();
+
+    void checkCroppedOfCurrentProducer();
 };
 
 #endif // PLAYER_H
