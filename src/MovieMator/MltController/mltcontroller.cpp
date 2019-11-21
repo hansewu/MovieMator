@@ -586,25 +586,25 @@ void Controller::setProfile(const QString& profile_name)
     LOG_DEBUG() << "setting to profile" << (profile_name.isEmpty()? "Automatic" : profile_name);
     if (!profile_name.isEmpty()) {
         //解决profile中description不能修改的问题
-        Mlt::Profile *pNewProfile = new Mlt::Profile(profile_name.toLatin1().constData());
-        Q_ASSERT(pNewProfile);
-        if (pNewProfile)
-        {
-            pNewProfile->set_explicit(true);
+//        Mlt::Profile *pNewProfile = new Mlt::Profile(profile_name.toLatin1().constData());
+//        Q_ASSERT(pNewProfile);
+//        if (pNewProfile)
+//        {
+//            pNewProfile->set_explicit(true);
 
-            delete m_profile;
-            m_profile = pNewProfile;
-        }
+//            delete m_profile;
+//            m_profile = pNewProfile;
+//        }
 
-//        Mlt::Profile tmp(profile_name.toLatin1().constData());
-//        m_profile->set_colorspace(tmp.colorspace());
-//        m_profile->set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
-//        m_profile->set_height(tmp.height());
-//        m_profile->set_progressive(tmp.progressive());
-//        m_profile->set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
-//        m_profile->set_display_aspect(tmp.display_aspect_num(), tmp.display_aspect_den());
-//        m_profile->set_width(alignWidth(tmp.width()));
-//        m_profile->set_explicit(true);
+        Mlt::Profile tmp(profile_name.toLatin1().constData());
+        m_profile->set_colorspace(tmp.colorspace());
+        m_profile->set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
+        m_profile->set_height(tmp.height());
+        m_profile->set_progressive(tmp.progressive());
+        m_profile->set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
+        m_profile->set_display_aspect(tmp.display_aspect_num(), tmp.display_aspect_den());
+        m_profile->set_width(alignWidth(tmp.width()));
+        m_profile->set_explicit(true);
     } else {
         m_profile->set_explicit(false);
         if (m_producer) {

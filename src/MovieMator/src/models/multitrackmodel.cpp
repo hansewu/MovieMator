@@ -3574,7 +3574,7 @@ void MultitrackModel::load()
 
 void MultitrackModel::reload(bool asynchronous)
 {
-    Q_ASSERT(m_tractor);
+//    Q_ASSERT(m_tractor);
 
     if (m_tractor) {
         if (asynchronous) {
