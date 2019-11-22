@@ -502,6 +502,15 @@ void ShotcutSettings::setIsSubscribed(bool bSubscribed)
     settings.setValue("subscribed", bSubscribed);
 }
 
+bool ShotcutSettings::stickerDockShowPrompt()
+{
+    return settings.value("stickerDcokPrompt", true).toBool();
+}
+
+void ShotcutSettings::setStickerDockShowPrompt(bool bIsPrompt)
+{
+    settings.setValue("stickerDcokPrompt", bIsPrompt);
+}
 
 void ShotcutSettings::sync()
 {

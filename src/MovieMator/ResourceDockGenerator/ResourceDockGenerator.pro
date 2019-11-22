@@ -41,7 +41,8 @@ SOURCES += \
     recentdock/recentitemmodel.cpp \
     recentdock/lineeditclear.cpp \
     audiodockwidget.cpp \
-    audioitemmodel.cpp
+    audioitemmodel.cpp \
+    helptipdialog.cpp
 
 HEADERS += \
         resourcedockgenerator_global.h \ 
@@ -62,7 +63,8 @@ HEADERS += \
     recentdock/lineeditclear.h \
     unsortmap.h \
     audiodockwidget.h \
-    audioitemmodel.h
+    audioitemmodel.h \
+    helptipdialog.h
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 INCLUDEPATH += ../src
@@ -96,5 +98,6 @@ unix {
 include(../win32debug.pri)
 
 FORMS += \
-    basedockwidget.ui
+    basedockwidget.ui \
+    helptipdialog.ui
 

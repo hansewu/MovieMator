@@ -62,9 +62,9 @@ protected slots:
     // 双击 item
     virtual void onDoubleClickedItem(const QModelIndex &index);
 
-private slots:
+protected slots:
     //切换dock时，自适应调节dock的宽
-    void onDockWidgetVisibilityChanged(bool bVisible);
+    virtual void onDockWidgetVisibilityChanged(bool bVisible);
 
 private:
     //创建所有分类的UI

@@ -6,6 +6,8 @@
 #include "stickeritemmodel.h"
 #include "uiuserdef.h"
 #include "translationhelper.h"
+#include "settings.h"
+#include "helptipdialog.h"
 
 #include <qdir.h>
 #include <qdebug.h>
@@ -451,6 +453,17 @@ void StickerDockWidget::onAnimationComboBoxCurrentIndexChanged(int nIndex)
     emit currentSelectedAnimationChanged(strAnimationFilePath);//用于更新拖拽数据
 
     qDebug()<<"sll-----onAnimationComboBoxCurrentIndexChanged---end";
+}
+
+void StickerDockWidget::onDockWidgetVisibilityChanged(bool bVisible)
+{
+    BaseDockWidget::onDockWidgetVisibilityChanged(bVisible);
+
+    if (bVisible && Settings.stickerDockShowPrompt())
+    {
+        HelpTipDialog helpTipDialog(this);
+        helpTipDialog.show();
+    }
 }
 
 static StickerDockWidget *pStickerDockInstance = nullptr;

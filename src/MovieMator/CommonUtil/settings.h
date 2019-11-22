@@ -158,6 +158,9 @@ public:
     bool isSubscribed();
     void setIsSubscribed(bool bSubscribed);
 
+    bool stickerDockShowPrompt();
+    void setStickerDockShowPrompt(bool bIsPrompt);
+
     void sync();
 
     void remove(const QString &key);
