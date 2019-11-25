@@ -478,8 +478,9 @@ win32 {
 
 mac {
     qmlfiles.files = $$PWD/qml
-    qmlfiles.path = $$PREFIX/share/MovieMator
-    INSTALLS += qmlfiles
+    qmlfiles.path = Contents/Resources/share/moviemator
+    #INSTALLS += qmlfiles
+    QMAKE_BUNDLE_DATA += qmlfiles
 }
 
 DISTFILES += \
