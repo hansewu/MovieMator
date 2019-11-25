@@ -62,6 +62,8 @@ class QmlFilter : public QObject
     Q_PROPERTY(double mediaHeight READ mediaHeight)
     Q_PROPERTY(int keyframeNumber READ cache_getKeyFrameNumber NOTIFY keyframeNumberChanged)
 
+    //Q_PROPERTY(int isKeyframeActivate READ isKeyframeActivate NOTIFY isKeyframeActivateChanged)
+
 public:
     explicit QmlFilter(Mlt::Filter* mltFilter, /*const*/ QmlMetadata* metadata, QObject *parent = nullptr);
     ~QmlFilter();
@@ -490,6 +492,7 @@ public:
      */
     Q_INVOKABLE void removeAnimationKeyFrame(int nFrame, QString name, bool bFromUndo = false);
 
+
 //#endif
 
     /** A Boolean value that indicates whether the animation is enable state.
@@ -515,6 +518,19 @@ public:
      * \param bAutoAddKeyFrame enables the Auto add keyframes function or not
      */
     Q_INVOKABLE void setAutoAddKeyFrame(bool bAutoAddKeyFrame) { m_bAutoAddKeyFrame = bAutoAddKeyFrame; }
+
+
+    /** sends editKeyframeOfParameter signal
+     *
+     * \param nIndexOfParameter index of the parameter
+     */
+    Q_INVOKABLE void emitEditKeyframeOfParameter(int nIndexOfParameter);
+
+
+    Q_INVOKABLE bool isKeyframeActivate(int nIndexOfParameter);
+    Q_INVOKABLE bool isKeyframeAtPosition(int nIndexOfParameter, int nFramePosition);
+    Q_INVOKABLE bool hasPreKeyframeAtPositon(int nIndexOfParameter, int nFramePosition);
+    Q_INVOKABLE bool hasNextKeyframeAtPositon(int nIndexOfParameter, int nFramePosition);
 
 public slots:
     /** Load a properties preset.
@@ -549,6 +565,9 @@ signals:
     /// Used to notify the receiver whenever the key frame number changed.
     void keyframeNumberChanged();
 //#endif
+
+    ///将要编辑参数的关键帧
+    void editKeyframeOfParameter(int nIndexOfParameter);
 
 private:
     QmlMetadata* m_metadata;    /** the metadata of the Mlt::Filter*/
