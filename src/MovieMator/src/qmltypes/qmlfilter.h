@@ -524,13 +524,13 @@ public:
      *
      * \param nIndexOfParameter index of the parameter
      */
-    Q_INVOKABLE void emitEditKeyframeOfParameter(int nIndexOfParameter);
+    Q_INVOKABLE void emitEditKeyframeOfParameter(const QString strIdentifierOfParameter);
 
 
-    Q_INVOKABLE bool isKeyframeActivate(int nIndexOfParameter);
-    Q_INVOKABLE bool isKeyframeAtPosition(int nIndexOfParameter, int nFramePosition);
-    Q_INVOKABLE bool hasPreKeyframeAtPositon(int nIndexOfParameter, int nFramePosition);
-    Q_INVOKABLE bool hasNextKeyframeAtPositon(int nIndexOfParameter, int nFramePosition);
+    Q_INVOKABLE bool isKeyframeActivate(const QString strIdentifierOfParameter);
+    Q_INVOKABLE bool isKeyframeAtPosition(const QString strIdentifierOfParameter, int nFramePosition);
+    Q_INVOKABLE bool hasPreKeyframeAtPositon(const QString strIdentifierOfParameter, int nFramePosition);
+    Q_INVOKABLE bool hasNextKeyframeAtPositon(const QString strIdentifierOfParameter, int nFramePosition);
 
 public slots:
     /** Load a properties preset.
@@ -567,7 +567,7 @@ signals:
 //#endif
 
     ///将要编辑参数的关键帧
-    void editKeyframeOfParameter(int nIndexOfParameter);
+    void editKeyframeOfParameter(const QString strIdentifierOfParameter);
 
 private:
     QmlMetadata* m_metadata;    /** the metadata of the Mlt::Filter*/
