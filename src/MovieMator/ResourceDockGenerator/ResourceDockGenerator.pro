@@ -39,7 +39,9 @@ SOURCES += \
     filteritemmodel.cpp \
     recentdock/recentdockwidget.cpp \
     recentdock/recentitemmodel.cpp \
-    recentdock/lineeditclear.cpp
+    recentdock/lineeditclear.cpp \
+    audiodockwidget.cpp \
+    audioitemmodel.cpp
 
 HEADERS += \
         resourcedockgenerator_global.h \ 
@@ -58,7 +60,9 @@ HEADERS += \
     recentdock/recentdockwidget.h \
     recentdock/recentitemmodel.h \
     recentdock/lineeditclear.h \
-    unsortmap.h
+    unsortmap.h \
+    audiodockwidget.h \
+    audioitemmodel.h
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil
 INCLUDEPATH += ../src

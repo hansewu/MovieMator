@@ -47,6 +47,7 @@
 #include "widgets/imageproducerwidget.h"
 #include "widgets/webvfxproducer.h"
 #include "docks/encodedock.h"
+#include "docks/advanceddock.h"
 #include "docks/jobsdock.h"
 #include "jobqueue.h"
 //#include <playlistdock.h>
@@ -541,8 +542,6 @@ MainWindow::MainWindow()
     m_encodeDock->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
     m_encodeDock->setWindowModality(Qt::WindowModal);
     m_encodeDock->hide();
-
-
     connect(this, SIGNAL(producerOpened()), m_encodeDock, SLOT(onProducerOpened()));
     connect(ui->actionEncode, SIGNAL(triggered()), this, SLOT(onEncodeTriggered()));
   //  connect(m_encodeDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onEncodeTriggered(bool)));
@@ -558,7 +557,6 @@ MainWindow::MainWindow()
     connect(this, SIGNAL(profileChanged()), SLOT(onProfileChanged()));
 //    connect(m_playlistDock->model(), SIGNAL(modified()), m_encodeDock, SLOT(onProducerOpened()));
     connect(m_timelineDock, SIGNAL(clipCopied()), m_encodeDock, SLOT(onProducerOpened()));
-    m_encodeDock->onProfileChanged();
 
     m_jobsDock = new JobsDock();//delete this to make jobs dock independent
     m_jobsDock->installEventFilter(this);
@@ -633,6 +631,10 @@ MainWindow::MainWindow()
     LOG_DEBUG() << "StickersDock";
     m_resourceStickerDock = RDG_CreateStickerDock(&MainInterface::singleton());
     addResourceDock(m_resourceStickerDock, tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
+
+    LOG_DEBUG() << "Auido";
+    m_resourceAudioDock = RDG_CreateAudioDock(&MainInterface::singleton());
+    addResourceDock(m_resourceAudioDock, tr("Audio"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
 
     m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
     m_propertiesDock->installEventFilter(this);
@@ -1710,8 +1712,8 @@ void MainWindow::seekPlaylist(int start)
     m_player->setOut(-1);
     // since we do not emit producerOpened, these components need updating
     on_actionJack_triggered(ui->actionJack && ui->actionJack->isChecked());
-    m_player->onProducerOpened(false);
-    m_encodeDock->onProducerOpened();
+   // m_player->onProducerOpened(false);
+    //m_encodeDock->onProducerOpened();
     m_filterController->setProducer();
     updateMarkers();
     MLT.seek(start);
@@ -1743,8 +1745,8 @@ void MainWindow::setMultitrackAsCurrentProducer()
         m_player->setIn(-1);
         m_player->setOut(-1);
         // since we do not emit producerOpened, these components need updating
-        m_player->onProducerOpened(false);
-        m_encodeDock->onProducerOpened();
+       // m_player->onProducerOpened(false);
+        //m_encodeDock->onProducerOpened();
         m_filterController->setProducer();
         updateMarkers();
         m_player->setFocus();
@@ -2512,9 +2514,9 @@ void MainWindow::dropEvent(QDropEvent *event)
                 m_multipleFiles.append(path);
             }
         }
-        QString path = Util::removeFileScheme(mimeData->urls().first());
-        open(path);
-        event->acceptProposedAction();
+        //QString path = Util::removeFileScheme(mimeData->urls().first());
+  //      open(path);
+   //     event->acceptProposedAction();
     }
     else if (mimeData->hasFormat(MLT.MltXMLMimeType())) {
 //        m_playlistDock->on_actionOpen_triggered();

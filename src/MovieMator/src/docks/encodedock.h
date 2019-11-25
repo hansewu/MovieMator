@@ -27,6 +27,7 @@
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 #include <MltProperties.h>
+#include "advanceddock.h"
 
 class QTreeWidgetItem;
 class QStringList;
@@ -72,7 +73,7 @@ signals:
 
 public slots:
     // Producer被打开
-    void onProducerOpened();
+    //void onProducerOpened();
     // 配置 Profile发生变化
     void onProfileChanged();
 
@@ -85,7 +86,7 @@ private slots:
     // encodeButton单击的槽函数
     void on_encodeButton_clicked();
     // streamButton单击的槽函数
-    void on_streamButton_clicked();
+   // void on_streamButton_clicked();
 
     // addPresetButton单击的槽函数
     void on_addPresetButton_clicked();
@@ -98,54 +99,49 @@ private slots:
     void onFinished(AbstractJob*, bool isSuccess);
 
     // stopCaptureButton单击的槽函数
-    void on_stopCaptureButton_clicked();
+    //void on_stopCaptureButton_clicked();
 
     // vidoeRateControlCombo激活的槽函数
-    void on_videoRateControlCombo_activated(int index);
+    //void on_videoRateControlCombo_activated(int index);
 
     // audioRateControlCombo激活的槽函数
-    void on_audioRateControlCombo_activated(int index);
+   // void on_audioRateControlCombo_activated(int index);
 
-    // scanModeCombo当前 index发生变化的槽函数
-    void on_scanModeCombo_currentIndexChanged(int index);
 
     // presetsSearch文本内容发生变化的槽函数
-    void on_presetsSearch_textChanged(const QString &search);
+    //void on_presetsSearch_textChanged(const QString &search);
 
     // resetButton单击的槽函数
-    void on_resetButton_clicked();
+    //void on_resetButton_clicked();
 
     // 打开捕获的（导出的）文件
     void openCaptureFile();
 
     // formatCombo当前 index发生变化的槽函数
-    void on_formatCombo_currentIndexChanged(int index);
+   // void on_formatCombo_currentIndexChanged(int index);
 
     // 视频时长发生变化的槽函数
     void on_videoBufferDurationChanged();
 
     // gopSpinner值发生变化的槽函数
     // GOP：图像组（帧数）
-    void on_gopSpinner_valueChanged(int value);
-    // closeButton单击的槽函数
-    void on_closeButton_clicked();
+    //void on_gopSpinner_valueChanged(int value);
 
-    void on_widthSpinner_editingFinished();
+    //void on_widthSpinner_editingFinished();
 
-    void on_heightSpinner_editingFinished();
+   // void on_heightSpinner_editingFinished();
+
+    void on_advancedButton_clicked();
+    //接收传递过来的数据的槽
+   // void receiveData(QString data);
+
+    void selectPreset(QString presetname);
 
 private:
-    // 码率控制
-    enum {
-        // 平衡
-        RateControlAverage = 0,
-        // 稳定？？？
-        RateControlConstant,
-        // 性能
-        RateControlQuality
-    };
+
     // 界面 ui
     Ui::EncodeDock *ui;
+     AdvancedDock*m_advanceddock;
     // 预置属性
     Mlt::Properties *m_presets;
     // 立即执行的任务？？？
@@ -159,7 +155,7 @@ private:
     // 导出的文件名
     QString m_outputFilename;
     // 是否是默认设置
-    bool m_isDefaultSettings;
+    //bool m_isDefaultSettings;
     // 当前的预置文件属性
     Mlt::Properties *m_currentPreset;
 

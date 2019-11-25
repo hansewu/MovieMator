@@ -162,7 +162,7 @@ QHBoxLayout *BaseDockWidget::createClassLabel(const QString &strClassName)
 
 BaseListView *BaseDockWidget::createClassListView(BaseItemModel *pItemModel)
 {
-    Q_ASSERT(pItemModel);
+    //Q_ASSERT(pItemModel);
     if (pItemModel == nullptr)
     {
         return nullptr;

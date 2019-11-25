@@ -25,6 +25,8 @@ RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *RDG_CreateTextDock(MainInterface
 
 RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *RDG_CreateStickerDock(MainInterface *pMainInterface);
 
+RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *RDG_CreateAudioDock(MainInterface *pMainInterface);
+
 RESOURCEDOCKGENERATORSHARED_EXPORT QDockWidget *RDG_CreateRecentDock(MainInterface *pMainInterface);
 RESOURCEDOCKGENERATORSHARED_EXPORT void RDG_AddFileToRecentDock(const QString &strFilePath);
 

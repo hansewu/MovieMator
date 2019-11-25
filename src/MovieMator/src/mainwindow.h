@@ -49,6 +49,7 @@ namespace Ui {
 }
 class Player;
 class EncodeDock;
+class AdvancedDock;
 class JobsDock;
 //class PlaylistDock;
 class QUndoStack;
@@ -204,6 +205,7 @@ private:
     QDockWidget* m_templateDock;//左侧模板dock，暂时无用
     QDockWidget* m_resourceTextDock;//文字Dock
     QDockWidget* m_resourceStickerDock;//文字Dock
+    QDockWidget* m_resourceAudioDock;//音頻資源
 //    QDockWidget* m_templateEditorDock;//右侧模板编辑dock，暂时无用
     EncodeDock* m_encodeDock;//导出文件dock
     JobsDock* m_jobsDock;//导出文件进度列表dock
