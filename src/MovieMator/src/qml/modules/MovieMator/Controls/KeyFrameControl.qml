@@ -44,41 +44,39 @@ Rectangle {
 
     signal switchFoldStat(bool bChecked)
     
+    property string m_strIdentifierOfParameter: ""
 
-    function refreshFrameButtonsEnable()
+    function refreshFrameButtonsEnable(strIdentifierOfParameter)
     {
-//        var position = timeline.getPositionInCurrentClip()
-
-//        addKeyFrameButton.enabled   = enableKeyFrameCheckBox.checked && !autoAddKeyFrameCheckBox.checked && metadata && (metadata.keyframes.parameterCount > 0)
-
-//        preKeyFrameButton.enabled   = enableKeyFrameCheckBox.checked && metadata && (metadata.keyframes.parameterCount > 0) && filter.bHasPreKeyFrame(position)
-
-//        nextKeyFrameButton.enabled  = enableKeyFrameCheckBox.checked && metadata && (metadata.keyframes.parameterCount > 0) && filter.bHasNextKeyFrame(position)
-
-//        removeKeyFrameButton.enabled= enableKeyFrameCheckBox.checked && metadata && (metadata.keyframes.parameterCount > 0) && filter.cache_bKeyFrame(position) && (position !== 0) && (position !== (timeline.getCurrentClipLength() - 1))
-
-//        autoAddKeyFrameCheckBox.enabled = enableKeyFrameCheckBox.checked
-    }
-
-
-    function initUIWithParameter(nIndexOfParameter)
-    {
-        console.log("initUIWithParameter: ", nIndexOfParameter)
+        if (strIdentifierOfParameter === "")
+            return;
 
         var position = timeline.getPositionInCurrentClip()
 
-        enableKeyFrameCheckBox.checked  = filter.isKeyframeActivate(nIndexOfParameter);
+        enableKeyFrameCheckBox.checked  = filter.isKeyframeActivate(strIdentifierOfParameter);
         addKeyFrameButton.enabled       = enableKeyFrameCheckBox.checked && !autoAddKeyFrameCheckBox.checked
-        preKeyFrameButton.enabled       = enableKeyFrameCheckBox.checked && filter.hasPreKeyframeAtPositon(nIndexOfParameter, position)
-        nextKeyFrameButton.enabled      = enableKeyFrameCheckBox.checked && filter.hasNextKeyframeAtPositon(nIndexOfParameter, position)
-        removeKeyFrameButton.enabled    = enableKeyFrameCheckBox.checked && filter.isKeyframeAtPosition(nIndexOfParameter, position)
+        preKeyFrameButton.enabled       = enableKeyFrameCheckBox.checked && filter.hasPreKeyframeAtPositon(strIdentifierOfParameter, position)
+        nextKeyFrameButton.enabled      = enableKeyFrameCheckBox.checked && filter.hasNextKeyframeAtPositon(strIdentifierOfParameter, position)
+        removeKeyFrameButton.enabled    = enableKeyFrameCheckBox.checked && filter.isKeyframeAtPosition(strIdentifierOfParameter, position)
         autoAddKeyFrameCheckBox.enabled = enableKeyFrameCheckBox.checked
+    }
+
+
+    function initUIWithParameter(strIdentifierOfParameter)
+    {
+        console.log("initUIWithParameter: ", strIdentifierOfParameter)
+
+        if (strIdentifierOfParameter === "")
+            return;
+
+        m_strIdentifierOfParameter = strIdentifierOfParameter
+        refreshFrameButtonsEnable(strIdentifierOfParameter)
     }
 
     Connections {
         target: filterDock
         onPositionChanged: {
-             refreshFrameButtonsEnable()
+             refreshFrameButtonsEnable(m_strIdentifierOfParameter)
 
              var position = timeline.getPositionInCurrentClip()
              frameChanged(position)
@@ -174,18 +172,17 @@ Rectangle {
                         if(metadata.keyframes.parameterCount > 0)
                         {   
                             addFrameChanged()
-                            refreshFrameButtonsEnable()
+                            refreshFrameButtonsEnable(m_strIdentifierOfParameter)
                             autoAddKeyFrameCheckBox.checked = true
                         }  
                     }
                     else
                     {  
-                        if(filter.cache_getKeyFrameNumber() > 0)
+                        if(filter.isKeyframeActivate(m_strIdentifierOfParameter))
                             removeKeyFrameWarning.visible = true
                     }
                 }
                 onCheckedChanged: {
-                    refreshFrameButtonsEnable()
                     enableKeyFrameChanged(checked)
                 }
             }
@@ -218,7 +215,7 @@ Rectangle {
                 }
                 onCheckedChanged: 
                 {
-                    refreshFrameButtonsEnable() 
+                    refreshFrameButtonsEnable(m_strIdentifierOfParameter)
                     autoAddKeyFrameChanged(checked)
                 }    
             }
@@ -234,7 +231,7 @@ Rectangle {
                 implicitWidth: 18
                 implicitHeight: 18
 
-                enabled: refreshFrameButtonsEnable() 
+                enabled: refreshFrameButtonsEnable(m_strIdentifierOfParameter)
                 opacity: enabled ? 1.0 : 0.5
                 tooltip: qsTr('Add key frame')
                 //customIconSource: 'qrc:///icons/light/32x32/list-add.png'
@@ -242,7 +239,7 @@ Rectangle {
                 //buttonWidth : 85
                 onClicked: {
                     addFrameChanged()
-                    refreshFrameButtonsEnable() 
+                    refreshFrameButtonsEnable(m_strIdentifierOfParameter)
                 }
 
                 style: ButtonStyle {
@@ -296,7 +293,7 @@ Rectangle {
                         filter.removeKeyFrameParaValue(position)
                         removeKeyFrame()
 
-                    refreshFrameButtonsEnable() 
+                    refreshFrameButtonsEnable(m_strIdentifierOfParameter)
                 }
             }
 
@@ -410,7 +407,10 @@ Rectangle {
         target: filter
         onEditKeyframeOfParameter:
         {
-            initUIWithParameter(nIndexOfParameter)
+            keyFrame.visible = true
+            foldBtn.checked = true
+            switchFoldStat(true)
+            initUIWithParameter(strIdentifierOfParameter)
         }
     }
 }

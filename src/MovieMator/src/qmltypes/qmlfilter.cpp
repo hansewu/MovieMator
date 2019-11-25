@@ -1362,54 +1362,51 @@ void QmlFilter::refreshNoAnimation(const QVector<key_frame_item> &listParameter,
 }
 
 
-void QmlFilter::emitEditKeyframeOfParameter(int nIndexOfParameter)
+void QmlFilter::emitEditKeyframeOfParameter(const QString strIdentifierOfParameter)
 {
-    Q_ASSERT(nIndexOfParameter >= 0);
-    if (nIndexOfParameter < 0)
+    Q_ASSERT(!strIdentifierOfParameter.isEmpty());
+    if (strIdentifierOfParameter.isEmpty())
         return;
 
-    emit editKeyframeOfParameter(nIndexOfParameter);
+    emit editKeyframeOfParameter(strIdentifierOfParameter);
 }
 
 
-bool QmlFilter::isKeyframeActivate(int nIndexOfParameter)
+bool QmlFilter::isKeyframeActivate(const QString strIdentifierOfParameter)
 {
-    Q_ASSERT(nIndexOfParameter >= 0 && nIndexOfParameter < m_metadata->keyframes()->paramCount());
-    if (nIndexOfParameter < 0 || nIndexOfParameter >= m_metadata->keyframes()->paramCount())
+
+    Q_ASSERT(!strIdentifierOfParameter.isEmpty());
+    if (strIdentifierOfParameter.isEmpty())
         return false;
 
-    QString strParameterKey = m_metadata->keyframes()->parameter(nIndexOfParameter)->property();
-    qDebug() << getAnimation(strParameterKey).key_count();
-    return getAnimation(strParameterKey).key_count() > 0;
+    qDebug() << getAnimation(strIdentifierOfParameter).key_count();
+    return getAnimation(strIdentifierOfParameter).key_count() > 0;
 }
 
-bool QmlFilter::isKeyframeAtPosition(int nIndexOfParameter, int nFramePosition)
+bool QmlFilter::isKeyframeAtPosition(const QString strIdentifierOfParameter, int nFramePosition)
 {
-    Q_ASSERT(nIndexOfParameter >= 0 && nIndexOfParameter < m_metadata->keyframes()->paramCount());
-    if (nIndexOfParameter < 0 || nIndexOfParameter >= m_metadata->keyframes()->paramCount())
+    Q_ASSERT(!strIdentifierOfParameter.isEmpty());
+    if (strIdentifierOfParameter.isEmpty())
         return false;
 
-    QString strParameterKey = m_metadata->keyframes()->parameter(nIndexOfParameter)->property();
-    return getAnimation(strParameterKey).is_key(nFramePosition);
+    return getAnimation(strIdentifierOfParameter).is_key(nFramePosition);
 }
 
-bool QmlFilter::hasPreKeyframeAtPositon(int nIndexOfParameter, int nFramePosition)
+bool QmlFilter::hasPreKeyframeAtPositon(const QString strIdentifierOfParameter, int nFramePosition)
 {
-    Q_ASSERT(nIndexOfParameter >= 0 && nIndexOfParameter < m_metadata->keyframes()->paramCount());
-    if (nIndexOfParameter < 0 || nIndexOfParameter >= m_metadata->keyframes()->paramCount())
+    Q_ASSERT(!strIdentifierOfParameter.isEmpty());
+    if (strIdentifierOfParameter.isEmpty())
         return false;
 
     if (m_filter)
     {
-        QString name = m_metadata->keyframes()->parameter(nIndexOfParameter)->property();
-
-        if (getAnimation(name).is_key(nFramePosition))
+        if (getAnimation(strIdentifierOfParameter).is_key(nFramePosition))
             nFramePosition = nFramePosition - 1;
 
         if (nFramePosition <= 0)
             return false;
 
-        int nKeyFrame = getAnimation(name).previous_key(nFramePosition);
+        int nKeyFrame = getAnimation(strIdentifierOfParameter).previous_key(nFramePosition);
         if (nKeyFrame == 1)//Animation::previous_key() 的实现有问题，没有关键帧的时候会返回1。
             return false;
 
@@ -1419,20 +1416,19 @@ bool QmlFilter::hasPreKeyframeAtPositon(int nIndexOfParameter, int nFramePositio
     return false;
 }
 
-bool QmlFilter::hasNextKeyframeAtPositon(int nIndexOfParameter, int nFramePosition)
+bool QmlFilter::hasNextKeyframeAtPositon(const QString strIdentifierOfParameter, int nFramePosition)
 {
-    Q_ASSERT(nIndexOfParameter >= 0 && nIndexOfParameter < m_metadata->keyframes()->paramCount());
-    if (nIndexOfParameter < 0 || nIndexOfParameter >= m_metadata->keyframes()->paramCount())
+    Q_ASSERT(!strIdentifierOfParameter.isEmpty());
+    if (strIdentifierOfParameter.isEmpty())
         return false;
 
     if (m_filter)
     {
-        QString name = m_metadata->keyframes()->parameter(nIndexOfParameter)->property();
 
-        if (getAnimation(name).is_key(nFramePosition))
+        if (getAnimation(strIdentifierOfParameter).is_key(nFramePosition))
             nFramePosition = nFramePosition + 1;
 
-        int nKeyFrame = getAnimation(name).next_key(nFramePosition);
+        int nKeyFrame = getAnimation(strIdentifierOfParameter).next_key(nFramePosition);
         if (nKeyFrame == 1)//Animation::next_key() 的实现有问题，没有关键帧的时候会返回1。
             return false;
 

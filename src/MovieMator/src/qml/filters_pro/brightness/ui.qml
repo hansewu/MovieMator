@@ -115,7 +115,7 @@ Item {
 
         EditKeyframeButton
         {
-            nParameterIndex: 0
+            strIndentifierOfParameter: "level"
         }
 
         Item {

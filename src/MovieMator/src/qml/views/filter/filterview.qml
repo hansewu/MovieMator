@@ -299,6 +299,7 @@ Rectangle {
         visible: metadata && (metadata.keyframes.parameterCount > 0)
         KeyFrameControl {
             id: keyFrameControl
+            visible: false
             width:parent.width
             height:parent.height
             anchors {
