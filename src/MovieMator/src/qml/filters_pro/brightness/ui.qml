@@ -75,7 +75,7 @@ Item {
     }
     GridLayout {
         id: layoutRoot
-        columns: 3
+        columns: 4
         anchors.fill: parent
         anchors.margins: 20
 
@@ -111,6 +111,11 @@ Item {
             onClicked: {
                 brightnessSlider.value = 100
             }
+        }
+
+        EditKeyframeButton
+        {
+            nParameterIndex: 0
         }
 
         Item {

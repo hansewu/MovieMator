@@ -1361,6 +1361,87 @@ void QmlFilter::refreshNoAnimation(const QVector<key_frame_item> &listParameter,
     emit keyframeNumberChanged();
 }
 
+
+void QmlFilter::emitEditKeyframeOfParameter(int nIndexOfParameter)
+{
+    Q_ASSERT(nIndexOfParameter >= 0);
+    if (nIndexOfParameter < 0)
+        return;
+
+    emit editKeyframeOfParameter(nIndexOfParameter);
+}
+
+
+bool QmlFilter::isKeyframeActivate(int nIndexOfParameter)
+{
+    Q_ASSERT(nIndexOfParameter >= 0 && nIndexOfParameter < m_metadata->keyframes()->paramCount());
+    if (nIndexOfParameter < 0 || nIndexOfParameter >= m_metadata->keyframes()->paramCount())
+        return false;
+
+    QString strParameterKey = m_metadata->keyframes()->parameter(nIndexOfParameter)->property();
+    qDebug() << getAnimation(strParameterKey).key_count();
+    return getAnimation(strParameterKey).key_count() > 0;
+}
+
+bool QmlFilter::isKeyframeAtPosition(int nIndexOfParameter, int nFramePosition)
+{
+    Q_ASSERT(nIndexOfParameter >= 0 && nIndexOfParameter < m_metadata->keyframes()->paramCount());
+    if (nIndexOfParameter < 0 || nIndexOfParameter >= m_metadata->keyframes()->paramCount())
+        return false;
+
+    QString strParameterKey = m_metadata->keyframes()->parameter(nIndexOfParameter)->property();
+    return getAnimation(strParameterKey).is_key(nFramePosition);
+}
+
+bool QmlFilter::hasPreKeyframeAtPositon(int nIndexOfParameter, int nFramePosition)
+{
+    Q_ASSERT(nIndexOfParameter >= 0 && nIndexOfParameter < m_metadata->keyframes()->paramCount());
+    if (nIndexOfParameter < 0 || nIndexOfParameter >= m_metadata->keyframes()->paramCount())
+        return false;
+
+    if (m_filter)
+    {
+        QString name = m_metadata->keyframes()->parameter(nIndexOfParameter)->property();
+
+        if (getAnimation(name).is_key(nFramePosition))
+            nFramePosition = nFramePosition - 1;
+
+        if (nFramePosition <= 0)
+            return false;
+
+        int nKeyFrame = getAnimation(name).previous_key(nFramePosition);
+        if (nKeyFrame == 1)//Animation::previous_key() 的实现有问题，没有关键帧的时候会返回1。
+            return false;
+
+        return true;
+    }
+
+    return false;
+}
+
+bool QmlFilter::hasNextKeyframeAtPositon(int nIndexOfParameter, int nFramePosition)
+{
+    Q_ASSERT(nIndexOfParameter >= 0 && nIndexOfParameter < m_metadata->keyframes()->paramCount());
+    if (nIndexOfParameter < 0 || nIndexOfParameter >= m_metadata->keyframes()->paramCount())
+        return false;
+
+    if (m_filter)
+    {
+        QString name = m_metadata->keyframes()->parameter(nIndexOfParameter)->property();
+
+        if (getAnimation(name).is_key(nFramePosition))
+            nFramePosition = nFramePosition + 1;
+
+        int nKeyFrame = getAnimation(name).next_key(nFramePosition);
+        if (nKeyFrame == 1)//Animation::next_key() 的实现有问题，没有关键帧的时候会返回1。
+            return false;
+
+        return true;
+    }
+
+    return false;
+}
+
 //#endif
 
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter* filter)
