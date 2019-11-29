@@ -85,13 +85,17 @@ RowLayout{
     signal refreshUI()
 
     // 目前只有string 类型的参数用到
-    function findDefaultIndex(strValue,modelList){
-        if(modelList.length <= 0){
+    function findDefaultIndex(strValue,modelList)
+    {
+        if(modelList.length <= 0)
+        {
             return 0
         }
-        for(var i=0;i<modelList.length;i++){
+        for(var i=0;i<modelList.length;i++)
+        {
 
-            if(strValue === modelList[i]){
+            if(strValue === modelList[i])
+            {
                 return i
             }
         }
@@ -99,168 +103,89 @@ RowLayout{
     }
 
     // 滤镜初始化，正常是滤镜参数界面加载完调用，更新滤镜参数界面的初始化显示
-    function initFilter(layoutRoot){
+    function initFilter(layoutRoot)
+    {
         if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined')){
             throw new Error("metadata is abnormal")
         }
 
-        //if(metadata.keyframes.parameters.length === 1)
-            filter.setInAndOut(0, timeline.getCurrentClipParentLength()-1)
+        filter.setInAndOut(0, timeline.getCurrentClipParentLength()-1)
 
         //导入上次工程保存的关键帧
-        //bBlockUpdateUI = true
         var metaParamList = metadata.keyframes.parameters
-        if((typeof metaParamList == 'undefined')||(metaParamList.length <= 0)) return
 
-        /*
-        // 由于string没有关键帧，所以通过string类型的参数获取关键帧个数会出错，因此不能用string类型的参数去获取关键帧个数和关键帧位置
-        var keyParam = 0
-        for(keyParam=0;keyParam<metaParamList.length;keyParam++){
-            if(metaParamList[keyParam].paraType !== 'string'){
-                break;
-            }
-        }
-
-        var keyFrameCount = 0
-        if(keyParam < metaParamList.length){
-            keyFrameCount = filter.getKeyFrameCountOnProject(metaParamList[keyParam].property);
-            if(keyFrameCount < 0){
-                keyFrameCount = filter.getKeyFrameCountOnProject(metaParamList[keyParam].property);
-            }
-            
-            bBlockUpdateUI = true
-            for(var keyIndex=0; keyIndex<keyFrameCount;keyIndex++)
-            {
-                var nFrame = filter.getKeyFrameOnProjectOnIndex(keyIndex, metaParamList[keyParam].property);
-                for(var paramIndex=0;paramIndex<metaParamList.length;paramIndex++){
-                    var prop = metaParamList[paramIndex].property
-                    var keyValue = '';
-                    if(metaParamList[paramIndex].paraType === 'rect'){
-                        keyValue = filter.getAnimRectValue(nFrame, prop);
-                        filter.cache_setKeyFrameParaRectValue(nFrame, prop, keyValue)
-                    }else{
-                        keyValue = filter.getKeyValueOnProjectOnIndex(keyIndex, prop);
-                        filter.cache_setKeyFrameParaValue(nFrame, prop, keyValue.toString())
-                    }
-                }
-            }
-            bBlockUpdateUI = false
-            filter.syncCacheToProject();
-            if(keyFrameCount > 0){
-                refreshUI()
-            }
-        }
-        */
-
-        // var keyFrameCount = filter.cache_getKeyFrameNumber()
-        // // 初始化关键帧控件
-        // if (filter.isNew && keyFrameCount<=0){
-        //     for(var paramIndex=0;paramIndex<metaParamList.length;paramIndex++){
-        //         var parameter = metaParamList[paramIndex]
-        //         parameter.value = parameter.defaultValue
-        //         var control = findControl(parameter.objectName,layoutRoot)
-        //         if(control === null)
-        //             continue;
-        //         switch(parameter.controlType)
-        //         {
-        //         case "SliderSpinner":
-        //             control.value = parseFloat(parameter.defaultValue) * 100
-        //             break;
-
-        //         case "CheckBox":
-        //             control.checked = Math.round(parseFloat(parameter.defaultValue))
-        //             break;
-
-        //         case "ColorWheelItem":
-        //             var parameter2 = metaParamList[paramIndex+1]
-        //             var parameter3 = metaParamList[paramIndex+2]
-        //             control.color = Qt.rgba(calcProjValByUIVal(parseFloat(parameter.defaultValue) * 100,parameter.factorFunc), calcProjValByUIVal(parseFloat(parameter2.defaultValue) * 100,parameter2.factorFunc), calcProjValByUIVal(parseFloat(parameter3.defaultValue) * 100,parameter3.factorFunc), 1.0 )
-        //             filter.set(parameter.property,calcProjValByUIVal(parseFloat(parameter.defaultValue) * 100,parameter.factorFunc))
-        //             filter.set(parameter2.property,calcProjValByUIVal(parseFloat(parameter2.defaultValue) * 100,parameter2.factorFunc))
-        //             filter.set(parameter3.property,calcProjValByUIVal(parseFloat(parameter3.defaultValue) * 100,parameter3.factorFunc))
-        //             paramIndex = paramIndex+2
-                
-        //             break;
-                
-        //         case "ColorPicker":
-        //             var rgb = parameter.defaultValue.split(" ")
-        //             control.value = Qt.rgba(parseFloat(rgb[0]),parseFloat(rgb[1]),parseFloat(rgb[2]),1.0)
-        //             // filter.set(parameter.property,control.value)
-        //             break;
-
-        //         case "Slider":
-        //             control.value = parseFloat(parameter.defaultValue)
-        //             break;
-
-        //         case "StringCtr":
-        //             var index0 = findDefaultIndex(parameter.defaultValue,control.model)
-        //             control.currentIndex = index0
-        //             break
-                
-        //         default :
-        //             break;
-        //         }
-
-        //     }
-        // }
+        if((typeof metaParamList == 'undefined') || (metaParamList.length <= 0))
+            return
 
         refreshUI()
     }
 
     // 控件发生修改时响应的函数，更新filter的某个参数值，主要调用filter.setKeyFrame 和 filter.set
-    function controlValueChanged(id){
-        if(typeof id == 'undefined'){
+    function controlValueChanged(id)
+    {
+        if(typeof id == 'undefined')
+        {
             throw new Error("id is undefined:"+id)
         }
+
         var userChange = false
         var valueChange = false
 
-        if(bBlockUIChangedSignal == true) return
+        if(bBlockUIChangedSignal == true)
+            return
        
         bBlockUpdateUI = true
         // 可能一个控件对应几个配置项
         var parameterList = getParamsAssociatedWithControl(id)
-        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined')){
+        if((typeof metadata == 'undefined') || (typeof metadata.keyframes == 'undefined') || (typeof metadata.keyframes.parameters == 'undefined'))
+        {
             throw new Error("metadata is abnormal")
         }
-        for(var paramIndex=0;paramIndex<parameterList.length;paramIndex++){
-            if(metadata.keyframes.parameters.length < parameterList[paramIndex]){
-                throw new Error("metadata length abnormal:"+metadata.keyframes.parameters.length+" "+parameterList[paramIndex]);
+
+        for(var paramIndex = 0; paramIndex < parameterList.length; paramIndex++)
+        {
+            if(metadata.keyframes.parameters.length < parameterList[paramIndex])
+            {
+                throw new Error("metadata length abnormal:" + metadata.keyframes.parameters.length + " " + parameterList[paramIndex]);
             }
+
             var parameter = metadata.keyframes.parameters[parameterList[paramIndex]]
             switch(parameter.controlType)
             {
             case "SliderSpinner":
-                if(filter.cache_bKeyFrame(currentFrame))
+                if(filter.isKeyframeAtPosition(parameter.property, currentFrame))
                 {
-                    filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(id.value,parameter.factorFunc).toString())
+                    filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(id.value, parameter.factorFunc).toString())
                     filter.syncCacheToProject()
-                //如果这次的改变是程序往里面写值，则不做处理，下同
-                }else if((Math.abs((id.value - parameter.value) / (id.maximumValue - id.minimumValue)) < 0.01)||(Math.abs(id.value - parameter.value) < 1)){
-                    
-                }else if((parameter.value > id.value)&&(id.value === id.maximumValue)){
-                    valueChange = true
-
-                }else if(!bEnableKeyFrame)  //没有关键帧
+                }
+                else if((Math.abs((id.value - parameter.value) / (id.maximumValue - id.minimumValue)) < 0.01) || (Math.abs(id.value - parameter.value) < 1))
                 {
-                    filter.set(parameter.property, calcProjValByUIVal(id.value,parameter.factorFunc))
-                    //userChange = true
-
+                    
+                }
+                else if((parameter.value > id.value) && (id.value === id.maximumValue))
+                {
+                    valueChange = true
+                }
+                else if(!bEnableKeyFrame)  //没有关键帧
+                {
+                    filter.set(parameter.property, calcProjValByUIVal(id.value, parameter.factorFunc))
                 }
                 else if(bAutoSetAsKeyFrame)  
                 {
-                    filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(id.value,parameter.factorFunc).toString())
+                    filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(id.value, parameter.factorFunc).toString())
                     filter.syncCacheToProject()
                     userChange = true
                 }
                 break;
 
             case "CheckBox":
-                if(filter.cache_bKeyFrame(currentFrame))
+                if(filter.isKeyframeAtPosition(parameter.property, currentFrame))
                 {
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, Number(id.checked).toString())
                     filter.syncCacheToProject()
-                }else if((id.checked === parameter.value)||(Math.abs(id.checked - parameter.value) < 1)){
+                }
+                else if((id.checked === parameter.value) || (Math.abs(id.checked - parameter.value) < 1))
+                {
                     
                 }
                 else if(!bEnableKeyFrame)  //没有关键帧
@@ -289,26 +214,28 @@ RowLayout{
                 var parameter2 = metadata.keyframes.parameters[parameterList[paramIndex+1]]
                 var parameter3 = metadata.keyframes.parameters[parameterList[paramIndex+2]]
 
-                if(filter.cache_bKeyFrame(currentFrame))
+                if(filter.isKeyframeAtPosition(parameter.property, currentFrame))
                 {
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(id.red,parameter.factorFunc).toString())
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter2.property, calcProjValByUIVal(id.green,parameter2.factorFunc).toString())
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter3.property, calcProjValByUIVal(id.blue,parameter3.factorFunc).toString())
                     filter.syncCacheToProject()
-                }else if((value10 - value20 <= 1)&&(value11 - value21 <= 1)&&(value12 - value22 <= 1)){
+                }
+                else if((value10 - value20 <= 1) && (value11 - value21 <= 1) && (value12 - value22 <= 1))
+                {
                     userChange = false
                 }
                 else if(!bEnableKeyFrame)  //没有关键帧
                 {
-                    filter.set(parameter.property,calcProjValByUIVal(id.red,parameter.factorFunc))
-                    filter.set(parameter2.property,calcProjValByUIVal(id.green,parameter2.factorFunc))
-                    filter.set(parameter3.property,calcProjValByUIVal(id.blue,parameter3.factorFunc))
+                    filter.set(parameter.property, calcProjValByUIVal(id.red, parameter.factorFunc))
+                    filter.set(parameter2.property, calcProjValByUIVal(id.green, parameter2.factorFunc))
+                    filter.set(parameter3.property, calcProjValByUIVal(id.blue, parameter3.factorFunc))
                 }
                 else if(bAutoSetAsKeyFrame)  
                 {
-                    filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(id.red,parameter.factorFunc).toString())
-                    filter.cache_setKeyFrameParaValue(currentFrame, parameter2.property, calcProjValByUIVal(id.green,parameter2.factorFunc).toString())
-                    filter.cache_setKeyFrameParaValue(currentFrame, parameter3.property, calcProjValByUIVal(id.blue,parameter3.factorFunc).toString())
+                    filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(id.red, parameter.factorFunc).toString())
+                    filter.cache_setKeyFrameParaValue(currentFrame, parameter2.property, calcProjValByUIVal(id.green, parameter2.factorFunc).toString())
+                    filter.cache_setKeyFrameParaValue(currentFrame, parameter3.property, calcProjValByUIVal(id.blue, parameter3.factorFunc).toString())
 
                     filter.syncCacheToProject()
 
@@ -329,12 +256,13 @@ RowLayout{
                 var gp = parseInt("0x" + parameter.value.slice(3, 5))
                 var bp = parseInt("0x" + parameter.value.slice(5, 7))
             
-                if(filter.cache_bKeyFrame(currentFrame))
+                if(filter.isKeyframeAtPosition(parameter.property, currentFrame))
                 {
                     filter.cache_setKeyFrameParaRectValue(currentFrame, parameter.property, colorRect)
                     filter.syncCacheToProject()
-                //如果这次的改变是程序往里面写值，则不做处理，下同
-                }else if((id.value === parameter.value)||(Math.abs(rv+gv+bv - rp - gp - bp) < 8)){
+                }
+                else if((id.value === parameter.value) || (Math.abs(rv+gv+bv - rp - gp - bp) < 8))
+                {
 
                 }
                 else if(!bEnableKeyFrame)  //没有关键帧
@@ -350,12 +278,15 @@ RowLayout{
                 break;
 
             case "Slider":
-                if(filter.cache_bKeyFrame(currentFrame))
+                if(filter.isKeyframeAtPosition(parameter.property, currentFrame))
                 {
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(id.value,parameter.factorFunc).toString())
                     filter.syncCacheToProject()
-                //如果这次的改变是程序往里面写值，则不做处理，下同
-                }else if((id.value === parameter.value)||(Math.abs((id.value - parameter.value) / (id.maximumValue - id.minimumValue)) < 0.01)||(Math.abs(id.value - parameter.value) < 1)){
+                }
+                else if((id.value === parameter.value)
+                        || (Math.abs((id.value - parameter.value) / (id.maximumValue - id.minimumValue)) < 0.01)
+                        || (Math.abs(id.value - parameter.value) < 1))
+                {
 
                 }
                 else if(!bEnableKeyFrame)  //没有关键帧
@@ -371,12 +302,13 @@ RowLayout{
                 break;
 
             case "StringCtr":
-                if(filter.cache_bKeyFrame(currentFrame))
+                if(filter.isKeyframeAtPosition(parameter.property, currentFrame))
                 {
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, id.currentText)
                     filter.syncCacheToProject()
-                //如果这次的改变是程序往里面写值，则不做处理，下同
-                }else if(id.currentText === parameter.value){
+                }
+                else if(id.currentText === parameter.value)
+                {
 
                 }
                 else if(!bEnableKeyFrame)  //没有关键帧
@@ -397,18 +329,12 @@ RowLayout{
         }
         bBlockUpdateUI = false
         
-        // 添加关键帧
-        if (userChange)
-        {
-         //   if (!bAutoSetAsKeyFrame) 
-         //   {
-         //       return
-         //  }
-
-            bKeyFrame = true
-            //syncUIDataToProject()
-            addKeyFrame()
-        }
+//        // 添加关键帧
+//        if (userChange)
+//        {
+//            bKeyFrame = true
+//            addKeyFrame()
+//        }
     }
 
     InfoDialog { 
@@ -420,7 +346,8 @@ RowLayout{
     //弹出 显示自动增加关键信息的提示界面
     function showAddFrameInfo(position)
     {
-        if (bAutoSetAsKeyFrame == false) return
+        if (bAutoSetAsKeyFrame == false)
+            return
 
         addFrameInfoDialog.show     = false
         addFrameInfoDialog.show     = true
@@ -428,75 +355,67 @@ RowLayout{
     }
 
     // 在当前浮标尺所在位置添加为关键帧，如果添加的是第一帧，自动在首尾位置添加关键帧
-    function addKeyFrame(){
-        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined')){
+    function addKeyFrame(strParameterId)
+    {
+        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined'))
+        {
             throw new Error("metadata is abnormal")
         }
+
         var position = timeline.getPositionInCurrentClip()
         if (position < 0) return
   
 
         bBlockUpdateUI = true
 
-        //添加首尾关键帧
-        if (filter.cache_getKeyFrameNumber() <= 0)
+        var paraType
+        var paramCount = metadata.keyframes.parameterCount
+        for (var i = 0; i < paramCount; i++)
         {
-            var paramCount = metadata.keyframes.parameterCount
-            for(var i = 0; i < paramCount; i++)
+            if (metadata.keyframes.parameters[i].property === strParameterId)
+                paraType = metadata.keyframes.parameters[i].paraType
+        }
+        //添加首尾关键帧
+        if (!filter.isKeyframeActivate(strParameterId))
+        {
+            var value = ''
+            var position2 = timeline.getCurrentClipLength() - 1//filter.producerOut - filter.producerIn + 1
+            if(paraType === 'rect')
             {
-                var key = metadata.keyframes.parameters[i].property
-                var paraType = metadata.keyframes.parameters[i].paraType
-                var value = ''
-                var position2 = timeline.getCurrentClipLength() - 1//filter.producerOut - filter.producerIn + 1
-                if(paraType === 'rect'){
-                    value = filter.getAnimRectValue(position,key)
-                    filter.cache_setKeyFrameParaRectValue(0, key, value)
-                    filter.cache_setKeyFrameParaRectValue(position2, key, value)
-                    
-                }else{
-                    value = filter.get(key)
-                    filter.cache_setKeyFrameParaValue(0, key, value.toString());
-                    filter.cache_setKeyFrameParaValue(position2, key, value.toString());
-                    
-                }
+                value = filter.getAnimRectValue(position, strParameterId)
+                filter.cache_setKeyFrameParaRectValue(0, strParameterId, value)
+                filter.cache_setKeyFrameParaRectValue(position2, strParameterId, value)
+            }
+            else
+            {
+                value = filter.get(strParameterId)
+                filter.cache_setKeyFrameParaValue(0, strParameterId, value.toString());
+                filter.cache_setKeyFrameParaValue(position2, strParameterId, value.toString());
             }
         }
 
-        bBlockUpdateUI = false
-
-        //重复点击不生效
-        //var bKeyFrame = filter.cache_bKeyFrame(position)
-        //if (bKeyFrame)
-            //return
-        bBlockUpdateUI = true
-        //插入关键帧
-        paramCount = metadata.keyframes.parameterCount
-        for(i = 0; i < paramCount; i++)
+        //插入关键帧     
+        var value ;
+        switch(paraType)
         {
-            
-            key = metadata.keyframes.parameters[i].property
-            paraType = metadata.keyframes.parameters[i].paraType
-            var value ;
-            switch(paraType){
             case 'int':
-                value = filter.getAnimIntValue(position,key)
-                filter.cache_setKeyFrameParaValue(position, key, value.toString());
+                value = filter.getAnimIntValue(position, strParameterId)
+                filter.cache_setKeyFrameParaValue(position, strParameterId, value.toString());
                 break;
             case 'double':
-                value = filter.getAnimDoubleValue(position,key)
-                filter.cache_setKeyFrameParaValue(position, key, value.toString());
+                value = filter.getAnimDoubleValue(position, strParameterId)
+                filter.cache_setKeyFrameParaValue(position, strParameterId, value.toString());
                 break;
             case 'string':
-                value = filter.getAnimStringValue(position,key)
-                filter.cache_setKeyFrameParaValue(position, key, value.toString());
+                value = filter.getAnimStringValue(position, strParameterId)
+                filter.cache_setKeyFrameParaValue(position, strParameterId, value.toString());
                 break;
             case 'rect':
-                value = filter.getAnimRectValue(position,key)
-                filter.cache_setKeyFrameParaRectValue(position, key, value);
+                value = filter.getAnimRectValue(position, strParameterId)
+                filter.cache_setKeyFrameParaRectValue(position, strParameterId, value);
                 break;
             default:
                 break;
-            }
         }
         
         filter.syncCacheToProject();
@@ -505,11 +424,11 @@ RowLayout{
         bBlockUpdateUI = false
 
 
-        for(var j = 0; j < paramCount; j++)
-        {
-            key = metadata.keyframes.parameters[j].property
-            var t = filter.get(key)
-        }
+//        for(var j = 0; j < paramCount; j++)
+//        {
+//            key = metadata.keyframes.parameters[j].property
+//            var t = filter.get(key)
+//        }
 
         showAddFrameInfo(position)
     }
@@ -578,7 +497,6 @@ RowLayout{
             throw new Error("layoutRoot is undefined:"+layoutRoot)
         }
         clearAllFilterAnimationStatus()
-        //resetAnim2No(layoutRoot)
 
         bBlockUpdateUI = true
 
@@ -652,50 +570,7 @@ RowLayout{
         }
     }
 
-    //弃用的函数
-    function resetAnim2No(layoutRoot){
-        if(typeof layoutRoot == 'undefined'){
-            throw new Error("layoutRoot is undefined:"+layoutRoot)
-        }
-        //最后一个关键帧移除之后触发用的
-        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined')){
-            throw new Error("metadata is abnormal")
-        }
-        var metaParamList1 = metadata.keyframes.parameters
-        var parameter = metaParamList1[0]
-        var control = findControl(parameter.objectName,layoutRoot)
-        if(filter.cache_getKeyFrameNumber() <= 0){
-            switch(parameter.controlType)
-            {
-            case "SliderSpinner":
-                var tmp = control.value
-                control.value = parseFloat(parameter.defaultValue) / 2
-                control.value = parseFloat(parameter.defaultValue) * 2
-                control.value = tmp
-            break;
 
-            case "CheckBox":
-                var tmp1 = control.value
-                control.value = Number(parameter.defaultValue) / 2
-                control.value = Number(parameter.defaultValue) * 2
-                control.value = tmp1
-                break;
-
-            case "ColorWheelItem":
-                var tmp2 = Qt.rgba(control.red / 255, control.green / 255, control.blue / 255, 1.0 )
-                control.color = Qt.rgba( 0, 0, 0, 1.0 )
-                control.color = Qt.rgba( 0.5, 0.5, 0.5, 1.0 )
-                control.color = tmp2
-                break;
-
-            case "ColorPicker":
-            case "Slider":
-            default :
-                break;
-            
-            }
-        }
-    }
     //加减乘除 分别用 + - x c 被除b，对数log，指数pow
     // 控件到project mlt底层的写入保存计算
     function calcProjValByUIVal(value,factorFunc){
@@ -1067,10 +942,10 @@ RowLayout{
     // 添加关键帧信号
     Connections {
              target: keyFrameControl
-             onAddFrameChanged: {
+             onAddKeyframe: {
                  bKeyFrame = true
                  //syncUIDataToProject()
-                 addKeyFrame()
+                 addKeyFrame(strIdentifierOfParameter)
              }
     }
     // 帧位置改变信号
@@ -1082,25 +957,24 @@ RowLayout{
                  refreshUI()
              }
     }
+
     // 移除关键帧信号
     Connections {
              target: keyFrameControl
-             onRemoveKeyFrame: {
+             onRemoveKeyFrame:
+             {
                 bKeyFrame = false
                 var nFrame = keyFrame.getCurrentFrame();
-                
-                filter.removeKeyFrameParaValue(nFrame);
-                //filter.syncCacheToProject();
-                //syncUIDataToProject()
-                
+                filter.removeAnimationKeyFrame(nFrame, strIdentifierOfParameter);
              }
     }
+
     // 移除所有关键帧信号
     Connections {
              target: keyFrameControl
              onRemoveAllKeyFrame: {
                 bKeyFrame = false
-                filter.removeAllKeyFrame()
+                filter.removeAllKeyFrame(strIdentifierOfParameter)
                 filter.syncCacheToProject();
                 syncUIDataToProject()
              }

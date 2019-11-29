@@ -38,9 +38,10 @@ Rectangle {
     signal autoAddKeyFrameChanged(bool bEnable)
 
     signal addFrameChanged()
+    signal addKeyframe(string strIdentifierOfParameter)
     signal frameChanged(double keyFrameNum)
-    signal removeKeyFrame()
-    signal removeAllKeyFrame()
+    signal removeKeyFrame(string strIdentifierOfParameter)
+    signal removeAllKeyFrame(string strIdentifierOfParameter)
 
     signal switchFoldStat(bool bChecked)
     
@@ -171,7 +172,7 @@ Rectangle {
                     {   
                         if(metadata.keyframes.parameterCount > 0)
                         {   
-                            addFrameChanged()
+                            addKeyframe(m_strIdentifierOfParameter)
                             refreshFrameButtonsEnable(m_strIdentifierOfParameter)
                             autoAddKeyFrameCheckBox.checked = true
                         }  
@@ -231,14 +232,14 @@ Rectangle {
                 implicitWidth: 18
                 implicitHeight: 18
 
-                enabled: refreshFrameButtonsEnable(m_strIdentifierOfParameter)
+                //enabled: refreshFrameButtonsEnable(m_strIdentifierOfParameter)
                 opacity: enabled ? 1.0 : 0.5
                 tooltip: qsTr('Add key frame')
                 //customIconSource: 'qrc:///icons/light/32x32/list-add.png'
                 //customText: qsTr('Add')
                 //buttonWidth : 85
                 onClicked: {
-                    addFrameChanged()
+                    addKeyframe(m_strIdentifierOfParameter)
                     refreshFrameButtonsEnable(m_strIdentifierOfParameter)
                 }
 
@@ -283,15 +284,14 @@ Rectangle {
                 }
 
                 onClicked: {
-                    var position        = timeline.getPositionInCurrentClip()
+                    var position = timeline.getPositionInCurrentClip()
 
-                    if((position === 0) || (position === (timeline.getCurrentClipLength() - 1)))
-                        return   //首尾帧无法删除
+                    if((position === 0) || (position === (timeline.getCurrentClipLength() - 1)))//首尾帧无法删除
+                        return
 
-                    var bKeyFrame       = filter.cache_bKeyFrame(position)
+                    var bKeyFrame = filter.isKeyframeAtPosition(m_strIdentifierOfParameter, position)
                     if (bKeyFrame)
-                        filter.removeKeyFrameParaValue(position)
-                        removeKeyFrame()
+                        removeKeyFrame(m_strIdentifierOfParameter)
 
                     refreshFrameButtonsEnable(m_strIdentifierOfParameter)
                 }
@@ -314,7 +314,7 @@ Rectangle {
                 //customText: qsTr('<<')
                 //buttonWidth : 85
                 onClicked: {
-                    var nFrame = filter.cache_getPreKeyFrameNum(timeline.getPositionInCurrentClip())
+                    var nFrame = filter.cache_getPreKeyFrameNum(timeline.getPositionInCurrentClip(), m_strIdentifierOfParameter)
                     if(nFrame !== -1)
                     {
                         filterDock.position = nFrame
@@ -351,7 +351,7 @@ Rectangle {
                 //customText: qsTr('>>')
                 //buttonWidth : 85
                 onClicked: {
-                    var nFrame = filter.cache_getNextKeyFrameNum(timeline.getPositionInCurrentClip())
+                    var nFrame = filter.cache_getNextKeyFrameNum(timeline.getPositionInCurrentClip(), m_strIdentifierOfParameter)
                     if(nFrame !== -1)
                     {
                         filterDock.position = nFrame
@@ -380,7 +380,7 @@ Rectangle {
         onYes: {
             enableKeyFrameCheckBox.checked = false
 
-            removeAllKeyFrame()
+            removeAllKeyFrame(m_strIdentifierOfParameter)
         }
         onNo: 
             enableKeyFrameCheckBox.checked = true  
