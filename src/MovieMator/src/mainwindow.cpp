@@ -4301,6 +4301,9 @@ void MainWindow::customizeToolbar()
 
     int buttonIndex = 0;
 
+    QSpacerItem *spacer0 = new QSpacerItem(20,20);
+    gridLayout->addItem(spacer0, 0, buttonIndex++, 1, 1);
+
     gridLayout->addWidget(m_addButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
 //    gridLayout->addWidget(m_removeButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     QSpacerItem *spacer1 = new QSpacerItem(74,20);

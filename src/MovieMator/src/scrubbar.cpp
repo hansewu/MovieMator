@@ -190,7 +190,9 @@ bool ScrubBar::onSeek(int value)
 
 void ScrubBar::paintEvent(QPaintEvent *e)
 {
-    QPen pen(QBrush(palette().text().color()), 2);
+//    QPen pen(QBrush(palette().text().color()), 2);
+    QColor pointerColor(180,180,180);
+    QPen pen(QBrush(pointerColor), 2);
     QPainter p(this);
     QRect r = e->rect();
     p.setClipRect(r);
@@ -204,7 +206,7 @@ void ScrubBar::paintEvent(QPaintEvent *e)
         const int x = selectionSize / 2 - 1;
         int head = int(margin + m_head * m_scale);
         pa.setPoints(3, head - x - 1, 0, head + x, 0, head, x);
-        p.setBrush(palette().text().color());
+        p.setBrush(pointerColor);
         p.setPen(Qt::NoPen);
         p.drawPolygon(pa);
         p.setPen(pen);
@@ -216,7 +218,7 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     if (m_in > -1) {
         const int in = int(margin + m_in * m_scale);
         pa.setPoints(3, in - selectionSize / 2, 0, in - selectionSize / 2, selectionSize - 1, in - 1, selectionSize / 2);
-        p.setBrush(palette().text().color());
+        p.setBrush(pointerColor);
         p.setPen(Qt::NoPen);
         p.drawPolygon(pa);
         p.setPen(pen);
@@ -227,7 +229,7 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     if (m_out > -1) {
         const int out = int(margin + m_out * m_scale);
         pa.setPoints(3, out + selectionSize / 2, 0, out + selectionSize / 2, selectionSize - 1, out, selectionSize / 2);
-        p.setBrush(palette().text().color());
+        p.setBrush(pointerColor);
         p.setPen(Qt::NoPen);
         p.drawPolygon(pa);
         p.setPen(pen);
@@ -274,18 +276,18 @@ void ScrubBar::updatePixmap()
 
     // background color
 //    p.fillRect(l_margin, 0, l_width - 2 * l_margin, l_height, palette().base().color());
-    p.fillRect(l_margin, (l_height - 10) / 2, l_width - 2 * l_margin, 10, palette().base().color());
+    p.fillRect(l_margin, (l_height - 10) / 2, l_width - 2 * l_margin, 10, QColor(49,53,56));
 
     // selected region
     if (m_in > -1 && m_out > m_in) {
         const int in = int(m_in * m_scale * ratio);
         const int out = int(m_out * m_scale * ratio);
         //选中区的边框
-        QColor boardColor(192, 72, 44, 255);
+        QColor boardColor(63, 151, 141, 255);
         p.fillRect(l_margin + in, 0, out - in, l_selectionSize, boardColor);
 
         //选中区的填充
-        QColor fillColor(15, 114, 103, 255);
+        QColor fillColor(13, 81, 73, 255);
         p.fillRect(l_margin + in + (2 + ratio), ratio, // 2 for the in point line
                    out - in - 2 * (2 + ratio) - qFloor(0.5 * ratio),
                    l_selectionSize - ratio * 2, fillColor);

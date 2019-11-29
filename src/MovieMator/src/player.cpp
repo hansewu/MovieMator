@@ -65,6 +65,8 @@ Player::Player(QWidget *parent)
 
 
   //  this->setBackgroundRole(QPalette::ColorRole::Dark);
+//    setStyleSheet("background-color:rgb(26,30,34);");
+    setStyleSheet("QWidget{background-color:rgb(26,30,34);}");
 
     m_bPlayedOrStoped = false;
     setObjectName("Player");
@@ -157,6 +159,7 @@ Player::Player(QWidget *parent)
 //    m_scrubber->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
 ////    m_scrubber->setFixedHeight(8);
 
+    //播放进度控件
     m_scrubber = new ScrubBar(this);
     m_scrubber->setFocusPolicy(Qt::NoFocus);
     m_scrubber->setObjectName("scrubBar");
@@ -165,6 +168,7 @@ Player::Player(QWidget *parent)
 //    vlayout->addWidget(m_scrubber);
 
 
+    //时间码控件
     m_positionSpinner = new TimeSpinBox(this);
     m_positionSpinner->setFixedSize(150, 33);
     m_positionSpinner->setFontSize(21);
@@ -172,21 +176,24 @@ Player::Player(QWidget *parent)
     m_positionSpinner->setToolTip(tr("Current position"));
     m_positionSpinner->setEnabled(false);
     m_positionSpinner->setKeyboardTracking(false);
-    m_positionSpinner->setStyleSheet("QSpinBox {background-color: rgb(127,127,127);color:rgb(255,255,255);border-image:url()}");
+    m_positionSpinner->setStyleSheet("QSpinBox {background-color:rgb(42,49,55);color:rgb(198,199,200);border:none;}");
 
+    //整个播放进度背景控件（包括播放进度控件和右边总时间控件）
     //add progressWidget
     QWidget *progressWidget = new QWidget;
-    progressWidget->setStyleSheet(".QWidget{background-color:rgb(52,52,52);border-radius:0px}");
+//    progressWidget->setStyleSheet("QWidget{background-color:rgb(26,30,34);border-radius:0px}");
     progressWidget->setContentsMargins(0,0,0,0);
 
+    //整个播放进度背景控件
     QHBoxLayout *hBoxLayout = new QHBoxLayout ;
     hBoxLayout->setContentsMargins(0,0,0,0);
     hBoxLayout->setSpacing(20);
 
 
+    //左边总时间控件
     m_durationLabel = new QLabel(this);
     m_durationLabel->setToolTip(tr("Total Duration"));
-    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg("00:00:00:00"));
+    m_durationLabel->setText(QString("<h4><font color=#7e7e7e>%1</font></h4>").arg("00:00:00:00"));
     m_durationLabel->setFixedWidth(100);
 
     hBoxLayout->addWidget(m_scrubber);
@@ -210,25 +217,25 @@ Player::Player(QWidget *parent)
     m_fullScreenButton->setToolTip(tr("Full screen"));
     m_zoomSetButton->setToolTip(tr("Change aspect ratio"));
 
-    m_fitButton->setFixedSize(QSize(20, 20));
-    m_fitButton->setIconSize(QSize(20, 20));
+    m_fitButton->setFixedSize(QSize(21, 22));
+    m_fitButton->setIconSize(QSize(21, 22));
     m_fitButton->setFlat(true);
 
-    m_fullScreenButton->setFixedSize(QSize(20, 20));
-    m_fullScreenButton->setIconSize(QSize(20, 20));
+    m_fullScreenButton->setFixedSize(QSize(21, 22));
+    m_fullScreenButton->setIconSize(QSize(21, 22));
     m_fullScreenButton->setFlat(true);
 #ifdef Q_OS_WIN
     m_fullScreenButton->setVisible(false);
     m_fullScreenButton->setEnabled(false);
 #endif
 
-    m_zoomSetButton->setFixedSize(QSize(20, 20));
-    m_zoomSetButton->setIconSize(QSize(20, 20));
+    m_zoomSetButton->setFixedSize(QSize(21, 22));
+    m_zoomSetButton->setIconSize(QSize(21, 22));
     m_zoomSetButton->setFlat(true);
 
     m_zoomMenu = new QMenu(this);
-    m_zoomMenu->setStyleSheet("QMenu{background-color:rgb(82,82,82);border:none;}"
-                              "QMenu::item:selected{background-color:rgb(192,72,44);}");
+    m_zoomMenu->setStyleSheet("QMenu{background-color:rgb(26,30,34);color:rgb(126,126,126);border:none;}"
+                              "QMenu::item:selected{background-color:rgb(165,65,33);}");
     m_zoomMenu->setWindowFlags(Qt::Popup | Qt::NoDropShadowWindowHint); // 消除阴影
 
     const int nSize             = 5;
@@ -285,7 +292,7 @@ Player::Player(QWidget *parent)
      //volume control
 
     m_volumePopup = new QFrame(this, Qt::Popup | Qt::NoDropShadowWindowHint);
-    m_volumePopup->setStyleSheet("background-color:rgb(82,82,82);");
+    m_volumePopup->setStyleSheet("background-color:rgb(26,30,34);");
     QVBoxLayout *volumeLayout = new QVBoxLayout(m_volumePopup);
 
 //     m_muteButton = new QPushButton;
@@ -306,6 +313,8 @@ Player::Player(QWidget *parent)
 
      m_volumeButton = new QPushButton;
      m_volumeButton->setToolTip(tr("Volume control"));
+     m_volumeButton->setFixedSize(QSize(21, 22));
+     m_volumeButton->setIconSize(QSize(21, 22));
      m_volumeButton->setFlat(true);
      m_volumeButton->setStyleSheet("QPushButton{border-image: url(:/icons/light/32x32/player-volume.png)}"
                                    "QPushButton:pressed{border-image: url(:/icons/light/32x32/player-volume-pressed.png)}");
@@ -330,9 +339,9 @@ Player::Player(QWidget *parent)
      m_volumeSlider->setRange(0, 99);
      m_volumeSlider->setValue(Settings.playerVolume());
 
-     QString strStyle = "QSlider::add-page:vertical{background:rgb(15,114,103);border-radius: 4px}";
-     strStyle.append("QSlider::groove:vertical{background:'grey';width:8px;border-radius: 4px;}");
-     strStyle.append("QSlider::handle:vertical{background:'white';height:5px;margin:0 -2px;border-radius: 2px}");
+     QString strStyle = "QSlider::add-page:vertical{background:rgb(13,81,73);border-radius: 4px}";
+     strStyle.append("QSlider::groove:vertical{background:rgb(49,53,56);width:8px;border-radius: 4px;}");
+     strStyle.append("QSlider::handle:vertical{background:rgb(126,126,126);height:5px;margin:0 -2px;border-radius: 2px}");
      strStyle.append("QToolTip{background-color:rgb(255,255,210)}");
      m_volumeSlider->setStyleSheet(strStyle);
 
@@ -353,12 +362,12 @@ Player::Player(QWidget *parent)
     QWidget *toolWidget = new QWidget;
     toolWidget->setFixedHeight(52);
     toolWidget->setContentsMargins(0, 0, 0, 0);
-    toolWidget->setStyleSheet(".QWidget{background-color:rgb(82,82,82); border: 0px;border-radius: 3px}");
+//    toolWidget->setStyleSheet(".QWidget{background-color:rgb(82,82,82); border: 0px;border-radius: 3px}");
 
 
     m_btnSeekPrevious = new QPushButton();//QIcon(":/icons/light/32x32/media-seek-backward.png"),"");
     m_btnSeekPrevious->setFlat(true);
-    m_btnSeekPrevious->setFixedSize(12, 19);
+    m_btnSeekPrevious->setFixedSize(21, 22);
 //    m_btnSeekPrevious->setIconSize(QSize(32,32));
     m_btnSeekPrevious->setToolTip(tr("Skip Previous"));
     connect(m_btnSeekPrevious, SIGNAL(clicked()), this, SLOT(on_actionSkipPrevious_triggered()));
@@ -369,7 +378,7 @@ Player::Player(QWidget *parent)
 
     m_btnSeekNext = new QPushButton();//QIcon();//":/icons/light/32x32/media-seek-forward.png"),"");
     m_btnSeekNext->setFlat(true);
-    m_btnSeekNext->setFixedSize(12, 19);
+    m_btnSeekNext->setFixedSize(21, 22);
 //    m_btnSeekNext->setIconSize(QSize(32,32));
     connect(m_btnSeekNext, SIGNAL(clicked()), this, SLOT(on_actionSkipNext_triggered()));
     m_btnSeekNext->setContentsMargins(0, 0, 0, 0);
@@ -379,7 +388,7 @@ Player::Player(QWidget *parent)
 
     m_btnPlay = new QPushButton();//m_playIcon,"");
     m_btnPlay->setFlat(true);
-    m_btnPlay->setFixedSize(16, 19);
+    m_btnPlay->setFixedSize(21, 22);
 //    m_btnPlay->setIconSize(QSize(32,32));
     connect(m_btnPlay, SIGNAL(clicked()), this, SLOT(togglePlayPaused()));
     m_btnPlay->setContentsMargins(0, 0, 0, 0);
@@ -406,7 +415,7 @@ Player::Player(QWidget *parent)
 
     m_btnPreFrame = new QPushButton();//QIcon(":/icons/light/32x32/media-seek-preframe.png"),"");
     m_btnPreFrame->setFlat(true);
-    m_btnPreFrame->setFixedSize(12, 19);
+    m_btnPreFrame->setFixedSize(21, 22);
 //    m_btnPreFrame->setIconSize(QSize(32,32));
     connect(m_btnPreFrame, SIGNAL(clicked()), this, SLOT(seekPreFrame()));
     m_btnPreFrame->setContentsMargins(0, 0, 0, 0);
@@ -415,7 +424,7 @@ Player::Player(QWidget *parent)
 
     m_btnNextFrame = new QPushButton();//QIcon(":/icons/light/32x32/media-seek-nextframe.png"),"");
     m_btnNextFrame->setFlat(true);
-    m_btnNextFrame->setFixedSize(12, 19);
+    m_btnNextFrame->setFixedSize(21, 22);
 //    m_btnNextFrame->setIconSize(QSize(32,32));
     connect(m_btnNextFrame, SIGNAL(clicked()), this, SLOT(seekNextFrame()));
     m_btnNextFrame->setContentsMargins(0, 0, 0, 0);
@@ -766,7 +775,7 @@ void Player::onProducerOpened(bool play)
 //    m_inPointLabel->setText("--:--:--:-- / ");
 //    m_selectedLabel->setText("--:--:--:--");
     if (m_isSeekable) {
-        m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
+        m_durationLabel->setText(QString("<h4><font color=#7e7e7e>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
         m_previousIn = MLT.isClip()? MLT.producer()->get_in() : -1;
         m_scrubber->setEnabled(true);
         m_scrubber->setInPoint(m_previousIn);
@@ -776,7 +785,7 @@ void Player::onProducerOpened(bool play)
         checkCroppedOfCurrentProducer();
     }
     else {
-        m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
+        m_durationLabel->setText(QString("<h4><font color=#7e7e7e>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
         m_scrubber->setDisabled(true);
         // cause scrubber redraw
         m_scrubber->setScale(m_duration);
@@ -834,7 +843,7 @@ void Player::onMeltedUnitOpened()
 //    m_progressBar->setRange(0,m_duration);
   //  m_inPointLabel->setText("--:--:--:-- / ");
   //  m_selectedLabel->setText("--:--:--:--");
-    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
+    m_durationLabel->setText(QString("<h4><font color=#7e7e7e>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
     m_previousIn = MLT.producer()->get_in();
     m_scrubber->setEnabled(true);
     m_scrubber->setInPoint(m_previousIn);
@@ -861,7 +870,7 @@ void Player::onDurationChanged()
     m_scrubber->setScale(m_duration);
     m_scrubber->setMarkers(QList<int>());
 //    m_progressBar->setRange(0, m_duration);
-    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
+    m_durationLabel->setText(QString("<h4><font color=#7e7e7e>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
     if(qFuzzyIsNull(MLT.producer()->get_speed()))
 //    if (MLT.producer()->get_speed() == 0)
         seek(m_position);
@@ -873,7 +882,7 @@ void Player::onShowFrame(int position, double fps, int in, int out, int length, 
 {
     m_duration = length;
     MLT.producer()->set("length", length);
-    m_durationLabel->setText(QString("<h4><font color=white>%1</font></h4>").arg(QString(MLT.producer()->get_length_time())));
+    m_durationLabel->setText(QString("<h4><font color=#7e7e7e>%1</font></h4>").arg(QString(MLT.producer()->get_length_time())));
     m_scrubber->setFramerate(fps);
     m_scrubber->setScale(m_duration);
 //    m_progressBar->setRange(0, m_duration);
