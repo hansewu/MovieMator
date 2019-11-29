@@ -35,8 +35,35 @@ void StickerDockWidget::setupTopBarUi()
 
     //动画combobox
     m_pAnimationCombobox = new QComboBox();
-    m_pAnimationCombobox->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
+//    m_pAnimationCombobox->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
+    m_pAnimationCombobox->setStyleSheet("QComboBox {\
+                                  background-color:rgb(82,82,82); \
+                                  color:rgb(185,185,185); \
+                                  border: 1px solid black;\
+                                  border-radius: 3px;\
+                                  min-width: 50px;\
+                                  }"
+                                  "QComboBox::drop-down { \
+                                  subcontrol-origin: padding; \
+                                  subcontrol-position: top right;\
+                                  width: 15px;\
+                                  border-left-width: 1px;\
+                                  border-left-color: rgb(82,82,82);\
+                                  border-left-style: solid;\
+                                  border-top-right-radius: 4px; \
+                                  border-bottom-right-radius: 4px;\
+                                  }"
+                                  "QComboBox::down-arrow {\
+                                  image: url(:/icons/light/8x8/down.png);\
+                                  }"
+                                  "QComboBox::donw-arrow:on {top:1px;left:1px;}"
+                                  "QComboBox QAbstractItemView {border: none;}");
     m_pAnimationCombobox->setMinimumWidth(ANIMATION_COMBOBOX_WIDTH);
+
+    QFont font = m_pAnimationCombobox->font();
+    font.setPointSize(16);
+    m_pAnimationCombobox->setFont(font);
+
     pAnimationWidgetLayout->addWidget(m_pAnimationCombobox);
     pAnimationWidgetLayout->setSpacing(10);
 
@@ -93,7 +120,7 @@ QIcon StickerDockWidget::getListViewItemIcon(const QString strFilePath)
     if (!image.isNull())
     {
         QPainter painter(&iconImage);
-        iconImage.fill(QApplication::palette().base().color().rgb());
+        iconImage.fill(QColor(39,46,52));
 
         QRect rect = image.rect();
         rect.setWidth(LISTVIEW_ITEMICONSIZE_WIDTH);

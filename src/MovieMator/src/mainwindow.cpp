@@ -186,6 +186,7 @@ static bool eventDebugCallback(void **data)
 }
 
 static const int AUTOSAVE_TIMEOUT_MS = 10000;
+static const int MAINWIDOWS_TOOLBUTTON_SIZE = 34;
 
 MainWindow::MainWindow()
     : QMainWindow(nullptr)
@@ -616,25 +617,25 @@ MainWindow::MainWindow()
 
     LOG_DEBUG() << "RecentDock";
     m_resourceRecentDock = RDG_CreateRecentDock(&MainInterface::singleton());
-    addResourceDock(m_resourceRecentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file-highlight.png"));
+    addResourceDock(m_resourceRecentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file.png"));
 
     LOG_DEBUG() << "VideoFilterDock";
     m_resourceVideoFilterDock = RDG_CreateVideoFilterDock(&MainInterface::singleton());
-    addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
+    addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter.png"));
 //    RDG_SetVideoFiltersInfo( m_filterController->getVideoFiltersInfo());
 
     LOG_DEBUG() << "AudioFilterDock";
     m_resourceAudioFilterDock = RDG_CreateAudioFilterDock(&MainInterface::singleton());
-    addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
+    addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter.png"));
 //    RDG_SetAudioFiltersInfo(m_filterController->getAudioFiltersInfo());
 
     LOG_DEBUG() << "TextDock";
     m_resourceTextDock = RDG_CreateTextDock(&MainInterface::singleton());
-    addResourceDock(m_resourceTextDock, tr("Text"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text-highlight.png"));
+    addResourceDock(m_resourceTextDock, tr("Text"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text.png"));
 
     LOG_DEBUG() << "StickersDock";
     m_resourceStickerDock = RDG_CreateStickerDock(&MainInterface::singleton());
-    addResourceDock(m_resourceStickerDock, tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
+    addResourceDock(m_resourceStickerDock, tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers.png"));
 
     LOG_DEBUG() << "Auido";
     m_resourceAudioDock = RDG_CreateAudioDock(&MainInterface::singleton());
@@ -4166,14 +4167,14 @@ void MainWindow::showCurrentTextSettingWidget(Mlt::Producer *textProcucer)
 QToolButton *MainWindow::createToolButton(const QString& icon, const QString& iconPressed, const QString& iconDisabled, const QString& title, const QString& tooltip)
 {
     QToolButton *toolButton = new QToolButton();
-    toolButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    toolButton->setFixedHeight(60);
-    int iconSize = 40;
+    toolButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    toolButton->setFixedHeight(MAINWIDOWS_TOOLBUTTON_SIZE);
+    int iconSize = MAINWIDOWS_TOOLBUTTON_SIZE;
     toolButton->setIconSize(QSize(iconSize,iconSize));
     QPixmap pixmap(iconSize,iconSize);
     pixmap.fill(QColor(0,0,0,0));
     toolButton->setIcon(QIcon(pixmap));
-    QString styleSheet = QString("QToolButton { image: url(%1); image-position: top; border: none; }" "QToolButton:pressed{color: rgb(142, 53, 62); image: url(%2); image-position: top; }" "QToolButton:disabled{image: url(%3)}").arg(icon).arg(iconPressed).arg(iconDisabled);
+    QString styleSheet = QString("QToolButton { image: url(%1); image-position: center; border: none; }" "QToolButton:pressed{color: rgb(142, 53, 62); image: url(%2); image-position: center; }" "QToolButton:disabled{image: url(%3)}").arg(icon).arg(iconPressed).arg(iconDisabled);
     toolButton->setStyleSheet(styleSheet);
     toolButton->setToolTip(tooltip);
     toolButton->setText(title);
@@ -4190,11 +4191,11 @@ void MainWindow::customizeToolbar()
 
 
     QWidget *widget = new QWidget(this);
-    widget->setFixedHeight(75);
+//    widget->setFixedHeight(MAINWIDOW_TOOLBAR_HEIGHT);
 
 
     QGridLayout *gridLayout = new QGridLayout;
-    gridLayout->setHorizontalSpacing(12);
+    gridLayout->setHorizontalSpacing(33);
 
     m_addButton = createToolButton(QString(":/icons/light/32x32/toolbar-add.png"),
                                    QString(":/icons/light/32x32/toolbar-add-pressed.png"),
@@ -4299,21 +4300,21 @@ void MainWindow::customizeToolbar()
 //#endif
 
     int buttonIndex = 0;
-    QSpacerItem *spacer1 = new QSpacerItem(50,20);
 
     gridLayout->addWidget(m_addButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
 //    gridLayout->addWidget(m_removeButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+    QSpacerItem *spacer1 = new QSpacerItem(74,20);
     gridLayout->addItem(spacer1, 0, buttonIndex++, 1, 1);
 
     gridLayout->addWidget(m_undoButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     gridLayout->addWidget(m_redoButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
-    QSpacerItem *spacer2 = new QSpacerItem(50,20);
+    QSpacerItem *spacer2 = new QSpacerItem(74,20);
     gridLayout->addItem(spacer2, 0, buttonIndex++, 1, 1);
 
     gridLayout->addWidget(m_saveButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     gridLayout->addWidget(m_exportButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     //gridLayout->addWidget(m_exportTemplateButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
-    QSpacerItem *spacer3 = new QSpacerItem(50,20, QSizePolicy::Expanding);
+    QSpacerItem *spacer3 = new QSpacerItem(74,20, QSizePolicy::Expanding);
     gridLayout->addItem(spacer3, 0, buttonIndex++, 1, 1);
 
 #if SHARE_VERSION
@@ -4324,7 +4325,7 @@ void MainWindow::customizeToolbar()
 #if MOVIEMATOR_PRO
         gridLayout->addWidget(m_buynowButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
 #endif
-        QSpacerItem *spacer4 = new QSpacerItem(50,20);
+        QSpacerItem *spacer4 = new QSpacerItem(74,20);
         gridLayout->addItem(spacer4, 0, buttonIndex++, 1, 1);
     }
 #endif
@@ -4362,7 +4363,8 @@ void MainWindow::customizeToolbar()
 
 
     widget->setLayout(gridLayout);
-    toolbar->setStyleSheet("QToolBar{background-image: url(:/toolbar-bg.png); background-repeat: repeat-x; border: 0px}");
+//    toolbar->setStyleSheet("QToolBar{background-image: url(:/toolbar-bg.png); background-repeat: repeat-x; border: 0px}");
+    toolbar->setStyleSheet("QToolBar{background-color: rgb(39, 46, 52); border: none}");
     toolbar->addWidget(widget);
     this->addToolBar(toolbar);
 //    this->setUnifiedTitleAndToolBarOnMac(true);//不加这句，自定义的工具栏将不能显示

@@ -121,7 +121,7 @@ Rectangle {
     /*
      * clip背景框
      */
-    border.color: selected? 'white' : backgroundColor // 'transparent'
+    border.color: selected ? selectedClipBorderColor : normalClipBorderColor // 'transparent'
     border.width: isBlank? 0 : selected ? 2 : 1
     clip: true
     Drag.active: mouseArea.drag.active
@@ -131,7 +131,7 @@ Rectangle {
     //声音波形颜色
     function getWaveColor()
     {
-        var waveColor = clipRoot.selected ? '#e47b62' : '#50a097'
+        var waveColor = clipRoot.selected ? selectedClipBorderColor : normalClipBorderColor
         return isBlank? 'transparent' : isTransition? '#8c953f' : waveColor
     }
 
@@ -139,13 +139,13 @@ Rectangle {
     function getColor() {
 //        return isBlank? 'transparent' : isTransition? 'mediumpurple' : isAudio? 'darkseagreen' : root.moviematorBlue
         // return isBlank? 'transparent' : isTransition? '#8c953f' : isAudio? '#2a5733' : '#2f798f'
-        return isBlank? 'transparent' : isTransition? '#8c953f' : '#0F7267'
+        return isBlank? 'transparent' : isTransition? '#8c953f' : normalClipColor
     }
 
     // clip被选中时的背景色
     function getSelectedColor() {
         // return isBlank? 'transparent' : isTransition? '#8c953f': isAudio? '#419f51' : '#2eb9df'
-        return isBlank? 'transparent' : isTransition? '#8c953f': '#C0482C'
+        return isBlank? 'transparent' : isTransition? '#8c953f': selectedClipColor
     }
 
     function isVisable(index)
@@ -443,6 +443,7 @@ Rectangle {
             PropertyChanges {
                 target: clipRoot
                 z: 0
+                color: '#000000'
             }
         },
         State {

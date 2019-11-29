@@ -47,9 +47,13 @@ LineEditClear::LineEditClear(QWidget *pParent)
 
     QString strDefaultStyle = "QLineEdit {padding-right: 20px; background-image: url(:/icons/light/32x32/search-icon.png); "
                                 "background-repeat: norepeat; background-position: center; border: 1px; border-radius: 3px; "
-                                "background-color: rgb(100,100,100) ; }";
-    QString strEditingStyle = "QLineEdit {padding-right: 20px; border: 1px; border-radius: 3px; background-color: rgb(100,100,100) ; }";
+                                "background-color: rgb(82,82,82) ; }";
+    QString strEditingStyle = "QLineEdit {padding-right: 20px; border: 1px; border-radius: 3px; background-color: rgb(82,82,82) ; }";
     setStyleSheets(strDefaultStyle, strEditingStyle);
+
+    QFont font = this->font();
+    font.setPointSize(16);
+    this->setFont(font);
 }
 
 void LineEditClear::resizeEvent(QResizeEvent *)

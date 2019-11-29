@@ -59,13 +59,15 @@ ToolBar {
 
     property alias actionAddFilter: addFilterAction
     property alias actionShowAllClips: showAllClipsAction
+    property int toolButtonWidth: 34
+    property int toolButtonHeight: 23
 
     signal zoomScaleValueChanged();
 
     id: root
     SystemPalette { id: activePalette }
-    width: 200
-    height: 51
+//    width: 200
+//    height: 46
     anchors.margins:0
 
     style: ToolBarStyle {
@@ -76,18 +78,20 @@ ToolBar {
                         spacing: 0
                         anchors.fill: parent
                         Rectangle {
-                            width: 12;  height: root.height; color: normalColor;
+                            width: 12;  height: root.height; color: toolbarBackgroundColor;
                             z:1;
-                            Image { source: 'qrc:///timeline/timeline-toolbar-bg-left.png';  fillMode: Image.Pad; anchors.fill: parent}
-                        }
-                        Rectangle {height: root.height;
-                            Layout.fillWidth: true;
-                            Image { anchors.fill: parent; source: 'qrc:///timeline/timeline-toolbar-bg-center.png'; fillMode: Image.TileHorizontally;}
+//                            Image { source: 'qrc:///timeline/timeline-toolbar-bg-left.png';  fillMode: Image.Pad; anchors.fill: parent}
                         }
                         Rectangle {
-                            width: 12;  height: root.height; color: normalColor;
+                            height: root.height;
+                            Layout.fillWidth: true;
+                            color: toolbarBackgroundColor
+//                            Image { anchors.fill: parent; source: 'qrc:///timeline/timeline-toolbar-bg-center.png'; fillMode: Image.TileHorizontally;}
+                        }
+                        Rectangle {
+                            width: 12;  height: root.height; color: toolbarBackgroundColor;
                             z:1;
-                            Image { source: 'qrc:///timeline/timeline-toolbar-bg-right.png'; anchors.fill: parent}
+//                            Image { source: 'qrc:///timeline/timeline-toolbar-bg-right.png'; anchors.fill: parent}
                         }
                     }
                     }
@@ -95,21 +99,24 @@ ToolBar {
 
 
         RowLayout{
-            x:0
+            x:10
+            spacing: 31
             anchors.verticalCenter: parent.verticalCenter
             CustomToolbutton {
                 customText: qsTr('Menu')
                 action: menuAction
-                implicitWidth: 44
-                implicitHeight: 44
+                implicitWidth: toolButtonWidth
+                implicitHeight: toolButtonHeight
                 customIconSource: 'qrc:///timeline/timeline-toolbar-menu-n.png'
                 pressedIconSource: 'qrc:///timeline/timeline-toolbar-menu-p.png'
                 disabledIconSource: 'qrc:///timeline/timeline-toolbar-menu-d.png'
             }
 
+
+
             Rectangle {
-                implicitWidth: 44
-                implicitHeight: 44
+                implicitWidth: 6
+                implicitHeight: toolButtonHeight
                 color: 'transparent'
                 Image {
                     anchors.centerIn: parent
@@ -117,35 +124,35 @@ ToolBar {
                 }
             }
 
-            // 增加（添加 clip到轨道上）
-            CustomToolbutton {
-                customText: qsTr('Append')
-                action: appendAction
-                implicitWidth: 44
-                implicitHeight: 44
+//            // 增加（添加 clip到轨道上）
+//            CustomToolbutton {
+//                customText: qsTr('Append')
+//                action: appendAction
+//                implicitWidth: 44
+//                implicitHeight: 44
 
-                customIconSource: 'qrc:///timeline/timeline-toolbar-append-n.png'
-                pressedIconSource: 'qrc:///timeline/timeline-toolbar-append-p.png'
-                disabledIconSource: 'qrc:///timeline/timeline-toolbar-append-d.png'
-            }
-            // 插入 clip到轨道上
-            CustomToolbutton {
-                customText:qsTr('Insert')
-                action: insertAction
-                implicitWidth: 44
-                implicitHeight: 44
+//                customIconSource: 'qrc:///timeline/timeline-toolbar-append-n.png'
+//                pressedIconSource: 'qrc:///timeline/timeline-toolbar-append-p.png'
+//                disabledIconSource: 'qrc:///timeline/timeline-toolbar-append-d.png'
+//            }
+//            // 插入 clip到轨道上
+//            CustomToolbutton {
+//                customText:qsTr('Insert')
+//                action: insertAction
+//                implicitWidth: 44
+//                implicitHeight: 44
 
-                customIconSource: 'qrc:///timeline/timeline-toolbar-insert-n.png'
-                pressedIconSource: 'qrc:///timeline/timeline-toolbar-insert-p.png'
-                disabledIconSource: 'qrc:///timeline/timeline-toolbar-insert-d.png'
-            }
+//                customIconSource: 'qrc:///timeline/timeline-toolbar-insert-n.png'
+//                pressedIconSource: 'qrc:///timeline/timeline-toolbar-insert-p.png'
+//                disabledIconSource: 'qrc:///timeline/timeline-toolbar-insert-d.png'
+//            }
 
             // 删除当前的 clip
             CustomToolbutton {
                 customText: qsTr('Delete')
                 action: deleteAction
-                implicitWidth: 44
-                implicitHeight: 44
+                implicitWidth: toolButtonWidth
+                implicitHeight: toolButtonHeight
 
                 customIconSource: 'qrc:///timeline/timeline-toolbar-remove-n.png'
                 pressedIconSource: 'qrc:///timeline/timeline-toolbar-remove-p.png'
@@ -157,8 +164,8 @@ ToolBar {
             CustomToolbutton {
                 customText:qsTr('Split')
                 action: splitAction
-                implicitWidth: 44
-                implicitHeight: 44
+                implicitWidth: toolButtonWidth
+                implicitHeight: toolButtonHeight
 
                 customIconSource: 'qrc:///timeline/timeline-toolbar-split-n.png'
                 pressedIconSource: 'qrc:///timeline/timeline-toolbar-split-p.png'
@@ -166,8 +173,8 @@ ToolBar {
             }
 
             Rectangle {
-                implicitWidth: 44
-                implicitHeight: 44
+                implicitWidth: 6
+                implicitHeight: toolButtonWidth
                 color: 'transparent'
                 Image {
                     anchors.centerIn: parent
@@ -216,8 +223,8 @@ ToolBar {
                 visible: true//add to hide the button
                 bEnabled: hasClipOrTrackSelected
 
-                implicitWidth: 44
-                implicitHeight: 44
+                implicitWidth: toolButtonWidth
+                implicitHeight: toolButtonHeight
 
                 tooltip: qsTr('Change the position and size of the clip')
                 customText: qsTr('Resize')
@@ -235,8 +242,8 @@ ToolBar {
                 bEnabled: hasClipOrTrackSelected
 
 
-                implicitWidth: 44
-                implicitHeight: 44
+                implicitWidth: toolButtonWidth
+                implicitHeight: toolButtonHeight
 
                 tooltip: qsTr('Rotate clip')
                 customText: qsTr('Rotate')
@@ -254,8 +261,8 @@ ToolBar {
                 bEnabled: hasClipOrTrackSelected
 
 
-                implicitWidth: 44
-                implicitHeight: 44
+                implicitWidth: toolButtonWidth
+                implicitHeight: toolButtonHeight
 
                 tooltip: qsTr('Crop clip')
                 customText: qsTr('Crop')
@@ -308,8 +315,8 @@ ToolBar {
                 visible: true//add to hide the button
                 bEnabled: hasClipOrTrackSelected
 
-                implicitWidth: 44
-                implicitHeight: 44
+                implicitWidth: toolButtonWidth
+                implicitHeight: toolButtonHeight
 
                 tooltip: qsTr('Volume')
                 customText: qsTr('Volume')
@@ -326,8 +333,8 @@ ToolBar {
                 visible: true
                 bEnabled: hasClipOrTrackSelected
 
-                implicitWidth: 44
-                implicitHeight: 44
+                implicitWidth: toolButtonWidth
+                implicitHeight: toolButtonHeight
 
                 customText:qsTr('Add Text')
 
@@ -343,8 +350,8 @@ ToolBar {
                 visible: true
                 bEnabled: hasClipOrTrackSelected
 
-                implicitWidth: 44
-                implicitHeight: 44
+                implicitWidth: toolButtonWidth
+                implicitHeight: toolButtonHeight
 
                 customText:qsTr('Add Filter')
 
@@ -354,33 +361,33 @@ ToolBar {
             }
             // Add -End
 
-            Rectangle {
-                implicitWidth: 44
-                implicitHeight: 44
-                color: 'transparent'
-                Image {
-                    anchors.centerIn: parent
-                    source: 'qrc:///timeline/timeline-toolbar-separator.png'
-                }
-            }
+//            Rectangle {
+//                implicitWidth: toolButtonSize
+//                implicitHeight: toolButtonSize
+//                color: 'transparent'
+//                Image {
+//                    anchors.centerIn: parent
+//                    source: 'qrc:///timeline/timeline-toolbar-separator.png'
+//                }
+//            }
 
-            // Add -显示所有 Clips
-            CustomToolbutton {
-                id: allClipsButton
-                action: showAllClipsAction
-                visible: true
-                //bEnabled: hasClipOrTrackSelected
+//            // Add -显示所有 Clips
+//            CustomToolbutton {
+//                id: allClipsButton
+//                action: showAllClipsAction
+//                visible: true
+//                //bEnabled: hasClipOrTrackSelected
 
-                implicitWidth: 44
-                implicitHeight: 44
+//                implicitWidth: 44
+//                implicitHeight: 44
 
-                customText:qsTr('Zoom to Fit')
+//                customText:qsTr('Zoom to Fit')
 
-                customIconSource: 'qrc:///timeline/timeline-toolbar-fit-n.png'
-                pressedIconSource: 'qrc:///timeline/timeline-toolbar-fit-p.png'
-                disabledIconSource: 'qrc:///timeline/timeline-toolbar-fit-n.png'
-            }
-            // Add -End
+//                customIconSource: 'qrc:///timeline/timeline-toolbar-fit-n.png'
+//                pressedIconSource: 'qrc:///timeline/timeline-toolbar-fit-p.png'
+//                disabledIconSource: 'qrc:///timeline/timeline-toolbar-fit-n.png'
+//            }
+//            // Add -End
 
             ColorOverlay {
                 id: snapColorEffect
@@ -439,7 +446,25 @@ ToolBar {
     RowLayout {
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        spacing: 1
+        spacing: 10
+
+        // Add -显示所有 Clips
+        CustomToolbutton {
+            id: allClipsButton
+            action: showAllClipsAction
+            visible: true
+            //bEnabled: hasClipOrTrackSelected
+
+            implicitWidth: toolButtonWidth
+            implicitHeight: toolButtonHeight
+
+            customText:qsTr('Zoom to Fit')
+
+            customIconSource: 'qrc:///timeline/timeline-toolbar-fit-n.png'
+            pressedIconSource: 'qrc:///timeline/timeline-toolbar-fit-p.png'
+            disabledIconSource: 'qrc:///timeline/timeline-toolbar-fit-n.png'
+        }
+        // Add -End
 
         // 缩小时间线按钮
         Button {
@@ -450,8 +475,8 @@ ToolBar {
                 }
             }
             visible: true
-            implicitWidth: 27
-            implicitHeight: 27
+            implicitWidth: toolButtonWidth
+            implicitHeight: toolButtonHeight
             iconSource: pressed? 'qrc:///timeline/timeline-toolbar-zoomout-pressed.png' : 'qrc:///timeline/timeline-toolbar-zoomout.png'
 
             action: zoomOutAction
@@ -466,8 +491,8 @@ ToolBar {
                 }
             }
             visible: true
-            implicitWidth: 27
-            implicitHeight: 27
+            implicitWidth: toolButtonWidth
+            implicitHeight: toolButtonHeight
             iconSource: pressed? 'qrc:///timeline/timeline-toolbar-zoomin-pressed.png' : 'qrc:///timeline/timeline-toolbar-zoomin.png'
             action: zoomInAction
         }

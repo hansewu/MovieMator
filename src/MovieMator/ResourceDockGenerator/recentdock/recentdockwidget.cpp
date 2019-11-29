@@ -240,7 +240,7 @@ QIcon RecentDockWidget::getItemIcon(const QString &strFile)
             else
             {
                 QPainter painter(&iconImage);
-                iconImage.fill(QApplication::palette().base().color().rgb());
+                iconImage.fill(QColor(39,46,52));
                 QRect rect = image.rect();
                 rect.setWidth(LISTVIEW_ITEMICONSIZE_WIDTH);
                 rect.setHeight(LISTVIEW_ITEMICONSIZE_HEIGHT);
@@ -345,7 +345,7 @@ void RecentDockWidget::hideModelTitle(int nIndex)
             }
 
             QWidget *pWidget = pItem->widget();
-            Q_ASSERT(pWidget);
+//            Q_ASSERT(pWidget);
             if(pWidget)
             {
                 pWidget->setVisible(false);
@@ -401,7 +401,7 @@ void RecentDockWidget::showModelTitle(int nIndex)
             }
 
             QWidget *pWidget = pItem->widget();
-            Q_ASSERT(pWidget);
+//            Q_ASSERT(pWidget);
             if(pWidget)
             {
                 pWidget->setVisible(true);

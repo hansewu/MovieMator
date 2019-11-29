@@ -53,6 +53,10 @@ Rectangle {
     // 轨道是否是当前轨道
     property bool current: false
 
+    property int bigIconSize: 50
+    property int smallIconSize: bigIconSize / 3
+    property int smallIconSpacing: isVideo ? (trackHeadRoot.height - smallIconSize * 3) / 4 : (trackHeadRoot.height - smallIconSize * 2) / 3
+
     // 轨道头被单击时发出的信号
     signal clicked()
 
@@ -62,8 +66,8 @@ Rectangle {
     }
 
     SystemPalette { id: activePalette; colorGroup: SystemPalette.Active}
-    color: selected ? selectedTrackColor : normalColor  //(index % 2)? activePalette.alternateBase : activePalette.base
-    border.color: selected? 'white' : backgroundColor//'transparent'
+    color: selected ? selectedTrackBackgroundColor : normalTrackBackgroundColor//normalColor  //(index % 2)? activePalette.alternateBase : activePalette.base
+    border.color: selected ? selectedClipBorderColor : selectedTrackBorderColor//backgroundColor//'transparent'
     border.width: selected? 2 : 1
     clip: true
     state: 'normal'
@@ -73,7 +77,7 @@ Rectangle {
             when: trackHeadRoot.selected
             PropertyChanges {
                 target: trackHeadRoot
-                color: activePalette.highlight
+                color: selectedClipColor
             }
         },
         State {
@@ -81,7 +85,7 @@ Rectangle {
             when: trackHeadRoot.current
             PropertyChanges {
                 target: trackHeadRoot
-                color: selectedTrackColor
+                color: selectedTrackBackgroundColor
             }
         },
         State {
@@ -89,7 +93,7 @@ Rectangle {
             name: 'normal'
             PropertyChanges {
                 target: trackHeadRoot
-                color: normalColor //(index % 2)? activePalette.alternateBase : activePalette.base
+                color: normalTrackBackgroundColor//normalColor //(index % 2)? activePalette.alternateBase : activePalette.base
             }
         }
     ]
@@ -120,166 +124,319 @@ Rectangle {
         }
 
         RowLayout {
-            x:0
-            spacing: 0
-            // Label改成图片
-//            Label {
-//                text: trackName
-//                color: activePalette.windowText
-//                elide: Qt.ElideRight
-//                width: 22
-//                horizontalAlignment: Text.AlignHCenter
-//                Layout.preferredWidth: 22
-//            }
+            x: 10
+
+            //轨道类型图标
             Rectangle {
-                width: 20
-                height: 20
+                width: bigIconSize
+                height: bigIconSize
                 color: "transparent"
                 Image {
-                    sourceSize.width: 18
-                    sourceSize.height: 18
+                    sourceSize.width: bigIconSize
+                    sourceSize.height: bigIconSize
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
                     source: isVideo ? 'qrc:///icons/light/32x32/track-video.png' : 'qrc:///icons/light/32x32/track-audio.png'
                 }
             }
-            Label {
-                text: trackName.substring(1)
-                color: activePalette.windowText
-                elide: Qt.ElideRight
-                width: 20
-                horizontalAlignment: Text.AlignLeft
-                Layout.preferredWidth: 20
-            }
-            // 静音按钮
-            CheckBox {
-                id: muteButton
-                checked: isMute
-                visible: !isText
-                style: CheckBoxStyle {
-                    indicator: Rectangle {
-                        implicitWidth: 18
-                        implicitHeight: 18
-                        color: 'transparent'
-                        Image {
-                            visible: isMute
-                            sourceSize.width: 18
-                            sourceSize.height: 18
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-                            source: selected? 'qrc:///icons/light/32x32/mute-white.png' : 'qrc:///icons/light/32x32/mute-blue.png'
+
+            Column {
+                spacing: smallIconSpacing
+
+                //隐藏轨道按钮
+                CheckBox {
+                        id: hideButton
+                        visible: isVideo
+                        checked: isHidden
+                        style: CheckBoxStyle {
+                            indicator: Rectangle {
+                                implicitWidth: smallIconSize
+                                implicitHeight: smallIconSize
+                                color: 'transparent'
+                                Image {
+                                    visible: isHidden
+                                    sourceSize.width: smallIconSize
+                                    sourceSize.height: smallIconSize
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    source: selected? 'qrc:///icons/light/32x32/unvisible-white.png' : 'qrc:///icons/light/32x32/unvisible-blue.png'
+                                }
+
+                                Image {
+                                    visible: !isHidden
+                                    sourceSize.width: smallIconSize
+                                    sourceSize.height: smallIconSize
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    source: 'qrc:///icons/light/32x32/visible-normal.png'
+                                }
+                            }
                         }
 
-                        Image {
-                            visible: !isMute
-                            sourceSize.width: 18
-                            sourceSize.height: 18
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-                            source: 'qrc:///icons/light/32x32/volume-normal.png'
-                        }
-                    }
+
+                       onClicked: {
+                            console.assert(timeline);
+                            if(timeline)
+                                timeline.toggleTrackHidden(index)
+                       }
+                       MovieMator.ToolTip { text: qsTr('Hide') }
                 }
 
-                onClicked: {
-                    console.assert(timeline);
-                    if(timeline)
-                        timeline.toggleTrackMute(index)
-                }
-                MovieMator.ToolTip { text: qsTr('Mute') }
-            }
-            // 隐藏按钮
-            CheckBox {
-                    id: hideButton
-                    visible: isVideo
-                    checked: isHidden
+                //静音轨道按钮
+                CheckBox {
+                    id: muteButton
+                    checked: isMute
+                    visible: !isText
                     style: CheckBoxStyle {
                         indicator: Rectangle {
-                            implicitWidth: 18
-                            implicitHeight: 18
+                            implicitWidth: smallIconSize
+                            implicitHeight: smallIconSize
                             color: 'transparent'
                             Image {
-                                visible: isHidden
-                                sourceSize.width: 18
-                                sourceSize.height: 18
+                                visible: isMute
+                                sourceSize.width: smallIconSize
+                                sourceSize.height: smallIconSize
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 anchors.verticalCenter: parent.verticalCenter
-                                source: selected? 'qrc:///icons/light/32x32/unvisible-white.png' : 'qrc:///icons/light/32x32/unvisible-blue.png'
+                                source: selected? 'qrc:///icons/light/32x32/mute-white.png' : 'qrc:///icons/light/32x32/mute-blue.png'
                             }
 
                             Image {
-                                visible: !isHidden
-                                sourceSize.width: 18
-                                sourceSize.height: 18
+                                visible: !isMute
+                                sourceSize.width: smallIconSize
+                                sourceSize.height: smallIconSize
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 anchors.verticalCenter: parent.verticalCenter
-                                source: 'qrc:///icons/light/32x32/visible-normal.png'
+                                source: 'qrc:///icons/light/32x32/volume-normal.png'
                             }
                         }
                     }
 
-
-                   onClicked: {
+                    onClicked: {
                         console.assert(timeline);
                         if(timeline)
-                            timeline.toggleTrackHidden(index)
-                   }
-                   MovieMator.ToolTip { text: qsTr('Hide') }
-            }
-            // 锁定按钮
-            CheckBox {
-                id: lockButton
-                checked: isLocked
-                style: CheckBoxStyle {
-                    indicator: Rectangle {
-                        implicitWidth: 18
-                        implicitHeight: 18
-                        color: 'transparent'
-                        Image {
-                            visible: isLocked
-                            sourceSize.width: 18
-                            sourceSize.height: 18
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-                            source: selected? 'qrc:///icons/light/32x32/lock-white.png' : 'qrc:///icons/light/32x32/lock-blue.png'
+                            timeline.toggleTrackMute(index)
+                    }
+                    MovieMator.ToolTip { text: qsTr('Mute') }
+                }
+
+                //锁定轨道按钮
+                CheckBox {
+                    id: lockButton
+                    checked: isLocked
+                    style: CheckBoxStyle {
+                        indicator: Rectangle {
+                            implicitWidth: smallIconSize
+                            implicitHeight: smallIconSize
+                            color: 'transparent'
+                            Image {
+                                visible: isLocked
+                                sourceSize.width: smallIconSize
+                                sourceSize.height: smallIconSize
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                anchors.verticalCenter: parent.verticalCenter
+                                source: selected? 'qrc:///icons/light/32x32/lock-white.png' : 'qrc:///icons/light/32x32/lock-blue.png'
+                            }
+
+                            Image {
+                                visible: !isLocked
+                                sourceSize.width: smallIconSize
+                                sourceSize.height: smallIconSize
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                anchors.verticalCenter: parent.verticalCenter
+                                source: 'qrc:///icons/light/32x32/unlock-normal.png'
+                            }
                         }
+                    }
 
-                        Image {
-                            visible: !isLocked
-                            sourceSize.width: 18
-                            sourceSize.height: 18
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-                            source: 'qrc:///icons/light/32x32/unlock-normal.png'
+                    SequentialAnimation {
+                        id: lockButtonAnim
+                        loops: 2
+                        NumberAnimation {
+                            target: lockButton
+                            property: "scale"
+                            to: 1.8
+                            duration: 200
+                        }
+                        NumberAnimation {
+                            target: lockButton
+                            property: "scale"
+                            to: 1
+                            duration: 200
                         }
                     }
-                }
 
-                SequentialAnimation {
-                    id: lockButtonAnim
-                    loops: 2
-                    NumberAnimation {
-                        target: lockButton
-                        property: "scale"
-                        to: 1.8
-                        duration: 200
+                    onClicked: {
+                        console.assert(timeline);
+                        if(timeline)
+                            timeline.setTrackLock(index, !isLocked)
                     }
-                    NumberAnimation {
-                        target: lockButton
-                        property: "scale"
-                        to: 1
-                        duration: 200
-                    }
+                    MovieMator.ToolTip { text: qsTr('Lock track') }
                 }
-
-                onClicked: {
-                    console.assert(timeline);
-                    if(timeline)
-                        timeline.setTrackLock(index, !isLocked)
-                }
-                MovieMator.ToolTip { text: qsTr('Lock track') }
             }
-      }
+        }
+
+//        RowLayout {
+//            x:0
+//            spacing: 0
+//            // Label改成图片
+////            Label {
+////                text: trackName
+////                color: activePalette.windowText
+////                elide: Qt.ElideRight
+////                width: 22
+////                horizontalAlignment: Text.AlignHCenter
+////                Layout.preferredWidth: 22
+////            }
+//            Rectangle {
+//                width: 20
+//                height: 20
+//                color: "transparent"
+//                Image {
+//                    sourceSize.width: 18
+//                    sourceSize.height: 18
+//                    anchors.horizontalCenter: parent.horizontalCenter
+//                    anchors.verticalCenter: parent.verticalCenter
+//                    source: isVideo ? 'qrc:///icons/light/32x32/track-video.png' : 'qrc:///icons/light/32x32/track-audio.png'
+//                }
+//            }
+//            Label {
+//                text: trackName.substring(1)
+//                color: activePalette.windowText
+//                elide: Qt.ElideRight
+//                width: 20
+//                horizontalAlignment: Text.AlignLeft
+//                Layout.preferredWidth: 20
+//            }
+//            // 静音按钮
+//            CheckBox {
+//                id: muteButton
+//                checked: isMute
+//                visible: !isText
+//                style: CheckBoxStyle {
+//                    indicator: Rectangle {
+//                        implicitWidth: 18
+//                        implicitHeight: 18
+//                        color: 'transparent'
+//                        Image {
+//                            visible: isMute
+//                            sourceSize.width: 18
+//                            sourceSize.height: 18
+//                            anchors.horizontalCenter: parent.horizontalCenter
+//                            anchors.verticalCenter: parent.verticalCenter
+//                            source: selected? 'qrc:///icons/light/32x32/mute-white.png' : 'qrc:///icons/light/32x32/mute-blue.png'
+//                        }
+
+//                        Image {
+//                            visible: !isMute
+//                            sourceSize.width: 18
+//                            sourceSize.height: 18
+//                            anchors.horizontalCenter: parent.horizontalCenter
+//                            anchors.verticalCenter: parent.verticalCenter
+//                            source: 'qrc:///icons/light/32x32/volume-normal.png'
+//                        }
+//                    }
+//                }
+
+//                onClicked: {
+//                    console.assert(timeline);
+//                    if(timeline)
+//                        timeline.toggleTrackMute(index)
+//                }
+//                MovieMator.ToolTip { text: qsTr('Mute') }
+//            }
+//            // 隐藏按钮
+//            CheckBox {
+//                    id: hideButton
+//                    visible: isVideo
+//                    checked: isHidden
+//                    style: CheckBoxStyle {
+//                        indicator: Rectangle {
+//                            implicitWidth: 18
+//                            implicitHeight: 18
+//                            color: 'transparent'
+//                            Image {
+//                                visible: isHidden
+//                                sourceSize.width: 18
+//                                sourceSize.height: 18
+//                                anchors.horizontalCenter: parent.horizontalCenter
+//                                anchors.verticalCenter: parent.verticalCenter
+//                                source: selected? 'qrc:///icons/light/32x32/unvisible-white.png' : 'qrc:///icons/light/32x32/unvisible-blue.png'
+//                            }
+
+//                            Image {
+//                                visible: !isHidden
+//                                sourceSize.width: 18
+//                                sourceSize.height: 18
+//                                anchors.horizontalCenter: parent.horizontalCenter
+//                                anchors.verticalCenter: parent.verticalCenter
+//                                source: 'qrc:///icons/light/32x32/visible-normal.png'
+//                            }
+//                        }
+//                    }
+
+
+//                   onClicked: {
+//                        console.assert(timeline);
+//                        if(timeline)
+//                            timeline.toggleTrackHidden(index)
+//                   }
+//                   MovieMator.ToolTip { text: qsTr('Hide') }
+//            }
+//            // 锁定按钮
+//            CheckBox {
+//                id: lockButton
+//                checked: isLocked
+//                style: CheckBoxStyle {
+//                    indicator: Rectangle {
+//                        implicitWidth: 18
+//                        implicitHeight: 18
+//                        color: 'transparent'
+//                        Image {
+//                            visible: isLocked
+//                            sourceSize.width: 18
+//                            sourceSize.height: 18
+//                            anchors.horizontalCenter: parent.horizontalCenter
+//                            anchors.verticalCenter: parent.verticalCenter
+//                            source: selected? 'qrc:///icons/light/32x32/lock-white.png' : 'qrc:///icons/light/32x32/lock-blue.png'
+//                        }
+
+//                        Image {
+//                            visible: !isLocked
+//                            sourceSize.width: 18
+//                            sourceSize.height: 18
+//                            anchors.horizontalCenter: parent.horizontalCenter
+//                            anchors.verticalCenter: parent.verticalCenter
+//                            source: 'qrc:///icons/light/32x32/unlock-normal.png'
+//                        }
+//                    }
+//                }
+
+//                SequentialAnimation {
+//                    id: lockButtonAnim
+//                    loops: 2
+//                    NumberAnimation {
+//                        target: lockButton
+//                        property: "scale"
+//                        to: 1.8
+//                        duration: 200
+//                    }
+//                    NumberAnimation {
+//                        target: lockButton
+//                        property: "scale"
+//                        to: 1
+//                        duration: 200
+//                    }
+//                }
+
+//                onClicked: {
+//                    console.assert(timeline);
+//                    if(timeline)
+//                        timeline.setTrackLock(index, !isLocked)
+//                }
+//                MovieMator.ToolTip { text: qsTr('Lock track') }
+//            }
+//      }
   }
 }
 

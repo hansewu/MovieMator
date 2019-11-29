@@ -54,7 +54,7 @@ Rectangle {
     id: rulerTop
     enabled: false
     height: 24
-    color: normalColor//activePalette.base
+    color: rulerBackgroundColor//normalColor//activePalette.base
 
 //    Rectangle {
 //        width: timeline.timeToFrames("00:05:00:00")*timeScale * parent.width / parent.width > parent.width ? parent.width : timeline.timeToFrames("00:05:00:00")*timeScale * parent.width / parent.width

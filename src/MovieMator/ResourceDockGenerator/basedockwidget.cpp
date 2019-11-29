@@ -26,7 +26,36 @@ BaseDockWidget::BaseDockWidget(QWidget *pParent) :
     connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(onDockWidgetVisibilityChanged(bool)));
 
     //设置分类combobox，连接函数
-    ui->comboBox_class->setStyleSheet("QComboBox { background-color:rgb(100,100,100);color:rgb(225,225,225); }");
+//    ui->comboBox_class->setStyleSheet("QComboBox {border:none; min-width:50px; background-color:rgb(100,100,100); color:rgb(225,225,225); }"
+//                                      "QComboBox:drop-down {width: 15px;border-left: 1px solid #428BCA;}");
+
+    ui->comboBox_class->setStyleSheet("QComboBox {\
+                                  background-color:rgb(82,82,82); \
+                                  color:rgb(185,185,185); \
+                                  border: 1px solid black;\
+                                  border-radius: 3px;\
+                                  min-width: 50px;\
+                                  }"
+                                  "QComboBox::drop-down { \
+                                  subcontrol-origin: padding; \
+                                  subcontrol-position: top right;\
+                                  width: 15px;\
+                                  border-left-width: 1px;\
+                                  border-left-color: rgb(82,82,82);\
+                                  border-left-style: solid;\
+                                  border-top-right-radius: 4px; \
+                                  border-bottom-right-radius: 4px;\
+                                  }"
+                                  "QComboBox::down-arrow {\
+                                  image: url(:/icons/light/8x8/down.png);\
+                                  }"
+                                  "QComboBox::donw-arrow:on {top:1px;left:1px;}"
+                                  "QComboBox QAbstractItemView {border: none;}");
+
+    QFont font = ui->comboBox_class->font();
+    font.setPointSize(16);
+    ui->comboBox_class->setFont(font);
+
     connect(ui->comboBox_class, SIGNAL(activated(int)), this, SLOT(onClassComboBoxActivated(int)));
 
     m_pAllClassesListView = new QMap<QString, BaseListView *>;
@@ -147,15 +176,25 @@ QHBoxLayout *BaseDockWidget::createClassLabel(const QString &strClassName)
     QLabel *pClassLabel = new QLabel(strClassName, this);
     pClassLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     pClassLabel->setFixedHeight(40);
+    pClassLabel->setStyleSheet("color:rgb(185, 185, 185);");
 
-    QLabel *pImageLabel = new QLabel(this);
-    pImageLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    pImageLabel->setScaledContents(true);     // 可以让图片随 label拉伸
-    pImageLabel->setPixmap(QPixmap(":/icons/light/32x32/line.png"));
+    QFont font = pClassLabel->font();
+    font.setPointSize(16);
+    pClassLabel->setFont(font);
+
+//    QLabel *pImageLabel = new QLabel(this);
+//    pImageLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+//    pImageLabel->setScaledContents(true);     // 可以让图片随 label拉伸
+//    pImageLabel->setPixmap(QPixmap(":/icons/light/32x32/line.png"));
+//    pImageLabel->setHidden(true);
+
+    QSpacerItem *pSpacerItem = new QSpacerItem(40, 20, QSizePolicy::Expanding,
+                                              QSizePolicy::Minimum);
 
     QHBoxLayout *pHBoxLayout = new QHBoxLayout();
     pHBoxLayout->addWidget(pClassLabel);
-    pHBoxLayout->addWidget(pImageLabel);
+//    pHBoxLayout->addWidget(pSpacerItem);
+    pHBoxLayout->addItem(pSpacerItem);
 
     return pHBoxLayout;
 }
