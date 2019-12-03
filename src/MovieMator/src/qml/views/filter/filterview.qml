@@ -307,7 +307,7 @@ Rectangle {
             }
             onSwitchFoldStat: {
                 if(bChecked){
-                    keyFrameControlContainer.height = 90
+                    keyFrameControlContainer.height = 150
                 }else{
                     keyFrameControlContainer.height = 15
                 }
