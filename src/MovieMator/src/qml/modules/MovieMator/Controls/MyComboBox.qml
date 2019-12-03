@@ -21,8 +21,8 @@ import Qt.labs.controls 1.0
 import QtQuick.Layouts 1.0
 
 Rectangle {
-    property ListModel listModel
-    property int currentIndex
+    property ListModel listModel: ListModel{}
+    property int currentIndex: -1
     property string currentText
 
     id: comboBox

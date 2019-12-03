@@ -32,20 +32,21 @@ Rectangle {
 
     color: 'transparent'
     width: parent.width
-    height: 90
+    height: 150
 
     signal enableKeyFrameChanged(bool bEnable)
-    signal autoAddKeyFrameChanged(bool bEnable)
+//    signal autoAddKeyFrameChanged(bool bEnable)
 
     signal addFrameChanged()
     signal addKeyframe(string strIdentifierOfParameter)
-    signal frameChanged(double keyFrameNum)
     signal removeKeyFrame(string strIdentifierOfParameter)
     signal removeAllKeyFrame(string strIdentifierOfParameter)
+    signal frameChanged(string strIdentifierOfParameter, double keyFrameNum)
 
     signal switchFoldStat(bool bChecked)
     
-    property string m_strIdentifierOfParameter: ""
+    property ListModel  m_listModelParameters: ListModel{}
+    property string     m_strIdentifierOfParameter: ""
 
     function refreshFrameButtonsEnable(strIdentifierOfParameter)
     {
@@ -54,12 +55,30 @@ Rectangle {
 
         var position = timeline.getPositionInCurrentClip()
 
-        enableKeyFrameCheckBox.checked  = filter.isKeyframeActivate(strIdentifierOfParameter);
-        addKeyFrameButton.enabled       = enableKeyFrameCheckBox.checked && !autoAddKeyFrameCheckBox.checked
+        enableKeyFrameCheckBox.checked  = filter.isKeyframeActivate(strIdentifierOfParameter)
+        addKeyFrameButton.enabled       = enableKeyFrameCheckBox.checked //&& !autoAddKeyFrameCheckBox.checked
         preKeyFrameButton.enabled       = enableKeyFrameCheckBox.checked && filter.hasPreKeyframeAtPositon(strIdentifierOfParameter, position)
         nextKeyFrameButton.enabled      = enableKeyFrameCheckBox.checked && filter.hasNextKeyframeAtPositon(strIdentifierOfParameter, position)
         removeKeyFrameButton.enabled    = enableKeyFrameCheckBox.checked && filter.isKeyframeAtPosition(strIdentifierOfParameter, position)
-        autoAddKeyFrameCheckBox.enabled = enableKeyFrameCheckBox.checked
+//        autoAddKeyFrameCheckBox.enabled = enableKeyFrameCheckBox.checked
+
+//        addKeyFrameButton.visible       = filter.isKeyframeActivate(strIdentifierOfParameter)
+//        preKeyFrameButton.visible       = filter.isKeyframeActivate(strIdentifierOfParameter)
+//        nextKeyFrameButton.visible      = filter.isKeyframeActivate(strIdentifierOfParameter)
+//        removeKeyFrameButton.visible    = filter.isKeyframeActivate(strIdentifierOfParameter)
+
+        labelKeyframe.visible           = filter.isKeyframeActivate(strIdentifierOfParameter)
+        labelKeyframeInfo.visible       = filter.isKeyframeActivate(strIdentifierOfParameter)
+        labelInterpolation.visible      = filter.isKeyframeActivate(strIdentifierOfParameter)
+        comboboxInterpolation.visible   = filter.isKeyframeActivate(strIdentifierOfParameter)
+
+
+        labelAnimationType.visible      = !filter.isKeyframeActivate(strIdentifierOfParameter)
+        comboboxAnimationType.visible   = !filter.isKeyframeActivate(strIdentifierOfParameter)
+        labelAnimationDuration.visible  = !filter.isKeyframeActivate(strIdentifierOfParameter)
+        sliderAnimationDuration.visible = !filter.isKeyframeActivate(strIdentifierOfParameter)
+
+        rowLayoutButtons.visible        = filter.isKeyframeActivate(strIdentifierOfParameter)
     }
 
 
@@ -80,7 +99,7 @@ Rectangle {
              refreshFrameButtonsEnable(m_strIdentifierOfParameter)
 
              var position = timeline.getPositionInCurrentClip()
-             frameChanged(position)
+             frameChanged(m_strIdentifierOfParameter, position)
         }
     }
 
@@ -138,145 +157,230 @@ Rectangle {
         id:body
         color: 'transparent'
         width: parent.width
-        height: 70
+        height: 120
         anchors.top: header.bottom
         anchors.topMargin:0
         visible:foldBtn.checked?true:false
-        GridLayout {
-            columns: 4
-            CheckBox {
-                id: enableKeyFrameCheckBox
-                Layout.columnSpan: 4
-                anchors.left: parent.left
-                anchors.leftMargin: 24
-                anchors.top: parent.top
-                anchors.topMargin: 4
-                text: qsTr('Enable Key Frames')
-                checked: (filter && filter.cache_getKeyFrameNumber() > 0)
-                style: CheckBoxStyle {
-                    indicator: Rectangle {
-                        color:'transparent'
-                        radius: 3
-                        z:1
-                        implicitWidth: 18
-                        implicitHeight: 18
-                        Image {
-                            z:2
-                            anchors.fill: parent
-                            source:enableKeyFrameCheckBox.checked ? 'qrc:///icons/light/32x32/key-a.png' : 'qrc:///icons/light/32x32/key.png'
-                        }
-                    }
-                }
-                onClicked: {
-                    if(checked)
-                    {   
-                        if(metadata.keyframes.parameterCount > 0)
-                        {   
-                            addKeyframe(m_strIdentifierOfParameter)
-                            refreshFrameButtonsEnable(m_strIdentifierOfParameter)
-                            autoAddKeyFrameCheckBox.checked = true
-                        }  
-                    }
-                    else
-                    {  
-                        if(filter.isKeyframeActivate(m_strIdentifierOfParameter))
-                            removeKeyFrameWarning.visible = true
-                    }
-                }
-                onCheckedChanged: {
-                    enableKeyFrameChanged(checked)
-                }
-            }
-            CheckBox {
-                id: autoAddKeyFrameCheckBox
-                Layout.columnSpan: 4
-                anchors.left: parent.left
-                anchors.leftMargin: 24
-                anchors.top: enableKeyFrameCheckBox.bottom
-                anchors.topMargin: 4
-                text: qsTr('Auto Add Key Frames')
-                checked: true
-                opacity: enableKeyFrameCheckBox.checked ? 1.0 : 0.5
-                onClicked: {
-                }
-                height:25
-                style: CheckBoxStyle {
-                    indicator: Rectangle {
-                        color:'transparent'
-                        radius: 3
-                        z:1
-                        implicitWidth: 18
-                        implicitHeight: 18
-                        Image {
-                            z:2
-                            anchors.fill: parent
-                            source:autoAddKeyFrameCheckBox.checked ? 'qrc:///icons/light/32x32/key-a.png' : 'qrc:///icons/light/32x32/key.png'
-                        }
-                    }
-                }
-                onCheckedChanged: 
+        ColumnLayout
+        {
+            //columns: 5
+            GridLayout
+            {
+                columns: 2
+                Layout.topMargin: 4
+                Layout.leftMargin: 24
+                Label
                 {
-                    refreshFrameButtonsEnable(m_strIdentifierOfParameter)
-                    autoAddKeyFrameChanged(checked)
-                }    
+                    id: parameterLabel
+                    text: qsTr('Parameter:')
+                    color: '#ffffff'
+                }
+
+                MyComboBox
+                {
+                    id: comboboxParametersList
+                    listModel: m_listModelParameters
+                    height: 26
+
+                    onCurrentIndexChanged:
+                    {
+                        if (currentIndex === -1)
+                            return;
+                        console.log("select parameter: ", m_listModelParameters.get(currentIndex).parameterIdentifier)
+                        m_strIdentifierOfParameter = m_listModelParameters.get(currentIndex).parameterIdentifier
+                        initUIWithParameter(m_listModelParameters.get(currentIndex).parameterIdentifier)
+                    }
+                }
+
+                Label {id:spacer}
+
+                CheckBox {
+                    id: enableKeyFrameCheckBox
+
+                    text: qsTr('Enable Key Frames')
+                    checked: (filter && filter.cache_getKeyFrameNumber() > 0)
+                    style: CheckBoxStyle {
+                        indicator: Rectangle {
+                            color:'transparent'
+                            radius: 3
+                            z:1
+                            implicitWidth: 18
+                            implicitHeight: 18
+                            Image {
+                                z:2
+                                anchors.fill: parent
+                                source:enableKeyFrameCheckBox.checked ? 'qrc:///icons/light/32x32/key-a.png' : 'qrc:///icons/light/32x32/key.png'
+                            }
+                        }
+                    }
+                    onClicked: {
+                        if(checked)
+                        {
+                            if(metadata.keyframes.parameterCount > 0)
+                            {
+                                addKeyframe(m_strIdentifierOfParameter)
+                                refreshFrameButtonsEnable(m_strIdentifierOfParameter)
+//                              autoAddKeyFrameCheckBox.checked = true
+                            }
+                        }
+                        else
+                        {
+                            if(filter.isKeyframeActivate(m_strIdentifierOfParameter))
+                                removeKeyFrameWarning.visible = true
+                        }
+                    }
+                    onCheckedChanged: {
+                        enableKeyFrameChanged(checked)
+                    }
+                }
+                //            CheckBox {
+                //                id: autoAddKeyFrameCheckBox
+                //                visible: false
+                //                Layout.columnSpan: 4
+                //                anchors.left: parent.left
+                //                anchors.leftMargin: 24
+                //                anchors.top: enableKeyFrameCheckBox.bottom
+                //                anchors.topMargin: 4
+                //                text: qsTr('Auto Add Key Frames')
+                //                checked: true
+                //                opacity: enableKeyFrameCheckBox.checked ? 1.0 : 0.5
+                //                onClicked: {
+                //                }
+                //                height:25
+                //                style: CheckBoxStyle {
+                //                    indicator: Rectangle {
+                //                        color:'transparent'
+                //                        radius: 3
+                //                        z:1
+                //                        implicitWidth: 18
+                //                        implicitHeight: 18
+                //                        Image {
+                //                            z:2
+                //                            anchors.fill: parent
+                //                            source:autoAddKeyFrameCheckBox.checked ? 'qrc:///icons/light/32x32/key-a.png' : 'qrc:///icons/light/32x32/key.png'
+                //                        }
+                //                    }
+                //                }
+                //                onCheckedChanged:
+                //                {
+                //                    refreshFrameButtonsEnable(m_strIdentifierOfParameter)
+                //                    autoAddKeyFrameChanged(checked)
+                //                }
+                //            }
+
+                Label
+                {
+                    id: labelAnimationType
+                    text: qsTr('Animation Type:')
+                    color: '#ffffff'
+                }
+
+                MyComboBox
+                {
+                    id: comboboxAnimationType
+                    listModel: ListModel{}
+                    height: 26
+
+                    onCurrentIndexChanged:
+                    {
+                    }
+                }
+
+                Label
+                {
+                    id: labelAnimationDuration
+                    text: qsTr('Animation Duration:')
+                    color: '#ffffff'
+                }
+
+                Slider
+                {
+                    id: sliderAnimationDuration
+                }
+
+                Label
+                {
+                    id: labelKeyframe
+                    visible: false
+                    text: qsTr('Keyframe:')
+                    color: '#ffffff'
+                }
+                Label
+                {
+                    id: labelKeyframeInfo
+                    visible: false
+                    text: qsTr('position:, value:')
+                    color: '#ffffff'
+                }
+
+                Label
+                {
+                    id: labelInterpolation
+                    visible: false
+                    text: qsTr('Keyframe:')
+                    color: '#ffffff'
+                }
+
+                MyComboBox
+                {
+                    id: comboboxInterpolation
+                    visible: false
+                    listModel: ListModel{}
+                    height: 26
+
+                    onCurrentIndexChanged:
+                    {
+                    }
+                }
+
             }
 
-            Button {
-                id:addKeyFrameButton
-                anchors {
-                    left: parent.left
-                    leftMargin: 24
-                    top: autoAddKeyFrameCheckBox.bottom
-                    topMargin: 8
-                }
-                implicitWidth: 18
-                implicitHeight: 18
+            RowLayout
+            {
+                id: rowLayoutButtons
+                Layout.leftMargin: 24
+                spacing: 12
 
-                //enabled: refreshFrameButtonsEnable(m_strIdentifierOfParameter)
-                opacity: enabled ? 1.0 : 0.5
-                tooltip: qsTr('Add key frame')
-                //customIconSource: 'qrc:///icons/light/32x32/list-add.png'
-                //customText: qsTr('Add')
-                //buttonWidth : 85
-                onClicked: {
-                    addKeyframe(m_strIdentifierOfParameter)
-                    refreshFrameButtonsEnable(m_strIdentifierOfParameter)
-                }
+                Button {
+                    id:addKeyFrameButton
+                    implicitWidth: 18
+                    implicitHeight: 18
 
-                style: ButtonStyle {
-                    background: Rectangle {
-                        color: 'transparent'
-                    }  
+                    opacity: enabled ? 1.0 : 0.5
+                    tooltip: qsTr('Add key frame')
+
+                    onClicked: {
+                        addKeyframe(m_strIdentifierOfParameter)
+                        refreshFrameButtonsEnable(m_strIdentifierOfParameter)
+                    }
+
+                    style: ButtonStyle {
+                        background: Rectangle {
+                            color: 'transparent'
+                        }
+                    }
+                    Image {
+                        fillMode: Image.PreserveAspectCrop
+                        anchors.fill: parent
+                        source: addKeyFrameButton.pressed ? "qrc:///icons/light/32x32/add_keyframe-on.png" : (enabled?'qrc:///icons/light/32x32/add_keyframe.png':'qrc:///icons/light/32x32/add_keyframe_disable.png')
+                    }
                 }
-                Image {
-                    fillMode: Image.PreserveAspectCrop
-                    anchors.fill: parent
-                    source: addKeyFrameButton.pressed ? "qrc:///icons/light/32x32/add_keyframe-on.png" : (enabled?'qrc:///icons/light/32x32/add_keyframe.png':'qrc:///icons/light/32x32/add_keyframe_disable.png')
-                }
-            }
 
             Button {
                 id:removeKeyFrameButton
-                anchors {
-                    left: addKeyFrameButton.right
-                    leftMargin: 24
-                    top: addKeyFrameButton.top
-                    topMargin: 0
-                }
+
                 implicitWidth: 18
                 implicitHeight: 18
 
                 opacity: enabled ? 1.0 : 0.5
                 tooltip: qsTr('Remove key frame')
-                //customIconSource: 'qrc:///icons/light/32x32/list-remove.png'
-                //customText: qsTr('Remove')
-                //buttonWidth : 85
 
                 style: ButtonStyle {
                     background: Rectangle {
                         color: 'transparent'
                     }  
                 }
+
                 Image {
                     fillMode: Image.PreserveAspectCrop
                     anchors.fill: parent
@@ -299,20 +403,13 @@ Rectangle {
 
             Button {
                 id:preKeyFrameButton
-                anchors {
-                    top: addKeyFrameButton.top
-                    topMargin: 0
-                    left: removeKeyFrameButton.right
-                    leftMargin: 24
-                }
+
                 implicitWidth: 18
                 implicitHeight: 18
 
                 opacity: enabled ? 1.0 : 0.5
                 tooltip: qsTr('Prev key frame')
-                //customIconSource: enabled?'qrc:///icons/light/32x32/previous_keyframe.png' :'qrc:///icons/light/32x32/previous_keyframe_disable.png'
-                //customText: qsTr('<<')
-                //buttonWidth : 85
+
                 onClicked: {
                     var nFrame = filter.cache_getPreKeyFrameNum(timeline.getPositionInCurrentClip(), m_strIdentifierOfParameter)
                     if(nFrame !== -1)
@@ -335,27 +432,18 @@ Rectangle {
 
             Button {
                 id:nextKeyFrameButton
-                anchors {
-                    top: addKeyFrameButton.top
-                    topMargin: 0
-                    left: preKeyFrameButton.right
-                    leftMargin: 24
-                }
+
                 implicitWidth: 18
                 implicitHeight: 18
 
                 opacity: enabled ? 1.0 : 0.5
                 tooltip: qsTr('Next key frame')
-                //customIconSource: 'qrc:///icons/light/32x32/bg.png'
-                //customIconSource: enabled?'qrc:///icons/light/32x32/next_keyframe.png':'qrc:///icons/light/32x32/next_keyframe_disable.png'
-                //customText: qsTr('>>')
-                //buttonWidth : 85
+
                 onClicked: {
                     var nFrame = filter.cache_getNextKeyFrameNum(timeline.getPositionInCurrentClip(), m_strIdentifierOfParameter)
                     if(nFrame !== -1)
                     {
                         filterDock.position = nFrame
-                        //frameChanged(nFrame)
                     }
                 }
                 style: ButtonStyle {
@@ -369,8 +457,11 @@ Rectangle {
                     source: nextKeyFrameButton.pressed? "qrc:///icons/light/32x32/next_keyframe-on.png" : (enabled?'qrc:///icons/light/32x32/next_keyframe.png':'qrc:///icons/light/32x32/next_keyframe_disable.png')
                 }
             }
+            }
         }
     }
+
+
     MessageDialog {
         id: removeKeyFrameWarning
         visible: false
@@ -386,11 +477,25 @@ Rectangle {
             enableKeyFrameCheckBox.checked = true  
         
     }
-    Connections {
+
+    Connections
+    {
         target: filterDock
-        onCurrentFilterChanged: {
+        onCurrentFilterChanged:
+        {
             enableKeyFrameCheckBox.checked = ( filter && filter.cache_getKeyFrameNumber() > 0)
-            autoAddKeyFrameChanged(autoAddKeyFrameCheckBox.checked)
+//            autoAddKeyFrameChanged(autoAddKeyFrameCheckBox.checked)
+
+            m_listModelParameters.clear()
+            comboboxParametersList.currentIndex = -1
+            if(metadata)
+            {
+                for (var i = 0; i < metadata.keyframes.parameterCount; i++)
+                {
+                    m_listModelParameters.append({name: metadata.keyframes.parameters[i].name, parameterIdentifier: metadata.keyframes.parameters[i].property})
+                }
+                comboboxParametersList.selectItemOfIndex(0);
+            }
         }
     }
 
@@ -398,7 +503,7 @@ Rectangle {
         target: filter
         onFilterPropertyValueChanged: {
             enableKeyFrameCheckBox.checked = (filter && filter.cache_getKeyFrameNumber() > 0)
-            autoAddKeyFrameChanged(autoAddKeyFrameCheckBox.checked)
+//            autoAddKeyFrameChanged(autoAddKeyFrameCheckBox.checked)
         }
     }
 
