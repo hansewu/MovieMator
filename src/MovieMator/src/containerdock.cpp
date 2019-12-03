@@ -24,7 +24,8 @@
 #include <QToolButton>
 
 static QString buttonSytleSheetNormal("background-color:rgb(39, 46, 52);color:rgb(225,225,225); border:none");
-static QString buttonSytleSheetSelected("background-color:rgb(165, 65, 47);color:rgb(192,72,44); border:none");
+static QString buttonSytleSheetSelected("background-color:rgb(165, 65, 47);color:rgb(165, 65, 47); border:none");
+static QString buttonSytleSheetNormal_topPosition("background-color:rgb(26, 30, 34);color:rgb(225,225,225); border:none");
 
 #define TABBAR_WIDTH 70
 #define TABBAR_HEIGHT 33
@@ -65,7 +66,7 @@ ContainerDock::ContainerDock(TAB_POSITION tabPosition, QWidget *parent)
     }
     else if (m_tabPostion == TabPosition_Top)
     {
-        m_tabBtnWidget->setStyleSheet(".QWidget{background-color: rgb(82,82,82);border-radius:5px}");
+        m_tabBtnWidget->setStyleSheet(".QWidget{background-color: rgb(26, 30, 34);border-radius:5px}");
         m_tabBtnWidget->setFixedHeight(43);     // 33
         QHBoxLayout *tabButtonLayout = new QHBoxLayout();
         tabButtonLayout->setSpacing(0);
@@ -144,7 +145,7 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
     button->setText(tabButtonTitle);
 
     if (m_buttons.count() > 0)
-        button->setStyleSheet(buttonSytleSheetNormal);
+        button->setStyleSheet((m_tabPostion == TabPosition_Top) ? buttonSytleSheetNormal_topPosition : buttonSytleSheetNormal);
     else
     {
         button->setStyleSheet(buttonSytleSheetSelected);
@@ -171,9 +172,10 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
         font.setPixelSize(14);
         button->setFont(font);
         button->setFixedSize(110, 45);
+        button->setIconSize(QSize(34, 37));
 
 //        button->setFixedSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-        button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        button->setToolButtonStyle(Qt::ToolButtonIconOnly);
         QHBoxLayout *hLayout = qobject_cast<QHBoxLayout*>(m_tabBtnWidget->layout());    //(QHBoxLayout *)m_tabBtnWidget->layout();
         hLayout->insertWidget(hLayout->count()-1,button);
     }
@@ -223,7 +225,7 @@ void ContainerDock::onTabButtonClicked()
         BUTTON_INFO buttonInfo = m_buttons[i];
         QToolButton *button = buttonInfo.button;
         button->setIcon(buttonInfo.normalIcon);
-        button->setStyleSheet(buttonSytleSheetNormal);
+        button->setStyleSheet((m_tabPostion == TabPosition_Top) ? buttonSytleSheetNormal_topPosition : buttonSytleSheetNormal);
     }
 }
 

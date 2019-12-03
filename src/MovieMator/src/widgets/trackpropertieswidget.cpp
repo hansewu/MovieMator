@@ -33,15 +33,23 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer& track, QWidget *pare
     m_track(track)
 {
     ui->setupUi(this);
+    setStyleSheet("background-color:rgb(26, 30, 34);");
 //    Util::setColorsToHighlight(ui->nameLabel);
     ui->nameLabel->setText(tr("Track: %1").arg(track.get(kTrackNameProperty)));
     ui->blendModeLabel->hide();
     ui->blendModeCombo->hide();
 
-    ui->nameLabel->setStyleSheet("background-color:rgb(46,46,46);");
+//    ui->nameLabel->setStyleSheet("background-color:rgb(46,46,46);");
+    ui->nameLabel->setStyleSheet("color:rgb(185,185,185);");
+    QFont font = ui->nameLabel->font();
+    font.setPointSize(16);
+    ui->nameLabel->setFont(font);
+
+    ui->blendModeLabel->setStyleSheet("color:rgb(185,185,185);");
+
     ui->blendModeCombo->setStyleSheet("QComboBox {\
                                       background-color:rgb(82,82,82); \
-                                      color:rgb(225,225,225); \
+                                      color:rgb(185,185,185); \
                                       border: 1px solid black;\
                                       border-radius: 4px;\
                                       padding: 1px 2px 1px 2px;\

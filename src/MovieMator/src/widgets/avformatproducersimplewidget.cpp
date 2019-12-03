@@ -39,21 +39,26 @@ AvformatProducerSimpleWidget::AvformatProducerSimpleWidget(QWidget *parent)
     , m_tempProducer(nullptr)
 {
     ui->setupUi(this);
+    setStyleSheet("background-color:rgb(26, 30, 34);");
 //    Util::setColorsToHighlight(ui->filenameLabel);
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
 
     ui->speedIcon->setPixmap(QPixmap(":/icons/light/32x32/speed_icon.png"));
 
-    ui->filenameLabel->setStyleSheet("background-color:rgb(46,46,46);");
+    ui->filenameLabel->setStyleSheet("color:rgb(185,185,185);");
+    QFont font = ui->filenameLabel->font();
+    font.setPointSize(16);
+    ui->filenameLabel->setFont(font);
+
     ui->line->setStyleSheet("color:black;");
     ui->line_2->setStyleSheet("color:black;");
     QString buttonStyle = "QPushButton{"
                           "border-radius:3px;border:1px solid;border-color:black;"
-                          "background-color:rgb(100,100,100);color:rgb(225,225,225);}";
+                          "background-color:rgb(82,82,82);color:rgb(185,185,185);}";
     ui->resetButton->setStyleSheet(buttonStyle);
     ui->okButton->setStyleSheet(buttonStyle);
     ui->advanced->setStyleSheet(buttonStyle);
-    QString spinBoxStyle = "QSpinBox{padding-left:4px;background-color:rgb(82,82,82);color:rgb(225,225,225);border:1px solid black;border-radius:4px;}";
+    QString spinBoxStyle = "QSpinBox{padding-left:4px;background-color:rgb(82,82,82);color:rgb(185,185,185);border:1px solid black;border-radius:4px;}";
     spinBoxStyle.append("QSpinBox::up-button{subcontrol-origin:border;subcontrol-position:top right;width:18px;border:none;}");
     spinBoxStyle.append("QSpinBox::up-arrow{image:url(:/icons/light/8x8/up.png);width:8px;height:8px;}");
     spinBoxStyle.append("QSpinBox::down-button{subcontrol-origin:border;subcontrol-position:bottom right;width:16px;border:none;border-top-width:0;}");
@@ -69,6 +74,21 @@ AvformatProducerSimpleWidget::AvformatProducerSimpleWidget(QWidget *parent)
     // 去除 spinBox的边框
     ui->startPointSpinBox->setStyleSheet("QSpinBox{background-color:transparent; border:none;}");
     ui->endPointSpinBox->setStyleSheet("QSpinBox{background-color:transparent; border:none;}");
+
+    ui->startPointLabel->setStyleSheet("color:rgb(185,185,185);");
+    QFont startPointLabelFont = ui->startPointLabel->font();
+    startPointLabelFont.setPointSize(13);
+    ui->startPointLabel->setFont(startPointLabelFont);
+
+    ui->endPointLabel->setStyleSheet("color:rgb(185,185,185);");
+    QFont endPointLabelFont = ui->startPointLabel->font();
+    endPointLabelFont.setPointSize(13);
+    ui->endPointLabel->setFont(endPointLabelFont);
+
+    ui->speedLabel->setStyleSheet("color:rgb(185,185,185);");
+    QFont speedLabelFont = ui->startPointLabel->font();
+    speedLabelFont.setPointSize(13);
+    ui->speedLabel->setFont(speedLabelFont);
 
     m_bStatus       = false;
     m_dOpacityValue = 1.0;

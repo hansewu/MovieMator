@@ -124,7 +124,7 @@ void BaseDockWidget::setupAllClassesUi(UnsortMap<QString, BaseItemModel *> *pAll
 {
     //创建所有分类的listview
     Q_ASSERT(pAllClassesItemModel);
-    if (pAllClassesItemModel == nullptr)
+    if (pAllClassesItemModel == nullptr || pAllClassesItemModel->count() < 1)
     {
         return;
     }

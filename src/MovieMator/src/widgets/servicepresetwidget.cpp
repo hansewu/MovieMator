@@ -32,6 +32,8 @@ ServicePresetWidget::ServicePresetWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->label->setStyleSheet("color:rgb(185,185,185);");
+
     QString buttonStyle = "QPushButton{"
                           "border-radius:3px;border:1px solid;border-color:black;"
                           "background-color:rgb(100,100,100);color:rgb(225,225,225);}";

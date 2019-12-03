@@ -28,15 +28,20 @@ ColorProducerWidget::ColorProducerWidget(QWidget *parent) :
     ui(new Ui::ColorProducerWidget)
 {
     ui->setupUi(this);
+    setStyleSheet("background-color:rgb(26, 30, 34);");
 //    Util::setColorsToHighlight(ui->label_2);
     ui->preset->saveDefaultPreset(*getPreset());
     ui->preset->loadPresets();
 
-    ui->label_2->setStyleSheet("background-color:rgb(46,46,46);");
+    ui->label_2->setStyleSheet("color:rgb(185,185,185);");
+    QFont label2Font = ui->label_2->font();
+    label2Font.setPointSize(16);
+    ui->label_2->setFont(label2Font);
+
     ui->line->setStyleSheet("color:black;");
     ui->colorButton->setStyleSheet("QPushButton{"
                                    "border-radius:3px;border:1px solid;border-color:black;"
-                                   "background-color:rgb(100,100,100);color:rgb(225,225,225);}"
+                                   "background-color:rgb(82,82,82);color:rgb(185,185,185);}"
                                    );
 }
 

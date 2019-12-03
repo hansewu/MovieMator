@@ -657,16 +657,17 @@ MainWindow::MainWindow()
 
     m_simplePropertiesDock = new QDockWidget(tr("Simple Properties"));
     QScrollArea* scroll1 = new QScrollArea;
+    scroll1->setStyleSheet("QScrollArea {background-color: rgb(26, 30, 34)}");
     scroll1->setWidgetResizable(true);
     scroll1->setFrameShape(QFrame::NoFrame);
     m_simplePropertiesDock->setWidget(scroll1);
-    addPropertiesDock(m_simplePropertiesDock, tr("Properties"), QIcon(":/icons/light/32x32/show-properties.png"), QIcon(":/icons/light/32x32/show-properties-highlight.png"));
+    addPropertiesDock(m_simplePropertiesDock, tr("Properties"), QIcon(":/icons/light/32x32/show-properties.png"), QIcon(":/icons/light/32x32/show-properties.png"));
 
 
     m_propertiesVideoFilterDock->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);
-    addPropertiesDock(m_propertiesVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
+    addPropertiesDock(m_propertiesVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter.png"));
     m_propertiesAudioFilterDock->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);
-    addPropertiesDock(m_propertiesAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
+    addPropertiesDock(m_propertiesAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter.png"));
 
     //替换模板文件界面Dock
     //m_templateEditorDock = TemplateEditorDock_initModule(&MainInterface::singleton());
