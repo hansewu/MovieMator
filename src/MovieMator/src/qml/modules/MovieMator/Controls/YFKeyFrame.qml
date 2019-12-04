@@ -355,7 +355,7 @@ RowLayout{
     }
 
     // 在当前浮标尺所在位置添加为关键帧，如果添加的是第一帧，自动在首尾位置添加关键帧
-    function addKeyFrame(strParameterId)
+    function addKeyFrame(strParameterId, nAnimationType, dAnimationDuration)
     {
         if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined'))
         {
@@ -945,7 +945,7 @@ RowLayout{
              onAddKeyframe: {
                  bKeyFrame = true
                  //syncUIDataToProject()
-                 addKeyFrame(strIdentifierOfParameter)
+                 addKeyFrame(strIdentifierOfParameter, nAnimationType, dAnimationDuration)
              }
     }
     // 帧位置改变信号
