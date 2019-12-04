@@ -21,3 +21,5 @@ MyComboBox 1.0 MyComboBox.qml
 FilterComboBox 1.0 FilterComboBox.qml
 MySpinBox 1.0 MySpinBox.qml
 EditKeyframeButton 1.0 EditKeyframeButton.qml
+CustomSlider 1.0 CustomSlider.qml
+

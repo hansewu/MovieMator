@@ -38,7 +38,7 @@ Rectangle {
 //    signal autoAddKeyFrameChanged(bool bEnable)
 
     signal addFrameChanged()
-    signal addKeyframe(string strIdentifierOfParameter)
+    signal addKeyframe(string strIdentifierOfParameter, int nAnimationType, double dAnimationDuration)
     signal removeKeyFrame(string strIdentifierOfParameter)
     signal removeAllKeyFrame(string strIdentifierOfParameter)
     signal frameChanged(string strIdentifierOfParameter, double keyFrameNum)
@@ -218,7 +218,7 @@ Rectangle {
                         {
                             if(metadata.keyframes.parameterCount > 0)
                             {
-                                addKeyframe(m_strIdentifierOfParameter)
+                                addKeyframe(m_strIdentifierOfParameter, comboboxAnimationType.currentIndex, sliderAnimationDuration.value)
                                 refreshFrameButtonsEnable(m_strIdentifierOfParameter)
 //                              autoAddKeyFrameCheckBox.checked = true
                             }
@@ -278,7 +278,12 @@ Rectangle {
                 MyComboBox
                 {
                     id: comboboxAnimationType
-                    listModel: ListModel{}
+                    listModel: ListModel{
+                        ListElement {name: qsTr('In&Out Animation')}
+                        ListElement {name: qsTr('In Animaiton')}
+                        ListElement {name: qsTr('Out Animaiton')}
+                    }
+
                     height: 26
 
                     onCurrentIndexChanged:
@@ -293,9 +298,14 @@ Rectangle {
                     color: '#ffffff'
                 }
 
-                Slider
+                CustomSlider
                 {
                     id: sliderAnimationDuration
+
+                    minimumValue: 0.5
+                    maximumValue: 5.0
+                    stepSize: 0.5
+                    tickmarksEnabled: true
                 }
 
                 Label
@@ -309,7 +319,7 @@ Rectangle {
                 {
                     id: labelKeyframeInfo
                     visible: false
-                    text: qsTr('position:, value:')
+                    text: qsTr('(Position: 00:00:00:00, Value:100)')
                     color: '#ffffff'
                 }
 
@@ -317,7 +327,7 @@ Rectangle {
                 {
                     id: labelInterpolation
                     visible: false
-                    text: qsTr('Keyframe:')
+                    text: qsTr('Interpolation:')
                     color: '#ffffff'
                 }
 
@@ -350,7 +360,7 @@ Rectangle {
                     tooltip: qsTr('Add key frame')
 
                     onClicked: {
-                        addKeyframe(m_strIdentifierOfParameter)
+                        addKeyframe(m_strIdentifierOfParameter, comboboxAnimationType.currentIndex, sliderAnimationDuration.value)
                         refreshFrameButtonsEnable(m_strIdentifierOfParameter)
                     }
 
