@@ -38,7 +38,8 @@ Rectangle {
 //    signal autoAddKeyFrameChanged(bool bEnable)
 
     signal addFrameChanged()
-    signal addKeyframe(string strIdentifierOfParameter, int nAnimationType, double dAnimationDuration)
+    signal addKeyframe(string strIdentifierOfParameter)
+    signal enableKeyframe(string strIdentifierOfParameter, int nAnimationType, double dAnimationDuration)
     signal removeKeyFrame(string strIdentifierOfParameter)
     signal removeAllKeyFrame(string strIdentifierOfParameter)
     signal frameChanged(string strIdentifierOfParameter, double keyFrameNum)
@@ -47,6 +48,24 @@ Rectangle {
     
     property ListModel  m_listModelParameters: ListModel{}
     property string     m_strIdentifierOfParameter: ""
+
+    function refreshKeyframeInfo(strIdentifierOfParameter)
+    {
+        if (strIdentifierOfParameter === "")
+            return;
+
+        var position = timeline.getPositionInCurrentClip()
+        if (filter.isKeyframeAtPosition(strIdentifierOfParameter, position))
+        {
+            var value = filter.cache_getKeyFrameParaDoubleValue(position, strIdentifierOfParameter)
+            var timePos = filter.timeFromFrames(position)
+            labelKeyframeInfo.text = "(Position: " + timePos +", Value: " + Math.round(value*1000)/1000 + ")"
+        }
+        else
+        {
+            labelKeyframeInfo.text = ""
+        }
+    }
 
     function refreshFrameButtonsEnable(strIdentifierOfParameter)
     {
@@ -79,6 +98,10 @@ Rectangle {
         sliderAnimationDuration.visible = !filter.isKeyframeActivate(strIdentifierOfParameter)
 
         rowLayoutButtons.visible        = filter.isKeyframeActivate(strIdentifierOfParameter)
+
+        comboboxInterpolation.enabled   = filter.isKeyframeAtPosition(strIdentifierOfParameter, position)
+
+        refreshKeyframeInfo(strIdentifierOfParameter)
     }
 
 
@@ -98,7 +121,7 @@ Rectangle {
         onPositionChanged: {
              refreshFrameButtonsEnable(m_strIdentifierOfParameter)
 
-             var position = timeline.getPositionInCurrentClip()
+            var position = timeline.getPositionInCurrentClip()
              frameChanged(m_strIdentifierOfParameter, position)
         }
     }
@@ -172,7 +195,7 @@ Rectangle {
                 Label
                 {
                     id: parameterLabel
-                    text: qsTr('Parameter:')
+                    text: qsTr('Parameter')
                     color: '#ffffff'
                 }
 
@@ -181,6 +204,8 @@ Rectangle {
                     id: comboboxParametersList
                     listModel: m_listModelParameters
                     height: 26
+
+                    Layout.preferredWidth: 240
 
                     onCurrentIndexChanged:
                     {
@@ -218,7 +243,7 @@ Rectangle {
                         {
                             if(metadata.keyframes.parameterCount > 0)
                             {
-                                addKeyframe(m_strIdentifierOfParameter, comboboxAnimationType.currentIndex, sliderAnimationDuration.value)
+                                enableKeyframe(m_strIdentifierOfParameter, comboboxAnimationType.currentIndex, sliderAnimationDuration.value)
                                 refreshFrameButtonsEnable(m_strIdentifierOfParameter)
 //                              autoAddKeyFrameCheckBox.checked = true
                             }
@@ -271,7 +296,7 @@ Rectangle {
                 Label
                 {
                     id: labelAnimationType
-                    text: qsTr('Animation Type:')
+                    text: qsTr('Animation Type')
                     color: '#ffffff'
                 }
 
@@ -294,7 +319,7 @@ Rectangle {
                 Label
                 {
                     id: labelAnimationDuration
-                    text: qsTr('Animation Duration:')
+                    text: qsTr('Animation Duration')
                     color: '#ffffff'
                 }
 
@@ -312,13 +337,14 @@ Rectangle {
                 {
                     id: labelKeyframe
                     visible: false
-                    text: qsTr('Keyframe:')
+                    text: qsTr('Keyframe')
                     color: '#ffffff'
                 }
                 Label
                 {
                     id: labelKeyframeInfo
                     visible: false
+
                     text: qsTr('(Position: 00:00:00:00, Value:100)')
                     color: '#ffffff'
                 }
@@ -327,7 +353,7 @@ Rectangle {
                 {
                     id: labelInterpolation
                     visible: false
-                    text: qsTr('Interpolation:')
+                    text: qsTr('Interpolation')
                     color: '#ffffff'
                 }
 
@@ -335,14 +361,16 @@ Rectangle {
                 {
                     id: comboboxInterpolation
                     visible: false
-                    listModel: ListModel{}
+                    listModel: ListModel{
+                        ListElement {name: qsTr('Linear')}
+                        ListElement {name: qsTr('Cubic')}
+                    }
                     height: 26
 
                     onCurrentIndexChanged:
                     {
                     }
                 }
-
             }
 
             RowLayout
@@ -360,7 +388,7 @@ Rectangle {
                     tooltip: qsTr('Add key frame')
 
                     onClicked: {
-                        addKeyframe(m_strIdentifierOfParameter, comboboxAnimationType.currentIndex, sliderAnimationDuration.value)
+                        addKeyframe(m_strIdentifierOfParameter)
                         refreshFrameButtonsEnable(m_strIdentifierOfParameter)
                     }
 
@@ -493,7 +521,6 @@ Rectangle {
         target: filterDock
         onCurrentFilterChanged:
         {
-            enableKeyFrameCheckBox.checked = ( filter && filter.cache_getKeyFrameNumber() > 0)
 //            autoAddKeyFrameChanged(autoAddKeyFrameCheckBox.checked)
 
             m_listModelParameters.clear()
@@ -506,13 +533,16 @@ Rectangle {
                 }
                 comboboxParametersList.selectItemOfIndex(0);
             }
+
+            enableKeyFrameCheckBox.checked = ( filter && filter.isKeyframeActivate(m_strIdentifierOfParameter) > 0)
+
         }
     }
 
     Connections {
         target: filter
         onFilterPropertyValueChanged: {
-            enableKeyFrameCheckBox.checked = (filter && filter.cache_getKeyFrameNumber() > 0)
+//            enableKeyFrameCheckBox.checked = (filter && filter.isKeyframeActivate(m_strIdentifierOfParameter) > 0)
 //            autoAddKeyFrameChanged(autoAddKeyFrameCheckBox.checked)
         }
     }

@@ -354,8 +354,90 @@ RowLayout{
         addFrameInfoDialog.position = position
     }
 
+    //nAnimationType: 0 - in&out, 1 - in, 2 - out
+    function addInitialKeyframe(strParameterId, nAnimationType, dAnimationDuration)
+    {
+        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined'))
+        {
+            throw new Error("metadata is abnormal")
+        }
+
+        var paraType
+        var paramCount = metadata.keyframes.parameterCount
+        for (var i = 0; i < paramCount; i++)
+        {
+            if (metadata.keyframes.parameters[i].property === strParameterId)
+                paraType = metadata.keyframes.parameters[i].paraType
+        }
+
+        bBlockUpdateUI = true
+
+        if (!filter.isKeyframeActivate(strParameterId))
+        {
+            var value = ''
+            var startPosition = 0
+            var endPosition = timeline.getCurrentClipLength() - 1//filter.producerOut - filter.producerIn + 1
+            var outPointOfInAnim = dAnimationDuration * profile.fps
+            var inPointOfOutAnim = endPosition - dAnimationDuration * profile.fps
+
+            if (outPointOfInAnim > endPosition)
+                outPointOfInAnim = endPosition
+            if (inPointOfOutAnim < startPosition)
+                inPointOfOutAnim = startPosition
+
+            var addInAnim = 0
+            var addOutAnim = 0
+
+
+            if (nAnimationType === 0)
+            {
+                addInAnim = 1
+                addOutAnim = 1
+
+                if(inPointOfOutAnim < outPointOfInAnim)
+                    inPointOfOutAnim = outPointOfInAnim
+            }
+            if (nAnimationType === 1)
+                addInAnim = 1
+            if (nAnimationType === 2)
+                addOutAnim = 1
+
+            if(paraType === 'rect')
+            {
+                value = filter.getAnimRectValue(startPosition, strParameterId)
+                if (addInAnim === 1)
+                {
+                    filter.cache_setKeyFrameParaRectValue(startPosition, strParameterId, value)
+                    filter.cache_setKeyFrameParaRectValue(outPointOfInAnim, strParameterId, value)
+                }
+
+                if (addOutAnim === 1)
+                {
+                    filter.cache_setKeyFrameParaRectValue(inPointOfOutAnim, strParameterId, value)
+                    filter.cache_setKeyFrameParaRectValue(endPosition, strParameterId, value)
+                }
+            }
+            else
+            {
+                value = filter.get(strParameterId)
+                if (addInAnim === 1)
+                {
+                    filter.cache_setKeyFrameParaValue(startPosition, strParameterId, value.toString());
+                    filter.cache_setKeyFrameParaValue(outPointOfInAnim, strParameterId, value.toString());
+                }
+                if (addOutAnim === 1)
+                {
+                    filter.cache_setKeyFrameParaValue(inPointOfOutAnim, strParameterId, value.toString());
+                    filter.cache_setKeyFrameParaValue(endPosition, strParameterId, value.toString());
+                }
+            }
+        }
+
+        bBlockUpdateUI = false
+    }
+
     // 在当前浮标尺所在位置添加为关键帧，如果添加的是第一帧，自动在首尾位置添加关键帧
-    function addKeyFrame(strParameterId, nAnimationType, dAnimationDuration)
+    function addKeyFrame(strParameterId)
     {
         if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined'))
         {
@@ -375,26 +457,8 @@ RowLayout{
             if (metadata.keyframes.parameters[i].property === strParameterId)
                 paraType = metadata.keyframes.parameters[i].paraType
         }
-        //添加首尾关键帧
-        if (!filter.isKeyframeActivate(strParameterId))
-        {
-            var value = ''
-            var position2 = timeline.getCurrentClipLength() - 1//filter.producerOut - filter.producerIn + 1
-            if(paraType === 'rect')
-            {
-                value = filter.getAnimRectValue(position, strParameterId)
-                filter.cache_setKeyFrameParaRectValue(0, strParameterId, value)
-                filter.cache_setKeyFrameParaRectValue(position2, strParameterId, value)
-            }
-            else
-            {
-                value = filter.get(strParameterId)
-                filter.cache_setKeyFrameParaValue(0, strParameterId, value.toString());
-                filter.cache_setKeyFrameParaValue(position2, strParameterId, value.toString());
-            }
-        }
 
-        //插入关键帧     
+        //插入关键帧
         var value ;
         switch(paraType)
         {
@@ -923,60 +987,52 @@ RowLayout{
         currentFrame = timeline.getPositionInCurrentClip()
     }
 
-    // 开启关键帧
-    Connections {
-        target: keyFrameControl
-        onEnableKeyFrameChanged: {
-            updateEnableKeyFrame(bEnable)
-        }
-    }
 
-    // 自动添加关键帧信号，当参数改变时
-    Connections {
-        target: keyFrameControl
-        onAutoAddKeyFrameChanged: {
-            updateAutoSetAsKeyFrame(bEnable)
-        }
-    }
-
-    // 添加关键帧信号
     Connections {
              target: keyFrameControl
+
+             // 添加关键帧信号
              onAddKeyframe: {
                  bKeyFrame = true
                  //syncUIDataToProject()
-                 addKeyFrame(strIdentifierOfParameter, nAnimationType, dAnimationDuration)
+                 addKeyFrame(strIdentifierOfParameter)
              }
-    }
-    // 帧位置改变信号
-    Connections {
-             target: keyFrameControl
+
+             onEnableKeyframe: {
+                addInitialKeyframe(strIdentifierOfParameter, nAnimationType, dAnimationDuration)
+             }
+
+              // 帧位置改变信号
              onFrameChanged: {
                  currentFrame = keyFrameNum
                  bKeyFrame = filter.cache_bKeyFrame(currentFrame)
                  refreshUI()
              }
-    }
 
-    // 移除关键帧信号
-    Connections {
-             target: keyFrameControl
+             // 移除关键帧信号
              onRemoveKeyFrame:
              {
                 bKeyFrame = false
                 var nFrame = keyFrame.getCurrentFrame();
                 filter.removeAnimationKeyFrame(nFrame, strIdentifierOfParameter);
              }
-    }
 
-    // 移除所有关键帧信号
-    Connections {
-             target: keyFrameControl
+             // 移除所有关键帧信号
              onRemoveAllKeyFrame: {
                 bKeyFrame = false
                 filter.removeAllKeyFrame(strIdentifierOfParameter)
                 filter.syncCacheToProject();
                 syncUIDataToProject()
+             }
+
+            // 自动添加关键帧信号，当参数改变时
+             onAutoAddKeyFrameChanged: {
+                 updateAutoSetAsKeyFrame(bEnable)
+             }
+
+             // 开启关键帧
+             onEnableKeyFrameChanged: {
+                 updateEnableKeyFrame(bEnable)
              }
     }
 }
