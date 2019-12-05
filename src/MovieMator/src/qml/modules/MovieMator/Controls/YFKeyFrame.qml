@@ -158,14 +158,14 @@ RowLayout{
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(id.value, parameter.factorFunc).toString())
                     filter.syncCacheToProject()
                 }
-                else if((Math.abs((id.value - parameter.value) / (id.maximumValue - id.minimumValue)) < 0.01) || (Math.abs(id.value - parameter.value) < 1))
-                {
+//                else if((Math.abs((id.value - parameter.value) / (id.maximumValue - id.minimumValue)) < 0.001) || (Math.abs(id.value - parameter.value) < 1))
+//                {
                     
-                }
-                else if((parameter.value > id.value) && (id.value === id.maximumValue))
-                {
-                    valueChange = true
-                }
+//                }
+//                else if((parameter.value > id.value) && (id.value === id.maximumValue))
+//                {
+//                    valueChange = true
+//                }
                 else if(!bEnableKeyFrame)  //没有关键帧
                 {
                     filter.set(parameter.property, calcProjValByUIVal(id.value, parameter.factorFunc))

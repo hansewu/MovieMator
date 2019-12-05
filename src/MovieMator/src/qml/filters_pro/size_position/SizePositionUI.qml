@@ -315,7 +315,6 @@ Item {
 
         YFKeyFrame{
             id: keyFrame
-            Layout.columnSpan:5
             onSyncUIDataToProject:{
                 if(filter.cache_getKeyFrameNumber() <= 0){
                     filter.resetProperty(rectProperty)
