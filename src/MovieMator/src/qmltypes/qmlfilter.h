@@ -532,6 +532,9 @@ public:
     Q_INVOKABLE bool hasPreKeyframeAtPositon(const QString strIdentifierOfParameter, int nFramePosition);
     Q_INVOKABLE bool hasNextKeyframeAtPositon(const QString strIdentifierOfParameter, int nFramePosition);
 
+    Q_INVOKABLE int setInterpolationMethod(const QString strIdentifierOfParameter, int nPositionOfKeyframe,  /*mlt_keyframe_type*/ int mltKeyframeType);
+
+    Q_INVOKABLE int getInterpolationMethod(const QString strIdentifierOfParameter, int nPositionOfKeyframe);
 public slots:
     /** Load a properties preset.
      *

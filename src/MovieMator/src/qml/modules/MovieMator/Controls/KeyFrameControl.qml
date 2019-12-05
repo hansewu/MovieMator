@@ -43,11 +43,65 @@ Rectangle {
     signal removeKeyFrame(string strIdentifierOfParameter)
     signal removeAllKeyFrame(string strIdentifierOfParameter)
     signal frameChanged(string strIdentifierOfParameter, double keyFrameNum)
+    signal keyframeTypeChange(string strIdentifierOfParameter, int nKeyframeType)
 
     signal switchFoldStat(bool bChecked)
     
     property ListModel  m_listModelParameters: ListModel{}
     property string     m_strIdentifierOfParameter: ""
+
+    property ListModel m_listModelInterpolations: ListModel {
+        ListElement {
+            name: qsTr('Linear')
+            keyframetype: 1
+        }
+        ListElement {
+            name: qsTr('Smooth')
+            keyframetype: 2
+        }
+        ListElement {
+            name: qsTr('Cubic Ease In Out')
+            keyframetype: 11
+        }
+        ListElement {
+            name: qsTr('Exponential Ease In Out')
+            keyframetype: 12
+        }
+        ListElement {
+            name: qsTr('Elastic Ease Out')
+            keyframetype: 13
+        }
+        ListElement {
+            name: qsTr('Back Ease In Out')
+            keyframetype: 14
+        }
+        ListElement {
+            name: qsTr('Bounce Ease Out')
+            keyframetype: 15
+        }
+    }
+
+    function refreshKeyframeType(strIdentifierOfParameter)
+    {
+        if (strIdentifierOfParameter === "")
+            return;
+        var position = timeline.getPositionInCurrentClip()
+        if (filter.isKeyframeAtPosition(strIdentifierOfParameter, position))
+        {
+            var keyframeType = filter.getInterpolationMethod(strIdentifierOfParameter, position)
+            var index = -1
+            for (var i = 0; i < m_listModelInterpolations.count; i++ )
+            {
+                if (m_listModelInterpolations.get(i).keyframetype === keyframeType)
+                {
+                    index = i
+                    break
+                }
+            }
+            if (index >= 0)
+                comboboxInterpolation.selectItemOfIndex(index)
+        }
+    }
 
     function refreshKeyframeInfo(strIdentifierOfParameter)
     {
@@ -102,6 +156,7 @@ Rectangle {
         comboboxInterpolation.enabled   = filter.isKeyframeAtPosition(strIdentifierOfParameter, position)
 
         refreshKeyframeInfo(strIdentifierOfParameter)
+        refreshKeyframeType(strIdentifierOfParameter)
     }
 
 
@@ -361,14 +416,13 @@ Rectangle {
                 {
                     id: comboboxInterpolation
                     visible: false
-                    listModel: ListModel{
-                        ListElement {name: qsTr('Linear')}
-                        ListElement {name: qsTr('Cubic')}
-                    }
+                    listModel:m_listModelInterpolations
                     height: 26
 
                     onCurrentIndexChanged:
                     {
+                        if (currentIndex >= 0)
+                            keyframeTypeChange(m_strIdentifierOfParameter, listModel.get(currentIndex).keyframetype)
                     }
                 }
             }
