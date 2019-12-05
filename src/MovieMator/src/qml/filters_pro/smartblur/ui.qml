@@ -34,54 +34,7 @@ Item {
     width: 300
     height: 250
     Component.onCompleted: {
-        // if (filter.isNew) {
-        //     filter.set("av.luma_radius", radiusDefault)
-        //     filter.set("av.chroma_radius", radiusDefault)
-        //     filter.set("av.luma_strength", strengthDefault)
-        //     filter.set("av.chroma_strength", strengthDefault)
-        //     filter.set("av.luma_threshold", thresholdDefault)
-        //     filter.set("av.chroma_threshold", thresholdDefault)
-        //     filter.savePreset(defaultParameters)
-        // }
-
-        var keyFrameCount = filter.getKeyFrameCountOnProject("av.luma_radius");
-        console.log("1......")
-        console.log(keyFrameCount)
-        if(keyFrameCount > 0)
-        {
-            var index=0
-            for(index=0; index<keyFrameCount;index++)
-            {
-                var nFrame = filter.getKeyFrameOnProjectOnIndex(index, "av.luma_radius");
-                var keyValue = filter.getKeyValueOnProjectOnIndex(index, "av.luma_radius");
-                filter.cache_setKeyFrameParaValue(nFrame, "av.luma_radius", keyValue)
-
-                keyValue = filter.getKeyValueOnProjectOnIndex(index, "av.chroma_radius");
-                filter.cache_setKeyFrameParaValue(nFrame, "av.chroma_radius", keyValue)
-
-                keyValue = filter.getKeyValueOnProjectOnIndex(index, "av.luma_strength");
-                filter.cache_setKeyFrameParaValue(nFrame, "av.luma_strength", keyValue)
-
-                keyValue = filter.getKeyValueOnProjectOnIndex(index, "av.chroma_strength");
-                filter.cache_setKeyFrameParaValue(nFrame, "av.chroma_strength", keyValue)
-
-                keyValue = filter.getKeyValueOnProjectOnIndex(index, "av.luma_threshold");
-                filter.cache_setKeyFrameParaValue(nFrame, "av.luma_threshold",  keyValue)
-
-                keyValue = filter.getKeyValueOnProjectOnIndex(index, "av.chroma_threshold");
-                filter.cache_setKeyFrameParaValue(nFrame, "av.chroma_threshold", keyValue)
-            }
-
-            filter.syncCacheToProject();
-
-            radiusSlider.value = filter.getKeyValueOnProjectOnIndex(0, "av.luma_radius")
-            strengthSlider.value = filter.getKeyValueOnProjectOnIndex(0, "av.luma_strength")
-            thresholdSlider.value = filter.getKeyValueOnProjectOnIndex(0, "av.luma_threshold")
-        }
-        else
-        {
-            setControls()
-        }
+        setControls()
     }
 
     function setControls() {
@@ -97,34 +50,6 @@ Item {
         anchors.fill: parent
         anchors.margins: 8
 
-        KeyFrame{
-             id: keyFrame
-             Layout.columnSpan:3
-             onRefreshUI:
-             {
-                 var blurValue = filter.cache_getKeyFrameParaDoubleValue(keyFrameNum, "av.luma_radius");
-                 if(blurValue !== -1.0)
-                 {
-                     radiusSlider.value = blurValue
-                 }
-
-                 blurValue = filter.cache_getKeyFrameParaDoubleValue(keyFrameNum, "av.luma_threshold");
-                 if(blurValue !== -1.0)
-                 {
-                     thresholdSlider.value = blurValue
-
-                 }
-
-                 blurValue = filter.cache_getKeyFrameParaDoubleValue(keyFrameNum, "av.luma_strength");
-                 if(blurValue !== -1.0)
-                 {
-                     strengthSlider.value = blurValue
-
-                 }
-
-
-             }
-         }
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
@@ -149,17 +74,8 @@ Item {
             decimals: 1
             spinnerWidth: 80
             onValueChanged: {
-                if(keyFrame.bKeyFrame)
-                {
-                    var nFrame = keyFrame.getCurrentFrame();
-                    filter.cache_setKeyFrameParaValue(nFrame, "av.luma_radius", value)
-                    filter.cache_setKeyFrameParaValue(nFrame, "av.chroma_radius", value)
-                    filter.syncCacheToProject()
-                }
-                else{
-                    filter.set("av.luma_radius", value)
-                    filter.set("av.chroma_radius", value)
-                }
+                filter.set("av.luma_radius", value)
+                filter.set("av.chroma_radius", value)
             }
         }
         UndoButton {
@@ -179,18 +95,8 @@ Item {
             decimals: 1
             spinnerWidth: 80
             onValueChanged: {
-                if(keyFrame.bKeyFrame)
-                {
-                    var nFrame = keyFrame.getCurrentFrame();
-                    filter.cache_setKeyFrameParaValue(nFrame, "av.luma_radius", value)
-                    filter.cache_setKeyFrameParaValue(nFrame, "av.chroma_radius", value)
-                    filter.syncCacheToProject()
-                }
-                else{
-                    filter.set("av.luma_strength", value)
-                    filter.set("av.chroma_strength", value)
-                }
-                
+                filter.set("av.luma_strength", value)
+                filter.set("av.chroma_strength", value)
             }
         }
         UndoButton {
@@ -210,17 +116,8 @@ Item {
             decimals: 0
             spinnerWidth: 80
             onValueChanged: {
-                if(keyFrame.bKeyFrame)
-                {
-                    var nFrame = keyFrame.getCurrentFrame();
-                    filter.cache_setKeyFrameParaValue(nFrame, "av.luma_threshold", value)
-                    filter.cache_setKeyFrameParaValue(nFrame, "av.chroma_threshold", value)
-                    filter.syncCacheToProject()
-                }
-                else{
-                    filter.set("av.luma_threshold", value)
-                    filter.set("av.chroma_threshold", value)
-                }
+                filter.set("av.luma_threshold", value)
+                filter.set("av.chroma_threshold", value)
             }
         }
         UndoButton {
