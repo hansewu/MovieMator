@@ -50,29 +50,9 @@ Item {
     Component.onCompleted: {
         
         filter.setInAndOut(0, timeline.getCurrentClipParentLength() - 1)
-        //导入上次工程保存的关键帧
-        var metaParamList = metadata.keyframes.parameters
-        /*
-        var keyFrameCount = filter.getKeyFrameCountOnProject(metaParamList[0].property);
-        if(keyFrameCount < 0){
-                keyFrameCount = filter.getKeyFrameCountOnProject(metaParamList[0].property);
-        }
-        for(var keyIndex=0; keyIndex<keyFrameCount;keyIndex++)
-        {
-            var nFrame = filter.getKeyFrameOnProjectOnIndex(keyIndex, metaParamList[0].property)
-            for(var paramIndex=0;paramIndex<metaParamList.length;paramIndex++){
-                var prop = metaParamList[paramIndex].property
-                var keyValue = filter.getAnimRectValue(nFrame, prop)
-                filter.cache_setKeyFrameParaRectValue(nFrame, prop, keyValue)
-            }
-        }
-        filter.syncCacheToProject();
-        */
         if (filter.isNew) {
             filter.set(fillProperty, 1)
             filter.set(distortProperty, 0)
-
-            // loadPresets()
 
             rectTmp.x = 0.0
             rectTmp.y = 0.0
@@ -85,10 +65,7 @@ Item {
             filter.savePreset(preset.parameters)
         }
         setControls()
-
-        // metadata.keyframes.parameters[0].value = rectTmp
-
-        keyFrame.initFilter()
+        keyFrame.initFilter(layoutRoot)
     }
            
         
@@ -329,13 +306,14 @@ Item {
     ExclusiveGroup { id: valignGroup }
 
     GridLayout {
+        id: layoutRoot
         columns: 5
         rowSpacing: 13
         columnSpacing: 20
         anchors.fill: parent
         anchors.margins: 18
 
-        KeyFrame{
+        YFKeyFrame{
             id: keyFrame
             Layout.columnSpan:5
             onSyncUIDataToProject:{
@@ -343,34 +321,13 @@ Item {
                     filter.resetProperty(rectProperty)
                     filter.set(rectProperty, rectOld)
                 }
-                else
-                {   
-                    
-                }
-            }
-            onSetAsKeyFrame:{
-                var nFrame = keyFrame.getCurrentFrame()
-                //saveValues()
-            
-                //var rectValue = filter.getRect(rectProperty)
-                var rectValue = filter.getAnimRectValue(nFrame, rectProperty)
-                if (filter.cache_getKeyFrameNumber() <= 0)
-                {
-                    var position2 = (timeline.getCurrentClipLength() - 1) //filter.producerOut - filter.producerIn + 1
-                    filter.cache_setKeyFrameParaRectValue(0, rectProperty, rectValue)
-                    filter.cache_setKeyFrameParaRectValue(position2, rectProperty, rectValue,1.0)
-                    //filter.syncCacheToProject();
-                }
-                filter.cache_setKeyFrameParaRectValue(nFrame, rectProperty, rectValue,1.0)
-                //filter.syncCacheToProject();
-
-                setControls()
             }
             onRefreshUI:
             {   
                 var nFrame = keyFrame.getCurrentFrame()
-                var rect = filter.getAnimRectValue(keyFrameNum, rectProperty)
-                rectOld  = filter.getAnimRectValue(keyFrameNum, rectProperty)
+                var rect = filter.getAnimRectValue(nFrame, rectProperty)
+                rectOld  = filter.getAnimRectValue(nFrame, rectProperty)
+
                 filterRect.x = rect.x
                 filterRect.y = rect.y
                 filterRect.width = rect.width
@@ -379,7 +336,6 @@ Item {
                 metadata.keyframes.parameters[0].value = 'X'+ rect.x +'Y'+rect.y+'W'+rect.width+'H'+rect.height 
 
                 setControls()
-    
             }
         }
 
