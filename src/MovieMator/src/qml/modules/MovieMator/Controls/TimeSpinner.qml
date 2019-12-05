@@ -39,6 +39,7 @@ RowLayout {
         Keys.onDownPressed: decrementAction.trigger()
         Keys.onUpPressed: incrementAction.trigger()
         onFocusChanged: if (focus) selectAll()
+        textColor: "#b9b9b9"
     }
 
     DeleteButton {

@@ -45,6 +45,8 @@ Item {
     width: 350
     height: 250
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     Component.onCompleted: {
         
         filter.setInAndOut(0, timeline.getCurrentClipParentLength() - 1)
@@ -384,7 +386,7 @@ Item {
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             id: preset
@@ -402,7 +404,7 @@ Item {
         Label {
             text: qsTr('Size mode')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
        
         RadioButton {
@@ -426,8 +428,14 @@ Item {
         }
         RadioButton {
             id: fillRadioButton
-            text: qsTr('Fill')
+//            text: qsTr('Fill')
             exclusiveGroup: sizeGroup
+            style: RadioButtonStyle {
+                label: Label {
+                    text: qsTr('Fill')
+                    color: activePalette.text
+                }
+            }
             onClicked: {
                 if(filter.cache_getKeyFrameNumber() > 0){
                     sizeKeyFrameWarning.visible = true
@@ -440,8 +448,14 @@ Item {
         }
         RadioButton {
             id: distortRadioButton
-            text: qsTr('Distort')
+//            text: qsTr('Distort')
             exclusiveGroup: sizeGroup
+            style: RadioButtonStyle {
+                label: Label {
+                    text: qsTr('Distort')
+                    color: activePalette.text
+                }
+            }
             onClicked: {
                 if(filter.cache_getKeyFrameNumber() > 0){
                     sizeKeyFrameWarning.visible = true
@@ -459,7 +473,7 @@ Item {
         Label {
             text: qsTr('Position')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             visible: false
         }
         RowLayout {
@@ -473,7 +487,7 @@ Item {
             }
             Label { 
                 text: ',' 
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
             TextField {
                 id: rectY
@@ -485,7 +499,7 @@ Item {
         Label {
             text: qsTr('Size')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             visible: false
         }
         RowLayout {
@@ -500,7 +514,7 @@ Item {
             }
             Label { 
                 text: 'x' 
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
             TextField {
                 id: rectH

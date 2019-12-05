@@ -25,6 +25,7 @@ import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import MovieMator.Controls 1.0
 import QtQuick.Dialogs 1.1
+import QtQuick.Controls.Styles 1.4
 
 Item {
     property string rectProperty: 'geometry'
@@ -804,11 +805,13 @@ Item {
     ExclusiveGroup { id: halignGroup }
     ExclusiveGroup { id: valignGroup }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     GridLayout {
         id: idGridLayoutPreset
         width:parent.width 
         columns: 5
-        rows:2
+        rows:3
        // anchors.fill: parent
         Layout.fillWidth: true 
         anchors.margins: 8
@@ -859,14 +862,15 @@ Item {
         Label {
             text: qsTr('Text')
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             font.bold:true
-	    font.pointSize:10
+            font.pointSize:13
         }
         TextArea {
             id: textArea
             Layout.columnSpan: 3
             textFormat: TextEdit.PlainText
+            textColor: "#b9b9b9"//activePalette.text
             // 消除 warning：
             // ScrollView.qml: QML : Possible anchor loop detected on fill.
             // If you set a width, consider using TextEdit.Wrap.
@@ -887,15 +891,17 @@ Item {
                 filter.set('argument', text)
             }
         }
-/*
-        Label {
-            text: qsTr('Insert field')
-            Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
-        }*/
+        Label{}//占位符
+        Label{}//占位符
+
+//        Label {
+//            text: qsTr('Insert')
+//            Layout.alignment: Qt.AlignLeft
+//            color: activePalette.text//'#ffffff'
+//        }
         MyComboBox {
             id: insertFieldCombo
-            Layout.columnSpan: 1
+            Layout.columnSpan: 3
             width: 100
             height: 32
             Layout.minimumHeight: 32
@@ -921,13 +927,14 @@ Item {
                 textArea.insert(textArea.cursorPosition, values[currentIndex])
             }
         }
+        Label{}//占位符
 
         Label {
             text: qsTr('Style')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             font.bold:true
-            font.pointSize:10
+            font.pointSize:13
             //font.underline:true
 
         }
@@ -967,6 +974,19 @@ Item {
             tooltip: qsTr('detail')
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
+            style: ButtonStyle {
+                background: Rectangle {
+                    border.color: activePalette.text
+                    implicitWidth: 80
+                    implicitHeight: 20
+                    border.width: control.activeFocus ? 2 : 1
+                    color: activePalette.text
+                }
+                label: Label {
+                    text: detailButton1.text//qsTr('Style >')
+                    color: "#b9b9b9"
+                }
+            }
             onClicked: 
             {
 	    	    if(idGridLayoutText.visible == false)
@@ -1019,7 +1039,7 @@ Item {
         {
             text: qsTr('Font')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         RowLayout {
             Layout.columnSpan: 4
@@ -1094,7 +1114,7 @@ Item {
         {
             text: qsTr('Shear X')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             Layout.columnSpan: 3
@@ -1120,9 +1140,9 @@ Item {
         Label {
             text: qsTr('Letter Spaceing')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SpinBox {
+        MySpinBox {
             id: letterSpaceing
             Layout.minimumWidth: preset.width
             Layout.maximumWidth: preset.width
@@ -1140,7 +1160,7 @@ Item {
         Label {
             text: qsTr('Outline')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         ColorPicker {
             id: outlineColor
@@ -1160,9 +1180,9 @@ Item {
         Label {
             text: qsTr('Thickness')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SpinBox {
+        MySpinBox {
             id: outlineSpinner
             Layout.minimumWidth: 150
             Layout.maximumWidth: 150
@@ -1180,7 +1200,7 @@ Item {
         Label {
             text: qsTr('Background')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         ColorPicker {
             id: bgColor
@@ -1201,9 +1221,9 @@ Item {
         Label {
             text: qsTr('Padding')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SpinBox {
+        MySpinBox {
             id: padSpinner
             Layout.minimumWidth: 150
             Layout.maximumWidth: 150
@@ -1222,15 +1242,15 @@ Item {
         {
             text: qsTr('Shadow')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Label 
         {
             text: qsTr('Distance')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SpinBox 
+        MySpinBox
         {
             id: idShadowDistance
             Layout.minimumWidth: preset.width/4
@@ -1250,9 +1270,9 @@ Item {
         {
             text: qsTr('Angle')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SpinBox 
+        MySpinBox
         {
             id: idShadowAngle
             Layout.minimumWidth: preset.width/4
@@ -1272,13 +1292,13 @@ Item {
         {
             text: qsTr('')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Label 
         {
             text: qsTr('Color')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
 
         ColorPicker 
@@ -1304,9 +1324,9 @@ Item {
         {
             text: qsTr('Blur')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SpinBox 
+        MySpinBox
         {
             id: idShadowRadius
             Layout.minimumWidth: preset.width/4
@@ -1328,7 +1348,7 @@ Item {
         {
             text: qsTr('Glow')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         CheckBox {
             id: idGlowEnable
@@ -1369,9 +1389,9 @@ Item {
         {
             text: qsTr('Range')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SpinBox 
+        MySpinBox
         {
             id: idGlowRadius
             Layout.minimumWidth: preset.width/4
@@ -1397,7 +1417,7 @@ Item {
         Label {
             text: qsTr('Position')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         RowLayout {
             Layout.columnSpan: 4
@@ -1408,10 +1428,11 @@ Item {
                 Layout.maximumWidth: (preset.width - 8) / 2 - 10
                 horizontalAlignment: Qt.AlignRight
                 onEditingFinished: setFilter()
+                textColor: "#b9b9b9"
             }
             Label {
                 text: ','
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
             TextField {
                 id: rectY
@@ -1420,12 +1441,13 @@ Item {
                 Layout.maximumWidth: (preset.width - 8) / 2 - 10
                 horizontalAlignment: Qt.AlignRight
                 onEditingFinished: setFilter()
+                textColor: "#b9b9b9"
             }
         }
         Label {
             text: qsTr('Size')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         RowLayout {
             Layout.columnSpan: 4
@@ -1436,10 +1458,11 @@ Item {
                 Layout.maximumWidth: (preset.width - 8) / 2 - 10
                 horizontalAlignment: Qt.AlignRight
                 onEditingFinished: setFilter()
+                textColor: "#b9b9b9"
             }
             Label {
                 text: 'x'
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
             TextField {
                 id: rectH
@@ -1448,13 +1471,14 @@ Item {
                 Layout.maximumWidth: (preset.width - 8) / 2 - 10
                 horizontalAlignment: Qt.AlignRight
                 onEditingFinished: setFilter()
+                textColor: "#b9b9b9"
             }
         }
 
         Label {
             text: qsTr('X fit')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         RadioButton {
             id: leftRadioButton
@@ -1488,7 +1512,7 @@ Item {
         Label {
             text: qsTr('Vertical fit')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         RadioButton {
             id: topRadioButton
@@ -1544,9 +1568,9 @@ Item {
         Label {
             text: qsTr('Animation')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             font.bold:true
-	    font.pointSize:10
+            font.pointSize:13
         }
         Preset 
         {
@@ -1581,6 +1605,19 @@ Item {
             tooltip: qsTr('detail')
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
+            style: ButtonStyle {
+                background: Rectangle {
+                    border.color: activePalette.text
+                    implicitWidth: 80
+                    implicitHeight: 20
+                    border.width: control.activeFocus ? 2 : 1
+                    color: activePalette.text
+                }
+                label: Label {
+                    text: detailButtonAnimation.text//qsTr('Style >')
+                    color: "#b9b9b9"
+                }
+            }
             onClicked: 
             {
 	    	    if(idGridLayoutAnimation.visible == false)
@@ -1626,7 +1663,7 @@ Item {
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
             text: qsTr('Rotation')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             Layout.columnSpan: 3
@@ -1650,7 +1687,7 @@ Item {
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
             text: qsTr('Scale')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             Layout.columnSpan: 3
@@ -1680,7 +1717,7 @@ Item {
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
             text: qsTr('Aspect')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner 
         {
@@ -1707,7 +1744,7 @@ Item {
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
             text: qsTr('X offset')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         
         SliderSpinner {
@@ -1731,7 +1768,7 @@ Item {
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
             text: qsTr('Y offset')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             Layout.columnSpan: 3
@@ -1757,7 +1794,7 @@ Item {
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
             text: qsTr('Transparent')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner 
         {

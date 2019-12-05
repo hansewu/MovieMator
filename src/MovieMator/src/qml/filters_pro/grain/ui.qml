@@ -32,6 +32,8 @@ Item {
         keyFrame.initFilter(layoutRoot)
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     function setControls() {
         var keyFrameCount = filter.getKeyFrameCountOnProject("noise");
         if(keyFrameCount > 0)
@@ -78,7 +80,7 @@ Item {
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             id: preset
@@ -90,7 +92,7 @@ Item {
         Label {
             text: qsTr('Noise')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'noiseSlider'
@@ -110,7 +112,7 @@ Item {
         Label {
             text: qsTr('Brightness')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'brightnessSlider'

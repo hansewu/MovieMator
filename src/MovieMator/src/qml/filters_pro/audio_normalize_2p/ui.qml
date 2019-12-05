@@ -43,6 +43,8 @@ Item {
         }
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     Connections {
         target: filter
         onAnalyzeFinished: {
@@ -58,7 +60,7 @@ Item {
         RowLayout {
             Label {
                 text: qsTr('Target Loudness')
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
             SliderSpinner {
                 id: programSlider
@@ -87,6 +89,7 @@ Item {
             }
             Label {
                 id: status
+                color: activePalette.text//'#ffffff'
                 Component.onCompleted: {
                     setStatus(false)
                 }

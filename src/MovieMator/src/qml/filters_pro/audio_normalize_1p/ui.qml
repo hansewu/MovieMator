@@ -79,7 +79,7 @@ Item {
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             id: preset
@@ -91,7 +91,7 @@ Item {
         Label {
             text: qsTr('Target Loudness')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The target loudness of the output in LUFS.')}
         }
         SliderSpinner {
@@ -111,7 +111,7 @@ Item {
         Label {
             text: qsTr('Analysis Window')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The amount of history to use to calculate the input loudness.')}
         }
         SliderSpinner {
@@ -131,7 +131,7 @@ Item {
         Label {
             text: qsTr('Maximum Gain')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The maximum that the gain can be increased.')}
         }
         SliderSpinner {
@@ -151,7 +151,7 @@ Item {
         Label {
             text: qsTr('Minimum Gain')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The maximum that the gain can be decreased.')}
         }
         SliderSpinner {
@@ -171,7 +171,7 @@ Item {
         Label {
             text: qsTr('Maximum Rate')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The maximum rate that the gain can be changed.')}
         }
         SliderSpinner {
@@ -249,7 +249,7 @@ Item {
         Label {
             text: qsTr('Input Loudness')
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('Status indicator showing the loudness measured on the input.')}
         }
         Gauge {
@@ -268,7 +268,7 @@ Item {
         Label {
             text: qsTr('Output Gain')
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('Status indicator showing the gain being applied.')}
         }
         Gauge {
@@ -286,7 +286,7 @@ Item {
         Label {
             text: qsTr('Reset')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('Status indicator showing when the loudness measurement is reset.')}
         }
         StatusIndicator {

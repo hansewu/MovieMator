@@ -90,6 +90,8 @@ Item {
         thresholdSlider.value = filter.getDouble("av.luma_threshold")
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     GridLayout {
         columns: 3
         anchors.fill: parent
@@ -126,7 +128,7 @@ Item {
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             id: presetItem
@@ -138,7 +140,7 @@ Item {
             text: qsTr('Blur Radius')
             Layout.alignment: Qt.AlignRight
             ToolTip {text: qsTr('The radius of the gaussian blur.')}
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: radiusSlider
@@ -168,7 +170,7 @@ Item {
             text: qsTr('Blur Strength')
             Layout.alignment: Qt.AlignRight
             ToolTip {text: qsTr('The strength of the gaussian blur.')}
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: strengthSlider
@@ -198,7 +200,7 @@ Item {
         Label {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('If the difference between the original pixel and the blurred pixel is less than threshold, the pixel will be replaced with the blurred pixel.')}
         }
         SliderSpinner {

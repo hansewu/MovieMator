@@ -36,6 +36,8 @@ Item {
         sliderWetness.value = filter.getDouble('wetness') * sliderWetness.maximumValue
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     GridLayout {
         anchors.fill: parent
         anchors.margins: 8
@@ -44,7 +46,7 @@ Item {
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             id: preset
@@ -56,7 +58,7 @@ Item {
         Label {
             text: qsTr('Delay')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The neutral delay time is 2 seconds. Times above 2 seconds will have reduced quality and times below will have increased CPU usage.')}
         }
         SliderSpinner {
@@ -78,7 +80,7 @@ Item {
         Label {
             text: qsTr('Feedback')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: sliderFeedback
@@ -99,7 +101,7 @@ Item {
         Label {
             text: qsTr('Dry')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: sliderWetness

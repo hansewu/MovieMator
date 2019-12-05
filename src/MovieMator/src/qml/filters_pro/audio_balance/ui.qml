@@ -32,6 +32,8 @@ Item {
 
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 8
@@ -39,7 +41,7 @@ Item {
         RowLayout {
             Label {
                 text: qsTr('Left')
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
             SliderSpinner {
                 id: slider

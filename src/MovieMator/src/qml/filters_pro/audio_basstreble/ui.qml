@@ -58,7 +58,7 @@ Item {
 
     Label {
         text: '+12 dB'
-        color: '#ffffff'
+        color: activePalette.text//'#ffffff'
         font.pointSize: bassLabel.font.pointSize - 1
         anchors {
             right: topLine.left
@@ -100,7 +100,7 @@ Item {
 
     Label {
         text: '0 dB'
-        color: '#ffffff'
+        color: activePalette.text//'#ffffff'
         font.pointSize: bassLabel.font.pointSize - 1
         anchors {
             right: zeroLine.left
@@ -142,7 +142,7 @@ Item {
 
     Label {
         text: '-12 dB'
-        color: '#ffffff'
+        color: activePalette.text//'#ffffff'
         font.pointSize: bassLabel.font.pointSize - 1
         anchors {
             right: bottomLine.left
@@ -165,7 +165,7 @@ Item {
             Label {
                 text: qsTr('Preset')
                 Layout.alignment: Qt.AlignRight
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
             Preset {
                 id: preset
@@ -198,7 +198,7 @@ Item {
                 id: bassLabel
                 text: qsTr('Bass')
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: '#ffffff'
+                color: activePalette//'#ffffff'
             }
         }
 
@@ -220,7 +220,7 @@ Item {
             Label {
                 text: qsTr('Middle')
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
         }
 
@@ -242,7 +242,7 @@ Item {
             Label {
                 text: qsTr('Treble')
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
         }
 

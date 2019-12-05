@@ -35,10 +35,12 @@ Item {
         anchors.fill: parent
         anchors.margins: 8
 
+        SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
         Label {
             text: qsTr('Channel')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
 //        ComboBox {
 //            id: combo
@@ -60,7 +62,7 @@ Item {
         Label {
             text: qsTr('Left')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: slider

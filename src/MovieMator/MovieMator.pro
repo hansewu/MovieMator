@@ -19,3 +19,6 @@ src.depends = CuteLogger CommonUtil QmlUtilities MltController Breakpad Resource
 TRANSLATIONS += \
      ./translations/mm_en.ts \
      ./translations/mm_zh.ts
+
+DISTFILES += \
+    src/qml/modules/MovieMator/Controls/MySpinBox.qml

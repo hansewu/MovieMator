@@ -61,7 +61,7 @@ Rectangle {
         attachedFilters.reLoadFilter()
     }
 
-    color: '#353535'//activePalette.window
+    color: '#1a1e22'//activePalette.window
     width: 400
 
     onWidthChanged: _setLayout()
@@ -105,7 +105,7 @@ Rectangle {
         id: attachedContainer
         columns: 3
         // width: titleBackground.width
-        height: 72
+        height: 80
         anchors {
             top: parent.top
             topMargin: 2
@@ -119,7 +119,7 @@ Rectangle {
             anchors.fill: parent
             AttachedFilters {
                 id: attachedFilters
-                color:'#2e2e2e'
+                color:'#1a1e22'
                 Layout.columnSpan: 3
                 height:parent.height
                 isvideo:isVideo
@@ -208,64 +208,74 @@ Rectangle {
         }
     }
 
-    //动态滤镜参数界面
-    ScrollView {
-        id: filterConfigScrollView
+    Rectangle{
+        color: "#15191d"
         anchors {
             top: attachedContainer.bottom
             bottom: keyFrameControlContainer.top
-            bottomMargin:10
-            left: root.left
-            right: root.right
+            left: parent.left
+            right: parent.right
         }
-        style: ScrollViewStyle {
-                transientScrollBars: false
-              //  scrollToClickedPosition:true
-                handle: Item {
-                    implicitWidth: 14
-                    implicitHeight: 14
-                    Rectangle {
-                        color: "#787878"
-                        anchors.fill: parent
-                        anchors.margins: 3
-                        radius: 4
+
+        //动态滤镜参数界面
+        ScrollView {
+            id: filterConfigScrollView
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+//                bottomMargin:10
+                left: parent.left
+                right: parent.right
+            }
+            style: ScrollViewStyle {
+                    transientScrollBars: false
+                  //  scrollToClickedPosition:true
+                    handle: Item {
+                        implicitWidth: 14
+                        implicitHeight: 14
+                        Rectangle {
+                            color: "#4e5156"
+                            anchors.fill: parent
+                            anchors.margins: 3
+                            radius: 4
+                        }
+                    }
+                    scrollBarBackground: Item {
+                        implicitWidth: 14
+                        implicitHeight: 14
+                    }
+                    decrementControl: Rectangle {
+                                implicitWidth: 0
+                                implicitHeight: 0
+                    }
+                    incrementControl: Rectangle {
+                                implicitWidth: 0
+                                implicitHeight: 0
+                    }
+                    corner: Item {
+                        implicitWidth: 14
+                        implicitHeight: 14
                     }
                 }
-                scrollBarBackground: Item {
-                    implicitWidth: 14
-                    implicitHeight: 14
-                }
-                decrementControl: Rectangle {
-                            implicitWidth: 0
-                            implicitHeight: 0
-                }
-                incrementControl: Rectangle {
-                            implicitWidth: 0
-                            implicitHeight: 0
-                }
-                corner: Item {
-                    implicitWidth: 14
-                    implicitHeight: 14
+
+            //根据动态滤镜参数调节参数界面宽
+            function expandWidth() {
+
+                if (filterConfig.item) {
+                    filterConfig.item.width =
+                        Math.max(filterConfig.minimumWidth,
+                                 filterConfigScrollView.width /* scroll bar */)
                 }
             }
-
-        //根据动态滤镜参数调节参数界面宽
-        function expandWidth() {
-
-            if (filterConfig.item) {
-                filterConfig.item.width =
-                    Math.max(filterConfig.minimumWidth,
-                             filterConfigScrollView.width /* scroll bar */)
-            }
-        }
-        onWidthChanged: expandWidth()
-        //动态加载滤镜参数界面qml的加载器
-        Loader {
-            id: filterConfig
-            property int minimumWidth: 0
-            onLoaded: {
-                minimumWidth = item.width
-                filterConfigScrollView.expandWidth()
+            onWidthChanged: expandWidth()
+            //动态加载滤镜参数界面qml的加载器
+            Loader {
+                id: filterConfig
+                property int minimumWidth: 0
+                onLoaded: {
+                    minimumWidth = item.width
+                    filterConfigScrollView.expandWidth()
+                }
             }
         }
     }

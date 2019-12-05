@@ -100,6 +100,8 @@ Item {
         filter.setInAndOut(0, timeline.getCurrentClipParentLength()-1)
         keyFrame.initFilter(layoutRoot)
     }
+
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
     
     Component.onCompleted: {
         // 根据参数计算参数控件容器的高度

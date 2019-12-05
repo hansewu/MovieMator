@@ -31,7 +31,7 @@ Rectangle {
     color: "#525252"
     border.color: 'gray'
     width: 100
-    height: 32
+    height: 20
 
     function selectItemOfIndex(index) {
         if (listModel.count > 0) {

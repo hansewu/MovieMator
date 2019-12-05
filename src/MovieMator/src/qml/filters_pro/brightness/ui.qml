@@ -67,6 +67,8 @@ Item {
 
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     Component.onCompleted: {
         keyFrame.initFilter(layoutRoot)
         //testSetAnimationValueAndSetValue()
@@ -91,7 +93,7 @@ Item {
         Label {
             text: qsTr('Brightness') + "    "
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'brightnessSlider'

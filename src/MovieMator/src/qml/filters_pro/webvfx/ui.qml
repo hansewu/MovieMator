@@ -145,12 +145,12 @@ Item {
         // Row 1
         Label {
             text: qsTr('<b>File:</b>')
-            color:'#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Label {
             id: fileLabel
             Layout.columnSpan: 3
-            color:'#ffffff'
+            color: activePalette.text//'#ffffff'
             MovieMator.ToolTip { id: fileLabelTip }
         }
 
@@ -167,7 +167,7 @@ Item {
 
             style: CheckBoxStyle {
                         label: Text {
-                            color: "white"
+                            color: activePalette.text//"white"
                             text: qsTr('Use WebVfx JavaScript extension')
                         }
             }

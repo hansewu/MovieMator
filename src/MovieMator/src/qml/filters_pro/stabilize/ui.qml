@@ -36,6 +36,8 @@ Item {
         keyFrame.initFilter(layoutRoot)
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     function hasAnalysisCompleted() {
             return (filter.get("results").length > 0 &&
                     filter.get("filename").indexOf(filter.get("results")) !== -1)
@@ -132,14 +134,14 @@ Item {
         Label {
             text: qsTr('<b>Analyze Options</b>')
             Layout.columnSpan: 3
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             font.pixelSize: 15
         }
 
         Label {
             text: qsTr('Shakiness')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'shakinessSlider'
@@ -161,7 +163,7 @@ Item {
         Label {
             text: qsTr('Accuracy')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'accuracySlider'
@@ -187,7 +189,7 @@ Item {
         Label {
             text: qsTr('<b>Filter Options</b>')
             Layout.columnSpan: 3
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             font.pixelSize: 15
         }
 
@@ -230,7 +232,7 @@ Item {
         Label {
             id: status
             Layout.columnSpan: 2
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             Component.onCompleted: {
                 setStatus(false)
             }

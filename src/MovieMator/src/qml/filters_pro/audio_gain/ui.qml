@@ -42,6 +42,8 @@ Item {
         return Math.pow(10, value / 20);
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 8
@@ -49,7 +51,7 @@ Item {
         RowLayout {
             Label {
                 text: qsTr('Gain')
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
             SliderSpinner {
                 id: slider

@@ -3084,7 +3084,7 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::HighlightedText, Qt::white);
         palette.setColor(QPalette::ToolTipBase, QColor(203,203,203));
         palette.setColor(QPalette::ToolTipText, Qt::black);
-        palette.setColor(QPalette::Text, palette.color(QPalette::WindowText));
+        palette.setColor(QPalette::Text, QColor(99,100,101)/*palette.color(QPalette::WindowText)*/);
         palette.setColor(QPalette::BrightText, Qt::red);
         palette.setColor(QPalette::Button, QColor(82,82,82));
         palette.setColor(QPalette::ButtonText, palette.color(QPalette::WindowText));

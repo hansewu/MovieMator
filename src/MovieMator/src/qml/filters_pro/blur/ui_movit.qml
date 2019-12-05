@@ -33,6 +33,8 @@ Item {
         keyFrame.initFilter(layoutRoot)
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     ColumnLayout {
         id: layoutRoot
         anchors.fill: parent
@@ -52,7 +54,7 @@ Item {
         RowLayout {
             Label {
                 text: qsTr('Radius')
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
             SliderSpinner {
                 objectName: 'slider'

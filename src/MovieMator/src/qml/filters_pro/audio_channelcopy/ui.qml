@@ -32,13 +32,15 @@ Item {
 
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 8
 
         RowLayout {
             Label { text: qsTr('Copy from')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             }
 //            ComboBox {
 //                id: combo

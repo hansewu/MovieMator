@@ -107,6 +107,8 @@ Item {
         keyFrame.initFilter(layoutRoot)
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     GridLayout {
         id: layoutRoot
         columns: 6
@@ -128,7 +130,7 @@ Item {
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             Layout.columnSpan: 5
@@ -146,7 +148,7 @@ Item {
         // Row 2
         Label {
             text: qsTr('Shadows')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
 
         }
         UndoButton {
@@ -155,7 +157,7 @@ Item {
         }
         Label {
             text: qsTr('Midtones')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
 
         }
         UndoButton {
@@ -164,7 +166,7 @@ Item {
         }
         Label {
             text: qsTr('Highlights')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         UndoButton {
             Layout.alignment: Qt.AlignCenter
