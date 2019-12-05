@@ -1034,6 +1034,13 @@ RowLayout{
              onEnableKeyFrameChanged: {
                  updateEnableKeyFrame(bEnable)
              }
+
+             onKeyframeTypeChange: {
+                 var nPosition = timeline.getPositionInCurrentClip()
+                 if (nPosition < 0) return
+
+                 filter.setInterpolationMethod(strIdentifierOfParameter, nPosition, nKeyframeType)
+             }
     }
 }
 

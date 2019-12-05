@@ -1286,7 +1286,7 @@ int QmlFilter::cache_getKeyFrameNumber(QString propertyName)
 //    int nCount1 = m_cacheKeyFrameList.count();
 //    return nCount1;
 
-    if (propertyName == nullptr) propertyName = getAnyAnimPropertyName();
+    //if (propertyName == nullptr) propertyName = getAnyAnimPropertyName();
     if (propertyName == nullptr) return -2;
 
     int nCount = getKeyFrameCountOnProject(propertyName);
@@ -1374,8 +1374,6 @@ void QmlFilter::emitEditKeyframeOfParameter(const QString strIdentifierOfParamet
 
 bool QmlFilter::isKeyframeActivate(const QString strIdentifierOfParameter)
 {
-
-    Q_ASSERT(!strIdentifierOfParameter.isEmpty());
     if (strIdentifierOfParameter.isEmpty())
         return false;
 
@@ -1436,6 +1434,79 @@ bool QmlFilter::hasNextKeyframeAtPositon(const QString strIdentifierOfParameter,
     }
 
     return false;
+}
+
+int QmlFilter::setInterpolationMethod(const QString strIdentifierOfParameter, int nPositionOfKeyframe,  /*mlt_keyframe_type*/ int mltKeyframeType)
+{
+    int nResult = -1;
+    if (strIdentifierOfParameter.isEmpty())
+        return nResult;
+
+    if (nPositionOfKeyframe < 0)
+        return nResult;
+
+    if (m_filter)
+    {
+        Mlt::Animation mltAnimation = getAnimation(strIdentifierOfParameter);
+        if (!mltAnimation.is_key(nPositionOfKeyframe))
+            return nResult;
+
+        int nKeyframeIndex = -1;
+        int nKeyframeCount = mltAnimation.key_count();
+        for (int i = 0; i < nKeyframeCount; i++)
+        {
+            int nFrame = mltAnimation.key_get_frame(i);
+            if (nFrame == nPositionOfKeyframe)
+            {
+                nKeyframeIndex = i;
+                break;
+            }
+        }
+
+        if (nKeyframeIndex < 0)
+            return nResult;
+
+        nResult = 0;
+        mltAnimation.key_set_type(nKeyframeIndex, (mlt_keyframe_type)mltKeyframeType);
+    }
+
+    return nResult;
+}
+
+int QmlFilter::getInterpolationMethod(const QString strIdentifierOfParameter, int nPositionOfKeyframe)
+{
+    int nType = -1;
+    if (strIdentifierOfParameter.isEmpty())
+        return nType;
+
+    if (nPositionOfKeyframe < 0)
+        return nType;
+
+    if (m_filter)
+    {
+        Mlt::Animation mltAnimation = getAnimation(strIdentifierOfParameter);
+        if (!mltAnimation.is_key(nPositionOfKeyframe))
+            return nType;
+
+        int nKeyframeIndex = -1;
+        int nKeyframeCount = mltAnimation.key_count();
+        for (int i = 0; i < nKeyframeCount; i++)
+        {
+            int nFrame = mltAnimation.key_get_frame(i);
+            if (nFrame == nPositionOfKeyframe)
+            {
+                nKeyframeIndex = i;
+                break;
+            }
+        }
+
+        if (nKeyframeIndex < 0)
+            return nType;
+
+        nType = mltAnimation.key_get_type(nKeyframeIndex);
+    }
+
+    return nType;
 }
 
 //#endif
