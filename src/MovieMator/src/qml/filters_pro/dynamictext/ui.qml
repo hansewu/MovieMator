@@ -817,48 +817,6 @@ Item {
         anchors.margins: 8
         rowSpacing : 25
 
-//        KeyFrame{
-//            id: keyFrame
-//            Layout.columnSpan:5
-//            onRefreshUI:{
-//                setControls()
-//                setKeyframedControls()
-//            }
-//        }
-
-//        Label {
-//            text: qsTr('Preset')
-//            Layout.alignment: Qt.AlignLeft
-//            color: '#ffffff'
-//        }
-//        Preset {
-//            id: preset
-//            Layout.columnSpan: 4
-//            parameters: [rectProperty, 'shear_x', halignProperty, valignProperty, 'size', //'argument',
-//            fgcolourProperty, 'family', 'weight', olcolourProperty, outlineProperty, bgcolourProperty, padProperty, letterSpaceingProperty,
-//            'shadow_distance', 'shadow_angle']
-          
-//            m_strType: "tst"
-//            onBeforePresetLoaded:
-//            {
-//                //removeAllKeyFrame()
-              
-//                //resetFilterPara()
-//            }
-//            onPresetSelected: {
-//                //加載關鍵幀
-//                loadSavedKeyFrameNew()
-
-//                //更新界面
-//                setControls()
-//                setKeyframedControls()
-
-//                if (filter.isNew) {
-//                    filter.set('size', filterRect.height)
-//                }
-//            }
-//        }
-
         Label {
             text: qsTr('Text')
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
