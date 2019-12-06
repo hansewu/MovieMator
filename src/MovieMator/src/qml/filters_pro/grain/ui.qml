@@ -38,19 +38,6 @@ Item {
         var keyFrameCount = filter.getKeyFrameCountOnProject("noise");
         if(keyFrameCount > 0)
         {
-            var index=0
-            for(index=0; index<keyFrameCount;index++)
-            {
-                var nFrame = filter.getKeyFrameOnProjectOnIndex(index, "noise");
-                var keyValue = filter.getKeyValueOnProjectOnIndex(index, "noise");
-
-                filter.cache_setKeyFrameParaValue(nFrame, "noise", keyValue)
-
-                keyValue = filter.getKeyValueOnProjectOnIndex(index, "brightness");
-                filter.cache_setKeyFrameParaValue(nFrame, "brightness", keyValue)
-            }
-
-            filter.syncCacheToProject();
             noiseSlider.value = filter.getKeyValueOnProjectOnIndex(0, "noise")
             brightnessSlider.value = filter.getKeyValueOnProjectOnIndex(0, "brightness")
         }
