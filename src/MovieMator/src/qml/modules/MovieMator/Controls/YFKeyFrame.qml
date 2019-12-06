@@ -1020,9 +1020,9 @@ RowLayout{
              }
 
             // 自动添加关键帧信号，当参数改变时
-             onAutoAddKeyFrameChanged: {
-                 updateAutoSetAsKeyFrame(bEnable)
-             }
+            //onAutoAddKeyFrameChanged: {
+            //    updateAutoSetAsKeyFrame(bEnable)
+            //}
 
              // 开启关键帧
              onEnableKeyFrameChanged: {
