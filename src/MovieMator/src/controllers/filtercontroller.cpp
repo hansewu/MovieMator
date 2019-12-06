@@ -707,7 +707,6 @@ void FilterController::insertKeyFrame(Mlt::Filter *filter, const QVector<key_fra
             iter++;
         }
     }
-    qmlFilter->syncCacheToProject();
 }
 
 void FilterController::removeKeyFrame(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame)
@@ -732,7 +731,6 @@ void FilterController::removeKeyFrame(Mlt::Filter *filter, const QVector<key_fra
             iter++;
         }
     }
-    qmlFilter->syncCacheToProject();
 }
 
 void FilterController::updateKeyFrame(Mlt::Filter *filter, int nFrame, QString name, QString value)
@@ -747,7 +745,6 @@ void FilterController::updateKeyFrame(Mlt::Filter *filter, int nFrame, QString n
     if(mltFilter->get_filter() != filter->get_filter())     return;
 
     qmlFilter->cache_setKeyFrameParaValue(nFrame, name, value, true);
-    qmlFilter->syncCacheToProject();
 }
 
 void FilterController::handleAttachedModelChange()

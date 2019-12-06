@@ -283,7 +283,7 @@ Rectangle {
                     id: enableKeyFrameCheckBox
 
                     text: qsTr('Enable Key Frames')
-                    checked: (filter && filter.cache_getKeyFrameNumber() > 0)
+                    checked: (filter && filter.cache_getKeyFrameNumber(filter.getCurrentParameter()) > 0)
                     style: CheckBoxStyle {
                         indicator: Rectangle {
                             color:'transparent'

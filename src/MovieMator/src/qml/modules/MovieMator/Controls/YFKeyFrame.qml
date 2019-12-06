@@ -60,7 +60,7 @@ RowLayout{
     }
 
     // A Boolean value that indicates whether the animation is enable state.
-    property bool bEnableKeyFrame: updateEnableKeyFrame((filter.cache_getKeyFrameNumber() > 0))
+    property bool bEnableKeyFrame: updateEnableKeyFrame((filter.cache_getKeyFrameNumber(filter.getCurrentParameter()) > 0))
     
     // A Boolean value that indicates whether the auto add keyframes function is on.
     property bool bAutoSetAsKeyFrame: updateAutoSetAsKeyFrame(true)
@@ -155,7 +155,6 @@ RowLayout{
                 if(filter.isKeyframeAtPosition(parameter.property, currentFrame))
                 {
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(id.value, parameter.factorFunc).toString())
-                    filter.syncCacheToProject()
                 }
 //                else if((Math.abs((id.value - parameter.value) / (id.maximumValue - id.minimumValue)) < 0.001) || (Math.abs(id.value - parameter.value) < 1))
 //                {
@@ -172,7 +171,6 @@ RowLayout{
                 else if(bAutoSetAsKeyFrame)  
                 {
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(id.value, parameter.factorFunc).toString())
-                    filter.syncCacheToProject()
                     userChange = true
                 }
                 break;
@@ -181,7 +179,6 @@ RowLayout{
                 if(filter.isKeyframeAtPosition(parameter.property, currentFrame))
                 {
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, Number(id.checked).toString())
-                    filter.syncCacheToProject()
                 }
                 else if((id.checked === parameter.value) || (Math.abs(id.checked - parameter.value) < 1))
                 {
@@ -194,7 +191,6 @@ RowLayout{
                 else if(bAutoSetAsKeyFrame)  
                 {
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, Number(id.checked).toString())
-                    filter.syncCacheToProject()
                     userChange = true
                 }
                 break;
@@ -218,7 +214,6 @@ RowLayout{
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(id.red,parameter.factorFunc).toString())
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter2.property, calcProjValByUIVal(id.green,parameter2.factorFunc).toString())
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter3.property, calcProjValByUIVal(id.blue,parameter3.factorFunc).toString())
-                    filter.syncCacheToProject()
                 }
                 else if((value10 - value20 <= 1) && (value11 - value21 <= 1) && (value12 - value22 <= 1))
                 {
@@ -235,9 +230,6 @@ RowLayout{
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(id.red, parameter.factorFunc).toString())
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter2.property, calcProjValByUIVal(id.green, parameter2.factorFunc).toString())
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter3.property, calcProjValByUIVal(id.blue, parameter3.factorFunc).toString())
-
-                    filter.syncCacheToProject()
-
                     userChange = true
                 }
                 paramIndex = paramIndex+2
@@ -258,7 +250,6 @@ RowLayout{
                 if(filter.isKeyframeAtPosition(parameter.property, currentFrame))
                 {
                     filter.cache_setKeyFrameParaRectValue(currentFrame, parameter.property, colorRect)
-                    filter.syncCacheToProject()
                 }
                 else if((id.value === parameter.value) || (Math.abs(rv+gv+bv - rp - gp - bp) < 8))
                 {
@@ -271,7 +262,6 @@ RowLayout{
                 else if(bAutoSetAsKeyFrame)  
                 {
                     filter.cache_setKeyFrameParaRectValue(currentFrame, parameter.property, colorRect)
-                    filter.syncCacheToProject()
                     userChange = true
                 }
                 break;
@@ -280,7 +270,6 @@ RowLayout{
                 if(filter.isKeyframeAtPosition(parameter.property, currentFrame))
                 {
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(id.value,parameter.factorFunc).toString())
-                    filter.syncCacheToProject()
                 }
                 else if((id.value === parameter.value)
                         || (Math.abs((id.value - parameter.value) / (id.maximumValue - id.minimumValue)) < 0.01)
@@ -295,7 +284,6 @@ RowLayout{
                 else if(bAutoSetAsKeyFrame)  
                 {
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(id.value,parameter.factorFunc).toString())
-                    filter.syncCacheToProject()
                     userChange = true
                 }
                 break;
@@ -304,7 +292,6 @@ RowLayout{
                 if(filter.isKeyframeAtPosition(parameter.property, currentFrame))
                 {
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, id.currentText)
-                    filter.syncCacheToProject()
                 }
                 else if(id.currentText === parameter.value)
                 {
@@ -317,7 +304,6 @@ RowLayout{
                 else if(bAutoSetAsKeyFrame)  
                 {
                     filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, id.currentText)
-                    filter.syncCacheToProject()
                     userChange = true
                 }
                 break;
@@ -479,8 +465,6 @@ RowLayout{
             default:
                 break;
         }
-        
-        filter.syncCacheToProject();
 
         bBlockUpdateUI = false
 
@@ -791,7 +775,6 @@ RowLayout{
             }
         }else{
             filter.get(parameter.property)
-            //filter.syncCacheToProject();
             var tempValue1 = filter.getAnimDoubleValue(currentFrame, parameter.property)
             filter.get(parameter.property)
             parameter.value = calcUIValByProjVal(tempValue1,parameter.factorFunc)
@@ -1015,7 +998,6 @@ RowLayout{
              // 移除所有关键帧信号
              onRemoveAllKeyFrame: {
                 filter.removeAllKeyFrame(strIdentifierOfParameter)
-                filter.syncCacheToProject();
                 syncUIDataToProject()
              }
 
