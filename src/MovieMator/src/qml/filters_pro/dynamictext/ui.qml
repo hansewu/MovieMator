@@ -251,20 +251,24 @@ Item {
 
     function setKeyframedControls()
     {
-        if (filter.cache_getKeyFrameNumber() > 0)
-        {
             var nFrame = timeline.getPositionInCurrentClip()
 
             blockUpdate = true
 
-            rotationSlider.value = filter.getAnimDoubleValue(nFrame, 'trans_fix_rotate_x')
-            scaleSlider.value =  100.0/filter.getAnimDoubleValue(nFrame, 'trans_scale_x')
-            xOffsetSlider.value = filter.getAnimDoubleValue(nFrame, 'trans_ox') * -1
-            yOffsetSlider.value = filter.getAnimDoubleValue(nFrame, 'trans_oy') * -1
-            scaleAspectRatioSlider.value    =  filter.getAnimDoubleValue(nFrame, 'trans_scale_aspect_ratio')
-            transparentAlphaSlider.value    =  filter.getAnimDoubleValue(nFrame, 'transparent_alpha')
+            if (filter.cache_getKeyFrameNumber('trans_fix_rotate_x') > 0)
+                rotationSlider.value = filter.getAnimDoubleValue(nFrame, 'trans_fix_rotate_x')
+            if (filter.cache_getKeyFrameNumber('trans_scale_x') > 0)
+                scaleSlider.value =  100.0/filter.getAnimDoubleValue(nFrame, 'trans_scale_x')
+            if (filter.cache_getKeyFrameNumber('trans_ox') > 0)
+                xOffsetSlider.value = filter.getAnimDoubleValue(nFrame, 'trans_ox') * -1
+            if (filter.cache_getKeyFrameNumber('trans_oy') > 0)
+                yOffsetSlider.value = filter.getAnimDoubleValue(nFrame, 'trans_oy') * -1
+            if (filter.cache_getKeyFrameNumber('trans_scale_aspect_ratio') > 0)
+                scaleAspectRatioSlider.value    =  filter.getAnimDoubleValue(nFrame, 'trans_scale_aspect_ratio')
+            if (filter.cache_getKeyFrameNumber('transparent_alpha') > 0)
+                transparentAlphaSlider.value    =  filter.getAnimDoubleValue(nFrame, 'transparent_alpha')
+
             blockUpdate = false
-        }
     }
 
     function setFilter()
@@ -300,6 +304,10 @@ Item {
     YFKeyFrame
     {
         id: keyframe
+        onRefreshUI:
+        {
+            keyframe.updateParamsUI(idGridLayoutAnimation)
+        }
     }
 
     GridLayout {
