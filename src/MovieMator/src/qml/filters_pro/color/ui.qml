@@ -36,9 +36,6 @@ Item {
         var keyFrameCount = filter.getKeyFrameCountOnProject("lift_r");
         if(keyFrameCount>0)
         {
-
-            filter.syncCacheToProject();
-
             liftwheel.color = Qt.rgba( filter.getKeyFrameOnProjectOnIndex(0, "lift_r"),
                                    filter.getKeyFrameOnProjectOnIndex(0, "lift_g"),
                                    filter.getKeyFrameOnProjectOnIndex(0, "lift_b"),

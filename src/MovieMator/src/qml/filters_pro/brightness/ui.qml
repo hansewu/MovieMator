@@ -47,7 +47,6 @@ Item {
 //        //获取动画数据，如果当前有动画数据存储，就获取动画数据，如果没有就获取非动画数据 。
 //        //set 之后，amin_set 动画，不会改变非动画的数据，获取动画和非动画的数据信息都存在。
 //        filter.cache_setKeyFrameParaValue(10, "level", 0.88)
-//        filter.syncCacheToProject()
 
 //        double_level = filter.getDouble("level")  //0.55
 //        anim_double_level = filter.getAnimDoubleValue(10, "level") //0.88
