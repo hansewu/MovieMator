@@ -196,7 +196,7 @@ Item {
         YFKeyFrame{
             id: keyFrame
             onSyncUIDataToProject:{
-                if(filter.cache_getKeyFrameNumber(filter.getCurrentParameter()) <= 0){
+                if(filter.cache_getKeyFrameNumber(rectProperty) <= 0){
                     filter.resetProperty(rectProperty)
                     filter.set(rectProperty, rectOld)
                 }
@@ -248,7 +248,7 @@ Item {
                 }
             }
             onClicked: {
-                if(filter.cache_getKeyFrameNumber(filter.getCurrentParameter()) > 0){
+                if(filter.cache_getKeyFrameNumber(rectProperty) > 0){
                     sizeKeyFrameWarning.visible = true
                 }
                 else{
@@ -268,7 +268,7 @@ Item {
                 }
             }
             onClicked: {
-                if(filter.cache_getKeyFrameNumber(filter.getCurrentParameter()) > 0){
+                if(filter.cache_getKeyFrameNumber(rectProperty) > 0){
                     sizeKeyFrameWarning.visible = true
                 }
                 else{
@@ -350,7 +350,7 @@ Item {
             onClicked: {
                 bFitNoScale = true
 
-                if(filter.cache_getKeyFrameNumber(filter.getCurrentParameter()) > 0)   // 关键帧
+                if(filter.cache_getKeyFrameNumber(rectProperty) > 0)   // 关键帧
                 {   
                     if(fillRadioButton.checked)   //填配模式
                     {
@@ -388,7 +388,7 @@ Item {
             onClicked: {
                 bFit = true
 
-                if(filter.cache_getKeyFrameNumber(filter.getCurrentParameter()) > 0)   // 关键帧
+                if(filter.cache_getKeyFrameNumber(rectProperty) > 0)   // 关键帧
                 {   
                     if(fillRadioButton.checked)   //填配模式
                     {
@@ -426,7 +426,7 @@ Item {
             onClicked: {
                 bFitCrop = true
 
-                if(filter.cache_getKeyFrameNumber(filter.getCurrentParameter()) > 0)   // 关键帧
+                if(filter.cache_getKeyFrameNumber(rectProperty) > 0)   // 关键帧
                 {   
                     if(fillRadioButton.checked)   //填配模式
                     {
@@ -464,7 +464,7 @@ Item {
             onClicked: {
                 bTile = true
 
-                if(filter.cache_getKeyFrameNumber(filter.getCurrentParameter()) > 0)   // 关键帧
+                if(filter.cache_getKeyFrameNumber(rectProperty) > 0)   // 关键帧
                 {   
                     if(distortRadioButton.checked)   //变形模式
                     {
