@@ -265,10 +265,15 @@ Rectangle {
                     onCurrentIndexChanged:
                     {
                         if (currentIndex === -1)
+                        {
+                            m_strIdentifierOfParameter = ""
+                            filter.emitEditKeyframeOfParameter("")
                             return;
+                        }
                         console.log("select parameter: ", m_listModelParameters.get(currentIndex).parameterIdentifier)
                         m_strIdentifierOfParameter = m_listModelParameters.get(currentIndex).parameterIdentifier
                         initUIWithParameter(m_listModelParameters.get(currentIndex).parameterIdentifier)
+                        filter.emitEditKeyframeOfParameter(m_strIdentifierOfParameter)
                     }
                 }
 
@@ -598,18 +603,6 @@ Rectangle {
         onFilterPropertyValueChanged: {
 //            enableKeyFrameCheckBox.checked = (filter && filter.isKeyframeActivate(m_strIdentifierOfParameter) > 0)
 //            autoAddKeyFrameChanged(autoAddKeyFrameCheckBox.checked)
-        }
-    }
-
-    Connections
-    {
-        target: filter
-        onEditKeyframeOfParameter:
-        {
-            keyFrame.visible = true
-            foldBtn.checked = true
-            switchFoldStat(true)
-            initUIWithParameter(strIdentifierOfParameter)
         }
     }
 }

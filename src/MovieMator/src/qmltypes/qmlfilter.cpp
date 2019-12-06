@@ -1298,7 +1298,7 @@ int QmlFilter::cache_getKeyFrameNumber(QString propertyName)
 
 int QmlFilter::getKeyFrame(int index, QString propertyName)
 {
-    if (propertyName == nullptr) propertyName = getAnyAnimPropertyName();
+    //if (propertyName == nullptr) propertyName = getAnyAnimPropertyName();
     if (propertyName == nullptr) return -1;
 
     int nKeyFrame = getKeyFrameOnProjectOnIndex(index, propertyName);
@@ -1364,10 +1364,7 @@ void QmlFilter::refreshNoAnimation(const QVector<key_frame_item> &listParameter,
 
 void QmlFilter::emitEditKeyframeOfParameter(const QString strIdentifierOfParameter)
 {
-    Q_ASSERT(!strIdentifierOfParameter.isEmpty());
-    if (strIdentifierOfParameter.isEmpty())
-        return;
-
+    m_strCurrentParameter = strIdentifierOfParameter;
     emit editKeyframeOfParameter(strIdentifierOfParameter);
 }
 

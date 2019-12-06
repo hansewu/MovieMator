@@ -416,6 +416,7 @@ public slots:
     void on_actionSubscription_triggered();
 #endif
 
+    Q_INVOKABLE void resetCurrentFilterForTimelineDock();
 private slots:
 
 

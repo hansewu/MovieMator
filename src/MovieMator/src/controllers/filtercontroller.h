@@ -62,6 +62,8 @@ public:
     //获取已加载的视频滤镜信息
     QList<FilterInfo> getVideoFiltersInfo();
 
+    QmlFilter *currentFilter(){return m_currentFilter.data();}
+
 signals:
     void currentFilterAboutToChange(int index);
     //当前的filter发生改变时发出的信号
