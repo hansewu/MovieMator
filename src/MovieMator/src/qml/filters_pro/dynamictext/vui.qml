@@ -57,106 +57,24 @@ Flickable {
         return Qt.rect(absoluteRect.x / profile.width, absoluteRect.y / profile.height, absoluteRect.width / profile.width, absoluteRect.height / profile.height)
     }
 
-    function setKeyFrameParaValue (nFrame, currentPropert, value) {
-        var paramCount = metadata.keyframes.parameterCount
-        for(var i = 0; i < paramCount; i++) {
-            var property = metadata.keyframes.parameters[i].property
-            var paraType = metadata.keyframes.parameters[i].paraType
-            if (property === currentPropert) {
-                if (paraType === "rect") {
-                    filter.cache_setKeyFrameParaRectValue(nFrame, property, value, 1.0)
-                } else {
-                    filter.cache_setKeyFrameParaValue(nFrame, property, value);
-                }
-            } else {
-                if (paraType === "rect") {
-                    var rectValue = filter.getAnimRectValue(nFrame, property)
-                    filter.cache_setKeyFrameParaRectValue(nFrame, property, rectValue, 1.0)
-                } else {
-                    var valueStr = filter.get(property)
-                    filter.cache_setKeyFrameParaValue(nFrame, property, valueStr);
-                }
-
-            }
-        }
-        filter.syncCacheToProject();
-    }
-
     function setRectangleControl() {
         if (blockUpdate) return
 
         var newValue = getAbsoluteRect(-1)
-        if (filter.cache_getKeyFrameNumber() > 0) {
-            var position = timeline.getPositionInCurrentClip()
-            newValue = getAbsoluteRect(position)
-        }
-
         if (filterRect !== newValue) {
             filterRect = newValue
             rectangle.setHandles(filterRect)
         }
     }
 
-
-    function isKeyFramePropterty(property)
+    function updateFilter(currentProperty, value)
     {
-        var metaParamList = metadata.keyframes.parameters
-        for(var paramIndex = 0; paramIndex < metaParamList.length; paramIndex++)
-         {
-                var prop = metaParamList[paramIndex].property
-                if(prop === property) 
-                {
-                    return true
-                }
-         }
-
-         return false
+        filter.set(currentProperty, value)
     }
 
-
-    function updateFilter(currentProperty, value) {
-        if (filter.enableAnimation() && isKeyFramePropterty(currentProperty === true)) 
-        {
-            var nFrame = timeline.getPositionInCurrentClip()
-            if (filter.autoAddKeyFrame()) {
-                if (!filter.cache_bKeyFrame(nFrame)) {
-                    showAddFrameInfo(nFrame)
-                }
-                setKeyFrameParaValue(nFrame, currentProperty, value)
-            } else {
-                if (filter.cache_bKeyFrame(nFrame)) {
-                    setKeyFrameParaValue(nFrame, currentProperty, value)
-                } else {
-                    filter.set(currentProperty, value)
-                }
-            }
-        } else {
-            filter.set(currentProperty, value)
-        }
-    }
-
-    InfoDialog {
-        id: addFrameInfoDialog
-        text: qsTr('Auto set as key frame at postion')+ ": " + position + "."
-        property int position: 0
-    }
-
-    function showAddFrameInfo(position)
-    {
-        if (filter.autoAddKeyFrame() === false) return
-
-        addFrameInfoDialog.show     = false
-        addFrameInfoDialog.show     = true
-        addFrameInfoDialog.position = position
-    }
 
     Component.onCompleted: {
-        if (filter.cache_getKeyFrameNumber() > 0) {
-            var position = timeline.getPositionInCurrentClip()
-            filterRect = getAbsoluteRect(position)
-        } else {
-            filterRect = getAbsoluteRect(-1)
-        }
+        filterRect = getAbsoluteRect(-1)
         rectangle.setHandles(filterRect)
         setRectangleControl()
     }
@@ -224,12 +142,7 @@ Flickable {
                 filterRect.height = Math.round(rect.height / rectangle.heightScale)
 
                 updateFilter(rectProperty, getRelativeRect(filterRect))
-//                if (filter.cache_getKeyFrameNumber() > 0) {
-//                    var position = timeline.getPositionInCurrentClip()
-//                    setKeyFrameParaValue(position, rectProperty, getRelativeRect(filterRect))
-//                } else {
-//                    filter.set(rectProperty, getRelativeRect(filterRect))
-//                }
+
                 blockUpdate = false
             }
         }
@@ -245,8 +158,6 @@ Flickable {
     Connections {
         target: filterDock
         onPositionChanged: {
-            setRectangleControl()
-
             rectangle.visible = (timeline.getPositionInCurrentClip() >= 0) ? true : false
         }
     }
