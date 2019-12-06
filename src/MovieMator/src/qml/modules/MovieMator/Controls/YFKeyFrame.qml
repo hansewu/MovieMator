@@ -84,7 +84,7 @@ RowLayout{
     signal refreshUI()
 
     // 目前只有string 类型的参数用到
-    function findDefaultIndex(strValue,modelList)
+    function findDefaultIndex(strValue, modelList)
     {
         if(modelList.length <= 0)
         {
@@ -479,7 +479,8 @@ RowLayout{
     }
 
     //帧位置改变时加载控件参数，从mlt底层读取数据更新到界面上
-    function updateParamsUI(layoutRoot){
+    function updateParamsUI(layoutRoot)
+    {
         if(typeof layoutRoot == 'undefined'){
             throw new Error("layoutRoot is undefined:"+layoutRoot)
         }
@@ -535,8 +536,10 @@ RowLayout{
 
         bBlockUIChangedSignal = false
     }
+
     // 数据写入，将控件的数值set到filter里面，将界面参数值更新到project中
-    function syncDataToProject(layoutRoot){
+    function syncDataToProject(layoutRoot)
+    {
 
         if(typeof layoutRoot == 'undefined'){
             throw new Error("layoutRoot is undefined:"+layoutRoot)
@@ -601,10 +604,10 @@ RowLayout{
     }
 
     // 清除filter的动画状态，当没有keyframe时处理所有的filter 属性参数reset 清空  更改成切换动画非动画更好。
-    function clearAllFilterAnimationStatus() {
-        //if(filter.cache_getKeyFrameNumber() > 0) return 
-
-        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined')){
+    function clearAllFilterAnimationStatus()
+    {
+        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined'))
+        {
             throw new Error("metadata is abnormal")
         }
         var metaParamList = metadata.keyframes.parameters
@@ -618,9 +621,11 @@ RowLayout{
 
     //加减乘除 分别用 + - x c 被除b，对数log，指数pow
     // 控件到project mlt底层的写入保存计算
-    function calcProjValByUIVal(value,factorFunc){
+    function calcProjValByUIVal(value,factorFunc)
+    {
         var rt = value
-        for(var i=0;i<factorFunc.length;i++){
+        for(var i=0;i<factorFunc.length;i++)
+        {
             var calc = factorFunc[i]
             var calcSymbol = calc.substring(0,calc.lastIndexOf(":"))
             var calcValue = parseFloat(calc.substring(calc.lastIndexOf(":")+1,calc.length))
@@ -662,10 +667,13 @@ RowLayout{
         }
         return rt;
     }
+
     // project mlt底层到控件参数的加载计算，刚好与写入保存相反
-    function calcUIValByProjVal(value,factorFunc){
+    function calcUIValByProjVal(value,factorFunc)
+    {
         var rt = value
-        for(var i=factorFunc.length-1;i>=0;i--){
+        for(var i=factorFunc.length-1;i>=0;i--)
+        {
             var calc = factorFunc[i]
             var calcSymbol = calc.substring(0,calc.lastIndexOf(":"))
             var calcValue = parseFloat(calc.substring(calc.lastIndexOf(":")+1,calc.length))
@@ -706,23 +714,32 @@ RowLayout{
         }
         return rt;
     }
+
     // 根据objectName和root节点查找root的孩子节点中objectName为objectName的子节点
-    function findControl(objectName,root){
-        if((typeof root == 'undefined')||(typeof root.children == 'undefined')){
+    function findControl(objectName,root)
+    {
+        if((typeof root == 'undefined')||(typeof root.children == 'undefined'))
+        {
             throw new Error("root is abnormal:"+root)
         }
 
         var controlList = root.children
-        for(var i=0;i<controlList.length;i++){
-            if(objectName === controlList[i].objectName){
+        for(var i=0;i<controlList.length;i++)
+        {
+            if(objectName === controlList[i].objectName)
+            {
                 return controlList[i]
             }
         }
-        for(i=0;i<controlList.length;i++){
-            if(!isEmptyObject(controlList[i].children)){
+
+        for(i=0;i<controlList.length;i++)
+        {
+            if(!isEmptyObject(controlList[i].children))
+            {
                 var controlList1 = controlList[i].children
                 for(var j=0;j<controlList1.length;j++){
-                    if(objectName === controlList1[j].objectName){
+                    if(objectName === controlList1[j].objectName)
+                    {
                         return controlList1[j]
                     }
                 }
@@ -730,50 +747,67 @@ RowLayout{
         }
         return null;
     }
+
     // 对象是否有children
-    function isEmptyObject(obj) {
-      for (var key in obj) {
+    function isEmptyObject(obj)
+    {
+      for (var key in obj)
+      {
         return false;
       }
       return true;
     }
+
     // 根据控件id查找配置项，查找对应哪几个参数，因为会有一个控件对应几个参数
-    function getParamsAssociatedWithControl(id){
-        if((typeof id == 'undefined')||(typeof id.objectName == 'undefined')){
+    function getParamsAssociatedWithControl(id)
+    {
+        if((typeof id == 'undefined')||(typeof id.objectName == 'undefined'))
+        {
             throw new Error("id is abnormal:"+id)
         }
-        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined')){
+        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined'))
+        {
             throw new Error("metadata is abnormal")
         }
         var rt = [];
-        for(var i=0;i<metadata.keyframes.parameters.length;i++){
+        for(var i=0;i<metadata.keyframes.parameters.length;i++)
+        {
             if(id.objectName === metadata.keyframes.parameters[i].objectName)
             rt.push(i)
         }
         return  rt;
     }
+
     // 加载单条滑条数据 : 由于是需要对meta里面的value进行直接修改，所以不能传对象，只能传地址
-    function loadControlSlider(control,paramIndex){
-        if((typeof control == 'undefined')||(typeof control.value == 'undefined')){
+    function loadControlSlider(control,paramIndex)
+    {
+        if((typeof control == 'undefined')||(typeof control.value == 'undefined'))
+        {
             throw new Error("control is abnormal:"+control)
         }
 
-        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined')){
+        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined'))
+        {
             throw new Error("metadata is abnormal")
         }
-        if(metadata.keyframes.parameters.length < paramIndex){
+        if(metadata.keyframes.parameters.length < paramIndex)
+        {
             throw new Error("metadata.keyframes.parameters array not longer enough:"+metadata.keyframes.parameters.length + " "+paramIndex)
         }
 
         var parameter = metadata.keyframes.parameters[paramIndex]
-        if(filter.cache_bKeyFrame(currentFrame)){
+
+        if(filter.isKeyframeAtPosition(parameter.property, currentFrame))
+        {
             var tempValue = filter.cache_getKeyFrameParaDoubleValue(currentFrame, parameter.property);
             if(tempValue !== -1.0)
             {
                 control.value = calcUIValByProjVal(tempValue,parameter.factorFunc)
                 
             }
-        }else{
+        }
+        else
+        {
             filter.get(parameter.property)
             var tempValue1 = filter.getAnimDoubleValue(currentFrame, parameter.property)
             filter.get(parameter.property)
@@ -799,26 +833,30 @@ RowLayout{
                 for(i=0;i< parameterList.length;i++){
                     parameter = metadata.keyframes.parameters[parameterList[i]]
                     filter.set(parameter.property,calcProjValByUIVal(control.value,parameter.factorFunc))
-                    // filter.cache_setKeyFrameParaValue(currentFrame, parameter.property, calcProjValByUIVal(control.value,parameter.factorFunc).toString());
                 }
             }
         }
     }
 
     // 加载Checkbox数据，从mlt读取数据更新到界面
-    function loadControlCheckbox(control,paramIndex){
-        if((typeof control == 'undefined')||(typeof control.checked == 'undefined')){
+    function loadControlCheckbox(control,paramIndex)
+    {
+        if((typeof control == 'undefined')||(typeof control.checked == 'undefined'))
+        {
             throw new Error("control is abnormal:"+control)
         }
-        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined')){
+        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined'))
+        {
             throw new Error("metadata is abnormal")
         }
-        if(metadata.keyframes.parameters.length < paramIndex){
+        if(metadata.keyframes.parameters.length < paramIndex)
+        {
             throw new Error("metadata.keyframes.parameters array not longer enough:"+metadata.keyframes.parameters.length + " "+paramIndex)
         }
 
         var parameter = metadata.keyframes.parameters[paramIndex]
-        if(filter.cache_bKeyFrame(currentFrame)){
+        if(filter.isKeyframeAtPosition(parameter.property, currentFrame))
+        {
             var test = filter.get(parameter.property)
             var tempValue = filter.cache_getKeyFrameParaDoubleValue(currentFrame, parameter.property);
             if(tempValue !== -1.0)
@@ -826,7 +864,8 @@ RowLayout{
                 control.checked = Boolean(tempValue)
             }
         }
-        else{
+        else
+        {
             filter.get(parameter.property)
             var tempValue1 = filter.getAnimIntValue(currentFrame, parameter.property)
             filter.get(parameter.property)
@@ -835,22 +874,30 @@ RowLayout{
     }
 
     // 加载ColorWheel数据，从mlt读取数据更新到界面
-    function loadControlColorWheel(control,paramIndex1,paramIndex2,paramIndex3){
-        if((typeof control == 'undefined')||(typeof control.color == 'undefined')){
+    function loadControlColorWheel(control,paramIndex1,paramIndex2,paramIndex3)
+    {
+        if((typeof control == 'undefined')||(typeof control.color == 'undefined'))
+        {
             throw new Error("control is abnormal:"+control)
         }
-        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined')){
+
+        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined'))
+        {
             throw new Error("metadata is abnormal")
         }
-        if(metadata.keyframes.parameters.length < paramIndex3){
+
+        if(metadata.keyframes.parameters.length < paramIndex3)
+        {
             throw new Error("metadata.keyframes.parameters array not longer enough:"+metadata.keyframes.parameters.length + " "+paramIndex3)
         }
+
         var parameter1 = metadata.keyframes.parameters[paramIndex1]
         var parameter2 = metadata.keyframes.parameters[paramIndex2]
         var parameter3 = metadata.keyframes.parameters[paramIndex3]
         var rValue = filter.cache_getKeyFrameParaDoubleValue(currentFrame, parameter1.property);
         var gValue = filter.cache_getKeyFrameParaDoubleValue(currentFrame, parameter2.property);
         var bValue = filter.cache_getKeyFrameParaDoubleValue(currentFrame, parameter3.property);
+
         if(rValue === -1.0)
         {
             filter.get(parameter1.property)
@@ -863,6 +910,7 @@ RowLayout{
             bValue = filter.getAnimDoubleValue(currentFrame, parameter3.property);
             filter.get(parameter3.property)
         }
+
         var tempRed = calcUIValByProjVal(rValue,parameter1.factorFunc)
         var tempGreen = calcUIValByProjVal(gValue,parameter2.factorFunc)
         var tempBlue = calcUIValByProjVal(bValue,parameter3.factorFunc)
@@ -875,17 +923,18 @@ RowLayout{
         control.red = tempRed
         control.green = tempGreen
         control.blue = tempBlue
-        
-        
     }
 
     // 加载ColorPicker数据，从mlt读取数据更新到界面
-    function loadColorPicker(control,paramIndex){
-        if((typeof control == 'undefined')||(typeof control.value == 'undefined')){
+    function loadColorPicker(control,paramIndex)
+    {
+        if((typeof control == 'undefined')||(typeof control.value == 'undefined'))
+        {
             throw new Error("control is abnormal:"+control)
         }
 
-        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined')){
+        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined'))
+        {
             throw new Error("metadata is abnormal")
         }
         if(metadata.keyframes.parameters.length < paramIndex){
@@ -899,29 +948,37 @@ RowLayout{
         parameter.value = Qt.rgba(parseFloat(tempValue.x),parseFloat(tempValue.y),parseFloat(tempValue.width),1.0)
         // 一定要先设配置参数，再设control的value，不然control的value一旦改变，就会触发新的动作，而那里面会用到parameter的value
         control.value = parameter.value
-        
     }
 
     // 加载Slider数据，从mlt读取数据更新到界面
-    function loadSlider(control,paramIndex){
-        if((typeof control == 'undefined')||(typeof control.value == 'undefined')){
+    function loadSlider(control,paramIndex)
+    {
+        if((typeof control == 'undefined')||(typeof control.value == 'undefined'))
+        {
             throw new Error("control is abnormal:"+control)
         }
 
-        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined')){
+        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined'))
+        {
             throw new Error("metadata is abnormal")
         }
-        if(metadata.keyframes.parameters.length < paramIndex){
+
+        if(metadata.keyframes.parameters.length < paramIndex)
+        {
             throw new Error("metadata.keyframes.parameters array not longer enough:"+metadata.keyframes.parameters.length + " "+paramIndex)
         }
+
         var parameter = metadata.keyframes.parameters[paramIndex]
-        if(filter.cache_bKeyFrame(currentFrame)){
+        if(filter.isKeyframeAtPosition(parameter.property, currentFrame))
+        {
             var tempValue = filter.cache_getKeyFrameParaDoubleValue(currentFrame, parameter.property);
             if(tempValue !== -1.0)
             {
                 control.value = calcUIValByProjVal(tempValue,parameter.factorFunc)
             }
-        }else{
+        }
+        else
+        {
             filter.get(parameter.property)
             var tempValue1 = filter.getAnimDoubleValue(currentFrame, parameter.property)
             filter.get(parameter.property)
@@ -936,19 +993,26 @@ RowLayout{
     }
 
     // 加载String数据，从mlt读取数据更新到界面
-    function loadStringCtr(control,paramIndex){
-        if((typeof control == 'undefined')||(typeof control.currentIndex == 'undefined')){
+    function loadStringCtr(control,paramIndex)
+    {
+        if((typeof control == 'undefined')||(typeof control.currentIndex == 'undefined'))
+        {
             throw new Error("control is abnormal:"+control)
         }
 
-        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined')){
+        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined'))
+        {
             throw new Error("metadata is abnormal")
         }
-        if(metadata.keyframes.parameters.length < paramIndex){
+
+        if(metadata.keyframes.parameters.length < paramIndex)
+        {
             throw new Error("metadata.keyframes.parameters array not longer enough:"+metadata.keyframes.parameters.length + " "+paramIndex)
         }
+
         var parameter = metadata.keyframes.parameters[paramIndex]
-        if(filter.cache_bKeyFrame(currentFrame)){
+        if(filter.isKeyframeAtPosition(parameter.property, currentFrame))
+        {
             var tempValue = filter.cache_getKeyFrameParaValue(currentFrame, parameter.property);
             if(tempValue !== -1.0)
             {
@@ -959,7 +1023,8 @@ RowLayout{
     }
 
     //获取当前帧
-    function getCurrentFrame(){
+    function getCurrentFrame()
+    {
         return currentFrame;
     }
 
@@ -967,7 +1032,6 @@ RowLayout{
     {
         currentFrame = timeline.getPositionInCurrentClip()
     }
-
 
     Connections {
              target: keyFrameControl
