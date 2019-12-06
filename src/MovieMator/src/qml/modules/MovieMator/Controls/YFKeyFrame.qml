@@ -69,7 +69,6 @@ RowLayout{
     property double currentFrame: 0
 
     // A Boolean value that indicates whether the frame is the key frame. 当前帧是否是关键帧
-    property bool bKeyFrame: false
 
     // 屏蔽信号，主要用到当一个filter 有几个参数时，当一个参数set时，可能会出现加载更新界面，或获取所有参数，还未来得及设置的参数出现了获取新的值，改变了参数。filter的几个参数set的过程中，屏蔽信号，不调用loadframe，等加载完了，再处理。
     property bool bBlockUpdateUI: false
@@ -332,7 +331,6 @@ RowLayout{
 //        // 添加关键帧
 //        if (userChange)
 //        {
-//            bKeyFrame = true
 //            addKeyFrame()
 //        }
     }
@@ -483,7 +481,6 @@ RowLayout{
         }
         
         filter.syncCacheToProject();
-        bKeyFrame = true
 
         bBlockUpdateUI = false
 
@@ -886,11 +883,12 @@ RowLayout{
         var tempRed = calcUIValByProjVal(rValue,parameter1.factorFunc)
         var tempGreen = calcUIValByProjVal(gValue,parameter2.factorFunc)
         var tempBlue = calcUIValByProjVal(bValue,parameter3.factorFunc)
+
         // 一定要先改参数值，再改control值
-        if(!bKeyFrame){
+        //if(!bKeyFrame){
             parameter1.value = parameter2.value = parameter3.value = Qt.rgba( tempRed / 255.0, tempGreen / 255.0, tempBlue / 255.0, 1.0 )
             control.color = parameter1.value
-        }
+        //}
         control.red = tempRed
         control.green = tempGreen
         control.blue = tempBlue
@@ -993,7 +991,6 @@ RowLayout{
 
              // 添加关键帧信号
              onAddKeyframe: {
-                 bKeyFrame = true
                  //syncUIDataToProject()
                  addKeyFrame(strIdentifierOfParameter)
              }
@@ -1005,21 +1002,18 @@ RowLayout{
               // 帧位置改变信号
              onFrameChanged: {
                  currentFrame = keyFrameNum
-                 bKeyFrame = filter.cache_bKeyFrame(currentFrame)
                  refreshUI()
              }
 
              // 移除关键帧信号
              onRemoveKeyFrame:
              {
-                bKeyFrame = false
                 var nFrame = keyFrame.getCurrentFrame();
                 filter.removeAnimationKeyFrame(nFrame, strIdentifierOfParameter);
              }
 
              // 移除所有关键帧信号
              onRemoveAllKeyFrame: {
-                bKeyFrame = false
                 filter.removeAllKeyFrame(strIdentifierOfParameter)
                 filter.syncCacheToProject();
                 syncUIDataToProject()
