@@ -1033,7 +1033,8 @@ Rectangle {
 
     // 在 clip下方显示关键帧的灰色背景
     Rectangle {
-        visible: !isBlank && selected && currentFilter && currentFilter.keyframeNumber > 0
+        id: keyframeRegion
+        visible: !isBlank && selected && currentFilter && currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) > 0
         height: parent.height / 2
         width: parent.width
         anchors.left: parent.left
@@ -1042,16 +1043,10 @@ Rectangle {
         opacity: 0.7
         color: 'grey'
 
-
-        //MouseArea {
-        //    anchors.fill: parent
-        //    acceptedButtons: Qt.LeftButton
-        //}
-
         Repeater {
             id: keyFrameRepeater
             // 只有 Rectangle显示时才有 model，消除 currentFilter的 Reference Error警告
-            model: (parent.visible && currentFilter) ? currentFilter.keyframeNumber : 0
+            model: (parent.visible && currentFilter) ? currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) : 0
             anchors.verticalCenter: parent.verticalCenter
 
 
@@ -1059,41 +1054,25 @@ Rectangle {
                 height: parent.height / 2
                 width: height
                 anchors.verticalCenter: parent.verticalCenter
-                visible: !isBlank && selected &&currentFilter && (currentFilter.getKeyFrame(index) !== -1)
-                x: (currentFilter?currentFilter.getKeyFrame(index):0) *multitrack.scaleFactor - width/2
-                frameNumber: currentFilter ? currentFilter.getKeyFrame(index) : -1
+                //visible: !isBlank && selected &&currentFilter && (currentFilter.getKeyFrame(index, currentFilter.getCurrentParameter()) !== -1)
+                x: (currentFilter?currentFilter.getKeyFrame(index, currentFilter.getCurrentParameter()):0) *multitrack.scaleFactor - width/2
+                frameNumber: currentFilter ? currentFilter.getKeyFrame(index, currentFilter.getCurrentParameter()) : -1
                 rotation: 45
             }
         }
     }
 
-//    Connections{
-//        target: currentFilter
-//        onKeyFrameChanged:{
-////            var  frameNumber = currentFilter.cache_getKeyFrameNumber()
-////            firstKeyFrameRect.visible = !isBlank && frameNumber
-////            if(frameNumber)
-////            {
-////                console.log("Clip.qml onKeyFrameChanged is called, keyframe=")
-////              //  firstKeyFrameRect.visible = !isBlank && frameNumber// This is available in all editors.
-////                var frame = currentFilter.getFristKeyFrame()
-
-////                firstKeyFrameRect.anchors.leftMargin = clipRoot.border.width+frame
-////                console.log(firstKeyFrameRect.anchors.leftMargin);
-////            }
-
-//        }
-//        onAddKeyFrame:{
-//            var keyNumber = currentFilter.cache_getKeyFrameNumber()
-//            keyFrameRepeater.model = keyNumber
-//        }
-
-//        onRemoveKeyFrame:{
-//            var keyNumber = currentFilter.cache_getKeyFrameNumber()
-//            keyFrameRepeater.model = keyNumber
-//        }
-
-//    }
+    Connections{
+        target: currentFilter
+        onKeyframeNumberChanged: {
+            keyframeRegion.visible = !isBlank && selected && currentFilter && currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) > 0
+            keyFrameRepeater.model = currentFilter ? currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) : 0
+        }
+        onEditKeyframeOfParameter: {
+            keyframeRegion.visible =  !isBlank && selected && currentFilter && currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) > 0
+            keyFrameRepeater.model = currentFilter ? currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) : 0
+        }
+    }
 
     // 右键 clip弹出的菜单
     /*

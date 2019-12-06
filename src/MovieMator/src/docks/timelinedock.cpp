@@ -115,6 +115,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_quickView.rootContext()->setContextProperty("multitrack", &m_model);
     m_quickView.setResizeMode(QQuickWidget::SizeRootObjectToView);
     m_quickView.setClearColor(palette().window().color());
+    setCurrentFilter(nullptr, nullptr,0);
 
 //    connect(&m_model, SIGNAL(modified()), this, SLOT(clearSelectionIfInvalid()));//sll:将modify放在mainwindow中建立连接，防止界面更新与数据操作顺序问题
 

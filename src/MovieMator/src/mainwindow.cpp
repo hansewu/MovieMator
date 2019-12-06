@@ -4854,3 +4854,11 @@ InAppDialog *MainWindow::inAppDialog()
     return m_pInAppDialog;
 }
 #endif
+
+void MainWindow::resetCurrentFilterForTimelineDock()
+{
+    int nCurrentFilterIndex = m_filterController->currentFilterIndex();
+    if (nCurrentFilterIndex >= 0)
+        m_timelineDock->setCurrentFilter(m_filterController->currentFilter(),
+                                     m_filterController->getQmlMetadata(nCurrentFilterIndex), 0);
+}

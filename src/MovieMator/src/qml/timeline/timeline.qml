@@ -891,6 +891,9 @@ Rectangle {
             onClipDropped: {
                 scrollTimer.running = false
                 bubbleHelp.hide()
+
+                //跨轨道移动后clip里面访问currentFilter为空，重新设置一下
+                mainwindow.resetCurrentFilterForTimelineDock()
             }
             onClipDraggedToTrack: {
                 var i = clip.trackIndex + direction

@@ -535,6 +535,8 @@ public:
     Q_INVOKABLE int setInterpolationMethod(const QString strIdentifierOfParameter, int nPositionOfKeyframe,  /*mlt_keyframe_type*/ int mltKeyframeType);
 
     Q_INVOKABLE int getInterpolationMethod(const QString strIdentifierOfParameter, int nPositionOfKeyframe);
+
+    Q_INVOKABLE QString getCurrentParameter() {return m_strCurrentParameter;}
 public slots:
     /** Load a properties preset.
      *
@@ -578,6 +580,7 @@ private:
     QString m_sResourcePath;             /** the absolute path to the metadata directory of the Mlt::Filter*/
     bool m_isNew;               /** a flag to indicate if the filter is new*/
     QStringList m_presets;      /** the preset list of the Mlt::Filter*/
+    QString m_strCurrentParameter; /** 保存当前正在编辑关键帧的参数 **/
     
     /** Get the object name or mlt_service of Mlt::Filter.
      *
