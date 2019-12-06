@@ -9,6 +9,7 @@ HelpTipDialog::HelpTipDialog(QWidget *parent) :
     ui(new Ui::HelpTipDialog)
 {
     ui->setupUi(this);
+    this->setStyleSheet("QWidget{background-color:rgb(53,53,53);}");
 }
 
 HelpTipDialog::~HelpTipDialog()
