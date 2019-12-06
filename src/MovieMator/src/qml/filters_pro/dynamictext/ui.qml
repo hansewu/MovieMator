@@ -308,6 +308,10 @@ Item {
         {
             keyframe.updateParamsUI(idGridLayoutAnimation)
         }
+        onSyncUIDataToProject:
+        {
+            keyframe.syncDataToProject(idGridLayoutAnimation)
+        }
     }
 
     GridLayout {
@@ -1017,9 +1021,9 @@ Item {
                 if (filter.isNew) {
                     filter.set('size', filterRect.height)
                 }
-                presetPositionAnimation.presetCombo.currentIndex = 0
-            }
-        }
+                //presetPositionAnimation.presetCombo.currentIndex = 0
+            } 
+        } 
 
         Button {
             id: detailButtonAnimation
