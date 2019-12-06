@@ -31,7 +31,6 @@ Flickable {
     property string halignProperty
     property string valignProperty
     property var _locale: Qt.locale(application.numericLocale)
-    property rect rectCtr
     property rect rectCtr2
     property string metaValue: ''
 
@@ -61,9 +60,9 @@ Flickable {
     {
         var rect = filter.getRect(rectProperty)
 
-        if (filter.cache_getKeyFrameNumber() > 0)
+        if (filter.cache_getKeyFrameNumber(rectProperty) > 0)
         {   
-            var position        = timeline.getPositionInCurrentClip()
+            var position = timeline.getPositionInCurrentClip()
             rect = filter.getAnimRectValue(position, rectProperty)
         } 
         
@@ -86,13 +85,32 @@ Flickable {
         addFrameInfoDialog.position = position
     }
 
+    function setFilterRect()
+    {
+        var position = timeline.getPositionInCurrentClip()
+        if (!filter.isKeyframeActivate(rectProperty))
+        {
+             filter.set(rectProperty, filterRect)
+        }
+        else if ((filter.isKeyframeActivate(rectProperty) && filter.autoAddKeyFrame())
+                 || filter.isKeyframeAtPosition(rectProperty, position))
+        {
+            if (!filter.isKeyframeAtPosition(rectProperty, position))
+                showAddFrameInfo(position)
+            filter.cache_setKeyFrameParaRectValue(position, rectProperty, filterRect, 1.0)
+        }
+    }
+
     Component.onCompleted: {
 
         var rectT = filter.getRect(rectProperty)
-        if (filter.cache_getKeyFrameNumber() > 0) {
+        if (filter.cache_getKeyFrameNumber(rectProperty) > 0)
+        {
             var position = timeline.getPositionInCurrentClip()
             filterRect = filter.getAnimRectValue(position, rectProperty)
-        } else {
+        }
+        else
+        {
             filterRect = filter.getRect(rectProperty)
         }
 
@@ -133,87 +151,7 @@ Flickable {
                 filterRect.width    = rect.width / rectangle.widthScale / profile.width
                 filterRect.height   = rect.height / rectangle.heightScale / profile.height
                 
-                //rectCtr.x = filterRect.x
-                //rectCtr.y = filterRect.y
-                //rectCtr.width = filterRect.width
-                //rectCtr.height = filterRect.height
-                //filter.resetProperty(rectProperty)
-                //filter.set(rectProperty, rectCtr)
-                
-                //filter.resetProperty(rectProperty)
-                //filter.set(rectProperty, filterRect)
-                vuiTimer1.restart()
-            }
-        
-        }
-    }
-
-
-    function isModeChanged(){
-        if((fillStat !== filter.get(fillProperty))||(distortStat !== filter.get(distortProperty))||(fillStat !== filter.get(valignProperty))||(halignStat !== filter.get(halignProperty))){
-            fillStat = filter.get(fillProperty)
-            distortStat = filter.get(distortProperty)
-            valignStat = filter.get(valignProperty)
-            halignStat = filter.get(halignProperty)
-            return true
-        }else{
-            return false
-        }
-    }
-    Connections {
-        target: filter
-        onFilterPropertyValueChanged: {
-            vuiTimer3.restart()
-        }
-    }
-    Timer {
-        id : vuiTimer3
-        interval: 0
-        repeat: false
-        onTriggered: 
-        {
-            onFilterChanged()
-        }
-    }
-    function onModeChanged(){
-        rectangle.aspectRatio = getAspectRatio()
-    }
-    function onFilterChanged(){
-        var rectTmp = filter.getRect(rectProperty)
-        var newRect = rectTmp
-        var position = timeline.getPositionInCurrentClip()
-        var bKeyFrame = filter.cache_bKeyFrame(position)
-        if (bKeyFrame) {
-            filter.get(rectProperty)
-            rectTmp = filter.getAnimRectValue(position, rectProperty)
-            filter.get(rectProperty)
-        }
-        
-        newRect.x = rectTmp.x * profile.width 
-        newRect.y = rectTmp.y * profile.height
-        newRect.width = rectTmp.width * profile.width
-        newRect.height = rectTmp.height * profile.height
-        rectangle.setHandles(newRect)
-        
-        if (rectangle.aspectRatio !== getAspectRatio()) {
-            rectangle.aspectRatio = getAspectRatio()
-            rectangle.setHandles(newRect)
-             var rect = rectangle.rectangle
-             rectCtr.x = rect.x / profile.width / rectangle.widthScale
-             rectCtr.y = rect.y / profile.height / rectangle.heightScale
-             rectCtr.width = rect.width / profile.width / rectangle.widthScale
-             rectCtr.height = rect.height / profile.height / rectangle.heightScale
-            //filter.set(rectProperty, rectCtr)
-
-            position        = timeline.getPositionInCurrentClip()
-            bKeyFrame       = filter.cache_bKeyFrame(position)
-            if (bKeyFrame)
-            {
-                filter.cache_setKeyFrameParaRectValue(position, rectProperty, rectCtr, 1.0)
-                filter.syncCacheToProject();
-            } else {
-                filter.resetProperty(rectProperty)
-                filter.set(rectProperty, rectCtr)
+                setFilterRect()
             }
         }
     }
@@ -238,31 +176,6 @@ Flickable {
             }
 
             rectangle.visible = (timeline.getPositionInCurrentClip() >= 0) ? true : false 
-        }
-    }
-
-    Timer {
-        id : vuiTimer1
-        interval: 100
-        repeat: false
-        onTriggered: 
-        {   
-            //filter.resetProperty(rectProperty)
-            //filter.set(rectProperty, filterRect)
-
-            var position = timeline.getPositionInCurrentClip()
-            if (!filter.enableAnimation())
-            {
-                 filter.set(rectProperty, filterRect)
-            }
-            else if ((filter.enableAnimation() && filter.autoAddKeyFrame()) || filter.cache_bKeyFrame(position))
-            {
-                if (!filter.cache_bKeyFrame(position)) showAddFrameInfo(position)
-                
-                //var rectValue = filter.getRect(rectProperty)
-                filter.cache_setKeyFrameParaRectValue(position, rectProperty, filterRect,1.0)
-                filter.syncCacheToProject();
-            }
         }
     }
 }
