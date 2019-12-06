@@ -756,6 +756,7 @@ void MainWindow::configureUI()
     ui->actionFullscreen = nullptr;
     delete ui->actionEnter_Full_Screen;
     ui->actionEnter_Full_Screen = nullptr;
+    ui->menuBar->setStyleSheet("QMenuBar{background-color:rgb(42, 49, 55);}");
 #endif
 
 

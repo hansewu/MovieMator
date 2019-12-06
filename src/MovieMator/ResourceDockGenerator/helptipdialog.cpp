@@ -19,7 +19,7 @@ HelpTipDialog::~HelpTipDialog()
 void HelpTipDialog::show()
 {
 #ifdef Q_OS_WIN
-     this->setWindowModality(QmlApplication::dialogModality());
+     this->setWindowModality(Qt::ApplicationModal);
  #endif
 
     this->exec();

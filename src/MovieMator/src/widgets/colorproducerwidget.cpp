@@ -35,7 +35,7 @@ ColorProducerWidget::ColorProducerWidget(QWidget *parent) :
 
     ui->label_2->setStyleSheet("color:rgb(185,185,185);");
     QFont label2Font = ui->label_2->font();
-    label2Font.setPointSize(16);
+    label2Font.setPointSize(14);
     ui->label_2->setFont(label2Font);
 
     ui->line->setStyleSheet("color:black;");

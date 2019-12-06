@@ -61,7 +61,7 @@ void StickerDockWidget::setupTopBarUi()
     m_pAnimationCombobox->setMinimumWidth(ANIMATION_COMBOBOX_WIDTH);
 
     QFont font = m_pAnimationCombobox->font();
-    font.setPointSize(16);
+    font.setPointSize(14);
     m_pAnimationCombobox->setFont(font);
 
     pAnimationWidgetLayout->addWidget(m_pAnimationCombobox);

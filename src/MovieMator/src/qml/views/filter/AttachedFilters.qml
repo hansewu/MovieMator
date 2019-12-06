@@ -502,7 +502,7 @@ Rectangle {
                             text: translate2CH?Trans.transEn2Ch(model.display):Trans.transEn2Short(model.display)
                             verticalAlignment:Text.AlignHCenter
                             wrapMode: Text.Wrap
-                            font.pointSize: 13
+//                            font.pointSize: 13
                             horizontalAlignment:Text.AlignRight
                             color: "#b9b9b9"
                             anchors {

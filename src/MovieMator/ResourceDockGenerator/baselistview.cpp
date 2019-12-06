@@ -14,9 +14,9 @@ BaseListView::BaseListView(QWidget *pParent) :
     //FIXME:mac上字体显示太小
     // Mac下字体显示太小，使用默认字体大小，Windows和 Mac下看上去效果都很好
 //    setFont(QFont(font().family(), LISTVIEW_ITEM_FONTSIZE));//设置listview的字体大小，主要作用与item上的文字
-    QFont font = this->font();
-    font.setPointSize(13);
-    this->setFont(font);
+//    QFont font = this->font();
+//    font.setPointSize(13);
+//    this->setFont(font);
 
     setViewMode(QListView::IconMode);//使用大尺寸的图标及名字显示item
     setGridSize(QSize(LISTVIEW_GRIDSIZE_WIDTH, LISTVIEW_GRIDSIZE_HEIGHT));//设置网格中每个item的宽高
@@ -38,9 +38,9 @@ BaseListView::BaseListView(QWidget *pParent) :
             "QToolTip{background:rgb(205, 205, 205);}");  // 单独设置 tooltip的样式
 #else
     setStyleSheet(//设置listview选中、滑过以及背景颜色
-            "QListView::item:selected{background-color:rgb(192,72,44); color:rgb(255,255,255);border-radius:4px;}"
-            "QListView::item:hover{background-color:rgb(192,72,44); color:rgb(255,255,255);border-radius:4px;}"
-            "QListView{background-color:transparent;color:rgb(214,214,214);}");
+            "QListView::item:selected{background-color:rgb(165,65,47); color:rgb(185, 185, 185);border-radius:4px;}"
+            "QListView::item:hover{background-color:rgb(165,65,47); color:rgb(185, 185, 185);border-radius:4px;}"
+            "QListView{background-color:transparent;color:rgb(99,100,101);}");
 #endif
 }
 

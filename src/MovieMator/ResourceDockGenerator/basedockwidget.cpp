@@ -180,7 +180,7 @@ QHBoxLayout *BaseDockWidget::createClassLabel(const QString &strClassName)
     pClassLabel->setStyleSheet("color:rgb(185, 185, 185);");
 
     QFont font = pClassLabel->font();
-    font.setPointSize(16);
+    font.setPointSize(14);
     pClassLabel->setFont(font);
 
 //    QLabel *pImageLabel = new QLabel(this);

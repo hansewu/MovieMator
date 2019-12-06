@@ -42,7 +42,7 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer& track, QWidget *pare
 //    ui->nameLabel->setStyleSheet("background-color:rgb(46,46,46);");
     ui->nameLabel->setStyleSheet("color:rgb(185,185,185);");
     QFont font = ui->nameLabel->font();
-    font.setPointSize(16);
+    font.setPointSize(14);
     ui->nameLabel->setFont(font);
 
     ui->blendModeLabel->setStyleSheet("color:rgb(185,185,185);");

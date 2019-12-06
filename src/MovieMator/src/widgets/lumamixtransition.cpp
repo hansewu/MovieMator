@@ -119,23 +119,23 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, int trackIndex, in
     QString textColorStyle = "color:rgb(185,185,185);";
     ui->label_2->setStyleSheet(textColorStyle);
     QFont font = ui->label_2->font();
-    font.setPointSize(16);
+    font.setPointSize(14);
     ui->label_2->setFont(font);
 
-    QFont smallTextFont = ui->label->font();
-    smallTextFont.setPointSize(13);
+//    QFont smallTextFont = ui->label->font();
+//    smallTextFont.setPointSize(13);
 
-    ui->label->setFont(smallTextFont);
+//    ui->label->setFont(smallTextFont);
     ui->label->setStyleSheet(textColorStyle);
-    ui->label_3->setFont(smallTextFont);
+//    ui->label_3->setFont(smallTextFont);
     ui->label_3->setStyleSheet(textColorStyle);
-    ui->label_4->setFont(smallTextFont);
+//    ui->label_4->setFont(smallTextFont);
     ui->label_4->setStyleSheet(textColorStyle);
-    ui->label_6->setFont(smallTextFont);
+//    ui->label_6->setFont(smallTextFont);
     ui->label_6->setStyleSheet(textColorStyle);
-    ui->label_7->setFont(smallTextFont);
+//    ui->label_7->setFont(smallTextFont);
     ui->label_7->setStyleSheet(textColorStyle);
-    ui->label_preview->setFont(smallTextFont);
+//    ui->label_preview->setFont(smallTextFont);
     ui->label_preview->setStyleSheet(textColorStyle);
 
     ui->invertCheckBox->setStyleSheet(textColorStyle);

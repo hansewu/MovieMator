@@ -40,28 +40,28 @@ ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
 //    ui->filenameLabel->setStyleSheet("background-color:rgb(46,46,46);");
     ui->filenameLabel->setStyleSheet("color:rgb(185,185,185);");
     QFont font = ui->filenameLabel->font();
-    font.setPointSize(16);
+    font.setPointSize(14);
     ui->filenameLabel->setFont(font);
 
-    QFont smallFont = ui->label->font();
-    smallFont.setPointSize(13);
+//    QFont smallFont = ui->label->font();
+//    smallFont.setPointSize(13);
     QString smallTextColorStyle = "color:rgb(185,185,185);";
 
-    ui->label->setFont(smallFont);
+//    ui->label->setFont(smallFont);
     ui->label->setStyleSheet(smallTextColorStyle);
-    ui->durationLabel->setFont(smallFont);
+//    ui->durationLabel->setFont(smallFont);
     ui->durationLabel->setStyleSheet(smallTextColorStyle);
-    ui->aspectRatioLabel->setFont(smallFont);
+//    ui->aspectRatioLabel->setFont(smallFont);
     ui->aspectRatioLabel->setStyleSheet(smallTextColorStyle);
-    ui->sequenceCheckBox->setFont(smallFont);
+//    ui->sequenceCheckBox->setFont(smallFont);
     ui->sequenceCheckBox->setStyleSheet(smallTextColorStyle);//setStyleSheet("QCheckBox{color:rgb(185,185,185)}");
-    ui->label_2->setFont(smallFont);
+//    ui->label_2->setFont(smallFont);
     ui->label_2->setStyleSheet(smallTextColorStyle);
-    ui->label_3->setFont(smallFont);
+//    ui->label_3->setFont(smallFont);
     ui->label_3->setStyleSheet(smallTextColorStyle);
-    ui->label_4->setFont(smallFont);
+//    ui->label_4->setFont(smallFont);
     ui->label_4->setStyleSheet(smallTextColorStyle);
-    ui->label_5->setFont(smallFont);
+//    ui->label_5->setFont(smallFont);
     ui->label_5->setStyleSheet(smallTextColorStyle);
 
     QString editStyle= "QLineEdit{border:1px;border-radius:3px;background-color:rgb(82,82,82);color:rgb(185,185,185);padding-left:4px;}";

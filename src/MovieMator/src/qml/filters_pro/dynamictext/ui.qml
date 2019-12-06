@@ -864,7 +864,7 @@ Item {
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             color: activePalette.text//'#ffffff'
             font.bold:true
-            font.pointSize:13
+//            font.pointSize:13
         }
         TextArea {
             id: textArea
@@ -934,7 +934,7 @@ Item {
             Layout.alignment: Qt.AlignLeft
             color: activePalette.text//'#ffffff'
             font.bold:true
-            font.pointSize:13
+//            font.pointSize:13
             //font.underline:true
 
         }
@@ -1570,7 +1570,7 @@ Item {
             Layout.alignment: Qt.AlignLeft
             color: activePalette.text//'#ffffff'
             font.bold:true
-            font.pointSize:13
+//            font.pointSize:13
         }
         Preset 
         {

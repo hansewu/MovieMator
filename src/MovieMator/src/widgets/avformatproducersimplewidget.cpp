@@ -47,7 +47,7 @@ AvformatProducerSimpleWidget::AvformatProducerSimpleWidget(QWidget *parent)
 
     ui->filenameLabel->setStyleSheet("color:rgb(185,185,185);");
     QFont font = ui->filenameLabel->font();
-    font.setPointSize(16);
+    font.setPointSize(14);
     ui->filenameLabel->setFont(font);
 
     ui->line->setStyleSheet("color:black;");
@@ -76,19 +76,19 @@ AvformatProducerSimpleWidget::AvformatProducerSimpleWidget(QWidget *parent)
     ui->endPointSpinBox->setStyleSheet("QSpinBox{background-color:transparent; border:none;}");
 
     ui->startPointLabel->setStyleSheet("color:rgb(185,185,185);");
-    QFont startPointLabelFont = ui->startPointLabel->font();
-    startPointLabelFont.setPointSize(13);
-    ui->startPointLabel->setFont(startPointLabelFont);
+//    QFont startPointLabelFont = ui->startPointLabel->font();
+//    startPointLabelFont.setPointSize(13);
+//    ui->startPointLabel->setFont(startPointLabelFont);
 
     ui->endPointLabel->setStyleSheet("color:rgb(185,185,185);");
-    QFont endPointLabelFont = ui->startPointLabel->font();
-    endPointLabelFont.setPointSize(13);
-    ui->endPointLabel->setFont(endPointLabelFont);
+//    QFont endPointLabelFont = ui->startPointLabel->font();
+//    endPointLabelFont.setPointSize(13);
+//    ui->endPointLabel->setFont(endPointLabelFont);
 
     ui->speedLabel->setStyleSheet("color:rgb(185,185,185);");
-    QFont speedLabelFont = ui->startPointLabel->font();
-    speedLabelFont.setPointSize(13);
-    ui->speedLabel->setFont(speedLabelFont);
+//    QFont speedLabelFont = ui->startPointLabel->font();
+//    speedLabelFont.setPointSize(13);
+//    ui->speedLabel->setFont(speedLabelFont);
 
     m_bStatus       = false;
     m_dOpacityValue = 1.0;
