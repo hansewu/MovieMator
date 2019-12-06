@@ -78,7 +78,7 @@ RowLayout{
     property rect colorRect
 
     //同步数据信号，这里这个信号的响应主要是同步界面数值到project中，mlt底层
-    signal syncUIDataToProject()
+    signal syncUIDataToProject(string strIdentifierOfParameter)
 
     //加载keyframe信号，这里主要用到的是同步数据值到界面中
     signal refreshUI()
@@ -481,23 +481,31 @@ RowLayout{
     //帧位置改变时加载控件参数，从mlt底层读取数据更新到界面上
     function updateParamsUI(layoutRoot)
     {
-        if(typeof layoutRoot == 'undefined'){
+        if(typeof layoutRoot == 'undefined')
+        {
             throw new Error("layoutRoot is undefined:"+layoutRoot)
         }
 
         if(bBlockUpdateUI == true) return
         currentFrame = timeline.getPositionInCurrentClip()
-        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined')){
+        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined'))
+        {
             throw new Error("metadata is abnormal")
         }
 
         bBlockUIChangedSignal = true
         var metaParamList = metadata.keyframes.parameters
-        for(var paramIndex=0;paramIndex<metaParamList.length;paramIndex++){
+        for(var paramIndex=0; paramIndex<metaParamList.length; paramIndex++)
+        {
             var parameter = metaParamList[paramIndex]
+
+            if (!filter.isKeyframeActivate(parameter.property))
+                continue;
+
             var control = findControl(parameter.objectName,layoutRoot)
             if(control === null)
                 continue;
+
             switch(parameter.controlType)
             {
             case "SliderSpinner":
@@ -540,26 +548,37 @@ RowLayout{
     // 数据写入，将控件的数值set到filter里面，将界面参数值更新到project中
     function syncDataToProject(layoutRoot)
     {
-
-        if(typeof layoutRoot == 'undefined'){
+        if(typeof layoutRoot == 'undefined')
+        {
             throw new Error("layoutRoot is undefined:"+layoutRoot)
         }
-        clearAllFilterAnimationStatus()
 
-        bBlockUpdateUI = true
-
-        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined')){
+        if((typeof metadata == 'undefined')||(typeof metadata.keyframes == 'undefined')||(typeof metadata.keyframes.parameters == 'undefined'))
+        {
             throw new Error("metadata is abnormal")
         }
+
+        //clearAllFilterAnimationStatus()
+
+        bBlockUpdateUI = true
+        var paramIdentifier = filter.getCurrentParameter()
+        filter.resetProperty(paramIdentifier)
+
+        var parameter
         var metaParamList = metadata.keyframes.parameters
-        for(var paramIndex=0;paramIndex<metaParamList.length;paramIndex++){
-            var parameter = metaParamList[paramIndex]
-            var control = findControl(parameter.objectName,layoutRoot)
-            if(control === null)
-                continue;
+        for(var paramIndex=0; paramIndex < metaParamList.length; paramIndex++)
+        {
+            parameter = metaParamList[paramIndex]
+            if (paramIdentifier === parameter.propery)
+                break
+        }
+
+        var control = findControl(parameter.objectName,layoutRoot)
+        if(control === null)
+            return
             
-            switch(parameter.controlType)
-            {
+        switch(parameter.controlType)
+        {
             case "SliderSpinner":
                 filter.set(parameter.property,calcProjValByUIVal(control.value,parameter.factorFunc))
                 break;
@@ -596,8 +615,6 @@ RowLayout{
                 //control.value = parameter.defaultValue
                 //filter.set(parameter.property,control.value)
                 break;
-            }
-
         }
 
         bBlockUpdateUI = false
@@ -1038,7 +1055,6 @@ RowLayout{
 
              // 添加关键帧信号
              onAddKeyframe: {
-                 //syncUIDataToProject()
                  addKeyFrame(strIdentifierOfParameter)
              }
 
@@ -1062,7 +1078,7 @@ RowLayout{
              // 移除所有关键帧信号
              onRemoveAllKeyFrame: {
                 filter.removeAllKeyFrame(strIdentifierOfParameter)
-                syncUIDataToProject()
+                syncUIDataToProject(strIdentifierOfParameter)
              }
 
             // 自动添加关键帧信号，当参数改变时
