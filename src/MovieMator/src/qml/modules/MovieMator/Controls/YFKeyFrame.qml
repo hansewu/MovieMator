@@ -28,21 +28,6 @@ RowLayout{
 
     id: keyFrame
     visible: false
-    
-    /** the animation’s enable state to the value specified by bEnable. 
-     * 更新关键帧功能是否开启bEnable，同时向QmlFilter对象中保存了当前动画功能是否激活。当动画激活时，可以增加关键帧设置动画，当动画没有激活时，不可以添加关键帧，不能给滤镜添加动画效果。
-     *
-     * \param bEnable the animation is enable or not
-     * \return the animation's enable state
-     */
-    function updateEnableKeyFrame(bEnable)
-    {
-        bEnableKeyFrame = bEnable
-        if(filter != null){
-            filter.setEnableAnimation(bEnableKeyFrame)
-        }
-        return bEnableKeyFrame
-    }
 
     /** update the Auto add keyframes function’s enable state to the value specified by bEnable.
      * 更新自动设置关键帧功能为bEnable，同时向QmlFilter对象中保存了当前自动更新关键帧的功能是否激活
@@ -58,9 +43,6 @@ RowLayout{
         }
         return bAutoSetAsKeyFrame
     }
-
-    // A Boolean value that indicates whether the animation is enable state.
-    property bool bEnableKeyFrame: updateEnableKeyFrame((filter.cache_getKeyFrameNumber(filter.getCurrentParameter()) > 0))
     
     // A Boolean value that indicates whether the auto add keyframes function is on.
     property bool bAutoSetAsKeyFrame: updateAutoSetAsKeyFrame(true)
@@ -135,7 +117,7 @@ RowLayout{
        
         bBlockUpdateUI = true
         // 可能一个控件对应几个配置项
-        var parameterList = getParamsAssociatedWithControl(id)
+        var parameterList = getParamsAssociatedWithControl(id.objectName)
         if((typeof metadata == 'undefined') || (typeof metadata.keyframes == 'undefined') || (typeof metadata.keyframes.parameters == 'undefined'))
         {
             throw new Error("metadata is abnormal")
@@ -164,7 +146,7 @@ RowLayout{
 //                {
 //                    valueChange = true
 //                }
-                else if(!bEnableKeyFrame)  //没有关键帧
+                else if(!filter.isKeyframeActivate(parameter.property))  //没有关键帧
                 {
                     filter.set(parameter.property, calcProjValByUIVal(id.value, parameter.factorFunc))
                 }
@@ -184,7 +166,7 @@ RowLayout{
                 {
                     
                 }
-                else if(!bEnableKeyFrame)  //没有关键帧
+                else if(!filter.isKeyframeActivate(parameter.property))  //没有关键帧
                 {
                     filter.set(parameter.property, Number(id.checked))
                 }
@@ -219,7 +201,7 @@ RowLayout{
                 {
                     userChange = false
                 }
-                else if(!bEnableKeyFrame)  //没有关键帧
+                else if(!filter.isKeyframeActivate(parameter.property))  //没有关键帧
                 {
                     filter.set(parameter.property, calcProjValByUIVal(id.red, parameter.factorFunc))
                     filter.set(parameter2.property, calcProjValByUIVal(id.green, parameter2.factorFunc))
@@ -255,7 +237,7 @@ RowLayout{
                 {
 
                 }
-                else if(!bEnableKeyFrame)  //没有关键帧
+                else if(!filter.isKeyframeActivate(parameter.property))  //没有关键帧
                 {
                     filter.set(parameter.property, colorRect)
                 }
@@ -277,7 +259,7 @@ RowLayout{
                 {
 
                 }
-                else if(!bEnableKeyFrame)  //没有关键帧
+                else if(!filter.isKeyframeActivate(parameter.property))  //没有关键帧
                 {
                     filter.set(parameter.property, calcProjValByUIVal(id.value,parameter.factorFunc))
                 }
@@ -297,7 +279,7 @@ RowLayout{
                 {
 
                 }
-                else if(!bEnableKeyFrame)  //没有关键帧
+                else if(!filter.isKeyframeActivate(parameter.property))  //没有关键帧
                 {
                     filter.set(parameter.property, id.currentText)
                 }
@@ -346,73 +328,84 @@ RowLayout{
             throw new Error("metadata is abnormal")
         }
 
+        bBlockUpdateUI = true
+
         var paraType
+        var parameterObjectName
+
         var paramCount = metadata.keyframes.parameterCount
         for (var i = 0; i < paramCount; i++)
         {
             if (metadata.keyframes.parameters[i].property === strParameterId)
+            {
                 paraType = metadata.keyframes.parameters[i].paraType
+                parameterObjectName = metadata.keyframes.parameters[i].objectName
+            }
         }
 
-        bBlockUpdateUI = true
-
-        if (!filter.isKeyframeActivate(strParameterId))
+        var paramList = getParamsAssociatedWithControl(parameterObjectName)
+        for(var i=0; i< paramList.length; i++)
         {
-            var value = ''
-            var startPosition = 0
-            var endPosition = timeline.getCurrentClipLength() - 1//filter.producerOut - filter.producerIn + 1
-            var outPointOfInAnim = dAnimationDuration * profile.fps
-            var inPointOfOutAnim = endPosition - dAnimationDuration * profile.fps
+            var parameterKey = metadata.keyframes.parameters[paramList[i]].property
 
-            if (outPointOfInAnim > endPosition)
-                outPointOfInAnim = endPosition
-            if (inPointOfOutAnim < startPosition)
-                inPointOfOutAnim = startPosition
-
-            var addInAnim = 0
-            var addOutAnim = 0
-
-
-            if (nAnimationType === 0)
+            if (!filter.isKeyframeActivate(parameterKey))
             {
-                addInAnim = 1
-                addOutAnim = 1
+                var value = ''
+                var startPosition = 0
+                var endPosition = timeline.getCurrentClipLength() - 1//filter.producerOut - filter.producerIn + 1
+                var outPointOfInAnim = dAnimationDuration * profile.fps
+                var inPointOfOutAnim = endPosition - dAnimationDuration * profile.fps
 
-                if(inPointOfOutAnim < outPointOfInAnim)
-                    inPointOfOutAnim = outPointOfInAnim
-            }
-            if (nAnimationType === 1)
-                addInAnim = 1
-            if (nAnimationType === 2)
-                addOutAnim = 1
+                if (outPointOfInAnim > endPosition)
+                    outPointOfInAnim = endPosition
+                if (inPointOfOutAnim < startPosition)
+                    inPointOfOutAnim = startPosition
 
-            if(paraType === 'rect')
-            {
-                value = filter.getAnimRectValue(startPosition, strParameterId)
-                if (addInAnim === 1)
-                {
-                    filter.cache_setKeyFrameParaRectValue(startPosition, strParameterId, value)
-                    filter.cache_setKeyFrameParaRectValue(outPointOfInAnim, strParameterId, value)
-                }
+                var addInAnim = 0
+                var addOutAnim = 0
 
-                if (addOutAnim === 1)
+
+                if (nAnimationType === 0)
                 {
-                    filter.cache_setKeyFrameParaRectValue(inPointOfOutAnim, strParameterId, value)
-                    filter.cache_setKeyFrameParaRectValue(endPosition, strParameterId, value)
+                    addInAnim = 1
+                    addOutAnim = 1
+
+                    if(inPointOfOutAnim < outPointOfInAnim)
+                        inPointOfOutAnim = outPointOfInAnim
                 }
-            }
-            else
-            {
-                value = filter.get(strParameterId)
-                if (addInAnim === 1)
+                if (nAnimationType === 1)
+                    addInAnim = 1
+                if (nAnimationType === 2)
+                    addOutAnim = 1
+
+                if(paraType === 'rect')
                 {
-                    filter.cache_setKeyFrameParaValue(startPosition, strParameterId, value.toString());
-                    filter.cache_setKeyFrameParaValue(outPointOfInAnim, strParameterId, value.toString());
+                    value = filter.getAnimRectValue(startPosition, parameterKey)
+                    if (addInAnim === 1)
+                    {
+                        filter.cache_setKeyFrameParaRectValue(startPosition, parameterKey, value)
+                        filter.cache_setKeyFrameParaRectValue(outPointOfInAnim, parameterKey, value)
+                    }
+
+                    if (addOutAnim === 1)
+                    {
+                        filter.cache_setKeyFrameParaRectValue(inPointOfOutAnim, parameterKey, value)
+                        filter.cache_setKeyFrameParaRectValue(endPosition, parameterKey, value)
+                    }
                 }
-                if (addOutAnim === 1)
+                else
                 {
-                    filter.cache_setKeyFrameParaValue(inPointOfOutAnim, strParameterId, value.toString());
-                    filter.cache_setKeyFrameParaValue(endPosition, strParameterId, value.toString());
+                    value = filter.get(parameterKey)
+                    if (addInAnim === 1)
+                    {
+                        filter.cache_setKeyFrameParaValue(startPosition, parameterKey, value.toString());
+                        filter.cache_setKeyFrameParaValue(outPointOfInAnim, parameterKey, value.toString());
+                    }
+                    if (addOutAnim === 1)
+                    {
+                        filter.cache_setKeyFrameParaValue(inPointOfOutAnim, parameterKey, value.toString());
+                        filter.cache_setKeyFrameParaValue(endPosition, parameterKey, value.toString());
+                    }
                 }
             }
         }
@@ -434,36 +427,48 @@ RowLayout{
 
         bBlockUpdateUI = true
 
+
         var paraType
+        var parameterObjectName
         var paramCount = metadata.keyframes.parameterCount
         for (var i = 0; i < paramCount; i++)
         {
             if (metadata.keyframes.parameters[i].property === strParameterId)
+            {
                 paraType = metadata.keyframes.parameters[i].paraType
+                parameterObjectName = metadata.keyframes.parameters[i].objectName
+            }
         }
 
-        //插入关键帧
-        var value ;
-        switch(paraType)
+        var paramList = getParamsAssociatedWithControl(parameterObjectName)
+        for(var i=0; i< paramList.length; i++)
         {
+            var parameterKey = metadata.keyframes.parameters[paramList[i]].property
+
+            //插入关键帧
+            var value ;
+            switch(paraType)
+            {
             case 'int':
-                value = filter.getAnimIntValue(position, strParameterId)
-                filter.cache_setKeyFrameParaValue(position, strParameterId, value.toString());
+                value = filter.getAnimIntValue(position, parameterKey)
+                filter.cache_setKeyFrameParaValue(position, parameterKey, value.toString());
                 break;
             case 'double':
-                value = filter.getAnimDoubleValue(position, strParameterId)
-                filter.cache_setKeyFrameParaValue(position, strParameterId, value.toString());
+                value = filter.getAnimDoubleValue(position, parameterKey)
+                filter.cache_setKeyFrameParaValue(position, parameterKey, value.toString());
                 break;
             case 'string':
-                value = filter.getAnimStringValue(position, strParameterId)
-                filter.cache_setKeyFrameParaValue(position, strParameterId, value.toString());
+                value = filter.getAnimStringValue(position, parameterKey)
+                filter.cache_setKeyFrameParaValue(position, parameterKey, value.toString());
                 break;
             case 'rect':
-                value = filter.getAnimRectValue(position, strParameterId)
-                filter.cache_setKeyFrameParaRectValue(position, strParameterId, value);
+                value = filter.getAnimRectValue(position, parameterKey)
+                filter.cache_setKeyFrameParaRectValue(position, parameterKey, value);
                 break;
             default:
                 break;
+            }
+
         }
 
         bBlockUpdateUI = false
@@ -499,8 +504,8 @@ RowLayout{
         {
             var parameter = metaParamList[paramIndex]
 
-            if (!filter.isKeyframeActivate(parameter.property))
-                continue;
+            //if (!filter.isKeyframeActivate(parameter.property))
+                //continue;
 
             var control = findControl(parameter.objectName,layoutRoot)
             if(control === null)
@@ -538,7 +543,7 @@ RowLayout{
                 break;
             }
             // 一个控件对应几个参数的，取一次就可以反算出来了
-            var paramList = getParamsAssociatedWithControl(control)
+            var paramList = getParamsAssociatedWithControl(control.objectName)
             paramIndex = paramIndex + paramList.length -1
         }
 
@@ -775,10 +780,10 @@ RowLayout{
       return true;
     }
 
-    // 根据控件id查找配置项，查找对应哪几个参数，因为会有一个控件对应几个参数
-    function getParamsAssociatedWithControl(id)
+    // 根据控件id查找配置项，查找对应哪几个参数，因为会有一个控件对应几个参数（比如rotation滤镜的scale）
+    function getParamsAssociatedWithControl(controlObjectName)
     {
-        if((typeof id == 'undefined')||(typeof id.objectName == 'undefined'))
+        if(typeof controlObjectName == 'undefined')
         {
             throw new Error("id is abnormal:"+id)
         }
@@ -789,7 +794,7 @@ RowLayout{
         var rt = [];
         for(var i=0;i<metadata.keyframes.parameters.length;i++)
         {
-            if(id.objectName === metadata.keyframes.parameters[i].objectName)
+            if(controlObjectName === metadata.keyframes.parameters[i].objectName)
             rt.push(i)
         }
         return  rt;
@@ -831,7 +836,7 @@ RowLayout{
             parameter.value = calcUIValByProjVal(tempValue1,parameter.factorFunc)
             
             // 一定要先设配置参数，再设control的value，不然control的value一旦改变，就会触发新的动作，而那里面会用到parameter的value
-            var parameterList = getParamsAssociatedWithControl(control)
+            var parameterList = getParamsAssociatedWithControl(control.objectName)
             for(var i=0;i< parameterList.length;i++){ //所有参数的value都要设，不然后面比较的时候会有问题
                 metadata.keyframes.parameters[parameterList[i]].value = parameter.value
             }
@@ -1001,7 +1006,7 @@ RowLayout{
             filter.get(parameter.property)
             parameter.value = calcUIValByProjVal(tempValue1,parameter.factorFunc)
             // 一定要先设配置参数，再设control的value，不然control的value一旦改变，就会触发新的动作，而那里面会用到parameter的value
-            var parameterList = getParamsAssociatedWithControl(control)
+            var parameterList = getParamsAssociatedWithControl(control.objectName)
             for(var i=0;i< parameterList.length;i++){ //所有参数的value都要设，不然后面比较的时候会有问题
                 metadata.keyframes.parameters[parameterList[i]].value = parameter.value
             }
