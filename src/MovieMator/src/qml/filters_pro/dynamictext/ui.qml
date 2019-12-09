@@ -189,14 +189,12 @@ Item {
     Component.onCompleted: {
         console.log("Component.onCompleted")
 
-        keyframe.initFilter(idGridLayoutAnimation)
-
-        setControls()
-        setKeyframedControls()
-
         if (filter.isNew) {
             filter.set('size', filterRect.height)
         }
+
+        setControls()
+        keyframe.initFilter(idGridLayoutAnimation)
     }
 
     function setControls()
@@ -225,12 +223,12 @@ Item {
         idGlowColor.value       = getHexStrColor(-1, 'glow_color')
         idGlowRadius.value    = filter.getDouble('glow_radius')
 
-        rotationSlider.value            = filter.getDouble('trans_fix_rotate_x')
-        scaleSlider.value               =  100.0/filter.getDouble('trans_scale_x')
-        xOffsetSlider.value             = filter.getDouble('trans_ox') * -1
-        yOffsetSlider.value             = filter.getDouble('trans_oy') * -1
-        scaleAspectRatioSlider.value    =  filter.getDouble('trans_scale_aspect_ratio')
-        transparentAlphaSlider.value    =  filter.getDouble('transparent_alpha')
+//        rotationSlider.value            = filter.getDouble('trans_fix_rotate_x')
+//        scaleSlider.value               =  100.0/filter.getDouble('trans_scale_x')
+//        xOffsetSlider.value             = filter.getDouble('trans_ox') * -1
+//        yOffsetSlider.value             = filter.getDouble('trans_oy') * -1
+//        scaleAspectRatioSlider.value    =  filter.getDouble('trans_scale_aspect_ratio')
+//        transparentAlphaSlider.value    =  filter.getDouble('transparent_alpha')
 
         blockUpdate = false
         var align = filter.get(halignProperty)
@@ -247,28 +245,6 @@ Item {
             middleRadioButton.checked = true
         else if (align === 'bottom')
             bottomRadioButton.checked = true
-    }
-
-    function setKeyframedControls()
-    {
-            var nFrame = timeline.getPositionInCurrentClip()
-
-            blockUpdate = true
-
-            if (filter.cache_getKeyFrameNumber('trans_fix_rotate_x') > 0)
-                rotationSlider.value = filter.getAnimDoubleValue(nFrame, 'trans_fix_rotate_x')
-            if (filter.cache_getKeyFrameNumber('trans_scale_x') > 0)
-                scaleSlider.value =  100.0/filter.getAnimDoubleValue(nFrame, 'trans_scale_x')
-            if (filter.cache_getKeyFrameNumber('trans_ox') > 0)
-                xOffsetSlider.value = filter.getAnimDoubleValue(nFrame, 'trans_ox') * -1
-            if (filter.cache_getKeyFrameNumber('trans_oy') > 0)
-                yOffsetSlider.value = filter.getAnimDoubleValue(nFrame, 'trans_oy') * -1
-            if (filter.cache_getKeyFrameNumber('trans_scale_aspect_ratio') > 0)
-                scaleAspectRatioSlider.value    =  filter.getAnimDoubleValue(nFrame, 'trans_scale_aspect_ratio')
-            if (filter.cache_getKeyFrameNumber('transparent_alpha') > 0)
-                transparentAlphaSlider.value    =  filter.getAnimDoubleValue(nFrame, 'transparent_alpha')
-
-            blockUpdate = false
     }
 
     function setFilter()
@@ -1016,7 +992,7 @@ Item {
             }
             onPresetSelected: {
                 //更新界面
-                setKeyframedControls()
+                keyframe.updateParamsUI(idGridLayoutAnimation)
 
                 if (filter.isNew) {
                     filter.set('size', filterRect.height)
