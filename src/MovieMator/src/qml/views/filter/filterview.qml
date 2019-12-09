@@ -296,7 +296,7 @@ Rectangle {
             bottomMargin:5
         }
         radius: 2//圆角
-        visible: metadata && (metadata.keyframes.parameterCount > 0)
+        visible: metadata && metadata.keyframes.supportAnimation
         KeyFrameControl {
             id: keyFrameControl
             width:parent.width
