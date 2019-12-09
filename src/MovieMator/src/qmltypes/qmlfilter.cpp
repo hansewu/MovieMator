@@ -639,6 +639,7 @@ void QmlFilter::preset(const QString &name)
     m_filter->load(dir.filePath(name).toUtf8().constData());
     MLT.refreshConsumer();
     emit filterPropertyValueChanged();
+    emit keyframeNumberChanged();
 }
 
 QString QmlFilter::objectNameOrService()
