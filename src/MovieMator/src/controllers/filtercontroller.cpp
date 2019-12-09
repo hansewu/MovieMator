@@ -96,7 +96,13 @@ void FilterController::loadFilterParameter(QmlMetadata *pMetadata)
             Q_ASSERT(pParameter);
 
             QString strAdjustedByControls = QString::fromUtf8(mlt_properties_get(paramProperties, "bAdjustedByControls"));
-            if((strAdjustedByControls != "0")&&(!bFrei0r)) continue;
+            if((strAdjustedByControls != "1")&&(!bFrei0r))
+                continue;
+
+            QString strSupportAnimation = QString::fromUtf8(mlt_properties_get(paramProperties, "bHaveAnimationEffect"));
+            pParameter->setSupportAnimationFlag(strSupportAnimation);
+            if (bFrei0r)
+                pParameter->setSupportAnimationFlag("1");
 
             QString strParmType = QString::fromUtf8(mlt_properties_get(paramProperties, "type"));
             if (strParmType == "boolean")
@@ -159,9 +165,11 @@ void FilterController::loadFilterMetadata()
     {
         if (strDirName == "frei0r")
         {
-            loadFrei0rFilterMetadata();
+//            loadFrei0rFilterMetadata();
             continue;
         }
+//        else
+//            continue;
 
         QDir subdir = dir;
         subdir.cd(strDirName);
@@ -187,6 +195,10 @@ void FilterController::loadFilterMetadata()
                     loadFilterParameter(pMetadata);
 
                     addMetadata(pMetadata);
+                }
+                else
+                {
+                   LOG_DEBUG() << "mlt_service is not available" << strDirName << pMetadata->mlt_service();
                 }
             }
             else if (!pMetadata)

@@ -301,7 +301,7 @@ Rectangle {
                     onClicked: {
                         if(checked)
                         {
-                            if(metadata.keyframes.parameterCount > 0)
+                            if(metadata.keyframes.supportAnimation)
                             {
                                 enableKeyframe(m_strIdentifierOfParameter, comboboxAnimationType.currentIndex, sliderAnimationDuration.value)
                                 refreshFrameButtonsEnable(m_strIdentifierOfParameter)
@@ -584,17 +584,17 @@ Rectangle {
 
             m_listModelParameters.clear()
             comboboxParametersList.currentIndex = -1
-            if(metadata)
+            if(metadata && metadata.keyframes.supportAnimation)
             {
                 for (var i = 0; i < metadata.keyframes.parameterCount; i++)
                 {
-                    m_listModelParameters.append({name: metadata.keyframes.parameters[i].name, parameterIdentifier: metadata.keyframes.parameters[i].property})
+                    if (metadata.keyframes.parameters[i].supportAnimationFlag === "1")
+                        m_listModelParameters.append({name: metadata.keyframes.parameters[i].name, parameterIdentifier: metadata.keyframes.parameters[i].property})
                 }
                 comboboxParametersList.selectItemOfIndex(0);
             }
 
             enableKeyFrameCheckBox.checked = ( filter && filter.isKeyframeActivate(m_strIdentifierOfParameter) > 0)
-
         }
     }
 

@@ -17,4 +17,5 @@ Metadata {
     gpuAlt: "movit.opacity"
     filterType: qsTr('5 Advanced Coloring Tool')
     objectName: 'brightness'
+    isHidden: true
 }

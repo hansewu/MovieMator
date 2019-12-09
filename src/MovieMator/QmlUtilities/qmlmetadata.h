@@ -58,6 +58,7 @@ class QMLUTILITIESSHARED_EXPORT QmlKeyframesParameter : public QObject
     Q_PROPERTY(QString defaultValue MEMBER m_defaultValue NOTIFY parameterChanged)
     Q_PROPERTY(QString value MEMBER m_value NOTIFY parameterChanged)
     Q_PROPERTY(QList<QString> factorFunc MEMBER m_factorFunc NOTIFY parameterChanged)
+    Q_PROPERTY(QString supportAnimationFlag MEMBER m_strSupportAnimationFlag)
 
 public:
     explicit QmlKeyframesParameter(QObject* parent = nullptr);
@@ -202,6 +203,10 @@ public:
      * \param factorFunc the formula for calculating the property‘s interface value
      */
     void setFactorFunc(const QList<QString> &factorFunc) {m_factorFunc.append(factorFunc);}
+
+    void setSupportAnimationFlag(const QString &supportAnimation) { m_strSupportAnimationFlag = supportAnimation; }
+
+    QString supportAnimationFlag() const { return m_strSupportAnimationFlag; };
 signals:
     void parameterChanged();   /** did not use*/
 
@@ -220,6 +225,8 @@ private:
     QString m_defaultValue; /** the default value of the parameter*/
     QString m_value;        /** the value of the parameter*/
     QList<QString> m_factorFunc;    /** the formula for calculating the parameter's interface value*/
+    QString m_strSupportAnimationFlag; //是否支持关键帧动画
+
 };
 
 /*!
@@ -241,6 +248,7 @@ class QMLUTILITIESSHARED_EXPORT QmlKeyframesMetadata : public QObject
     Q_PROPERTY(QString minimumVersion MEMBER m_minimumVersion NOTIFY keyframesMetadataChanged)
     Q_PROPERTY(bool enabled MEMBER m_enabled NOTIFY keyframesMetadataChanged)
     Q_PROPERTY(int parameterCount READ parameterCount NOTIFY keyframesMetadataChanged)
+    Q_PROPERTY(bool supportAnimation READ supportAnimation)
 
 public:
     explicit QmlKeyframesMetadata(QObject *parent = nullptr);
@@ -319,6 +327,8 @@ public:
      *
      */
     void clearParameter();
+
+    bool supportAnimation();
 
 signals:
     void keyframesMetadataChanged();             /** did not use*/

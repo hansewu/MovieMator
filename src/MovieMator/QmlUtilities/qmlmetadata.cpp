@@ -272,6 +272,17 @@ void QmlKeyframesMetadata::setDisabled()
     m_enabled = m_allowAnimateIn = m_allowAnimateOut = false;
 }
 
+bool QmlKeyframesMetadata::supportAnimation()
+{
+    for (int i = 0; i < m_parameters.count(); i++)
+    {
+        QmlKeyframesParameter *pParameter = m_parameters.at(i);
+        if (pParameter->supportAnimationFlag() == "1")
+            return true;
+    }
+    return false;
+}
+
 
 
 QmlKeyframesParameter::QmlKeyframesParameter(QObject* parent)
@@ -281,6 +292,7 @@ QmlKeyframesParameter::QmlKeyframesParameter(QObject* parent)
     , m_minimum(0.0)
     , m_maximum(0.0)
     , m_paraType("string")
+    , m_strSupportAnimationFlag("0")
 {
 }
 
