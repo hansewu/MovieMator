@@ -301,7 +301,7 @@ Rectangle {
                     onClicked: {
                         if(checked)
                         {
-                            if(metadata.keyframes.supportAnimation)
+                            if(metadata.keyframes.supportAnimation > 0)
                             {
                                 enableKeyframe(m_strIdentifierOfParameter, comboboxAnimationType.currentIndex, sliderAnimationDuration.value)
                                 refreshFrameButtonsEnable(m_strIdentifierOfParameter)
@@ -389,6 +389,7 @@ Rectangle {
 
                     minimumValue: 0.5
                     maximumValue: 5.0
+                    value: 1.0
                     stepSize: 0.5
                     tickmarksEnabled: true
                 }
