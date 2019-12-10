@@ -165,7 +165,7 @@ void FilterController::loadFilterMetadata()
     {
         if (strDirName == "frei0r")
         {
-//            loadFrei0rFilterMetadata();
+            loadFrei0rFilterMetadata();
             continue;
         }
 //        else
