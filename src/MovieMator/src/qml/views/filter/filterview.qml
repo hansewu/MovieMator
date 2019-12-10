@@ -292,8 +292,8 @@ Rectangle {
             left: parent.left
             right: parent.right
             leftMargin:0
-            rightMargin:10
-            bottomMargin:5
+            rightMargin:0
+            bottomMargin:0
         }
         radius: 2//圆角
         visible: metadata && metadata.keyframes.supportAnimation

@@ -542,7 +542,7 @@ RowLayout{
             default :
                 break;
             }
-            // 一个控件对应几个参数的，取一次就可以反算出来了
+            // 一个控件对应几个参数的，只取一个就可以
             var paramList = getParamsAssociatedWithControl(control.objectName)
             paramIndex = paramIndex + paramList.length -1
         }

@@ -103,6 +103,53 @@ Rectangle {
         }
     }
 
+    // project mlt底层到控件参数的加载计算，刚好与写入保存相反
+    function calcUIValByProjVal(value,factorFunc)
+    {
+        var rt = value
+        for(var i=factorFunc.length-1;i>=0;i--)
+        {
+            var calc = factorFunc[i]
+            var calcSymbol = calc.substring(0,calc.lastIndexOf(":"))
+            var calcValue = parseFloat(calc.substring(calc.lastIndexOf(":")+1,calc.length))
+            switch(calcSymbol)
+            {
+            case '+':
+                rt = rt - calcValue
+                break;
+
+            case '-':
+                rt = rt + calcValue
+                break;
+
+            case 'x':
+                rt = rt / calcValue
+                break;
+
+            case 'c':
+                rt = rt * calcValue
+                break;
+
+            case 'b':
+                if (rt === 0)
+                   rt = 1
+                else
+                   rt = calcValue / rt
+                //rt = calcValue / rt
+                break;
+
+            case 'log':
+                rt = Math.pow(calcValue, rt);
+                break;
+
+            case 'pow':
+                rt = Math.log(Math.abs(rt)) / Math.log(Math.abs(calcValue))
+                break;
+            }
+        }
+        return rt;
+    }
+
     function refreshKeyframeInfo(strIdentifierOfParameter)
     {
         if (strIdentifierOfParameter === "")
@@ -111,9 +158,36 @@ Rectangle {
         var position = timeline.getPositionInCurrentClip()
         if (filter.isKeyframeAtPosition(strIdentifierOfParameter, position))
         {
-            var value = filter.cache_getKeyFrameParaDoubleValue(position, strIdentifierOfParameter)
+            var paraType
+
+            var paramCount = metadata.keyframes.parameterCount
+            var factorFunc
+            for (var i = 0; i < paramCount; i++)
+            {
+                if (metadata.keyframes.parameters[i].property === strIdentifierOfParameter)
+                {
+                    paraType = metadata.keyframes.parameters[i].paraType
+                    factorFunc = metadata.keyframes.parameters[i].factorFunc
+                }
+            }
+
+            var value
+            if (paraType === 'rect')
+                value = filter.cache_getKeyFrameParaRectValue(position, strIdentifierOfParameter)
+            else
+                value = filter.cache_getKeyFrameParaDoubleValue(position, strIdentifierOfParameter)
+
             var timePos = filter.timeFromFrames(position)
-            labelKeyframeInfo.text = "(Position: " + timePos +", Value: " + Math.round(value*1000)/1000 + ")"
+            if (paraType === 'rect')
+            {
+                var rect = 'rect(' + Math.round(value.x*100)/100 + ',' + Math.round(value.y*100)/100 + ',' + Math.round(value.width*100)/100 + ',' + Math.round(value.height*100)/100 + ')'
+                labelKeyframeInfo.text = "(Position: " + timePos +", Value: " + rect + ")"
+            }
+            else
+            {
+                var valueDisplay = calcUIValByProjVal(value, factorFunc)
+                labelKeyframeInfo.text = "(Position: " + timePos +", Value: " + Math.round(valueDisplay*10)/10 + ")"
+            }
         }
         else
         {
@@ -246,7 +320,7 @@ Rectangle {
             {
                 columns: 2
                 Layout.topMargin: 4
-                Layout.leftMargin: 24
+                Layout.leftMargin: 12
                 Label
                 {
                     id: parameterLabel
@@ -258,7 +332,7 @@ Rectangle {
                 {
                     id: comboboxParametersList
                     listModel: m_listModelParameters
-                    height: 26
+                    height: 24
 
                     Layout.preferredWidth: 240
 
@@ -369,7 +443,7 @@ Rectangle {
                         ListElement {name: qsTr('Out Animaiton')}
                     }
 
-                    height: 26
+                    height: 24
 
                     onCurrentIndexChanged:
                     {
@@ -423,7 +497,7 @@ Rectangle {
                     id: comboboxInterpolation
                     visible: false
                     listModel:m_listModelInterpolations
-                    height: 26
+                    height: 24
 
                     onCurrentIndexChanged:
                     {
@@ -436,13 +510,13 @@ Rectangle {
             RowLayout
             {
                 id: rowLayoutButtons
-                Layout.leftMargin: 24
+                Layout.leftMargin: 12
                 spacing: 12
 
                 Button {
                     id:addKeyFrameButton
-                    implicitWidth: 18
-                    implicitHeight: 18
+                    implicitWidth: 20
+                    implicitHeight: 20
 
                     opacity: enabled ? 1.0 : 0.5
                     tooltip: qsTr('Add key frame')
@@ -467,8 +541,8 @@ Rectangle {
             Button {
                 id:removeKeyFrameButton
 
-                implicitWidth: 18
-                implicitHeight: 18
+                implicitWidth: 20
+                implicitHeight: 20
 
                 opacity: enabled ? 1.0 : 0.5
                 tooltip: qsTr('Remove key frame')
@@ -502,8 +576,8 @@ Rectangle {
             Button {
                 id:preKeyFrameButton
 
-                implicitWidth: 18
-                implicitHeight: 18
+                implicitWidth: 20
+                implicitHeight: 20
 
                 opacity: enabled ? 1.0 : 0.5
                 tooltip: qsTr('Prev key frame')
@@ -531,8 +605,8 @@ Rectangle {
             Button {
                 id:nextKeyFrameButton
 
-                implicitWidth: 18
-                implicitHeight: 18
+                implicitWidth: 20
+                implicitHeight: 20
 
                 opacity: enabled ? 1.0 : 0.5
                 tooltip: qsTr('Next key frame')
@@ -547,7 +621,7 @@ Rectangle {
                 style: ButtonStyle {
                     background: Rectangle {
                         color: 'transparent'
-                    }  
+                    }
                 }
                 Image {
                     fillMode: Image.PreserveAspectCrop
