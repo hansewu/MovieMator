@@ -1034,7 +1034,7 @@ Rectangle {
     // 在 clip下方显示关键帧的灰色背景
     Rectangle {
         id: keyframeRegion
-        visible: !isBlank && selected && currentFilter && currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) > 0
+        visible: clipRoot.selected && keyFrameRepeater.count > 0//currentFilter && currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) > 0
         height: parent.height / 2
         width: parent.width
         anchors.left: parent.left
@@ -1046,16 +1046,15 @@ Rectangle {
         Repeater {
             id: keyFrameRepeater
             // 只有 Rectangle显示时才有 model，消除 currentFilter的 Reference Error警告
-            model: (parent.visible && currentFilter) ? currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) : 0
+            model: currentFilter ? currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) : 0
             anchors.verticalCenter: parent.verticalCenter
 
 
-            KeyframeIndicator{
+            delegate: KeyframeIndicator{
                 height: parent.height / 2
                 width: height
                 anchors.verticalCenter: parent.verticalCenter
-                //visible: !isBlank && selected &&currentFilter && (currentFilter.getKeyFrame(index, currentFilter.getCurrentParameter()) !== -1)
-                x: (currentFilter?currentFilter.getKeyFrame(index, currentFilter.getCurrentParameter()):0) *multitrack.scaleFactor - width/2
+                x: (currentFilter? currentFilter.getKeyFrame(index, currentFilter.getCurrentParameter()) : 0) *multitrack.scaleFactor - width/2
                 frameNumber: currentFilter ? currentFilter.getKeyFrame(index, currentFilter.getCurrentParameter()) : -1
                 rotation: 45
             }
@@ -1065,12 +1064,10 @@ Rectangle {
     Connections{
         target: currentFilter
         onKeyframeNumberChanged: {
-            keyframeRegion.visible = !isBlank && selected && currentFilter && currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) > 0
-            keyFrameRepeater.model = currentFilter ? currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) : 0
+            mainwindow.resetCurrentFilterForTimelineDock()
         }
         onEditKeyframeOfParameter: {
-            keyframeRegion.visible =  !isBlank && selected && currentFilter && currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) > 0
-            keyFrameRepeater.model = currentFilter ? currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) : 0
+            mainwindow.resetCurrentFilterForTimelineDock()
         }
     }
 
