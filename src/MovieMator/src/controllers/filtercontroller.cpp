@@ -101,8 +101,6 @@ void FilterController::loadFilterParameter(QmlMetadata *pMetadata)
 
             QString strSupportAnimation = QString::fromUtf8(mlt_properties_get(paramProperties, "bHaveAnimationEffect"));
             pParameter->setSupportAnimationFlag(strSupportAnimation);
-            if (bFrei0r)
-                pParameter->setSupportAnimationFlag("1");
 
             QString strParmType = QString::fromUtf8(mlt_properties_get(paramProperties, "type"));
             if (strParmType == "boolean")
@@ -118,6 +116,8 @@ void FilterController::loadFilterParameter(QmlMetadata *pMetadata)
                 pParameter->setMinimum(QString::fromUtf8(mlt_properties_get(paramProperties, "minimum")).toDouble());
                 pParameter->setMaximum(QString::fromUtf8(mlt_properties_get(paramProperties, "maximum")).toDouble());
                 pParameter->setDefaultValue(QString::number(mlt_properties_get_double(paramProperties, "default")));
+                if (bFrei0r)
+                    pParameter->setSupportAnimationFlag("1");
             }
             else if(strParmType == "color")
             {
