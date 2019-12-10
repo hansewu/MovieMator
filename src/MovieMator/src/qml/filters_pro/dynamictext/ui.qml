@@ -189,12 +189,11 @@ Item {
     Component.onCompleted: {
         console.log("Component.onCompleted")
 
+        setControls()
+        keyframe.initFilter(idGridLayoutAnimation)
         if (filter.isNew) {
             filter.set('size', filterRect.height)
         }
-
-        setControls()
-        keyframe.initFilter(idGridLayoutAnimation)
     }
 
     function setControls()
