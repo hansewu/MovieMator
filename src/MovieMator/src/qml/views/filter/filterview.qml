@@ -297,6 +297,16 @@ Rectangle {
         }
         radius: 2//圆角
         visible: metadata && metadata.keyframes.supportAnimation
+        onVisibleChanged:
+        {
+            if (visible && keyFrameControl.unfolded)
+                height = 160
+            else if (visible)
+                height = 30
+            else
+                height = 0
+        }
+
         KeyFrameControl {
             id: keyFrameControl
             width:parent.width
