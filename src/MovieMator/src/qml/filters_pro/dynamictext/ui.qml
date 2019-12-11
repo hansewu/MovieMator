@@ -198,11 +198,11 @@ Item {
 
     function setControls()
     {
+        blockUpdate = true
+
         textArea.text = filter.get('argument')
         fontButton.text = filter.get('family')
         weightCombo.currentIndex = weightCombo.valueToIndex()
-        insertFieldCombo.currentIndex = insertFieldCombo.valueToIndex()
-        blockUpdate = true
         filterRect = getAbsoluteRect(-1)
         fgColor.value = getHexStrColor(-1, fgcolourProperty)
         outlineColor.value = getHexStrColor(-1, olcolourProperty)
@@ -334,11 +334,6 @@ Item {
         Label{}//占位符
         Label{}//占位符
 
-//        Label {
-//            text: qsTr('Insert')
-//            Layout.alignment: Qt.AlignLeft
-//            color: activePalette.text//'#ffffff'
-//        }
         MyComboBox {
             id: insertFieldCombo
             Layout.columnSpan: 3
@@ -356,13 +351,8 @@ Item {
                 ListElement {name: qsTr('File name')}
             }
             property var values: ['welcome!', '#timecode#', '#frame#', '#localfiledate#', '#resource#']
-            function valueToIndex() {
-                var textStr = filter.get('argument')
-                for (var i = 0; i < values.length; ++i)
-                    if (values[i] === textStr) break;
-                if (i === values.length) i = 0;
-                return i;
-            }
+
+            currentIndex: 0
             onCurrentIndexChanged: {
                 textArea.insert(textArea.cursorPosition, values[currentIndex])
             }
@@ -1208,10 +1198,6 @@ Item {
         {
             onClicked: transparentAlphaSlider.value = 1
         }
-
-//        Item { Layout.fillWidth: true }
-
-//        Item { Layout.fillHeight: true }
     }
 
 
