@@ -283,10 +283,10 @@ Rectangle {
     //关键帧界面
     Rectangle{
         id:keyFrameControlContainer
-        color: '#353535'
-        border.color: "black"
-        border.width: 0
-        height: 15
+        color: 'transparent'
+//        border.color: "black"
+//        border.width: 0
+        height: 30
         anchors {
             bottom: parent.bottom
             left: parent.left
@@ -307,9 +307,9 @@ Rectangle {
             }
             onSwitchFoldStat: {
                 if(bChecked){
-                    keyFrameControlContainer.height = 150
+                    keyFrameControlContainer.height = 160
                 }else{
-                    keyFrameControlContainer.height = 15
+                    keyFrameControlContainer.height = 30
                 }
             }
         }

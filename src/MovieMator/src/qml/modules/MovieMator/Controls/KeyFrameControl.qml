@@ -255,15 +255,17 @@ Rectangle {
         }
     }
 
+    SystemPalette { id: activePalette }
+
     Rectangle{
         id:header
-        color: '#555555'
-        width: parent.width+10
+        color: Qt.rgba(42/255, 49/255, 55/255, 1.0)//'#555555'
+        width: parent.width
         height: 30
         
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.topMargin:-10
+        //anchors.topMargin:-10
         
         Button{
             id: foldBtn
@@ -309,7 +311,7 @@ Rectangle {
         id:body
         color: 'transparent'
         width: parent.width
-        height: 120
+        height: 130
         anchors.top: header.bottom
         anchors.topMargin:0
         visible:foldBtn.checked?true:false
@@ -325,7 +327,7 @@ Rectangle {
                 {
                     id: parameterLabel
                     text: qsTr('Parameter')
-                    color: '#ffffff'
+                    color: activePalette.text
                 }
 
                 MyComboBox
@@ -431,7 +433,7 @@ Rectangle {
                 {
                     id: labelAnimationType
                     text: qsTr('Animation Type')
-                    color: '#ffffff'
+                    color: activePalette.text
                 }
 
                 MyComboBox
@@ -454,7 +456,7 @@ Rectangle {
                 {
                     id: labelAnimationDuration
                     text: qsTr('Animation Duration')
-                    color: '#ffffff'
+                    color: activePalette.text
                 }
 
                 CustomSlider
@@ -466,6 +468,8 @@ Rectangle {
                     value: 1.0
                     stepSize: 0.5
                     tickmarksEnabled: true
+
+                    textColor: activePalette.text
                 }
 
                 Label
@@ -473,7 +477,7 @@ Rectangle {
                     id: labelKeyframe
                     visible: false
                     text: qsTr('Keyframe')
-                    color: '#ffffff'
+                    color: activePalette.text
                 }
                 Label
                 {
@@ -481,7 +485,7 @@ Rectangle {
                     visible: false
 
                     text: qsTr('(Position: 00:00:00:00, Value:100)')
-                    color: '#ffffff'
+                    color: activePalette.text
                 }
 
                 Label
@@ -489,7 +493,7 @@ Rectangle {
                     id: labelInterpolation
                     visible: false
                     text: qsTr('Interpolation')
-                    color: '#ffffff'
+                    color: activePalette.text
                 }
 
                 MyComboBox
