@@ -782,7 +782,9 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
     int nFrameInClip    = frame;
     bool bKeyFrame      = cache_bKeyFrame(frame, key);
 
-    if(frame < 0) return;
+    if(frame < 0)
+        return;
+
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
 
 
@@ -794,8 +796,18 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
         for (int i = 0; i < paramCount; i++)
         {
              QString name = m_metadata->keyframes()->parameter(i)->property();
-             if (name == key) { paraType = m_metadata->keyframes()->parameter(i)->paraType(); break; }
+             if (name == key)
+             {
+                 paraType = m_metadata->keyframes()->parameter(i)->paraType();
+                 break;
+             }
         }
+
+        mlt_keyframe_type mltKeyframeType = mlt_keyframe_linear;
+        if (bKeyFrame)
+            mltKeyframeType = (mlt_keyframe_type)getInterpolationMethod(key, frame);
+
+
         int duration = m_filter->get_length();
 
                 // Only set an animation keyframe if it does not already exist with the same value.
@@ -806,7 +818,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                             || !qFuzzyCompare(value.toDouble(),m_filter->anim_get_double(key.toUtf8().constData(), frame, duration)))
                     {
                         from_value = QString::number(m_filter->anim_get_double(key.toUtf8().constData(), frame, duration));
-                        m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), frame, duration, mlt_keyframe_linear);
+                        m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), frame, duration, mltKeyframeType);
                     }
                 }
                 else if(paraType == "int")
@@ -814,7 +826,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                     if (!animation.is_valid() || !animation.is_key(frame)
                             || value.toInt() != m_filter->anim_get_int(key.toUtf8().constData(), frame, duration)) {
                         from_value = QString::number(m_filter->anim_get_int(key.toUtf8().constData(), frame, duration));
-                        m_filter->anim_set(key.toUtf8().constData(), value.toInt(), frame, duration, mlt_keyframe_linear);
+                        m_filter->anim_set(key.toUtf8().constData(), value.toInt(), frame, duration, mltKeyframeType);
                     }
                 }
                 else if(paraType == "string")
@@ -846,7 +858,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                         rect.h = height;
                         rect.o = opacity;
 
-                        m_filter->anim_set(key.toUtf8().constData(), rect, frame, duration); //, mlt_keyframe_smooth); mlt_keyframe_smooth 可能有问题，在颜色显示时很明显  https://github.com/hansewu/MovieMator/issues/271
+                        m_filter->anim_set(key.toUtf8().constData(), rect, frame, duration, mltKeyframeType); //, mlt_keyframe_smooth); mlt_keyframe_smooth 可能有问题，在颜色显示时很明显  https://github.com/hansewu/MovieMator/issues/271
                     }
                 }
                 else
