@@ -46,6 +46,8 @@ Rectangle {
     signal keyframeTypeChange(string strIdentifierOfParameter, int nKeyframeType)
 
     signal switchFoldStat(bool bChecked)
+
+    property bool unfolded: foldBtn.checked
     
     property ListModel  m_listModelParameters: ListModel{}
     property string     m_strIdentifierOfParameter: ""
