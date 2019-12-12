@@ -128,7 +128,7 @@ RecordDialog::RecordDialog(QWidget *parent) :
                                   "QComboBox QAbstractItemView {border: none;}"
                                   "QComboBox QAbstractItemView {background:rgb(82,82,82); color:rgb(185,185,185); border: none;}");
 
-#ifdef Q_OS_MAC
+
     //获取可用的音频设备
     foreach (const QAudioDeviceInfo &deviceInfo, QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
     {
@@ -138,21 +138,20 @@ RecordDialog::RecordDialog(QWidget *parent) :
     if (ui->audioInputComboBox->count() > 0)
     {
         ui->audioInputComboBox->setCurrentIndex(0);
-    }
-#endif
+    }                    
 
     m_nStartValueOfCountdown = 3;
     ui->maskLabel->setText(QString::number(m_nStartValueOfCountdown));
 
     m_pCountdownTimer = new QTimer(this);
-    connect(m_pCountdownTimer, &QTimer::timeout, this, &RecordDialog::countdown_callback);
+    connect(m_pCountdownTimer, SIGNAL(timeout()), this, SLOT(countdown_callback()));
 
 
     m_durationTime = QTime(0, 0, 0, 0);
     ui->durationLabel->setText(m_durationTime.toString("hh:mm:ss:zzz"));
 
     m_pTimer = new QTimer(this);
-    connect(m_pTimer, &QTimer::timeout, this, &RecordDialog::fun_clicked);
+    connect(m_pTimer, SIGNAL(timeout()), this, SLOT(updateDuration_callback()));
 }
 
 void RecordDialog::countdown_callback()
@@ -175,7 +174,7 @@ void RecordDialog::countdown_callback()
     ui->maskLabel->setText(QString(QString::number(m_nStartValueOfCountdown)));
 }
 
-void RecordDialog::fun_clicked()
+void RecordDialog::updateDuration_callback()
 {
     QString tim = m_durationTime.toString("hh:mm:ss:zzz");
     m_durationTime = m_durationTime.addMSecs(10);
@@ -212,6 +211,9 @@ RecordDialog::~RecordDialog()
         m_pCountdownTimer = nullptr;
     }
 
+    m_pAudioProducer.reset();
+    m_pMeltJob.reset();
+
     delete ui;
 }
 
@@ -226,12 +228,17 @@ void RecordDialog::createAudioProducer()
         return;
     }
 
-    //创建producer
-    QString resource = QString("avfoundation:none:%1?pixel_format=yuyv422&framerate=25&video_size=1280x720")
-            .arg(ui->audioInputComboBox->currentText().replace(tr("None"), "none"));
+     //创建producer
+#ifdef Q_OS_WIN
+    QByteArray resource = QString("dshow:audio=%1").arg(ui->audioInputComboBox->currentText()).toUtf8();
+#elif Q_OS_MAC
+    QByteArray resource = QString("avfoundation:none:%1?pixel_format=yuyv422&framerate=25&video_size=1280x720")
+            .arg(ui->audioInputComboBox->currentText().replace(tr("None"), "none")).toLatin1();
+#endif
+
     LOG_DEBUG() << resource;
 
-    m_pAudioProducer.reset(new Mlt::Producer(profile, resource.toLatin1().constData()));
+    m_pAudioProducer.reset(new Mlt::Producer(profile, resource.constData()));
 
     //FIXME：当producer创建失败后，重试创建10次，确保捕获producer可用。目前原因还没弄清楚，在有可能创建捕获producer失败，初步推测原因是设置异常或者占用
     for (int i = 0; i < 10; i++)
@@ -242,7 +249,7 @@ void RecordDialog::createAudioProducer()
         }
         else
         {
-            m_pAudioProducer.reset(new Mlt::Producer(profile, resource.toLatin1().constData()));
+            m_pAudioProducer.reset(new Mlt::Producer(profile, resource.constData()));
         }
     }
 }

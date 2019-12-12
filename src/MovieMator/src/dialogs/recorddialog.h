@@ -32,7 +32,7 @@ private slots:
 
     void countdown_callback();
 
-    void fun_clicked();
+    void updateDuration_callback();
 
 private:
     void createAudioProducer();
