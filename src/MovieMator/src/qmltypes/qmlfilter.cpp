@@ -100,7 +100,9 @@ int QmlFilter::getKeyFrameOnProjectOnIndex(int index, QString name)
 
         int nPositionInClip = MAIN.timelineDock()->getPositionOnClip(nKeyFrame);
         int nClipLength = MAIN.timelineDock()->getCurrentClipLength();
-        if (nPositionInClip > (nClipLength - 1)) return -1;
+
+        if (nPositionInClip > (nClipLength - 1))
+            return -1;
 
         return nPositionInClip;
 //        return MAIN.timelineDock()->getPositionOnClip(nKeyFrame);
@@ -1171,7 +1173,8 @@ int QmlFilter::cache_getKeyFrameNumber(QString propertyName)
 int QmlFilter::getKeyFrame(int index, QString propertyName)
 {
     //if (propertyName == nullptr) propertyName = getAnyAnimPropertyName();
-    if (propertyName == nullptr) return -1;
+    if (propertyName == nullptr)
+        return -1;
 
     int nKeyFrame = getKeyFrameOnProjectOnIndex(index, propertyName);
     return nKeyFrame;
@@ -1255,8 +1258,9 @@ bool QmlFilter::isKeyframeAtPosition(const QString strIdentifierOfParameter, int
     Q_ASSERT(!strIdentifierOfParameter.isEmpty());
     if (strIdentifierOfParameter.isEmpty())
         return false;
+    int nFrame = MAIN.timelineDock()->getPositionOnParentProducer(nFramePosition);
 
-    return getAnimation(strIdentifierOfParameter).is_key(nFramePosition);
+    return getAnimation(strIdentifierOfParameter).is_key(nFrame);
 }
 
 bool QmlFilter::hasPreKeyframeAtPositon(const QString strIdentifierOfParameter, int nFramePosition)
@@ -1267,13 +1271,16 @@ bool QmlFilter::hasPreKeyframeAtPositon(const QString strIdentifierOfParameter, 
 
     if (m_filter)
     {
-        if (getAnimation(strIdentifierOfParameter).is_key(nFramePosition))
-            nFramePosition = nFramePosition - 1;
 
-        if (nFramePosition <= 0)
+        int nFrameInParent = MAIN.timelineDock()->getPositionOnParentProducer(nFramePosition);
+
+        if (getAnimation(strIdentifierOfParameter).is_key(nFrameInParent))
+            nFrameInParent = nFrameInParent - 1;
+
+        if (nFrameInParent <= 0)
             return false;
 
-        int nKeyFrame = getAnimation(strIdentifierOfParameter).previous_key(nFramePosition);
+        int nKeyFrame = getAnimation(strIdentifierOfParameter).previous_key(nFrameInParent);
         if (nKeyFrame == 1)//Animation::previous_key() 的实现有问题，没有关键帧的时候会返回1。
             return false;
 
@@ -1291,11 +1298,12 @@ bool QmlFilter::hasNextKeyframeAtPositon(const QString strIdentifierOfParameter,
 
     if (m_filter)
     {
+        int nFrameInParent = MAIN.timelineDock()->getPositionOnParentProducer(nFramePosition);
 
-        if (getAnimation(strIdentifierOfParameter).is_key(nFramePosition))
-            nFramePosition = nFramePosition + 1;
+        if (getAnimation(strIdentifierOfParameter).is_key(nFrameInParent))
+            nFrameInParent = nFrameInParent + 1;
 
-        int nKeyFrame = getAnimation(strIdentifierOfParameter).next_key(nFramePosition);
+        int nKeyFrame = getAnimation(strIdentifierOfParameter).next_key(nFrameInParent);
         if (nKeyFrame == 1)//Animation::next_key() 的实现有问题，没有关键帧的时候会返回1。
             return false;
 
@@ -1316,8 +1324,10 @@ int QmlFilter::setInterpolationMethod(const QString strIdentifierOfParameter, in
 
     if (m_filter)
     {
+        int nFrameInParent = MAIN.timelineDock()->getPositionOnParentProducer(nPositionOfKeyframe);
+
         Mlt::Animation mltAnimation = getAnimation(strIdentifierOfParameter);
-        if (!mltAnimation.is_key(nPositionOfKeyframe))
+        if (!mltAnimation.is_key(nFrameInParent))
             return nResult;
 
         int nKeyframeIndex = -1;
@@ -1325,7 +1335,7 @@ int QmlFilter::setInterpolationMethod(const QString strIdentifierOfParameter, in
         for (int i = 0; i < nKeyframeCount; i++)
         {
             int nFrame = mltAnimation.key_get_frame(i);
-            if (nFrame == nPositionOfKeyframe)
+            if (nFrame == nFrameInParent)
             {
                 nKeyframeIndex = i;
                 break;
@@ -1353,8 +1363,11 @@ int QmlFilter::getInterpolationMethod(const QString strIdentifierOfParameter, in
 
     if (m_filter)
     {
+
+        int nFrameInParent = MAIN.timelineDock()->getPositionOnParentProducer(nPositionOfKeyframe);
+
         Mlt::Animation mltAnimation = getAnimation(strIdentifierOfParameter);
-        if (!mltAnimation.is_key(nPositionOfKeyframe))
+        if (!mltAnimation.is_key(nFrameInParent))
             return nType;
 
         int nKeyframeIndex = -1;
@@ -1362,7 +1375,7 @@ int QmlFilter::getInterpolationMethod(const QString strIdentifierOfParameter, in
         for (int i = 0; i < nKeyframeCount; i++)
         {
             int nFrame = mltAnimation.key_get_frame(i);
-            if (nFrame == nPositionOfKeyframe)
+            if (nFrame == nFrameInParent)
             {
                 nKeyframeIndex = i;
                 break;
