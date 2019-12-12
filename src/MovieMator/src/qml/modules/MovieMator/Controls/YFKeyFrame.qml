@@ -574,7 +574,7 @@ RowLayout{
         for(var paramIndex=0; paramIndex < metaParamList.length; paramIndex++)
         {
             parameter = metaParamList[paramIndex]
-            if (paramIdentifier === parameter.propery)
+            if (paramIdentifier === parameter.property)
                 break
         }
 
