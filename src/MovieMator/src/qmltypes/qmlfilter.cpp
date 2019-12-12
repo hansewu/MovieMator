@@ -807,7 +807,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
 
         mlt_keyframe_type mltKeyframeType = mlt_keyframe_linear;
         if (bKeyFrame)
-            mltKeyframeType = (mlt_keyframe_type)getInterpolationMethod(key, frame);
+            mltKeyframeType = (mlt_keyframe_type)getInterpolationMethod(key, nFrameInClip);
 
 
         int duration = m_filter->get_length();
