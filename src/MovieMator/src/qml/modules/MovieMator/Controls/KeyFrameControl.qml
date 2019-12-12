@@ -34,7 +34,6 @@ Rectangle {
     width: parent.width
     height: 150
 
-    signal enableKeyFrameChanged(bool bEnable)
 //    signal autoAddKeyFrameChanged(bool bEnable)
 
     signal addFrameChanged()
@@ -391,9 +390,6 @@ Rectangle {
                             if(filter.isKeyframeActivate(m_strIdentifierOfParameter))
                                 removeKeyFrameWarning.visible = true
                         }
-                    }
-                    onCheckedChanged: {
-                        enableKeyFrameChanged(checked)
                     }
                 }
                 //            CheckBox {

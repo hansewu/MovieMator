@@ -1090,12 +1090,6 @@ RowLayout{
             //onAutoAddKeyFrameChanged: {
             //    updateAutoSetAsKeyFrame(bEnable)
             //}
-
-             // 开启关键帧
-             onEnableKeyFrameChanged: {
-                 updateEnableKeyFrame(bEnable)
-             }
-
              onKeyframeTypeChange: {
                  var nPosition = timeline.getPositionInCurrentClip()
                  if (nPosition < 0) return
