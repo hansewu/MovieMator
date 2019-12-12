@@ -117,7 +117,8 @@ SOURCES += main.cpp\
     commands/abstractcommand.cpp \
     dialogs/videomodesettingsdialog.cpp \
     dialogs/aspectratiosettingsdialog.cpp \
-    widgets/twolinebutton.cpp
+    widgets/twolinebutton.cpp \
+    dialogs/recorddialog.cpp
 
 HEADERS  += mainwindow.h \
     scrubbar.h \
@@ -231,7 +232,8 @@ HEADERS  += mainwindow.h \
     CrashHandler/CrashHandler.h \
     dialogs/videomodesettingsdialog.h \
     dialogs/aspectratiosettingsdialog.h \
-    widgets/twolinebutton.h
+    widgets/twolinebutton.h \
+    dialogs/recorddialog.h
 mac {
     SOURCES += \
                 dialogs/inappdialog.cpp
@@ -299,7 +301,8 @@ FORMS    += mainwindow.ui \
     docks/encodetaskdock.ui \
     widgets/avformatproducersimplewidget.ui \
     dialogs/videomodesettingsdialog.ui \
-    dialogs/aspectratiosettingsdialog.ui
+    dialogs/aspectratiosettingsdialog.ui \
+    dialogs/recorddialog.ui
 
 RESOURCES += \
     ../icons/resources.qrc \
@@ -479,7 +482,7 @@ win32 {
 mac {
     qmlfiles.files = $$PWD/qml
     qmlfiles.path = Contents/Resources/share/moviemator
-    #INSTALLS += qmlfiles
+    INSTALLS += qmlfiles
     QMAKE_BUNDLE_DATA += qmlfiles
 }
 

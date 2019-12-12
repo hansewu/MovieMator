@@ -116,6 +116,7 @@
     #include "dialogs/inappdialog.h"
 #endif
 
+#include "dialogs/recorddialog.h"
 
 
 #if defined(Q_OS_WIN)
@@ -266,6 +267,7 @@ MainWindow::MainWindow()
     LOG_DEBUG() << "Connect UI signals";
     // Connect UI signals.
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
+    connect(ui->actionRecordAudio, SIGNAL(triggered()), this, SLOT(recordAudio()));
 //    connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(removeVideo()));
 
     if (ui->actionFullscreen)
@@ -1664,6 +1666,12 @@ void MainWindow::openVideo()
         MLT.onWindowResize();
         activateWindow();
     }
+}
+
+void MainWindow::recordAudio()
+{
+    RecordDialog recordDialog(this);
+    recordDialog.exec();
 }
 
 void MainWindow::openFiles(const QStringList &list)

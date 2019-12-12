@@ -323,6 +323,7 @@ public slots:
     void open(QString url, const Mlt::Properties* = nullptr);//打开文件
     void open1(QString url, const Mlt::Properties * = nullptr);
     void openVideo();//打开多选文件
+    void recordAudio();
     void openCut(Mlt::Producer* producer);//打开producer
     void showStatusMessage(QAction* action, int timeoutSeconds = 5);//显示状态信息
     void showStatusMessage(const QString& message, int timeoutSeconds = 5);
