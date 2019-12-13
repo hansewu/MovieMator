@@ -64,7 +64,7 @@ Rectangle {
         Label {
             text: qsTr('Radius')
             Layout.alignment: Qt.AlignRight
-            color: activePalette//'#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'slider'
@@ -82,7 +82,7 @@ Rectangle {
         Label {
             text: qsTr('Color')
             Layout.alignment: Qt.AlignRight
-            color: activePalette//'#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         ColorPicker {
             objectName: 'colorSwatch'
