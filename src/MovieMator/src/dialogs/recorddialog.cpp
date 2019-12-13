@@ -231,7 +231,7 @@ void RecordDialog::createAudioProducer()
      //创建producer
 #ifdef Q_OS_WIN
     QByteArray resource = QString("dshow:audio=%1").arg(ui->audioInputComboBox->currentText()).toUtf8();
-#elif Q_OS_MAC
+#else //Q_OS_MAC
     QByteArray resource = QString("avfoundation:none:%1?pixel_format=yuyv422&framerate=25&video_size=1280x720")
             .arg(ui->audioInputComboBox->currentText().replace(tr("None"), "none")).toLatin1();
 #endif
@@ -266,8 +266,8 @@ void RecordDialog::on_startRecordButton_clicked()
         outputDir.append("/untitiled.wav");
     }
 
-    QString outputFilePath = QFileDialog::getSaveFileName(this, tr("Save WAV"), outputDir, tr("WAV (*.wav)"));
-    Q_ASSERT(!outputFilePath.isEmpty());
+    QString outputFilePath = QFileDialog::getSaveFileName(this, tr("Save File"), outputDir, tr("WAV (*.wav)"));
+//    Q_ASSERT(!outputFilePath.isEmpty());
     if (outputFilePath.isEmpty())
     {
         return;

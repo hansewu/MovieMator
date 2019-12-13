@@ -267,7 +267,6 @@ MainWindow::MainWindow()
     LOG_DEBUG() << "Connect UI signals";
     // Connect UI signals.
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
-    connect(ui->actionRecordAudio, SIGNAL(triggered()), this, SLOT(recordAudio()));
 //    connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(removeVideo()));
 
     if (ui->actionFullscreen)
@@ -4213,6 +4212,12 @@ void MainWindow::customizeToolbar()
                                    tr("Open"), tr("Open a video, audio or image file"));
     connect(m_addButton, SIGNAL(clicked()), this, SLOT(openVideo()));
 
+    m_recordAudioButton = createToolButton(QString(":/icons/light/32x32/toolbar-audio-record.png"),
+                                   QString(":/icons/light/32x32/toolbar-audio-record-pressed.png"),
+                                   QString(":/icons/light/32x32/toolbar-audio-recordpng"),
+                                   tr("Record Audio"), tr("Record Audio"));
+    connect(m_recordAudioButton, SIGNAL(clicked()), this, SLOT(recordAudio()));
+
 //    m_removeButton = createToolButton(":/icons/light/32x32/toolbar-remove.png",
 //                                      ":/icons/light/32x32/toolbar-remove-pressed.png",
 //                                      "", tr("Remove"), tr("Remove media files"));
@@ -4315,6 +4320,7 @@ void MainWindow::customizeToolbar()
     gridLayout->addItem(spacer0, 0, buttonIndex++, 1, 1);
 
     gridLayout->addWidget(m_addButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+    gridLayout->addWidget(m_recordAudioButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
 //    gridLayout->addWidget(m_removeButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     QSpacerItem *spacer1 = new QSpacerItem(74,20);
     gridLayout->addItem(spacer1, 0, buttonIndex++, 1, 1);

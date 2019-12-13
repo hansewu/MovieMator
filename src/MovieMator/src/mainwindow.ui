@@ -77,8 +77,6 @@
     <addaction name="actionOpen"/>
     <addaction name="actionOpenOther"/>
     <addaction name="separator"/>
-    <addaction name="actionRecordAudio"/>
-    <addaction name="separator"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
     <addaction name="actionExportEDL"/>
@@ -976,7 +974,7 @@
     <string>Subscription</string>
    </property>
   </action>
-  <action name="actionRecordAudio">
+  <action name="action">
    <property name="text">
     <string>RecordAudio</string>
    </property>
