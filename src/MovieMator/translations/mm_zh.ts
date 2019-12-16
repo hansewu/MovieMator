@@ -2488,37 +2488,37 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="330"/>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">参数</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="433"/>
         <source>Animation Type</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">动画类型</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="441"/>
         <source>In&amp;Out Animation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">入点动画和出点动画</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="442"/>
         <source>In Animaiton</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">入点动画</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="443"/>
         <source>Out Animaiton</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">出点动画</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="456"/>
         <source>Animation Duration</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">动画时长</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="477"/>
         <source>Keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">关键帧</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="485"/>
@@ -2528,7 +2528,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="493"/>
         <source>Interpolation</source>
-        <translation type="unfinished">变形</translation>
+        <translation type="unfinished">插值方法</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="524"/>
@@ -2548,7 +2548,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="643"/>
         <source>This will remove all keyframes.&lt;p&gt;Do you still want to do this?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">这将删除该参数的所有关键帧数据.&lt;p&gt;确定这样做吗?</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -7696,12 +7696,12 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="363"/>
         <source>Style</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">样式</translation>
     </message>
     <message>
         <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="397"/>
         <source>Style &gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">样式 &gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="398"/>
@@ -7755,12 +7755,12 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="966"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">动画</translation>
     </message>
     <message>
         <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="995"/>
         <source>Animation &gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">动画 &gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="577"/>
@@ -7817,7 +7817,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters_pro/dynamictext/ui.qml" line="1179"/>
         <source>Transparent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">透明度</translation>
     </message>
     <message>
         <source>Y fit</source>
