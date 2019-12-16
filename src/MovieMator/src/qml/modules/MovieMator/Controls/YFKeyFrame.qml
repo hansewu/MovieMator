@@ -45,7 +45,7 @@ RowLayout{
     }
     
     // A Boolean value that indicates whether the auto add keyframes function is on.
-    property bool bAutoSetAsKeyFrame: updateAutoSetAsKeyFrame(true)
+    property bool bAutoSetAsKeyFrame: updateAutoSetAsKeyFrame(false)
     
     // The current frame number. 当前的帧数
     property double currentFrame: 0

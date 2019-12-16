@@ -683,17 +683,20 @@ void FilterController::refreshKeyFrame(Mlt::Filter *filter, const QVector<key_fr
 
 void FilterController::refreshNoAnimation(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame)
 {
-    if(m_currentFilterIndex == -1)          return;
+    if(m_currentFilterIndex == -1)
+        return;
 
     QmlFilter *qmlFilter = m_currentFilter.data();
-    if(!qmlFilter)                          return;
+    if(!qmlFilter)
+        return;
 
     Mlt::Filter* mltFilter = qmlFilter->getMltFilter();
     Q_ASSERT(mltFilter);
-    if(mltFilter->get_filter() != filter->get_filter())     return;
+    if(mltFilter->get_filter() != filter->get_filter())
+        return;
 
-    int nKeyNumber = qmlFilter->cache_getKeyFrameNumber();
-    if (nKeyNumber <= 1)  //if (nKeyNumber <= 0) //考虑mlt底层会在0的位置自动加上关键帧
+    int nKeyNumber = qmlFilter->cache_getKeyFrameNumber(listKeyFrame.at(0).paraMap.firstKey());
+    if (nKeyNumber <= 0)  //if (nKeyNumber <= 0) //考虑mlt底层会在0的位置自动加上关键帧
         qmlFilter->refreshNoAnimation(listKeyFrame, true);
 }
 
