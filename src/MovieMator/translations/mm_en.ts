@@ -1756,7 +1756,7 @@ in temporal compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="808"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="811"/>
         <source>Only one %1 filter is allowed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3451,9 +3451,19 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="621"/>
+        <source>Media</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.cpp" line="625"/>
         <location filename="../src/mainwindow.cpp" line="669"/>
         <source>Video Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="625"/>
+        <source>Video Filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3463,8 +3473,18 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="630"/>
+        <source>Audio Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.cpp" line="635"/>
         <source>Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="635"/>
+        <source>Text/Credit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3475,6 +3495,21 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="643"/>
         <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="643"/>
+        <source>Music/Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="669"/>
+        <source>Set the Parameters of the Video Filters Applied to Current Clip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="671"/>
+        <source>Set the Parameters of the Audio Filters Applied to Current Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

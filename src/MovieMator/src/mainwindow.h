@@ -539,8 +539,8 @@ private slots:
 
     void initParentDockForResourceDock();//初始化左侧的容器dock
     void initParentDockForPropteriesDock();//初始化右侧的容器dock
-    void addResourceDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);//添加dock到左侧的dock容器中
-    void addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);//添加dock到右侧的dock容器中
+    void addResourceDock(QDockWidget *dock, QString tabButtonTitle, QString tabButtonTooltip, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);//添加dock到左侧的dock容器中
+    void addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QString tabButtonTooltip, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);//添加dock到右侧的dock容器中
 
     void on_actionNewProject_triggered();
     void on_actionVideoMode_triggered();

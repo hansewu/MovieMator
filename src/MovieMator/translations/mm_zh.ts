@@ -1818,7 +1818,7 @@ in temporal compression</source>
         <translation type="obsolete">常用</translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="808"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="811"/>
         <source>Only one %1 filter is allowed.</source>
         <translation type="unfinished">仅允许一个%1滤镜</translation>
     </message>
@@ -3427,14 +3427,49 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="621"/>
+        <source>Media</source>
+        <translation type="unfinished">媒体资源</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="625"/>
+        <source>Video Filters</source>
+        <translation type="unfinished">视频滤镜</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="630"/>
+        <source>Audio Filters</source>
+        <translation type="unfinished">音频滤镜</translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.cpp" line="635"/>
         <source>Text</source>
         <translation type="unfinished">文字</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="635"/>
+        <source>Text/Credit</source>
+        <translation type="unfinished">文字模板</translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.cpp" line="643"/>
         <source>Audio</source>
         <translation type="unfinished">音频</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="643"/>
+        <source>Music/Sound</source>
+        <translation type="unfinished">音乐资源</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="669"/>
+        <source>Set the Parameters of the Video Filters Applied to Current Clip</source>
+        <translation type="unfinished">设置当前片段添加的视频滤镜参数</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="671"/>
+        <source>Set the Parameters of the Audio Filters Applied to Current Clip</source>
+        <translation type="unfinished">设置当前片段添加的音频滤镜参数</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="715"/>

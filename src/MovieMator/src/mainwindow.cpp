@@ -618,29 +618,29 @@ MainWindow::MainWindow()
 
     LOG_DEBUG() << "RecentDock";
     m_resourceRecentDock = RDG_CreateRecentDock(&MainInterface::singleton());
-    addResourceDock(m_resourceRecentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file.png"));
+    addResourceDock(m_resourceRecentDock, tr("File"), tr("Media"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file.png"));
 
     LOG_DEBUG() << "VideoFilterDock";
     m_resourceVideoFilterDock = RDG_CreateVideoFilterDock(&MainInterface::singleton());
-    addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter.png"));
+    addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), tr("Video Filters"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter.png"));
 //    RDG_SetVideoFiltersInfo( m_filterController->getVideoFiltersInfo());
 
     LOG_DEBUG() << "AudioFilterDock";
     m_resourceAudioFilterDock = RDG_CreateAudioFilterDock(&MainInterface::singleton());
-    addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter.png"));
+    addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), tr("Audio Filters"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter.png"));
 //    RDG_SetAudioFiltersInfo(m_filterController->getAudioFiltersInfo());
 
     LOG_DEBUG() << "TextDock";
     m_resourceTextDock = RDG_CreateTextDock(&MainInterface::singleton());
-    addResourceDock(m_resourceTextDock, tr("Text"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text.png"));
+    addResourceDock(m_resourceTextDock, tr("Text"), tr("Text/Credit"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text.png"));
 
     LOG_DEBUG() << "StickersDock";
     m_resourceStickerDock = RDG_CreateStickerDock(&MainInterface::singleton());
-    addResourceDock(m_resourceStickerDock, tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers.png"));
+    addResourceDock(m_resourceStickerDock, tr("Stickers"), tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers.png"));
 
     LOG_DEBUG() << "Auido";
     m_resourceAudioDock = RDG_CreateAudioDock(&MainInterface::singleton());
-    addResourceDock(m_resourceAudioDock, tr("Audio"), QIcon(":/icons/light/32x32/audio.png"), QIcon(":/icons/light/32x32/audio.png"));
+    addResourceDock(m_resourceAudioDock, tr("Audio"), tr("Music/Sound"), QIcon(":/icons/light/32x32/audio.png"), QIcon(":/icons/light/32x32/audio.png"));
 
     m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
     m_propertiesDock->installEventFilter(this);
@@ -662,13 +662,13 @@ MainWindow::MainWindow()
     scroll1->setWidgetResizable(true);
     scroll1->setFrameShape(QFrame::NoFrame);
     m_simplePropertiesDock->setWidget(scroll1);
-    addPropertiesDock(m_simplePropertiesDock, tr("Properties"), QIcon(":/icons/light/32x32/show-properties.png"), QIcon(":/icons/light/32x32/show-properties.png"));
+    addPropertiesDock(m_simplePropertiesDock, tr("Properties"), tr("Properties"), QIcon(":/icons/light/32x32/show-properties.png"), QIcon(":/icons/light/32x32/show-properties.png"));
 
 
     m_propertiesVideoFilterDock->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);
-    addPropertiesDock(m_propertiesVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter.png"));
+    addPropertiesDock(m_propertiesVideoFilterDock, tr("Video Filter"), tr("Set the Parameters of the Video Filters Applied to Current Clip"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter.png"));
     m_propertiesAudioFilterDock->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);
-    addPropertiesDock(m_propertiesAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter.png"));
+    addPropertiesDock(m_propertiesAudioFilterDock, tr("Audio Filter"), tr("Set the Parameters of the Audio Filters Applied to Current Clip"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter.png"));
 
     //替换模板文件界面Dock
     //m_templateEditorDock = TemplateEditorDock_initModule(&MainInterface::singleton());
@@ -3149,7 +3149,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         if (advancedScrollArea->widget())
             scrollArea->widget()->deleteLater();
         return  w;
-    }  
+    }
 
     QString service(producer->get("mlt_service"));
     QString resource = QString::fromUtf8(producer->get("resource"));
@@ -4582,7 +4582,7 @@ void MainWindow::initParentDockForPropteriesDock()
     addDockWidget(Qt::RightDockWidgetArea, m_propertiesDockContainer);
 }
 
-void MainWindow::addResourceDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
+void MainWindow::addResourceDock(QDockWidget *dock, QString tabButtonTitle, QString tabButtonTooltip, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
 {
     Q_ASSERT(dock);
     dock->setFeatures(QDockWidget::NoDockWidgetFeatures);
@@ -4590,10 +4590,10 @@ void MainWindow::addResourceDock(QDockWidget *dock, QString tabButtonTitle, QIco
     dock->setMinimumSize(300, 272);
     dock->setTitleBarWidget(new QWidget());
 
-    m_resourceDockContainer->addDock(dock, tabButtonTitle, tabButtonNormalIcon, tabButtonAcitveIcon);
+    m_resourceDockContainer->addDock(dock, tabButtonTitle, tabButtonTooltip, tabButtonNormalIcon, tabButtonAcitveIcon);
 }
 
-void MainWindow::addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
+void MainWindow::addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QString tabButtonTooltip, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
 {
     Q_ASSERT(dock);
     dock->setFeatures(QDockWidget::NoDockWidgetFeatures);
@@ -4601,7 +4601,7 @@ void MainWindow::addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QI
     dock->setMinimumSize(410, 272);
     dock->setTitleBarWidget(new QWidget());
 
-    m_propertiesDockContainer->addDock(dock, tabButtonTitle, tabButtonNormalIcon, tabButtonAcitveIcon);
+    m_propertiesDockContainer->addDock(dock, tabButtonTitle, tabButtonTooltip, tabButtonNormalIcon, tabButtonAcitveIcon);
 }
 
 void MainWindow::onFileOpened(QString filePath)

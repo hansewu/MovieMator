@@ -24,7 +24,8 @@
 #include <QToolButton>
 
 static QString buttonSytleSheetNormal("background-color:rgb(39, 46, 52);color:rgb(225,225,225); border:none");
-static QString buttonSytleSheetSelected("background-color:rgb(165, 65, 47);color:rgb(165, 65, 47); border:none");
+//static QString buttonSytleSheetSelected("background-color:rgb(165, 65, 47);color:rgb(165, 65, 47); border:none");
+static QString buttonSytleSheetSelected("background-color:rgb(165, 65, 47);color:rgb(225,225,225); border:none");
 static QString buttonSytleSheetNormal_topPosition("background-color:rgb(26, 30, 34);color:rgb(225,225,225); border:none");
 
 #define TABBAR_WIDTH 70
@@ -113,7 +114,7 @@ ContainerDock::ContainerDock(TAB_POSITION tabPosition, QWidget *parent)
 }
 
 
-void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
+void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QString tabButtonTooltip, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
 {
     Q_ASSERT(dock);
     Q_ASSERT(widget());
@@ -143,6 +144,7 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
     button->setFont(font);
     button->setIcon(tabButtonNormalIcon);
     button->setText(tabButtonTitle);
+    button->setToolTip(tabButtonTooltip);
 
     if (m_buttons.count() > 0)
         button->setStyleSheet((m_tabPostion == TabPosition_Top) ? buttonSytleSheetNormal_topPosition : buttonSytleSheetNormal);
