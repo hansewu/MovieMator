@@ -104,10 +104,12 @@ RecordDialog::RecordDialog(QWidget *parent) :
 
     ui->startRecordButton->setStyleSheet("QPushButton{"
                                         "border-radius:3px;border:1px solid;border-color:black;"
-                                        "background-color:rgb(82,82,82);color:rgb(185,185,185);}");
+                                        "background-color:rgb(82,82,82);color:rgb(185,185,185);}"
+                                         "QPushButton:disabled {background-color:rgb(50,50,50);color:rgb(80,80,80);}");
     ui->stopRecordButton->setStyleSheet("QPushButton{"
                                         "border-radius:3px;border:1px solid;border-color:black;"
-                                        "background-color:rgb(82,82,82);color:rgb(185,185,185);}");
+                                        "background-color:rgb(82,82,82);color:rgb(185,185,185);}"
+                                        "QPushButton:disabled {background-color:rgb(50,50,50);color:rgb(80,80,80);}");
 
     ui->maskLabel->setVisible(false);
 
