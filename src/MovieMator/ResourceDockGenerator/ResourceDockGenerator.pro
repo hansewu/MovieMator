@@ -41,11 +41,8 @@ SOURCES += \
     recentdock/recentitemmodel.cpp \
     recentdock/lineeditclear.cpp \
     audiodockwidget.cpp \
-
     audioitemmodel.cpp \
-
-    audioitemmodel.cpp \
-    helptipdialog.cpp
+    helptipdialog.cpp  \
 
 
 HEADERS += \
@@ -67,11 +64,8 @@ HEADERS += \
     recentdock/lineeditclear.h \
     unsortmap.h \
     audiodockwidget.h \
-
     audioitemmodel.h \
-
-    audioitemmodel.h \
-    helptipdialog.h
+    helptipdialog.h \
 
 
 INCLUDEPATH = ../CuteLogger/include ../CommonUtil

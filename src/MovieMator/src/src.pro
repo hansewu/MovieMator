@@ -116,10 +116,8 @@ SOURCES += main.cpp\
 #    templateeidtor.cpp \
     commands/abstractcommand.cpp \
     dialogs/videomodesettingsdialog.cpp \
-
     docks/advanceddock.cpp \
     presettabstyle.cpp \
-
     dialogs/aspectratiosettingsdialog.cpp \
     widgets/twolinebutton.cpp \
     dialogs/recorddialog.cpp
@@ -236,11 +234,8 @@ HEADERS  += mainwindow.h \
     commands/abstractcommand.h \
     CrashHandler/CrashHandler.h \
     dialogs/videomodesettingsdialog.h \
-
     docks/advanceddock.h \
-    presettabstyle.h
-
-
+    presettabstyle.h \
     dialogs/aspectratiosettingsdialog.h \
     widgets/twolinebutton.h \
     dialogs/recorddialog.h
@@ -312,9 +307,7 @@ FORMS    += mainwindow.ui \
     docks/encodetaskdock.ui \
     widgets/avformatproducersimplewidget.ui \
     dialogs/videomodesettingsdialog.ui \
-
-    docks/advanceddock.ui
-
+    docks/advanceddock.ui \
     dialogs/aspectratiosettingsdialog.ui \
     dialogs/recorddialog.ui
 

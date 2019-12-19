@@ -640,9 +640,9 @@ MainWindow::MainWindow()
     m_resourceAudioDock = RDG_CreateAudioDock(&MainInterface::singleton());
     addResourceDock(m_resourceAudioDock, tr("Audio"), tr("Music/Sound"), QIcon(":/icons/light/32x32/audio.png"), QIcon(":/icons/light/32x32/audio.png"));
 
-    LOG_DEBUG() << "Auido";
-    m_resourceAudioDock = RDG_CreateAudioDock(&MainInterface::singleton());
-    addResourceDock(m_resourceAudioDock, tr("Audio"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
+//    LOG_DEBUG() << "Auido";
+//    m_resourceAudioDock = RDG_CreateAudioDock(&MainInterface::singleton());
+//    addResourceDock(m_resourceAudioDock, tr("Audio"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
 
     m_propertiesDock = new QDockWidget(tr("Properties"));//, this);
     m_propertiesDock->installEventFilter(this);

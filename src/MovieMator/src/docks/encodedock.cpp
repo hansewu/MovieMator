@@ -208,10 +208,14 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
                    .arg(preset.get("width")).arg("x").arg(preset.get("height"));
             ui->resolutionValue->setText(str);
          }
-         else if (name == "ar")
-            ui->sampleRateValue->setText(preset.get("ar"));
-         else if(name == "ab")
-            ui->bitrateValue->setText(preset.get("ab"));
+         else if (name == "ar" && strlen(preset.get("ar")))
+         {
+            ui->sampleRateValue->setText(QString("%1Hz").arg(preset.get("ar")));
+         }
+         else if(name == "ab" && strlen(preset.get("ab")))
+         {
+            ui->bitrateValue->setText(QString("%1bps").arg(preset.get("ab")));
+         }
 
 
     }
@@ -1287,9 +1291,14 @@ void EncodeDock::onProfileChanged()
 
         ui->fpsValue->setText(m_currentPreset->get("r"));
 
-        ui->sampleRateValue->setText(m_currentPreset->get("ar"));
 
-        ui->bitrateValue->setText(m_currentPreset->get("ab"));
+        QString strValue = m_currentPreset->get("ar");
+        if(strValue.length())
+            ui->sampleRateValue->setText(m_currentPreset->get("ar"));
+
+        strValue = m_currentPreset->get("ab");
+        if(strValue.length())
+            ui->bitrateValue->setText(m_currentPreset->get("ab"));
 
     }
 
@@ -1500,6 +1509,8 @@ void EncodeDock::resetOptions()
 //     m_currentPreset->set("acodec", "aac");
 //     preset.set("meta.preset.extension", "mp4");
 
+     ui->sampleRateValue->setText("44100Hz");
+     ui->bitrateValue->setText("384Kbps");
     loadPresetFromProperties(*m_currentPreset);
 }
 

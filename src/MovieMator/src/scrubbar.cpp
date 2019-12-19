@@ -112,46 +112,6 @@ void ScrubBar::setMarkers(const QList<int> &list)
 
 void ScrubBar::mousePressEvent(QMouseEvent * event)
 {
-
-
-    Q_ASSERT(event);
-     int x = event->x() - margin;
-//     int in = m_in * m_scale;
-//     int out = m_out * m_scale;
-//     int head = m_head * m_scale;
-     int pos = CLAMP(int(x / m_scale), 0, m_max);
-
-     if (event->button() == Qt::LeftButton)
-     {
-            if (orientation() == Qt::Vertical)
-                setValue(minimum() + ((maximum()-minimum()) * (height()-event->y())) / height() ) ;
-            else
-                setValue(minimum() + ((maximum()-minimum()) * event->x()) / width() ) ;
-
-            event->accept();
-      }
-
-//    if (m_in > -1 && m_out > -1) {
-//        if (x >= in - 12 && x <= in + 6) {
-//            m_activeControl = CONTROL_IN;
-//            setInPoint(pos);
-//        }
-//        else if (x >= out - 6 && x <= out + 12) {
-//            m_activeControl = CONTROL_OUT;
-//            setOutPoint(pos);
-//        }
-//    }
-//    if (m_head > -1) {
-//        if (m_activeControl == CONTROL_NONE) {
-//            m_activeControl = CONTROL_HEAD;
-//            m_head = pos;
-//            const int offset = height() / 2;
-//            const int x = head;
-//            const int w = qAbs(x - head);
-//         // update(margin + x - offset, 0, w + 2 * offset, height());
-//        }
-//    }
-
     int x = event->x() - margin;
     int in = int(m_in * m_scale);
     int out = int(m_out * m_scale);
@@ -184,17 +144,14 @@ void ScrubBar::mousePressEvent(QMouseEvent * event)
             update(margin + x - offset, 0, w + 2 * offset, height());
         }
     }
-
     emit seeked(pos);
 }
-
 
 void ScrubBar::mouseReleaseEvent(QMouseEvent * event)
 {
     Q_UNUSED(event)
     m_activeControl = CONTROL_NONE;
 }
-
 
 void ScrubBar::mouseMoveEvent(QMouseEvent * event)
 {
@@ -378,4 +335,3 @@ void ScrubBar::updatePixmap()
     p.end();
     update();
 }
-
