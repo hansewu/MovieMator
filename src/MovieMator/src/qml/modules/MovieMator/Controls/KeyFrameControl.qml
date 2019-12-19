@@ -374,6 +374,10 @@ Rectangle {
                                 source:enableKeyFrameCheckBox.checked ? 'qrc:///icons/light/32x32/key-a.png' : 'qrc:///icons/light/32x32/key.png'
                             }
                         }
+                        label: Text {
+                            text: enableKeyFrameCheckBox.text
+                            color: '#ffffff'
+                        }
                     }
                     onClicked: {
                         if(checked)
