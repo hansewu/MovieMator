@@ -36,6 +36,7 @@ JobsDock::JobsDock(QWidget *parent) :
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
     ui->treeView->setModel(&JOBS);
+    ui->treeView->setStyleSheet("color:rgb(185, 185, 185)");
 
     QHeaderView* header = ui->treeView->header();
     header->setStretchLastSection(false);
