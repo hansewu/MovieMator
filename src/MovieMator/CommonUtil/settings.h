@@ -155,6 +155,12 @@ public:
     QDateTime lastUse() const;
     void setLastUse(QDateTime lastUse);
 
+    bool isSubscribed();
+    void setIsSubscribed(bool bSubscribed);
+
+    bool stickerDockShowPrompt();
+    void setStickerDockShowPrompt(bool bIsPrompt);
+
     void sync();
 
     void remove(const QString &key);

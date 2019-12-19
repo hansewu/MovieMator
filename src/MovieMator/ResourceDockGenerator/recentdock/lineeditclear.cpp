@@ -46,10 +46,14 @@ LineEditClear::LineEditClear(QWidget *pParent)
                    qMax(miniSize.height(), m_pClearButton->sizeHint().height()/* + nFrameWidth * 2 + 2*/));
 
     QString strDefaultStyle = "QLineEdit {padding-right: 20px; background-image: url(:/icons/light/32x32/search-icon.png); "
-                                "background-repeat: norepeat; background-position: center; border: 1px; border-radius: 3px; "
-                                "background-color: rgb(100,100,100) ; }";
-    QString strEditingStyle = "QLineEdit {padding-right: 20px; border: 1px; border-radius: 3px; background-color: rgb(100,100,100) ; }";
+                                "background-repeat: norepeat; background-position: center; color:rgb(185,185,185); border: 1px; border-radius: 3px; "
+                                "background-color: rgb(82,82,82) ; }";
+    QString strEditingStyle = "QLineEdit {padding-right: 20px; border: 1px; border-radius: 3px; color:rgb(185,185,185);  background-color: rgb(82,82,82) ; }";
     setStyleSheets(strDefaultStyle, strEditingStyle);
+
+//    QFont font = this->font();
+//    font.setPointSize(16);
+//    this->setFont(font);
 }
 
 void LineEditClear::resizeEvent(QResizeEvent *)

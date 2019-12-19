@@ -21,8 +21,8 @@ import Qt.labs.controls 1.0
 import QtQuick.Layouts 1.0
 
 Rectangle {
-    property ListModel listModel
-    property int currentIndex
+    property ListModel listModel: ListModel{}
+    property int currentIndex: -1
     property string currentText
 
     id: comboBox
@@ -31,7 +31,7 @@ Rectangle {
     color: "#525252"
     border.color: 'gray'
     width: 100
-    height: 32
+    height: 20
 
     function selectItemOfIndex(index) {
         if (listModel.count > 0) {

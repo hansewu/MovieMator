@@ -41,6 +41,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, int trackIndex, in
     , m_clipIndex(clipIndex)
 {
     ui->setupUi(this);
+    setStyleSheet("background-color:rgb(26, 30, 34);");
 //    Util::setColorsToHighlight(ui->label_2);
 
     ui->softnessSlider->blockSignals(true);
@@ -114,7 +115,34 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, int trackIndex, in
 //    }
 //#endif
 
-    ui->label_2->setStyleSheet("background-color:rgb(46,46,46);");
+//    ui->label_2->setStyleSheet("background-color:rgb(46,46,46);");
+    QString textColorStyle = "color:rgb(185,185,185);";
+    ui->label_2->setStyleSheet(textColorStyle);
+    QFont font = ui->label_2->font();
+    font.setPointSize(14);
+    ui->label_2->setFont(font);
+
+//    QFont smallTextFont = ui->label->font();
+//    smallTextFont.setPointSize(13);
+
+//    ui->label->setFont(smallTextFont);
+    ui->label->setStyleSheet(textColorStyle);
+//    ui->label_3->setFont(smallTextFont);
+    ui->label_3->setStyleSheet(textColorStyle);
+//    ui->label_4->setFont(smallTextFont);
+    ui->label_4->setStyleSheet(textColorStyle);
+//    ui->label_6->setFont(smallTextFont);
+    ui->label_6->setStyleSheet(textColorStyle);
+//    ui->label_7->setFont(smallTextFont);
+    ui->label_7->setStyleSheet(textColorStyle);
+//    ui->label_preview->setFont(smallTextFont);
+    ui->label_preview->setStyleSheet(textColorStyle);
+
+    ui->invertCheckBox->setStyleSheet(textColorStyle);
+    ui->softnessLabel->setStyleSheet(textColorStyle);
+    ui->crossfadeRadioButton->setStyleSheet(textColorStyle);
+    ui->mixRadioButton->setStyleSheet(textColorStyle);
+
     ui->line->setStyleSheet("color:black;");
     ui->line_2->setStyleSheet("color:black;");
     QString sliderStyle = "QSlider::sub-page:horizontal{background:rgb(15,114,103);border-radius: 4px}";
@@ -122,7 +150,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, int trackIndex, in
     sliderStyle.append("QSlider::handle:horizontal{background:'white';width:5px;height:15px;margin: -5px 0px -5px 0px;border-radius: 2px}");
     ui->softnessSlider->setStyleSheet(sliderStyle);
     ui->mixSlider->setStyleSheet(sliderStyle);
-    QString spinBoxStyle = "QSpinBox {padding-left:4px;background-color:rgb(82,82,82);color:rgb(225,225,225);border:1px solid black;border-radius:4px;}";
+    QString spinBoxStyle = "QSpinBox {padding-left:4px;background-color:rgb(82,82,82);color:rgb(185,185,185);border:1px solid black;border-radius:4px;}";
     spinBoxStyle.append("QSpinBox::up-button {subcontrol-origin:border;subcontrol-position:top right;width:22px;border:none;}");
     spinBoxStyle.append("QSpinBox::up-arrow {image: url(:/icons/light/8x8/up.png);width:8px;height:8px;}");
     spinBoxStyle.append("QSpinBox::down-button {subcontrol-origin: border;subcontrol-position: bottom right;width: 20px;border: none;border-top-width: 0;}");
@@ -141,7 +169,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, int trackIndex, in
     ui->mixRadioButton->setStyleSheet(radioButtonStyle);
     ui->lumaCombo->setStyleSheet("QComboBox {\
                                   background-color:rgb(82,82,82); \
-                                  color:rgb(225,225,225); \
+                                  color:rgb(185,185,185); \
                                   border: 1px solid black;\
                                   border-radius: 4px;\
                                   padding: 1px 2px 1px 2px;\

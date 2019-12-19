@@ -44,6 +44,8 @@ Item {
         alphaCheckbox.checked = filter.get('alpha') !== 1
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 8
@@ -51,7 +53,7 @@ Item {
         RowLayout {
             Label {
                 text: qsTr('Duration')
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
             TimeSpinner {
                 id: timeSpinner
@@ -75,7 +77,7 @@ Item {
 
             style: CheckBoxStyle {
                         label: Text {
-                            color: "white"
+                            color: activePalette.text//"white"
                             text: qsTr('Adjust opacity instead of fade with black')
                         }
             }

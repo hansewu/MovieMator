@@ -492,6 +492,26 @@ void ShotcutSettings::setLastUse(QDateTime lastUse)
     settings.setValue("kLastUse", lastUse);
 }
 
+bool ShotcutSettings::isSubscribed()
+{
+    return settings.value("subscribed", false).toBool();
+}
+
+void ShotcutSettings::setIsSubscribed(bool bSubscribed)
+{
+    settings.setValue("subscribed", bSubscribed);
+}
+
+bool ShotcutSettings::stickerDockShowPrompt()
+{
+    return settings.value("stickerDcokPrompt", true).toBool();
+}
+
+void ShotcutSettings::setStickerDockShowPrompt(bool bIsPrompt)
+{
+    settings.setValue("stickerDcokPrompt", bIsPrompt);
+}
+
 void ShotcutSettings::sync()
 {
     settings.sync();

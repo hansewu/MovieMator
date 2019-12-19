@@ -28,6 +28,8 @@ Item {
     width: 300
     height: 250
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     GridLayout {
         columns: 3
         anchors.fill: parent
@@ -36,7 +38,7 @@ Item {
         Label {
             text: qsTr('Radius')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: radiusSlider
@@ -55,7 +57,7 @@ Item {
         Label {
             text: qsTr('Blurriness')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: mixSlider

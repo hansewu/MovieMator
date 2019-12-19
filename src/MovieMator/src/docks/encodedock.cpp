@@ -738,6 +738,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
     tmp.open();
     tmp.close();
 
+    MLT.saveXML(tmp.fileName(), service, false /* without relative paths */);
     //添加水印
     addWatermark(service, tmp);
 
@@ -846,11 +847,16 @@ void EncodeDock::addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProject
         return;
     }
 
-    //添加水印滤镜
-#if SHARE_VERSION
+    //添加水印滤镜（网站使用版、网站免费版，app store免费版）
+#if defined(SHARE_VERSION) || defined(MOVIEMATOR_FREE)
     Mlt::Filter *pSoftwareNameTextFilter = nullptr;
     Mlt::Filter *pHomePagetextFilter     = nullptr;
-    if (Registration.registrationType() == Registration_None)
+
+    if (Registration.registrationType() != Registration_None
+            || Settings.isSubscribed())
+        return;
+
+    //if (Registration.registrationType() == Registration_None)
     {
         //显示软件名
         QString strSoftwareName             = tr("MovieMator");
@@ -909,7 +915,6 @@ void EncodeDock::addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProject
         pHomePagetextFilter->set("trans_oy", 0);
         pHomePagetextFilter->set("trans_scale_aspect_ratio", 1);
 
-#if MOVIEMATOR_PRO
         pSoftwareNameTextFilter->set("geometry", 0.684375, 0, 0.328125, 0.2875);
         pSoftwareNameTextFilter->set("bgcolour", 0, 128, 128, 128);
         pSoftwareNameTextFilter->set("transparent_alpha", 1);
@@ -917,9 +922,8 @@ void EncodeDock::addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProject
         pHomePagetextFilter->set("geometry", 0.698438, 0.1725, 0.299219, 0.123611);
         pHomePagetextFilter->set("bgcolour", 0, 128, 128, 128);
         pHomePagetextFilter->set("transparent_alpha", 1);
-#endif
 
-#if MOVIEMATOR_FREE
+#if MOVIEMATOR_FREE && SHARE_VERSION //国区免费版
         pSoftwareNameTextFilter->set("geometry", 0.854375, 0, 0.13125, 0.115);
         pSoftwareNameTextFilter->set("bgcolour", 0, 0, 255, 255);
         pSoftwareNameTextFilter->set("transparent_alpha", 0.25);
@@ -938,10 +942,11 @@ void EncodeDock::addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProject
     MLT.saveXML(tmpProjectXml.fileName(), pService, false /* without relative paths */);
 
     //从当前工程中移除水印
-#if SHARE_VERSION
-#if MOVIEMATOR_PRO || MOVIEMATOR_FREE
-    if (Registration.registrationType() == Registration_None)
-    {
+#if defined(SHARE_VERSION) || defined(MOVIEMATOR_FREE)
+    if (Registration.registrationType() != Registration_None
+            || Settings.isSubscribed())
+        return;
+
         pService->detach(*pSoftwareNameTextFilter);
         pService->detach(*pHomePagetextFilter);
 
@@ -950,8 +955,6 @@ void EncodeDock::addWatermark(Mlt::Service* pService, QTemporaryFile& tmpProject
 
         delete pHomePagetextFilter;
         pHomePagetextFilter = nullptr;
-    }
-#endif
 #endif
 }
 
@@ -1180,6 +1183,16 @@ void EncodeDock::on_encodeButton_clicked()
 #endif
 #endif
 
+    //弹出订阅窗口
+#ifndef SHARE_VERSION
+#if MOVIEMATOR_FREE
+    if (!Settings.isSubscribed())
+    {
+        MAIN.showInAppDialog();
+    }
+#endif
+#endif
+
 
     if (ui->encodeButton->text() == tr("Stop Capture")) {
         MLT.closeConsumer();
@@ -1351,11 +1364,11 @@ void EncodeDock::on_removePresetButton_clicked()
                        this);
 
     dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
+
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());

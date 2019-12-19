@@ -116,8 +116,14 @@ SOURCES += main.cpp\
 #    templateeidtor.cpp \
     commands/abstractcommand.cpp \
     dialogs/videomodesettingsdialog.cpp \
+
     docks/advanceddock.cpp \
-    presettabstyle.cpp
+    presettabstyle.cpp \
+
+    dialogs/aspectratiosettingsdialog.cpp \
+    widgets/twolinebutton.cpp \
+    dialogs/recorddialog.cpp
+
 
 HEADERS  += mainwindow.h \
     scrubbar.h \
@@ -230,14 +236,35 @@ HEADERS  += mainwindow.h \
     commands/abstractcommand.h \
     CrashHandler/CrashHandler.h \
     dialogs/videomodesettingsdialog.h \
+
     docks/advanceddock.h \
     presettabstyle.h
 
+
+    dialogs/aspectratiosettingsdialog.h \
+    widgets/twolinebutton.h \
+    dialogs/recorddialog.h
+
 mac {
-    SOURCES += securitybookmark/SecurityBookmark.mm \
-                ../iRate/iRate.mm
+    SOURCES += \
+                dialogs/inappdialog.cpp
+
     HEADERS += securitybookmark/SecurityBookmark.h \
-                ../iRate/iRate.h
+                ../iRate/iRate.h \
+                inapp/IAP.h \
+                inapp/iap_c_interface.h \
+                inapp/XYAppReceipt.h \
+                dialogs/inappdialog.h
+
+    OBJECTIVE_SOURCES += \
+                inapp/IAP.mm \
+                inapp/iap_c_interface.mm \
+                inapp/XYAppReceipt.mm \
+                securitybookmark/SecurityBookmark.mm \
+                ../iRate/iRate.mm
+
+    FORMS    += \
+                dialogs/inappdialog.ui
 }
 
 
@@ -285,7 +312,12 @@ FORMS    += mainwindow.ui \
     docks/encodetaskdock.ui \
     widgets/avformatproducersimplewidget.ui \
     dialogs/videomodesettingsdialog.ui \
+
     docks/advanceddock.ui
+
+    dialogs/aspectratiosettingsdialog.ui \
+    dialogs/recorddialog.ui
+
 
 RESOURCES += \
     ../icons/resources.qrc \
@@ -347,7 +379,7 @@ mac {
 
     #free appstore
 #    DEFINES += MOVIEMATOR_FREE=1
-#    TARGET = "MovieMator Video Editor Lite"
+#    TARGET = "MovieMator Video Editor"
 #    QMAKE_INFO_PLIST = ../Info-Free.plist
 #    ICON = ../icons/moviemator.icns
 
@@ -388,6 +420,7 @@ mac {
 #    LIBS += -L$$MLT_PREFIX/lib -lmlt++ -lmlt -lSDL
 #    LIBS += -lexif -lmltqt
     LIBS += "-framework Cocoa"
+    LIBS += "-framework StoreKit"
     LIBS += -L$$PWD/../../../../build/ecc -lregister
 
     QMAKE_LFLAGS += -Wl,/usr/lib/libcrypto.0.9.8.dylib
@@ -440,7 +473,7 @@ isEmpty(MOVIEMATOR_VERSION) {
      win32:MOVIEMATOR_VERSION = adhoc
 }
 #DEFINES += MOVIEMATOR_VERSION=\\\"$$MOVIEMATOR_VERSION\\\"
-DEFINES += MOVIEMATOR_VERSION=\\\"2.9.2\\\"
+DEFINES += MOVIEMATOR_VERSION=\\\"3.0.0\\\"
 
 
 unix:!mac:isEmpty(PREFIX) {
@@ -463,8 +496,9 @@ win32 {
 
 mac {
     qmlfiles.files = $$PWD/qml
-    qmlfiles.path = $$PREFIX/share/MovieMator
+    qmlfiles.path = Contents/Resources/share/moviemator
     INSTALLS += qmlfiles
+
 
 #自动copy资源与生成的dylib到app程序包中 xjp
     BUILD_FOLDER = /work/Projects/MovieMator-github/MovieMator/src/build-MovieMator-Desktop_Qt_5_6_1_clang_64bit1-Debug #不同机器，不同编译器，需要修改
@@ -551,6 +585,9 @@ mac {
 
   QMAKE_POST_LINK +=install_name_tool -change /work/Projects/MovieMator-github/shotcut/mlt_build/lib/libmlt++.3.dylib @executable_path/lib/libmlt++.3.dylib /work/Projects/MovieMator-github/MovieMator/src/build-MovieMator-Desktop_Qt_5_6_1_clang_64bit1-Debug/src/MovieMator\ Video\ Editor\ Pro.app/Contents/MacOS/MovieMator\ Video\ Editor\ Pro &
   QMAKE_POST_LINK +=install_name_tool -change /work/Projects/MovieMator-github/shotcut/mlt_build/lib/libmlt.6.dylib @executable_path/lib/libmlt.6.dylib /work/Projects/MovieMator-github/MovieMator/src/build-MovieMator-Desktop_Qt_5_6_1_clang_64bit1-Debug/src/MovieMator\ Video\ Editor\ Pro.app/Contents/MacOS/MovieMator\ Video\ Editor\ Pro  &
+
+    QMAKE_BUNDLE_DATA += qmlfiles
+
 }
 
 DISTFILES += \
@@ -559,5 +596,6 @@ DISTFILES += \
     ../translations/mm_en.qm \
     ../translations/mm_zh.qm
 
-
 include(../win32debug.pri)
+
+

@@ -32,6 +32,8 @@ Item {
         keyFrame.initFilter(layoutRoot)
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     GridLayout {
         id: layoutRoot
         columns: 3
@@ -52,7 +54,7 @@ Item {
         Label {
             text: qsTr('Opacity')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'slider'

@@ -36,6 +36,7 @@ JobsDock::JobsDock(QWidget *parent) :
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
     ui->treeView->setModel(&JOBS);
+    ui->treeView->setStyleSheet("color:rgb(185, 185, 185)");
 
     QHeaderView* header = ui->treeView->header();
     header->setStretchLastSection(false);
@@ -185,11 +186,9 @@ void JobsDock::on_closeButton_clicked()
                        this);
 
     dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
  //   dialog.setWindowModality(QmlApplication::dialogModality());

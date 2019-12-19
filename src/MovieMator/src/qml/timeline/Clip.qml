@@ -121,7 +121,7 @@ Rectangle {
     /*
      * clip背景框
      */
-    border.color: selected? 'white' : backgroundColor // 'transparent'
+    border.color: selected ? selectedClipBorderColor : normalClipBorderColor // 'transparent'
     border.width: isBlank? 0 : selected ? 2 : 1
     clip: true
     Drag.active: mouseArea.drag.active
@@ -131,7 +131,7 @@ Rectangle {
     //声音波形颜色
     function getWaveColor()
     {
-        var waveColor = clipRoot.selected ? '#e47b62' : '#50a097'
+        var waveColor = clipRoot.selected ? selectedClipBorderColor : normalClipBorderColor
         return isBlank? 'transparent' : isTransition? '#8c953f' : waveColor
     }
 
@@ -139,13 +139,13 @@ Rectangle {
     function getColor() {
 //        return isBlank? 'transparent' : isTransition? 'mediumpurple' : isAudio? 'darkseagreen' : root.moviematorBlue
         // return isBlank? 'transparent' : isTransition? '#8c953f' : isAudio? '#2a5733' : '#2f798f'
-        return isBlank? 'transparent' : isTransition? '#8c953f' : '#0F7267'
+        return isBlank? 'transparent' : isTransition? '#8c953f' : normalClipColor
     }
 
     // clip被选中时的背景色
     function getSelectedColor() {
         // return isBlank? 'transparent' : isTransition? '#8c953f': isAudio? '#419f51' : '#2eb9df'
-        return isBlank? 'transparent' : isTransition? '#8c953f': '#C0482C'
+        return isBlank? 'transparent' : isTransition? '#8c953f': selectedClipColor
     }
 
     function isVisable(index)
@@ -443,6 +443,7 @@ Rectangle {
             PropertyChanges {
                 target: clipRoot
                 z: 0
+                color: '#000000'
             }
         },
         State {
@@ -1032,7 +1033,8 @@ Rectangle {
 
     // 在 clip下方显示关键帧的灰色背景
     Rectangle {
-        visible: !isBlank && selected && currentFilter && currentFilter.keyframeNumber > 0
+        id: keyframeRegion
+        visible: clipRoot.selected && keyFrameRepeater.count > 0//currentFilter && currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) > 0
         height: parent.height / 2
         width: parent.width
         anchors.left: parent.left
@@ -1041,58 +1043,33 @@ Rectangle {
         opacity: 0.7
         color: 'grey'
 
-
-        //MouseArea {
-        //    anchors.fill: parent
-        //    acceptedButtons: Qt.LeftButton
-        //}
-
         Repeater {
             id: keyFrameRepeater
             // 只有 Rectangle显示时才有 model，消除 currentFilter的 Reference Error警告
-            model: (parent.visible && currentFilter) ? currentFilter.keyframeNumber : 0
+            model: currentFilter ? currentFilter.cache_getKeyFrameNumber(currentFilter.getCurrentParameter()) : 0
             anchors.verticalCenter: parent.verticalCenter
 
 
-            KeyframeIndicator{
+            delegate: KeyframeIndicator{
                 height: parent.height / 2
                 width: height
                 anchors.verticalCenter: parent.verticalCenter
-                visible: !isBlank && selected &&currentFilter && (currentFilter.getKeyFrame(index) !== -1)
-                x: (currentFilter?currentFilter.getKeyFrame(index):0) *multitrack.scaleFactor - width/2
-                frameNumber: currentFilter ? currentFilter.getKeyFrame(index) : -1
+                x: (currentFilter? currentFilter.getKeyFrame(index, currentFilter.getCurrentParameter()) : 0) *multitrack.scaleFactor - width/2
+                frameNumber: currentFilter ? currentFilter.getKeyFrame(index, currentFilter.getCurrentParameter()) : -1
                 rotation: 45
             }
         }
     }
 
-//    Connections{
-//        target: currentFilter
-//        onKeyFrameChanged:{
-////            var  frameNumber = currentFilter.cache_getKeyFrameNumber()
-////            firstKeyFrameRect.visible = !isBlank && frameNumber
-////            if(frameNumber)
-////            {
-////                console.log("Clip.qml onKeyFrameChanged is called, keyframe=")
-////              //  firstKeyFrameRect.visible = !isBlank && frameNumber// This is available in all editors.
-////                var frame = currentFilter.getFristKeyFrame()
-
-////                firstKeyFrameRect.anchors.leftMargin = clipRoot.border.width+frame
-////                console.log(firstKeyFrameRect.anchors.leftMargin);
-////            }
-
-//        }
-//        onAddKeyFrame:{
-//            var keyNumber = currentFilter.cache_getKeyFrameNumber()
-//            keyFrameRepeater.model = keyNumber
-//        }
-
-//        onRemoveKeyFrame:{
-//            var keyNumber = currentFilter.cache_getKeyFrameNumber()
-//            keyFrameRepeater.model = keyNumber
-//        }
-
-//    }
+    Connections{
+        target: currentFilter
+        onKeyframeNumberChanged: {
+            mainwindow.resetCurrentFilterForTimelineDock()
+        }
+        onEditKeyframeOfParameter: {
+            mainwindow.resetCurrentFilterForTimelineDock()
+        }
+    }
 
     // 右键 clip弹出的菜单
     /*

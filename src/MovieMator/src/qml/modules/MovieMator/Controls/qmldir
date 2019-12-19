@@ -9,7 +9,6 @@ SaveDefaultButton 1.0 SaveDefaultButton.qml
 SliderSpinner 1.0 SliderSpinner.qml
 RectangleControl 1.0 RectangleControl.qml
 SimplePropertyUI 1.0 SimplePropertyUI.qml
-KeyFrame 1.0 KeyFrame.qml
 KeyFrameControl 1.0 KeyFrameControl.qml
 CustomFilterButton 1.0 CustomFilterButton.qml
 YFKeyFrame 1.0 YFKeyFrame.qml
@@ -19,3 +18,7 @@ NewPreset 1.0 NewPreset.qml
 MyListView 1.0 MyListView.qml
 MyComboBox 1.0 MyComboBox.qml
 FilterComboBox 1.0 FilterComboBox.qml
+MySpinBox 1.0 MySpinBox.qml
+EditKeyframeButton 1.0 EditKeyframeButton.qml
+CustomSlider 1.0 CustomSlider.qml
+

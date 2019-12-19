@@ -63,6 +63,8 @@ Item {
         verticalSlider.value = filter.getDouble('vertical') * verticalSlider.maximumValue
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     GridLayout {
         columns: 5
         anchors.fill: parent
@@ -71,7 +73,7 @@ Item {
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             id: preset
@@ -84,7 +86,7 @@ Item {
         Label {
             text: qsTr('Text')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         TextField {
             id: textField
@@ -102,7 +104,7 @@ Item {
             Layout.row: 2
             Layout.column: 0            
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
 //        ComboBox {
 //            id: fontCombo
@@ -152,7 +154,7 @@ Item {
             onCheckedChanged: filter.set('weight', checked? 'bold' : 'normal')
             style: CheckBoxStyle {
                         label: Text {
-                            color: "white"
+                            color: activePalette.text//"white"
                             text: qsTr('Bold')
                         }
             }
@@ -167,7 +169,7 @@ Item {
             onCheckedChanged: filter.set('bevel', checked)
             style: CheckBoxStyle {
                         label: Text {
-                            color: "white"
+                            color: activePalette.text//"white"
                             text: qsTr('Beveled')
                         }
             }
@@ -178,7 +180,7 @@ Item {
             Layout.row: 3
             Layout.column: 0            
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         ColorPicker {
             id: colorSwatch
@@ -204,7 +206,7 @@ Item {
             Layout.row: 4
             Layout.column: 0            
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: sizeSlider
@@ -227,7 +229,7 @@ Item {
             Layout.row: 5
             Layout.column: 0            
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: depthSlider
@@ -251,7 +253,7 @@ Item {
             Layout.row: 6
             Layout.column: 0            
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: tiltSlider
@@ -275,7 +277,7 @@ Item {
             Layout.row: 7
             Layout.column: 0            
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: horizontalSlider
@@ -299,7 +301,7 @@ Item {
             Layout.row: 8
             Layout.column: 0            
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: verticalSlider

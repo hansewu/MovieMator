@@ -32,23 +32,12 @@ Item {
         keyFrame.initFilter(layoutRoot)
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     function setControls() {
         var keyFrameCount = filter.getKeyFrameCountOnProject("noise");
         if(keyFrameCount > 0)
         {
-            var index=0
-            for(index=0; index<keyFrameCount;index++)
-            {
-                var nFrame = filter.getKeyFrameOnProjectOnIndex(index, "noise");
-                var keyValue = filter.getKeyValueOnProjectOnIndex(index, "noise");
-
-                filter.cache_setKeyFrameParaValue(nFrame, "noise", keyValue)
-
-                keyValue = filter.getKeyValueOnProjectOnIndex(index, "brightness");
-                filter.cache_setKeyFrameParaValue(nFrame, "brightness", keyValue)
-            }
-
-            filter.syncCacheToProject();
             noiseSlider.value = filter.getKeyValueOnProjectOnIndex(0, "noise")
             brightnessSlider.value = filter.getKeyValueOnProjectOnIndex(0, "brightness")
         }
@@ -78,7 +67,7 @@ Item {
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             id: preset
@@ -90,7 +79,7 @@ Item {
         Label {
             text: qsTr('Noise')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'noiseSlider'
@@ -110,7 +99,7 @@ Item {
         Label {
             text: qsTr('Brightness')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'brightnessSlider'

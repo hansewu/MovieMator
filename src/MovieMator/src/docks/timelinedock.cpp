@@ -115,6 +115,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_quickView.rootContext()->setContextProperty("multitrack", &m_model);
     m_quickView.setResizeMode(QQuickWidget::SizeRootObjectToView);
     m_quickView.setClearColor(palette().window().color());
+    setCurrentFilter(nullptr, nullptr,0);
 
 //    connect(&m_model, SIGNAL(modified()), this, SLOT(clearSelectionIfInvalid()));//sll:将modify放在mainwindow中建立连接，防止界面更新与数据操作顺序问题
 
@@ -162,10 +163,10 @@ void TimelineDock::setPosition(int position)
 
 QString TimelineDock::timecode(int frames)
 {
-    Q_ASSERT(MLT.producer());
-    Q_ASSERT(MLT.producer()->is_valid());
+//    Q_ASSERT(MLT.producer());
+//    Q_ASSERT(MLT.producer()->is_valid());
 
-    if (MLT.producer())
+    if (MLT.producer() && MLT.producer()->is_valid())
         return MLT.producer()->frames_to_time(frames, mlt_time_smpte);
     return QString("");
 }
@@ -1708,9 +1709,8 @@ void TimelineDock::appendFromPath(int trackIndex, const QString &path)
                                      tr("For reasons of copyright protection, you can not import vob or m4p files"),
                                      QMessageBox::Ok,
                                      this);
-#if MOVIEMATOR_PRO
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-#else
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
 #endif
         dialog.setWindowModality(QmlApplication::dialogModality());

@@ -361,7 +361,7 @@ Rectangle {
                 implicitWidth: 14
                 implicitHeight: 14
                 Rectangle {
-                    color: "#787878"
+                    color: "#4e5156"
                     anchors.fill: parent
                     anchors.margins: 3
                     radius: 4
@@ -502,8 +502,9 @@ Rectangle {
                             text: translate2CH?Trans.transEn2Ch(model.display):Trans.transEn2Short(model.display)
                             verticalAlignment:Text.AlignHCenter
                             wrapMode: Text.Wrap
-                            font.pixelSize: 11
+//                            font.pointSize: 13
                             horizontalAlignment:Text.AlignRight
+                            color: "#b9b9b9"
                             anchors {
                                 top:filterDelegateImage.bottom
                                 topMargin:0

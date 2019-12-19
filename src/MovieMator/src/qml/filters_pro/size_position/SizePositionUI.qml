@@ -34,9 +34,7 @@ Item {
     property string halignProperty
     property var _locale: Qt.locale(application.numericLocale)
     property rect filterRect : filter.getRect(rectProperty)
-    property rect rectTmp
     property rect rectOld  //保存了当前的rect值，这样remove all keyframes之后（底层数据清空），可以将此值用于更新底层。不然也可以直接将界面的控件值设置到底层，不过此时这个滤镜需要使用rectangle.rect 
-    property var clickedButton
     property bool bTile: false
     property bool bFit: false
     property bool bFitCrop: false
@@ -45,125 +43,29 @@ Item {
     width: 350
     height: 250
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     Component.onCompleted: {
-        
-        filter.setInAndOut(0, timeline.getCurrentClipParentLength() - 1)
-        //导入上次工程保存的关键帧
-        var metaParamList = metadata.keyframes.parameters
-        /*
-        var keyFrameCount = filter.getKeyFrameCountOnProject(metaParamList[0].property);
-        if(keyFrameCount < 0){
-                keyFrameCount = filter.getKeyFrameCountOnProject(metaParamList[0].property);
-        }
-        for(var keyIndex=0; keyIndex<keyFrameCount;keyIndex++)
-        {
-            var nFrame = filter.getKeyFrameOnProjectOnIndex(keyIndex, metaParamList[0].property)
-            for(var paramIndex=0;paramIndex<metaParamList.length;paramIndex++){
-                var prop = metaParamList[paramIndex].property
-                var keyValue = filter.getAnimRectValue(nFrame, prop)
-                filter.cache_setKeyFrameParaRectValue(nFrame, prop, keyValue)
-            }
-        }
-        filter.syncCacheToProject();
-        */
         if (filter.isNew) {
-            filter.set(fillProperty, 1)
-            filter.set(distortProperty, 0)
-
-            // loadPresets()
-
-            rectTmp.x = 0.0
-            rectTmp.y = 0.0
-            rectTmp.width = 1.0
-            rectTmp.height = 1.0
-            
-            filter.set(rectProperty, rectTmp)
-            filter.set(valignProperty, 'top')
-            filter.set(halignProperty, 'left')
-            filter.savePreset(preset.parameters)
         }
         setControls()
-
-        // metadata.keyframes.parameters[0].value = rectTmp
-
-        keyFrame.initFilter()
+        keyFrame.initFilter(layoutRoot)
     }
-           
-        
-    function loadPresets()
-    {
-        rectTmp.x       = 0.0
-        rectTmp.y       = 0.5
-        rectTmp.width   = 0.5
-        rectTmp.height  = 0.5
 
-        filter.set(rectProperty,   rectTmp)
-        filter.savePreset(preset.parameters, qsTr('Bottom Left'))
-
-        rectTmp.x       = 0.5
-        rectTmp.y       = 0.5
-        rectTmp.width   = 0.5
-        rectTmp.height  = 0.5
-        filter.set(rectProperty,   rectTmp)
-        filter.savePreset(preset.parameters, qsTr('Bottom Right'))
-
-        rectTmp.x       = 0.0
-        rectTmp.y       = 0.0
-        rectTmp.width   = 0.5
-        rectTmp.height  = 0.5
-        filter.set(rectProperty,   rectTmp)
-        filter.savePreset(preset.parameters, qsTr('Top Left'))
-
-        rectTmp.x       = 0.5
-        rectTmp.y       = 0.0
-        rectTmp.width   = 0.5
-        rectTmp.height  = 0.5
-        filter.set(rectProperty,   rectTmp)
-        filter.savePreset(preset.parameters, qsTr('Top Right'))
-    } 
-
-    function setFilter() {
-        var x = parseFloat(rectX.text)
-        var y = parseFloat(rectY.text)
-        var w = parseFloat(rectW.text)
-        var h = parseFloat(rectH.text)
-
-        filterRect.x = x / profile.width
-        filterRect.y = y / profile.height
-        filterRect.width = w / profile.width
-        filterRect.height = h / profile.height
-
-        if(!keyFrame.bEnableKeyFrame)  //没有关键帧
-        {   
-            filter.resetProperty(rectProperty)
+    function setFilterRect() {
+        if(!filter.isKeyframeActivate(rectProperty))  //没有关键帧
+        {
             filter.set(rectProperty, filterRect)
         }
-        else if ((keyFrame.bEnableKeyFrame && keyFrame.bAutoSetAsKeyFrame) || filter.cache_bKeyFrame(keyFrame.getCurrentFrame()))
+        else if ((filter.isKeyframeActivate(rectProperty) && keyFrame.bAutoSetAsKeyFrame)
+                 || filter.isKeyframeAtPosition(rectProperty, keyFrame.getCurrentFrame()))
         {
             var nFrame = keyFrame.getCurrentFrame()
             
-            if (!filter.cache_bKeyFrame(nFrame)) keyFrame.showAddFrameInfo(nFrame)
-
-            //var rectValue = filter.getRect(rectProperty)
-            filter.cache_setKeyFrameParaRectValue(nFrame, rectProperty, filterRect,1.0)
-            filter.syncCacheToProject();
-        } 
-               
-    }
-
-    function saveValues() {
-        
-        var x = parseFloat(rectX.text)
-        var y = parseFloat(rectY.text)
-        var w = parseFloat(rectW.text)
-        var h = parseFloat(rectH.text)
-        filterRect.x        = x / profile.width
-        filterRect.y        = y / profile.height
-        filterRect.width    = w / profile.width
-        filterRect.height   = h / profile.height
-
-        filter.set(rectProperty, filterRect)
-        
+            if (!filter.isKeyframeAtPosition(rectProperty, nFrame))
+                keyFrame.showAddFrameInfo(nFrame)
+            filter.cache_setKeyFrameParaRectValue(nFrame, rectProperty, filterRect, 1.0)
+        }
     }
 
     function setControls() {
@@ -171,54 +73,21 @@ Item {
             distortRadioButton.checked = true
         else if (filter.get(fillProperty) === '1')
             fillRadioButton.checked = true
-        else
-            fitRadioButton.checked = true
     }
 
     function changeMode(){
-        if(fitRadioButton.checked == true){
-            filter.set(fillProperty, 1)
-            filter.set(distortProperty, 1)
-            
-            filter.set(fillProperty, 0)
-            filter.set(distortProperty, 0)
-        }else if(fillRadioButton.checked == true){
-            filter.resetProperty(fillProperty)
-            filter.resetProperty(distortProperty)
-
+        if(fillRadioButton.checked == true){
             filter.set(fillProperty, 1)
             filter.set(distortProperty, 0)
         }else if(distortRadioButton.checked === true){
-            filter.resetProperty(fillProperty)
-            filter.resetProperty(distortProperty)
-
             filter.set(fillProperty, 1)
             filter.set(distortProperty, 1)
         }
     }
 
-    function setPerset(){
-        var position = timeline.getPositionInCurrentClip()
-        filter.get(rectProperty)
-        var rect = filter.getAnimRectValue(position, rectProperty)
-        var rect3 = filter.get(rectProperty)
-
-        filterRect.x = rect.x
-        filterRect.y = rect.y
-        filterRect.width = rect.width
-        filterRect.height = rect.height
-
-        setFilter()
-        setControls()
-    }
-
     function tile()
     {
         bTile = false
-
-        filter.resetProperty(fillProperty)
-        filter.resetProperty(distortProperty)
-
         filter.set(fillProperty, 1)
         filter.set(distortProperty, 1)
 
@@ -227,17 +96,13 @@ Item {
         filterRect.width = 1
         filterRect.height = 1
 
-        setFilter()
+        setFilterRect()
         setControls()
     }
 
     function fitNoScale()
     {
         bFitNoScale = false
-
-        filter.resetProperty(fillProperty)
-        filter.resetProperty(distortProperty)
-
         filter.set(fillProperty, 1)
         filter.set(distortProperty, 0)
 
@@ -261,16 +126,13 @@ Item {
         filterRect.x        = (1.0 - filterRect.width)/2.0
         filterRect.y        = (1.0 - filterRect.height)/2.0
 
-        setFilter()
+        setFilterRect()
         setControls()
     }
 
     function fit()
     {
         bFit = false
-
-        filter.resetProperty(fillProperty)
-        filter.resetProperty(distortProperty)
 
         filter.set(fillProperty, 1)
         filter.set(distortProperty, 0)
@@ -289,16 +151,13 @@ Item {
         filterRect.y        = (1.0 - filterRect.height)/2.0
 
 
-        setFilter()
+        setFilterRect()
         setControls()
     }
 
     function fitCrop()
     {
         bFitCrop = false
-
-        filter.resetProperty(fillProperty)
-        filter.resetProperty(distortProperty)
 
         filter.set(fillProperty, 1)
         filter.set(distortProperty, 0)
@@ -317,7 +176,7 @@ Item {
         filterRect.x        = (1.0 - filterRect.width)/2.0
         filterRect.y        = (1.0 - filterRect.height)/2.0
 
-        setFilter()
+        setFilterRect()
         setControls()
     }
     
@@ -327,70 +186,43 @@ Item {
     ExclusiveGroup { id: valignGroup }
 
     GridLayout {
+        id: layoutRoot
         columns: 5
         rowSpacing: 13
         columnSpacing: 20
         anchors.fill: parent
         anchors.margins: 18
 
-        KeyFrame{
+        YFKeyFrame{
             id: keyFrame
-            Layout.columnSpan:5
             onSyncUIDataToProject:{
-                if(filter.cache_getKeyFrameNumber() <= 0){
+                if(filter.cache_getKeyFrameNumber(rectProperty) <= 0){
                     filter.resetProperty(rectProperty)
                     filter.set(rectProperty, rectOld)
                 }
-                else
-                {   
-                    
-                }
-            }
-            onSetAsKeyFrame:{
-                var nFrame = keyFrame.getCurrentFrame()
-                //saveValues()
-            
-                //var rectValue = filter.getRect(rectProperty)
-                var rectValue = filter.getAnimRectValue(nFrame, rectProperty)
-                if (filter.cache_getKeyFrameNumber() <= 0)
-                {
-                    var position2 = (timeline.getCurrentClipLength() - 1) //filter.producerOut - filter.producerIn + 1
-                    filter.cache_setKeyFrameParaRectValue(0, rectProperty, rectValue)
-                    filter.cache_setKeyFrameParaRectValue(position2, rectProperty, rectValue,1.0)
-                    //filter.syncCacheToProject();
-                }
-                filter.cache_setKeyFrameParaRectValue(nFrame, rectProperty, rectValue,1.0)
-                //filter.syncCacheToProject();
-
-                setControls()
             }
             onRefreshUI:
             {   
                 var nFrame = keyFrame.getCurrentFrame()
-                var rect = filter.getAnimRectValue(keyFrameNum, rectProperty)
-                rectOld  = filter.getAnimRectValue(keyFrameNum, rectProperty)
-                filterRect.x = rect.x
-                filterRect.y = rect.y
-                filterRect.width = rect.width
-                filterRect.height = rect.height   
+                var rect = filter.getAnimRectValue(nFrame, rectProperty)
+                rectOld  = filter.getAnimRectValue(nFrame, rectProperty)  
 
                 metadata.keyframes.parameters[0].value = 'X'+ rect.x +'Y'+rect.y+'W'+rect.width+'H'+rect.height 
 
                 setControls()
-    
             }
         }
 
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             id: preset
             parameters: [fillProperty, distortProperty, rectProperty, halignProperty, valignProperty]
             Layout.columnSpan: 4
-            onPresetSelected: setPerset()
+            onPresetSelected: setControls()
         }
 
         SeparatorLine {
@@ -402,34 +234,21 @@ Item {
         Label {
             text: qsTr('Size mode')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-       
-        RadioButton {
-            id: fitRadioButton
-            text: qsTr('Fit')
-            visible:false
-            exclusiveGroup: sizeGroup
-            onClicked: {
-                if(filter.cache_getKeyFrameNumber() > 0){
-                    sizeKeyFrameWarning.visible = true
-                }
-                else{
-                    filter.set(fillProperty, 1)
-                    filter.set(distortProperty, 1)
 
-                    filter.set(fillProperty, 0)
-                    filter.set(distortProperty, 0)
-                }
-                
-            }
-        }
         RadioButton {
             id: fillRadioButton
-            text: qsTr('Fill')
+//            text: qsTr('Fill')
             exclusiveGroup: sizeGroup
+            style: RadioButtonStyle {
+                label: Label {
+                    text: qsTr('Fill')
+                    color: activePalette.text
+                }
+            }
             onClicked: {
-                if(filter.cache_getKeyFrameNumber() > 0){
+                if(filter.cache_getKeyFrameNumber(rectProperty) > 0){
                     sizeKeyFrameWarning.visible = true
                 }
                 else{
@@ -440,17 +259,22 @@ Item {
         }
         RadioButton {
             id: distortRadioButton
-            text: qsTr('Distort')
+//            text: qsTr('Distort')
             exclusiveGroup: sizeGroup
+            style: RadioButtonStyle {
+                label: Label {
+                    text: qsTr('Distort')
+                    color: activePalette.text
+                }
+            }
             onClicked: {
-                if(filter.cache_getKeyFrameNumber() > 0){
+                if(filter.cache_getKeyFrameNumber(rectProperty) > 0){
                     sizeKeyFrameWarning.visible = true
                 }
                 else{
                     filter.set(fillProperty, 1)
                     filter.set(distortProperty, 1)
                 }
-                
             }
         }
 
@@ -459,7 +283,7 @@ Item {
         Label {
             text: qsTr('Position')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             visible: false
         }
         RowLayout {
@@ -469,23 +293,23 @@ Item {
                 id: rectX
                 text: (filterRect.x * profile.width).toFixed()
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                //onEditingFinished: setFilter()
             }
             Label { 
                 text: ',' 
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
             TextField {
                 id: rectY
                 text: (filterRect.y * profile.height).toFixed()
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                //onEditingFinished: setFilter()
             }
         }
         Label {
             text: qsTr('Size')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             visible: false
         }
         RowLayout {
@@ -496,21 +320,22 @@ Item {
                 id: rectW
                 text: (filterRect.width * profile.width).toFixed()
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                //onEditingFinished: setFilter()
             }
-            Label { 
+
+            Label {
                 text: 'x' 
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
             TextField {
                 id: rectH
                 text: (filterRect.height * profile.height).toFixed()
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                //onEditingFinished: setFilter()
             }
-            
+
         }
-    
+
 
         SeparatorLine {
             Layout.columnSpan: 5
@@ -525,7 +350,7 @@ Item {
             onClicked: {
                 bFitNoScale = true
 
-                if(filter.cache_getKeyFrameNumber() > 0)   // 关键帧
+                if(filter.cache_getKeyFrameNumber(rectProperty) > 0)   // 关键帧
                 {   
                     if(fillRadioButton.checked)   //填配模式
                     {
@@ -563,7 +388,7 @@ Item {
             onClicked: {
                 bFit = true
 
-                if(filter.cache_getKeyFrameNumber() > 0)   // 关键帧
+                if(filter.cache_getKeyFrameNumber(rectProperty) > 0)   // 关键帧
                 {   
                     if(fillRadioButton.checked)   //填配模式
                     {
@@ -601,7 +426,7 @@ Item {
             onClicked: {
                 bFitCrop = true
 
-                if(filter.cache_getKeyFrameNumber() > 0)   // 关键帧
+                if(filter.cache_getKeyFrameNumber(rectProperty) > 0)   // 关键帧
                 {   
                     if(fillRadioButton.checked)   //填配模式
                     {
@@ -639,7 +464,7 @@ Item {
             onClicked: {
                 bTile = true
 
-                if(filter.cache_getKeyFrameNumber() > 0)   // 关键帧
+                if(filter.cache_getKeyFrameNumber(rectProperty) > 0)   // 关键帧
                 {   
                     if(distortRadioButton.checked)   //变形模式
                     {
@@ -670,15 +495,6 @@ Item {
         
     }
 
-    Connections {
-        target: filter
-        onFilterPropertyValueChanged: {
-            var keyFrameNum = timeline.getPositionInCurrentClip()
-            var newValue = filter.getRect(rectProperty)
-            if (filterRect !== newValue)
-                filterRect = newValue
-        }
-    }
 
     MessageDialog {
         id: sizeKeyFrameWarning
@@ -689,8 +505,7 @@ Item {
             var keyFrameNum = timeline.getPositionInCurrentClip()
             var rect = filter.getAnimRectValue(keyFrameNum, rectProperty)
             filter.removeAllKeyFrame()
-            
-            filter.resetProperty(rectProperty)
+
             filter.set(rectProperty,rect)
 
             changeMode()

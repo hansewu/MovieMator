@@ -47,7 +47,7 @@ public:
 
     ContainerDock(TAB_POSITION tabPosition = TabPosition_Left, QWidget *parent = nullptr);
 
-    void addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);
+    void addDock(QDockWidget *dock, QString tabButtonTitle, QString tabButtonTooltip, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);
 
     void showDock(QDockWidget *dock);
     QRect dockPosition();

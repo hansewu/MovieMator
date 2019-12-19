@@ -33,43 +33,9 @@ Item {
     height: 250
 
     function loadWheels() {
-
-
         var keyFrameCount = filter.getKeyFrameCountOnProject("lift_r");
         if(keyFrameCount>0)
         {
-            var index=0
-            for(index=0; index<keyFrameCount;index++)
-            {
-                var nFrame = filter.getKeyFrameOnProjectOnIndex(index, "lift_r");
-                var liftRkeyValue = filter.getStringKeyValueOnProjectOnIndex(index, "lift_r");
-                var liftGkeyValue = filter.getStringKeyValueOnProjectOnIndex(index, "lift_g");
-                var liftBkeyValue = filter.getStringKeyValueOnProjectOnIndex(index, "lift_b");
-
-                var gammaRkeyValue = filter.getStringKeyValueOnProjectOnIndex(index, "gamma_r");
-                var gammaGkeyValue = filter.getStringKeyValueOnProjectOnIndex(index, "gamma_g");
-                var gammaBkeyValue = filter.getStringKeyValueOnProjectOnIndex(index, "gamma_b");
-
-                var gainRkeyValue = filter.getStringKeyValueOnProjectOnIndex(index, "gain_r");
-                var gainGkeyValue = filter.getStringKeyValueOnProjectOnIndex(index, "gain_g");
-                var gainBkeyValue = filter.getStringKeyValueOnProjectOnIndex(index, "gain_b");
-
-                filter.cache_setKeyFrameParaValue(nFrame, "lift_r", liftRkeyValue.toString())
-                filter.cache_setKeyFrameParaValue(nFrame, "lift_g", liftGkeyValue.toString())
-                filter.cache_setKeyFrameParaValue(nFrame, "lift_b", liftBkeyValue.toString())
-
-                filter.cache_setKeyFrameParaValue(nFrame, "gamma_r", gammaRkeyValue.toString())
-                filter.cache_setKeyFrameParaValue(nFrame, "gamma_g", gammaGkeyValue.toString())
-                filter.cache_setKeyFrameParaValue(nFrame, "gamma_b", gammaBkeyValue.toString())
-
-                filter.cache_setKeyFrameParaValue(nFrame, "gain_r", gainRkeyValue.toString())
-                filter.cache_setKeyFrameParaValue(nFrame, "gain_g", gainGkeyValue.toString())
-                filter.cache_setKeyFrameParaValue(nFrame, "gain_b", gainBkeyValue.toString())
-
-            }
-
-            filter.syncCacheToProject();
-
             liftwheel.color = Qt.rgba( filter.getKeyFrameOnProjectOnIndex(0, "lift_r"),
                                    filter.getKeyFrameOnProjectOnIndex(0, "lift_g"),
                                    filter.getKeyFrameOnProjectOnIndex(0, "lift_b"),
@@ -107,6 +73,8 @@ Item {
         keyFrame.initFilter(layoutRoot)
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     GridLayout {
         id: layoutRoot
         columns: 6
@@ -128,7 +96,7 @@ Item {
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             Layout.columnSpan: 5
@@ -146,7 +114,7 @@ Item {
         // Row 2
         Label {
             text: qsTr('Shadows')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
 
         }
         UndoButton {
@@ -155,7 +123,7 @@ Item {
         }
         Label {
             text: qsTr('Midtones')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
 
         }
         UndoButton {
@@ -164,7 +132,7 @@ Item {
         }
         Label {
             text: qsTr('Highlights')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         UndoButton {
             Layout.alignment: Qt.AlignCenter

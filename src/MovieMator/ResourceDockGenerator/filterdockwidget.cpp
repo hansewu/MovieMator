@@ -125,7 +125,8 @@ void FilterDockWidget::setFiltersInfo(QList<FilterInfo> filtersInfo)
     qDebug()<<"sll-----setFiltersInfo---end";
 }
 
-void FilterDockWidget::readTranslatJsFile(QString jsFilePath) {
+void FilterDockWidget::readTranslatJsFile(QString jsFilePath)
+{
     QString strResult = "";
     QFile scriptFile(jsFilePath);
     if (!scriptFile.open(QIODevice::ReadOnly))
@@ -143,13 +144,15 @@ void FilterDockWidget::readTranslatJsFile(QString jsFilePath) {
     m_jsEngine.evaluate(strContents);
 }
 
-QString FilterDockWidget::getQmlDirPath() {
+QString FilterDockWidget::getQmlDirPath()
+{
     QDir dir(qApp->applicationDirPath());
 
     #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
         dir.cdUp();
     #elif defined(Q_OS_MAC)
-        dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+        dir.cdUp();
+        dir.cd("Resources");
     #endif
 
     dir.cd("share");

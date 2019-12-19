@@ -62,6 +62,8 @@ class QmlFilter : public QObject
     Q_PROPERTY(double mediaHeight READ mediaHeight)
     Q_PROPERTY(int keyframeNumber READ cache_getKeyFrameNumber NOTIFY keyframeNumberChanged)
 
+    //Q_PROPERTY(int isKeyframeActivate READ isKeyframeActivate NOTIFY isKeyframeActivateChanged)
+
 public:
     explicit QmlFilter(Mlt::Filter* mltFilter, /*const*/ QmlMetadata* metadata, QObject *parent = nullptr);
     ~QmlFilter();
@@ -490,6 +492,7 @@ public:
      */
     Q_INVOKABLE void removeAnimationKeyFrame(int nFrame, QString name, bool bFromUndo = false);
 
+
 //#endif
 
     /** A Boolean value that indicates whether the animation is enable state.
@@ -516,6 +519,24 @@ public:
      */
     Q_INVOKABLE void setAutoAddKeyFrame(bool bAutoAddKeyFrame) { m_bAutoAddKeyFrame = bAutoAddKeyFrame; }
 
+
+    /** sends editKeyframeOfParameter signal
+     *
+     * \param nIndexOfParameter index of the parameter
+     */
+    Q_INVOKABLE void emitEditKeyframeOfParameter(const QString strIdentifierOfParameter);
+
+
+    Q_INVOKABLE bool isKeyframeActivate(const QString strIdentifierOfParameter);
+    Q_INVOKABLE bool isKeyframeAtPosition(const QString strIdentifierOfParameter, int nFramePosition);
+    Q_INVOKABLE bool hasPreKeyframeAtPositon(const QString strIdentifierOfParameter, int nFramePosition);
+    Q_INVOKABLE bool hasNextKeyframeAtPositon(const QString strIdentifierOfParameter, int nFramePosition);
+
+    Q_INVOKABLE int setInterpolationMethod(const QString strIdentifierOfParameter, int nPositionOfKeyframe,  /*mlt_keyframe_type*/ int mltKeyframeType);
+
+    Q_INVOKABLE int getInterpolationMethod(const QString strIdentifierOfParameter, int nPositionOfKeyframe);
+
+    Q_INVOKABLE QString getCurrentParameter() {return m_strCurrentParameter;}
 public slots:
     /** Load a properties preset.
      *
@@ -550,12 +571,16 @@ signals:
     void keyframeNumberChanged();
 //#endif
 
+    ///将要编辑参数的关键帧
+    void editKeyframeOfParameter(const QString strIdentifierOfParameter);
+
 private:
     QmlMetadata* m_metadata;    /** the metadata of the Mlt::Filter*/
     Mlt::Filter* m_filter;      /** the current Mlt::Filter*/
     QString m_sResourcePath;             /** the absolute path to the metadata directory of the Mlt::Filter*/
     bool m_isNew;               /** a flag to indicate if the filter is new*/
     QStringList m_presets;      /** the preset list of the Mlt::Filter*/
+    QString m_strCurrentParameter; /** 保存当前正在编辑关键帧的参数 **/
     
     /** Get the object name or mlt_service of Mlt::Filter.
      *

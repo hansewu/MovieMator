@@ -30,6 +30,9 @@ Item {
     Component.onCompleted: {
         keyFrame.initFilter(layoutRoot)
     }
+
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     GridLayout {
         id: layoutRoot
         columns: 3
@@ -50,7 +53,7 @@ Item {
         Label{
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             id: preset
@@ -72,7 +75,7 @@ Item {
         Label {
             text: qsTr('Radius')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'radiusSlider'
@@ -92,7 +95,7 @@ Item {
         Label {
             text: qsTr('Feathering')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'smoothSlider'
@@ -126,7 +129,7 @@ Item {
             }
             style: CheckBoxStyle {
                         label: Text {
-                            color: "white"
+                            color: activePalette.text//"white"
                             text: qsTr('Non-linear feathering')
                         }
             }
@@ -135,7 +138,7 @@ Item {
         Label {
             text: qsTr('Opacity')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'opacitySlider'

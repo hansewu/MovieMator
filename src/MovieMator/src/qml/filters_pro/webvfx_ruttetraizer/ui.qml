@@ -55,6 +55,8 @@ Item {
         yRotationSlider.value = filter.getDouble('rotation_y') * yRotationSlider.maximumValue
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     GridLayout {
         id: layoutRoot
         columns: 3
@@ -75,7 +77,7 @@ Item {
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             id: preset
@@ -88,7 +90,7 @@ Item {
         Label {
             text: qsTr('Brightness')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: opacitySlider
@@ -107,7 +109,7 @@ Item {
         Label {
             text: qsTr('Thickness')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: thicknessSlider
@@ -125,7 +127,7 @@ Item {
         Label {
             text: qsTr('Density')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: densitySlider
@@ -144,7 +146,7 @@ Item {
         Label {
             text: qsTr('Depth')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: depthSlider
@@ -163,7 +165,7 @@ Item {
         Label {
             text: qsTr('Scale')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: scaleSlider
@@ -181,7 +183,7 @@ Item {
         Label {
             text: qsTr('X Axis Rotation')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: xRotationSlider
@@ -200,7 +202,7 @@ Item {
         Label {
             text: qsTr('Y Axis Rotation')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: yRotationSlider

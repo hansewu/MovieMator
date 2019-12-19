@@ -23,8 +23,10 @@
 #include <QPushButton>
 #include <QToolButton>
 
-static QString buttonSytleSheetNormal("background-color:rgb(82,82,82);color:rgb(225,225,225)");
-static QString buttonSytleSheetSelected("background-color:rgb(51,51,51);color:rgb(192,72,44)");
+static QString buttonSytleSheetNormal("background-color:rgb(39, 46, 52);color:rgb(225,225,225); border:none");
+//static QString buttonSytleSheetSelected("background-color:rgb(165, 65, 47);color:rgb(165, 65, 47); border:none");
+static QString buttonSytleSheetSelected("background-color:rgb(165, 65, 47);color:rgb(225,225,225); border:none");
+static QString buttonSytleSheetNormal_topPosition("background-color:rgb(26, 30, 34);color:rgb(225,225,225); border:none");
 
 #define TABBAR_WIDTH 70
 #define TABBAR_HEIGHT 33
@@ -45,7 +47,7 @@ ContainerDock::ContainerDock(TAB_POSITION tabPosition, QWidget *parent)
     m_tabBtnWidget = new QWidget(this);
     if (m_tabPostion == TabPosition_Left)
     {
-        m_tabBtnWidget->setStyleSheet(".QWidget{background-color: rgb(82,82,82);border-radius:1px}");
+        m_tabBtnWidget->setStyleSheet(".QWidget{background-color: rgb(39, 46, 52);border-radius:1px}");
         m_tabBtnWidget->setFixedWidth(TABBAR_WIDTH);
         QVBoxLayout *tabButtonLayout = new QVBoxLayout();
         tabButtonLayout->setSpacing(0);
@@ -65,7 +67,7 @@ ContainerDock::ContainerDock(TAB_POSITION tabPosition, QWidget *parent)
     }
     else if (m_tabPostion == TabPosition_Top)
     {
-        m_tabBtnWidget->setStyleSheet(".QWidget{background-color: rgb(82,82,82);border-radius:5px}");
+        m_tabBtnWidget->setStyleSheet(".QWidget{background-color: rgb(26, 30, 34);border-radius:5px}");
         m_tabBtnWidget->setFixedHeight(43);     // 33
         QHBoxLayout *tabButtonLayout = new QHBoxLayout();
         tabButtonLayout->setSpacing(0);
@@ -92,7 +94,7 @@ ContainerDock::ContainerDock(TAB_POSITION tabPosition, QWidget *parent)
     strStyle.append("QScrollBar::sub-page:horizontal{background:none;}");
     strStyle.append("QScrollBar::add-line:horizontal{width:0px; background:none;}");
     strStyle.append("QScrollBar::sub-line:horizontal{width:0px; background:none;}");
-    strStyle.append(".QWidget{background-color:rgb(51,51,51)}");
+    strStyle.append(".QWidget{background-color:rgb(26, 30, 34)}");
     layoutWidget->setStyleSheet(strStyle);
 
 
@@ -112,7 +114,7 @@ ContainerDock::ContainerDock(TAB_POSITION tabPosition, QWidget *parent)
 }
 
 
-void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
+void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QString tabButtonTooltip, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
 {
     Q_ASSERT(dock);
     Q_ASSERT(widget());
@@ -142,9 +144,10 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
     button->setFont(font);
     button->setIcon(tabButtonNormalIcon);
     button->setText(tabButtonTitle);
+    button->setToolTip(tabButtonTooltip);
 
     if (m_buttons.count() > 0)
-        button->setStyleSheet(buttonSytleSheetNormal);
+        button->setStyleSheet((m_tabPostion == TabPosition_Top) ? buttonSytleSheetNormal_topPosition : buttonSytleSheetNormal);
     else
     {
         button->setStyleSheet(buttonSytleSheetSelected);
@@ -153,9 +156,9 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
 
     if (m_tabPostion == TabPosition_Left)
     {
-        button->setIconSize(QSize(30, 25));
+        button->setIconSize(QSize(34, 37));
         button->setFixedSize(BUTTON_WIDTH_SQUARE, BUTTON_HEIGHT_SQUARE);
-        button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        button->setToolButtonStyle(Qt::ToolButtonIconOnly);
         QVBoxLayout *vLayout = qobject_cast<QVBoxLayout*>(m_tabBtnWidget->layout());    //(QVBoxLayout *)m_tabBtnWidget->layout();
         vLayout->insertWidget(vLayout->count()-1,button);
     }
@@ -171,9 +174,10 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QIcon tab
         font.setPixelSize(14);
         button->setFont(font);
         button->setFixedSize(110, 45);
+        button->setIconSize(QSize(34, 37));
 
 //        button->setFixedSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-        button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        button->setToolButtonStyle(Qt::ToolButtonIconOnly);
         QHBoxLayout *hLayout = qobject_cast<QHBoxLayout*>(m_tabBtnWidget->layout());    //(QHBoxLayout *)m_tabBtnWidget->layout();
         hLayout->insertWidget(hLayout->count()-1,button);
     }
@@ -223,7 +227,7 @@ void ContainerDock::onTabButtonClicked()
         BUTTON_INFO buttonInfo = m_buttons[i];
         QToolButton *button = buttonInfo.button;
         button->setIcon(buttonInfo.normalIcon);
-        button->setStyleSheet(buttonSytleSheetNormal);
+        button->setStyleSheet((m_tabPostion == TabPosition_Top) ? buttonSytleSheetNormal_topPosition : buttonSytleSheetNormal);
     }
 }
 

@@ -108,13 +108,16 @@
 #include <QQmlContext>
 
 #include "dialogs/videomodesettingsdialog.h"
+#include "dialogs/aspectratiosettingsdialog.h"
 
 #include "commands/timelinecommands.h"
 
 #if defined (Q_OS_MAC)
     #include "securitybookmark/transport_security_bookmark.h"
+    #include "dialogs/inappdialog.h"
 #endif
 
+#include "dialogs/recorddialog.h"
 
 
 #if defined(Q_OS_WIN)
@@ -185,6 +188,7 @@ static bool eventDebugCallback(void **data)
 }
 
 static const int AUTOSAVE_TIMEOUT_MS = 10000;
+static const int MAINWIDOWS_TOOLBUTTON_SIZE = 34;
 
 MainWindow::MainWindow()
     : QMainWindow(nullptr)
@@ -612,25 +616,29 @@ MainWindow::MainWindow()
 
     LOG_DEBUG() << "RecentDock";
     m_resourceRecentDock = RDG_CreateRecentDock(&MainInterface::singleton());
-    addResourceDock(m_resourceRecentDock, tr("File"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file-highlight.png"));
+    addResourceDock(m_resourceRecentDock, tr("File"), tr("Media"), QIcon(":/icons/light/32x32/file.png"), QIcon(":/icons/light/32x32/file.png"));
 
     LOG_DEBUG() << "VideoFilterDock";
     m_resourceVideoFilterDock = RDG_CreateVideoFilterDock(&MainInterface::singleton());
-    addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
+    addResourceDock(m_resourceVideoFilterDock, tr("Video Filter"), tr("Video Filters"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter.png"));
 //    RDG_SetVideoFiltersInfo( m_filterController->getVideoFiltersInfo());
 
     LOG_DEBUG() << "AudioFilterDock";
     m_resourceAudioFilterDock = RDG_CreateAudioFilterDock(&MainInterface::singleton());
-    addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
+    addResourceDock(m_resourceAudioFilterDock, tr("Audio Filter"), tr("Audio Filters"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter.png"));
 //    RDG_SetAudioFiltersInfo(m_filterController->getAudioFiltersInfo());
 
     LOG_DEBUG() << "TextDock";
     m_resourceTextDock = RDG_CreateTextDock(&MainInterface::singleton());
-    addResourceDock(m_resourceTextDock, tr("Text"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text-highlight.png"));
+    addResourceDock(m_resourceTextDock, tr("Text"), tr("Text/Credit"), QIcon(":/icons/light/32x32/text.png"), QIcon(":/icons/light/32x32/text.png"));
 
     LOG_DEBUG() << "StickersDock";
     m_resourceStickerDock = RDG_CreateStickerDock(&MainInterface::singleton());
-    addResourceDock(m_resourceStickerDock, tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers-highlight.png"));
+    addResourceDock(m_resourceStickerDock, tr("Stickers"), tr("Stickers"), QIcon(":/icons/light/32x32/anim-stickers.png"), QIcon(":/icons/light/32x32/anim-stickers.png"));
+
+    LOG_DEBUG() << "Auido";
+    m_resourceAudioDock = RDG_CreateAudioDock(&MainInterface::singleton());
+    addResourceDock(m_resourceAudioDock, tr("Audio"), tr("Music/Sound"), QIcon(":/icons/light/32x32/audio.png"), QIcon(":/icons/light/32x32/audio.png"));
 
     LOG_DEBUG() << "Auido";
     m_resourceAudioDock = RDG_CreateAudioDock(&MainInterface::singleton());
@@ -652,16 +660,17 @@ MainWindow::MainWindow()
 
     m_simplePropertiesDock = new QDockWidget(tr("Simple Properties"));
     QScrollArea* scroll1 = new QScrollArea;
+    scroll1->setStyleSheet("QScrollArea {background-color: rgb(26, 30, 34)}");
     scroll1->setWidgetResizable(true);
     scroll1->setFrameShape(QFrame::NoFrame);
     m_simplePropertiesDock->setWidget(scroll1);
-    addPropertiesDock(m_simplePropertiesDock, tr("Properties"), QIcon(":/icons/light/32x32/show-properties.png"), QIcon(":/icons/light/32x32/show-properties-highlight.png"));
+    addPropertiesDock(m_simplePropertiesDock, tr("Properties"), tr("Properties"), QIcon(":/icons/light/32x32/show-properties.png"), QIcon(":/icons/light/32x32/show-properties.png"));
 
 
     m_propertiesVideoFilterDock->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);
-    addPropertiesDock(m_propertiesVideoFilterDock, tr("Video Filter"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter_on.png"));
+    addPropertiesDock(m_propertiesVideoFilterDock, tr("Video Filter"), tr("Set the Parameters of the Video Filters Applied to Current Clip"), QIcon(":/icons/light/32x32/video_filter.png"), QIcon(":/icons/light/32x32/video_filter.png"));
     m_propertiesAudioFilterDock->setExtraQmlContextProperty("propertiesContainer", m_propertiesDockContainer);
-    addPropertiesDock(m_propertiesAudioFilterDock, tr("Audio Filter"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter_on.png"));
+    addPropertiesDock(m_propertiesAudioFilterDock, tr("Audio Filter"), tr("Set the Parameters of the Audio Filters Applied to Current Clip"), QIcon(":/icons/light/32x32/audio_filter.png"), QIcon(":/icons/light/32x32/audio_filter.png"));
 
     //替换模板文件界面Dock
     //m_templateEditorDock = TemplateEditorDock_initModule(&MainInterface::singleton());
@@ -671,6 +680,10 @@ MainWindow::MainWindow()
 
     m_registrationTipsDialog = new RegistrationTipsDialog();
     m_registrationDialog = new RegistrationDialog();
+
+#if defined(Q_OS_MAC)
+    m_pInAppDialog = new InAppDialog();
+#endif
 
 
     m_proFeaturePromptDialog = new ProFeaturePromptDialog();
@@ -697,8 +710,8 @@ MainWindow::MainWindow()
 
     LOG_DEBUG() << "setWindowTitle";
 
-#if SHARE_VERSION
 
+#if SHARE_VERSION
 #if MOVIEMATOR_PRO
     if (Registration.registrationType() == Registration_None)
         setWindowTitle(tr("MovieMator Video Editor Pro (Unregistered)"));
@@ -711,16 +724,16 @@ MainWindow::MainWindow()
     else
         setWindowTitle(tr("MovieMator Video Editor Pro"));
 #else
-//    setWindowTitle(tr("MovieMator Video Editor"));
+    //setWindowTitle(tr("MovieMator Video Editor"));
     setWindowTitle(tr("MovieMator Video Editor Pro"));
 #endif
 
-//#else
-//#if MOVIEMATOR_PRO
-//    setWindowTitle(tr("MovieMator Video Editor Pro"));
-//#else
-//    setWindowTitle(tr("MovieMator Video Editor"));
-//#endif
+#else
+#if MOVIEMATOR_PRO
+    setWindowTitle(tr("MovieMator Video Editor Pro"));
+#else
+    setWindowTitle(tr("MovieMator Video Editor"));
+#endif
 #endif
 
 //    LOG_DEBUG() << "init pythonqt";
@@ -746,6 +759,7 @@ void MainWindow::configureUI()
     ui->actionFullscreen = nullptr;
     delete ui->actionEnter_Full_Screen;
     ui->actionEnter_Full_Screen = nullptr;
+    ui->menuBar->setStyleSheet("QMenuBar{background-color:rgb(42, 49, 55);}");
 #endif
 
 
@@ -754,16 +768,14 @@ void MainWindow::configureUI()
     ui->actionEnter_License_Code->setVisible(false);
 #endif
 
-#ifndef MOVIEMATOR_PRO
-#ifndef MOVIEMATOR_FREE
-    ui->actionBuy_a_License_Code->setVisible(false);
-    ui->actionEnter_License_Code->setVisible(false);
-#endif
-#endif
-
 #if STEAM
     ui->actionBuy_a_License_Code->setVisible(false);
     ui->actionEnter_License_Code->setVisible(false);
+#endif
+
+    ui->actionSubscription->setVisible(false);
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSIOn)
+    ui->actionSubscription->setVisible(true);
 #endif
 
     ui->actionAbout_TVE->setText(tr("About MovieMator Video Editor Pro"));
@@ -1188,11 +1200,9 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker& checker)
            this);
 
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
@@ -1257,11 +1267,9 @@ bool MainWindow::isXmlRepaired(MltXmlChecker& checker, QString& fileName)
            this);
 
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
@@ -1295,11 +1303,9 @@ bool MainWindow::checkAutoSave(QString &url)
            QMessageBox::No | QMessageBox::Yes, nullptr);
 
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
@@ -1393,6 +1399,17 @@ void MainWindow::setProfile(const QString &profile_name)
     emit profileChanged();
 }
 
+void MainWindow::setProjectAspectRatio()
+{
+    AspectRatioSettingsDialog aspectRationSettingsDialog(this);
+
+#ifdef Q_OS_WIN
+     aspectRationSettingsDialog.setWindowModality(QmlApplication::dialogModality());
+ #endif
+
+    aspectRationSettingsDialog.exec();
+}
+
 static void autosaveTask(MainWindow* p)
 {
     Q_ASSERT(p);
@@ -1436,11 +1453,9 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
                                      this);
 
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Ok);
         int r = dialog.exec();
@@ -1652,6 +1667,12 @@ void MainWindow::openVideo()
         MLT.onWindowResize();
         activateWindow();
     }
+}
+
+void MainWindow::recordAudio()
+{
+    RecordDialog recordDialog(this);
+    recordDialog.exec();
 }
 
 void MainWindow::openFiles(const QStringList &list)
@@ -1917,12 +1938,12 @@ void MainWindow::setCurrentFile(const QString &filename)
 #endif
 
 #else
-    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro"));
-//#if MOVIEMATOR_PRO
-//    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("MovieMator Video Editor Pro"));
-//#else
-//    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg(tr("MovieMator Video Editor")));
-//#endif
+
+#if MOVIEMATOR_PRO
+    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg(tr("MovieMator Video Editor Pro")));
+#else
+    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg(tr("MovieMator Video Editor")));
+#endif
 #endif
 }
 
@@ -2691,11 +2712,9 @@ bool MainWindow::continueModified()
                                      this);
 
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Save);
         dialog.setEscapeButton(QMessageBox::Cancel);
@@ -2724,11 +2743,9 @@ bool MainWindow::continueJobsRunning()
                                      this);
 
         dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
@@ -2792,15 +2809,13 @@ void MainWindow::onEncodeTriggered(bool checked)
                                          this);
 
             dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
-        dialog.setWindowModality(QmlApplication::dialogModality());
-        dialog.setDefaultButton(QMessageBox::Ok);
-        int r = dialog.exec();
-        Q_UNUSED(r);
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+            dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.setDefaultButton(QMessageBox::Ok);
+            int r = dialog.exec();
+            Q_UNUSED(r);
         }
  //       m_encodeDock->eventFilter(m_encodeDock, new QEvent(QEvent::NonClientAreaMouseButtonDblClick));
      //   m_encodeDock->raise();
@@ -3081,7 +3096,7 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::HighlightedText, Qt::white);
         palette.setColor(QPalette::ToolTipBase, QColor(203,203,203));
         palette.setColor(QPalette::ToolTipText, Qt::black);
-        palette.setColor(QPalette::Text, palette.color(QPalette::WindowText));
+        palette.setColor(QPalette::Text, QColor(99,100,101)/*palette.color(QPalette::WindowText)*/);
         palette.setColor(QPalette::BrightText, Qt::red);
         palette.setColor(QPalette::Button, QColor(82,82,82));
         palette.setColor(QPalette::ButtonText, palette.color(QPalette::WindowText));
@@ -3138,7 +3153,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         if (advancedScrollArea->widget())
             scrollArea->widget()->deleteLater();
         return  w;
-    }  
+    }
 
     QString service(producer->get("mlt_service"));
     QString resource = QString::fromUtf8(producer->get("resource"));
@@ -3455,11 +3470,9 @@ void MainWindow::onLanguageTriggered(QAction* action)
                        this);
 
     dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());
@@ -3536,11 +3549,9 @@ void MainWindow::on_actionGPU_triggered(bool checked)
                        this);
 
     dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());
@@ -3628,11 +3639,9 @@ void MainWindow::changeProfile(QString strProfileName)
                        this);
 
     dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
 
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
@@ -3670,11 +3679,9 @@ void MainWindow::onProfileTriggered(QAction *action)
                        this);
 
     dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#if MOVIEMATOR_PRO
-//        dialog.setIconPixmap(QPixmap(":/icons/moviemator-pro-logo-64.png"));
-//#else
-//    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
-//#endif
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
+    dialog.setIconPixmap(QPixmap(":/icons/moviemator-logo-64.png"));
+#endif
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());
@@ -4173,14 +4180,14 @@ void MainWindow::showCurrentTextSettingWidget(Mlt::Producer *textProcucer)
 QToolButton *MainWindow::createToolButton(const QString& icon, const QString& iconPressed, const QString& iconDisabled, const QString& title, const QString& tooltip)
 {
     QToolButton *toolButton = new QToolButton();
-    toolButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    toolButton->setFixedHeight(60);
-    int iconSize = 40;
+    toolButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    toolButton->setFixedHeight(MAINWIDOWS_TOOLBUTTON_SIZE);
+    int iconSize = MAINWIDOWS_TOOLBUTTON_SIZE;
     toolButton->setIconSize(QSize(iconSize,iconSize));
     QPixmap pixmap(iconSize,iconSize);
     pixmap.fill(QColor(0,0,0,0));
     toolButton->setIcon(QIcon(pixmap));
-    QString styleSheet = QString("QToolButton { image: url(%1); image-position: top; border: none; }" "QToolButton:pressed{color: rgb(142, 53, 62); image: url(%2); image-position: top; }" "QToolButton:disabled{image: url(%3)}").arg(icon).arg(iconPressed).arg(iconDisabled);
+    QString styleSheet = QString("QToolButton { image: url(%1); image-position: center; border: none; }" "QToolButton:pressed{color: rgb(142, 53, 62); image: url(%2); image-position: center; }" "QToolButton:disabled{image: url(%3)}").arg(icon).arg(iconPressed).arg(iconDisabled);
     toolButton->setStyleSheet(styleSheet);
     toolButton->setToolTip(tooltip);
     toolButton->setText(title);
@@ -4197,17 +4204,23 @@ void MainWindow::customizeToolbar()
 
 
     QWidget *widget = new QWidget(this);
-    widget->setFixedHeight(75);
+//    widget->setFixedHeight(MAINWIDOW_TOOLBAR_HEIGHT);
 
 
     QGridLayout *gridLayout = new QGridLayout;
-    gridLayout->setHorizontalSpacing(12);
+    gridLayout->setHorizontalSpacing(33);
 
     m_addButton = createToolButton(QString(":/icons/light/32x32/toolbar-add.png"),
                                    QString(":/icons/light/32x32/toolbar-add-pressed.png"),
                                    QString(":/icons/light/32x32/toolbar-add.png"),
                                    tr("Open"), tr("Open a video, audio or image file"));
     connect(m_addButton, SIGNAL(clicked()), this, SLOT(openVideo()));
+
+    m_recordAudioButton = createToolButton(QString(":/icons/light/32x32/toolbar-audio-record.png"),
+                                   QString(":/icons/light/32x32/toolbar-audio-record-pressed.png"),
+                                   QString(":/icons/light/32x32/toolbar-audio-recordpng"),
+                                   tr("Record Audio"), tr("Record Audio"));
+    connect(m_recordAudioButton, SIGNAL(clicked()), this, SLOT(recordAudio()));
 
 //    m_removeButton = createToolButton(":/icons/light/32x32/toolbar-remove.png",
 //                                      ":/icons/light/32x32/toolbar-remove-pressed.png",
@@ -4306,21 +4319,25 @@ void MainWindow::customizeToolbar()
 //#endif
 
     int buttonIndex = 0;
-    QSpacerItem *spacer1 = new QSpacerItem(50,20);
+
+    QSpacerItem *spacer0 = new QSpacerItem(20,20);
+    gridLayout->addItem(spacer0, 0, buttonIndex++, 1, 1);
 
     gridLayout->addWidget(m_addButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+    gridLayout->addWidget(m_recordAudioButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
 //    gridLayout->addWidget(m_removeButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+    QSpacerItem *spacer1 = new QSpacerItem(74,20);
     gridLayout->addItem(spacer1, 0, buttonIndex++, 1, 1);
 
     gridLayout->addWidget(m_undoButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     gridLayout->addWidget(m_redoButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
-    QSpacerItem *spacer2 = new QSpacerItem(50,20);
+    QSpacerItem *spacer2 = new QSpacerItem(74,20);
     gridLayout->addItem(spacer2, 0, buttonIndex++, 1, 1);
 
     gridLayout->addWidget(m_saveButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     gridLayout->addWidget(m_exportButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
     //gridLayout->addWidget(m_exportTemplateButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
-    QSpacerItem *spacer3 = new QSpacerItem(50,20, QSizePolicy::Expanding);
+    QSpacerItem *spacer3 = new QSpacerItem(74,20, QSizePolicy::Expanding);
     gridLayout->addItem(spacer3, 0, buttonIndex++, 1, 1);
 
 #if SHARE_VERSION
@@ -4331,7 +4348,7 @@ void MainWindow::customizeToolbar()
 #if MOVIEMATOR_PRO
         gridLayout->addWidget(m_buynowButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
 #endif
-        QSpacerItem *spacer4 = new QSpacerItem(50,20);
+        QSpacerItem *spacer4 = new QSpacerItem(74,20);
         gridLayout->addItem(spacer4, 0, buttonIndex++, 1, 1);
     }
 #endif
@@ -4369,7 +4386,8 @@ void MainWindow::customizeToolbar()
 
 
     widget->setLayout(gridLayout);
-    toolbar->setStyleSheet("QToolBar{background-image: url(:/toolbar-bg.png); background-repeat: repeat-x; border: 0px}");
+//    toolbar->setStyleSheet("QToolBar{background-image: url(:/toolbar-bg.png); background-repeat: repeat-x; border: 0px}");
+    toolbar->setStyleSheet("QToolBar{background-color: rgb(39, 46, 52); border: none}");
     toolbar->addWidget(widget);
     this->addToolBar(toolbar);
 //    this->setUnifiedTitleAndToolBarOnMac(true);//不加这句，自定义的工具栏将不能显示
@@ -4442,6 +4460,7 @@ void MainWindow::on_actionEnter_License_Code_triggered()
 {
     this->onActivateButton_clicked();
 }
+
 
 void MainWindow::on_actionExecute_Python_triggered()
 {
@@ -4567,7 +4586,7 @@ void MainWindow::initParentDockForPropteriesDock()
     addDockWidget(Qt::RightDockWidgetArea, m_propertiesDockContainer);
 }
 
-void MainWindow::addResourceDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
+void MainWindow::addResourceDock(QDockWidget *dock, QString tabButtonTitle, QString tabButtonTooltip, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
 {
     Q_ASSERT(dock);
     dock->setFeatures(QDockWidget::NoDockWidgetFeatures);
@@ -4575,10 +4594,10 @@ void MainWindow::addResourceDock(QDockWidget *dock, QString tabButtonTitle, QIco
     dock->setMinimumSize(300, 272);
     dock->setTitleBarWidget(new QWidget());
 
-    m_resourceDockContainer->addDock(dock, tabButtonTitle, tabButtonNormalIcon, tabButtonAcitveIcon);
+    m_resourceDockContainer->addDock(dock, tabButtonTitle, tabButtonTooltip, tabButtonNormalIcon, tabButtonAcitveIcon);
 }
 
-void MainWindow::addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
+void MainWindow::addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QString tabButtonTooltip, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon)
 {
     Q_ASSERT(dock);
     dock->setFeatures(QDockWidget::NoDockWidgetFeatures);
@@ -4586,7 +4605,7 @@ void MainWindow::addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QI
     dock->setMinimumSize(410, 272);
     dock->setTitleBarWidget(new QWidget());
 
-    m_propertiesDockContainer->addDock(dock, tabButtonTitle, tabButtonNormalIcon, tabButtonAcitveIcon);
+    m_propertiesDockContainer->addDock(dock, tabButtonTitle, tabButtonTooltip, tabButtonNormalIcon, tabButtonAcitveIcon);
 }
 
 void MainWindow::onFileOpened(QString filePath)
@@ -4810,6 +4829,7 @@ void MainWindow::loadTemplateInfo(Mlt::Producer *producer)
 
 void MainWindow::on_actionNewProject_triggered()
 {
+    setProjectAspectRatio();
     on_actionClose_triggered();
 }
 
@@ -4825,4 +4845,38 @@ void MainWindow::onFiltersInfoLoaded()
 {
     RDG_SetVideoFiltersInfo(m_filterController->getVideoFiltersInfo());
     RDG_SetAudioFiltersInfo(m_filterController->getAudioFiltersInfo());
+}
+
+#if defined (Q_OS_MAC)
+
+void MainWindow::on_actionSubscription_triggered()
+{
+    this->showInAppDialog();
+}
+
+void MainWindow::showInAppDialog()
+{
+    int nProductCount = inapp_get_product_count();
+    if(nProductCount > 0)
+    {
+        //SubscribeWindow.show();
+        INAPP_PRODUCT_INFO *productInfos = inapp_get_product_information();
+        m_pInAppDialog->setInAppProductInfo(productInfos, nProductCount);
+        free(productInfos);
+    }
+    m_pInAppDialog->exec();
+}
+
+InAppDialog *MainWindow::inAppDialog()
+{
+    return m_pInAppDialog;
+}
+#endif
+
+void MainWindow::resetCurrentFilterForTimelineDock()
+{
+    int nCurrentFilterIndex = m_filterController->currentFilterIndex();
+    if (nCurrentFilterIndex >= 0)
+        m_timelineDock->setCurrentFilter(m_filterController->currentFilter(),
+                                     m_filterController->getQmlMetadata(nCurrentFilterIndex), 0);
 }

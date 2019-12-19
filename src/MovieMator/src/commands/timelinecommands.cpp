@@ -1323,7 +1323,7 @@ bool KeyFrameInsertCommand::mergeWith(const QUndoCommand *other)
     Q_ASSERT(other_command);
     if(other_command->m_filter->get_filter() != m_filter->get_filter())     return false;
 
-    if(m_execTime.elapsed() > 1000)   //不合并
+    if(m_execTime.elapsed() > 500)   //不合并
     {
         m_execTime.restart();
         return false;
@@ -1423,7 +1423,7 @@ bool KeyFrameRemoveCommand::mergeWith(const QUndoCommand *other)
     Q_ASSERT(other_command);
     if(other_command->m_filter->get_filter() != m_filter->get_filter())     return false;
 
-    if(m_execTime.elapsed() > 1000)   //不合并
+    if(m_execTime.elapsed() > 500)   //不合并
     {
         m_execTime.restart();
         return false;
@@ -1509,7 +1509,7 @@ bool KeyFrameUpdateCommand::mergeWith(const QUndoCommand *other)
     {
             return false;
     }
-    if(m_execTime.elapsed() > 800)
+    if(m_execTime.elapsed() > 500)
     {
         m_execTime.restart();
         return false;

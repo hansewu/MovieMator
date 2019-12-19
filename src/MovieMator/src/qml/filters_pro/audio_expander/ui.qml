@@ -41,6 +41,8 @@ Item {
         sliderGain.value = filter.getDouble('6')
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     GridLayout {
         anchors.fill: parent
         anchors.margins: 8
@@ -49,7 +51,7 @@ Item {
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             id: preset
@@ -61,7 +63,7 @@ Item {
         Label {
             text: qsTr('RMS')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.')}
         }
         SliderSpinner {
@@ -84,7 +86,7 @@ Item {
         Label {
             text: qsTr('Attack')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: sliderAttack
@@ -104,7 +106,7 @@ Item {
         Label {
             text: qsTr('Release')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: sliderRelease
@@ -124,7 +126,7 @@ Item {
         Label {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The point at which the compressor will start to kick in.')}
         }
         SliderSpinner {
@@ -146,7 +148,7 @@ Item {
         Label {
             text: qsTr('Ratio')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The gain reduction ratio used when the signal level exceeds the threshold.')}
         }
         SliderSpinner {
@@ -167,7 +169,7 @@ Item {
         Label {
             text: qsTr('Knee radius')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The distance from the threshold where the knee curve starts.')}
         }
         SliderSpinner {
@@ -189,7 +191,7 @@ Item {
         Label {
             text: qsTr('Attenuation')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The gain of the output signal. Used to correct for excessive amplitude caused by the extra dynamic range.')}
         }
         SliderSpinner {

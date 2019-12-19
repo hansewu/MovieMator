@@ -80,6 +80,10 @@ class ContainerDock;
 class QToolButton;
 class TemplateEidtor;
 
+#if defined (Q_OS_MAC)
+class InAppDialog;
+#endif
+
 //class TextlistDock;
 
 //软件主窗口类
@@ -119,6 +123,8 @@ public:
     //设置软件的profile为profile_name
     void setProfile(const QString& profile_name);
 
+    void setProjectAspectRatio();
+
     //重写QMainWindow的键盘按下事件，处理主界面的键盘按下事件
     void keyPressEvent(QKeyEvent*);
     //重写QMainWindow的键盘松开事件，处理主界面的键盘松开按键事件
@@ -144,6 +150,10 @@ public:
 
     //修改profile
     void changeProfile(QString strProfileName);
+
+#if defined (Q_OS_MAC)
+    InAppDialog *inAppDialog();
+#endif
 
 signals:
     //打开producer时发送此信号
@@ -251,6 +261,7 @@ private:
 
     //以下是工具栏上的按钮
     QToolButton *m_addButton;
+    QToolButton *m_recordAudioButton;
 //    QToolButton *m_removeButton;
     QToolButton *m_undoButton;
     QToolButton *m_redoButton;
@@ -300,6 +311,10 @@ private:
 
     TemplateEidtor *m_templateEditor;//暂时无用
 
+#if defined (Q_OS_MAC)
+    InAppDialog *m_pInAppDialog;
+#endif
+
 public slots:
     void open(Mlt::Producer* producer);//打开producer
 
@@ -310,6 +325,7 @@ public slots:
     void open(QString url, const Mlt::Properties* = nullptr);//打开文件
     void open1(QString url, const Mlt::Properties * = nullptr);
     void openVideo();//打开多选文件
+    void recordAudio();
     void openCut(Mlt::Producer* producer);//打开producer
     void showStatusMessage(QAction* action, int timeoutSeconds = 5);//显示状态信息
     void showStatusMessage(const QString& message, int timeoutSeconds = 5);
@@ -398,6 +414,12 @@ public slots:
 
     void loadTemplateInfo(Mlt::Producer *producer);//空函数，暂时无用
 
+#if defined (Q_OS_MAC)
+    void showInAppDialog();
+    void on_actionSubscription_triggered();
+#endif
+
+    Q_INVOKABLE void resetCurrentFilterForTimelineDock();
 private slots:
 
 
@@ -518,8 +540,8 @@ private slots:
 
     void initParentDockForResourceDock();//初始化左侧的容器dock
     void initParentDockForPropteriesDock();//初始化右侧的容器dock
-    void addResourceDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);//添加dock到左侧的dock容器中
-    void addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);//添加dock到右侧的dock容器中
+    void addResourceDock(QDockWidget *dock, QString tabButtonTitle, QString tabButtonTooltip, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);//添加dock到左侧的dock容器中
+    void addPropertiesDock(QDockWidget *dock, QString tabButtonTitle, QString tabButtonTooltip, QIcon tabButtonNormalIcon, QIcon tabButtonAcitveIcon);//添加dock到右侧的dock容器中
 
     void on_actionNewProject_triggered();
     void on_actionVideoMode_triggered();

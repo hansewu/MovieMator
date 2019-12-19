@@ -61,6 +61,8 @@ Item {
         setEnabled()
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     GridLayout {
         id:layoutRoot
         columns: 3
@@ -82,7 +84,7 @@ Item {
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             Layout.columnSpan: 2
@@ -123,7 +125,7 @@ Item {
 
             style: CheckBoxStyle {
                         label: Text {
-                            color: "white"
+                            color: activePalette.text
                             text: qsTr('Center ')
                         }
             }
@@ -139,6 +141,7 @@ Item {
         Label {
             text: qsTr('Center bias')
             Layout.alignment: Qt.AlignLeft
+            color: activePalette.text
         }
         SliderSpinner {
             id: biasslider
@@ -163,6 +166,7 @@ Item {
         Label {
             text: qsTr('Top')
             Layout.alignment: Qt.AlignLeft
+            color: activePalette.text
         }
         SliderSpinner {
             id: topslider
@@ -181,6 +185,7 @@ Item {
         Label {
             text: qsTr('Bottom')
             Layout.alignment: Qt.AlignLeft
+            color: activePalette.text
         }
         SliderSpinner {
             id: bottomslider
@@ -199,6 +204,7 @@ Item {
         Label {
             text: qsTr('Left')
             Layout.alignment: Qt.AlignLeft
+            color: activePalette.text
         }
         SliderSpinner {
             id: leftslider
@@ -217,6 +223,7 @@ Item {
         Label {
             text: qsTr('Right')
             Layout.alignment: Qt.AlignLeft
+            color: activePalette.text
         }
         SliderSpinner {
             id: rightslider

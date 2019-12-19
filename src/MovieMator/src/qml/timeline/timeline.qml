@@ -34,7 +34,7 @@ Rectangle {
 
     SystemPalette { id: activePalette }
     //color: activePalette.window
-    color: backgroundColor
+    color: normalTrackBackgroundColor
 
     // 单击轨道上 clip的信号
     signal clipClicked()
@@ -127,7 +127,7 @@ Rectangle {
     }
 
     // 轨道头的宽度（定值）
-    property int headerWidth: 108    //92
+    property int headerWidth: 92    //92
     // 当前（选中）轨道的序号
     property int currentTrack: 0
     // 被选中的轨道的背景颜色
@@ -148,6 +148,20 @@ Rectangle {
 //    property var selection: []
     // 波纹
     property alias ripple: toolbar.ripple
+
+    //******定义MovieMator时间线上使用的所有颜色******//
+    property color toolbarBackgroundColor: Qt.rgba(42/255, 49/255, 55/255, 1.0)
+    property color rulerBackgroundColor: Qt.rgba(34/255, 39/255, 44/255, 1.0)
+    property color rulerTextColor: Qt.rgba(126/255, 126/255, 126/255, 1.0)
+    property color rulerCursorColor: Qt.rgba(246/255, 53/255, 53/255, 1.0)
+    property color normalTrackBackgroundColor: Qt.rgba(26/255, 30/255, 34/255, 1.0)
+    property color selectedTrackBackgroundColor: Qt.rgba(35/255, 37/255, 39/255, 1.0)
+    property color selectedTrackBorderColor: selectedTrackBackgroundColor//Qt.rgba(72/255, 72/255, 72/255, 1.0)
+    property color selectedClipColor: Qt.rgba(165/255, 65/255, 47/255, 1.0)
+    property color selectedClipBorderColor: Qt.rgba(210/255, 89/255, 68/255, 1.0)
+    property color normalClipColor: Qt.rgba(13/255, 81/255, 73/255, 1.0)
+    property color normalClipBorderColor: Qt.rgba(63/255, 151/255, 141/255, 1.0)
+    property color timelineScrollbarColor: Qt.rgba(78/255, 81/255, 86/255, 1.0)
 
     // 当前轨道发生变化时响应的函数
     onCurrentTrackChanged: {
@@ -301,7 +315,7 @@ Rectangle {
 
                 border.color: selected? 'red' : 'transparent'
                 border.width: selected? 1 : 0
-                color: selected? moviematorBlue : normalColor//activePalette.window
+                color: selected? moviematorBlue : rulerBackgroundColor//normalColor//activePalette.window
                 z: 0
             }
 
@@ -455,7 +469,7 @@ Rectangle {
                                 Rectangle {
                                     anchors.margins: 3
                                     anchors.fill: parent
-                                    color: '#787878'
+                                    color: timelineScrollbarColor//'#4e5156'
                                     radius: 4
                                 }
 
@@ -516,8 +530,9 @@ Rectangle {
                             Repeater {
                                 model: multitrack
                                 delegate: Rectangle {
+                                    border.color: selectedTrackBorderColor
                                     width: (tracksContainer.width < scrollView.width) ? scrollView.width : tracksContainer.width
-                                    color: (index === currentTrack)? selectedTrackColor : normalColor//(index % 2)? activePalette.alternateBase : activePalette.base
+                                    color: (index === currentTrack)? selectedTrackBackgroundColor/*selectedTrackColor*/ : normalTrackBackgroundColor//normalColor//(index % 2)? activePalette.alternateBase : activePalette.base
                                     height: Logic.trackHeight(video)
                                 }
                             }
@@ -876,6 +891,9 @@ Rectangle {
             onClipDropped: {
                 scrollTimer.running = false
                 bubbleHelp.hide()
+
+                //跨轨道移动后clip里面访问currentFilter为空，重新设置一下
+                mainwindow.resetCurrentFilterForTimelineDock()
             }
             onClipDraggedToTrack: {
                 var i = clip.trackIndex + direction

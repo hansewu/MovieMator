@@ -100,7 +100,9 @@ int QmlFilter::getKeyFrameOnProjectOnIndex(int index, QString name)
 
         int nPositionInClip = MAIN.timelineDock()->getPositionOnClip(nKeyFrame);
         int nClipLength = MAIN.timelineDock()->getCurrentClipLength();
-        if (nPositionInClip > (nClipLength - 1)) return -1;
+
+        if (nPositionInClip > (nClipLength - 1))
+            return -1;
 
         return nPositionInClip;
 //        return MAIN.timelineDock()->getPositionOnClip(nKeyFrame);
@@ -639,6 +641,7 @@ void QmlFilter::preset(const QString &name)
     m_filter->load(dir.filePath(name).toUtf8().constData());
     MLT.refreshConsumer();
     emit filterPropertyValueChanged();
+    emit keyframeNumberChanged();
 }
 
 QString QmlFilter::objectNameOrService()
@@ -781,7 +784,9 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
     int nFrameInClip    = frame;
     bool bKeyFrame      = cache_bKeyFrame(frame, key);
 
-    if(frame < 0) return;
+    if(frame < 0)
+        return;
+
     frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
 
 
@@ -793,8 +798,18 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
         for (int i = 0; i < paramCount; i++)
         {
              QString name = m_metadata->keyframes()->parameter(i)->property();
-             if (name == key) { paraType = m_metadata->keyframes()->parameter(i)->paraType(); break; }
+             if (name == key)
+             {
+                 paraType = m_metadata->keyframes()->parameter(i)->paraType();
+                 break;
+             }
         }
+
+        mlt_keyframe_type mltKeyframeType = mlt_keyframe_linear;
+        if (bKeyFrame)
+            mltKeyframeType = (mlt_keyframe_type)getInterpolationMethod(key, nFrameInClip);
+
+
         int duration = m_filter->get_length();
 
                 // Only set an animation keyframe if it does not already exist with the same value.
@@ -805,7 +820,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                             || !qFuzzyCompare(value.toDouble(),m_filter->anim_get_double(key.toUtf8().constData(), frame, duration)))
                     {
                         from_value = QString::number(m_filter->anim_get_double(key.toUtf8().constData(), frame, duration));
-                        m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), frame, duration, mlt_keyframe_linear);
+                        m_filter->anim_set(key.toUtf8().constData(), value.toDouble(), frame, duration, mltKeyframeType);
                     }
                 }
                 else if(paraType == "int")
@@ -813,7 +828,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                     if (!animation.is_valid() || !animation.is_key(frame)
                             || value.toInt() != m_filter->anim_get_int(key.toUtf8().constData(), frame, duration)) {
                         from_value = QString::number(m_filter->anim_get_int(key.toUtf8().constData(), frame, duration));
-                        m_filter->anim_set(key.toUtf8().constData(), value.toInt(), frame, duration, mlt_keyframe_linear);
+                        m_filter->anim_set(key.toUtf8().constData(), value.toInt(), frame, duration, mltKeyframeType);
                     }
                 }
                 else if(paraType == "string")
@@ -845,7 +860,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
                         rect.h = height;
                         rect.o = opacity;
 
-                        m_filter->anim_set(key.toUtf8().constData(), rect, frame, duration); //, mlt_keyframe_smooth); mlt_keyframe_smooth 可能有问题，在颜色显示时很明显  https://github.com/hansewu/MovieMator/issues/271
+                        m_filter->anim_set(key.toUtf8().constData(), rect, frame, duration, mltKeyframeType); //, mlt_keyframe_smooth); mlt_keyframe_smooth 可能有问题，在颜色显示时很明显  https://github.com/hansewu/MovieMator/issues/271
                     }
                 }
                 else
@@ -885,148 +900,7 @@ void QmlFilter::cache_setKeyFrameParaValue(int frame, QString key, QString value
 
     }
     emit keyframeNumberChanged();
-
-
-//QVector<key_frame_item> keyFrameTo(m_cacheKeyFrameList);
-
-//MAIN.pushCommand(new Timeline::KeyFrameCommand(m_filter, keyFrameFrom, keyFrameTo));
-
-//           MLT.refreshConsumer();
-//           emit filterPropertyValueChanged();
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    if(frame < 0) return;
-    frame = MAIN.timelineDock()->getPositionOnParentProducer(frame);
-
-
-        QVector<key_frame_item> keyFrameFrom(m_cacheKeyFrameList);
-       int keyFrameCount = m_cacheKeyFrameList.count();
-
-       bool hasSameKeyFrame = false;
-
-       if(keyFrameCount > 0)
-       {
-           int index =0;
-
-           for(index=0; index < keyFrameCount; index++)
-           {
-               key_frame_item para = m_cacheKeyFrameList.at(index);
-
-
-          //     key_frame_item para1 = m_cacheKeyFrameList.at(index++);
-               if(para.keyFrame == frame)
-               {
-                   para.paraMap.insert(key, value);
-                   m_cacheKeyFrameList.removeAt(index);//paraMap.insert(key, value);
-                   m_cacheKeyFrameList.insert(index, para);
-                   hasSameKeyFrame = true;
-                    QVector<key_frame_item> keyFrameTo(m_cacheKeyFrameList);
-
-                    MAIN.pushCommand(new Timeline::KeyFrameCommand(m_filter, keyFrameFrom, keyFrameTo));
-                   return;
-               //  return hasSameKeyFrame;
-
-               }
-            }
-
-           //if there is no equal key frame in m_cacheKeyFrameList
-           if(hasSameKeyFrame == false)
-           {
-               key_frame_item newItem ;
-               newItem.keyFrame = frame;
-               newItem.paraMap.insert(key, value);
-              // m_cacheKeyFrameList.append(newItem);
-
-               key_frame_item firstPara = m_cacheKeyFrameList.at(0);
-               key_frame_item lastPara = m_cacheKeyFrameList.at(keyFrameCount-1);
-
-               if(frame < firstPara.keyFrame)
-               {
-                   m_cacheKeyFrameList.insert(0, newItem);
-                   hasSameKeyFrame = true;
-
-                   emit cache_addedKeyFrame();
-                   QVector<key_frame_item> keyFrameTo(m_cacheKeyFrameList);
-
-                   MAIN.pushCommand(new Timeline::KeyFrameCommand(m_filter, keyFrameFrom, keyFrameTo));
-                   emit keyframeNumberChanged();
-                   return ;
-               }
-               if(frame > lastPara.keyFrame)
-               {
-                   m_cacheKeyFrameList.insert(keyFrameCount, newItem);
-                   hasSameKeyFrame = true;
-
-                   emit cache_addedKeyFrame();
-                   QVector<key_frame_item> keyFrameTo(m_cacheKeyFrameList);
-
-                   MAIN.pushCommand(new Timeline::KeyFrameCommand(m_filter, keyFrameFrom, keyFrameTo));
-                   emit keyframeNumberChanged();
-                   return ;
-               }
-
-               for(index=0; index < keyFrameCount-1; index++)
-               {
-
-                   key_frame_item para = m_cacheKeyFrameList.at(index);
-                   key_frame_item para1;
-                   if((index+1) < keyFrameCount)
-                       para1 = m_cacheKeyFrameList.at(index+1);
-
-                   if((frame > para.keyFrame) &&(frame < para1.keyFrame))
-                   {
-                       m_cacheKeyFrameList.insert(index+1, newItem);
-                       hasSameKeyFrame = true;
-                       emit cache_addedKeyFrame();
-                       QVector<key_frame_item> keyFrameTo(m_cacheKeyFrameList);
-
-                       MAIN.pushCommand(new Timeline::KeyFrameCommand(m_filter, keyFrameFrom, keyFrameTo));
-                       emit keyframeNumberChanged();
-                       return ;
-                   }
-
-               }
-
-
-           }
-       }
-       else
-       {
-           key_frame_item newItem ;
-           newItem.keyFrame = frame;
-           newItem.paraMap.insert(key, value);
-           m_cacheKeyFrameList.append(newItem);
-           hasSameKeyFrame = true;
-       //    return true;
-        //   emit cache_addedKeyFrame();
-
-       //    emit cache_addedKeyFrame();
-       }
-
-       if(hasSameKeyFrame)
-       {
-           emit cache_addedKeyFrame();
-           emit keyframeNumberChanged();
-       }
-     //  return false;
-       //set all key frame value together
-
-       QVector<key_frame_item> keyFrameTo(m_cacheKeyFrameList);
-
-       MAIN.pushCommand(new Timeline::KeyFrameCommand(m_filter, keyFrameFrom, keyFrameTo));
-*/
+    MLT.refreshConsumer();
 }
 
 void QmlFilter::removeAllKeyFrame(bool bFromUndo)
@@ -1286,7 +1160,7 @@ int QmlFilter::cache_getKeyFrameNumber(QString propertyName)
 //    int nCount1 = m_cacheKeyFrameList.count();
 //    return nCount1;
 
-    if (propertyName == nullptr) propertyName = getAnyAnimPropertyName();
+    //if (propertyName == nullptr) propertyName = getAnyAnimPropertyName();
     if (propertyName == nullptr) return -2;
 
     int nCount = getKeyFrameCountOnProject(propertyName);
@@ -1298,8 +1172,9 @@ int QmlFilter::cache_getKeyFrameNumber(QString propertyName)
 
 int QmlFilter::getKeyFrame(int index, QString propertyName)
 {
-    if (propertyName == nullptr) propertyName = getAnyAnimPropertyName();
-    if (propertyName == nullptr) return -1;
+    //if (propertyName == nullptr) propertyName = getAnyAnimPropertyName();
+    if (propertyName == nullptr)
+        return -1;
 
     int nKeyFrame = getKeyFrameOnProjectOnIndex(index, propertyName);
     return nKeyFrame;
@@ -1359,6 +1234,161 @@ void QmlFilter::refreshNoAnimation(const QVector<key_frame_item> &listParameter,
     MLT.refreshConsumer();
     emit filterPropertyValueChanged();
     emit keyframeNumberChanged();
+}
+
+
+void QmlFilter::emitEditKeyframeOfParameter(const QString strIdentifierOfParameter)
+{
+    m_strCurrentParameter = strIdentifierOfParameter;
+    emit editKeyframeOfParameter(strIdentifierOfParameter);
+}
+
+
+bool QmlFilter::isKeyframeActivate(const QString strIdentifierOfParameter)
+{
+    if (strIdentifierOfParameter.isEmpty())
+        return false;
+
+    qDebug() << getAnimation(strIdentifierOfParameter).key_count();
+    return getAnimation(strIdentifierOfParameter).key_count() > 0;
+}
+
+bool QmlFilter::isKeyframeAtPosition(const QString strIdentifierOfParameter, int nFramePosition)
+{
+    Q_ASSERT(!strIdentifierOfParameter.isEmpty());
+    if (strIdentifierOfParameter.isEmpty())
+        return false;
+    int nFrame = MAIN.timelineDock()->getPositionOnParentProducer(nFramePosition);
+
+    return getAnimation(strIdentifierOfParameter).is_key(nFrame);
+}
+
+bool QmlFilter::hasPreKeyframeAtPositon(const QString strIdentifierOfParameter, int nFramePosition)
+{
+    Q_ASSERT(!strIdentifierOfParameter.isEmpty());
+    if (strIdentifierOfParameter.isEmpty())
+        return false;
+
+    if (m_filter)
+    {
+
+        int nFrameInParent = MAIN.timelineDock()->getPositionOnParentProducer(nFramePosition);
+
+        if (getAnimation(strIdentifierOfParameter).is_key(nFrameInParent))
+            nFrameInParent = nFrameInParent - 1;
+
+        if (nFrameInParent <= 0)
+            return false;
+
+        int nKeyFrame = getAnimation(strIdentifierOfParameter).previous_key(nFrameInParent);
+        if (nKeyFrame == 1)//Animation::previous_key() 的实现有问题，没有关键帧的时候会返回1。
+            return false;
+
+        return true;
+    }
+
+    return false;
+}
+
+bool QmlFilter::hasNextKeyframeAtPositon(const QString strIdentifierOfParameter, int nFramePosition)
+{
+    Q_ASSERT(!strIdentifierOfParameter.isEmpty());
+    if (strIdentifierOfParameter.isEmpty())
+        return false;
+
+    if (m_filter)
+    {
+        int nFrameInParent = MAIN.timelineDock()->getPositionOnParentProducer(nFramePosition);
+
+        if (getAnimation(strIdentifierOfParameter).is_key(nFrameInParent))
+            nFrameInParent = nFrameInParent + 1;
+
+        int nKeyFrame = getAnimation(strIdentifierOfParameter).next_key(nFrameInParent);
+        if (nKeyFrame == 1)//Animation::next_key() 的实现有问题，没有关键帧的时候会返回1。
+            return false;
+
+        return true;
+    }
+
+    return false;
+}
+
+int QmlFilter::setInterpolationMethod(const QString strIdentifierOfParameter, int nPositionOfKeyframe,  /*mlt_keyframe_type*/ int mltKeyframeType)
+{
+    int nResult = -1;
+    if (strIdentifierOfParameter.isEmpty())
+        return nResult;
+
+    if (nPositionOfKeyframe < 0)
+        return nResult;
+
+    if (m_filter)
+    {
+        int nFrameInParent = MAIN.timelineDock()->getPositionOnParentProducer(nPositionOfKeyframe);
+
+        Mlt::Animation mltAnimation = getAnimation(strIdentifierOfParameter);
+        if (!mltAnimation.is_key(nFrameInParent))
+            return nResult;
+
+        int nKeyframeIndex = -1;
+        int nKeyframeCount = mltAnimation.key_count();
+        for (int i = 0; i < nKeyframeCount; i++)
+        {
+            int nFrame = mltAnimation.key_get_frame(i);
+            if (nFrame == nFrameInParent)
+            {
+                nKeyframeIndex = i;
+                break;
+            }
+        }
+
+        if (nKeyframeIndex < 0)
+            return nResult;
+
+        nResult = 0;
+        mltAnimation.key_set_type(nKeyframeIndex, (mlt_keyframe_type)mltKeyframeType);
+    }
+
+    return nResult;
+}
+
+int QmlFilter::getInterpolationMethod(const QString strIdentifierOfParameter, int nPositionOfKeyframe)
+{
+    int nType = -1;
+    if (strIdentifierOfParameter.isEmpty())
+        return nType;
+
+    if (nPositionOfKeyframe < 0)
+        return nType;
+
+    if (m_filter)
+    {
+
+        int nFrameInParent = MAIN.timelineDock()->getPositionOnParentProducer(nPositionOfKeyframe);
+
+        Mlt::Animation mltAnimation = getAnimation(strIdentifierOfParameter);
+        if (!mltAnimation.is_key(nFrameInParent))
+            return nType;
+
+        int nKeyframeIndex = -1;
+        int nKeyframeCount = mltAnimation.key_count();
+        for (int i = 0; i < nKeyframeCount; i++)
+        {
+            int nFrame = mltAnimation.key_get_frame(i);
+            if (nFrame == nFrameInParent)
+            {
+                nKeyframeIndex = i;
+                break;
+            }
+        }
+
+        if (nKeyframeIndex < 0)
+            return nType;
+
+        nType = mltAnimation.key_get_type(nKeyframeIndex);
+    }
+
+    return nType;
 }
 
 //#endif

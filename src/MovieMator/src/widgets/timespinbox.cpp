@@ -104,7 +104,7 @@ TimeSpinBoxLineEdit::TimeSpinBoxLineEdit(QWidget *parent)
     : QLineEdit(parent)
     , m_selectOnMousePress(false)
 {
-
+    this->setStyleSheet("QLineEdit{selection-background-color:rgb(165,65,47);color:rgb(198,199,200);}");
 }
 
 void TimeSpinBoxLineEdit::focusInEvent(QFocusEvent *event)

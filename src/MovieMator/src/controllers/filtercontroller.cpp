@@ -96,7 +96,11 @@ void FilterController::loadFilterParameter(QmlMetadata *pMetadata)
             Q_ASSERT(pParameter);
 
             QString strAdjustedByControls = QString::fromUtf8(mlt_properties_get(paramProperties, "bAdjustedByControls"));
-            if((strAdjustedByControls != "0")&&(!bFrei0r)) continue;
+            if((strAdjustedByControls != "1")&&(!bFrei0r))
+                continue;
+
+            QString strSupportAnimation = QString::fromUtf8(mlt_properties_get(paramProperties, "bHaveAnimationEffect"));
+            pParameter->setSupportAnimationFlag(strSupportAnimation);
 
             QString strParmType = QString::fromUtf8(mlt_properties_get(paramProperties, "type"));
             if (strParmType == "boolean")
@@ -112,6 +116,8 @@ void FilterController::loadFilterParameter(QmlMetadata *pMetadata)
                 pParameter->setMinimum(QString::fromUtf8(mlt_properties_get(paramProperties, "minimum")).toDouble());
                 pParameter->setMaximum(QString::fromUtf8(mlt_properties_get(paramProperties, "maximum")).toDouble());
                 pParameter->setDefaultValue(QString::number(mlt_properties_get_double(paramProperties, "default")));
+                if (bFrei0r)
+                    pParameter->setSupportAnimationFlag("1");
             }
             else if(strParmType == "color")
             {
@@ -162,6 +168,8 @@ void FilterController::loadFilterMetadata()
             loadFrei0rFilterMetadata();
             continue;
         }
+//        else
+//            continue;
 
         QDir subdir = dir;
         subdir.cd(strDirName);
@@ -187,6 +195,10 @@ void FilterController::loadFilterMetadata()
                     loadFilterParameter(pMetadata);
 
                     addMetadata(pMetadata);
+                }
+                else
+                {
+                   LOG_DEBUG() << "mlt_service is not available" << strDirName << pMetadata->mlt_service();
                 }
             }
             else if (!pMetadata)
@@ -671,17 +683,20 @@ void FilterController::refreshKeyFrame(Mlt::Filter *filter, const QVector<key_fr
 
 void FilterController::refreshNoAnimation(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame)
 {
-    if(m_currentFilterIndex == -1)          return;
+    if(m_currentFilterIndex == -1)
+        return;
 
     QmlFilter *qmlFilter = m_currentFilter.data();
-    if(!qmlFilter)                          return;
+    if(!qmlFilter)
+        return;
 
     Mlt::Filter* mltFilter = qmlFilter->getMltFilter();
     Q_ASSERT(mltFilter);
-    if(mltFilter->get_filter() != filter->get_filter())     return;
+    if(mltFilter->get_filter() != filter->get_filter())
+        return;
 
-    int nKeyNumber = qmlFilter->cache_getKeyFrameNumber();
-    if (nKeyNumber <= 1)  //if (nKeyNumber <= 0) //考虑mlt底层会在0的位置自动加上关键帧
+    int nKeyNumber = qmlFilter->cache_getKeyFrameNumber(listKeyFrame.at(0).paraMap.firstKey());
+    if (nKeyNumber <= 0)  //if (nKeyNumber <= 0) //考虑mlt底层会在0的位置自动加上关键帧
         qmlFilter->refreshNoAnimation(listKeyFrame, true);
 }
 
@@ -707,7 +722,6 @@ void FilterController::insertKeyFrame(Mlt::Filter *filter, const QVector<key_fra
             iter++;
         }
     }
-    qmlFilter->syncCacheToProject();
 }
 
 void FilterController::removeKeyFrame(Mlt::Filter *filter, const QVector<key_frame_item> &listKeyFrame)
@@ -732,7 +746,6 @@ void FilterController::removeKeyFrame(Mlt::Filter *filter, const QVector<key_fra
             iter++;
         }
     }
-    qmlFilter->syncCacheToProject();
 }
 
 void FilterController::updateKeyFrame(Mlt::Filter *filter, int nFrame, QString name, QString value)
@@ -747,7 +760,6 @@ void FilterController::updateKeyFrame(Mlt::Filter *filter, int nFrame, QString n
     if(mltFilter->get_filter() != filter->get_filter())     return;
 
     qmlFilter->cache_setKeyFrameParaValue(nFrame, name, value, true);
-    qmlFilter->syncCacheToProject();
 }
 
 void FilterController::handleAttachedModelChange()

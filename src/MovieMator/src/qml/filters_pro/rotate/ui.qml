@@ -40,6 +40,8 @@ Item {
 
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     GridLayout {
         id: layoutRoot
         anchors.fill: parent
@@ -61,7 +63,7 @@ Item {
         Label {
             text: qsTr('Preset') + "        "
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             id: preset
@@ -78,7 +80,7 @@ Item {
 
         Label {
             text: qsTr('Rotation')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'rotationSlider'
@@ -99,7 +101,7 @@ Item {
         Label {
             text: qsTr('Scale')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'scaleSlider'
@@ -125,7 +127,7 @@ Item {
 
         Label {
             text: qsTr('X offset')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'xOffsetSlider'
@@ -143,7 +145,7 @@ Item {
 
         Label {
             text: qsTr('Y offset')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'yOffsetSlider'

@@ -113,6 +113,7 @@ RowLayout {
         onValueChanged: slider.value = value * ratio
 
         style: SpinBoxStyle {
+            textColor: "#b9b9b9"
             background: Rectangle {
                 color: activePalette.base
                 border.color: 'gray'

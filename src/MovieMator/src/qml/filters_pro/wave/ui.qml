@@ -33,6 +33,9 @@ Item {
     Component.onCompleted: {
         keyFrame.initFilter(layoutRoot)
     }
+
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     GridLayout {
         id: layoutRoot
         columns: 3
@@ -53,7 +56,7 @@ Item {
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
-            color:'#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             id: preset
@@ -70,7 +73,7 @@ Item {
         Label {
             text: qsTr('Amplitude')
             Layout.alignment: Qt.AlignRight
-            color:'#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'waveSlider'
@@ -89,7 +92,7 @@ Item {
         Label {
             text: qsTr('Speed')
             Layout.alignment: Qt.AlignRight
-            color:'#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'speedSlider'
@@ -123,7 +126,7 @@ Item {
 
             style: CheckBoxStyle {
                         label: Text {
-                            color: "white"
+                            color: activePalette.text//"white"
                             text: qsTr('Deform horizontally?')
                         }
             }
@@ -146,7 +149,7 @@ Item {
             }
             style: CheckBoxStyle {
                         label: Text {
-                            color: "white"
+                            color: activePalette.text//"white"
                             text: qsTr('Deform vertically?')
                         }
             }

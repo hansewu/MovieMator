@@ -40,6 +40,8 @@ Item {
         sliderTail.value = filter.getDouble('6')
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     GridLayout {
         anchors.fill: parent
         anchors.margins: 8
@@ -48,7 +50,7 @@ Item {
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             id: preset
@@ -60,7 +62,7 @@ Item {
         Label {
             text: qsTr('Room size')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The size of the room, in meters. Excessivly large, and excessively small values will make it sound a bit unrealistic.Values of around 30 sound good.')}
         }
         SliderSpinner {
@@ -81,7 +83,7 @@ Item {
         Label {
             text: qsTr('Reverb time')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             id: sliderTime
@@ -102,7 +104,7 @@ Item {
         Label {
             text: qsTr('Damping')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('This controls the high frequency damping (a lowpass filter), values near 1 will make it sound very bright, values near 0 will make it sound very dark.')}
         }
         SliderSpinner {
@@ -124,7 +126,7 @@ Item {
         Label {
             text: qsTr('Input bandwidth')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('This is like a damping control for the input, it has a similar effect to the damping control, but is subtly different.')}
         }
         SliderSpinner {
@@ -146,7 +148,7 @@ Item {
         Label {
             text: qsTr('Dry signal level')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The amount of dry signal to be mixed with the reverberated signal.')}
         }
         SliderSpinner {
@@ -168,7 +170,7 @@ Item {
         Label {
             text: qsTr('Early reflection level')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The distance from the threshold where the knee curve starts.')}
         }
         SliderSpinner {
@@ -189,7 +191,7 @@ Item {
         Label {
             text: qsTr('Tail level')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The quantity of early reflections (scatter reflections directly from the source).')}
         }
         SliderSpinner {
@@ -211,7 +213,7 @@ Item {
         Label {
             Layout.columnSpan: 3
             text: qsTr('About reverb')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             font.underline: true
             MouseArea {
                 anchors.fill: parent

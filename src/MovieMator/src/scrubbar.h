@@ -23,9 +23,8 @@
 #define SCRUBBAR_H
 
 #include <QWidget>
-#include <QSlider>
 
-class ScrubBar : public QSlider//QWidget
+class ScrubBar : public QWidget
 {
     Q_OBJECT
 
@@ -37,7 +36,7 @@ class ScrubBar : public QSlider//QWidget
     };
 
 public:
-    explicit ScrubBar(QSlider *parent = nullptr);
+    explicit ScrubBar(QWidget *parent = nullptr);
 
     virtual void mousePressEvent(QMouseEvent * event);
     virtual void mouseReleaseEvent(QMouseEvent * event);
@@ -61,9 +60,9 @@ public slots:
     bool onSeek(int value);
 
 protected:
-//    virtual void paintEvent(QPaintEvent *e);
+    virtual void paintEvent(QPaintEvent *e);
     virtual void resizeEvent(QResizeEvent *);
-//    virtual bool event(QEvent *event);
+    virtual bool event(QEvent *event);
 
 private:
     int m_cursorPosition;
@@ -80,7 +79,7 @@ private:
     int m_secondsPerTick;
     QList<int> m_markers;
 
-  //  void updatePixmap();
+    void updatePixmap();
 };
 
 #endif // SCRUBBAR_H

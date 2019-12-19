@@ -38,6 +38,8 @@ Item {
         sliderRelease.value = filter.get('2')
     }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
     Timer {
         id: timer
         interval: 100
@@ -56,7 +58,7 @@ Item {
         Label {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         Preset {
             id: preset
@@ -68,7 +70,7 @@ Item {
         Label {
             text: qsTr('Input gain')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.')}
         }
         SliderSpinner {
@@ -90,7 +92,7 @@ Item {
         Label {
             text: qsTr('Limit')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.')}
         }
         SliderSpinner {
@@ -112,7 +114,7 @@ Item {
         Label {
             text: qsTr('Release')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('The time taken for the limiter\'s attenuation to return to 0 dB\'s.')}
         }
         SliderSpinner {
@@ -191,7 +193,7 @@ Item {
         Label {
             text: qsTr('Gain Reduction')
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             ToolTip {text: qsTr('Status indicator showing the gain reduction applied by the compressor.')}
         }
         Gauge {

@@ -31,23 +31,50 @@ ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
     m_tempProducer(nullptr)
 {
     ui->setupUi(this);
+    setStyleSheet("background-color:rgb(26, 30, 34);");
 //    Util::setColorsToHighlight(ui->filenameLabel);
     ui->cancelButton->setHidden(true);
 
     ui->line->setStyleSheet("color:black;");
     ui->line_2->setStyleSheet("color:black");
-    ui->filenameLabel->setStyleSheet("background-color:rgb(46,46,46);");
-    QString editStyle= "QLineEdit{border:1px;border-radius:3px;background-color:rgb(82,82,82);padding-left:4px;}";
+//    ui->filenameLabel->setStyleSheet("background-color:rgb(46,46,46);");
+    ui->filenameLabel->setStyleSheet("color:rgb(185,185,185);");
+    QFont font = ui->filenameLabel->font();
+    font.setPointSize(14);
+    ui->filenameLabel->setFont(font);
+
+//    QFont smallFont = ui->label->font();
+//    smallFont.setPointSize(13);
+    QString smallTextColorStyle = "color:rgb(185,185,185);";
+
+//    ui->label->setFont(smallFont);
+    ui->label->setStyleSheet(smallTextColorStyle);
+//    ui->durationLabel->setFont(smallFont);
+    ui->durationLabel->setStyleSheet(smallTextColorStyle);
+//    ui->aspectRatioLabel->setFont(smallFont);
+    ui->aspectRatioLabel->setStyleSheet(smallTextColorStyle);
+//    ui->sequenceCheckBox->setFont(smallFont);
+    ui->sequenceCheckBox->setStyleSheet(smallTextColorStyle);//setStyleSheet("QCheckBox{color:rgb(185,185,185)}");
+//    ui->label_2->setFont(smallFont);
+    ui->label_2->setStyleSheet(smallTextColorStyle);
+//    ui->label_3->setFont(smallFont);
+    ui->label_3->setStyleSheet(smallTextColorStyle);
+//    ui->label_4->setFont(smallFont);
+    ui->label_4->setStyleSheet(smallTextColorStyle);
+//    ui->label_5->setFont(smallFont);
+    ui->label_5->setStyleSheet(smallTextColorStyle);
+
+    QString editStyle= "QLineEdit{border:1px;border-radius:3px;background-color:rgb(82,82,82);color:rgb(185,185,185);padding-left:4px;}";
     ui->heightLineEdit->setStyleSheet(editStyle);
     ui->widthLineEdit->setStyleSheet(editStyle);
     QString buttonStyle = "QPushButton{"
                           "border-radius:3px;border:1px solid;border-color:black;"
-                          "background-color:rgb(100,100,100);color:rgb(225,225,225);}";
+                          "background-color:rgb(82,82,82);color:rgb(185,185,185);}";
     ui->resetButton->setStyleSheet(buttonStyle);
     ui->defaultDurationButton->setStyleSheet(buttonStyle);
     ui->okButton->setStyleSheet(buttonStyle);
     ui->cancelButton->setStyleSheet(buttonStyle);
-    QString spinBoxStyle = "QSpinBox{padding-left:4px;background-color:rgb(82,82,82);color:rgb(225,225,225);border:1px solid black;border-radius:4px;}";
+    QString spinBoxStyle = "QSpinBox{padding-left:4px;background-color:rgb(82,82,82);color:rgb(185,185,185);border:1px solid black;border-radius:4px;}";
     spinBoxStyle.append("QSpinBox::up-button{subcontrol-origin:border;subcontrol-position:top right;width:22px;border:none;}");
     spinBoxStyle.append("QSpinBox::up-arrow{image:url(:/icons/light/8x8/up.png);width:8px;height:8px;}");
     spinBoxStyle.append("QSpinBox::down-button{subcontrol-origin:border;subcontrol-position:bottom right;width:20px;border:none;border-top-width:0;}");

@@ -110,6 +110,7 @@
     <addaction name="actionBuy_a_License_Code"/>
     <addaction name="actionEnter_License_Code"/>
     <addaction name="actionExecute_Python"/>
+    <addaction name="actionSubscription"/>
     <addaction name="separator"/>
     <addaction name="actionGet_Total_Video_Converter_Pro"/>
     <addaction name="actionGet_Total_Video_Player"/>
@@ -964,7 +965,20 @@
    <property name="text">
     <string>Video Mode</string>
    </property>
-  </action>  
+  </action>
+  <action name="actionSubscription">
+   <property name="text">
+    <string>Subscription</string>
+   </property>
+   <property name="toolTip">
+    <string>Subscription</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>RecordAudio</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

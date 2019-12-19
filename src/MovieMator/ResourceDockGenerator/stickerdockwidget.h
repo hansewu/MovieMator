@@ -36,6 +36,7 @@ signals:
 private slots:
     void onAnimationComboBoxCurrentIndexChanged(int nIndex);
     void onAnimationComboBoxActivated(int nIndex);
+    void onDockWidgetVisibilityChanged(bool bVisible);
 
 private:
     QIcon getListViewItemIcon(const QString strFilePath);

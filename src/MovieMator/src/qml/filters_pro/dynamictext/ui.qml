@@ -25,6 +25,7 @@ import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import MovieMator.Controls 1.0
 import QtQuick.Dialogs 1.1
+import QtQuick.Controls.Styles 1.4
 
 Item {
     property string rectProperty: 'geometry'
@@ -39,25 +40,18 @@ Item {
     property rect filterRect
     property var _locale: Qt.locale(application.numericLocale)
     property bool blockUpdate: false
-    property bool bEnableKeyFrame: (filter ? filter.cache_getKeyFrameNumber() > 0 : false)
-    property bool bAutoSetAsKeyFrame: false
-    property bool bTemporaryKeyFrame: false
-    property int  m_lastFrameNum: -1
-    property bool m_bLastEnableKeyFrame: false
-//    property var  m_parameterValue: new Array()
-    property bool  m_refreshedUI:false
 
-    width: 550
+    width: 300
     height: 1500  //1150
 
     function getColorStr(colorValue)
     {
         var int_color = parseInt(colorValue)
 
-        if(int_color <=0)  
+        if(int_color <=0)
             int_color = 0
-        
-        if(int_color >= 255)  
+
+        if(int_color >= 255)
             int_color = 255
 
         var colorStr = int_color.toString(16)
@@ -72,7 +66,7 @@ Item {
     {
         if(rect.x == 2.22507e-308 || rect.y == 2.22507e-308 || rect.width == 2.22507e-308 || rect.height == 2.22507e-308)
             return false
-       
+
         if(rect.x*10000 < -100 || rect.x > 0.8)
             return false
         if(rect.y*10000 < -100 || rect.y > 0.8)
@@ -82,7 +76,7 @@ Item {
             return false
         if(rect.height < 0.0001 || rect.height > 2)
             return false
-    
+
         return true
     }
 
@@ -100,16 +94,16 @@ Item {
             return false
         if(rect.height > 0 && rect.height < 0.00001)
             return false
-    
+
         return true
     }
-    function getHexStrColor(position, propertyName) 
+    function getHexStrColor(position, propertyName)
     {
         var colorRect = filter.getRectOfTextFilter(propertyName)
 
         console.log("propertyName = ", propertyName, " colorRect =", colorRect)
 
-        if (position >= 0) 
+        if (position >= 0)
         {
             colorRect = filter.getAnimRectValue(position, propertyName)
         }
@@ -125,14 +119,14 @@ Item {
         return "#" + aStr + rStr + gStr + bStr
     }
 
-    function getRectColor(hexStrColor) 
+    function getRectColor(hexStrColor)
     {
-        if(hexStrColor.length != 7 && hexStrColor.length != 9) 
+        if(hexStrColor.length != 7 && hexStrColor.length != 9)
             return Qt.rect(255, 255, 255, 255)
 
         var aStr = "FF",  rStr = "FF", gStr = "FF", bStr = "FF";
 
-        if (hexStrColor.length == 7) 
+        if (hexStrColor.length == 7)
         {
             aStr = "FF"
             rStr = hexStrColor.substring(1, 3)
@@ -150,34 +144,19 @@ Item {
         return Qt.rect(parseInt(aStr, 16), parseInt(rStr, 16), parseInt(gStr, 16), parseInt(bStr, 16))
     }
 
-    function getAbsoluteRect(position) 
+    function getAbsoluteRect(position)
     {
         var rect = filter.getRectOfTextFilter(rectProperty)
-        if (position >= 0) 
+        if (position >= 0)
         {
             rect = filter.getAnimRectValue(position, rectProperty)
         }
         return Qt.rect(Math.round(rect.x * profile.width), Math.round(rect.y * profile.height), Math.round(rect.width * profile.width), Math.round(rect.height * profile.height))
     }
 
-    function getRelativeRect(absoluteRect) 
+    function getRelativeRect(absoluteRect)
     {
         return Qt.rect(absoluteRect.x / profile.width, absoluteRect.y / profile.height, absoluteRect.width / profile.width, absoluteRect.height / profile.height)
-    }
-
-
-
-    function combineAllKeyFramePara()
-    {
-        var metaParamList = metadata.keyframes.parameters
-        for(var paramIndex = 0; paramIndex < metaParamList.length; paramIndex++) 
-        {
-            var property = metadata.keyframes.parameters[paramIndex].property
-	    
-	  //      filter.resetProperty(property)
-        }
-
-        filter.syncCacheToProject()
     }
 
     function getResetValue(property)
@@ -198,506 +177,32 @@ Item {
         return 0
     }
 
-    function getNormalValue(propertyGet) 
-    {
-        var paramCount = metadata.keyframes.parameterCount
-
-        var propertyValue = ""
-        var nFrame = timeline.getPositionInCurrentClip()
-
-        for(var i = 0; i < paramCount; i++) 
-        {
-            var property = metadata.keyframes.parameters[i].property
-            var paraType = metadata.keyframes.parameters[i].paraType
-
-            if(propertyGet === property)
-            {
-                if (paraType === "rect") 
-                {
-                    propertyValue = filter.getRectOfTextFilter(property)
-                    if(property == rectProperty)
-                    {
-                        if(isRectPosValid(propertyValue) == false)
-                            propertyValue = getResetValue(property)
-                    }
-                    else if(isColorRectValid(propertyValue) == false)
-                    {
-                        propertyValue = getResetValue(property)
-                    }
-                }
-                else if (paraType === "double") 
-                {
-                    propertyValue = filter.getAnimDoubleValue(nFrame, property)
-                    //propertyValue = filter.getDouble(property)
-                }
-                else if (paraType === "int") 
-                {
-                    propertyValue = filter.getAnimIntValue(nFrame, property)
-                    //propertyValue = filter.getInt(property)
-                }
-                else
-                {
-                    propertyValue = filter.get(property)
-                }
-            }
-        }    
-
-        return propertyValue
-    }
-
-    function setKeyFrameOfFrame (nFrame) 
-    {
-        var paramCount = metadata.keyframes.parameterCount
-
-        for(var i = 0; i < paramCount; i++) 
-        {
-            var property = metadata.keyframes.parameters[i].property
-            var paraType = metadata.keyframes.parameters[i].paraType
-            if (paraType === "rect") 
-            {
-                var rectValue = filter.getAnimRectValue(nFrame, property)
-                filter.cache_setKeyFrameParaRectValue(nFrame, property, rectValue, 1.0)
-            } 
-            else if(paraType === "double")
-            {
-                var valueStr = filter.getAnimDoubleValue(nFrame, property)
-                filter.cache_setKeyFrameParaValue(nFrame, property, valueStr.toString());
-            }
-            else if(paraType === "int")
-            {
-                var valueStr = filter.getAnimIntValue(nFrame, property)
-                filter.cache_setKeyFrameParaValue(nFrame, property, valueStr.toString());
-            }
-        }
-        combineAllKeyFramePara();
-    }
-
-    function setKeyFrameParaValue (nFrame, currentPropert, value) 
-    {
-        var paramCount = metadata.keyframes.parameterCount
-        //console.log("setKeyFrameParaValue paramCount: ", paramCount)
-
-        for(var i = 0; i < paramCount; i++) 
-        {
-            var property = metadata.keyframes.parameters[i].property
-            var paraType = metadata.keyframes.parameters[i].paraType
-            if (property === currentPropert) 
-            {
-                if (paraType === "rect") 
-                {
-                    filter.cache_setKeyFrameParaRectValue(nFrame, property, value, 1.0)
-                } 
-                else 
-                {
-                //    console.log("setKeyFrameParaValue currentPropert: ", currentPropert, "value: ", value)
-                    filter.cache_setKeyFrameParaValue(nFrame, property, value.toString());
-                }
-            } 
-        }
-        combineAllKeyFramePara();
-    }
-
-    function setInAndOutKeyFrame () 
-    {
-        var positionStart = 0
-        var positionEnd = (timeline.getCurrentClipLength() - 1)//filter.producerOut - filter.producerIn + 1
-
-        var paramCount = metadata.keyframes.parameterCount
-        for(var i = 0; i < paramCount; i++) 
-        {
-            var property = metadata.keyframes.parameters[i].property
-            var paraType = metadata.keyframes.parameters[i].paraType
-
-            
-            if (paraType === "rect") {
-                var rectValue = filter.getRectOfTextFilter(property)
-              //  m_parameterValue[property] = rectValue
-                
-                filter.cache_setKeyFrameParaRectValue(positionStart, property, rectValue, 1.0)
-                filter.cache_setKeyFrameParaRectValue(positionEnd, property, rectValue, 1.0)
-                console.log("paraType = ", paraType, " property = ", property, " valueStr = ", rectValue )
-            } 
-            else if (paraType === "double") 
-            {
-                var valueStr = filter.getDouble(property)
-             //   m_parameterValue[property] = valueStr
-                filter.cache_setKeyFrameParaValue(positionStart, property, valueStr.toString());
-                filter.cache_setKeyFrameParaValue(positionEnd, property, valueStr.toString());
-                console.log("paraType = ", paraType, " property = ", property, " valueStr = ", valueStr )
-            }
-            else if (paraType === "int") 
-            {
-                var valueStr = filter.getInt(property)
-              //  m_parameterValue[property] = valueStr
-                filter.cache_setKeyFrameParaValue(positionStart, property, valueStr.toString());
-                filter.cache_setKeyFrameParaValue(positionEnd, property, valueStr.toString());
-                console.log("paraType = ", paraType, " property = ", property, " valueStr = ", valueStr )
-            }
-           // filter.resetProperty(property)  //wzq
-        }
-        combineAllKeyFramePara();
-    }
-
-    function getMaxKeyFrameCountInfo() 
-    {
-        var metaParamList = metadata.keyframes.parameters
-        var maxKeyFrameConut = 0
-        var maxKeyFramePropert = metaParamList[0].property
-        for(var paramIndex = 0; paramIndex < metaParamList.length; paramIndex++) 
-        {
-            var property = metaParamList[paramIndex].property
-            var keyFrameCount = filter.getKeyFrameCountOnProject(property)
-            if (keyFrameCount > maxKeyFrameConut) 
-            {
-                maxKeyFrameConut = keyFrameCount
-                maxKeyFramePropert = property
-            }
-        }
-
-        return [maxKeyFrameConut, maxKeyFramePropert]
-    }
-
-    function loadSavedKeyFrameNew () 
-    {
-        var metaParamList = metadata.keyframes.parameters
-        var maxKeyFrameCountInfo = getMaxKeyFrameCountInfo()
-        for(var keyIndex = 0; keyIndex < maxKeyFrameCountInfo[0]; keyIndex++)
-        {
-            var nFrame = filter.getKeyFrameOnProjectOnIndex(keyIndex, maxKeyFrameCountInfo[1])
-            for(var paramIndex = 0; paramIndex < metaParamList.length; paramIndex++){
-                var property = metadata.keyframes.parameters[paramIndex].property
-                var paraType = metadata.keyframes.parameters[paramIndex].paraType
-                if (nFrame > (timeline.getCurrentClipLength() - 1)) {
-                    filter.removeAnimationKeyFrame(nFrame, property)
-                    continue
-                }
-
-                if (paraType === "rect") 
-                {
-                    var strValue = filter.get(property)
-                    var rectValue = filter.getAnimRectValue(nFrame, property)
-                    if (strValue.indexOf("#") !== -1) {
-                        rectValue = getRectColor(strValue)
-                    }
-
-                    filter.cache_setKeyFrameParaRectValue(nFrame, property, rectValue, 1.0)
-                } 
-               else if (paraType === "double")
-                {
-                    var valueStr = filter.getAnimDoubleValue(nFrame, property)
-                    filter.cache_setKeyFrameParaValue(nFrame, property, valueStr.toString());
-                }
-                else if (paraType === "int")
-                {
-                    var valueStr = filter.getAnimIntValue(nFrame, property)
-                    filter.cache_setKeyFrameParaValue(nFrame, property, valueStr.toString());
-                }
-            }
-        }
-        combineAllKeyFramePara();
-    }
-
-
-    
-    function loadSavedKeyFrame () 
-    {
-
-        var metaParamList = metadata.keyframes.parameters
-        for(var paramIndex = 0; paramIndex < metaParamList.length; paramIndex++) 
-        {
-            var property = metadata.keyframes.parameters[paramIndex].property
-            var paraType = metadata.keyframes.parameters[paramIndex].paraType
-            var keyFrameCount = filter.cache_getKeyFrameNumber()
-            for(var keyIndex = 0; keyIndex < keyFrameCount; keyIndex++) 
-            {
-                var nFrame = filter.getKeyFrame(keyIndex)
-                if (paraType === "rect") 
-                {
-                    var rectValue = filter.cache_getKeyFrameParaRectValue(nFrame, property)
-                    filter.cache_setKeyFrameParaRectValue(nFrame, property, rectValue, 1.0)
-                }
-                else if (paraType === "double") 
-                {
-                    //filter.resetProperty(property)
-                    var valueStr = filter.cache_getKeyFrameParaDoubleValue(nFrame, property);//没有getKeyFrameParaIntValue
-                    filter.cache_setKeyFrameParaValue(nFrame, property, valueStr.toString());
-                    console.log("loadSavedKeyFrame nFrame = ", nFrame, " property = ", property, " value = ", valueStr);
-                }
-            }
-	    
-        }
-        combineAllKeyFramePara()
-    }
-
-    function removeAllKeyFrame () 
-    {
-        if (filter.cache_getKeyFrameNumber() > 0) 
-        {
-        
-            var metaParamList = metadata.keyframes.parameters
-            for(var paramIndex = 0; paramIndex < metaParamList.length; paramIndex++)
-            {
-                var prop = metaParamList[paramIndex].property
-
-                var valueNormal = getResetValue(prop)
-                filter.removeAllKeyFrame(prop)
-                filter.resetProperty(prop)
-                filter.set(prop, valueNormal)
-            }
-
-            combineAllKeyFramePara();
-        }
-    }
-
-    
-  /*  function restoreFilterPara()
-    {
-        for(var key in m_parameterValue) 
-        {
-            console.log("m_parameterValue key = ", key, "value = ", m_parameterValue[key])
-            
-            var metaParamList = metadata.keyframes.parameters
-            for(var paramIndex = 0; paramIndex < metaParamList.length; paramIndex++) 
-            {
-                
-                var property = metadata.keyframes.parameters[paramIndex].property
-                if(property === key)
-                {
-                    var paraType = metadata.keyframes.parameters[paramIndex].paraType
-                    if (paraType === "rect") 
-                    {
-                     //   if(key === fgcolourProperty)
-                     //       filter.set(fgcolourProperty, Qt.rect(255.0, 255.0, 255.0, 255.0))
-                     //   else
-                        {
-                      //      filter.resetProperty(key)
-                            filter.set(key, m_parameterValue[key])
-                        }
-                    }
-                    else 
-                    {
-                    //    filter.resetProperty(key)
-                        filter.set(key, m_parameterValue[key])
-                    }
-                }
-            }
-	    
-        }
-    
-        
-    }
-
-    */
-    function resetFilterPara () 
-    {
-        filter.set(fgcolourProperty, Qt.rect(255.0, 255.0, 255.0, 255.0))
-        filter.set(bgcolourProperty, Qt.rect(0.0, 0.0, 0.0, 0.0))
-        filter.set(olcolourProperty, Qt.rect(255.0, 0.0, 0.0, 0.0))
-        filter.resetProperty(outlineProperty)
-        filter.set(outlineProperty, 0)
-        filter.resetProperty(letterSpaceingProperty)
-        filter.set(letterSpaceingProperty, 0)
-        filter.resetProperty(padProperty)
-        filter.set(padProperty, 0)
-        filter.set(rectProperty, Qt.rect(0.0148437, 0.441667, 0.948438, 0.195833))
-        filter.set(valignProperty, 'bottom')
-        filter.set(halignProperty, 'center')
-        filter.set('argument', 'Welcome to MovieMator')
-        filter.set('trans_fix_rotate_x', 0)
-        filter.set('trans_scale_x', 1)
-        filter.set('trans_ox', 0)
-        filter.set('trans_oy', 0)
-        filter.set('trans_fix_shear_x', 0)
-        
-    }
-
-    function  testNormalKeyFrameState()
-    {
-        var fgcolourNormalOld = filter.getRectOfTextFilter(fgcolourProperty)
-
-        filter.set(fgcolourProperty, Qt.rect(254.0, 254.0, 254.0, 254.0))
-
-        filter.setEnableAnimation(true)
-
-        filter.cache_setKeyFrameParaRectValue(0, fgcolourProperty, Qt.rect(250.0, 250.0, 250.0, 250.0), 1.0)
-        filter.cache_setKeyFrameParaRectValue(2, fgcolourProperty, Qt.rect(25.0, 25.0, 250.0, 250.0), 1.0)
-
-        var fgcolourNormalAfterKeyFrame = filter.getRectOfTextFilter(fgcolourProperty)
-
-        removeAllKeyFrame()
-
-        var fgcolourNormalAfterRemoveKeyFrame = filter.getRectOfTextFilter(fgcolourProperty)
-
-        filter.set(fgcolourProperty, fgcolourNormalOld)
-
-        var fgcolourNormalRestore = filter.getRectOfTextFilter(fgcolourProperty)
-
-        console.log("testNormalKeyFrameState fgcolourProperty 1 ", fgcolourNormalOld, " 2 ", fgcolourNormalAfterKeyFrame, " 3 ", fgcolourNormalAfterRemoveKeyFrame, " 4 ", fgcolourNormalRestore )
-    }
-
-    function isKeyFramePropterty(property)
-    {
-        var metaParamList = metadata.keyframes.parameters
-        for(var paramIndex = 0; paramIndex < metaParamList.length; paramIndex++)
-         {
-                var prop = metaParamList[paramIndex].property
-                if(prop === property) 
-                {
-                    return true
-                }
-         }
-
-         return false
-    }
-
-    function updateFilter(currentProperty, value) 
+    function updateFilter(currentProperty, value)
     {
         if (blockUpdate === true) {
             return
         }
 
-        if (bEnableKeyFrame &&  isKeyFramePropterty(currentProperty) === true) 
-        {
-            var nFrame = timeline.getPositionInCurrentClip()
-            if (bAutoSetAsKeyFrame) 
-            {
-                if (!filter.cache_bKeyFrame(nFrame)) 
-                {
-                    showAddFrameInfo(nFrame)
-                }
-                console.log("updateFilter currentPropert: ", currentProperty, "value: ", value)
-                setKeyFrameParaValue(nFrame, currentProperty, value);
-                combineAllKeyFramePara()
-            } 
-            else 
-            {
-                if (filter.cache_bKeyFrame(nFrame)) 
-                {
-                    setKeyFrameParaValue(nFrame, currentProperty, value);
-                    
-                    combineAllKeyFramePara()
-
-                } 
-              //  else 
-              //  {
-              //      filter.set(currentProperty, value)
-              //  }
-            }
-        } 
-        else 
-        {
-            filter.set(currentProperty, value)
-        }
-    }
-
-    function updateTemporaryKeyFrame (currentProperty, value) 
-    {
-        if (blockUpdate === true) {
-            return
-        }
-        if (bEnableKeyFrame) 
-        {
-            var nFrame = timeline.getPositionInCurrentClip()
-            if (bAutoSetAsKeyFrame) {
-                if (!filter.cache_bKeyFrame(nFrame)) 
-                {
-                    bTemporaryKeyFrame = true
-                }
-                setKeyFrameParaValue(nFrame, currentProperty, value)
-            } 
-            else 
-            {
-                if (filter.cache_bKeyFrame(nFrame)) 
-                {
-                    setKeyFrameParaValue(nFrame, currentProperty, value)
-                } 
-                else 
-                {
-                    filter.set(currentProperty, value)
-                }
-            }
-        } 
-        else 
-        {
-            filter.set(currentProperty, value)
-        }
-    }
-
-    function removeTemporaryKeyFrame () 
-    {
-        if (blockUpdate === true) 
-        {
-            return
-        }
-        if (bEnableKeyFrame) 
-        {
-            if (bAutoSetAsKeyFrame) 
-            {
-                var nFrame = timeline.getPositionInCurrentClip()
-                if (filter.cache_bKeyFrame(nFrame) && bTemporaryKeyFrame) 
-                {
-                    filter.removeKeyFrameParaValue(nFrame);
-                    combineAllKeyFramePara();
-
-                    setKeyframedControls()
-
-                    bTemporaryKeyFrame = false
-                }
-            }
-        }
-    }
-
-    InfoDialog {
-        id: addFrameInfoDialog
-        text: qsTr('Auto set as key frame at postion')+ ": " + position + "."
-        property int position: 0
-    }
-
-    function showAddFrameInfo(position)
-    {
-        if (filter.autoAddKeyFrame() === false) return
-
-        addFrameInfoDialog.show     = false
-        addFrameInfoDialog.show     = true
-        addFrameInfoDialog.position = position
+        filter.set(currentProperty, value)
     }
 
     Component.onCompleted: {
         console.log("Component.onCompleted")
-     //   testNormalKeyFrameState()
-
-        filter.setEnableAnimation(bEnableKeyFrame)
-        filter.setAutoAddKeyFrame(bAutoSetAsKeyFrame)
-
-        filter.setInAndOut(0, timeline.getCurrentClipParentLength()-1)
-
-        //导入上次工程保存的关键帧
-        loadSavedKeyFrameNew()
-
-        // Windows下更改默认字体后需要撤销两次才能删除，改为 attachedfiltersmodel里设置默认字体
-//        if (filter.isNew) {
-//            if (application.OS === 'Windows')
-//                filter.set('family', 'Verdana')
-
-//            //resetFilterPara()
-//            console.log("Component.onCompleted filter.isNew")
-//        }
 
         setControls()
-        setKeyframedControls()
-
+        keyframe.initFilter(idGridLayoutAnimation)
         if (filter.isNew) {
             filter.set('size', filterRect.height)
         }
     }
 
-    function setControls() 
+    function setControls()
     {
+        blockUpdate = true
+
         textArea.text = filter.get('argument')
         fontButton.text = filter.get('family')
         weightCombo.currentIndex = weightCombo.valueToIndex()
-        insertFieldCombo.currentIndex = insertFieldCombo.valueToIndex()
-        blockUpdate = true
         filterRect = getAbsoluteRect(-1)
         fgColor.value = getHexStrColor(-1, fgcolourProperty)
         outlineColor.value = getHexStrColor(-1, olcolourProperty)
@@ -713,16 +218,16 @@ Item {
         idShadowColor.value     = getHexStrColor(-1, 'shadow_color')
 
         idGlowEnable.checked      = (filter.get('glow_enable') != 0)
-        
+
         idGlowColor.value       = getHexStrColor(-1, 'glow_color')
         idGlowRadius.value    = filter.getDouble('glow_radius')
 
-        rotationSlider.value            = filter.getDouble('trans_fix_rotate_x')
-        scaleSlider.value               =  100.0/filter.getDouble('trans_scale_x')
-        xOffsetSlider.value             = filter.getDouble('trans_ox') * -1
-        yOffsetSlider.value             = filter.getDouble('trans_oy') * -1
-        scaleAspectRatioSlider.value    =  filter.getDouble('trans_scale_aspect_ratio')
-        transparentAlphaSlider.value    =  filter.getDouble('transparent_alpha')
+//        rotationSlider.value            = filter.getDouble('trans_fix_rotate_x')
+//        scaleSlider.value               =  100.0/filter.getDouble('trans_scale_x')
+//        xOffsetSlider.value             = filter.getDouble('trans_ox') * -1
+//        yOffsetSlider.value             = filter.getDouble('trans_oy') * -1
+//        scaleAspectRatioSlider.value    =  filter.getDouble('trans_scale_aspect_ratio')
+//        transparentAlphaSlider.value    =  filter.getDouble('transparent_alpha')
 
         blockUpdate = false
         var align = filter.get(halignProperty)
@@ -739,44 +244,11 @@ Item {
             middleRadioButton.checked = true
         else if (align === 'bottom')
             bottomRadioButton.checked = true
-
-       
     }
 
-    function setKeyframedControls() 
+    function setFilter()
     {
-        if (filter.cache_getKeyFrameNumber() > 0) 
-        {
-
-//            var nFrame = keyFrame.getCurrentFrame()
-            var nFrame = timeline.getPositionInCurrentClip()
-
-            blockUpdate = true
-/*
-            filterRect = getAbsoluteRect(nFrame)
-            fgColor.value = getHexStrColor(nFrame, fgcolourProperty)
-            outlineColor.value = getHexStrColor(nFrame, olcolourProperty)
-            outlineSpinner.value = filter.getAnimDoubleValue(nFrame, outlineProperty)
-            letterSpaceing.value = filter.getAnimDoubleValue(nFrame, letterSpaceingProperty)
-            bgColor.value = getHexStrColor(nFrame, bgcolourProperty)
-            padSpinner.value = filter.getAnimDoubleValue(nFrame, padProperty)
-  */          
-
-            rotationSlider.value = filter.getAnimDoubleValue(nFrame, 'trans_fix_rotate_x')
-            scaleSlider.value =  100.0/filter.getAnimDoubleValue(nFrame, 'trans_scale_x')
-            xOffsetSlider.value = filter.getAnimDoubleValue(nFrame, 'trans_ox') * -1
-            yOffsetSlider.value = filter.getAnimDoubleValue(nFrame, 'trans_oy') * -1
-            scaleAspectRatioSlider.value    =  filter.getAnimDoubleValue(nFrame, 'trans_scale_aspect_ratio')
-            transparentAlphaSlider.value    =  filter.getAnimDoubleValue(nFrame, 'transparent_alpha')
-            //console.log("xOffsetSlider.value = ", xOffsetSlider.value, "yOffsetSlider.value", yOffsetSlider.value)
-
-            blockUpdate = false
-        }
-    }
-
-    function setFilter() 
-    {
-        if (blockUpdate === true) 
+        if (blockUpdate === true)
         {
             return
         }
@@ -787,7 +259,7 @@ Item {
         if (x !== filterRect.x ||
             y !== filterRect.y ||
             w !== filterRect.width ||
-            h !== filterRect.height) 
+            h !== filterRect.height)
             {
             filterRect.x = x
             filterRect.y = y
@@ -795,78 +267,50 @@ Item {
             filterRect.height = h
 
             updateFilter(rectProperty, getRelativeRect(filterRect))
-
         }
-
     }
 
     ExclusiveGroup { id: sizeGroup }
     ExclusiveGroup { id: halignGroup }
     ExclusiveGroup { id: valignGroup }
 
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+
+    YFKeyFrame
+    {
+        id: keyframe
+        onRefreshUI:
+        {
+            keyframe.updateParamsUI(idGridLayoutAnimation)
+        }
+        onSyncUIDataToProject:
+        {
+            keyframe.syncDataToProject(idGridLayoutAnimation)
+        }
+    }
+
     GridLayout {
         id: idGridLayoutPreset
-        width:parent.width 
+        width:parent.width
         columns: 5
-        rows:2
+        rows:3
        // anchors.fill: parent
-        Layout.fillWidth: true 
+        Layout.fillWidth: true
         anchors.margins: 8
         rowSpacing : 25
-
-//        KeyFrame{
-//            id: keyFrame
-//            Layout.columnSpan:5
-//            onRefreshUI:{
-//                setControls()
-//                setKeyframedControls()
-//            }
-//        }
-
-//        Label {
-//            text: qsTr('Preset')
-//            Layout.alignment: Qt.AlignLeft
-//            color: '#ffffff'
-//        }
-//        Preset {
-//            id: preset
-//            Layout.columnSpan: 4
-//            parameters: [rectProperty, 'shear_x', halignProperty, valignProperty, 'size', //'argument',
-//            fgcolourProperty, 'family', 'weight', olcolourProperty, outlineProperty, bgcolourProperty, padProperty, letterSpaceingProperty,
-//            'shadow_distance', 'shadow_angle']
-          
-//            m_strType: "tst"
-//            onBeforePresetLoaded:
-//            {
-//                //removeAllKeyFrame()
-              
-//                //resetFilterPara()
-//            }
-//            onPresetSelected: {
-//                //加載關鍵幀
-//                loadSavedKeyFrameNew()
-
-//                //更新界面
-//                setControls()
-//                setKeyframedControls()
-
-//                if (filter.isNew) {
-//                    filter.set('size', filterRect.height)
-//                }
-//            }
-//        }
 
         Label {
             text: qsTr('Text')
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             font.bold:true
-	    font.pointSize:10
+//            font.pointSize:13
         }
         TextArea {
             id: textArea
             Layout.columnSpan: 3
             textFormat: TextEdit.PlainText
+            textColor: "#b9b9b9"//activePalette.text
             // 消除 warning：
             // ScrollView.qml: QML : Possible anchor loop detected on fill.
             // If you set a width, consider using TextEdit.Wrap.
@@ -887,15 +331,12 @@ Item {
                 filter.set('argument', text)
             }
         }
-/*
-        Label {
-            text: qsTr('Insert field')
-            Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
-        }*/
+        Label{}//占位符
+        Label{}//占位符
+
         MyComboBox {
             id: insertFieldCombo
-            Layout.columnSpan: 1
+            Layout.columnSpan: 3
             width: 100
             height: 32
             Layout.minimumHeight: 32
@@ -910,56 +351,46 @@ Item {
                 ListElement {name: qsTr('File name')}
             }
             property var values: ['welcome!', '#timecode#', '#frame#', '#localfiledate#', '#resource#']
-            function valueToIndex() {
-                var textStr = filter.get('argument')
-                for (var i = 0; i < values.length; ++i)
-                    if (values[i] === textStr) break;
-                if (i === values.length) i = 0;
-                return i;
-            }
+
+            currentIndex: 0
             onCurrentIndexChanged: {
                 textArea.insert(textArea.cursorPosition, values[currentIndex])
             }
         }
+        Label{}//占位符
 
         Label {
             text: qsTr('Style')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             font.bold:true
-            font.pointSize:10
+//            font.pointSize:13
             //font.underline:true
 
         }
+
         Preset {
             id: preset
             Layout.columnSpan: 4
-            parameters: [rectProperty, 'shear_x', halignProperty, valignProperty, 'size', //'argument', 
+            parameters: [rectProperty, 'shear_x', halignProperty, valignProperty, 'size', //'argument',
             fgcolourProperty, 'family', 'weight', olcolourProperty, outlineProperty, bgcolourProperty, padProperty, letterSpaceingProperty,
             'shadow_distance', 'shadow_angle', 'shadow_radius', 'shadow_color', 'glow_enable', 'glow_radius', 'glow_color']
-          
-            m_strType: "tst"
-            onBeforePresetLoaded: 
-            {
-                //removeAllKeyFrame()
-              
-                //resetFilterPara()
-            }
-            onPresetSelected: {
-                //加載關鍵幀
-                loadSavedKeyFrameNew()
 
+            m_strType: "tst"
+            onBeforePresetLoaded:
+            {
+            }
+            onPresetSelected:
+            {
                 //更新界面
                 setControls()
-                setKeyframedControls()
 
+                //？？？不清楚这句有什么作用
                 if (filter.isNew) {
                     filter.set('size', filterRect.height)
-                } 
+                }
             }
         }
-
-
 
         Button {
             id: detailButton1
@@ -967,27 +398,38 @@ Item {
             tooltip: qsTr('detail')
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
-            onClicked: 
+            style: ButtonStyle {
+                background: Rectangle {
+                    border.color: activePalette.text
+                    implicitWidth: 80
+                    implicitHeight: 20
+                    border.width: control.activeFocus ? 2 : 1
+                    color: activePalette.text
+                }
+                label: Label {
+                    text: detailButton1.text//qsTr('Style >')
+                    color: "#b9b9b9"
+                }
+            }
+            onClicked:
             {
-	    	    if(idGridLayoutText.visible == false)
-		        {
-
-			        idGridLayoutText.anchors.topMargin = 20
+                if(idGridLayoutText.visible == false)
+                {
+                    idGridLayoutText.anchors.topMargin = 20
                     idGridLayoutText.visible = true
-		            idGridLayoutAnimationProfile.anchors.top = idGridLayoutPreset.bottom //idGridLayoutPreset.bottom// idSeparatorTextStyleEnd.bottom //
+                    idGridLayoutAnimationProfile.anchors.top = idGridLayoutPreset.bottom //idGridLayoutPreset.bottom// idSeparatorTextStyleEnd.bottom //
                     //采用idSeparatorTextStyleEnd.bottom 没有作用，不知道什么原因，可能是初始隐藏了
                     idGridLayoutAnimationProfile.anchors.topMargin = 680
                     detailButton1.text = 'Style ^'
-
-		        }
-		        else
-		        {
+                }
+                else
+                {
                     idGridLayoutText.visible = false
-			        idGridLayoutText.anchors.topMargin = 1000
-				    idGridLayoutAnimationProfile.anchors.top = idGridLayoutPreset.bottom
+                    idGridLayoutText.anchors.topMargin = 1000
+                    idGridLayoutAnimationProfile.anchors.top = idGridLayoutPreset.bottom
                     idGridLayoutAnimationProfile.anchors.topMargin = 70
                     detailButton1.text = 'Style >'
-		        }
+                }
             }
 
         }
@@ -995,10 +437,8 @@ Item {
             Layout.columnSpan: 4
             Layout.minimumWidth: parent.width
             Layout.maximumWidth: parent.width
-            width: parent.width
         }
     }
-
 
     GridLayout {
         id: idGridLayoutText
@@ -1008,18 +448,18 @@ Item {
         Layout.fillWidth: true
         columns: 5
         anchors.top:idGridLayoutPreset.bottom
-	    anchors.topMargin: 1000
-        
+        anchors.topMargin: 1000
+
         anchors.margins: 12
         anchors.left : parent.left
-        anchors.leftMargin: 12 
+        anchors.leftMargin: 12
         rowSpacing : 25
 
-        Label 
+        Label
         {
             text: qsTr('Font')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         RowLayout {
             Layout.columnSpan: 4
@@ -1029,16 +469,13 @@ Item {
                 eyedropper: false
                 alpha: true
                 onCancel: {
-                    removeTemporaryKeyFrame()
                 }
                 onTemporaryColorChanged: {
-                //    updateTemporaryKeyFrame(fgcolourProperty, getRectColor(temporaryColor))
                 }
                 onValueChanged:
                 {
                     console.log("fgcolourProperty = ", value, "rectcolor=", getRectColor(value))
                     updateFilter(fgcolourProperty, getRectColor(value))
-                    bTemporaryKeyFrame = false
                 }
             }
 
@@ -1090,11 +527,11 @@ Item {
            }
         }
 
-        Label 
+        Label
         {
             text: qsTr('Shear X')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             Layout.columnSpan: 3
@@ -1104,25 +541,25 @@ Item {
             maximumValue: 1
             decimals: 1
             spinnerWidth: 80
-            
+
             onValueChanged:{
                 updateFilter('shear_x', value.toString())
             }
         }
-         UndoButton 
+         UndoButton
          {
             Layout.columnSpan: 1
-            onClicked: idShearX.value = 0  
+            onClicked: idShearX.value = 0
         }
-        
+
 
 
         Label {
             text: qsTr('Letter Spaceing')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SpinBox {
+        MySpinBox {
             id: letterSpaceing
             Layout.minimumWidth: preset.width
             Layout.maximumWidth: preset.width
@@ -1133,36 +570,32 @@ Item {
             decimals: 0
             onValueChanged: {
                 updateFilter(letterSpaceingProperty, value.toString())
-
             }
         }
 
         Label {
             text: qsTr('Outline')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         ColorPicker {
             id: outlineColor
             eyedropper: false
             alpha: true
             onCancel: {
-                removeTemporaryKeyFrame()
             }
             onTemporaryColorChanged: {
-            //    updateTemporaryKeyFrame(olcolourProperty, getRectColor(temporaryColor))
             }
             onValueChanged: {
                 updateFilter(olcolourProperty, getRectColor(value))
-                bTemporaryKeyFrame = false
             }
         }
         Label {
             text: qsTr('Thickness')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SpinBox {
+        MySpinBox {
             id: outlineSpinner
             Layout.minimumWidth: 150
             Layout.maximumWidth: 150
@@ -1173,37 +606,32 @@ Item {
             decimals: 0
             onValueChanged: {
                 updateFilter(outlineProperty, value.toString())
-
             }
         }
 
         Label {
             text: qsTr('Background')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         ColorPicker {
             id: bgColor
             eyedropper: false
             alpha: true
             onCancel: {
-                removeTemporaryKeyFrame()
             }
             onTemporaryColorChanged: {
-            //    updateTemporaryKeyFrame(bgcolourProperty, getRectColor(temporaryColor))
             }
             onValueChanged: {
                 updateFilter(bgcolourProperty, getRectColor(value))
-                bTemporaryKeyFrame = false
-
             }
         }
         Label {
             text: qsTr('Padding')
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SpinBox {
+        MySpinBox {
             id: padSpinner
             Layout.minimumWidth: 150
             Layout.maximumWidth: 150
@@ -1214,23 +642,22 @@ Item {
             decimals: 0
             onValueChanged: {
                 updateFilter(padProperty, value.toString())
-
             }
         }
 
-        Label 
+        Label
         {
             text: qsTr('Shadow')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        Label 
+        Label
         {
             text: qsTr('Distance')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SpinBox 
+        MySpinBox
         {
             id: idShadowDistance
             Layout.minimumWidth: preset.width/4
@@ -1240,19 +667,19 @@ Item {
             maximumValue: 30
             horizontalAlignment:Qt.AlignLeft
             decimals: 0
-            onValueChanged: 
+            onValueChanged:
             {
                 updateFilter('shadow_distance', value.toString())
-           }
+            }
         }
 
-        Label 
+        Label
         {
             text: qsTr('Angle')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SpinBox 
+        MySpinBox
         {
             id: idShadowAngle
             Layout.minimumWidth: preset.width/4
@@ -1262,51 +689,48 @@ Item {
             maximumValue: 360
             horizontalAlignment:Qt.AlignLeft
             decimals: 0
-            onValueChanged: 
+            onValueChanged:
             {
                 updateFilter('shadow_angle', value.toString())
-           }
+            }
         }
 
-        Label 
+        Label
         {
             text: qsTr('')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        Label 
+        Label
         {
             text: qsTr('Color')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
 
-        ColorPicker 
+        ColorPicker
         {
                 id: idShadowColor
                 Layout.columnSpan: 1
                 eyedropper: false
                 alpha: true
                 onCancel: {
-                    removeTemporaryKeyFrame()
                 }
                 onTemporaryColorChanged: {
-                //    updateTemporaryKeyFrame(fgcolourProperty, getRectColor(temporaryColor))
                 }
                 onValueChanged:
                 {
                     updateFilter("shadow_color", getRectColor(value))
-                    bTemporaryKeyFrame = false
                 }
         }
 
-        Label 
+        Label
         {
             text: qsTr('Blur')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SpinBox 
+        MySpinBox
         {
             id: idShadowRadius
             Layout.minimumWidth: preset.width/4
@@ -1316,62 +740,55 @@ Item {
             maximumValue: 130
             horizontalAlignment:Qt.AlignLeft
             decimals: 0
-            onValueChanged: 
+            onValueChanged:
             {
                 updateFilter('shadow_radius', value.toString())
-           }
+            }
         }
 
-        
-
-        Label 
+        Label
         {
             text: qsTr('Glow')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         CheckBox {
             id: idGlowEnable
             Layout.columnSpan: 1
             checked: filter.get('glow_enable') != 0
-          
+
             onCheckedChanged:
             {
                 if(idGlowEnable.checked)
                     filter.set('glow_enable', '1')
                 else
                     filter.set('glow_enable', '0')
-
             }
-        
         }
 
-        ColorPicker 
+        ColorPicker
         {
                 id: idGlowColor
                 Layout.columnSpan: 1
                 eyedropper: false
                 alpha: true
                 onCancel: {
-                    removeTemporaryKeyFrame()
                 }
                 onTemporaryColorChanged: {
-                //    updateTemporaryKeyFrame(fgcolourProperty, getRectColor(temporaryColor))
                 }
                 onValueChanged:
                 {
                     updateFilter("glow_color", getRectColor(value))
-                    bTemporaryKeyFrame = false
                 }
         }
 
-         Label 
+         Label
         {
             text: qsTr('Range')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SpinBox 
+        MySpinBox
         {
             id: idGlowRadius
             Layout.minimumWidth: preset.width/4
@@ -1381,7 +798,7 @@ Item {
             maximumValue: 130
             horizontalAlignment:Qt.AlignLeft
             decimals: 0
-            onValueChanged: 
+            onValueChanged:
             {
                 updateFilter('glow_radius', value.toString())
            }
@@ -1397,7 +814,7 @@ Item {
         Label {
             text: qsTr('Position')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         RowLayout {
             Layout.columnSpan: 4
@@ -1408,10 +825,11 @@ Item {
                 Layout.maximumWidth: (preset.width - 8) / 2 - 10
                 horizontalAlignment: Qt.AlignRight
                 onEditingFinished: setFilter()
+                textColor: "#b9b9b9"
             }
             Label {
                 text: ','
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
             TextField {
                 id: rectY
@@ -1420,12 +838,13 @@ Item {
                 Layout.maximumWidth: (preset.width - 8) / 2 - 10
                 horizontalAlignment: Qt.AlignRight
                 onEditingFinished: setFilter()
+                textColor: "#b9b9b9"
             }
         }
         Label {
             text: qsTr('Size')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         RowLayout {
             Layout.columnSpan: 4
@@ -1436,10 +855,11 @@ Item {
                 Layout.maximumWidth: (preset.width - 8) / 2 - 10
                 horizontalAlignment: Qt.AlignRight
                 onEditingFinished: setFilter()
+                textColor: "#b9b9b9"
             }
             Label {
                 text: 'x'
-                color: '#ffffff'
+                color: activePalette.text//'#ffffff'
             }
             TextField {
                 id: rectH
@@ -1448,13 +868,14 @@ Item {
                 Layout.maximumWidth: (preset.width - 8) / 2 - 10
                 horizontalAlignment: Qt.AlignRight
                 onEditingFinished: setFilter()
+                textColor: "#b9b9b9"
             }
         }
 
         Label {
             text: qsTr('X fit')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         RadioButton {
             id: leftRadioButton
@@ -1488,7 +909,7 @@ Item {
         Label {
             text: qsTr('Vertical fit')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         RadioButton {
             id: topRadioButton
@@ -1531,75 +952,82 @@ Item {
 
     GridLayout {
         id: idGridLayoutAnimationProfile
-        width:parent.width 
+        width:parent.width
 
         visible:true
         Layout.fillWidth: true
         columns: 5
         anchors.top:idGridLayoutPreset.bottom
-	    anchors.topMargin: 70
+        anchors.topMargin: 70
         anchors.margins: 8
         rowSpacing : 25
 
         Label {
             text: qsTr('Animation')
             Layout.alignment: Qt.AlignLeft
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
             font.bold:true
-	    font.pointSize:10
+//            font.pointSize:13
         }
-        Preset 
+        Preset
         {
             id: presetPositionAnimation
             Layout.columnSpan: 4
             parameters: [  'trans_fix_rotate_x', 'trans_scale_x', 'trans_scale_aspect_ratio', 'trans_ox', 'trans_oy', 'transparent_alpha']
             m_strType: "pan"
-            onBeforePresetLoaded: 
+            onBeforePresetLoaded:
             {
-                removeAllKeyFrame()
-                //resetFilterPara()
+                filter.removeAllKeyFrame()
             }
             onPresetSelected: {
-                //加載關鍵幀
-                loadSavedKeyFrameNew()
-
                 //更新界面
-                setControls()
-                setKeyframedControls()
+                keyframe.updateParamsUI(idGridLayoutAnimation)
 
                 if (filter.isNew) {
                     filter.set('size', filterRect.height)
                 }
-                presetPositionAnimation.presetCombo.currentIndex = 0 
+                //presetPositionAnimation.presetCombo.currentIndex = 0
             } 
         } 
 
         Button {
             id: detailButtonAnimation
             text: qsTr('Animation >')
-            
+
             tooltip: qsTr('detail')
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
-            onClicked: 
+            style: ButtonStyle {
+                background: Rectangle {
+                    border.color: activePalette.text
+                    implicitWidth: 80
+                    implicitHeight: 20
+                    border.width: control.activeFocus ? 2 : 1
+                    color: activePalette.text
+                }
+                label: Label {
+                    text: detailButtonAnimation.text//qsTr('Style >')
+                    color: "#b9b9b9"
+                }
+            }
+            onClicked:
             {
-	    	    if(idGridLayoutAnimation.visible == false)
-		        {
-                
-			        idGridLayoutAnimation.anchors.topMargin = 20
+                if(idGridLayoutAnimation.visible == false)
+                {
+
+                    idGridLayoutAnimation.anchors.topMargin = 20
                     idGridLayoutAnimation.visible = true
                     detailButtonAnimation.text = 'Animation ^'
-		        }
-		        else
-		        {
-		
+                }
+                else
+                {
                     idGridLayoutAnimation.visible = false
-			        idGridLayoutAnimation.anchors.topMargin = 1000
+                    idGridLayoutAnimation.anchors.topMargin = 1000
                     detailButtonAnimation.text = 'Animation >'
-		        }
+                }
             }
-
         }
+
         SeparatorLine {
             Layout.columnSpan: 4
             Layout.minimumWidth: parent.width
@@ -1616,17 +1044,17 @@ Item {
         Layout.fillWidth: true
         columns: 5
         anchors.top:idGridLayoutAnimationProfile.bottom
-	    anchors.topMargin: 20
+        anchors.topMargin: 20
         anchors.margins: 12
         anchors.left : parent.left
-        anchors.leftMargin: 12 
+        anchors.leftMargin: 12
         rowSpacing : 25
 
         Label {
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
             text: qsTr('Rotation')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             Layout.columnSpan: 3
@@ -1638,19 +1066,19 @@ Item {
             spinnerWidth: 80
             suffix: qsTr(' °')//qsTr(' degree')
             onValueChanged:{
-                updateFilter("trans_fix_rotate_x", value.toString())
+                keyframe.controlValueChanged(rotationSlider)
             }
         }
         UndoButton {
             //Layout.columnSpan: 1
-            onClicked: rotationSlider.value = 0  
+            onClicked: rotationSlider.value = 0
         }
 
         Label {
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
             text: qsTr('Scale')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             Layout.columnSpan: 3
@@ -1662,27 +1090,22 @@ Item {
             spinnerWidth: 80
             suffix: ' %'
             onValueChanged: {
-                    var valued = value
-                    if(valued > 0)
-                    {
-                        valued = 100.0/valued
-                        updateFilter("trans_scale_x", valued.toString())
-                    }
+                    keyframe.controlValueChanged(scaleSlider)
             }
         }
         UndoButton {
             Layout.columnSpan: 1
-            onClicked: scaleSlider.value = 100 // 
+            onClicked: scaleSlider.value = 100 //
         }
 
-        Label 
+        Label
         {
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
             text: qsTr('Aspect')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SliderSpinner 
+        SliderSpinner
         {
             Layout.columnSpan: 3
             objectName: 'scaleAspectRatioSlider'
@@ -1691,25 +1114,25 @@ Item {
             maximumValue: 5
             decimals: 1
             spinnerWidth: 80
-            
+
             onValueChanged:
             {
-                updateFilter("trans_scale_aspect_ratio", value.toString())
+                keyframe.controlValueChanged(scaleAspectRatioSlider)
             }
         }
-        UndoButton 
+        UndoButton
         {
-            onClicked: scaleAspectRatioSlider.value = 1  
+            onClicked: scaleAspectRatioSlider.value = 1
         }
 
-        Label 
+        Label
         {
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
             text: qsTr('X offset')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        
+
         SliderSpinner {
             Layout.columnSpan: 3
             objectName: 'xOffsetSlider'
@@ -1718,8 +1141,7 @@ Item {
             maximumValue: 1000
             spinnerWidth: 80
             onValueChanged:{
-                var valuestr = -value;
-                updateFilter("trans_ox", valuestr.toString())
+                keyframe.controlValueChanged(xOffsetSlider)
             }
         }
         UndoButton {
@@ -1731,7 +1153,7 @@ Item {
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
             text: qsTr('Y offset')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             Layout.columnSpan: 3
@@ -1741,9 +1163,7 @@ Item {
             maximumValue: 1000
             spinnerWidth: 80
             onValueChanged:{
-                var valuestr = -value;
-                updateFilter("trans_oy", valuestr.toString())
-
+                keyframe.controlValueChanged(yOffsetSlider)
             }
         }
         UndoButton {
@@ -1752,14 +1172,14 @@ Item {
         }
 
 
-       Label 
+       Label
         {
             Layout.columnSpan: 1
             Layout.alignment: Qt.AlignLeft
             text: qsTr('Transparent')
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
-        SliderSpinner 
+        SliderSpinner
         {
             Layout.columnSpan: 3
             objectName: 'transparentAlphaSlider'
@@ -1768,279 +1188,41 @@ Item {
             maximumValue: 1
             decimals: 2
             spinnerWidth: 80
-            
+
             onValueChanged:
             {
-                updateFilter("transparent_alpha", value.toString())
+                keyframe.controlValueChanged(transparentAlphaSlider)
             }
         }
-        UndoButton 
+        UndoButton
         {
-            onClicked: transparentAlphaSlider.value = 1  
-        }
-    
-
-        Item { Layout.fillWidth: true }
-
-        Item { Layout.fillHeight: true }
-
-    }
-
-
-    Connections 
-    {
-        target: filter
-        onFilterPropertyValueChanged: 
-        {
-            console.log("---filter onChanged---")
-
-            var position        = timeline.getPositionInCurrentClip()
-            var newRect         = getAbsoluteRect(-1)
-            var keyFrameCount   = filter.getKeyFrameCountOnProject(rectProperty);
-            //判断是否有关键帧
-            if(keyFrameCount > 0) 
-            {
-                newRect = getAbsoluteRect(position)
-            }
-
-            if (isRectPosValid(newRect) && filterRect !== newRect) 
-            {
-                filterRect = newRect
-                filter.set('size', filterRect.height)
-            }
-            
+            onClicked: transparentAlphaSlider.value = 1
         }
     }
 
-    // 开启关键帧
-    Connections {
-        target: keyFrameControl
-        onEnableKeyFrameChanged: 
-        {
-            console.log("---onEnableKeyFrameChanged---", bEnable)
-            if(bEnableKeyFrame != bEnable) //未知原因  否则关键帧的值设置不进去
-            {    
-               // removeAllKeyFrame();
-               // loadSavedKeyFrame()
-            }
 
-            bEnableKeyFrame = bEnable
-            filter.setEnableAnimation(bEnableKeyFrame)
+//    Connections
+//    {
+//        target: filter
+//        onFilterPropertyValueChanged:
+//        {
+//            console.log("---filter onChanged---")
 
-            
-           // m_bLastEnableKeyFrame = bEnableKeyFrame
-            
-        }
-    }
+//            var position        = timeline.getPositionInCurrentClip()
+//            var newRect         = getAbsoluteRect(-1)
+//            var keyFrameCount   = filter.getKeyFrameCountOnProject(rectProperty);
+//            //判断是否有关键帧
+//            if(keyFrameCount > 0)
+//            {
+//                newRect = getAbsoluteRect(position)
+//            }
 
-    // 自动添加关键帧信号，当参数改变时
-    Connections 
-    {
-        target: keyFrameControl
-        onAutoAddKeyFrameChanged: 
-        {
-            console.log("---onAutoAddKeyFrameChanged---", bEnable)
-            bAutoSetAsKeyFrame = bEnable
-            if (filter) {
-                filter.setAutoAddKeyFrame(bAutoSetAsKeyFrame)
-            }
-        }
-    }
+//            if (isRectPosValid(newRect) && filterRect !== newRect)
+//            {
+//                filterRect = newRect
+//                filter.set('size', filterRect.height)
+//            }
+//        }
+//    }
 
-    //添加关键帧信号
-    Connections 
-    {
-        target: keyFrameControl
-        onAddFrameChanged: {
-            console.log("---onAddFrameChanged---")
-             //如果没有关键帧，先创建头尾两个关键帧
-
-             if (filter.cache_getKeyFrameNumber() <= 0) 
-             {
-                 setInAndOutKeyFrame()
-             }
-
-             //插入新的关键帧
-             var nFrame = timeline.getPositionInCurrentClip()
-             setKeyFrameOfFrame(nFrame)
-
-             //更新关键帧相关控件
-             setKeyframedControls()
-        }
-    }
-
-    //帧位置改变信号
-    Connections {
-        target: keyFrameControl
-        onFrameChanged: {
-
-            console.log("---keyFrameNum---", keyFrameNum)
-            if(m_lastFrameNum != keyFrameNum)
-
-            {
-                setControls()
-                setKeyframedControls()
-                filter.set('size', filterRect.height)
-                m_lastFrameNum = keyFrameNum
-            }
-            
-        }
-    }
-
-    // 移除关键帧信号
-    Connections {
-        target: keyFrameControl
-        onRemoveKeyFrame: {
-            var nFrame = timeline.getPositionInCurrentClip()
-            filter.removeKeyFrameParaValue(nFrame);
-            combineAllKeyFramePara();
-
-            setKeyframedControls()
-        }
-    }
-
-    // 移除所有关键帧信号
-    Connections {
-        target: keyFrameControl
-        onRemoveAllKeyFrame: {
-            removeAllKeyFrame()
-        //    restoreFilterPara()
-        //    resetFilterPara()
-
-            setControls()
-            setKeyframedControls()
-        }
-    }
 }
-
-/*
-    Item 
-    {
-    width: 200
-    height: 300
-
-    ListView {
-        anchors.top: transparentAlphaSlider.bottom
-       anchors.topMargin: 50
-        //anchors.fill: parent
-        model: nestedModel
-        delegate: categoryDelegate
-    }
-
-    ListModel {
-        id: nestedModel
-        ListElement {
-            categoryName: "Veggies"
-            collapsed: true
-
-            // A ListElement can't contain child elements, but it can contain
-            // a list of elements. A list of ListElements can be used as a model
-            // just like any other model type.
-            subItems: [
-                ListElement { itemName: "Tomato" },
-                ListElement { itemName: "Cucumber" },
-                ListElement { itemName: "Onion" },
-                ListElement { itemName: "Brains" }
-            ]
-        }
-
-        ListElement {
-            categoryName: "Fruits"
-            collapsed: true
-            subItems: [
-                ListElement { itemName: "Orange" },
-                ListElement { itemName: "Apple" },
-                ListElement { itemName: "Pear" },
-                ListElement { itemName: "Lemon" }
-            ]
-        }
-
-        ListElement {
-            categoryName: "Cars"
-            collapsed: true
-            subItems: [
-                ListElement { itemName: "Nissan" },
-                ListElement { itemName: "Toyota" },
-                ListElement { itemName: "Chevy" },
-                ListElement { itemName: "Audi" }
-            ]
-        }
-    }
-
-    Component {
-        id: categoryDelegate
-        Column {
-            width: 200
-
-            Rectangle {
-                id: categoryItem
-                border.color: "black"
-                border.width: 5
-                color: "white"
-                height: 50
-                width: 200
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    x: 15
-                    font.pixelSize: 24
-                    text: categoryName
-                }
-
-                Rectangle {
-                    color: "red"
-                    width: 30
-                    height: 30
-                    anchors.right: parent.right
-                    anchors.rightMargin: 15
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    MouseArea {
-                        anchors.fill: parent
-
-                        // Toggle the 'collapsed' property
-                        onClicked: nestedModel.setProperty(index, "collapsed", !collapsed)
-                    }
-                }
-            }
-
-            Loader {
-                id: subItemLoader
-
-                // This is a workaround for a bug/feature in the Loader element. If sourceComponent is set to null
-                // the Loader element retains the same height it had when sourceComponent was set. Setting visible
-                // to false makes the parent Column treat it as if it's height was 0.
-                visible: !collapsed
-                property variant subItemModel : subItems
-                sourceComponent: collapsed ? null : subItemColumnDelegate
-                onStatusChanged: if (status == Loader.Ready) item.model = subItemModel
-            }
-        }
-
-    }
-
-    Component {
-        id: subItemColumnDelegate
-        Column {
-            property alias model : subItemRepeater.model
-            width: 200
-            Repeater {
-                id: subItemRepeater
-                delegate: Rectangle {
-                    color: "#cccccc"
-                    height: 40
-                    width: 200
-                    border.color: "black"
-                    border.width: 2
-
-                    Text {
-                        anchors.verticalCenter: parent.verticalCenter
-                        x: 30
-                        font.pixelSize: 18
-                        text: itemName
-                    }
-                }
-            }
-        }
-    }
-    } */

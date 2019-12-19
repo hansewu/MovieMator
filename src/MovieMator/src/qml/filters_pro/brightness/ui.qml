@@ -30,42 +30,43 @@ Item {
 
     property double levelValue: 100
 
-    function testSetAnimationValueAndSetValue()
-    {
-        //⾮动画数据设置时，会清空这个 property 的之前所有动画和非动画数据。
-        //获取非动画数据，直接获取之前设置的非动画数据，不论中间有没有设置过动画和非动画 都可以获取到。
-        //获取动画数据，如果当前有动画数据存储，就获取动画数据，如果没有就获取非动画数据 。
-        filter.set("level", 0.55)
+//    function testSetAnimationValueAndSetValue()
+//    {
+//        //⾮动画数据设置时，会清空这个 property 的之前所有动画和非动画数据。
+//        //获取非动画数据，直接获取之前设置的非动画数据，不论中间有没有设置过动画和非动画 都可以获取到。
+//        //获取动画数据，如果当前有动画数据存储，就获取动画数据，如果没有就获取非动画数据 。
+//        filter.set("level", 0.55)
 
-        var double_level = filter.getDouble("level")    //0.55
-        var anim_double_level = filter.getAnimDoubleValue(10, "level") //0.55
-        console.log("test level get ", double_level)
-        console.log("test level get anim", anim_double_level)
+//        var double_level = filter.getDouble("level")    //0.55
+//        var anim_double_level = filter.getAnimDoubleValue(10, "level") //0.55
+//        console.log("test level get ", double_level)
+//        console.log("test level get anim", anim_double_level)
 
-        //动画数据设置时，不会清空property之前设置的非动画数据，只会在当前动画数据基础上 插入以及新增加设置动画数据。
-        //获取非动画数据，直接获取之前设置的非动画数据，不论中间有没有设置过动画和非动画 都可以获取到。
-        //获取动画数据，如果当前有动画数据存储，就获取动画数据，如果没有就获取非动画数据 。
-        //set 之后，amin_set 动画，不会改变非动画的数据，获取动画和非动画的数据信息都存在。
-        filter.cache_setKeyFrameParaValue(10, "level", 0.88)
-        filter.syncCacheToProject()
+//        //动画数据设置时，不会清空property之前设置的非动画数据，只会在当前动画数据基础上 插入以及新增加设置动画数据。
+//        //获取非动画数据，直接获取之前设置的非动画数据，不论中间有没有设置过动画和非动画 都可以获取到。
+//        //获取动画数据，如果当前有动画数据存储，就获取动画数据，如果没有就获取非动画数据 。
+//        //set 之后，amin_set 动画，不会改变非动画的数据，获取动画和非动画的数据信息都存在。
+//        filter.cache_setKeyFrameParaValue(10, "level", 0.88)
 
-        double_level = filter.getDouble("level")  //0.55
-        anim_double_level = filter.getAnimDoubleValue(10, "level") //0.88
-        console.log("test2 level get ", double_level)
-        console.log("test2 level get anim", anim_double_level)
+//        double_level = filter.getDouble("level")  //0.55
+//        anim_double_level = filter.getAnimDoubleValue(10, "level") //0.88
+//        console.log("test2 level get ", double_level)
+//        console.log("test2 level get anim", anim_double_level)
 
-        //⾮动画数据设置时，会清空这个 property 的之前所有动画和⾮动画数据。
-        //anim_set 动画，set 时，动画信息丢失。获取动画和非动画的数据最后得到的结果都是set 的结果(非动画的数据)。
-        //获取⾮动画数据，直接获取之前设置的⾮动画数据，不论中间有没有设置过动画和非动画 都可以获取到。
-        //获取动画数据，如果当前有动画数据存储，就获取动画数据，如果没有就获取非动画数据 。
-        filter.set("level", 0.22)
+//        //⾮动画数据设置时，会清空这个 property 的之前所有动画和⾮动画数据。
+//        //anim_set 动画，set 时，动画信息丢失。获取动画和非动画的数据最后得到的结果都是set 的结果(非动画的数据)。
+//        //获取⾮动画数据，直接获取之前设置的⾮动画数据，不论中间有没有设置过动画和非动画 都可以获取到。
+//        //获取动画数据，如果当前有动画数据存储，就获取动画数据，如果没有就获取非动画数据 。
+//        filter.set("level", 0.22)
 
-        double_level = filter.getDouble("level")   //0.22
-        anim_double_level = filter.getAnimDoubleValue(10, "level")  //0.22
-        console.log("test3 level get ", double_level)
-        console.log("test3 level get anim", anim_double_level)
+//        double_level = filter.getDouble("level")   //0.22
+//        anim_double_level = filter.getAnimDoubleValue(10, "level")  //0.22
+//        console.log("test3 level get ", double_level)
+//        console.log("test3 level get anim", anim_double_level)
 
-    }
+//    }
+
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
 
     Component.onCompleted: {
         keyFrame.initFilter(layoutRoot)
@@ -73,7 +74,7 @@ Item {
     }
     GridLayout {
         id: layoutRoot
-        columns: 3
+        columns: 4
         anchors.fill: parent
         anchors.margins: 20
 
@@ -91,7 +92,7 @@ Item {
         Label {
             text: qsTr('Brightness') + "    "
             Layout.alignment: Qt.AlignRight
-            color: '#ffffff'
+            color: activePalette.text//'#ffffff'
         }
         SliderSpinner {
             objectName: 'brightnessSlider'
@@ -109,6 +110,11 @@ Item {
             onClicked: {
                 brightnessSlider.value = 100
             }
+        }
+
+        EditKeyframeButton
+        {
+            strIndentifierOfParameter: "level"
         }
 
         Item {

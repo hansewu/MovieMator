@@ -16,5 +16,5 @@ Metadata {
     qml: "ui.qml"
     gpuAlt: "movit.opacity"
     filterType: qsTr('1 Basic Processing')
-
+    isHidden: true
 }

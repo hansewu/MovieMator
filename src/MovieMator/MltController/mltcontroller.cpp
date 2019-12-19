@@ -585,6 +585,17 @@ void Controller::setProfile(const QString& profile_name)
     Q_ASSERT(m_profile);
     LOG_DEBUG() << "setting to profile" << (profile_name.isEmpty()? "Automatic" : profile_name);
     if (!profile_name.isEmpty()) {
+        //解决profile中description不能修改的问题
+//        Mlt::Profile *pNewProfile = new Mlt::Profile(profile_name.toLatin1().constData());
+//        Q_ASSERT(pNewProfile);
+//        if (pNewProfile)
+//        {
+//            pNewProfile->set_explicit(true);
+
+//            delete m_profile;
+//            m_profile = pNewProfile;
+//        }
+
         Mlt::Profile tmp(profile_name.toLatin1().constData());
         m_profile->set_colorspace(tmp.colorspace());
         m_profile->set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
