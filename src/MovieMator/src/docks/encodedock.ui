@@ -39,46 +39,52 @@
    <widget class="QPushButton" name="advancedButton">
     <property name="geometry">
      <rect>
-      <x>440</x>
+      <x>450</x>
       <y>300</y>
-      <width>101</width>
-      <height>32</height>
+      <width>111</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
-     <string>advanced</string>
+     <string>Advanced</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="resolutionLabel">
     <property name="geometry">
      <rect>
-      <x>382</x>
+      <x>412</x>
       <y>90</y>
       <width>81</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Resoulution:</string>
+     <string>Resolution:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="fpsLabel">
     <property name="geometry">
      <rect>
-      <x>382</x>
+      <x>412</x>
       <y>150</y>
       <width>81</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>Frames/sec:</string>
+     <string>Frames/Sec:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="durationLabel">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>440</x>
       <y>210</y>
       <width>58</width>
       <height>16</height>
@@ -86,26 +92,6 @@
     </property>
     <property name="text">
      <string>Duration：</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="resoulutionvalue">
-    <property name="geometry">
-     <rect>
-      <x>470</x>
-      <y>90</y>
-      <width>113</width>
-      <height>21</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="frames_2">
-    <property name="geometry">
-     <rect>
-      <x>470</x>
-      <y>150</y>
-      <width>113</width>
-      <height>21</height>
-     </rect>
     </property>
    </widget>
    <widget class="QWidget" name="widget_bottom_toolbar" native="true">
@@ -188,72 +174,242 @@
      </item>
     </layout>
    </widget>
-   <widget class="QScrollArea" name="scrollArea">
+   <widget class="QPushButton" name="customFormat">
     <property name="geometry">
      <rect>
-      <x>271</x>
-      <y>7</y>
-      <width>76</width>
-      <height>194</height>
+      <x>0</x>
+      <y>0</y>
+      <width>116</width>
+      <height>51</height>
      </rect>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
+    <property name="text">
+     <string>Custom</string>
     </property>
-    <property name="widgetResizable">
+    <property name="checkable">
      <bool>true</bool>
     </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>76</width>
-       <height>194</height>
-      </rect>
-     </property>
-    </widget>
    </widget>
-   <widget class="QTreeView" name="presetsTree">
+   <widget class="QPushButton" name="videoFormat">
     <property name="geometry">
      <rect>
-      <x>8</x>
-      <y>8</y>
-      <width>301</width>
-      <height>431</height>
+      <x>0</x>
+      <y>50</y>
+      <width>116</width>
+      <height>51</height>
      </rect>
     </property>
-    <property name="editTriggers">
-     <set>QAbstractItemView::NoEditTriggers</set>
+    <property name="text">
+     <string>Video</string>
     </property>
-    <property name="showDropIndicator" stdset="0">
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="audioFormat">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>100</y>
+      <width>116</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Audio</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deviceFormat">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>150</y>
+      <width>116</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Devices</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="tvFormat">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>200</y>
+      <width>116</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TV</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="losslessFormat">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>250</y>
+      <width>116</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Lossless</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="webFormat">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>300</y>
+      <width>116</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Web</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
      <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="resolutionValue">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>90</y>
+      <width>91</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>1280x720</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="fpsValue">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>150</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>24</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="durationValue">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>210</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>00:00:00:00</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QListView" name="presetsList">
+    <property name="geometry">
+     <rect>
+      <x>118</x>
+      <y>0</y>
+      <width>191</width>
+      <height>451</height>
+     </rect>
     </property>
     <property name="alternatingRowColors">
-     <bool>true</bool>
-    </property>
-    <attribute name="headerVisible">
      <bool>false</bool>
-    </attribute>
-    <attribute name="headerDefaultSectionSize">
-     <number>0</number>
-    </attribute>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="duration">
+   <widget class="QLabel" name="bitrateLabel">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>210</y>
-      <width>113</width>
-      <height>21</height>
+      <x>433</x>
+      <y>90</y>
+      <width>60</width>
+      <height>16</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>Bit Rate:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="bitrateValue">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>90</y>
+      <width>60</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>128Kbps</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="sampleRateLabel">
+    <property name="geometry">
+     <rect>
+      <x>412</x>
+      <y>150</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sample Rate:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="sampleRateValue">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>150</y>
+      <width>60</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>44100Hz</string>
     </property>
    </widget>
   </widget>
  </widget>
- <tabstops>
-  <tabstop>scrollArea</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

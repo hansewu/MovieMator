@@ -2,9 +2,12 @@
 #include "ui_advanceddock.h"
 #include <QComboBox>
 #include <QtWidgets>
+#include "mltcontroller.h"
 
 
 #define TO_RELATIVE(min, max, abs) qRound(100.0f * float((abs) - (min)) / float((max) - (min) + 1))
+#define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min) + 1) * float(rel) / 100.0f)
+
 AdvancedDock::AdvancedDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::AdvancedDock),
@@ -15,37 +18,37 @@ AdvancedDock::AdvancedDock(QWidget *parent) :
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
 
-//    Mlt::Consumer c(MLT.profile(), "avformat");
-//    //Q_ASSERT(c.is_valid());
-//    if (c.is_valid())
-//    {
-//    c.set("f", "list");
-//    c.set("acodec", "list");
-//    c.set("vcodec", "list");
-//    c.start();
-//    c.stop();
+    Mlt::Consumer c(MLT.profile(), "avformat");
+    //Q_ASSERT(c.is_valid());
+    if (c.is_valid())
+    {
+        c.set("f", "list");
+        c.set("acodec", "list");
+        c.set("vcodec", "list");
+        c.start();
+        c.stop();
 
-//        Mlt::Properties* p = new Mlt::Properties(c.get_data("f"));
+        Mlt::Properties* p = new Mlt::Properties(c.get_data("f"));
 
-//        Q_ASSERT(p);
-//        for (int i = 0; i < p->count(); i++)
-//            ui->audioCodecCombo->addItem(p->get(i));
-//        delete p;
-//        ui->audioCodecCombo->model()->sort(0);
-//        ui->audioCodecCombo->insertItem(0, tr("Default for format"));
+        Q_ASSERT(p);
+        for (int i = 0; i < p->count(); i++)
+            ui->audioCodecCombo->addItem(p->get(i));
+        delete p;
+        ui->audioCodecCombo->model()->sort(0);
+        ui->audioCodecCombo->insertItem(0, tr("Default for format"));
 
-//        p = new Mlt::Properties(c.get_data("vcodec"));
-//        Q_ASSERT(p);
-//        for (int i = 0; i < p->count(); i++)
-//            ui->videoCodecCombo->addItem(p->get(i));
-//        delete p;
-//        ui->videoCodecCombo->model()->sort(0);
-//        ui->videoCodecCombo->insertItem(0, tr("Default for format"));
+        p = new Mlt::Properties(c.get_data("vcodec"));
+        Q_ASSERT(p);
+        for (int i = 0; i < p->count(); i++)
+            ui->videoCodecCombo->addItem(p->get(i));
+        delete p;
+        ui->videoCodecCombo->model()->sort(0);
+        ui->videoCodecCombo->insertItem(0, tr("Default for format"));
 
-//        on_resetButton_clicked();
+  //      on_resetButton_clicked();
 
 
-//  }
+  }
 }
 
 AdvancedDock::~AdvancedDock()
@@ -54,10 +57,10 @@ AdvancedDock::~AdvancedDock()
     //delete m_presets;
 }
 
-void AdvancedDock::on_closeButton_clicked()
-{
-     this->hide();
-}
+//void AdvancedDock::on_closeButton_clicked()
+//{
+//     this->hide();
+//}
 //void EncodeDock::resetOptions()
 //{
 //    // Reset all controls to default values.
@@ -123,12 +126,12 @@ void AdvancedDock::on_gopSpinner_valueChanged(int value)
     Q_UNUSED(value);
     m_isDefaultSettings = false;
 }
-void AdvancedDock::on_resetButton_clicked()
-{
-    m_isDefaultSettings = true;
-    //resetOptions();
-//    onProfileChanged();
-}
+//void AdvancedDock::on_resetButton_clicked()
+//{
+//    m_isDefaultSettings = true;
+//    //resetOptions();
+////    onProfileChanged();
+//}
 
 void AdvancedDock::on_scanModeCombo_currentIndexChanged(int index)
 {
@@ -206,18 +209,31 @@ void AdvancedDock::on_audioRateControlCombo_activated(int index)
     }
 }
 
-void AdvancedDock::setPreset (Mlt::Properties *preset)
+void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo)
 {
        m_currentPreset = preset;
        int audioQuality = -1;
        int videoQuality = -1;
        QStringList other;
 
+
+       //xjp 2019.12.6 用profile的宽，高来设置widthSpinner， heightSpinner的初始值
+       int width = MLT.profile().width();
+       int height = MLT.profile().height();
+
+       ui->widthSpinner->setValue(width);
+       ui->heightSpinner->setValue(height);
+
+   //    ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
+
+       //****** end ******
+
       // ui->presetLabel->setText(preset.get("meta.preset.name"));
        ui->disableAudioCheckbox->setChecked(preset->get_int("an"));
        ui->disableVideoCheckbox->setChecked(preset->get_int("vn"));
        for (int i = 0; i < preset->count(); i++) {
            QString name(preset->get_name(i));
+           qDebug()<<"****** xjp pare name:"<<name;
             if (name == "acodec") {
                for (int i = 0; i < ui->audioCodecCombo->count(); i++)
                    if (ui->audioCodecCombo->itemText(i) == preset->get("acodec"))
@@ -262,29 +278,8 @@ void AdvancedDock::setPreset (Mlt::Properties *preset)
                ui->heightSpinner->setValue(preset->get_int("height"));
    //            ui->heightSpinner->setEnabled(false);
            }
-           else if (name == "aspect") {
-               double dar = preset->get_double("aspect");
-               switch (int(dar * 100)) {
-               case 133:
-                   ui->aspectNumSpinner->setValue(4);
-                   ui->aspectDenSpinner->setValue(3);
-                   break;
-               case 177:
-                   ui->aspectNumSpinner->setValue(16);
-                   ui->aspectDenSpinner->setValue(9);
-                   break;
-               case 56:
-                   ui->aspectNumSpinner->setValue(9);
-                   ui->aspectDenSpinner->setValue(16);
-                   break;
-               default:
-                   ui->aspectNumSpinner->setValue(int(dar * 1000));
-                   ui->aspectDenSpinner->setValue(1000);
-                   break;
-               }
-   //            ui->aspectNumSpinner->setEnabled(false);
-   //            ui->aspectDenSpinner->setEnabled(false);
-           }
+
+//           }+
            else if (name == "r") {
                ui->fpsSpinner->setValue(preset->get_double("r"));
    //            ui->fpsSpinner->setEnabled(false);
@@ -390,6 +385,30 @@ void AdvancedDock::setPreset (Mlt::Properties *preset)
 //                aac: 0 (worst) - 500 (best)
 //               ui->audioQualitySpinner->setValue(TO_RELATIVE(0, 500, audioQuality));
 //       }
+
+
+       //xjp 2019.12.9判断目标分辨率是否在分辨率列表中，
+       QString resolutionStr = QString("%1x%2").arg(ui->widthSpinner->value()).arg(ui->heightSpinner->value());
+       int resolutionCount = ui->resolutionBox->count();
+       int index=0;
+
+       for(index = 0; index < resolutionCount; index++)
+       {
+           if(ui->resolutionBox->itemText(index).contains(resolutionStr))
+           {
+               ui->resolutionBox->setCurrentIndex(index);
+               break;
+           }
+
+       }
+
+       if(index == resolutionCount)
+           ui->resolutionBox->setCurrentIndex(resolutionCount-1);
+
+       //********* end **********
+
+
+
        if (ui->videoRateControlCombo->currentIndex() == RateControlQuality && videoQuality > -1) {
            const QString& vcodec = ui->videoCodecCombo->currentText();
            //val = min + (max - min) * paramval;
@@ -400,8 +419,227 @@ void AdvancedDock::setPreset (Mlt::Properties *preset)
            else  //1 (best, NOT 100%) - 31 (worst)
                ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
        }
-       on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
-       on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
+
+           on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
+           on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
+
+           if(bVideo)
+           {
+               if(ui->tabWidget->count() == 1)
+               {
+                   ui->tabWidget->insertTab(0, ui->videoTab,"Video");
+                   ui->tabWidget->insertTab(1, ui->codecTab,"Codec");
+               }
+               ui->tabWidget->setCurrentIndex(0);
+
+           }
+           else
+           {
+             //  ui->tabWidget->setCurrentIndex(2);
+               if(ui->tabWidget->count() == 3)
+               {
+                   ui->tabWidget->removeTab(0);
+                   ui->tabWidget->removeTab(0);//xjp, 2019.12.19当删除第一个tab后，第二个tab的index自动变为0了，所以序号还是0
+
+               }
+           }
 
   }
 
+
+void AdvancedDock::on_resolutionBox_currentIndexChanged(const QString &arg1)
+{
+    qDebug()<<arg1;
+    if(arg1 == "Custom")
+        return;
+
+    //xjp 2019.12.6 将选中的分辨率中的宽，高分离出来，写入下面的宽，高spinner中
+    QStringList textParts = arg1.split('x');
+    QStringList textParts2 = textParts[1].split('(');
+
+    ui->widthSpinner->setValue(textParts.at(0).toInt())  ;
+    ui->heightSpinner->setValue(textParts2.at(0).toInt());
+
+}
+
+
+
+
+void AdvancedDock::on_cancelButton_clicked()
+{
+    this->hide();
+}
+
+void AdvancedDock::on_okButton_clicked()
+{
+    updateCurrentPreset(-3);
+    emit updateAdvancedSetting();
+    this->hide();
+}
+
+
+void AdvancedDock::updateCurrentPreset(int realtime)
+{
+
+    if (m_currentPreset && m_currentPreset->is_valid())
+    {
+        // foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n"))
+        //     p->parse(line.toUtf8().constData());
+        if (realtime)
+            m_currentPreset->set("real_time", realtime);
+        // p->set("meta.preset.name", ui->presetLabel->text().toLatin1().constData());
+//        if (ui->formatCombo->currentIndex() != 0)
+//            m_currentPreset->set("f", ui->formatCombo->currentText().toLatin1().constData());
+        if (ui->disableAudioCheckbox->isChecked())
+        {
+            m_currentPreset->set("an", 1);
+            m_currentPreset->set("audio_off", 1);
+        }
+        else
+        {
+            const QString& acodec = ui->audioCodecCombo->currentText();
+            if (ui->audioCodecCombo->currentIndex() > 0)
+                m_currentPreset->set("acodec", ui->audioCodecCombo->currentText().toLatin1().constData());
+            m_currentPreset->set("ar", ui->sampleRateCombo->currentText().toLatin1().constData());
+            if (ui->audioRateControlCombo->currentIndex() == RateControlAverage
+                    || ui->audioRateControlCombo->currentIndex() == RateControlConstant) {
+                m_currentPreset->set("ab", ui->audioBitrateCombo->currentText().toLatin1().constData());
+                if (acodec == "libopus") {
+                    if (RateControlConstant == ui->audioRateControlCombo->currentIndex())
+                        m_currentPreset->set("vbr", "off");
+                    else
+                        m_currentPreset->set("vbr", "constrained");
+                }
+            } else if (acodec == "libopus") {
+                m_currentPreset->set("vbr", "on");
+                m_currentPreset->set("ab", ui->audioBitrateCombo->currentText().toLatin1().constData());
+            } else {
+                int aq = ui->videoQualitySpinner->value();
+                if (acodec == "libmp3lame")
+                    aq = TO_ABSOLUTE(9, 0, aq);
+                else if (acodec == "libvorbis" || acodec == "vorbis")
+                    aq = TO_ABSOLUTE(0, 10, aq);
+                else
+                    aq = TO_ABSOLUTE(0, 500, aq);
+                m_currentPreset->set("aq", aq);
+            }
+        }
+        if (ui->disableVideoCheckbox->isChecked())
+        {
+            m_currentPreset->set("vn", 1);
+            m_currentPreset->set("video_off", 1);
+        }
+        else
+        {
+            const QString& vcodec = ui->videoCodecCombo->currentText();
+            if (ui->videoCodecCombo->currentIndex() > 0)
+                m_currentPreset->set("vcodec", vcodec.toLatin1().constData());
+            if (vcodec == "libx265")
+            {
+                // Most x265 parameters must be supplied through x265-params.
+                QString x265params = QString::fromUtf8(m_currentPreset->get("x265-params"));
+                switch (ui->videoRateControlCombo->currentIndex())
+                {
+                case RateControlAverage:
+                    m_currentPreset->set("vb", ui->audioBitrateCombo->currentText().toLatin1().constData());
+                    break;
+                case RateControlConstant:
+                {
+//                    QString b = ui->audioBitrateCombo->currentText();
+//                    // x265 does not expect bitrate suffixes and requires Kb/s
+//                    b.replace('k', "").replace('M', "000");
+//                    x265params = QString("bitrate=%1:vbv-bufsize=%2:vbv-maxrate=%3:%4")
+//                        .arg(b).arg(int(ui->videoBufferSizeSpinner->value() * 8)).arg(b).arg(x265params);
+                    break;
+                }
+                case RateControlQuality:
+                {
+                    int vq = ui->videoQualitySpinner->value();
+                    x265params = QString("crf=%1:%2").arg(TO_ABSOLUTE(51, 0, vq)).arg(x265params);
+                    // Also set crf property so that custom presets can be interpreted properly.
+                    m_currentPreset->set("crf", TO_ABSOLUTE(51, 0, vq));
+                    break;
+                }
+                }
+                x265params = QString("keyint=%1:bframes=%2:%3").arg(ui->gopSpinner->value())
+                            .arg(ui->bFramesSpinner->value()).arg(x265params);
+                m_currentPreset->set("x265-params", x265params.toUtf8().constData());
+            }
+
+
+            m_currentPreset->set("g", ui->gopSpinner->value());
+            m_currentPreset->set("bf", ui->bFramesSpinner->value());
+        }
+        m_currentPreset->set("width", ui->widthSpinner->value());
+        m_currentPreset->set("height", ui->heightSpinner->value());
+        m_currentPreset->set("aspect", double(ui->widthSpinner->value()) / double(ui->heightSpinner->value()));
+        m_currentPreset->set("progressive", ui->scanModeCombo->currentIndex());
+   //         m_currentPreset->set("top_field_first", ui->fieldOrderCombo->currentIndex());
+        switch (ui->deinterlacerCombo->currentIndex())
+        {
+            case 0:
+                m_currentPreset->set("deinterlace_method", "onefield");
+                break;
+            case 1:
+                m_currentPreset->set("deinterlace_method", "linearblend");
+                break;
+            case 2:
+                m_currentPreset->set("deinterlace_method", "yadif-nospatial");
+                break;
+            default:
+                m_currentPreset->set("deinterlace_method", "yadif");
+                break;
+        }
+        switch (ui->interpolationCombo->currentIndex())
+        {
+            case 0:
+                m_currentPreset->set("rescale", "nearest");
+                break;
+            case 1:
+                m_currentPreset->set("rescale", "bilinear");
+                break;
+            case 2:
+                m_currentPreset->set("rescale", "bicubic");
+                break;
+            default:
+                m_currentPreset->set("rescale", "hyper");
+                break;
+        }
+        if (qFloor(ui->fpsSpinner->value() * 10.0) == 239)
+        {
+             m_currentPreset->set("frame_rate_num", 24000);
+             m_currentPreset->set("frame_rate_den", 1001);
+
+        }
+        else if (qFloor(ui->fpsSpinner->value() * 10.0) == 299)
+        {
+             m_currentPreset->set("frame_rate_num", 30000);
+             m_currentPreset->set("frame_rate_den", 1001);
+        }
+        else if (qFloor(ui->fpsSpinner->value() * 10.0) == 479)
+        {
+             m_currentPreset->set("frame_rate_num", 48000);
+             m_currentPreset->set("frame_rate_den", 1001);
+        }
+        else if (qFloor(ui->fpsSpinner->value() * 10.0) == 599)
+        {
+             m_currentPreset->set("frame_rate_num", 60000);
+             m_currentPreset->set("frame_rate_den", 1001);
+        }
+        else
+             m_currentPreset->set("r", qFloor(ui->fpsSpinner->value()));
+
+        if (ui->videoCodecCombo->currentText() == "prores" || m_currentPreset->get("meta.preset.name") == "image2")
+             m_currentPreset->set("threads", 1);
+        else if (ui->videoCodecThreadsSpinner->value() == 0
+                     && ui->videoCodecCombo->currentText() != "libx264"
+                     && ui->videoCodecCombo->currentText() != "libx265")
+             m_currentPreset->set("threads", QThread::idealThreadCount() - 1);
+        else
+             m_currentPreset->set("threads", ui->videoCodecThreadsSpinner->value());
+//            if (ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())
+//                p->set("pass", 1);
+     }
+     
+
+}

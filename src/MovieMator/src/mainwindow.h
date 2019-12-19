@@ -36,7 +36,7 @@
 #include <QQuickWidget>
 #include "mltcontroller.h"
 #include "mltxmlchecker.h"
-#include "customtabwidget.h"
+
 #include <QThread>
 #include <QProgressDialog>
 

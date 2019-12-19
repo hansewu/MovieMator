@@ -2776,6 +2776,8 @@ void MainWindow::onEncodeTriggered(bool checked)
         }
         if(bHasClipInTimeline)
         {
+
+ //           m_encodeDock->updateProjectDuration(MAIN.multitrack()->get_length_time());
             m_encodeDock->show();
 //#if MOVIEMATOR_FREE
 //            showUpgradeToProPromptDialog();

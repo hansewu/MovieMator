@@ -154,12 +154,13 @@ void ScrubBar::mousePressEvent(QMouseEvent * event)
 //            const int offset = height() / 2;
 //            const int x = head;
 //            const int w = qAbs(x - head);
-//         //   update(margin + x - offset, 0, w + 2 * offset, height());
+//         // update(margin + x - offset, 0, w + 2 * offset, height());
 //        }
 //    }
     emit seeked(pos);
           QSlider::mousePressEvent(event);
 }
+
 
 void ScrubBar::mouseReleaseEvent(QMouseEvent * event)
 {
@@ -168,6 +169,7 @@ void ScrubBar::mouseReleaseEvent(QMouseEvent * event)
     m_activeControl = CONTROL_NONE;
     qDebug()<<"ScrubBar::mouseReleaseEvent ends";
 }
+
 
 void ScrubBar::mouseMoveEvent(QMouseEvent * event)
 {

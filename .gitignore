@@ -43,3 +43,4 @@ target_wrapper.*
 CMakeLists.txt.user*
 
 .DS_Store
+src/MovieMator/src/src.pro

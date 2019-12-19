@@ -20,6 +20,7 @@ public:
 signals:
     // 捕获状态变化信号
    // void captureStateChanged(bool);
+    void updateAdvancedSetting();
 
     //用来传递参数
    // void sendData(QString);
@@ -27,16 +28,10 @@ public slots:
     // 配置 Profile发生变化
    // void onProfileChanged();
 
-    void setPreset (Mlt::Properties *preset);
+    void setPreset (Mlt::Properties *preset, bool bVideo);
 
 private slots:
-    // addPresetButton单击的槽函数
-   // void on_addPresetButton_clicked();
-    // resetButton单击的槽函数
-    void on_resetButton_clicked();
 
-    // closeButton单击的槽函数
-    void on_closeButton_clicked();
 
     // gopSpinner值发生变化的槽函数
     // GOP：图像组（帧数）
@@ -54,8 +49,13 @@ private slots:
 
     // scanModeCombo当前 index发生变化的槽函数
     void on_scanModeCombo_currentIndexChanged(int index);
-    //单击确认按钮
-    // void on_confirmButton_clicked();
+
+    void on_resolutionBox_currentIndexChanged(const QString &arg1);
+
+    // cancelButton单击的槽函数
+    void on_cancelButton_clicked();
+
+    void on_okButton_clicked();
 
 private:
     // 码率控制
@@ -79,6 +79,8 @@ private:
 
     // 当前的预置文件属性
     Mlt::Properties *m_currentPreset;
+
+    void updateCurrentPreset(int realtime);
 };
 
 #endif // ADVANCEDDOCK_H

@@ -127,13 +127,16 @@ void BaseDockWidget::setupAllClassesUi(UnsortMap<QString, BaseItemModel *> *pAll
         //无分类时移除分类控件
         ui->comboBox_class->setHidden(true);
 
-        //创建一个分类的lsitview
-        QString strItemName             = pAllClassesItemModel->keys().first();
-        BaseListView *pOneClassListView = createClassListView(pAllClassesItemModel->value(strItemName));
-        ui->verticalLayout_scrollarea->addWidget(pOneClassListView);
+        if(pAllClassesItemModel->count() > 0)
+        {
+            //创建一个分类的lsitview
+            QString strItemName             = pAllClassesItemModel->keys().first();
+            BaseListView *pOneClassListView = createClassListView(pAllClassesItemModel->value(strItemName));
+            ui->verticalLayout_scrollarea->addWidget(pOneClassListView);
 
-        //保存listview到map，
-        m_pAllClassesListView->insert(strItemName, pOneClassListView);
+            //保存listview到map，
+            m_pAllClassesListView->insert(strItemName, pOneClassListView);
+        }
     }
 
     //在dock底部添加伸缩布局控件，控制dock中控件的数值布局是靠顶部的

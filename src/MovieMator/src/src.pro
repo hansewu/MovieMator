@@ -116,7 +116,8 @@ SOURCES += main.cpp\
 #    templateeidtor.cpp \
     commands/abstractcommand.cpp \
     dialogs/videomodesettingsdialog.cpp \
-    docks/advanceddock.cpp
+    docks/advanceddock.cpp \
+    presettabstyle.cpp
 
 HEADERS  += mainwindow.h \
     scrubbar.h \
@@ -229,7 +230,8 @@ HEADERS  += mainwindow.h \
     commands/abstractcommand.h \
     CrashHandler/CrashHandler.h \
     dialogs/videomodesettingsdialog.h \
-    docks/advanceddock.h
+    docks/advanceddock.h \
+    presettabstyle.h
 
 mac {
     SOURCES += securitybookmark/SecurityBookmark.mm \
@@ -463,6 +465,92 @@ mac {
     qmlfiles.files = $$PWD/qml
     qmlfiles.path = $$PREFIX/share/MovieMator
     INSTALLS += qmlfiles
+
+#自动copy资源与生成的dylib到app程序包中 xjp
+    BUILD_FOLDER = /work/Projects/MovieMator-github/MovieMator/src/build-MovieMator-Desktop_Qt_5_6_1_clang_64bit1-Debug #不同机器，不同编译器，需要修改
+    CODE_FOLDER  = /work/Projects/MovieMator-github   #MovieMator相关代码的存放位置
+
+    APP_DEST = $$BUILD_FOLDER/src/MovieMator\ Video\ Editor\ Pro.app/Contents
+    CODE_SOURCE = $$CODE_FOLDER/MovieMator/src/MovieMator
+    MOVIEMATOR_QML = $$CODE_FOLDER/MovieMator-Resource
+    QML = $$CODE_FOLDER/MovieMator/src/MovieMator/src
+    TEMPLATE_SOURCE = $$CODE_FOLDER/MovieMator-Resource
+    ZIP_RESOURCE_DEST = $$CODE_FOLDER/resource
+
+
+    #copy libAudioFilterDock
+    QMAKE_POST_LINK += cp -f  -a  $$BUILD_FOLDER/AudioFilterDock/libAudioFilterDock.1.0.0.dylib  $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f  -a  $$BUILD_FOLDER/AudioFilterDock/libAudioFilterDock.1.0.dylib  $$APP_DEST/MacOS  &
+    QMAKE_POST_LINK += cp -f  -a  $$BUILD_FOLDER/AudioFilterDock/libAudioFilterDock.1.dylib  $$APP_DEST/MacOS  &
+    QMAKE_POST_LINK += cp -f  -a  $$BUILD_FOLDER/AudioFilterDock/libAudioFilterDock.dylib  $$APP_DEST/MacOS &
+
+    #copy libBreakpad
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/Breakpad/libBreakpad.1.0.0.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/Breakpad/libBreakpad.1.0.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/Breakpad/libBreakpad.1.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/Breakpad/libBreakpad.dylib $$APP_DEST/MacOS &
+    #copy libCommonUtil
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/CommonUtil/libCommonUtil.1.0.0.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/CommonUtil/libCommonUtil.1.0.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/CommonUtil/libCommonUtil.1.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/CommonUtil/libCommonUtil.dylib $$APP_DEST/MacOS &
+    #copy CrashReporter
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/CrashReporter/CrashReporter $$APP_DEST/MacOS &
+    #copy libLogger
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/CuteLogger/libLogger.1.0.0.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/CuteLogger/libLogger.1.0.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/CuteLogger/libLogger.1.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/CuteLogger/libLogger.dylib $$APP_DEST/MacOS &
+    #copy libMltController
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/MltController/libMltController.1.0.0.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/MltController/libMltController.1.0.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/MltController/libMltController.1.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/MltController/libMltController.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += install_name_tool -change $$CODE_FOLDER/shotcut/mlt_build/lib/libmlt++.3.dylib @executable_path/lib/libmlt++.3.dylib $$APP_DEST/MacOS/libMltController.1.0.0.dylib &
+    QMAKE_POST_LINK += install_name_tool -change $$CODE_FOLDER/shotcut/mlt_build/lib/libmlt.6.dylib   @executable_path/lib/libmlt.6.dylib   $$APP_DEST/MacOS/libMltController.1.0.0.dylib &
+    #copy libQmlUtilities
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/QmlUtilities/libQmlUtilities.1.0.0.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/QmlUtilities/libQmlUtilities.1.0.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/QmlUtilities/libQmlUtilities.1.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/QmlUtilities/libQmlUtilities.dylib $$APP_DEST/MacOS &
+    #copy libResourceDockGenerator
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/ResourceDockGenerator/libResourceDockGenerator.1.0.0.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/ResourceDockGenerator/libResourceDockGenerator.1.0.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/ResourceDockGenerator/libResourceDockGenerator.1.dylib $$APP_DEST/MacOS &
+    QMAKE_POST_LINK += cp -f -a $$BUILD_FOLDER/ResourceDockGenerator/libResourceDockGenerator.dylib $$APP_DEST/MacOS &
+
+    #copy frei0r.txt
+    QMAKE_POST_LINK += cp -f -a $$CODE_SOURCE/frei0r.txt $$APP_DEST/Resources/filters &
+    #copy cr_zh.qm
+    QMAKE_POST_LINK += cp -f -a $$CODE_SOURCE/translations/cr_zh.qm $$APP_DEST/Resources/translations &
+    # copy mm_zh.qm
+    QMAKE_POST_LINK += cp -f -a $$CODE_SOURCE/translations/mm_zh.qm $$APP_DEST/Resources/translations &
+    #QML
+    #拷贝moviemator/src/qml到MovieMator Video Editor Pro.app/Contents/Resources/share/moviemator/qml
+    QMAKE_POST_LINK += cp -f -a $$CODE_FOLDER/MovieMator/src/MovieMator/src/qml $$APP_DEST/Resources/share/moviemator/qml &
+    #mlt源码
+    #1 拷贝moviemator_resource/mlt到MovieMator Video Editor Pro.app/Contents/Resources/share/mlt
+    QMAKE_POST_LINK += cp -r -f $$TEMPLATE_SOURCE/mlt $$APP_DEST/Resources/share/mlt & #-f -a
+    #TODO,MovieMator-Resource
+    #1 MovieMator-Resource/template 拷贝到 MovieMator Video Editor Pro.app/Contents/Resources/template
+    QMAKE_POST_LINK += cp -r -f $$TEMPLATE_SOURCE/template $$APP_DEST/Resources/template &
+
+    #拷贝qt相关库
+    # qt_lib_mac/qml 		--> MovieMator.app/Contents/Resources/qml
+    # qt_lib_mac/PlugIns  		--> MovieMator.app/Contents/PlugIns
+    # qt_lib_mac/Frameworks		--> MovieMator.app/Contents/Frameworks
+    # qt_lib_mac/qt.conf		--> MovieMator.app/Contents/Resources/qt.conf
+#    QMAKE_POST_LINK += cd $$TEMPLATE_SOURCE/;unzip $$TEMPLATE_SOURCE/qt_lib_mac.zip &  #解压 qt_lib_mac.zip 文件
+#    QMAKE_POST_LINK += cp -r -f $$CODE_FOLDER/MovieMator-Resource/qt_lib_mac/Frameworks/* $$APP_DEST/Frameworks &
+#    QMAKE_POST_LINK += cp -r -f $$CODE_FOLDER/MovieMator-Resource/qt_lib_mac/PlugIns/* $$APP_DEST/PlugIns &
+#    QMAKE_POST_LINK += cp -r -f $$CODE_FOLDER/MovieMator-Resource/qt_lib_mac/qml/* $$APP_DEST/Resources/qml &
+#    QMAKE_POST_LINK += cp -r -f $$CODE_FOLDER/MovieMator-Resource/qt_lib_mac/qt.conf $$APP_DEST/Resources/qt.conf &
+#    QMAKE_POST_LINK += rm -r $$CODE_FOLDER/MovieMator-Resource/qt_lib_mac &   #qt_lib_mac.zip解压后，需要删除 qt_lib_mac目录
+#    QMAKE_POST_LINK += rm -r $$CODE_FOLDER/MovieMator-Resource/__MACOSX &
+
+
+  QMAKE_POST_LINK +=install_name_tool -change /work/Projects/MovieMator-github/shotcut/mlt_build/lib/libmlt++.3.dylib @executable_path/lib/libmlt++.3.dylib /work/Projects/MovieMator-github/MovieMator/src/build-MovieMator-Desktop_Qt_5_6_1_clang_64bit1-Debug/src/MovieMator\ Video\ Editor\ Pro.app/Contents/MacOS/MovieMator\ Video\ Editor\ Pro &
+  QMAKE_POST_LINK +=install_name_tool -change /work/Projects/MovieMator-github/shotcut/mlt_build/lib/libmlt.6.dylib @executable_path/lib/libmlt.6.dylib /work/Projects/MovieMator-github/MovieMator/src/build-MovieMator-Desktop_Qt_5_6_1_clang_64bit1-Debug/src/MovieMator\ Video\ Editor\ Pro.app/Contents/MacOS/MovieMator\ Video\ Editor\ Pro  &
 }
 
 DISTFILES += \
