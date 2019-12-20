@@ -26,8 +26,8 @@
    <string>MovieMator Video Editor</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../icons/crashreporter.qrc">
-    <normaloff>:/icons/moviemator-logo-64.png</normaloff>:/icons/moviemator-logo-64.png</iconset>
+   <iconset resource="../icons/resources.qrc">
+    <normaloff>:/icons/moviemator-pro-logo-64.png</normaloff>:/icons/moviemator-pro-logo-64.png</iconset>
   </property>
   <property name="iconSize">
    <size>
@@ -982,7 +982,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../icons/crashreporter.qrc"/>
   <include location="../icons/resources.qrc"/>
  </resources>
  <connections>
