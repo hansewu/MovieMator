@@ -258,7 +258,7 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo)
            else if (name == "g")
                ui->gopSpinner->setValue(preset->get_int("g"));
            else if (name == "bf")
-               ui->bFramesSpinner->setValue(presetet_int("bf"));
+               ui->bFramesSpinner->setValue(preset->get_int("bf"));
            else if (name == "deinterlace") {
                ui->scanModeCombo->setCurrentIndex(preset->get_int("deinterlace"));
                ui->scanModeCombo->setEnabled(false);
