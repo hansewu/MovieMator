@@ -17,7 +17,6 @@ void StickerItemModel::updatCurrentSelectedAnimationFilePath(QString &strAnimati
 
 QMimeData *StickerItemModel::mimeData(const QModelIndexList &indexes) const
 {
-    qDebug()<<"sll-----mimeData---start";
     QModelIndex index                   = indexes.first();
     QAbstractItemModel *pItemModel      = const_cast<QAbstractItemModel *>(index.model());
     BaseItemModel *pStandardItemModel   = static_cast<BaseItemModel *>(pItemModel);
@@ -26,9 +25,6 @@ QMimeData *StickerItemModel::mimeData(const QModelIndexList &indexes) const
     QVariant userDataVariant            = pStandardItem->data(Qt::UserRole);
     QByteArray userByteArray            = userDataVariant.value<QByteArray>();
     StickerUserData *pStickerUserData   = reinterpret_cast<StickerUserData *>(userByteArray.data());
-
-    qDebug()<<"sll----imageFilePath = "<<pStickerUserData->strImageFilePath;
-    qDebug()<<"sll----animationFilePath = "<<m_strCurrentSelectedAnimationFilePath;
 
     Q_ASSERT(m_pMainInterface);
     QMimeData *pMimeData = nullptr;
@@ -41,8 +37,6 @@ QMimeData *StickerItemModel::mimeData(const QModelIndexList &indexes) const
             pMimeData->setText(QString::number(m_pMainInterface->getPlayTime(fileHandle)));
         }
     }
-
-    qDebug()<<"sll-----mimeData---end";
 
     return pMimeData;
 }

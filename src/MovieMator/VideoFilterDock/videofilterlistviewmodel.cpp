@@ -67,7 +67,7 @@ void VideoFilterListVideoModel::readTranslatJsFile(QString jsFilePath) {
     QFile scriptFile(jsFilePath);
     if (!scriptFile.open(QIODevice::ReadOnly)) {
         result.clear();
-        qDebug()<<"sll-------------js file open error!!!";
+        qDebug()<<"Error::js file open error!!!";
         return;
     }
 

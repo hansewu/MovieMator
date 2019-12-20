@@ -19,14 +19,10 @@ StickerDockWidget::StickerDockWidget(MainInterface *pMainInterface, QWidget *pPa
     BaseDockWidget(pParent),
     m_pMainInterface(pMainInterface)
 {
-    qDebug()<<"sll-----StickerDockWidget构造---start";
-    qDebug()<<"sll-----StickerDockWidget构造---end";
 }
 
 void StickerDockWidget::setupTopBarUi()
 {
-    qDebug()<<"sll-----setupOtherUi---start";
-
     QHBoxLayout *pAnimationWidgetLayout = new QHBoxLayout();
 
     //动画标签
@@ -75,24 +71,16 @@ void StickerDockWidget::setupTopBarUi()
 
     connect(m_pAnimationCombobox, SIGNAL(currentIndexChanged(int)), this, SLOT(onAnimationComboBoxCurrentIndexChanged(int)));
     connect(m_pAnimationCombobox, SIGNAL(activated(int)), this, SLOT(onAnimationComboBoxActivated(int)));
-
-    qDebug()<<"sll-----setupOtherUi---end";
 }
 
 void StickerDockWidget::resizeEvent(QResizeEvent *pEvent)
 {
-    qDebug()<<"sll-----resizeEvent---start";
-
     onAnimationComboBoxActivated(m_pAnimationCombobox->currentIndex());
     BaseDockWidget::resizeEvent(pEvent);
-
-    qDebug()<<"sll-----resizeEvent---end";
 }
 
 void StickerDockWidget::setupAnimationComboboxData()
 {
-    qDebug()<<"sll-----setupAnimationComboboxData---start";
-
     QString stickerDir = Util::resourcesPath() + "/template/sticker";
 
     QJsonObject animationTranslateInfo;
@@ -106,8 +94,6 @@ void StickerDockWidget::setupAnimationComboboxData()
         m_pAnimationCombobox->addItem(strItemName, QVariant(animationFileInfo.filePath()));
         m_pAnimationCombobox->setItemData(m_pAnimationCombobox->count()-1, strItemName, Qt::ToolTipRole);
     }
-
-    qDebug()<<"sll-----setupAnimationComboboxData---end";
 }
 
 QIcon StickerDockWidget::getListViewItemIcon(const QString strFilePath)
@@ -139,8 +125,6 @@ QIcon StickerDockWidget::getListViewItemIcon(const QString strFilePath)
 
 UnsortMap<QString, BaseItemModel *> *StickerDockWidget::createAllClassesItemModel()
 {
-    qDebug()<<"sll-----createAllClassesItemModel---start";
-
     UnsortMap<QString, BaseItemModel *> *pStickerDockListViewItemModel = new UnsortMap<QString, BaseItemModel *>;
 
     QString strStickerDir = Util::resourcesPath() + "/template/sticker";
@@ -164,7 +148,6 @@ UnsortMap<QString, BaseItemModel *> *StickerDockWidget::createAllClassesItemMode
             QString strFileName = imageFileInfo.baseName();
             pItem->setText(strFileName);
 
-            qDebug()<<"sll-----imageFilePath = "<<imageFileInfo.filePath();
             QIcon icon = getListViewItemIcon(imageFileInfo.filePath());
             pItem->setIcon(icon);
 
@@ -182,28 +165,20 @@ UnsortMap<QString, BaseItemModel *> *StickerDockWidget::createAllClassesItemMode
             pItemMode->appendRow(pItem);
         }
 
-        qDebug()<<"sll-----className = "<<strClassName;
-
         pStickerDockListViewItemModel->append(strClassName, pItemMode);
     }
 
-    qDebug()<<"sll-----createAllClassesItemModel---end";
     return pStickerDockListViewItemModel;
 }
 
 void StickerDockWidget::addItemToTimeline(const QStandardItem *pItem)
 {
-    qDebug()<<"sll-----addToTimeline---start";
-
     QVariant userDataVariant            = pItem->data(Qt::UserRole);
     QByteArray userByteArray            = userDataVariant.value<QByteArray>();
     StickerUserData *pStickerUserData   = reinterpret_cast<StickerUserData *>(userByteArray.data());
 
     QVariant currentSelecteditemData            = m_pAnimationCombobox->currentData();
     QString strCurrentSelectedAnimationFilePath = currentSelecteditemData.toString();
-
-    qDebug()<<"sll-----imageFilePath = "<<pStickerUserData->strImageFilePath;
-    qDebug()<<"sll-----animationFilePath = "<<strCurrentSelectedAnimationFilePath;
 
     FILE_HANDLE fileHandle = createFileHandle(m_pMainInterface, strCurrentSelectedAnimationFilePath,
                                               pStickerUserData->strImageFilePath);
@@ -215,14 +190,10 @@ void StickerDockWidget::addItemToTimeline(const QStandardItem *pItem)
         m_pMainInterface->addToTimeLine(fileHandle);
         m_pMainInterface->destroyFileHandle(fileHandle);
     }
-
-    qDebug()<<"sll-----addToTimeline---end";
 }
 
 void StickerDockWidget::preview(const QStandardItem *pItem)
 {
-    qDebug()<<"sll-----preview---start";
-
     QVariant userDataVariant            = pItem->data(Qt::UserRole);
     QByteArray userByteArray            = userDataVariant.value<QByteArray>();
     StickerUserData *pStickerUserData   = reinterpret_cast<StickerUserData *>(userByteArray.data());
@@ -231,9 +202,6 @@ void StickerDockWidget::preview(const QStandardItem *pItem)
 
     QVariant currentSelecteditemData            = m_pAnimationCombobox->currentData();
     QString strCurrentSelectedAnimationFilePath = currentSelecteditemData.toString();
-
-    qDebug()<<"sll-----imageFilePath = "<<pStickerUserData->strImageFilePath;
-    qDebug()<<"sll-----animationFilePath = "<<strCurrentSelectedAnimationFilePath;
 
     FILE_HANDLE fileHandle = createFileHandle(m_pMainInterface, strCurrentSelectedAnimationFilePath,
                                               m_strCurrentSelectedImageFilePath);
@@ -245,8 +213,6 @@ void StickerDockWidget::preview(const QStandardItem *pItem)
         m_pMainInterface->playFile(fileHandle);
         m_pMainInterface->destroyFileHandle(fileHandle);
     }
-
-    qDebug()<<"sll-----preview---end";
 }
 
 QString StickerDockWidget::getImageClassType(QString srcStr)
@@ -275,8 +241,6 @@ FILE_HANDLE StickerDockWidget::createFileHandle(MainInterface *pMainInterface,
                                                 const QString &strAnimationFilePath,
                                                 const QString &strImageFilePath)
 {
-    qDebug()<<"sll-----createFileHandle---start";
-
     Q_ASSERT(!strAnimationFilePath.isNull());
 //    Q_ASSERT(!imageFilePath.isNull());
     Q_ASSERT(pMainInterface);
@@ -296,7 +260,7 @@ FILE_HANDLE StickerDockWidget::createFileHandle(MainInterface *pMainInterface,
         QString strError;
         if (!doc.setContent(&file, &strError))
         {
-            qDebug()<<"sll-----QDomDocument error!！";
+            qDebug()<<"Error::QDomDocument error!！";
             qDebug()<<strError;
             file.close();
             return fileHandle;
@@ -440,32 +404,22 @@ FILE_HANDLE StickerDockWidget::createFileHandle(MainInterface *pMainInterface,
         }
     }
 
-    qDebug()<<"sll-----createFileHandle---end";
-
     return fileHandle;
 }
 
 void StickerDockWidget::onAnimationComboBoxActivated(int nIndex) {
-    qDebug()<<"sll-----onAnimationComboBoxActivated---start";
     QVariant itemData               = m_pAnimationCombobox->itemData(nIndex);
     QString strAnimationFilePath    = itemData.toString();
 
-    qDebug()<<"sll----animationFilePath = "<<strAnimationFilePath;
     emit currentSelectedAnimationChanged(strAnimationFilePath);//用于更新拖拽数据
 
     m_pAnimationCombobox->setToolTip(m_pAnimationCombobox->currentText());
-
-    qDebug()<<"sll-----onAnimationComboBoxActivated---start";
 }
 
 void StickerDockWidget::onAnimationComboBoxCurrentIndexChanged(int nIndex)
 {
-    qDebug()<<"sll-----onAnimationComboBoxCurrentIndexChanged---start";
     QVariant itemData               = m_pAnimationCombobox->itemData(nIndex);
     QString strAnimationFilePath    = itemData.toString();
-
-    qDebug()<<"sll----animationFilePath = "<<strAnimationFilePath;
-    qDebug()<<"sll----imageFilePath = "<<m_strCurrentSelectedImageFilePath;
 
     FILE_HANDLE fileHandle = createFileHandle(m_pMainInterface, strAnimationFilePath, m_strCurrentSelectedImageFilePath);
 
@@ -478,8 +432,6 @@ void StickerDockWidget::onAnimationComboBoxCurrentIndexChanged(int nIndex)
     }
 
     emit currentSelectedAnimationChanged(strAnimationFilePath);//用于更新拖拽数据
-
-    qDebug()<<"sll-----onAnimationComboBoxCurrentIndexChanged---end";
 }
 
 void StickerDockWidget::onDockWidgetVisibilityChanged(bool bVisible)

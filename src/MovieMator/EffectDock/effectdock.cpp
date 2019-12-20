@@ -187,7 +187,7 @@ void EffectDock::resizeEvent(QResizeEvent *event)
 void EffectDock::readJsonFile(QString filePath, QJsonObject &jsonObj) {
     QFile jsonFile(filePath);
     if (!jsonFile.open(QIODevice::ReadOnly)) {
-        qDebug()<<"sll-----could't open"<<filePath;
+        qDebug()<<"Error::could't open"<<filePath;
         return;
     }
 
@@ -197,7 +197,7 @@ void EffectDock::readJsonFile(QString filePath, QJsonObject &jsonObj) {
     QJsonParseError json_error;
     QJsonDocument jsonDoc(QJsonDocument::fromJson(jsonData, &json_error));
     if (json_error.error != QJsonParseError::NoError) {
-        qDebug()<<"sll-----json error!";
+        qDebug()<<"Error::json error!";
         return;
     }
 

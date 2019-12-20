@@ -12,8 +12,6 @@ BaseDockWidget::BaseDockWidget(QWidget *pParent) :
     QDockWidget(pParent),
     ui(new Ui::BaseDockWidget)
 {
-    qDebug()<<"sll-----BaseDockWidget构造---start";
-
     ui->setupUi(this);
 
     ui->scrollArea->setWidgetResizable(true);
@@ -29,6 +27,7 @@ BaseDockWidget::BaseDockWidget(QWidget *pParent) :
 //    ui->comboBox_class->setStyleSheet("QComboBox {border:none; min-width:50px; background-color:rgb(100,100,100); color:rgb(225,225,225); }"
 //                                      "QComboBox:drop-down {width: 15px;border-left: 1px solid #428BCA;}");
 
+    /*
 //    ui->comboBox_class->setStyleSheet("QComboBox {\
 //                                  background-color:rgb(82,82,82); \
 //                                  color:rgb(185,185,185); \
@@ -56,31 +55,24 @@ BaseDockWidget::BaseDockWidget(QWidget *pParent) :
 //    QFont font = ui->comboBox_class->font();
 //    font.setPointSize(16);
 //    ui->comboBox_class->setFont(font);
+*/
 
     connect(ui->comboBox_class, SIGNAL(activated(int)), this, SLOT(onClassComboBoxActivated(int)));
 
     m_pAllClassesListView = new QMap<QString, BaseListView *>;
-
-    qDebug()<<"sll-----BaseDockWidget构造---end";
 }
 
 BaseDockWidget::~BaseDockWidget()
 {
-    qDebug()<<"sll-----BaseDockWidget析构---start";
-
     qDeleteAll(*m_pAllClassesListView);
     m_pAllClassesListView->clear();
     m_pAllClassesListView = nullptr;
 
     delete ui;
-
-    qDebug()<<"sll-----BaseDockWidget析构---end";
 }
 
 void BaseDockWidget::setupUi()
 {
-    qDebug()<<"sll-----setupUi---start";
-
     //初始化及设置顶部控件，各子类可以定制
     setupTopBarUi();
 
@@ -89,14 +81,10 @@ void BaseDockWidget::setupUi()
 
     //创建所有分类的UI
     setupAllClassesUi(pAllClassesItemModel);
-
-    qDebug()<<"sll-----setupUi---end";
 }
 
 void BaseDockWidget::setupTopBarUi()
 {
-    qDebug()<<"sll-----setupOtherUi---start";
-    qDebug()<<"sll-----setupOtherUi---end";
 }
 
 void BaseDockWidget::showMeun(const QStandardItem *pItem, const QPoint &position)
@@ -227,8 +215,6 @@ BaseListView *BaseDockWidget::createClassListView(BaseItemModel *pItemModel)
 
 void BaseDockWidget::onLeftClickedAddButtonInItem(const QModelIndex &index)
 {
-    qDebug()<<"sll-----addItemToTimeline---start";
-
     QAbstractItemModel *pItemModel       = const_cast<QAbstractItemModel *>(index.model());
     BaseItemModel *pStandardItemModel    = static_cast<BaseItemModel *>(pItemModel);
     QStandardItem *pStandardItem         = pStandardItemModel->itemFromIndex(index);
@@ -237,14 +223,10 @@ void BaseDockWidget::onLeftClickedAddButtonInItem(const QModelIndex &index)
 
     // 清空非当前选中状态
     clearSelectionOfNotCurrentListView(index);
-
-    qDebug()<<"sll-----addItemToTimeline---end";
 }
 
 void BaseDockWidget::onLeftClickedItem(const QModelIndex &index)
 {
-    qDebug()<<"sll-----clickedItem---start";
-
     QAbstractItemModel *itemModel       = const_cast<QAbstractItemModel *>(index.model());
     BaseItemModel *standardItemModel    = static_cast<BaseItemModel *>(itemModel);
     QStandardItem *standardItem         = standardItemModel->itemFromIndex(index);
@@ -253,21 +235,15 @@ void BaseDockWidget::onLeftClickedItem(const QModelIndex &index)
     clearSelectionOfNotCurrentListView(index);
 
     preview(standardItem);
-
-    qDebug()<<"sll-----clickedItem---end";
 }
 
 void BaseDockWidget::onRightClickedItem(const QModelIndex &index, const QPoint &position)
 {
-    qDebug()<<"sll-----showMenu---start";
-
     QAbstractItemModel *pItemModel       = const_cast<QAbstractItemModel *>(index.model());
     BaseItemModel *pStandardItemModel    = static_cast<BaseItemModel *>(pItemModel);
     QStandardItem *pStandardItem         = pStandardItemModel->itemFromIndex(index);
 
     showMeun(pStandardItem, position);
-
-    qDebug()<<"sll-----showMenu---end";
 }
 
 void BaseDockWidget::onDoubleClickedItem(const QModelIndex &index)
@@ -279,8 +255,6 @@ void BaseDockWidget::onDoubleClickedItem(const QModelIndex &index)
 //FIXME:此函数需要优化，存在魔法数字
 void BaseDockWidget::resizeEvent(QResizeEvent *pEvent)
 {
-    qDebug()<<"sll-----resizeEvent---start";
-
     QMap<QString, BaseListView *>::const_iterator iter;
     for (iter = m_pAllClassesListView->constBegin(); iter != m_pAllClassesListView->constEnd(); iter++)
     {
@@ -306,13 +280,9 @@ void BaseDockWidget::resizeEvent(QResizeEvent *pEvent)
     onClassComboBoxActivated(ui->comboBox_class->currentIndex());
 
     QDockWidget::resizeEvent(pEvent);
-
-    qDebug()<<"sll-----resizeEvent---end";
 }
 
 void BaseDockWidget::onClassComboBoxActivated(int nIndex) {
-    qDebug()<<"sll-----onClassComboBoxActivated---start";
-
     if (nIndex < 0)
     {
         return;
@@ -344,8 +314,6 @@ void BaseDockWidget::onClassComboBoxActivated(int nIndex) {
 
         ui->scrollArea->verticalScrollBar()->setValue(pWidget->y());
     }
-
-    qDebug()<<"sll-----onClassComboBoxActivated---end";
 }
 
 void BaseDockWidget::onDockWidgetVisibilityChanged(bool bVisible)

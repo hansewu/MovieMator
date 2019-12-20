@@ -14,7 +14,7 @@ void TranslationHelper::readJsonFile(QString strFilePath, QJsonObject &jsonObj)
     QFile jsonFile(strFilePath);
     if (!jsonFile.open(QIODevice::ReadOnly))
     {
-        qDebug()<<"sll-----could't open"<<strFilePath;
+        qDebug()<<"Error::could't open"<<strFilePath;
         return;
     }
 
@@ -25,7 +25,7 @@ void TranslationHelper::readJsonFile(QString strFilePath, QJsonObject &jsonObj)
     QJsonDocument jsonDoc(QJsonDocument::fromJson(jsonData, &json_error));
     if (json_error.error != QJsonParseError::NoError)
     {
-        qDebug()<<"sll-----json error!";
+        qDebug()<<"Error::json error!";
         return;
     }
 
@@ -36,7 +36,7 @@ QString TranslationHelper::getTranslationStr(QString srcStr, QJsonObject transla
 {
     if (translationInfo.isEmpty())
     {
-        qDebug()<<"sll-----QJsonObject is empty!";
+        qDebug()<<"Error::QJsonObject is empty!";
         return srcStr;
     }
 
