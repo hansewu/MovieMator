@@ -11,11 +11,6 @@ AspectRatioSettingsDialog::AspectRatioSettingsDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setWindowIcon(QIcon(":/icons/moviemator-pro-logo-64.png"));
-#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
-    setWindowIcon(QIcon(":/icons/moviemator-logo-64.png"));
-#endif
-
     addItemsToAspectRationComboBox();
 
     setDefaultItemOfAspectRationComboBox();

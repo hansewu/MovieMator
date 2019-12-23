@@ -97,11 +97,6 @@ RecordDialog::RecordDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setWindowIcon(QIcon(":/icons/moviemator-pro-logo-64.png"));
-#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
-    setWindowIcon(QIcon(":/icons/moviemator-logo-64.png"));
-#endif
-
     ui->startRecordButton->setStyleSheet("QPushButton{"
                                         "border-radius:3px;border:1px solid;border-color:black;"
                                         "background-color:rgb(82,82,82);color:rgb(185,185,185);}"

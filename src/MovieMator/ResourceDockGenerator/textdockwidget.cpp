@@ -12,19 +12,14 @@ TextDockWidget::TextDockWidget(MainInterface *pMainInterface, QWidget *pParent) 
     BaseDockWidget(pParent),
     m_pMainInterface(pMainInterface)
 {
-    qDebug()<<"sll-----TextDockWidget构造---start";
-    qDebug()<<"sll-----TextDockWidget构造---end";
 }
 
 TextDockWidget::~TextDockWidget()
 {
-    qDebug()<<"sll-----TextDockWidget析构---start";
-    qDebug()<<"sll-----TextDockWidget析构---end";
 }
 
 UnsortMap<QString, BaseItemModel *> *TextDockWidget::createAllClassesItemModel()
 {
-    qDebug()<<"sll-----createAllClassesItemModel---start";
     UnsortMap<QString, BaseItemModel *> *pTextDockListViewItemModel = new UnsortMap<QString, BaseItemModel *>;
 
     QString strTextDir = Util::resourcesPath() + "/template/text";
@@ -61,7 +56,6 @@ UnsortMap<QString, BaseItemModel *> *TextDockWidget::createAllClassesItemModel()
             {
                 thumbnailFolderName = "/thumbnail_en/";
             }
-            qDebug()<<"sll----------"<<strTextDir + thumbnailFolderName + oneClassFolderInfo.fileName() + "/" + templateFileInfo.baseName() + ".jpg";
             QIcon icon = QIcon(strTextDir + thumbnailFolderName + oneClassFolderInfo.fileName() + "/" + templateFileInfo.baseName() + ".jpg");
             pItem->setIcon(icon);
 
@@ -75,28 +69,18 @@ UnsortMap<QString, BaseItemModel *> *TextDockWidget::createAllClassesItemModel()
             pItem->setData(userDataByteArray, Qt::UserRole);
 
             pItemMode->appendRow(pItem);
-
-            qDebug()<<"sll-----xmlFilePath = "<<templateFileInfo.filePath();
         }
-
-        qDebug()<<"sll-----className = "<<strClassName;
-
         pTextDockListViewItemModel->append(strClassName, pItemMode);
     }
 
-    qDebug()<<"sll-----createAllClassesItemModel---end";
     return pTextDockListViewItemModel;
 }
 
 void TextDockWidget::addItemToTimeline(const QStandardItem *pItem)
 {
-    qDebug()<<"sll-----addToTimeline---start";
-
     QVariant userDataVariant    = pItem->data(Qt::UserRole);
     QByteArray userByteArray    = userDataVariant.value<QByteArray>();
     TextUserData *pTextUserData = reinterpret_cast<TextUserData *>(userByteArray.data());
-
-    qDebug()<<"sll-----xmlFilePath = "<<pTextUserData->strXmlFilePath;
 
     FILE_HANDLE fileHandel = m_pMainInterface->openFile(pTextUserData->strXmlFilePath);
     if (fileHandel) {
@@ -104,18 +88,13 @@ void TextDockWidget::addItemToTimeline(const QStandardItem *pItem)
 
         m_pMainInterface->destroyFileHandle(fileHandel);
     }
-
-    qDebug()<<"sll-----addToTimeline---end";
 }
 
 void TextDockWidget::preview(const QStandardItem *pItem)
 {
-    qDebug()<<"sll-----preview---start";
     QVariant userDataVariant    = pItem->data(Qt::UserRole);
     QByteArray userByteArray    = userDataVariant.value<QByteArray>();
     TextUserData *pTextUserData = reinterpret_cast<TextUserData *>(userByteArray.data());
-
-    qDebug()<<"sll-----xmlFilePath = "<<pTextUserData->strXmlFilePath;
 
     FILE_HANDLE fileHandel = m_pMainInterface->openFile(pTextUserData->strXmlFilePath);
     if (fileHandel) {
@@ -123,8 +102,6 @@ void TextDockWidget::preview(const QStandardItem *pItem)
 
         m_pMainInterface->destroyFileHandle(fileHandel);
     }
-
-    qDebug()<<"sll-----preview---end";
 }
 
 static TextDockWidget *pTextDockInstance = nullptr;

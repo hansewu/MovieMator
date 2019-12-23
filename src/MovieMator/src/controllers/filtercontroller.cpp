@@ -539,8 +539,6 @@ QList<FilterInfo> FilterController::getVideoFiltersInfo()
 
 QList<FilterInfo> FilterController::getFiltersInfo(int nFilterType)
 {
-    qDebug()<<"sll---------getFiltersInfo---start";
-
     QList<FilterInfo> videoFiltersInfo = QList<FilterInfo>();
 
     for (int nIndex = 0; nIndex < m_metadataModel.rowCount(); nIndex++)
@@ -588,8 +586,6 @@ QList<FilterInfo> FilterController::getFiltersInfo(int nFilterType)
         }
 
     }
-
-    qDebug()<<"sll---------getFiltersInfo---end";
 
     return videoFiltersInfo;
 }

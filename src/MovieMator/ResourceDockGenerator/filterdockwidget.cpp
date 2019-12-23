@@ -14,15 +14,12 @@ FilterDockWidget::FilterDockWidget(int nFilterDockType, MainInterface *pMainInte
     m_pMainInterface(pMainInterface),
     m_nFilterDockType(nFilterDockType)
 {
-    qDebug()<<"sll-----FilterDockWidget构造---start";
     QString strJsFilePath = getQmlDirPath() + "/views/filter/translateTool.js";
     readTranslatJsFile(strJsFilePath);
-    qDebug()<<"sll-----FilterDockWidget构造---end";
 }
 
 UnsortMap<QString, BaseItemModel *> *FilterDockWidget::createAllClassesItemModel()
 {
-    qDebug()<<"sll-----createAllClassesItemModel---start";
     UnsortMap<QString, BaseItemModel *> *pFilterDockListViewItemModel = new UnsortMap<QString, BaseItemModel *>;
 
     foreach (FilterInfo filterInfo, m_filtersInfo)
@@ -75,54 +72,38 @@ UnsortMap<QString, BaseItemModel *> *FilterDockWidget::createAllClassesItemModel
         pFilterItemModel->appendRow(pItem);
     }
 
-    qDebug()<<"sll-----createAllClassesItemModel---end";
-
     return pFilterDockListViewItemModel;
 }
 
 void FilterDockWidget::addItemToTimeline(const QStandardItem *pItem)
 {
-    qDebug()<<"sll-----addToTimeline---start";
-
     QVariant userDataVariant        = pItem->data(Qt::UserRole);
     QByteArray userByteArray        = userDataVariant.value<QByteArray>();
     FilterUserData *pFilterUserData = reinterpret_cast<FilterUserData *>(userByteArray.data());
-
-    qDebug()<<"sll-----nFilterIndex = "<<pFilterUserData->nFilterIndex;
 
     Q_ASSERT(m_pMainInterface);
     if (m_pMainInterface)
     {
         m_pMainInterface->addFilter(pFilterUserData->nFilterIndex);
     }
-
-    qDebug()<<"sll-----addToTimeline---end";
 }
 
 void FilterDockWidget::preview(const QStandardItem *pItem)
 {
-    qDebug()<<"sll-----preview---start";
-
     QVariant userDataVariant        = pItem->data(Qt::UserRole);
     QByteArray userByteArray        = userDataVariant.value<QByteArray>();
     FilterUserData *pFilterUserData = reinterpret_cast<FilterUserData *>(userByteArray.data());
-
-    qDebug()<<"sll-----nFilterIndex = "<<pFilterUserData->nFilterIndex;
 
     Q_ASSERT(m_pMainInterface);
     if (m_pMainInterface)
     {
         previewFilter(pFilterUserData->strPerviewFilePath);
     }
-
-    qDebug()<<"sll-----preview---end";
 }
 
 void FilterDockWidget::setFiltersInfo(QList<FilterInfo> filtersInfo)
 {
-    qDebug()<<"sll-----setFiltersInfo---start";
     m_filtersInfo = filtersInfo;
-    qDebug()<<"sll-----setFiltersInfo---end";
 }
 
 void FilterDockWidget::readTranslatJsFile(QString jsFilePath)
@@ -132,7 +113,7 @@ void FilterDockWidget::readTranslatJsFile(QString jsFilePath)
     if (!scriptFile.open(QIODevice::ReadOnly))
     {
         strResult.clear();
-        qDebug()<<"sll-------------js file open error!!!";
+        qDebug()<<"Errpr::js file open error!!!";
         return;
     }
 

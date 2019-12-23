@@ -5,14 +5,10 @@
 BaseItemModel::BaseItemModel(QObject *pParent)
     : QStandardItemModel(pParent)
 {
-    qDebug()<<"sll-----BaseItemModel构造---start";
-    qDebug()<<"sll-----BaseItemModel构造---end";
 }
 
 QMimeData *BaseItemModel::mimeData(const QModelIndexList &indexes) const
 {
-    qDebug()<<"sll-----mimeData---start";
-    qDebug()<<"sll-----mimeData---end";
     return QStandardItemModel::mimeData(indexes);
 }
 

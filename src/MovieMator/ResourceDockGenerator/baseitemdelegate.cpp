@@ -10,16 +10,12 @@
 BaseItemDelegate::BaseItemDelegate(QObject *pParent) :
     QStyledItemDelegate(pParent)
 {
-    qDebug()<<"sll-----BaseItemDelegate构造---start";
-
     m_bIsAddButton     = false;
     m_bIsDoubleClicked = false;
 
     m_pClickedTimer    = new QTimer(this);
     m_pClickedTimer->setSingleShot(true);
     connect(m_pClickedTimer, SIGNAL(timeout()), this, SLOT(singleClicked()));
-
-    qDebug()<<"sll-----BaseItemDelegate构造---end";
 }
 
 void BaseItemDelegate::paint(QPainter *pPainter,
@@ -51,8 +47,6 @@ bool BaseItemDelegate::editorEvent(QEvent *pEvent,
                                    const QModelIndex &index)
 {
     Q_UNUSED(pModel);
-
-    qDebug()<<"sll-----editorEvent---start";
 
     QRect decorationRect    = QRect(option.rect.left() + option.rect.width() - LISTVIEW_ITEM_ADDBTNSIZE,
                                     option.rect.top(),
@@ -112,8 +106,6 @@ bool BaseItemDelegate::editorEvent(QEvent *pEvent,
         }
     }
 
-    qDebug()<<"sll-----editorEvent---end";
-
     return QStyledItemDelegate::editorEvent(pEvent, pModel, option, index);
 }
 
@@ -122,12 +114,9 @@ QSize BaseItemDelegate::sizeHint(const QStyleOptionViewItem &option,
 {
     Q_UNUSED(option);
     Q_UNUSED(index);
-    qDebug()<<"sll-----sizeHint---start";
 
     QSize itemSize = QSize(LISTVIEW_GRIDSIZE_WIDTH - LISTVIEW_GRID_SPACING * 2,
                            LISTVIEW_GRIDSIZE_HEIGHT - LISTVIEW_GRID_SPACING * 2);
-
-    qDebug()<<"sll-----sizeHint---end";
 
     return itemSize;
 }
