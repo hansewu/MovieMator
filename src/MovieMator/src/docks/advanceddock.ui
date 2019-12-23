@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>532</width>
-    <height>369</height>
+    <height>437</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Export Settings</string>
@@ -17,8 +23,8 @@
    <widget class="QPushButton" name="cancelButton">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>310</y>
+      <x>340</x>
+      <y>380</y>
       <width>77</width>
       <height>28</height>
      </rect>
@@ -31,7 +37,7 @@
     <property name="geometry">
      <rect>
       <x>430</x>
-      <y>310</y>
+      <y>380</y>
       <width>81</width>
       <height>28</height>
      </rect>
@@ -47,13 +53,13 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>10</y>
+      <y>20</y>
       <width>451</width>
-      <height>261</height>
+      <height>321</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <property name="usesScrollButtons">
      <bool>false</bool>
@@ -410,6 +416,9 @@
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QComboBox" name="resolutionBox">
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
             <item>
              <property name="text">
               <string>1280x720(16:9)</string>
@@ -508,7 +517,7 @@
       <property name="geometry">
        <rect>
         <x>54</x>
-        <y>140</y>
+        <y>200</y>
         <width>54</width>
         <height>16</height>
        </rect>
@@ -540,7 +549,7 @@
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>80</y>
+        <y>140</y>
         <width>43</width>
         <height>16</height>
        </rect>
@@ -556,7 +565,7 @@
       <property name="geometry">
        <rect>
         <x>77</x>
-        <y>110</y>
+        <y>170</y>
         <width>28</width>
         <height>16</height>
        </rect>
@@ -588,7 +597,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>170</y>
+        <y>230</y>
         <width>89</width>
         <height>16</height>
        </rect>
@@ -604,7 +613,7 @@
       <property name="geometry">
        <rect>
         <x>180</x>
-        <y>200</y>
+        <y>260</y>
         <width>107</width>
         <height>21</height>
        </rect>
@@ -661,7 +670,7 @@
       <property name="geometry">
        <rect>
         <x>121</x>
-        <y>140</y>
+        <y>200</y>
         <width>221</width>
         <height>26</height>
        </rect>
@@ -697,7 +706,7 @@ in temporal compression</string>
       <property name="geometry">
        <rect>
         <x>121</x>
-        <y>110</y>
+        <y>170</y>
         <width>221</width>
         <height>26</height>
        </rect>
@@ -770,7 +779,7 @@ in temporal compression</string>
       <property name="geometry">
        <rect>
         <x>121</x>
-        <y>80</y>
+        <y>140</y>
         <width>221</width>
         <height>26</height>
        </rect>
@@ -816,19 +825,203 @@ in temporal compression</string>
         <height>26</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_15">
+      <layout class="QHBoxLayout" name="horizontalLayout_15"/>
+     </widget>
+     <widget class="QLabel" name="label_21">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>231</y>
+        <width>59</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>(0 = auto)</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="videoCodecThreadsSpinner">
+      <property name="geometry">
+       <rect>
+        <x>122</x>
+        <y>231</y>
+        <width>48</width>
+        <height>24</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>80</y>
+        <width>180</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="videoBitrateLayout">
        <item>
-        <widget class="QSpinBox" name="videoCodecThreadsSpinner"/>
+        <widget class="QComboBox" name="videoBitrateCombo">
+         <property name="toolTip">
+          <string>The average bit rate</string>
+         </property>
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+         <property name="currentIndex">
+          <number>8</number>
+         </property>
+         <item>
+          <property name="text">
+           <string>64k</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>128k</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>256k</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>512k</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>768k</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>1M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>1200k</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>1500k</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>2M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>2500k</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>3M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>4M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>5M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>6M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>8M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>10M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>12M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>14M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>16M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>18M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>20M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>25M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>30M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>40M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>50M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>60M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>70M</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>80M</string>
+          </property>
+         </item>
+        </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_21">
+        <widget class="QLabel" name="videoBitrateSuffixLabel">
          <property name="text">
-          <string>(0 = auto)</string>
+          <string>b/s</string>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_15">
+        <spacer name="videoBitrateSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -842,6 +1035,109 @@ in temporal compression</string>
        </item>
       </layout>
      </widget>
+     <widget class="QLabel" name="videoBitrateLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>90</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Bitrate</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="videoBufferSizeLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>109</y>
+        <width>90</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Buffer size</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_8">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>110</y>
+        <width>165</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="videoBufferSizeLayout">
+       <item>
+        <widget class="QDoubleSpinBox" name="videoBufferSizeSpinner">
+         <property name="maximum">
+          <double>9999.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>224.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="videoBufferSizeSuffixLabel">
+         <property name="text">
+          <string>KiB</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_18">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <zorder>label_20</zorder>
+     <zorder>label_17</zorder>
+     <zorder>videoQualityLabel</zorder>
+     <zorder>label_18</zorder>
+     <zorder>label_23</zorder>
+     <zorder>label_12</zorder>
+     <zorder>disableVideoCheckbox</zorder>
+     <zorder>layoutWidget</zorder>
+     <zorder>layoutWidget</zorder>
+     <zorder>layoutWidget</zorder>
+     <zorder>layoutWidget</zorder>
+     <zorder>layoutWidget</zorder>
+     <zorder>layoutWidget</zorder>
+     <zorder>horizontalSpacer_15</zorder>
+     <zorder>gopSpinner</zorder>
+     <zorder>bFramesSpinner</zorder>
+     <zorder>horizontalSpacer_19</zorder>
+     <zorder>videoCodecThreadsSpinner</zorder>
+     <zorder>label_21</zorder>
+     <zorder>videoQualitySpinner</zorder>
+     <zorder>horizontalSpacer_14</zorder>
+     <zorder>label_19</zorder>
+     <zorder>horizontalSpacer_15</zorder>
+     <zorder>label_21</zorder>
+     <zorder>videoCodecThreadsSpinner</zorder>
+     <zorder>layoutWidget_2</zorder>
+     <zorder>videoBitrateLabel</zorder>
+     <zorder>videoBufferSizeLabel</zorder>
+     <zorder>layoutWidget_8</zorder>
     </widget>
     <widget class="QWidget" name="audioTab">
      <attribute name="title">
@@ -867,7 +1163,7 @@ in temporal compression</string>
       <property name="geometry">
        <rect>
         <x>180</x>
-        <y>160</y>
+        <y>190</y>
         <width>107</width>
         <height>20</height>
        </rect>
@@ -1186,7 +1482,90 @@ in temporal compression</string>
        </item>
       </layout>
      </widget>
+     <widget class="QLabel" name="audioQualityLabel">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>140</y>
+        <width>74</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Quality</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_9">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>140</y>
+        <width>120</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="audioQualityLayout">
+       <item>
+        <widget class="QSpinBox" name="audioQualitySpinner">
+         <property name="suffix">
+          <string> %</string>
+         </property>
+         <property name="minimum">
+          <number>0</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>50</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_20">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="addPresetButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>350</y>
+      <width>113</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Save Preset</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="resetPresetButton">
+    <property name="geometry">
+     <rect>
+      <x>142</x>
+      <y>350</y>
+      <width>101</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reset</string>
+    </property>
    </widget>
   </widget>
  </widget>

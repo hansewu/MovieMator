@@ -115,8 +115,7 @@ private slots:
     // presetsSearch文本内容发生变化的槽函数
     //void on_presetsSearch_textChanged(const QString &search);
 
-    // resetButton单击的槽函数
-    void on_resetButton_clicked();
+
 
     // 打开捕获的（导出的）文件
     void openCaptureFile();
@@ -146,6 +145,11 @@ private slots:
     void on_changeButtonGroup(int index);
 
     void on_visibilityChanged(bool bVisble);
+
+    void onAddCustomPreset(QString newPreset); //xjp 2019.12.13 添加自定义preset到列表
+    void onResetCurrentPreset();
+
+
 private:
 
     // 界面 ui
@@ -201,7 +205,7 @@ private:
     int m_currentSelectedClass;//当前选中的格式分类， 0-Custom, 1-video, 2-audio, 3-devices,4-tv, 5-lossless, 6-web
     QButtonGroup* m_formatButtonGroup;
 
-    void addCustomPresets(QString newPreset); //xjp 2019.12.13 添加自定义preset到列表
+
 
     // 从预置的 Mlt::Properties中加载预设的配置
     // 从左边的预置树表里读取配置

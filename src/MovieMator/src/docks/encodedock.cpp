@@ -114,10 +114,12 @@ EncodeDock::EncodeDock(QWidget *parent) :
 
 
     connect(m_advanceddock,SIGNAL(updateAdvancedSetting()), this, SLOT(onUpdateAdvancedSetting()));
+    connect(m_advanceddock,SIGNAL(addCustomPreset(QString)),this,SLOT(onAddCustomPreset(QString)));
+    connect(m_advanceddock,SIGNAL(resetCurrentPreset()),this, SLOT(onResetCurrentPreset()));
 
 
 
-    //格式按钮设置了checkable属性后，设置checked状态和非checked状态的颜色
+    //xjp 格式按钮设置了checkable属性后，设置checked状态和非checked状态的颜色
     ui->customFormat->setStyleSheet("QPushButton{background-color: rgb(40, 46, 52);\
                                                  border:1px solid #aaaaaa;} \
                                      QPushButton:checked{background-color: rgb(161, 67, 42); border:1px solid #aaaaaa;}");
@@ -140,7 +142,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
                                 border:1px solid #aaaaaa;} \
                     QPushButton:checked{background-color: rgb(161, 67, 42); border:1px solid #aaaaaa;}");
 
-    //用QButtonGrop控件实现几个format按钮之间的选中状态互斥
+    //xjp 用QButtonGrop控件实现几个format按钮之间的选中状态互斥
     m_formatButtonGroup = new QButtonGroup;
     m_formatButtonGroup->addButton(ui->customFormat,0);
     m_formatButtonGroup->addButton(ui->videoFormat,1);
@@ -194,6 +196,26 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
     QStringList other;
 
     m_extension.clear();
+
+    QString strPresetName = preset.get("meta.preset.name");  //m_modelList[m_currentSelectedClass].data(0, Qt::UserRole + 1).toString()；
+    qDebug()<<"******** xjp preset name:"<<strPresetName;
+    if(strPresetName == "DVD (dv_pal)")
+    {
+        preset.set("width","720");
+        preset.set("height","576");
+        preset.set("aspect",double(4.0/3.0));
+        preset.set("r","25");
+
+    }
+    else if(strPresetName == "DVD (dv_ntsc)")
+    {
+        preset.set("width","720");
+        preset.set("height","480");
+        preset.set("aspect",double(4.0/3.0));
+        preset.set("r","29.97");
+    }
+
+
     for (int i = 0; i < preset.count(); i++)
     {
         QString name(preset.get_name(i));
@@ -217,6 +239,13 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             ui->bitrateValue->setText(QString("%1bps").arg(preset.get("ab")));
          }
 
+
+    }
+
+
+    if(preset.get_double("aspect") == 0) //xjp，当preset文件中没有aspect参数时，从profile中获取默认值
+    {
+         preset.set("aspect", double(MLT.profile().display_aspect_num())/double(MLT.profile().display_aspect_den()) );
 
     }
 }
@@ -326,12 +355,6 @@ void EncodeDock::loadPresets()
                     if (preset.get("meta.preset.note"))
                         item->setToolTip(QString("<p>%1</p>").arg(QString::fromUtf8(preset.get("meta.preset.note"))));
                 //    parentItem->appendRow(item);
-
-                    //xjp 2019.12.17 encodedock显示时， m_currentPreset有初始值，默认情况下点击"Advanced"按钮不会崩溃
-//                    if(categoryIndex == 1 && indexInCategory == 0)
-//                        setCurrentPreset(m_presets);
-                    /***** end ******/
-
                     m_modelList[categoryIndex].setItem(indexInCategory,item);
 
             }
@@ -1347,7 +1370,7 @@ void EncodeDock::on_addPresetButton_clicked()
                 f.write(dialog.properties().toUtf8());
 
             // add the preset and select it
-            addCustomPresets(preset);   //   loadPresets();
+            onAddCustomPreset(preset);   //   loadPresets();
 //            QModelIndex parentIndex = m_presetsModel.index(0, 0);
 //            int n = m_presetsModel.rowCount(parentIndex);
 //            for (int i = 0; i < n; i++) {
@@ -1638,6 +1661,8 @@ void EncodeDock::on_presetsList_clicked(const QModelIndex &index)
             }
             loadPresetFromProperties(*preset);
 
+            qDebug()<<"**** xjp "<<name<<"preset"<<preset->get("aspect");
+
         }
         else {
             delete preset;
@@ -1690,7 +1715,7 @@ void EncodeDock::on_presetsList_clicked(const QModelIndex &index)
  }
 
 
- void EncodeDock::addCustomPresets(QString newPreset)
+ void EncodeDock::onAddCustomPreset(QString newPreset)
  {
      Q_ASSERT(m_presets);
 
@@ -1713,12 +1738,13 @@ void EncodeDock::on_presetsList_clicked(const QModelIndex &index)
           item->setData(0, Qt::UserRole + 2);
       //       parentItem->appendRow(item);
 
-          m_modelList[0].appendRow(item);
-          //   m_modelList[0].setItem(0,item);
+        //  m_modelList[0].appendRow(item);
+             m_modelList[0].insertRow(0,item);
       }
 
       ui->presetsList->setModel(&m_modelList[0]);
       ui->customFormat->click();
+
 
  }
 
@@ -1738,6 +1764,7 @@ void EncodeDock::on_presetsList_clicked(const QModelIndex &index)
          QModelIndex indexFromList = m_modelList[index].index(0,0);
          ui->presetsList->clicked(indexFromList);
          ui->presetsList->setCurrentIndex(indexFromList);
+         ui->presetsList->setFocus();
 
          if(index == 2)
          {
@@ -1765,16 +1792,14 @@ void EncodeDock::on_presetsList_clicked(const QModelIndex &index)
          }
 
      }
-     qDebug()<<tr("被选中按钮的objectName1").arg(checkedBtnObjectName);
+
+     //xjp 2019.12.20 每次切换格式，也设置高级设置窗口的控件的值，防止用户不修改advance窗口的设置，时，也能取到advanceddock的值
+     bool bVideo = (m_currentSelectedClass!=2)?true:false;
+     m_advanceddock->setPreset(m_currentPreset,bVideo);
+
 
  }
 
-void EncodeDock::on_resetButton_clicked()
-{
-    //    m_isDefaultSettings = true;
-        resetOptions();
-        onProfileChanged();
-}
 
 
 
@@ -1788,4 +1813,13 @@ void EncodeDock::on_visibilityChanged(bool bVisible)
 
 
     }
+}
+
+
+void EncodeDock::onResetCurrentPreset()
+{
+    resetOptions();
+    onProfileChanged();
+    bool bVideo = (m_currentSelectedClass!=2)?true:false;
+    m_advanceddock->setPreset(m_currentPreset,bVideo);
 }

@@ -3,6 +3,7 @@
 #include <QComboBox>
 #include <QtWidgets>
 #include "mltcontroller.h"
+#include "dialogs/addencodepresetdialog.h"
 
 
 #define TO_RELATIVE(min, max, abs) qRound(100.0f * float((abs) - (min)) / float((max) - (min) + 1))
@@ -28,7 +29,7 @@ AdvancedDock::AdvancedDock(QWidget *parent) :
         c.start();
         c.stop();
 
-        Mlt::Properties* p = new Mlt::Properties(c.get_data("f"));
+        Mlt::Properties* p = new Mlt::Properties(c.get_data("acodec"));
 
         Q_ASSERT(p);
         for (int i = 0; i < p->count(); i++)
@@ -45,9 +46,34 @@ AdvancedDock::AdvancedDock(QWidget *parent) :
         ui->videoCodecCombo->model()->sort(0);
         ui->videoCodecCombo->insertItem(0, tr("Default for format"));
 
-  //      on_resetButton_clicked();
+        //xjp, 给每个控件设置背景色，解决默认字体颜色时控件内容看不清楚的问题
+        //video tab  QSpinBox::up-button{background-color: rgb(82, 82, 82)};border:1px solid #aaaaaa;}");
+        ui->resolutionBox->setBackgroundRole(QPalette::ColorRole::Dark);
+        ui->widthSpinner->setStyleSheet("QSpinBox{background-color: rgb(0, 0, 0); border:1px solid #aaaaaa;}"); \
+                                      //  QSpinBox::up-arrow{background-color: rgb(255, 255, 255)};border:1px solid #aaaaaa;}");
+        ui->heightSpinner->setStyleSheet("QSpinBox{background-color: rgb(0, 0, 0); border:1px solid #aaaaaa;}");
+        ui->fpsSpinner->setStyleSheet("QDoubleSpinBox{background-color: rgb(0, 0, 0); border:1px solid #aaaaaa;}");
+        ui->scanModeCombo->setBackgroundRole(QPalette::ColorRole::Dark);
+        ui->deinterlacerCombo->setBackgroundRole(QPalette::ColorRole::Dark);
+        ui->interpolationCombo->setBackgroundRole(QPalette::ColorRole::Dark);
 
+        //Codec Tab
+        ui->videoCodecCombo->setBackgroundRole(QPalette::ColorRole::Dark);
+        ui->videoRateControlCombo->setBackgroundRole(QPalette::ColorRole::Dark);
+        ui->videoQualitySpinner->setStyleSheet("QSpinBox{background-color: rgb(0, 0, 0); border:1px solid #aaaaaa;}");
+        ui->gopSpinner->setStyleSheet("QSpinBox{background-color: rgb(0, 0, 0); border:1px solid #aaaaaa;}");
+        ui->bFramesSpinner->setStyleSheet("QSpinBox{background-color: rgb(0, 0, 0); border:1px solid #aaaaaa;}");
+        ui->videoCodecThreadsSpinner->setStyleSheet("QSpinBox{background-color: rgb(0, 0, 0); border:1px solid #aaaaaa;}");
+        ui->disableVideoCheckbox->setBackgroundRole(QPalette::ColorRole::Dark);
 
+        //Audio Tab
+        ui->sampleRateCombo->setBackgroundRole(QPalette::ColorRole::Dark);
+        ui->audioCodecCombo->setBackgroundRole(QPalette::ColorRole::Dark);
+        ui->audioRateControlCombo->setBackgroundRole(QPalette::ColorRole::Dark);
+        ui->audioBitrateCombo->setBackgroundRole(QPalette::ColorRole::Dark);
+        ui->disableAudioCheckbox->setBackgroundRole(QPalette::ColorRole::Dark);
+
+        setAttribute(Qt::WA_ShowModal, true);
   }
 }
 
@@ -144,36 +170,36 @@ void AdvancedDock::on_videoRateControlCombo_activated(int index)
 {
     switch (index) {
     case RateControlAverage:
-       // ui->videoBitrateCombo->show();
-       // ui->videoBufferSizeSpinner->hide();
+        ui->videoBitrateCombo->show();
+        ui->videoBufferSizeSpinner->hide();
         ui->videoQualitySpinner->hide();
         //ui->dualPassCheckbox->show();
-        //ui->videoBitrateLabel->show();
-        //ui->videoBitrateSuffixLabel->show();
-        //ui->videoBufferSizeLabel->hide();
-        //ui->videoBufferSizeSuffixLabel->hide();
+        ui->videoBitrateLabel->show();
+        ui->videoBitrateSuffixLabel->show();
+        ui->videoBufferSizeLabel->hide();
+        ui->videoBufferSizeSuffixLabel->hide();
         ui->videoQualityLabel->hide();
         break;
     case RateControlConstant:
-       // ui->videoBitrateCombo->show();
-       // ui->videoBufferSizeSpinner->show();
+        ui->videoBitrateCombo->show();
+        ui->videoBufferSizeSpinner->show();
         ui->videoQualitySpinner->hide();
-        //ui->dualPassCheckbox->show();
-        //ui->videoBitrateLabel->show();
-       // ui->videoBitrateSuffixLabel->show();
-       // ui->videoBufferSizeLabel->show();
-       // ui->videoBufferSizeSuffixLabel->show();
+     //   ui->dualPassCheckbox->show();
+        ui->videoBitrateLabel->show();
+        ui->videoBitrateSuffixLabel->show();
+        ui->videoBufferSizeLabel->show();
+        ui->videoBufferSizeSuffixLabel->show();
         ui->videoQualityLabel->hide();
         break;
     case RateControlQuality:
-       // ui->videoBitrateCombo->hide();
-        //ui->videoBufferSizeSpinner->hide();
+        ui->videoBitrateCombo->hide();
+        ui->videoBufferSizeSpinner->hide();
         ui->videoQualitySpinner->show();
-        //ui->dualPassCheckbox->hide();
-        //ui->videoBitrateLabel->hide();
-        //ui->videoBitrateSuffixLabel->hide();
-        //ui->videoBufferSizeLabel->hide();
-        //ui->videoBufferSizeSuffixLabel->hide();
+     //   ui->dualPassCheckbox->hide();
+        ui->videoBitrateLabel->hide();
+        ui->videoBitrateSuffixLabel->hide();
+        ui->videoBufferSizeLabel->hide();
+        ui->videoBufferSizeSuffixLabel->hide();
         ui->videoQualityLabel->show();
         break;
     }
@@ -187,24 +213,24 @@ void AdvancedDock::on_audioRateControlCombo_activated(int index)
     switch (index) {
     case RateControlAverage:
         ui->audioBitrateCombo->show();
-      //  ui->audioQualitySpinner->hide();
+        ui->audioQualitySpinner->hide();
         ui->audioBitrateLabel->show();
         ui->audioBitrateSuffixLabel->show();
-        //ui->audioQualityLabel->hide();
+        ui->audioQualityLabel->hide();
         break;
     case RateControlConstant:
         ui->audioBitrateCombo->show();
-       // ui->audioQualitySpinner->hide();
+        ui->audioQualitySpinner->hide();
         ui->audioBitrateLabel->show();
         ui->audioBitrateSuffixLabel->show();
-        //ui->audioQualityLabel->hide();
+        ui->audioQualityLabel->hide();
         break;
     case RateControlQuality:
         ui->audioBitrateCombo->hide();
-       // ui->audioQualitySpinner->show();
+        ui->audioQualitySpinner->show();
         ui->audioBitrateLabel->hide();
         ui->audioBitrateSuffixLabel->hide();
-        //ui->audioQualityLabel->show();
+        ui->audioQualityLabel->show();
         break;
     }
 }
@@ -215,6 +241,22 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo)
        int audioQuality = -1;
        int videoQuality = -1;
        QStringList other;
+
+       ui->deinterlacerCombo->setCurrentIndex(3);
+       ui->interpolationCombo->setCurrentIndex(1);
+       ui->videoBitrateCombo->lineEdit()->setText("2M");
+       ui->videoBufferSizeSpinner->setValue(224);
+       ui->gopSpinner->blockSignals(true);
+       ui->gopSpinner->setValue(13);
+       ui->gopSpinner->blockSignals(false);
+       ui->bFramesSpinner->setValue(2);
+       ui->videoCodecThreadsSpinner->setValue(0);
+     //  ui->dualPassCheckbox->setChecked(false);
+       ui->disableVideoCheckbox->setChecked(false);
+
+       ui->sampleRateCombo->lineEdit()->setText("44100");
+       ui->audioBitrateCombo->lineEdit()->setText("384k");
+       ui->audioQualitySpinner->setValue(50);
 
 
        //xjp 2019.12.6 用profile的宽，高来设置widthSpinner， heightSpinner的初始值
@@ -233,7 +275,7 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo)
        ui->disableVideoCheckbox->setChecked(preset->get_int("vn"));
        for (int i = 0; i < preset->count(); i++) {
            QString name(preset->get_name(i));
-           qDebug()<<"****** xjp pare name:"<<name;
+          // qDebug()<<"****** xjp pare name:"<<name;
             if (name == "acodec") {
                for (int i = 0; i < ui->audioCodecCombo->count(); i++)
                    if (ui->audioCodecCombo->itemText(i) == preset->get("acodec"))
@@ -253,7 +295,7 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo)
                ui->audioBitrateCombo->lineEdit()->setText(preset->get("ab"));
            else if (name == "vb") {
                ui->videoRateControlCombo->setCurrentIndex(RateControlAverage);
-//               ui->videoBitrateCombo->lineEdit()->setText(preset->get("vb"));
+               ui->videoBitrateCombo->lineEdit()->setText(preset->get("vb"));
            }
            else if (name == "g")
                ui->gopSpinner->setValue(preset->get_int("g"));
@@ -642,4 +684,88 @@ void AdvancedDock::updateCurrentPreset(int realtime)
      }
      
 
+}
+
+
+
+void AdvancedDock::on_addPresetButton_clicked()
+{
+    updateCurrentPreset(-3);
+
+    Mlt::Properties* data = collectProperties(0);
+    Q_ASSERT(data);
+    AddEncodePresetDialog dialog(this);
+    QStringList ls;
+
+//    if (data && data->is_valid())
+//        for (int i = 0; i < data->count(); i++)
+//            if (strlen(data->get_name(i)) > 0)
+//                ls << QString("%1=%2").arg(data->get_name(i)).arg(data->get(i));
+
+    dialog.setWindowTitle(tr("Add Export Preset"));
+
+//    dialog.setProperties(ls.join("\n"));
+    //dialog.setPresetName(ui->presetLabel->text());
+    if (dialog.exec() == QDialog::Accepted) {
+        QString preset = dialog.presetName();
+        data->set("meta.preset.name", preset.toLatin1().constData());
+        if (data && data->is_valid())
+            for (int i = 0; i < data->count(); i++)
+                if (strlen(data->get_name(i)) > 0)
+                    ls << QString("%1=%2").arg(data->get_name(i)).arg(data->get(i));
+        dialog.setProperties(ls.join("\n"));
+        QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+        QString subdir("encode");
+
+        if (!preset.isEmpty()) {
+            if (!dir.exists())
+                dir.mkpath(dir.path());
+            if (!dir.cd("presets")) {
+                if (dir.mkdir("presets"))
+                    dir.cd("presets");
+            }
+            if (!dir.cd(subdir)) {
+                if (dir.mkdir(subdir))
+                    dir.cd(subdir);
+            }
+            QFile f(dir.filePath(preset));
+            if (f.open(QIODevice::WriteOnly | QIODevice::Text))
+                f.write(dialog.properties().toUtf8());
+
+            // add the preset and select it
+            emit addCustomPreset(preset);   //   loadPresets();
+//            QModelIndex parentIndex = m_presetsModel.index(0, 0);
+//            int n = m_presetsModel.rowCount(parentIndex);
+//            for (int i = 0; i < n; i++) {
+//                QModelIndex index = m_presetsModel.index(i, 0, parentIndex);
+//                if (m_presetsModel.data(index).toString() == preset) {
+////                    ui->presetsTree->setCurrentIndex(index);
+//                    break;
+//                }
+//            }
+        }
+    }
+    delete data;
+}
+
+
+Mlt::Properties* AdvancedDock::collectProperties(int realtime)
+{
+    Mlt::Properties* p = new Mlt::Properties;
+
+    if (p && p->is_valid())
+    {
+        if (m_currentPreset && m_currentPreset->is_valid()) {
+            for (int i = 0; i < m_currentPreset->count(); i++)
+                if (m_currentPreset->get_name(i) && strcmp(m_currentPreset->get_name(i), ""))
+                    p->set(m_currentPreset->get_name(i), m_currentPreset->get(i));
+        }
+    }
+
+    return p;
+}
+
+void AdvancedDock::on_resetPresetButton_clicked()
+{
+    emit resetCurrentPreset();
 }

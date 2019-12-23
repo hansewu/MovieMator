@@ -9,9 +9,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>712</width>
-    <height>539</height>
+    <width>638</width>
+    <height>487</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
@@ -39,10 +45,10 @@
    <widget class="QPushButton" name="advancedButton">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>300</y>
+      <x>420</x>
+      <y>290</y>
       <width>111</width>
-      <height>51</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -52,8 +58,8 @@
    <widget class="QLabel" name="resolutionLabel">
     <property name="geometry">
      <rect>
-      <x>412</x>
-      <y>90</y>
+      <x>382</x>
+      <y>70</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -62,14 +68,14 @@
      <string>Resolution:</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="fpsLabel">
     <property name="geometry">
      <rect>
-      <x>412</x>
-      <y>150</y>
+      <x>382</x>
+      <y>130</y>
       <width>81</width>
       <height>20</height>
      </rect>
@@ -78,14 +84,14 @@
      <string>Frames/Sec:</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="durationLabel">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>210</y>
+      <x>382</x>
+      <y>190</y>
       <width>58</width>
       <height>16</height>
      </rect>
@@ -98,8 +104,8 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>460</y>
-      <width>711</width>
+      <y>410</y>
+      <width>641</width>
       <height>56</height>
      </rect>
     </property>
@@ -120,30 +126,7 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_19">
      <item>
-      <widget class="QPushButton" name="removePresetButton">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Delete currently selected( preset</string>
-       </property>
-       <property name="text">
-        <string>Delete Preset</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="addPresetButton">
-       <property name="toolTip">
-        <string>Add current settings as a new custom preset</string>
-       </property>
-       <property name="text">
-        <string>Save Preset</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
+      <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -156,16 +139,6 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="resetButton">
-       <property name="toolTip">
-        <string>Reset options to defaults</string>
-       </property>
-       <property name="text">
-        <string>Reset</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="encodeButton">
        <property name="text">
         <string>Export File</string>
@@ -173,102 +146,6 @@
       </widget>
      </item>
     </layout>
-   </widget>
-   <widget class="QPushButton" name="customFormat">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>116</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Custom</string>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="videoFormat">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>50</y>
-      <width>116</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Video</string>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="audioFormat">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>100</y>
-      <width>116</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Audio</string>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="deviceFormat">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>150</y>
-      <width>116</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Devices</string>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="tvFormat">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>200</y>
-      <width>116</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TV</string>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="losslessFormat">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>250</y>
-      <width>116</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Lossless</string>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
    </widget>
    <widget class="QPushButton" name="webFormat">
     <property name="geometry">
@@ -292,8 +169,8 @@
    <widget class="QLabel" name="resolutionValue">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>90</y>
+      <x>480</x>
+      <y>70</y>
       <width>91</width>
       <height>20</height>
      </rect>
@@ -308,8 +185,8 @@
    <widget class="QLabel" name="fpsValue">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>150</y>
+      <x>480</x>
+      <y>130</y>
       <width>71</width>
       <height>16</height>
      </rect>
@@ -324,8 +201,8 @@
    <widget class="QLabel" name="durationValue">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>210</y>
+      <x>480</x>
+      <y>190</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -343,7 +220,7 @@
       <x>118</x>
       <y>0</y>
       <width>191</width>
-      <height>451</height>
+      <height>361</height>
      </rect>
     </property>
     <property name="alternatingRowColors">
@@ -353,8 +230,8 @@
    <widget class="QLabel" name="bitrateLabel">
     <property name="geometry">
      <rect>
-      <x>433</x>
-      <y>90</y>
+      <x>382</x>
+      <y>70</y>
       <width>60</width>
       <height>16</height>
      </rect>
@@ -363,14 +240,14 @@
      <string>Bit Rate:</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="bitrateValue">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>90</y>
+      <x>480</x>
+      <y>70</y>
       <width>60</width>
       <height>16</height>
      </rect>
@@ -382,8 +259,8 @@
    <widget class="QLabel" name="sampleRateLabel">
     <property name="geometry">
      <rect>
-      <x>412</x>
-      <y>150</y>
+      <x>382</x>
+      <y>130</y>
       <width>81</width>
       <height>20</height>
      </rect>
@@ -392,20 +269,171 @@
      <string>Sample Rate:</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="sampleRateValue">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>150</y>
+      <x>480</x>
+      <y>130</y>
       <width>60</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>44100Hz</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="removePresetButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>374</y>
+      <width>124</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Delete currently selected( preset</string>
+    </property>
+    <property name="text">
+     <string>Delete Preset</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="customFormat">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>116</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Delete currently selected( preset</string>
+    </property>
+    <property name="text">
+     <string>Custom</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="videoFormat">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>50</y>
+      <width>116</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Delete currently selected( preset</string>
+    </property>
+    <property name="text">
+     <string>Video</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="audioFormat">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>100</y>
+      <width>116</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Delete currently selected( preset</string>
+    </property>
+    <property name="text">
+     <string>Audio</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deviceFormat">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>150</y>
+      <width>116</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Delete currently selected( preset</string>
+    </property>
+    <property name="text">
+     <string>Devices</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="tvFormat">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>200</y>
+      <width>116</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Delete currently selected( preset</string>
+    </property>
+    <property name="text">
+     <string>TV</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="losslessFormat">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>250</y>
+      <width>116</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Delete currently selected( preset</string>
+    </property>
+    <property name="text">
+     <string>Lossless</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

@@ -20,6 +20,543 @@
     </message>
 </context>
 <context>
+    <name>AdvancedDock</name>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="14"/>
+        <source>Export Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="27"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="40"/>
+        <source>OK</source>
+        <translation type="unfinished">确定</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="66"/>
+        <source>Video</source>
+        <translation type="unfinished">视频</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="96"/>
+        <source>Deinterlacer</source>
+        <translation type="unfinished">反交错</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="112"/>
+        <source>Interpolation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="128"/>
+        <source>Frames/sec</source>
+        <translation type="unfinished">帧/秒</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="144"/>
+        <source>Scan mode</source>
+        <translation type="unfinished">扫描方式</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="160"/>
+        <source>Resolution</source>
+        <translation type="unfinished">分辨率</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="195"/>
+        <source>x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="272"/>
+        <source>Interlaced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="277"/>
+        <source>Progressive</source>
+        <translation type="unfinished">逐行</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="314"/>
+        <source>One Field (fast)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="319"/>
+        <source>Linear Blend (fast)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="324"/>
+        <source>YADIF - temporal only (good)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="329"/>
+        <source>YADIF - temporal + spatial (best)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="366"/>
+        <source>Nearest Neighbor (fast)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="371"/>
+        <source>Bilinear (good)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="376"/>
+        <source>Bicubic (better)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="381"/>
+        <source>Hyper/Lanczos (best)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="418"/>
+        <source>1280x720(16:9)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="423"/>
+        <source>1440x1080(16:9)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="428"/>
+        <source>1920x1080(16:9)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="433"/>
+        <source>2560x1440(16:9)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="438"/>
+        <source>3840x2160(16:9)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="443"/>
+        <source>1080x1920(9:16)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="448"/>
+        <source>1920x1440(4:3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="453"/>
+        <source>1280x960(4:3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="458"/>
+        <source>720x480(3:2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="463"/>
+        <source>720x576(5:4)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="468"/>
+        <source>1400x1080(35:27)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="473"/>
+        <source>Custom</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="508"/>
+        <location filename="../src/docks/advanceddock.ui" line="536"/>
+        <location filename="../src/docks/advanceddock.ui" line="1211"/>
+        <source>Codec</source>
+        <translation type="unfinished">编码</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="520"/>
+        <source>B frames</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="552"/>
+        <location filename="../src/docks/advanceddock.ui" line="1489"/>
+        <source>Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="568"/>
+        <source>GOP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="584"/>
+        <location filename="../src/docks/advanceddock.ui" line="1150"/>
+        <source>Rate control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="600"/>
+        <source>Codec threads</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="616"/>
+        <source>Disable video</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="633"/>
+        <location filename="../src/docks/advanceddock.ui" line="1231"/>
+        <source>Average Bitrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="638"/>
+        <location filename="../src/docks/advanceddock.ui" line="1236"/>
+        <source>Constant Bitrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="643"/>
+        <location filename="../src/docks/advanceddock.ui" line="1241"/>
+        <source>Quality-based VBR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="676"/>
+        <source>B frames are the bidirectional &quot;delta&quot; pictures
+in temporal compression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="712"/>
+        <source>GOP = group of pictures, which is the maximum key frame interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="725"/>
+        <source>frames</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="785"/>
+        <location filename="../src/docks/advanceddock.ui" line="1508"/>
+        <source> %</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="834"/>
+        <source>(0 = auto)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="860"/>
+        <location filename="../src/docks/advanceddock.ui" line="1274"/>
+        <source>The average bit rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="870"/>
+        <location filename="../src/docks/advanceddock.ui" line="1299"/>
+        <source>64k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="875"/>
+        <location filename="../src/docks/advanceddock.ui" line="1309"/>
+        <source>128k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="880"/>
+        <location filename="../src/docks/advanceddock.ui" line="1324"/>
+        <source>256k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="885"/>
+        <location filename="../src/docks/advanceddock.ui" line="1334"/>
+        <source>512k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="890"/>
+        <source>768k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="895"/>
+        <location filename="../src/docks/advanceddock.ui" line="1339"/>
+        <source>1M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="900"/>
+        <source>1200k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="905"/>
+        <source>1500k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="910"/>
+        <source>2M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="915"/>
+        <source>2500k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="920"/>
+        <source>3M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="925"/>
+        <source>4M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="930"/>
+        <source>5M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="935"/>
+        <source>6M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="940"/>
+        <source>8M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="945"/>
+        <source>10M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="950"/>
+        <source>12M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="955"/>
+        <source>14M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="960"/>
+        <source>16M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="965"/>
+        <source>18M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="970"/>
+        <source>20M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="975"/>
+        <source>25M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="980"/>
+        <source>30M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="985"/>
+        <source>40M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="990"/>
+        <source>50M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="995"/>
+        <source>60M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1000"/>
+        <source>70M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1005"/>
+        <source>80M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1013"/>
+        <location filename="../src/docks/advanceddock.ui" line="1347"/>
+        <source>b/s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1042"/>
+        <location filename="../src/docks/advanceddock.ui" line="1179"/>
+        <source>Bitrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1058"/>
+        <source>Buffer size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1087"/>
+        <source>KiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1138"/>
+        <source>Audio</source>
+        <translation type="unfinished">音频</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1166"/>
+        <source>Disable audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1195"/>
+        <source>Sample rate</source>
+        <translation type="unfinished">采样率</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1284"/>
+        <source>16k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1289"/>
+        <source>32k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1294"/>
+        <source>48k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1304"/>
+        <source>96k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1314"/>
+        <source>160k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1319"/>
+        <source>190k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1329"/>
+        <source>384k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1382"/>
+        <location filename="../src/docks/advanceddock.ui" line="1414"/>
+        <source>44100</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1389"/>
+        <source>8000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1394"/>
+        <source>12000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1399"/>
+        <source>16000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1404"/>
+        <source>22050</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1409"/>
+        <source>32000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1419"/>
+        <source>48000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1424"/>
+        <source>96000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1432"/>
+        <source>Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1548"/>
+        <source>Save Preset</source>
+        <translation type="unfinished">保存预设</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="1561"/>
+        <source>Reset</source>
+        <translation type="unfinished">重置</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.cpp" line="39"/>
+        <location filename="../src/docks/advanceddock.cpp" line="47"/>
+        <source>Default for format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.cpp" line="705"/>
+        <source>Add Export Preset</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AlsaWidget</name>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="14"/>
@@ -60,27 +597,27 @@
         <translation type="unfinished">设置工程宽高比</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="45"/>
+        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="50"/>
         <source>16:9(Landscape)</source>
         <translation type="unfinished">16:9(宽屏)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="46"/>
+        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="51"/>
         <source>9:16(Portrait)</source>
         <translation type="unfinished">9:16(竖屏)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="47"/>
+        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="52"/>
         <source>4:3(Classic)</source>
         <translation type="unfinished">4:3(标准)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="48"/>
+        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="53"/>
         <source>3:4(E-store)</source>
         <translation type="unfinished">3:4(电商)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="49"/>
+        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="54"/>
         <source>1:1(Square)</source>
         <translation type="unfinished">1:1(方形)</translation>
     </message>
@@ -1016,658 +1553,251 @@ You may leave your Email address and tell us more detailed information about the
     <message>
         <location filename="../src/dialogs/durationdialog.ui" line="25"/>
         <source>Duration</source>
-        <translation type="unfinished">时长</translation>
+        <translation>时长</translation>
     </message>
 </context>
 <context>
     <name>EncodeDock</name>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="33"/>
+        <location filename="../src/docks/encodedock.ui" line="39"/>
         <source>Export</source>
         <translation type="unfinished">导出</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="142"/>
         <source>Default</source>
-        <translation type="unfinished">默认</translation>
+        <translation type="obsolete">默认</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="149"/>
         <source>Format</source>
-        <translation type="unfinished">格式</translation>
+        <translation type="obsolete">格式</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="162"/>
         <source>From</source>
-        <translation type="unfinished">表单</translation>
+        <translation type="obsolete">表单</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="188"/>
+        <location filename="../src/docks/encodedock.ui" line="345"/>
         <source>Video</source>
         <translation type="unfinished">视频</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="212"/>
         <source>Interpolation</source>
-        <translation type="unfinished">变形</translation>
+        <translation type="obsolete">变形</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="222"/>
         <source>Field order</source>
-        <translation type="unfinished">场序</translation>
+        <translation type="obsolete">场序</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="232"/>
         <source>Aspect ratio</source>
-        <translation type="unfinished">宽高比</translation>
+        <translation type="obsolete">宽高比</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="260"/>
-        <source>x</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="295"/>
         <source>Scan mode</source>
-        <translation type="unfinished">扫描方式</translation>
+        <translation type="obsolete">扫描方式</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="314"/>
         <source>Interlaced</source>
-        <translation type="unfinished">隔行</translation>
+        <translation type="obsolete">隔行</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="319"/>
         <source>Progressive</source>
-        <translation type="unfinished">逐行</translation>
+        <translation type="obsolete">逐行</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="388"/>
         <source>Resolution</source>
-        <translation type="unfinished">分辨率</translation>
+        <translation type="obsolete">分辨率</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="398"/>
         <source>Frames/sec</source>
-        <translation type="unfinished">帧/秒</translation>
+        <translation type="obsolete">帧/秒</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="426"/>
-        <source>:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="467"/>
         <source>Bottom Field First</source>
-        <translation type="unfinished">底场优先</translation>
+        <translation type="obsolete">底场优先</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="472"/>
         <source>Top Field First</source>
-        <translation type="unfinished">高场优先</translation>
+        <translation type="obsolete">高场优先</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="501"/>
-        <source>One Field (fast)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="506"/>
-        <source>Linear Blend (fast)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="511"/>
-        <source>YADIF - temporal only (good)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="516"/>
-        <source>YADIF - temporal + spatial (best)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="539"/>
         <source>Deinterlacer</source>
-        <translation type="unfinished">反交错</translation>
+        <translation type="obsolete">反交错</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="555"/>
-        <source>Nearest Neighbor (fast)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="560"/>
-        <source>Bilinear (good)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="565"/>
-        <source>Bicubic (better)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="570"/>
-        <source>Hyper/Lanczos (best)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="593"/>
-        <source>This enables multiple image processing threads.
-Sometimes, this can be a problem, and you can
-test if turning this off helps. For example, some
-interlaced AVCHD in conjunction with the YADIF
-deinterlacer has been reported as problematic
-with parallel processing enabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="601"/>
-        <source>Parallel processing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="615"/>
-        <location filename="../src/docks/encodedock.ui" line="624"/>
-        <location filename="../src/docks/encodedock.ui" line="1220"/>
         <source>Codec</source>
-        <translation type="unfinished">编码</translation>
+        <translation type="obsolete">编码</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="654"/>
-        <source>GOP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="666"/>
-        <source>GOP = group of pictures, which is the maximum key frame interval</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="679"/>
-        <source>frames</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="703"/>
-        <location filename="../src/docks/encodedock.ui" line="1262"/>
-        <source>The average bit rate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="713"/>
-        <location filename="../src/docks/encodedock.ui" line="1287"/>
-        <source>64k</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="718"/>
-        <location filename="../src/docks/encodedock.ui" line="1297"/>
-        <source>128k</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="723"/>
-        <location filename="../src/docks/encodedock.ui" line="1307"/>
-        <source>256k</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="728"/>
-        <location filename="../src/docks/encodedock.ui" line="1317"/>
-        <source>512k</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="733"/>
-        <source>768k</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="738"/>
-        <location filename="../src/docks/encodedock.ui" line="1322"/>
-        <source>1M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="743"/>
-        <source>1200k</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="748"/>
-        <source>1500k</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="753"/>
-        <source>2M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="758"/>
-        <source>2500k</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="763"/>
-        <source>3M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="768"/>
-        <source>4M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="773"/>
-        <source>5M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="778"/>
-        <source>6M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="783"/>
-        <source>8M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="788"/>
-        <source>10M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="793"/>
-        <source>12M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="798"/>
-        <source>14M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="803"/>
-        <source>16M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="808"/>
-        <source>18M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="813"/>
-        <source>20M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="818"/>
-        <source>25M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="823"/>
-        <source>30M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="828"/>
-        <source>40M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="833"/>
-        <source>50M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="838"/>
-        <source>60M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="843"/>
-        <source>70M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="848"/>
-        <source>80M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="856"/>
-        <location filename="../src/docks/encodedock.ui" line="1330"/>
-        <source>b/s</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="878"/>
-        <source>Disable video</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="885"/>
-        <source>Dual pass</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="892"/>
-        <source>B frames</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="904"/>
-        <source>B frames are the bidirectional &quot;delta&quot; pictures
-in temporal compression</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="943"/>
-        <source>Codec threads</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="958"/>
-        <source>(0 = auto)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="980"/>
-        <location filename="../src/docks/encodedock.ui" line="1372"/>
-        <source>Rate control</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="993"/>
-        <location filename="../src/docks/encodedock.ui" line="1385"/>
-        <source>Average Bitrate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="998"/>
-        <location filename="../src/docks/encodedock.ui" line="1390"/>
-        <source>Constant Bitrate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1003"/>
-        <location filename="../src/docks/encodedock.ui" line="1395"/>
-        <source>Quality-based VBR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1026"/>
-        <source>Buffer size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1048"/>
-        <source>KiB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1070"/>
-        <location filename="../src/docks/encodedock.ui" line="1418"/>
-        <source>Quality</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1082"/>
-        <location filename="../src/docks/encodedock.ui" line="1430"/>
-        <source> %</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1113"/>
-        <location filename="../src/docks/encodedock.ui" line="1250"/>
-        <source>Bitrate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1124"/>
+        <location filename="../src/docks/encodedock.ui" line="367"/>
         <source>Audio</source>
         <translation type="unfinished">音频</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1145"/>
-        <source>8000</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1150"/>
-        <source>12000</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1155"/>
-        <source>16000</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1160"/>
-        <source>22050</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1165"/>
-        <source>32000</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1138"/>
-        <location filename="../src/docks/encodedock.ui" line="1170"/>
-        <source>44100</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1175"/>
-        <source>48000</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1180"/>
-        <source>96000</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1188"/>
-        <source>Hz</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1210"/>
         <source>Sample rate</source>
-        <translation type="unfinished">采样率</translation>
+        <translation type="obsolete">采样率</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1272"/>
-        <source>16k</source>
+        <location filename="../src/docks/encodedock.ui" line="55"/>
+        <source>Advanced</source>
+        <translation type="unfinished">高级设置</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="68"/>
+        <source>Resolution:</source>
+        <translation type="unfinished">分辨率:</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="84"/>
+        <source>Frames/Sec:</source>
+        <translation type="unfinished">帧率:</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="100"/>
+        <source>Duration：</source>
+        <translation type="unfinished">视频长度:</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="160"/>
+        <source>Web</source>
+        <translation type="unfinished">网站</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="179"/>
+        <source>1280x720</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1277"/>
-        <source>32k</source>
+        <location filename="../src/docks/encodedock.ui" line="195"/>
+        <source>24</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1282"/>
-        <source>48k</source>
+        <location filename="../src/docks/encodedock.ui" line="211"/>
+        <source>00:00:00:00</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1292"/>
-        <source>96k</source>
+        <location filename="../src/docks/encodedock.ui" line="240"/>
+        <source>Bit Rate:</source>
+        <translation type="unfinished">比特率:</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="256"/>
+        <source>128Kbps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1302"/>
-        <source>220k</source>
+        <location filename="../src/docks/encodedock.ui" line="269"/>
+        <source>Sample Rate:</source>
+        <translation type="unfinished">采样率:</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="285"/>
+        <source>44100Hz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1312"/>
-        <source>384k</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1352"/>
-        <source>Disable audio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1462"/>
-        <source>Other</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1501"/>
+        <location filename="../src/docks/encodedock.ui" line="301"/>
+        <location filename="../src/docks/encodedock.ui" line="320"/>
+        <location filename="../src/docks/encodedock.ui" line="342"/>
+        <location filename="../src/docks/encodedock.ui" line="364"/>
+        <location filename="../src/docks/encodedock.ui" line="386"/>
+        <location filename="../src/docks/encodedock.ui" line="408"/>
+        <location filename="../src/docks/encodedock.ui" line="430"/>
         <source>Delete currently selected( preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1504"/>
-        <location filename="../src/docks/encodedock.cpp" line="1706"/>
+        <location filename="../src/docks/encodedock.ui" line="304"/>
+        <location filename="../src/docks/encodedock.cpp" line="1393"/>
         <source>Delete Preset</source>
         <translation type="unfinished">删除预设</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1524"/>
-        <source>Add current settings as a new custom preset</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/docks/encodedock.ui" line="389"/>
+        <source>Devices</source>
+        <translation type="unfinished">设备</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1527"/>
+        <location filename="../src/docks/encodedock.ui" line="411"/>
+        <source>TV</source>
+        <translation type="unfinished">TV</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="433"/>
+        <source>Lossless</source>
+        <translation type="unfinished">无损</translation>
+    </message>
+    <message>
         <source>Save Preset</source>
-        <translation type="unfinished">保存预设</translation>
+        <translation type="obsolete">保存预设</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1534"/>
-        <source>Reset options to defaults</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1537"/>
         <source>Reset</source>
-        <translation type="unfinished">重置</translation>
+        <translation type="obsolete">重置</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1580"/>
-        <source>Stop Screen Capture</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1587"/>
-        <location filename="../src/docks/encodedock.cpp" line="1607"/>
-        <location filename="../src/docks/encodedock.cpp" line="1614"/>
-        <location filename="../src/docks/encodedock.cpp" line="1736"/>
-        <source>Stream</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1594"/>
         <source>Close</source>
-        <translation type="unfinished">关闭</translation>
+        <translation type="obsolete">关闭</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1601"/>
-        <location filename="../src/docks/encodedock.cpp" line="1488"/>
+        <location filename="../src/docks/encodedock.ui" line="144"/>
+        <location filename="../src/docks/encodedock.cpp" line="1244"/>
         <source>Export File</source>
         <translation type="unfinished">导出文件</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="95"/>
-        <source>Automatic from extension</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.cpp" line="104"/>
-        <location filename="../src/docks/encodedock.cpp" line="112"/>
-        <source>Default for format</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.cpp" line="365"/>
         <source>Timeline</source>
-        <translation type="unfinished">时间线</translation>
+        <translation type="obsolete">时间线</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="367"/>
         <source>Playlist</source>
-        <translation type="unfinished">播放列表</translation>
+        <translation type="obsolete">播放列表</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="369"/>
-        <source>Each Playlist Item</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.cpp" line="377"/>
-        <location filename="../src/docks/encodedock.cpp" line="386"/>
-        <source>Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.cpp" line="426"/>
-        <location filename="../src/docks/encodedock.cpp" line="1382"/>
+        <location filename="../src/docks/encodedock.ui" line="323"/>
+        <location filename="../src/docks/encodedock.cpp" line="279"/>
+        <location filename="../src/docks/encodedock.cpp" line="1118"/>
+        <location filename="../src/docks/encodedock.cpp" line="1727"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">自定义</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1022"/>
+        <location filename="../src/docks/encodedock.cpp" line="889"/>
         <source>MovieMator</source>
         <translation type="unfinished">剪大师</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1051"/>
+        <location filename="../src/docks/encodedock.cpp" line="918"/>
         <source>http://moviemator.net</source>
         <translation type="unfinished">http://jiandashi.com</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1467"/>
+        <location filename="../src/docks/encodedock.cpp" line="1224"/>
         <source>Stop Capture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1469"/>
-        <location filename="../src/docks/encodedock.cpp" line="1488"/>
-        <location filename="../src/docks/encodedock.cpp" line="1735"/>
+        <location filename="../src/docks/encodedock.cpp" line="1226"/>
+        <location filename="../src/docks/encodedock.cpp" line="1244"/>
+        <location filename="../src/docks/encodedock.cpp" line="1422"/>
         <source>Capture File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1488"/>
+        <location filename="../src/docks/encodedock.cpp" line="1244"/>
         <source>*.%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1602"/>
-        <location filename="../src/docks/encodedock.cpp" line="1623"/>
-        <source>Stop Stream</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.cpp" line="1615"/>
-        <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.cpp" line="1655"/>
+        <location filename="../src/docks/encodedock.cpp" line="1342"/>
         <source>Add Export Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1707"/>
+        <location filename="../src/docks/encodedock.cpp" line="1394"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.cpp" line="1864"/>
-        <source>KiB (%1s)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2388,17 +2518,17 @@ the list. This does not stop a currently running job. Right-
         <translation type="unfinished">移除</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.cpp" line="106"/>
+        <location filename="../src/docks/jobsdock.cpp" line="107"/>
         <source>Job Log</source>
         <translation type="unfinished">任务日志</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.cpp" line="182"/>
+        <location filename="../src/docks/jobsdock.cpp" line="183"/>
         <source>Tips</source>
         <translation type="unfinished">提示</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.cpp" line="183"/>
+        <location filename="../src/docks/jobsdock.cpp" line="184"/>
         <source>The jobs will be stop, continue to close?</source>
         <translation type="unfinished">任务将会被停止，继续关闭吗？</translation>
     </message>
@@ -2848,8 +2978,8 @@ duration of the transition.</source>
     <name>MainWindow</name>
     <message>
         <location filename="../src/mainwindow.ui" line="26"/>
-        <location filename="../src/mainwindow.cpp" line="733"/>
-        <location filename="../src/mainwindow.cpp" line="1943"/>
+        <location filename="../src/mainwindow.cpp" line="735"/>
+        <location filename="../src/mainwindow.cpp" line="1945"/>
         <source>MovieMator Video Editor</source>
         <translation type="unfinished">剪大师</translation>
     </message>
@@ -3029,7 +3159,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="373"/>
-        <location filename="../src/mainwindow.cpp" line="3274"/>
+        <location filename="../src/mainwindow.cpp" line="3278"/>
         <source>Enter Full Screen</source>
         <translation type="unfinished">进入全屏模式</translation>
     </message>
@@ -3050,8 +3180,8 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="400"/>
-        <location filename="../src/mainwindow.cpp" line="645"/>
-        <location filename="../src/mainwindow.cpp" line="665"/>
+        <location filename="../src/mainwindow.cpp" line="647"/>
+        <location filename="../src/mainwindow.cpp" line="667"/>
         <source>Properties</source>
         <translation type="unfinished">属性</translation>
     </message>
@@ -3067,7 +3197,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="436"/>
-        <location filename="../src/mainwindow.cpp" line="523"/>
+        <location filename="../src/mainwindow.cpp" line="524"/>
         <source>History</source>
         <translation type="unfinished">历史</translation>
     </message>
@@ -3321,7 +3451,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="886"/>
-        <location filename="../src/mainwindow.cpp" line="4266"/>
+        <location filename="../src/mainwindow.cpp" line="4270"/>
         <source>Feedback</source>
         <translation type="unfinished">反馈</translation>
     </message>
@@ -3342,7 +3472,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="907"/>
-        <location filename="../src/mainwindow.cpp" line="4296"/>
+        <location filename="../src/mainwindow.cpp" line="4300"/>
         <source>Buy a License Code</source>
         <translation type="unfinished">购买注册码</translation>
     </message>
@@ -3403,158 +3533,158 @@ duration of the transition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="212"/>
+        <location filename="../src/mainwindow.cpp" line="213"/>
         <source>Error: This program requires the JACK 1 library.
 
 Please install it using your package manager. It may be named libjack0, jack-audio-connection-kit, jack, or similar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="220"/>
+        <location filename="../src/mainwindow.cpp" line="221"/>
         <source>Error: This program requires the SDL 1.2 library.
 
 Please install it using your package manager. It may be named libsdl1.2debian, SDL, or similar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="288"/>
+        <location filename="../src/mainwindow.cpp" line="289"/>
         <source>Ctrl+Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="289"/>
+        <location filename="../src/mainwindow.cpp" line="290"/>
         <source>Ctrl+Shift+Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="621"/>
+        <location filename="../src/mainwindow.cpp" line="619"/>
         <source>Media</source>
         <translation type="unfinished">媒体资源</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="625"/>
+        <location filename="../src/mainwindow.cpp" line="623"/>
         <source>Video Filters</source>
         <translation type="unfinished">视频滤镜</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="630"/>
+        <location filename="../src/mainwindow.cpp" line="628"/>
         <source>Audio Filters</source>
         <translation type="unfinished">音频滤镜</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="635"/>
+        <location filename="../src/mainwindow.cpp" line="633"/>
         <source>Text</source>
         <translation type="unfinished">文字</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="635"/>
+        <location filename="../src/mainwindow.cpp" line="633"/>
         <source>Text/Credit</source>
         <translation type="unfinished">文字模板</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="643"/>
+        <location filename="../src/mainwindow.cpp" line="641"/>
         <source>Audio</source>
         <translation type="unfinished">音频</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="643"/>
+        <location filename="../src/mainwindow.cpp" line="641"/>
         <source>Music/Sound</source>
         <translation type="unfinished">音乐资源</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="669"/>
+        <location filename="../src/mainwindow.cpp" line="671"/>
         <source>Set the Parameters of the Video Filters Applied to Current Clip</source>
         <translation type="unfinished">设置当前片段添加的视频滤镜参数</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="671"/>
+        <location filename="../src/mainwindow.cpp" line="673"/>
         <source>Set the Parameters of the Audio Filters Applied to Current Clip</source>
         <translation type="unfinished">设置当前片段添加的音频滤镜参数</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="715"/>
+        <location filename="../src/mainwindow.cpp" line="717"/>
         <source>MovieMator Video Editor Pro (Unregistered)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="717"/>
+        <location filename="../src/mainwindow.cpp" line="719"/>
         <source>MovieMator Video Editor Pro (Personal)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="721"/>
         <location filename="../src/mainwindow.cpp" line="723"/>
-        <location filename="../src/mainwindow.cpp" line="726"/>
-        <location filename="../src/mainwindow.cpp" line="731"/>
-        <location filename="../src/mainwindow.cpp" line="1941"/>
+        <location filename="../src/mainwindow.cpp" line="725"/>
+        <location filename="../src/mainwindow.cpp" line="728"/>
+        <location filename="../src/mainwindow.cpp" line="733"/>
+        <location filename="../src/mainwindow.cpp" line="1943"/>
         <source>MovieMator Video Editor Pro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="902"/>
+        <location filename="../src/mainwindow.cpp" line="904"/>
         <source>Non-Broadcast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="913"/>
+        <location filename="../src/mainwindow.cpp" line="915"/>
         <source>DVD Widescreen NTSC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="914"/>
+        <location filename="../src/mainwindow.cpp" line="916"/>
         <source>DVD Widescreen PAL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="919"/>
+        <location filename="../src/mainwindow.cpp" line="921"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">自定义</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="938"/>
+        <location filename="../src/mainwindow.cpp" line="940"/>
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="969"/>
+        <location filename="../src/mainwindow.cpp" line="971"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="972"/>
+        <location filename="../src/mainwindow.cpp" line="974"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="975"/>
+        <location filename="../src/mainwindow.cpp" line="977"/>
         <source>External</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="992"/>
+        <location filename="../src/mainwindow.cpp" line="994"/>
         <source>DeckLink Keyer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1166"/>
         <location filename="../src/mainwindow.cpp" line="1168"/>
-        <location filename="../src/mainwindow.cpp" line="3853"/>
+        <location filename="../src/mainwindow.cpp" line="1170"/>
+        <location filename="../src/mainwindow.cpp" line="3857"/>
         <source>Failed to open </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1194"/>
+        <location filename="../src/mainwindow.cpp" line="1196"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1247"/>
+        <location filename="../src/mainwindow.cpp" line="1249"/>
         <source>Repairing the project failed.</source>
         <translation type="unfinished">修复工程失败</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1259"/>
+        <location filename="../src/mainwindow.cpp" line="1261"/>
         <source>MovieMator noticed some problems in your project.
 Do you want MovieMator to try to repair it?
 
@@ -3563,47 +3693,47 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1300"/>
+        <location filename="../src/mainwindow.cpp" line="1302"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1449"/>
+        <location filename="../src/mainwindow.cpp" line="1451"/>
         <source>For reasons of copyright protection, you can not import vob or m4p files</source>
         <translation type="unfinished">因为版权保护，不支持导入vob和m4p文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3057"/>
+        <location filename="../src/mainwindow.cpp" line="3061"/>
         <source>http://moviemator.net</source>
         <translation type="unfinished">http://jiandashi.com</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3632"/>
-        <location filename="../src/mainwindow.cpp" line="3672"/>
+        <location filename="../src/mainwindow.cpp" line="3636"/>
+        <location filename="../src/mainwindow.cpp" line="3676"/>
         <source>You must restart MovieMator to change the video mode.
 Do you want to change video mode now?</source>
         <translation type="unfinished">您必须重启程序以完成视频模式更改。
 是否现在重启程序？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4123"/>
-        <location filename="../src/mainwindow.cpp" line="4551"/>
+        <location filename="../src/mainwindow.cpp" line="4127"/>
+        <location filename="../src/mainwindow.cpp" line="4555"/>
         <source>http://www.macvideostudio.com/quickly-start-movie-video-editing-mac.html</source>
         <translation type="unfinished">http://www.jiandashi.com/shipinbianji-quick-guide.html</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4218"/>
+        <location filename="../src/mainwindow.cpp" line="4222"/>
         <source>Record Audio</source>
         <translation type="unfinished">录音</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4442"/>
-        <location filename="../src/mainwindow.cpp" line="4497"/>
+        <location filename="../src/mainwindow.cpp" line="4446"/>
+        <location filename="../src/mainwindow.cpp" line="4501"/>
         <source>http://moviemator.net/buynow.html</source>
         <translation type="unfinished">http://jiandashi.com/buynow.html</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4794"/>
+        <location filename="../src/mainwindow.cpp" line="4798"/>
         <source>Template (*.mlt)</source>
         <translation type="unfinished">http://jiandashi.com/buynow.html</translation>
     </message>
@@ -3624,29 +3754,29 @@ Do you want to change video mode now?</source>
         <translation type="obsolete">&lt;h1&gt;MovieMator Video Editor %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;产品主页: &lt;a href=&quot;http://www.macvideostudio.com/video-editor-moviemator-appstore.html&quot;&gt;MovieMator Video Editor&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2019 effectmatrix, Inc&lt;/p&gt;&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1646"/>
-        <location filename="../src/mainwindow.cpp" line="3833"/>
+        <location filename="../src/mainwindow.cpp" line="1648"/>
+        <location filename="../src/mainwindow.cpp" line="3837"/>
         <source>Open File</source>
         <translation type="unfinished">打开文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1924"/>
         <location filename="../src/mainwindow.cpp" line="1926"/>
         <location filename="../src/mainwindow.cpp" line="1928"/>
         <location filename="../src/mainwindow.cpp" line="1930"/>
         <location filename="../src/mainwindow.cpp" line="1932"/>
-        <location filename="../src/mainwindow.cpp" line="1935"/>
-        <location filename="../src/mainwindow.cpp" line="1941"/>
+        <location filename="../src/mainwindow.cpp" line="1934"/>
+        <location filename="../src/mainwindow.cpp" line="1937"/>
         <location filename="../src/mainwindow.cpp" line="1943"/>
+        <location filename="../src/mainwindow.cpp" line="1945"/>
         <source>%1[*] - %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="235"/>
         <location filename="../src/mainwindow.ui" line="238"/>
-        <location filename="../src/mainwindow.cpp" line="779"/>
-        <location filename="../src/mainwindow.cpp" line="1978"/>
-        <location filename="../src/mainwindow.cpp" line="2023"/>
+        <location filename="../src/mainwindow.cpp" line="781"/>
+        <location filename="../src/mainwindow.cpp" line="1980"/>
+        <location filename="../src/mainwindow.cpp" line="2025"/>
         <source>About MovieMator Video Editor Pro</source>
         <translation type="unfinished">关于MovieMator Video Editor Pro</translation>
     </message>
@@ -3659,28 +3789,28 @@ Do you want to change video mode now?</source>
         <translation type="obsolete">关于剪大师</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2661"/>
-        <location filename="../src/mainwindow.cpp" line="2694"/>
+        <location filename="../src/mainwindow.cpp" line="2663"/>
+        <location filename="../src/mainwindow.cpp" line="2696"/>
         <source>Saved %1</source>
         <translation type="unfinished">保存 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2671"/>
+        <location filename="../src/mainwindow.cpp" line="2673"/>
         <source>Save MMP</source>
         <translation type="unfinished">保存MMP</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2671"/>
+        <location filename="../src/mainwindow.cpp" line="2673"/>
         <source>MMP (*.mmp)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2686"/>
+        <location filename="../src/mainwindow.cpp" line="2688"/>
         <source>Unable to save empty file, but saved its name for future.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="659"/>
+        <location filename="../src/mainwindow.cpp" line="661"/>
         <source>Simple Properties</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3689,40 +3819,40 @@ Do you want to change video mode now?</source>
         <translation type="obsolete">滤镜</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1979"/>
-        <location filename="../src/mainwindow.cpp" line="2024"/>
+        <location filename="../src/mainwindow.cpp" line="1981"/>
+        <location filename="../src/mainwindow.cpp" line="2026"/>
         <source>&lt;h1&gt;MovieMator Video Editor Pro %1&lt;/h1&gt;&lt;small&gt;&lt;p&gt;Product Home Page: &lt;a href=%2&gt;MovieMator Video Editor Pro&lt;/a&gt;&lt;/p&gt;&lt;p /&gt;&lt;p&gt;Copyright &amp;copy; 2016-2019 effectmatrix, Inc&lt;/p&gt;&lt;p&gt;Based on Shotcut v16.06 Copyright &amp;copy; 2011-2016 Meltytech, LLC.&lt;/p&gt;&lt;p&gt;Licensed under the GNU General Public License v3.0&lt;/p&gt;&lt;/small&gt;&lt;small&gt;&lt;p /&gt;&lt;p&gt;&lt;a href=&quot;http://www.moviemator.net/develop/third-party.html&quot;&gt;Related Information&lt;/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;mailto:market@effectmatrix.com&quot;&gt;Feedback&lt;/a&gt;&lt;/p&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2705"/>
+        <location filename="../src/mainwindow.cpp" line="2707"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished">工程已修改，要保存吗?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2737"/>
+        <location filename="../src/mainwindow.cpp" line="2739"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation type="unfinished">还有任务没有完成，确定退出吗?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2803"/>
+        <location filename="../src/mainwindow.cpp" line="2807"/>
         <source>To export video, you must add one or more files to timeline.</source>
         <translation type="unfinished">要导出视频，需要拖放至少一个文件到时间线</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3277"/>
+        <location filename="../src/mainwindow.cpp" line="3281"/>
         <source>Exit Full Screen</source>
         <translation type="unfinished">退出全屏</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3290"/>
+        <location filename="../src/mainwindow.cpp" line="3294"/>
         <source>GPU Processing is not supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3463"/>
+        <location filename="../src/mainwindow.cpp" line="3467"/>
         <source>You must restart MovieMator to switch to the new language.
 Do you want to change language now?</source>
         <translation type="unfinished"></translation>
@@ -3734,103 +3864,103 @@ Do you want to restart now?</source>
 现在重启吗?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="719"/>
+        <location filename="../src/mainwindow.cpp" line="721"/>
         <source>MovieMator Video Editor Pro (Business)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1645"/>
+        <location filename="../src/mainwindow.cpp" line="1647"/>
         <source>All supported files(*.mmp *.png *.bmp *.tiff *.jpeg *.gif *.jpg *.3gp *.3gp2 *.3g2 *.3gpp *.a52  *.avi *.asf  *.ac3 *.aac *.au *.aiff *.aif *.ape *.amr *.caf *.cda *.dat *.divx *.dsm *.dv *.dts *.dvr-ms *.flac  *.fli  *.flc *.flv *.f4v *.gif *.ifo *.m4r *.mp2 *.mp3 *.mmf *.mp4 *.mov *.mpg *.mpeg *.m1v *.mpeg1 *.mpeg2 *.m2a *.mp1  *.m2p *.m2v *.mpv *.mpa *.mpeg4*.mod *.m2ts *.mts *.m4v *.m4a *.mxf *.mkv *.mka *.ogg *.ogv*.ogm *.oga *.qt *.rmvb *.rm *.ra *.ram *.tod  *.ts *.vob *.wma *.wav *.wmv *.webm *.wtv)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4794"/>
+        <location filename="../src/mainwindow.cpp" line="4798"/>
         <source>Save Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3533"/>
+        <location filename="../src/mainwindow.cpp" line="3537"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="621"/>
+        <location filename="../src/mainwindow.cpp" line="619"/>
         <source>File</source>
         <translation type="unfinished">文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="625"/>
-        <location filename="../src/mainwindow.cpp" line="669"/>
+        <location filename="../src/mainwindow.cpp" line="623"/>
+        <location filename="../src/mainwindow.cpp" line="671"/>
         <source>Video Filter</source>
         <translation type="unfinished">视频滤镜</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="630"/>
-        <location filename="../src/mainwindow.cpp" line="671"/>
+        <location filename="../src/mainwindow.cpp" line="628"/>
+        <location filename="../src/mainwindow.cpp" line="673"/>
         <source>Audio Filter</source>
         <translation type="unfinished">音频滤镜</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="639"/>
+        <location filename="../src/mainwindow.cpp" line="637"/>
         <source>Stickers</source>
         <translation type="unfinished">贴图</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3542"/>
+        <location filename="../src/mainwindow.cpp" line="3546"/>
         <source>You must restart MovieMator to switch using GPU processing.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3834"/>
+        <location filename="../src/mainwindow.cpp" line="3838"/>
         <source>MMP (*.mmp);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3894"/>
+        <location filename="../src/mainwindow.cpp" line="3898"/>
         <source>You must restart MovieMator to change the display method.
 Do you want to restart now?</source>
         <translation type="unfinished">要修改显示模式，需要重启MovieMator
 现在重启吗?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3916"/>
+        <location filename="../src/mainwindow.cpp" line="3920"/>
         <source>Application Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3949"/>
+        <location filename="../src/mainwindow.cpp" line="3953"/>
         <source>MovieMator version %1 is available! Click here to get it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3953"/>
+        <location filename="../src/mainwindow.cpp" line="3957"/>
         <source>You are running the latest version of MovieMator.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3963"/>
+        <location filename="../src/mainwindow.cpp" line="3967"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4020"/>
+        <location filename="../src/mainwindow.cpp" line="4024"/>
         <source>Export EDL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4020"/>
+        <location filename="../src/mainwindow.cpp" line="4024"/>
         <source>EDL (*.edl)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4061"/>
+        <location filename="../src/mainwindow.cpp" line="4065"/>
         <source>A JavaScript error occurred during export.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4064"/>
+        <location filename="../src/mainwindow.cpp" line="4068"/>
         <source>Failed to open export-edl.js</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3839,12 +3969,12 @@ Do you want to restart now?</source>
         <translation type="obsolete">http://www.macvideostudio.com/mac-shipinbianji-guide.html</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4212"/>
+        <location filename="../src/mainwindow.cpp" line="4216"/>
         <source>Open a video, audio or image file</source>
         <translation type="unfinished">打开一个视频，视频或图片</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4212"/>
+        <location filename="../src/mainwindow.cpp" line="4216"/>
         <source>Open</source>
         <translation type="unfinished">打开文件</translation>
     </message>
@@ -3853,58 +3983,58 @@ Do you want to restart now?</source>
         <translation type="obsolete">删除媒体文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4230"/>
+        <location filename="../src/mainwindow.cpp" line="4234"/>
         <source>Undo</source>
         <translation type="unfinished">撤销</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4237"/>
+        <location filename="../src/mainwindow.cpp" line="4241"/>
         <source>Redo</source>
         <translation type="unfinished">重做</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4245"/>
+        <location filename="../src/mainwindow.cpp" line="4249"/>
         <source>Save Project</source>
         <translation type="unfinished">保存工程</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4252"/>
+        <location filename="../src/mainwindow.cpp" line="4256"/>
         <source>Export video, audio or image file</source>
         <translation type="unfinished">导出视频，音频或图片</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4252"/>
+        <location filename="../src/mainwindow.cpp" line="4256"/>
         <source>Export Video</source>
         <translation type="unfinished">导出视频</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4259"/>
+        <location filename="../src/mainwindow.cpp" line="4263"/>
         <source>Tutorials</source>
         <translation type="unfinished">教程</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="945"/>
-        <location filename="../src/mainwindow.cpp" line="4259"/>
+        <location filename="../src/mainwindow.cpp" line="4263"/>
         <source>Tutorial</source>
         <translation type="unfinished">教程</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4266"/>
+        <location filename="../src/mainwindow.cpp" line="4270"/>
         <source>Send us your suggestions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4288"/>
+        <location filename="../src/mainwindow.cpp" line="4292"/>
         <source>Enter Licensse Code</source>
         <translation type="unfinished">输入注册码</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4288"/>
+        <location filename="../src/mainwindow.cpp" line="4292"/>
         <source>Register</source>
         <translation type="unfinished">注册</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4296"/>
+        <location filename="../src/mainwindow.cpp" line="4300"/>
         <source>Buy Now</source>
         <translation type="unfinished">立即购买</translation>
     </message>
@@ -3925,12 +4055,12 @@ Do you want to restart now?</source>
         <translation type="obsolete">视频转换 &amp; DVD刻录</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4463"/>
+        <location filename="../src/mainwindow.cpp" line="4467"/>
         <source>Execute Python File</source>
         <translation type="unfinished">执行Python文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4463"/>
+        <location filename="../src/mainwindow.cpp" line="4467"/>
         <source>Python File (*.py)</source>
         <translation type="unfinished">Python文件(*.py)</translation>
     </message>
@@ -5090,12 +5220,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">移动%1从%2到3%</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="129"/>
+        <location filename="../src/mainwindow.cpp" line="130"/>
         <source>http://moviemator.net</source>
         <translation type="unfinished">http://jiandashi.com</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="130"/>
+        <location filename="../src/mainwindow.cpp" line="131"/>
         <source>http://moviemator.net/buynow.html</source>
         <translation type="unfinished">http://jiandashi.com/buynow.html</translation>
     </message>
@@ -5251,17 +5381,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/recorddialog.cpp" line="236"/>
+        <location filename="../src/dialogs/recorddialog.cpp" line="244"/>
         <source>None</source>
         <translation type="unfinished">无</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/recorddialog.cpp" line="269"/>
+        <location filename="../src/dialogs/recorddialog.cpp" line="277"/>
         <source>Save File</source>
         <translation type="unfinished">保存文件</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/recorddialog.cpp" line="269"/>
+        <location filename="../src/dialogs/recorddialog.cpp" line="277"/>
         <source>WAV (*.wav)</source>
         <translation type="unfinished"></translation>
     </message>

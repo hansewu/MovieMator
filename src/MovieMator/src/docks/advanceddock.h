@@ -24,6 +24,10 @@ signals:
 
     //用来传递参数
    // void sendData(QString);
+
+    void addCustomPreset(QString presetName);
+    void resetCurrentPreset();
+
 public slots:
     // 配置 Profile发生变化
    // void onProfileChanged();
@@ -57,6 +61,10 @@ private slots:
 
     void on_okButton_clicked();
 
+    void on_addPresetButton_clicked();
+
+    void on_resetPresetButton_clicked();
+
 private:
     // 码率控制
     enum {
@@ -81,6 +89,8 @@ private:
     Mlt::Properties *m_currentPreset;
 
     void updateCurrentPreset(int realtime);
+    // 读取界面配置，设定 real_time为 realtime来创建 Mlt::Properties
+    Mlt::Properties* collectProperties(int realtime);
 };
 
 #endif // ADVANCEDDOCK_H
