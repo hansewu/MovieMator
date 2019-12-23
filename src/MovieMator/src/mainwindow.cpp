@@ -591,7 +591,7 @@ MainWindow::MainWindow()
 
     //connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), videoWidget, SLOT(setCurrentFilter(QObject*, QmlMetadata*)), Qt::QueuedConnection);
 //    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), this, SLOT(setCurrentFilterForVideoWidget(QObject*, QmlMetadata*)), Qt::QueuedConnection);
-     connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), this, SLOT(setCurrentFilterForVideoWidget(QObject*, QmlMetadata*)));
+    connect(m_filterController, SIGNAL(currentFilterChanged(QObject*, QmlMetadata*, int)), this, SLOT(setCurrentFilterForVideoWidget(QObject*, QmlMetadata*)));
     connect(m_filterController, SIGNAL(currentFilterAboutToChange(int)), videoWidget, SLOT(setBlankScene()));
 
     readWindowSettings();

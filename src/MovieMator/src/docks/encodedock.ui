@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>638</width>
-    <height>487</height>
+    <width>641</width>
+    <height>461</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,8 +21,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>638</width>
-    <height>280</height>
+    <width>641</width>
+    <height>461</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>641</width>
+    <height>461</height>
    </size>
   </property>
   <property name="windowIcon">
@@ -101,6 +107,9 @@
     </property>
    </widget>
    <widget class="QWidget" name="widget_bottom_toolbar" native="true">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -220,7 +229,7 @@
       <x>118</x>
       <y>0</y>
       <width>191</width>
-      <height>361</height>
+      <height>366</height>
      </rect>
     </property>
     <property name="alternatingRowColors">
