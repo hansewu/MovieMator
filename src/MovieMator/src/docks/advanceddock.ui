@@ -438,11 +438,6 @@
             </item>
             <item>
              <property name="text">
-              <string>1440x1080(16:9)</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
               <string>1920x1080(16:9)</string>
              </property>
             </item>
@@ -464,6 +459,11 @@
             <item>
              <property name="text">
               <string>1920x1440(4:3)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>1440x1080(4:3)</string>
              </property>
             </item>
             <item>
@@ -1121,35 +1121,6 @@ in temporal compression</string>
        </item>
       </layout>
      </widget>
-     <zorder>label_20</zorder>
-     <zorder>label_17</zorder>
-     <zorder>videoQualityLabel</zorder>
-     <zorder>label_18</zorder>
-     <zorder>label_23</zorder>
-     <zorder>label_12</zorder>
-     <zorder>disableVideoCheckbox</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>horizontalSpacer_15</zorder>
-     <zorder>gopSpinner</zorder>
-     <zorder>bFramesSpinner</zorder>
-     <zorder>horizontalSpacer_19</zorder>
-     <zorder>videoCodecThreadsSpinner</zorder>
-     <zorder>label_21</zorder>
-     <zorder>videoQualitySpinner</zorder>
-     <zorder>horizontalSpacer_14</zorder>
-     <zorder>label_19</zorder>
-     <zorder>horizontalSpacer_15</zorder>
-     <zorder>label_21</zorder>
-     <zorder>videoCodecThreadsSpinner</zorder>
-     <zorder>layoutWidget_2</zorder>
-     <zorder>videoBitrateLabel</zorder>
-     <zorder>videoBufferSizeLabel</zorder>
-     <zorder>layoutWidget_8</zorder>
     </widget>
     <widget class="QWidget" name="audioTab">
      <attribute name="title">
