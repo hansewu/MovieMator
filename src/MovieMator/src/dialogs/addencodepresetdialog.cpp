@@ -27,6 +27,7 @@ AddEncodePresetDialog::AddEncodePresetDialog(QWidget *parent) :
 
     ui->propertiesEdit->setHidden(true);
 //    ui->label_2->setHidden(true);
+     ui->nameEdit->setStyleSheet("background-color:rgb(0,0,0)");
 }
 
 AddEncodePresetDialog::~AddEncodePresetDialog()

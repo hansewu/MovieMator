@@ -1733,8 +1733,8 @@ void MainWindow::seekPlaylist(int start)
     m_player->setOut(-1);
     // since we do not emit producerOpened, these components need updating
     on_actionJack_triggered(ui->actionJack && ui->actionJack->isChecked());
-   // m_player->onProducerOpened(false);
-    //m_encodeDock->onProducerOpened();
+    m_player->onProducerOpened(false);
+  //  m_encodeDock->onProducerOpened();
     m_filterController->setProducer();
     updateMarkers();
     MLT.seek(start);
@@ -1766,7 +1766,7 @@ void MainWindow::setMultitrackAsCurrentProducer()
         m_player->setIn(-1);
         m_player->setOut(-1);
         // since we do not emit producerOpened, these components need updating
-       // m_player->onProducerOpened(false);
+        m_player->onProducerOpened(false);
         //m_encodeDock->onProducerOpened();
         m_filterController->setProducer();
         updateMarkers();
@@ -2535,9 +2535,9 @@ void MainWindow::dropEvent(QDropEvent *event)
                 m_multipleFiles.append(path);
             }
         }
-        //QString path = Util::removeFileScheme(mimeData->urls().first());
-  //      open(path);
-   //     event->acceptProposedAction();
+        QString path = Util::removeFileScheme(mimeData->urls().first());
+        open(path);
+        event->acceptProposedAction();
     }
     else if (mimeData->hasFormat(MLT.MltXMLMimeType())) {
 //        m_playlistDock->on_actionOpen_triggered();

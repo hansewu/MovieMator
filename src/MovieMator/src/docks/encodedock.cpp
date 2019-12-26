@@ -1742,8 +1742,8 @@ void EncodeDock::on_presetsList_clicked(const QModelIndex &index)
              m_modelList[0].insertRow(0,item);
       }
 
-      ui->presetsList->setModel(&m_modelList[0]);
-      ui->customFormat->click();
+//      ui->presetsList->setModel(&m_modelList[0]);
+//      ui->customFormat->click();
 
 
  }

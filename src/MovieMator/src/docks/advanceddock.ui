@@ -71,7 +71,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <property name="usesScrollButtons">
      <bool>false</bool>
@@ -104,10 +104,10 @@
         <widget class="QLabel" name="label_2">
          <property name="geometry">
           <rect>
-           <x>40</x>
-           <y>154</y>
-           <width>74</width>
-           <height>16</height>
+           <x>43</x>
+           <y>164</y>
+           <width>91</width>
+           <height>20</height>
           </rect>
          </property>
          <property name="text">
@@ -120,10 +120,10 @@
         <widget class="QLabel" name="label_4">
          <property name="geometry">
           <rect>
-           <x>40</x>
-           <y>182</y>
-           <width>77</width>
-           <height>16</height>
+           <x>26</x>
+           <y>192</y>
+           <width>111</width>
+           <height>20</height>
           </rect>
          </property>
          <property name="text">
@@ -136,10 +136,10 @@
         <widget class="QLabel" name="label_10">
          <property name="geometry">
           <rect>
-           <x>44</x>
-           <y>90</y>
-           <width>70</width>
-           <height>16</height>
+           <x>43</x>
+           <y>100</y>
+           <width>91</width>
+           <height>20</height>
           </rect>
          </property>
          <property name="text">
@@ -152,10 +152,10 @@
         <widget class="QLabel" name="label_14">
          <property name="geometry">
           <rect>
-           <x>46</x>
-           <y>130</y>
-           <width>68</width>
-           <height>16</height>
+           <x>33</x>
+           <y>140</y>
+           <width>101</width>
+           <height>20</height>
           </rect>
          </property>
          <property name="text">
@@ -168,10 +168,10 @@
         <widget class="QLabel" name="label_22">
          <property name="geometry">
           <rect>
-           <x>50</x>
-           <y>25</y>
-           <width>64</width>
-           <height>16</height>
+           <x>53</x>
+           <y>35</y>
+           <width>81</width>
+           <height>20</height>
           </rect>
          </property>
          <property name="text">
@@ -184,8 +184,8 @@
         <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
-           <x>120</x>
-           <y>50</y>
+           <x>140</x>
+           <y>60</y>
            <width>281</width>
            <height>26</height>
           </rect>
@@ -245,8 +245,8 @@
         <widget class="QWidget" name="layoutWidget_3">
          <property name="geometry">
           <rect>
-           <x>120</x>
-           <y>140</y>
+           <x>140</x>
+           <y>150</y>
            <width>281</width>
            <height>26</height>
           </rect>
@@ -270,10 +270,10 @@
         <widget class="QWidget" name="layoutWidget_4">
          <property name="geometry">
           <rect>
-           <x>120</x>
-           <y>120</y>
-           <width>281</width>
-           <height>26</height>
+           <x>140</x>
+           <y>130</y>
+           <width>1623</width>
+           <height>38</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -315,10 +315,10 @@
         <widget class="QWidget" name="layoutWidget_5">
          <property name="geometry">
           <rect>
-           <x>120</x>
-           <y>150</y>
-           <width>281</width>
-           <height>26</height>
+           <x>140</x>
+           <y>160</y>
+           <width>1426</width>
+           <height>32</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -367,8 +367,8 @@
         <widget class="QWidget" name="layoutWidget_6">
          <property name="geometry">
           <rect>
-           <x>120</x>
-           <y>180</y>
+           <x>140</x>
+           <y>190</y>
            <width>281</width>
            <height>26</height>
           </rect>
@@ -419,8 +419,8 @@
         <widget class="QWidget" name="layoutWidget_7">
          <property name="geometry">
           <rect>
-           <x>120</x>
-           <y>20</y>
+           <x>140</x>
+           <y>30</y>
            <width>281</width>
            <height>26</height>
           </rect>
@@ -498,8 +498,8 @@
         <widget class="QDoubleSpinBox" name="fpsSpinner">
          <property name="geometry">
           <rect>
-           <x>120</x>
-           <y>90</y>
+           <x>140</x>
+           <y>100</y>
            <width>90</width>
            <height>24</height>
           </rect>
@@ -528,10 +528,10 @@
      <widget class="QLabel" name="label_20">
       <property name="geometry">
        <rect>
-        <x>54</x>
+        <x>65</x>
         <y>200</y>
-        <width>54</width>
-        <height>16</height>
+        <width>81</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
@@ -544,10 +544,10 @@
      <widget class="QLabel" name="label_17">
       <property name="geometry">
        <rect>
-        <x>60</x>
+        <x>77</x>
         <y>20</y>
-        <width>40</width>
-        <height>16</height>
+        <width>61</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
@@ -560,10 +560,10 @@
      <widget class="QLabel" name="videoQualityLabel">
       <property name="geometry">
        <rect>
-        <x>60</x>
+        <x>70</x>
         <y>140</y>
-        <width>43</width>
-        <height>16</height>
+        <width>71</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
@@ -576,10 +576,10 @@
      <widget class="QLabel" name="label_18">
       <property name="geometry">
        <rect>
-        <x>77</x>
+        <x>92</x>
         <y>170</y>
-        <width>28</width>
-        <height>16</height>
+        <width>51</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
@@ -592,10 +592,10 @@
      <widget class="QLabel" name="label_23">
       <property name="geometry">
        <rect>
-        <x>30</x>
+        <x>51</x>
         <y>50</y>
-        <width>74</width>
-        <height>16</height>
+        <width>91</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
@@ -608,10 +608,10 @@
      <widget class="QLabel" name="label_12">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>46</x>
         <y>230</y>
-        <width>89</width>
-        <height>16</height>
+        <width>101</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
@@ -624,9 +624,9 @@
      <widget class="QCheckBox" name="disableVideoCheckbox">
       <property name="geometry">
        <rect>
-        <x>180</x>
+        <x>218</x>
         <y>260</y>
-        <width>107</width>
+        <width>131</width>
         <height>21</height>
        </rect>
       </property>
@@ -637,7 +637,7 @@
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>121</x>
+        <x>159</x>
         <y>50</y>
         <width>221</width>
         <height>26</height>
@@ -681,7 +681,7 @@
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>121</x>
+        <x>159</x>
         <y>200</y>
         <width>221</width>
         <height>26</height>
@@ -717,7 +717,7 @@ in temporal compression</string>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>121</x>
+        <x>159</x>
         <y>170</y>
         <width>221</width>
         <height>26</height>
@@ -762,7 +762,7 @@ in temporal compression</string>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>121</x>
+        <x>159</x>
         <y>20</y>
         <width>221</width>
         <height>26</height>
@@ -790,7 +790,7 @@ in temporal compression</string>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>121</x>
+        <x>159</x>
         <y>140</y>
         <width>221</width>
         <height>26</height>
@@ -831,7 +831,7 @@ in temporal compression</string>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>121</x>
+        <x>159</x>
         <y>170</y>
         <width>221</width>
         <height>26</height>
@@ -842,7 +842,7 @@ in temporal compression</string>
      <widget class="QLabel" name="label_21">
       <property name="geometry">
        <rect>
-        <x>180</x>
+        <x>218</x>
         <y>231</y>
         <width>59</width>
         <height>24</height>
@@ -855,7 +855,7 @@ in temporal compression</string>
      <widget class="QSpinBox" name="videoCodecThreadsSpinner">
       <property name="geometry">
        <rect>
-        <x>122</x>
+        <x>160</x>
         <y>231</y>
         <width>48</width>
         <height>24</height>
@@ -865,7 +865,7 @@ in temporal compression</string>
      <widget class="QWidget" name="layoutWidget_2">
       <property name="geometry">
        <rect>
-        <x>120</x>
+        <x>158</x>
         <y>80</y>
         <width>180</width>
         <height>28</height>
@@ -1050,7 +1050,7 @@ in temporal compression</string>
      <widget class="QLabel" name="videoBitrateLabel">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>48</x>
         <y>80</y>
         <width>90</width>
         <height>28</height>
@@ -1066,7 +1066,7 @@ in temporal compression</string>
      <widget class="QLabel" name="videoBufferSizeLabel">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>48</x>
         <y>109</y>
         <width>90</width>
         <height>26</height>
@@ -1082,7 +1082,7 @@ in temporal compression</string>
      <widget class="QWidget" name="layoutWidget_8">
       <property name="geometry">
        <rect>
-        <x>120</x>
+        <x>158</x>
         <y>110</y>
         <width>165</width>
         <height>26</height>
@@ -1121,6 +1121,32 @@ in temporal compression</string>
        </item>
       </layout>
      </widget>
+     <zorder>label_20</zorder>
+     <zorder>label_17</zorder>
+     <zorder>videoQualityLabel</zorder>
+     <zorder>label_18</zorder>
+     <zorder>label_23</zorder>
+     <zorder>label_12</zorder>
+     <zorder>disableVideoCheckbox</zorder>
+     <zorder>layoutWidget</zorder>
+     <zorder>layoutWidget</zorder>
+     <zorder>layoutWidget</zorder>
+     <zorder>layoutWidget</zorder>
+     <zorder>layoutWidget</zorder>
+     <zorder>layoutWidget</zorder>
+     <zorder>label_21</zorder>
+     <zorder>videoCodecThreadsSpinner</zorder>
+     <zorder>layoutWidget_2</zorder>
+     <zorder>videoBitrateLabel</zorder>
+     <zorder>videoBufferSizeLabel</zorder>
+     <zorder>layoutWidget_8</zorder>
+     <zorder>horizontalSpacer_14</zorder>
+     <zorder>videoCodecCombo</zorder>
+     <zorder>videoBufferSizeSuffixLabel</zorder>
+     <zorder>horizontalSpacer_18</zorder>
+     <zorder>videoBufferSizeSpinner</zorder>
+     <zorder>horizontalSpacer_11</zorder>
+     <zorder>bFramesSpinner</zorder>
     </widget>
     <widget class="QWidget" name="audioTab">
      <attribute name="title">
@@ -1129,10 +1155,10 @@ in temporal compression</string>
      <widget class="QLabel" name="label_7">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>80</y>
-        <width>74</width>
-        <height>16</height>
+        <x>43</x>
+        <y>90</y>
+        <width>101</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
@@ -1145,9 +1171,9 @@ in temporal compression</string>
      <widget class="QCheckBox" name="disableAudioCheckbox">
       <property name="geometry">
        <rect>
-        <x>180</x>
-        <y>190</y>
-        <width>107</width>
+        <x>160</x>
+        <y>200</y>
+        <width>131</width>
         <height>20</height>
        </rect>
       </property>
@@ -1158,10 +1184,10 @@ in temporal compression</string>
      <widget class="QLabel" name="audioBitrateLabel">
       <property name="geometry">
        <rect>
-        <x>70</x>
-        <y>120</y>
-        <width>40</width>
-        <height>16</height>
+        <x>59</x>
+        <y>130</y>
+        <width>81</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
@@ -1174,10 +1200,10 @@ in temporal compression</string>
      <widget class="QLabel" name="label_8">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>20</y>
-        <width>73</width>
-        <height>16</height>
+        <x>42</x>
+        <y>30</y>
+        <width>101</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
@@ -1190,10 +1216,10 @@ in temporal compression</string>
      <widget class="QLabel" name="label_3">
       <property name="geometry">
        <rect>
-        <x>70</x>
-        <y>50</y>
-        <width>40</width>
-        <height>16</height>
+        <x>59</x>
+        <y>60</y>
+        <width>81</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
@@ -1206,8 +1232,8 @@ in temporal compression</string>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>80</y>
+        <x>160</x>
+        <y>90</y>
         <width>221</width>
         <height>26</height>
        </rect>
@@ -1250,8 +1276,8 @@ in temporal compression</string>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>110</y>
+        <x>160</x>
+        <y>120</y>
         <width>221</width>
         <height>28</height>
        </rect>
@@ -1355,8 +1381,8 @@ in temporal compression</string>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>20</y>
+        <x>160</x>
+        <y>30</y>
         <width>221</width>
         <height>28</height>
        </rect>
@@ -1440,8 +1466,8 @@ in temporal compression</string>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>50</y>
+        <x>160</x>
+        <y>60</y>
         <width>221</width>
         <height>26</height>
        </rect>
@@ -1468,8 +1494,8 @@ in temporal compression</string>
      <widget class="QLabel" name="audioQualityLabel">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>140</y>
+        <x>70</x>
+        <y>150</y>
         <width>74</width>
         <height>26</height>
        </rect>
@@ -1484,8 +1510,8 @@ in temporal compression</string>
      <widget class="QWidget" name="layoutWidget_9">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>140</y>
+        <x>160</x>
+        <y>150</y>
         <width>120</width>
         <height>26</height>
        </rect>
