@@ -35,6 +35,8 @@ Rectangle {
     SystemPalette { id: activePalette }
     //color: activePalette.window
     color: normalTrackBackgroundColor
+    border.width: 2
+    border.color: Qt.rgba(13/255, 81/255, 73/255, 1.0)
 
     // 单击轨道上 clip的信号
     signal clipClicked()
@@ -265,7 +267,7 @@ Rectangle {
 
         anchors {
             top: parent.top
-//            topMargin: 6
+            topMargin: 2
             left:parent.left
             leftMargin: 1
             rightMargin: 1
@@ -333,7 +335,7 @@ Rectangle {
                 // Non-slider scroll area for the track headers.
                 //flickableItem.contentY: scrollView.flickableItem.contentY
                 width: headerWidth
-                height: root.height - ruler.height - toolbar.height - 1 - 1 //下留白1 spacing 1
+                height: root.height - ruler.height - toolbar.height - 1 - 1 - 4 //下留白1 spacing 1
                 //interactive: false
                 //boundsBehavior: Flickable.StopAtBounds
                 horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
