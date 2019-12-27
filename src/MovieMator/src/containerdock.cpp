@@ -23,10 +23,13 @@
 #include <QPushButton>
 #include <QToolButton>
 
-static QString buttonSytleSheetNormal("background-color:rgb(39, 46, 52);color:rgb(225,225,225); border:none");
+//static QString buttonSytleSheetNormal("background-color:rgb(39, 46, 52);color:rgb(225,225,225); border:none");
 //static QString buttonSytleSheetSelected("background-color:rgb(165, 65, 47);color:rgb(165, 65, 47); border:none");
-static QString buttonSytleSheetSelected("background-color:rgb(165, 65, 47);color:rgb(225,225,225); border:none");
+//static QString buttonSytleSheetSelected("background-color:rgb(165, 65, 47);color:rgb(225,225,225); border:none");
 static QString buttonSytleSheetNormal_topPosition("background-color:rgb(26, 30, 34);color:rgb(225,225,225); border:none");
+
+static QString buttonSytleSheetNormal("background-color:rgb(82,82,82);color:rgb(225,225,225)");
+static QString buttonSytleSheetSelected("background-color:rgb(51,51,51);color:rgb(225,225,225)");
 
 #define TABBAR_WIDTH 70
 #define TABBAR_HEIGHT 33
@@ -47,7 +50,7 @@ ContainerDock::ContainerDock(TAB_POSITION tabPosition, QWidget *parent)
     m_tabBtnWidget = new QWidget(this);
     if (m_tabPostion == TabPosition_Left)
     {
-        m_tabBtnWidget->setStyleSheet(".QWidget{background-color: rgb(39, 46, 52);border-radius:1px}");
+        m_tabBtnWidget->setStyleSheet(".QWidget{background-color: rgb(82,82,82);border-radius:1px}");
         m_tabBtnWidget->setFixedWidth(TABBAR_WIDTH);
         QVBoxLayout *tabButtonLayout = new QVBoxLayout();
         tabButtonLayout->setSpacing(0);
@@ -67,7 +70,7 @@ ContainerDock::ContainerDock(TAB_POSITION tabPosition, QWidget *parent)
     }
     else if (m_tabPostion == TabPosition_Top)
     {
-        m_tabBtnWidget->setStyleSheet(".QWidget{background-color: rgb(26, 30, 34);border-radius:5px}");
+        m_tabBtnWidget->setStyleSheet(".QWidget{background-color: rgb(82, 82, 82);border-radius:5px}");
         m_tabBtnWidget->setFixedHeight(43);     // 33
         QHBoxLayout *tabButtonLayout = new QHBoxLayout();
         tabButtonLayout->setSpacing(0);
@@ -147,7 +150,7 @@ void ContainerDock::addDock(QDockWidget *dock, QString tabButtonTitle, QString t
     button->setToolTip(tabButtonTooltip);
 
     if (m_buttons.count() > 0)
-        button->setStyleSheet((m_tabPostion == TabPosition_Top) ? buttonSytleSheetNormal_topPosition : buttonSytleSheetNormal);
+        button->setStyleSheet(buttonSytleSheetNormal);
     else
     {
         button->setStyleSheet(buttonSytleSheetSelected);
@@ -227,7 +230,7 @@ void ContainerDock::onTabButtonClicked()
         BUTTON_INFO buttonInfo = m_buttons[i];
         QToolButton *button = buttonInfo.button;
         button->setIcon(buttonInfo.normalIcon);
-        button->setStyleSheet((m_tabPostion == TabPosition_Top) ? buttonSytleSheetNormal_topPosition : buttonSytleSheetNormal);
+        button->setStyleSheet(buttonSytleSheetNormal);
     }
 }
 
