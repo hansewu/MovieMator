@@ -666,7 +666,7 @@ Rectangle {
         MenuStyle
         {
             property int nFontSize: 15
-            property color fontColor: activePalette.text
+            property color fontColor: Qt.rgba(220/255, 220/255, 220/255, 1.0)//activePalette.text
 
             itemDelegate.background: Rectangle
             {
