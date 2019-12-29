@@ -78,7 +78,7 @@ public slots:
     //void onProducerOpened();
     // 配置 Profile发生变化
     void onProfileChanged();
-    void onUpdateAdvancedSetting();
+    void onUpdateAdvancedSetting(QString strFps);
 
 
 private slots:

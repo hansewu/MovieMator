@@ -34,6 +34,8 @@ EncodeTaskDock::EncodeTaskDock(QWidget *parent) :
     header->setStretchLastSection(false);
     header->setSectionResizeMode(0, QHeaderView::Stretch);
     header->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+
+    ui->treeView->setBackgroundRole(QPalette::ColorRole::Dark);
 }
 
 EncodeTaskDock::~EncodeTaskDock()

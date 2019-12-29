@@ -113,7 +113,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
 
 
 
-    connect(m_advanceddock,SIGNAL(updateAdvancedSetting()), this, SLOT(onUpdateAdvancedSetting()));
+    connect(m_advanceddock,SIGNAL(updateAdvancedSetting(QString)), this, SLOT(onUpdateAdvancedSetting(QString)));
     connect(m_advanceddock,SIGNAL(addCustomPreset(QString)),this,SLOT(onAddCustomPreset(QString)));
     connect(m_advanceddock,SIGNAL(resetCurrentPreset()),this, SLOT(onResetCurrentPreset()));
 
@@ -1526,6 +1526,11 @@ void EncodeDock::resetOptions()
 //     m_currentPreset->set("vcodec", "libx264");
      m_currentPreset->set("crf", "21");
      m_currentPreset->set("preset", "fast");
+     m_currentPreset->set("an", "0");
+     m_currentPreset->set("vn", "0");
+     m_currentPreset->set("frame_rate_num",24);
+     m_currentPreset->set("frame_rate_den",1);
+
 
      QString fps = QString("%1").arg(MLT.profile().fps());
      m_currentPreset->set("r",fps.toLatin1().constData());
@@ -1671,7 +1676,7 @@ void EncodeDock::on_presetsList_clicked(const QModelIndex &index)
 }
 
 
- void EncodeDock::onUpdateAdvancedSetting()
+ void EncodeDock::onUpdateAdvancedSetting(QString strFps)
  {
 
      if (m_currentPreset)
@@ -1681,35 +1686,10 @@ void EncodeDock::on_presetsList_clicked(const QModelIndex &index)
                             .arg(m_currentPreset->get("width")).arg("x").arg(m_currentPreset->get("height"));
          ui->resolutionValue->setText(str);
 
-         QString r = m_currentPreset->get("r");
 
-         ui->fpsValue->setText(m_currentPreset->get("r"));
+//
+         ui->fpsValue->setText(strFps);
 
-
-         int frame_rate_num = QString(m_currentPreset->get("frame_rate_num")).toInt();
-         int frame_rate_den = QString(m_currentPreset->get("frame_rate_den")).toInt();
-
-         if (frame_rate_num == 24000 &&  frame_rate_den == 1001)
-         {
-              ui->fpsValue->setText("23.98");
-              m_currentPreset->set("r", 23.98);
-
-         }
-         else if (frame_rate_num == 30000 &&  frame_rate_den == 1001)
-         {
-              ui->fpsValue->setText("29.97");
-              m_currentPreset->set("r", 29.97);
-         }
-         else if(frame_rate_num == 48000 &&  frame_rate_den == 1001)
-         {
-               ui->fpsValue->setText("47.97");
-               m_currentPreset->set("r", "47.97");
-         }
-         else if(frame_rate_num == 48000 &&  frame_rate_den == 1001)
-         {
-              ui->fpsValue->setText("59.94");
-              m_currentPreset->set("r", "59.94");
-         }
      }
 
  }
@@ -1760,7 +1740,7 @@ void EncodeDock::on_presetsList_clicked(const QModelIndex &index)
          ui->presetsList->setModel(&m_modelList[index]);
          m_currentSelectedClass = index;
 
-         //切换时分类时，默认选中第一个格式 -- TOTO xjp 2019.12.13 有选中index，但没有高亮显示index
+         //切换时分类时，默认选中第一个格式 -- TODO xjp 2019.12.13 有选中index，但没有高亮显示index
          QModelIndex indexFromList = m_modelList[index].index(0,0);
          ui->presetsList->clicked(indexFromList);
          ui->presetsList->setCurrentIndex(indexFromList);

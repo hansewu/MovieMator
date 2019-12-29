@@ -20,7 +20,7 @@ public:
 signals:
     // 捕获状态变化信号
    // void captureStateChanged(bool);
-    void updateAdvancedSetting();
+    void updateAdvancedSetting(QString strFps);
 
     //用来传递参数
    // void sendData(QString);

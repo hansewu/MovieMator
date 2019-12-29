@@ -45,6 +45,7 @@ AdvancedDock::AdvancedDock(QWidget *parent) :
         delete p;
         ui->videoCodecCombo->model()->sort(0);
         ui->videoCodecCombo->insertItem(0, tr("Default for format"));
+        ui->videoCodecThreadsSpinner->setMaximum(QThread::idealThreadCount());
 
         //xjp, 给每个控件设置背景色，解决默认字体颜色时控件内容看不清楚的问题
         //video tab  QSpinBox::up-button{background-color: rgb(82, 82, 82)};border:1px solid #aaaaaa;}");
@@ -64,15 +65,14 @@ AdvancedDock::AdvancedDock(QWidget *parent) :
         ui->gopSpinner->setStyleSheet("QSpinBox{background-color: rgb(0, 0, 0); border:1px solid #aaaaaa;}");
         ui->bFramesSpinner->setStyleSheet("QSpinBox{background-color: rgb(0, 0, 0); border:1px solid #aaaaaa;}");
         ui->videoCodecThreadsSpinner->setStyleSheet("QSpinBox{background-color: rgb(0, 0, 0); border:1px solid #aaaaaa;}");
-        ui->disableVideoCheckbox->setBackgroundRole(QPalette::ColorRole::Dark);
+        ui->disableVideoCheckbox->setStyleSheet("QCheckBox{background-color: rgb(0, 0, 0);}");
 
         //Audio Tab
         ui->sampleRateCombo->setBackgroundRole(QPalette::ColorRole::Dark);
         ui->audioCodecCombo->setBackgroundRole(QPalette::ColorRole::Dark);
         ui->audioRateControlCombo->setBackgroundRole(QPalette::ColorRole::Dark);
         ui->audioBitrateCombo->setBackgroundRole(QPalette::ColorRole::Dark);
-        ui->disableAudioCheckbox->setBackgroundRole(QPalette::ColorRole::Dark);
-
+        ui->disableAudioCheckbox->setStyleSheet("QCheckBox{background-color: rgb(0, 0, 0);}");
         setAttribute(Qt::WA_ShowModal, true);
   }
 }
@@ -83,53 +83,7 @@ AdvancedDock::~AdvancedDock()
     //delete m_presets;
 }
 
-//void AdvancedDock::on_closeButton_clicked()
-//{
-//     this->hide();
-//}
-//void EncodeDock::resetOptions()
-//{
-//    // Reset all controls to default values.
-//    //ui->formatCombo->setCurrentIndex(0);
-//    //ui->resoulutionvalue->setEnabled(true);
-//    ui->widthSpinner->setEnabled(true);
-//    ui->heightSpinner->setEnabled(true);
-//    ui->aspectNumSpinner->setEnabled(true);
-//    ui->aspectDenSpinner->setEnabled(true);
-//    ui->scanModeCombo->setEnabled(true);
-//    ui->fpsSpinner->setEnabled(true);
-//    ui->deinterlacerCombo->setEnabled(true);
-//    ui->deinterlacerCombo->setCurrentIndex(3);
-//    ui->interpolationCombo->setEnabled(true);
-//    ui->interpolationCombo->setCurrentIndex(1);
 
-//    //ui->videoBitrateCombo->lineEdit()->setText("2M");
-//    //ui->videoBufferSizeSpinner->setValue(224);
-//    ui->gopSpinner->blockSignals(true);
-//    ui->gopSpinner->setValue(13);
-//    ui->gopSpinner->blockSignals(false);
-//    ui->bFramesSpinner->setValue(2);
-//    ui->videoCodecThreadsSpinner->setValue(0);
-//    ui->dualPassCheckbox->setChecked(false);
-//    ui->disableVideoCheckbox->setChecked(false);
-
-//    ui->sampleRateCombo->lineEdit()->setText("44100");
-//    ui->audioBitrateCombo->lineEdit()->setText("384k");
-//    //ui->audioQualitySpinner->setValue(50);
-//    ui->disableAudioCheckbox->setChecked(false);
-
-//   // on_videoBufferDurationChanged();
-
-//    Mlt::Properties preset;
-//    preset.set("f", "mp4");
-//    preset.set("movflags", "+faststart");
-//    preset.set("vcodec", "libx264");
-//    preset.set("crf", "21");
-//    preset.set("preset", "fast");
-//    preset.set("acodec", "aac");
-//    preset.set("meta.preset.extension", "mp4");
-//    loadPresetFromProperties(preset);
-//}
 
 //FIXME: 要支持获取单个clip或者playlist，则需要修改
 
@@ -271,6 +225,9 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo)
        //****** end ******
 
       // ui->presetLabel->setText(preset.get("meta.preset.name"));
+       qDebug()<<"disableAudioCheckbox:"<<preset->get_int("an");
+       qDebug()<<"disableVideoCheckbox:"<<preset->get_int("vn");
+
        ui->disableAudioCheckbox->setChecked(preset->get_int("an"));
        ui->disableVideoCheckbox->setChecked(preset->get_int("vn"));
        for (int i = 0; i < preset->count(); i++) {
@@ -450,6 +407,29 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo)
        //********* end **********
 
 
+       int frame_rate_num = m_currentPreset->get_int("frame_rate_num");
+       int frame_rate_den = m_currentPreset->get_int("frame_rate_den");
+
+
+       if (frame_rate_num == 24000 && frame_rate_den == 1001)
+       {
+            ui->fpsSpinner->setValue(23.98);
+
+       }
+       else if (frame_rate_num == 30000 && frame_rate_den == 1001)
+       {
+           ui->fpsSpinner->setValue(29.97);
+       }
+       else if (frame_rate_num == 48000 && frame_rate_den == 1001)
+       {
+           ui->fpsSpinner->setValue(47.97);
+       }
+       else if (frame_rate_num == 60000 && frame_rate_den == 1001)
+       {
+           ui->fpsSpinner->setValue(59.94);
+
+       }
+
 
        if (ui->videoRateControlCombo->currentIndex() == RateControlQuality && videoQuality > -1) {
            const QString& vcodec = ui->videoCodecCombo->currentText();
@@ -515,7 +495,8 @@ void AdvancedDock::on_cancelButton_clicked()
 void AdvancedDock::on_okButton_clicked()
 {
     updateCurrentPreset(-3);
-    emit updateAdvancedSetting();
+    QString strFps = QString::number(ui->fpsSpinner->value(),10,4);
+    emit updateAdvancedSetting(strFps);
     this->hide();
 }
 
@@ -617,6 +598,11 @@ void AdvancedDock::updateCurrentPreset(int realtime)
         m_currentPreset->set("aspect", double(ui->widthSpinner->value()) / double(ui->heightSpinner->value()));
         m_currentPreset->set("progressive", ui->scanModeCombo->currentIndex());
    //         m_currentPreset->set("top_field_first", ui->fieldOrderCombo->currentIndex());
+
+        qDebug()<<m_currentPreset->get("frame_rate_num");
+        qDebug()<<m_currentPreset->get("frame_rate_den");
+
+
         switch (ui->deinterlacerCombo->currentIndex())
         {
             case 0:
@@ -648,28 +634,37 @@ void AdvancedDock::updateCurrentPreset(int realtime)
                 break;
         }
         if (qFloor(ui->fpsSpinner->value() * 10.0) == 239)
-        {
-             m_currentPreset->set("frame_rate_num", 24000);
-             m_currentPreset->set("frame_rate_den", 1001);
+                {
+                     m_currentPreset->set("frame_rate_num", 24000);
+                     m_currentPreset->set("frame_rate_den", 1001);
+                 //    m_currentPreset->set("r", 23.98);
 
-        }
-        else if (qFloor(ui->fpsSpinner->value() * 10.0) == 299)
-        {
-             m_currentPreset->set("frame_rate_num", 30000);
-             m_currentPreset->set("frame_rate_den", 1001);
-        }
-        else if (qFloor(ui->fpsSpinner->value() * 10.0) == 479)
-        {
-             m_currentPreset->set("frame_rate_num", 48000);
-             m_currentPreset->set("frame_rate_den", 1001);
-        }
-        else if (qFloor(ui->fpsSpinner->value() * 10.0) == 599)
-        {
-             m_currentPreset->set("frame_rate_num", 60000);
-             m_currentPreset->set("frame_rate_den", 1001);
-        }
-        else
-             m_currentPreset->set("r", qFloor(ui->fpsSpinner->value()));
+                }
+                else if (qFloor(ui->fpsSpinner->value() * 10.0) == 299)
+                {
+                     m_currentPreset->set("frame_rate_num", 30000);
+                     m_currentPreset->set("frame_rate_den", 1001);
+                 //    m_currentPreset->set("r", 29.97);
+                }
+                else if (qFloor(ui->fpsSpinner->value() * 10.0) == 479)
+                {
+                     m_currentPreset->set("frame_rate_num", 48000);
+                     m_currentPreset->set("frame_rate_den", 1001);
+                 //    m_currentPreset->set("r", 47.97);
+                }
+                else if (qFloor(ui->fpsSpinner->value() * 10.0) == 599)
+                {
+                     m_currentPreset->set("frame_rate_num", 60000);
+                     m_currentPreset->set("frame_rate_den", 1001);
+                  //   m_currentPreset->set("r", 59.94);
+                }
+                else
+                {
+                     m_currentPreset->set("r", qFloor(ui->fpsSpinner->value()));
+                     m_currentPreset->set("frame_rate_num", qFloor(ui->fpsSpinner->value()));
+                     m_currentPreset->set("frame_rate_den", 1);
+                }
+
 
         if (ui->videoCodecCombo->currentText() == "prores" || m_currentPreset->get("meta.preset.name") == "image2")
              m_currentPreset->set("threads", 1);
