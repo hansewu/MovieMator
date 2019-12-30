@@ -225,8 +225,6 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo)
        //****** end ******
 
       // ui->presetLabel->setText(preset.get("meta.preset.name"));
-       qDebug()<<"disableAudioCheckbox:"<<preset->get_int("an");
-       qDebug()<<"disableVideoCheckbox:"<<preset->get_int("vn");
 
        ui->disableAudioCheckbox->setChecked(preset->get_int("an"));
        ui->disableVideoCheckbox->setChecked(preset->get_int("vn"));
@@ -471,7 +469,7 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo)
 
 void AdvancedDock::on_resolutionBox_currentIndexChanged(const QString &arg1)
 {
-    qDebug()<<arg1;
+    //qDebug()<<arg1;
     if(arg1 == "Custom")
         return;
 
@@ -604,9 +602,6 @@ void AdvancedDock::updateCurrentPreset(int realtime)
         m_currentPreset->set("aspect", double(ui->widthSpinner->value()) / double(ui->heightSpinner->value()));
         m_currentPreset->set("progressive", ui->scanModeCombo->currentIndex());
    //         m_currentPreset->set("top_field_first", ui->fieldOrderCombo->currentIndex());
-
-        qDebug()<<m_currentPreset->get("frame_rate_num");
-        qDebug()<<m_currentPreset->get("frame_rate_den");
 
 
         switch (ui->deinterlacerCombo->currentIndex())

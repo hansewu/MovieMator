@@ -62,7 +62,7 @@ void TimelineDock::filterScrollChild(QObject* parent)
         if (!mobj) {
             return;
         }
-        qDebug()<<"class name is "<<mobj->className()<<"obj name is "<<parent->objectName();
+        //qDebug()<<"class name is "<<mobj->className()<<"obj name is "<<parent->objectName();
 
         //if(QString(mobj->className()) == QString("QScrollArea"))
         //            ((QScrollArea *)parent)->viewport()->installEventFilter(this);
@@ -411,7 +411,7 @@ bool TimelineDock::eventFilter( QObject * o, QEvent * e ) {
        if (!mobj) {
            return false;
        }
-       qDebug()<<"class name is "<<mobj->className()<<"obj name is "<<o->objectName();
+       //qDebug()<<"class name is "<<mobj->className()<<"obj name is "<<o->objectName();
 
        //&& qobject_cast<ProjectTreeView*>( o ) ) {
         // Then do what you want, per example: ignore it.

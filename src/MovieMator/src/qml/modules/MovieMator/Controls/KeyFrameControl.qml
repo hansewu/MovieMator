@@ -237,7 +237,7 @@ Rectangle {
 
     function initUIWithParameter(strIdentifierOfParameter)
     {
-        console.log("initUIWithParameter: ", strIdentifierOfParameter)
+        //console.log("initUIWithParameter: ", strIdentifierOfParameter)
 
         if (strIdentifierOfParameter === "")
             return;
@@ -347,7 +347,7 @@ Rectangle {
                             filter.emitEditKeyframeOfParameter("")
                             return;
                         }
-                        console.log("select parameter: ", m_listModelParameters.get(currentIndex).parameterIdentifier)
+                        //console.log("select parameter: ", m_listModelParameters.get(currentIndex).parameterIdentifier)
                         m_strIdentifierOfParameter = m_listModelParameters.get(currentIndex).parameterIdentifier
                         initUIWithParameter(m_listModelParameters.get(currentIndex).parameterIdentifier)
                         filter.emitEditKeyframeOfParameter(m_strIdentifierOfParameter)

@@ -101,7 +101,7 @@ Item {
     {
         var colorRect = filter.getRectOfTextFilter(propertyName)
 
-        console.log("propertyName = ", propertyName, " colorRect =", colorRect)
+        //console.log("propertyName = ", propertyName, " colorRect =", colorRect)
 
         if (position >= 0)
         {
@@ -187,7 +187,7 @@ Item {
     }
 
     Component.onCompleted: {
-        console.log("Component.onCompleted")
+        //console.log("Component.onCompleted")
 
         setControls()
         keyframe.initFilter(idGridLayoutAnimation)
@@ -474,7 +474,7 @@ Item {
                 }
                 onValueChanged:
                 {
-                    console.log("fgcolourProperty = ", value, "rectcolor=", getRectColor(value))
+                    //console.log("fgcolourProperty = ", value, "rectcolor=", getRectColor(value))
                     updateFilter(fgcolourProperty, getRectColor(value))
                 }
             }

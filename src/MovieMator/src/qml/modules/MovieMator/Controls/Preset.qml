@@ -39,7 +39,7 @@ RowLayout {
         for (var i = 0; i < count; i++) {
             var presetStr = filter.getPresetWithIndex(i)
                 var presetLowCaseName = (presetStr.toString()).toLowerCase()
-                console.log("Preset presetStr: ", presetStr)
+                //console.log("Preset presetStr: ", presetStr)
                 var strType = "." + m_strType
                 strType.toLowerCase()
 

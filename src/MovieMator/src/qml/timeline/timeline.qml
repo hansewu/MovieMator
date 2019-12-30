@@ -193,7 +193,7 @@ Rectangle {
             Drag.cancel()
         }
         onEntered: {
-            console.log("onEntered --- --- --- --- --- ---")
+            //console.log("onEntered --- --- --- --- --- ---")
             if (drag.formats.indexOf('application/mlt+xml') >= 0 || drag.hasUrls || drag.formats.indexOf('application/x-qabstractitemmodeldatalist') >= 0)
             {
                 drag.acceptProposedAction()
@@ -208,11 +208,11 @@ Rectangle {
                hasUrls = true
         }
         onExited: {
-            console.log("onExited --- --- --- --- --- ---")
+            //console.log("onExited --- --- --- --- --- ---")
             Logic.dropped()
         }
         onPositionChanged: {
-            console.log("onPositionChanged --- --- --- --- --- ---")
+            //console.log("onPositionChanged --- --- --- --- --- ---")
             if (drag.formats.indexOf('application/mlt+xml') >= 0 || drag.hasUrls || drag.formats.indexOf('application/x-qabstractitemmodeldatalist') >= 0)
             {
 
@@ -220,7 +220,7 @@ Rectangle {
             }
         }
         onDropped: {
-            console.log("onDropped --- --- --- --- --- ---")
+            //console.log("onDropped --- --- --- --- --- ---")
             if (drop.formats.indexOf('application/mlt+xml') >= 0) //数据来自于media窗口
             {
                 if (currentTrack >= 0)
@@ -243,7 +243,7 @@ Rectangle {
             {
                    if (currentTrack >= 0 )
                    {
-                       console.log(drop.source.objectName)
+                       //console.log(drop.source.objectName)
 
                        Logic.acceptDropListItem(drop.getDataAsArrayBuffer('application/x-qabstractitemmodeldatalist'))
                        drop.acceptProposedAction()
