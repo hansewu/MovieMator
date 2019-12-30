@@ -198,7 +198,6 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
     m_extension.clear();
 
     QString strPresetName = preset.get("meta.preset.name");  //m_modelList[m_currentSelectedClass].data(0, Qt::UserRole + 1).toString()；
-    qDebug()<<"******** xjp preset name:"<<strPresetName;
     if(strPresetName == "DVD (dv_pal)")
     {
         preset.set("width","720");
@@ -1665,9 +1664,6 @@ void EncodeDock::on_presetsList_clicked(const QModelIndex &index)
                 }
             }
             loadPresetFromProperties(*preset);
-
-            qDebug()<<"**** xjp "<<name<<"preset"<<preset->get("aspect");
-
         }
         else {
             delete preset;
