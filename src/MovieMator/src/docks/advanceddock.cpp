@@ -127,7 +127,7 @@ void AdvancedDock::on_videoRateControlCombo_activated(int index)
         ui->videoBitrateCombo->show();
         ui->videoBufferSizeSpinner->hide();
         ui->videoQualitySpinner->hide();
-        //ui->dualPassCheckbox->show();
+     //   ui->dualPassCheckbox->show();
         ui->videoBitrateLabel->show();
         ui->videoBitrateSuffixLabel->show();
         ui->videoBufferSizeLabel->hide();
@@ -138,7 +138,7 @@ void AdvancedDock::on_videoRateControlCombo_activated(int index)
         ui->videoBitrateCombo->show();
         ui->videoBufferSizeSpinner->show();
         ui->videoQualitySpinner->hide();
-     //   ui->dualPassCheckbox->show();
+    //    ui->dualPassCheckbox->show();
         ui->videoBitrateLabel->show();
         ui->videoBitrateSuffixLabel->show();
         ui->videoBufferSizeLabel->show();
@@ -149,7 +149,7 @@ void AdvancedDock::on_videoRateControlCombo_activated(int index)
         ui->videoBitrateCombo->hide();
         ui->videoBufferSizeSpinner->hide();
         ui->videoQualitySpinner->show();
-     //   ui->dualPassCheckbox->hide();
+   //     ui->dualPassCheckbox->hide();
         ui->videoBitrateLabel->hide();
         ui->videoBitrateSuffixLabel->hide();
         ui->videoBufferSizeLabel->hide();
@@ -205,7 +205,7 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo)
        ui->gopSpinner->blockSignals(false);
        ui->bFramesSpinner->setValue(2);
        ui->videoCodecThreadsSpinner->setValue(0);
-     //  ui->dualPassCheckbox->setChecked(false);
+   //    ui->dualPassCheckbox->setChecked(false);
        ui->disableVideoCheckbox->setChecked(false);
 
        ui->sampleRateCombo->lineEdit()->setText("44100");
@@ -245,7 +245,10 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo)
                        ui->videoCodecCombo->setCurrentIndex(i);
            }
            else if (name == "ar")
+            {
+                qDebug()<<preset->get("ar");
                ui->sampleRateCombo->lineEdit()->setText(preset->get("ar"));
+            }
            else if (name == "ab")
                ui->audioBitrateCombo->lineEdit()->setText(preset->get("ab"));
            else if (name == "vb") {
@@ -528,8 +531,11 @@ void AdvancedDock::updateCurrentPreset(int realtime)
             if (ui->audioCodecCombo->currentIndex() > 0)
                 m_currentPreset->set("acodec", ui->audioCodecCombo->currentText().toLatin1().constData());
             m_currentPreset->set("ar", ui->sampleRateCombo->currentText().toLatin1().constData());
+            qDebug()<<ui->sampleRateCombo->currentText().toLatin1().constData(); //xjp debug
+
             if (ui->audioRateControlCombo->currentIndex() == RateControlAverage
-                    || ui->audioRateControlCombo->currentIndex() == RateControlConstant) {
+                    || ui->audioRateControlCombo->currentIndex() == RateControlConstant)
+            {
                 m_currentPreset->set("ab", ui->audioBitrateCombo->currentText().toLatin1().constData());
                 if (acodec == "libopus") {
                     if (RateControlConstant == ui->audioRateControlCombo->currentIndex())
@@ -572,11 +578,11 @@ void AdvancedDock::updateCurrentPreset(int realtime)
                     break;
                 case RateControlConstant:
                 {
-//                    QString b = ui->audioBitrateCombo->currentText();
-//                    // x265 does not expect bitrate suffixes and requires Kb/s
-//                    b.replace('k', "").replace('M', "000");
-//                    x265params = QString("bitrate=%1:vbv-bufsize=%2:vbv-maxrate=%3:%4")
-//                        .arg(b).arg(int(ui->videoBufferSizeSpinner->value() * 8)).arg(b).arg(x265params);
+                    QString b = ui->audioBitrateCombo->currentText();
+                    // x265 does not expect bitrate suffixes and requires Kb/s
+                    b.replace('k', "").replace('M', "000");
+                    x265params = QString("bitrate=%1:vbv-bufsize=%2:vbv-maxrate=%3:%4")
+                        .arg(b).arg(int(ui->videoBufferSizeSpinner->value() * 8)).arg(b).arg(x265params);
                     break;
                 }
                 case RateControlQuality:
@@ -592,6 +598,36 @@ void AdvancedDock::updateCurrentPreset(int realtime)
                             .arg(ui->bFramesSpinner->value()).arg(x265params);
                 m_currentPreset->set("x265-params", x265params.toUtf8().constData());
             }
+            else
+            {
+                switch (ui->videoRateControlCombo->currentIndex())
+                {
+                    case RateControlAverage:
+                        m_currentPreset->set("vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
+                        break;
+                    case RateControlConstant: {
+                        const QString& b = ui->videoBitrateCombo->currentText();
+                        m_currentPreset->set("vb", b.toLatin1().constData());
+                        m_currentPreset->set("vminrate", b.toLatin1().constData());
+                        m_currentPreset->set("vmaxrate", b.toLatin1().constData());
+                        m_currentPreset->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                        break;
+                        }
+                    case RateControlQuality: {
+                        int vq = ui->videoQualitySpinner->value();
+                        if (vcodec == "libx264") {
+                            m_currentPreset->set("crf", TO_ABSOLUTE(51, 0, vq));
+                        } else if (vcodec.startsWith("libvpx")) {
+                            m_currentPreset->set("crf", TO_ABSOLUTE(63, 0, vq));
+                            m_currentPreset->set("vb", 0); // VP9 needs this to prevent constrained quality mode.
+                        } else {
+                            m_currentPreset->set("qscale", TO_ABSOLUTE(31, 1, vq));
+                        }
+                        break;
+                        }
+                  }
+            }
+
 
 
             m_currentPreset->set("g", ui->gopSpinner->value());
@@ -635,36 +671,36 @@ void AdvancedDock::updateCurrentPreset(int realtime)
                 break;
         }
         if (qFloor(ui->fpsSpinner->value() * 10.0) == 239)
-                {
-                     m_currentPreset->set("frame_rate_num", 24000);
-                     m_currentPreset->set("frame_rate_den", 1001);
-                 //    m_currentPreset->set("r", 23.98);
+        {
+             m_currentPreset->set("frame_rate_num", 24000);
+             m_currentPreset->set("frame_rate_den", 1001);
 
-                }
-                else if (qFloor(ui->fpsSpinner->value() * 10.0) == 299)
-                {
-                     m_currentPreset->set("frame_rate_num", 30000);
-                     m_currentPreset->set("frame_rate_den", 1001);
-                 //    m_currentPreset->set("r", 29.97);
-                }
-                else if (qFloor(ui->fpsSpinner->value() * 10.0) == 479)
-                {
-                     m_currentPreset->set("frame_rate_num", 48000);
-                     m_currentPreset->set("frame_rate_den", 1001);
-                 //    m_currentPreset->set("r", 47.97);
-                }
-                else if (qFloor(ui->fpsSpinner->value() * 10.0) == 599)
-                {
-                     m_currentPreset->set("frame_rate_num", 60000);
-                     m_currentPreset->set("frame_rate_den", 1001);
-                  //   m_currentPreset->set("r", 59.94);
-                }
-                else
-                {
-                     m_currentPreset->set("r", qFloor(ui->fpsSpinner->value()));
-                     m_currentPreset->set("frame_rate_num", qFloor(ui->fpsSpinner->value()));
-                     m_currentPreset->set("frame_rate_den", 1);
-                }
+
+        }
+        else if (qFloor(ui->fpsSpinner->value() * 10.0) == 299)
+        {
+             m_currentPreset->set("frame_rate_num", 30000);
+             m_currentPreset->set("frame_rate_den", 1001);
+
+        }
+        else if (qFloor(ui->fpsSpinner->value() * 10.0) == 479)
+        {
+             m_currentPreset->set("frame_rate_num", 48000);
+             m_currentPreset->set("frame_rate_den", 1001);
+
+        }
+        else if (qFloor(ui->fpsSpinner->value() * 10.0) == 599)
+        {
+             m_currentPreset->set("frame_rate_num", 60000);
+             m_currentPreset->set("frame_rate_den", 1001);
+
+        }
+        else
+        {
+             m_currentPreset->set("r", qFloor(ui->fpsSpinner->value()));
+             m_currentPreset->set("frame_rate_num", qFloor(ui->fpsSpinner->value()));
+             m_currentPreset->set("frame_rate_den", 1);
+        }
 
 
         if (ui->videoCodecCombo->currentText() == "prores" || m_currentPreset->get("meta.preset.name") == "image2")
@@ -675,8 +711,8 @@ void AdvancedDock::updateCurrentPreset(int realtime)
              m_currentPreset->set("threads", QThread::idealThreadCount() - 1);
         else
              m_currentPreset->set("threads", ui->videoCodecThreadsSpinner->value());
-//            if (ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())
-//                p->set("pass", 1);
+//        if (ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())
+//            p->set("pass", 1);
      }
      
 
@@ -690,6 +726,7 @@ void AdvancedDock::on_addPresetButton_clicked()
 
     Mlt::Properties* data = collectProperties(0);
     Q_ASSERT(data);
+    qDebug()<<data->get("ab")<<","<<data->get("vb");
     AddEncodePresetDialog dialog(this);
     QStringList ls;
 

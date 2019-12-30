@@ -1525,14 +1525,19 @@ void EncodeDock::resetOptions()
 //     m_currentPreset->set("vcodec", "libx264");
      m_currentPreset->set("crf", "21");
      m_currentPreset->set("preset", "fast");
-     m_currentPreset->set("an", "0");
-     m_currentPreset->set("vn", "0");
-     m_currentPreset->set("frame_rate_num",24);
-     m_currentPreset->set("frame_rate_den",1);
+
+     if(m_currentSelectedClass != 0)
+     {
+         m_currentPreset->set("an", "0");
+         m_currentPreset->set("vn", "0");
+         m_currentPreset->set("frame_rate_num",24);
+         m_currentPreset->set("frame_rate_den",1);
+         QString fps = QString("%1").arg(MLT.profile().fps());
+         m_currentPreset->set("r",fps.toLatin1().constData());
+     }
 
 
-     QString fps = QString("%1").arg(MLT.profile().fps());
-     m_currentPreset->set("r",fps.toLatin1().constData());
+
 //     m_currentPreset->set("acodec", "aac");
 //     preset.set("meta.preset.extension", "mp4");
 
