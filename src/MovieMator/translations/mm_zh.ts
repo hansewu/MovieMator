@@ -22,525 +22,525 @@
 <context>
     <name>AdvancedDock</name>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="14"/>
+        <location filename="../src/docks/advanceddock.ui" line="32"/>
         <source>Export Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="27"/>
+        <location filename="../src/docks/advanceddock.ui" line="45"/>
         <source>Cancel</source>
         <translation type="unfinished">取消</translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="40"/>
+        <location filename="../src/docks/advanceddock.ui" line="58"/>
         <source>OK</source>
         <translation type="unfinished">确定</translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="66"/>
+        <location filename="../src/docks/advanceddock.ui" line="84"/>
         <source>Video</source>
         <translation type="unfinished">视频</translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="96"/>
+        <location filename="../src/docks/advanceddock.ui" line="114"/>
         <source>Deinterlacer</source>
         <translation type="unfinished">反交错</translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="112"/>
+        <location filename="../src/docks/advanceddock.ui" line="130"/>
         <source>Interpolation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="128"/>
+        <location filename="../src/docks/advanceddock.ui" line="146"/>
         <source>Frames/sec</source>
         <translation type="unfinished">帧/秒</translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="144"/>
+        <location filename="../src/docks/advanceddock.ui" line="162"/>
         <source>Scan mode</source>
         <translation type="unfinished">扫描方式</translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="160"/>
+        <location filename="../src/docks/advanceddock.ui" line="178"/>
         <source>Resolution</source>
         <translation type="unfinished">分辨率</translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="195"/>
+        <location filename="../src/docks/advanceddock.ui" line="213"/>
         <source>x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="272"/>
+        <location filename="../src/docks/advanceddock.ui" line="290"/>
         <source>Interlaced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="277"/>
+        <location filename="../src/docks/advanceddock.ui" line="295"/>
         <source>Progressive</source>
         <translation type="unfinished">逐行</translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="314"/>
+        <location filename="../src/docks/advanceddock.ui" line="332"/>
         <source>One Field (fast)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="319"/>
+        <location filename="../src/docks/advanceddock.ui" line="337"/>
         <source>Linear Blend (fast)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="324"/>
+        <location filename="../src/docks/advanceddock.ui" line="342"/>
         <source>YADIF - temporal only (good)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="329"/>
+        <location filename="../src/docks/advanceddock.ui" line="347"/>
         <source>YADIF - temporal + spatial (best)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="366"/>
+        <location filename="../src/docks/advanceddock.ui" line="384"/>
         <source>Nearest Neighbor (fast)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="371"/>
+        <location filename="../src/docks/advanceddock.ui" line="389"/>
         <source>Bilinear (good)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="376"/>
+        <location filename="../src/docks/advanceddock.ui" line="394"/>
         <source>Bicubic (better)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="381"/>
+        <location filename="../src/docks/advanceddock.ui" line="399"/>
         <source>Hyper/Lanczos (best)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="418"/>
+        <location filename="../src/docks/advanceddock.ui" line="436"/>
         <source>1280x720(16:9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="423"/>
-        <source>1440x1080(16:9)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/advanceddock.ui" line="428"/>
+        <location filename="../src/docks/advanceddock.ui" line="441"/>
         <source>1920x1080(16:9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="433"/>
+        <location filename="../src/docks/advanceddock.ui" line="446"/>
         <source>2560x1440(16:9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="438"/>
+        <location filename="../src/docks/advanceddock.ui" line="451"/>
         <source>3840x2160(16:9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="443"/>
+        <location filename="../src/docks/advanceddock.ui" line="456"/>
         <source>1080x1920(9:16)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="448"/>
+        <location filename="../src/docks/advanceddock.ui" line="461"/>
         <source>1920x1440(4:3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="453"/>
+        <location filename="../src/docks/advanceddock.ui" line="466"/>
+        <source>1440x1080(4:3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/advanceddock.ui" line="471"/>
         <source>1280x960(4:3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="458"/>
+        <location filename="../src/docks/advanceddock.ui" line="476"/>
         <source>720x480(3:2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="463"/>
+        <location filename="../src/docks/advanceddock.ui" line="481"/>
         <source>720x576(5:4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="468"/>
+        <location filename="../src/docks/advanceddock.ui" line="486"/>
         <source>1400x1080(35:27)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="473"/>
+        <location filename="../src/docks/advanceddock.ui" line="491"/>
         <source>Custom</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="508"/>
-        <location filename="../src/docks/advanceddock.ui" line="536"/>
-        <location filename="../src/docks/advanceddock.ui" line="1211"/>
+        <location filename="../src/docks/advanceddock.ui" line="526"/>
+        <location filename="../src/docks/advanceddock.ui" line="554"/>
+        <location filename="../src/docks/advanceddock.ui" line="1226"/>
         <source>Codec</source>
         <translation type="unfinished">编码</translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="520"/>
+        <location filename="../src/docks/advanceddock.ui" line="538"/>
         <source>B frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="552"/>
-        <location filename="../src/docks/advanceddock.ui" line="1489"/>
+        <location filename="../src/docks/advanceddock.ui" line="570"/>
+        <location filename="../src/docks/advanceddock.ui" line="1504"/>
         <source>Quality</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="568"/>
+        <location filename="../src/docks/advanceddock.ui" line="586"/>
         <source>GOP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="584"/>
-        <location filename="../src/docks/advanceddock.ui" line="1150"/>
+        <location filename="../src/docks/advanceddock.ui" line="602"/>
+        <location filename="../src/docks/advanceddock.ui" line="1165"/>
         <source>Rate control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="600"/>
+        <location filename="../src/docks/advanceddock.ui" line="618"/>
         <source>Codec threads</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="616"/>
+        <location filename="../src/docks/advanceddock.ui" line="634"/>
         <source>Disable video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="633"/>
-        <location filename="../src/docks/advanceddock.ui" line="1231"/>
+        <location filename="../src/docks/advanceddock.ui" line="651"/>
+        <location filename="../src/docks/advanceddock.ui" line="1246"/>
         <source>Average Bitrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="638"/>
-        <location filename="../src/docks/advanceddock.ui" line="1236"/>
+        <location filename="../src/docks/advanceddock.ui" line="656"/>
+        <location filename="../src/docks/advanceddock.ui" line="1251"/>
         <source>Constant Bitrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="643"/>
-        <location filename="../src/docks/advanceddock.ui" line="1241"/>
+        <location filename="../src/docks/advanceddock.ui" line="661"/>
+        <location filename="../src/docks/advanceddock.ui" line="1256"/>
         <source>Quality-based VBR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="676"/>
+        <location filename="../src/docks/advanceddock.ui" line="694"/>
         <source>B frames are the bidirectional &quot;delta&quot; pictures
 in temporal compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="712"/>
+        <location filename="../src/docks/advanceddock.ui" line="730"/>
         <source>GOP = group of pictures, which is the maximum key frame interval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="725"/>
+        <location filename="../src/docks/advanceddock.ui" line="743"/>
         <source>frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="785"/>
-        <location filename="../src/docks/advanceddock.ui" line="1508"/>
+        <location filename="../src/docks/advanceddock.ui" line="803"/>
+        <location filename="../src/docks/advanceddock.ui" line="1523"/>
         <source> %</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="834"/>
+        <location filename="../src/docks/advanceddock.ui" line="852"/>
         <source>(0 = auto)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="860"/>
-        <location filename="../src/docks/advanceddock.ui" line="1274"/>
+        <location filename="../src/docks/advanceddock.ui" line="878"/>
+        <location filename="../src/docks/advanceddock.ui" line="1289"/>
         <source>The average bit rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="870"/>
-        <location filename="../src/docks/advanceddock.ui" line="1299"/>
+        <location filename="../src/docks/advanceddock.ui" line="888"/>
+        <location filename="../src/docks/advanceddock.ui" line="1314"/>
         <source>64k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="875"/>
-        <location filename="../src/docks/advanceddock.ui" line="1309"/>
+        <location filename="../src/docks/advanceddock.ui" line="893"/>
+        <location filename="../src/docks/advanceddock.ui" line="1324"/>
         <source>128k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="880"/>
-        <location filename="../src/docks/advanceddock.ui" line="1324"/>
+        <location filename="../src/docks/advanceddock.ui" line="898"/>
+        <location filename="../src/docks/advanceddock.ui" line="1339"/>
         <source>256k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="885"/>
-        <location filename="../src/docks/advanceddock.ui" line="1334"/>
+        <location filename="../src/docks/advanceddock.ui" line="903"/>
+        <location filename="../src/docks/advanceddock.ui" line="1349"/>
         <source>512k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="890"/>
+        <location filename="../src/docks/advanceddock.ui" line="908"/>
         <source>768k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="895"/>
-        <location filename="../src/docks/advanceddock.ui" line="1339"/>
+        <location filename="../src/docks/advanceddock.ui" line="913"/>
+        <location filename="../src/docks/advanceddock.ui" line="1354"/>
         <source>1M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="900"/>
+        <location filename="../src/docks/advanceddock.ui" line="918"/>
         <source>1200k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="905"/>
+        <location filename="../src/docks/advanceddock.ui" line="923"/>
         <source>1500k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="910"/>
+        <location filename="../src/docks/advanceddock.ui" line="928"/>
         <source>2M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="915"/>
+        <location filename="../src/docks/advanceddock.ui" line="933"/>
         <source>2500k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="920"/>
+        <location filename="../src/docks/advanceddock.ui" line="938"/>
         <source>3M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="925"/>
+        <location filename="../src/docks/advanceddock.ui" line="943"/>
         <source>4M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="930"/>
+        <location filename="../src/docks/advanceddock.ui" line="948"/>
         <source>5M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="935"/>
+        <location filename="../src/docks/advanceddock.ui" line="953"/>
         <source>6M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="940"/>
+        <location filename="../src/docks/advanceddock.ui" line="958"/>
         <source>8M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="945"/>
+        <location filename="../src/docks/advanceddock.ui" line="963"/>
         <source>10M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="950"/>
+        <location filename="../src/docks/advanceddock.ui" line="968"/>
         <source>12M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="955"/>
+        <location filename="../src/docks/advanceddock.ui" line="973"/>
         <source>14M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="960"/>
+        <location filename="../src/docks/advanceddock.ui" line="978"/>
         <source>16M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="965"/>
+        <location filename="../src/docks/advanceddock.ui" line="983"/>
         <source>18M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="970"/>
+        <location filename="../src/docks/advanceddock.ui" line="988"/>
         <source>20M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="975"/>
+        <location filename="../src/docks/advanceddock.ui" line="993"/>
         <source>25M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="980"/>
+        <location filename="../src/docks/advanceddock.ui" line="998"/>
         <source>30M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="985"/>
+        <location filename="../src/docks/advanceddock.ui" line="1003"/>
         <source>40M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="990"/>
+        <location filename="../src/docks/advanceddock.ui" line="1008"/>
         <source>50M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="995"/>
+        <location filename="../src/docks/advanceddock.ui" line="1013"/>
         <source>60M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1000"/>
+        <location filename="../src/docks/advanceddock.ui" line="1018"/>
         <source>70M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1005"/>
+        <location filename="../src/docks/advanceddock.ui" line="1023"/>
         <source>80M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1013"/>
-        <location filename="../src/docks/advanceddock.ui" line="1347"/>
+        <location filename="../src/docks/advanceddock.ui" line="1031"/>
+        <location filename="../src/docks/advanceddock.ui" line="1362"/>
         <source>b/s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1042"/>
-        <location filename="../src/docks/advanceddock.ui" line="1179"/>
+        <location filename="../src/docks/advanceddock.ui" line="1060"/>
+        <location filename="../src/docks/advanceddock.ui" line="1194"/>
         <source>Bitrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1058"/>
+        <location filename="../src/docks/advanceddock.ui" line="1076"/>
         <source>Buffer size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1087"/>
+        <location filename="../src/docks/advanceddock.ui" line="1105"/>
         <source>KiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1138"/>
+        <location filename="../src/docks/advanceddock.ui" line="1153"/>
         <source>Audio</source>
         <translation type="unfinished">音频</translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1166"/>
+        <location filename="../src/docks/advanceddock.ui" line="1181"/>
         <source>Disable audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1195"/>
+        <location filename="../src/docks/advanceddock.ui" line="1210"/>
         <source>Sample rate</source>
         <translation type="unfinished">采样率</translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1284"/>
+        <location filename="../src/docks/advanceddock.ui" line="1299"/>
         <source>16k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1289"/>
+        <location filename="../src/docks/advanceddock.ui" line="1304"/>
         <source>32k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1294"/>
+        <location filename="../src/docks/advanceddock.ui" line="1309"/>
         <source>48k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1304"/>
+        <location filename="../src/docks/advanceddock.ui" line="1319"/>
         <source>96k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1314"/>
+        <location filename="../src/docks/advanceddock.ui" line="1329"/>
         <source>160k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1319"/>
+        <location filename="../src/docks/advanceddock.ui" line="1334"/>
         <source>190k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1329"/>
+        <location filename="../src/docks/advanceddock.ui" line="1344"/>
         <source>384k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1382"/>
-        <location filename="../src/docks/advanceddock.ui" line="1414"/>
+        <location filename="../src/docks/advanceddock.ui" line="1397"/>
+        <location filename="../src/docks/advanceddock.ui" line="1429"/>
         <source>44100</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1389"/>
+        <location filename="../src/docks/advanceddock.ui" line="1404"/>
         <source>8000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1394"/>
+        <location filename="../src/docks/advanceddock.ui" line="1409"/>
         <source>12000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1399"/>
+        <location filename="../src/docks/advanceddock.ui" line="1414"/>
         <source>16000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1404"/>
+        <location filename="../src/docks/advanceddock.ui" line="1419"/>
         <source>22050</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1409"/>
+        <location filename="../src/docks/advanceddock.ui" line="1424"/>
         <source>32000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1419"/>
+        <location filename="../src/docks/advanceddock.ui" line="1434"/>
         <source>48000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1424"/>
+        <location filename="../src/docks/advanceddock.ui" line="1439"/>
         <source>96000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1432"/>
+        <location filename="../src/docks/advanceddock.ui" line="1447"/>
         <source>Hz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1548"/>
+        <location filename="../src/docks/advanceddock.ui" line="1563"/>
         <source>Save Preset</source>
         <translation type="unfinished">保存预设</translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.ui" line="1561"/>
+        <location filename="../src/docks/advanceddock.ui" line="1576"/>
         <source>Reset</source>
         <translation type="unfinished">重置</translation>
     </message>
@@ -551,7 +551,7 @@ in temporal compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/advanceddock.cpp" line="705"/>
+        <location filename="../src/docks/advanceddock.cpp" line="701"/>
         <source>Add Export Preset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -597,27 +597,27 @@ in temporal compression</source>
         <translation type="unfinished">设置工程宽高比</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="50"/>
+        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="45"/>
         <source>16:9(Landscape)</source>
         <translation type="unfinished">16:9(宽屏)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="51"/>
+        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="46"/>
         <source>9:16(Portrait)</source>
         <translation type="unfinished">9:16(竖屏)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="52"/>
+        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="47"/>
         <source>4:3(Classic)</source>
         <translation type="unfinished">4:3(标准)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="53"/>
+        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="48"/>
         <source>3:4(E-store)</source>
         <translation type="unfinished">3:4(电商)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="54"/>
+        <location filename="../src/dialogs/aspectratiosettingsdialog.cpp" line="49"/>
         <source>1:1(Square)</source>
         <translation type="unfinished">1:1(方形)</translation>
     </message>
@@ -1559,7 +1559,7 @@ You may leave your Email address and tell us more detailed information about the
 <context>
     <name>EncodeDock</name>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="39"/>
+        <location filename="../src/docks/encodedock.ui" line="45"/>
         <source>Export</source>
         <translation type="unfinished">导出</translation>
     </message>
@@ -1576,7 +1576,7 @@ You may leave your Email address and tell us more detailed information about the
         <translation type="obsolete">表单</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="345"/>
+        <location filename="../src/docks/encodedock.ui" line="354"/>
         <source>Video</source>
         <translation type="unfinished">视频</translation>
     </message>
@@ -1629,7 +1629,7 @@ You may leave your Email address and tell us more detailed information about the
         <translation type="obsolete">编码</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="367"/>
+        <location filename="../src/docks/encodedock.ui" line="376"/>
         <source>Audio</source>
         <translation type="unfinished">音频</translation>
     </message>
@@ -1638,94 +1638,94 @@ You may leave your Email address and tell us more detailed information about the
         <translation type="obsolete">采样率</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="55"/>
+        <location filename="../src/docks/encodedock.ui" line="61"/>
         <source>Advanced</source>
         <translation type="unfinished">高级设置</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="68"/>
+        <location filename="../src/docks/encodedock.ui" line="74"/>
         <source>Resolution:</source>
         <translation type="unfinished">分辨率:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="84"/>
+        <location filename="../src/docks/encodedock.ui" line="90"/>
         <source>Frames/Sec:</source>
         <translation type="unfinished">帧率:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="100"/>
+        <location filename="../src/docks/encodedock.ui" line="106"/>
         <source>Duration：</source>
         <translation type="unfinished">视频长度:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="160"/>
+        <location filename="../src/docks/encodedock.ui" line="169"/>
         <source>Web</source>
         <translation type="unfinished">网站</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="179"/>
+        <location filename="../src/docks/encodedock.ui" line="188"/>
         <source>1280x720</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="195"/>
+        <location filename="../src/docks/encodedock.ui" line="204"/>
         <source>24</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="211"/>
+        <location filename="../src/docks/encodedock.ui" line="220"/>
         <source>00:00:00:00</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="240"/>
+        <location filename="../src/docks/encodedock.ui" line="249"/>
         <source>Bit Rate:</source>
         <translation type="unfinished">比特率:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="256"/>
+        <location filename="../src/docks/encodedock.ui" line="265"/>
         <source>128Kbps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="269"/>
+        <location filename="../src/docks/encodedock.ui" line="278"/>
         <source>Sample Rate:</source>
         <translation type="unfinished">采样率:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="285"/>
+        <location filename="../src/docks/encodedock.ui" line="294"/>
         <source>44100Hz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="301"/>
-        <location filename="../src/docks/encodedock.ui" line="320"/>
-        <location filename="../src/docks/encodedock.ui" line="342"/>
-        <location filename="../src/docks/encodedock.ui" line="364"/>
-        <location filename="../src/docks/encodedock.ui" line="386"/>
-        <location filename="../src/docks/encodedock.ui" line="408"/>
-        <location filename="../src/docks/encodedock.ui" line="430"/>
+        <location filename="../src/docks/encodedock.ui" line="310"/>
+        <location filename="../src/docks/encodedock.ui" line="329"/>
+        <location filename="../src/docks/encodedock.ui" line="351"/>
+        <location filename="../src/docks/encodedock.ui" line="373"/>
+        <location filename="../src/docks/encodedock.ui" line="395"/>
+        <location filename="../src/docks/encodedock.ui" line="417"/>
+        <location filename="../src/docks/encodedock.ui" line="439"/>
         <source>Delete currently selected( preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="304"/>
-        <location filename="../src/docks/encodedock.cpp" line="1393"/>
+        <location filename="../src/docks/encodedock.ui" line="313"/>
+        <location filename="../src/docks/encodedock.cpp" line="1392"/>
         <source>Delete Preset</source>
         <translation type="unfinished">删除预设</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="389"/>
+        <location filename="../src/docks/encodedock.ui" line="398"/>
         <source>Devices</source>
         <translation type="unfinished">设备</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="411"/>
+        <location filename="../src/docks/encodedock.ui" line="420"/>
         <source>TV</source>
         <translation type="unfinished">TV</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="433"/>
+        <location filename="../src/docks/encodedock.ui" line="442"/>
         <source>Lossless</source>
         <translation type="unfinished">无损</translation>
     </message>
@@ -1742,8 +1742,8 @@ You may leave your Email address and tell us more detailed information about the
         <translation type="obsolete">关闭</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="144"/>
-        <location filename="../src/docks/encodedock.cpp" line="1244"/>
+        <location filename="../src/docks/encodedock.ui" line="153"/>
+        <location filename="../src/docks/encodedock.cpp" line="1243"/>
         <source>Export File</source>
         <translation type="unfinished">导出文件</translation>
     </message>
@@ -1756,47 +1756,47 @@ You may leave your Email address and tell us more detailed information about the
         <translation type="obsolete">播放列表</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="323"/>
-        <location filename="../src/docks/encodedock.cpp" line="279"/>
-        <location filename="../src/docks/encodedock.cpp" line="1118"/>
-        <location filename="../src/docks/encodedock.cpp" line="1727"/>
+        <location filename="../src/docks/encodedock.ui" line="332"/>
+        <location filename="../src/docks/encodedock.cpp" line="278"/>
+        <location filename="../src/docks/encodedock.cpp" line="1117"/>
+        <location filename="../src/docks/encodedock.cpp" line="1703"/>
         <source>Custom</source>
         <translation type="unfinished">自定义</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="889"/>
+        <location filename="../src/docks/encodedock.cpp" line="888"/>
         <source>MovieMator</source>
         <translation type="unfinished">剪大师</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="918"/>
+        <location filename="../src/docks/encodedock.cpp" line="917"/>
         <source>http://moviemator.net</source>
         <translation type="unfinished">http://jiandashi.com</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1224"/>
+        <location filename="../src/docks/encodedock.cpp" line="1223"/>
         <source>Stop Capture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1226"/>
-        <location filename="../src/docks/encodedock.cpp" line="1244"/>
-        <location filename="../src/docks/encodedock.cpp" line="1422"/>
+        <location filename="../src/docks/encodedock.cpp" line="1225"/>
+        <location filename="../src/docks/encodedock.cpp" line="1243"/>
+        <location filename="../src/docks/encodedock.cpp" line="1421"/>
         <source>Capture File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1244"/>
+        <location filename="../src/docks/encodedock.cpp" line="1243"/>
         <source>*.%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1342"/>
+        <location filename="../src/docks/encodedock.cpp" line="1341"/>
         <source>Add Export Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1394"/>
+        <location filename="../src/docks/encodedock.cpp" line="1393"/>
         <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1859,12 +1859,12 @@ You may leave your Email address and tell us more detailed information about the
         <translation type="unfinished">删除</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodetaskdock.cpp" line="86"/>
+        <location filename="../src/docks/encodetaskdock.cpp" line="88"/>
         <source>Tips</source>
         <translation type="unfinished">提示</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodetaskdock.cpp" line="87"/>
+        <location filename="../src/docks/encodetaskdock.cpp" line="89"/>
         <source>The tasks will be stop, continue to close?</source>
         <translation type="unfinished">关闭窗口导出任务将会终止，确定关闭？</translation>
     </message>
@@ -1948,7 +1948,7 @@ You may leave your Email address and tell us more detailed information about the
         <translation type="obsolete">常用</translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="811"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="807"/>
         <source>Only one %1 filter is allowed.</source>
         <translation type="unfinished">仅允许一个%1滤镜</translation>
     </message>
@@ -2138,9 +2138,13 @@ with the framebuffer object extension.</source>
         <translation type="unfinished">提示</translation>
     </message>
     <message>
-        <location filename="../ResourceDockGenerator/helptipdialog.ui" line="62"/>
         <source>Go (to the guide)</source>
-        <translation type="unfinished">前往（教程）</translation>
+        <translation type="obsolete">前往（教程）</translation>
+    </message>
+    <message>
+        <location filename="../ResourceDockGenerator/helptipdialog.ui" line="62"/>
+        <source>Go to the guide</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ResourceDockGenerator/helptipdialog.ui" line="90"/>
@@ -2621,62 +2625,62 @@ the list. This does not stop a currently running job. Right-
         <translation type="unfinished">参数</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="433"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="437"/>
         <source>Animation Type</source>
         <translation type="unfinished">动画类型</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="441"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="445"/>
         <source>In&amp;Out Animation</source>
         <translation type="unfinished">入点动画和出点动画</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="442"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="446"/>
         <source>In Animaiton</source>
         <translation type="unfinished">入点动画</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="443"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="447"/>
         <source>Out Animaiton</source>
         <translation type="unfinished">出点动画</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="456"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="460"/>
         <source>Animation Duration</source>
         <translation type="unfinished">动画时长</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="477"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="481"/>
         <source>Keyframe</source>
         <translation type="unfinished">关键帧</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="485"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="489"/>
         <source>(Position: 00:00:00:00, Value:100)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="493"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="497"/>
         <source>Interpolation</source>
         <translation type="unfinished">插值方法</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="524"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="528"/>
         <source>Add key frame</source>
         <translation type="unfinished">增加关键帧</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="550"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="554"/>
         <source>Remove key frame</source>
         <translation type="unfinished">移除关键帧</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="642"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="646"/>
         <source>Confirm Removing Keyframes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="643"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="647"/>
         <source>This will remove all keyframes.&lt;p&gt;Do you still want to do this?</source>
         <translation type="unfinished">这将删除该参数的所有关键帧数据.&lt;p&gt;确定这样做吗?</translation>
     </message>
@@ -2689,7 +2693,7 @@ the list. This does not stop a currently running job. Right-
         <translation type="obsolete">移除关键帧</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="585"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="589"/>
         <source>Prev key frame</source>
         <translation type="unfinished">上一帧</translation>
     </message>
@@ -2698,7 +2702,7 @@ the list. This does not stop a currently running job. Right-
         <translation type="obsolete">上一帧</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="614"/>
+        <location filename="../src/qml/modules/MovieMator/Controls/KeyFrameControl.qml" line="618"/>
         <source>Next key frame</source>
         <translation type="unfinished">下一帧</translation>
     </message>
@@ -3451,7 +3455,6 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="886"/>
-        <location filename="../src/mainwindow.cpp" line="4270"/>
         <source>Feedback</source>
         <translation type="unfinished">反馈</translation>
     </message>
@@ -4008,20 +4011,13 @@ Do you want to restart now?</source>
         <translation type="unfinished">导出视频</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4263"/>
         <source>Tutorials</source>
-        <translation type="unfinished">教程</translation>
+        <translation type="obsolete">教程</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="945"/>
-        <location filename="../src/mainwindow.cpp" line="4263"/>
         <source>Tutorial</source>
         <translation type="unfinished">教程</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="4270"/>
-        <source>Send us your suggestions</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="4292"/>
@@ -5381,17 +5377,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/recorddialog.cpp" line="244"/>
+        <location filename="../src/dialogs/recorddialog.cpp" line="239"/>
         <source>None</source>
         <translation type="unfinished">无</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/recorddialog.cpp" line="277"/>
+        <location filename="../src/dialogs/recorddialog.cpp" line="272"/>
         <source>Save File</source>
         <translation type="unfinished">保存文件</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/recorddialog.cpp" line="277"/>
+        <location filename="../src/dialogs/recorddialog.cpp" line="272"/>
         <source>WAV (*.wav)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5970,6 +5966,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">缩放到合适</translation>
     </message>
     <message>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="606"/>
+        <source>Remove current clip（Del）</source>
+        <translation type="unfinished">删除当前片段（Del）</translation>
+    </message>
+    <message>
         <source>Fade in</source>
         <translation type="obsolete">渐入</translation>
     </message>
@@ -6025,9 +6026,8 @@ shifting following clips to the right (V)</source>
         <translation type="unfinished">追加到当前轨道(A)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="606"/>
         <source>Remove current clip</source>
-        <translation type="unfinished">删除当前片段</translation>
+        <translation type="obsolete">删除当前片段</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="626"/>
@@ -7510,73 +7510,73 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="597"/>
-        <location filename="../src/qml/timeline/timeline.qml" line="767"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="599"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="769"/>
         <source>Append</source>
         <translation type="unfinished">追加资源</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="597"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="599"/>
         <source>Insert</source>
         <translation type="unfinished">插入</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="695"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="697"/>
         <source>Add Audio Track</source>
         <translation type="unfinished">增加音频轨道</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="704"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="706"/>
         <source>Add Video Track</source>
         <translation type="unfinished">增加视频轨道</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="713"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="715"/>
         <source>Insert Track</source>
         <translation type="unfinished">插入轨道</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="722"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="724"/>
         <source>Remove Track</source>
         <translation type="unfinished">删除轨道</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="730"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="732"/>
         <source>Show Audio Waveforms</source>
         <translation type="unfinished">显示音频波形</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="757"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="759"/>
         <source>Split</source>
         <translation type="unfinished">切割</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="778"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="780"/>
         <source>Paste</source>
         <translation type="unfinished">粘贴</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="789"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="791"/>
         <source>New Video Track</source>
         <translation type="unfinished">增加视频轨道</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="799"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="801"/>
         <source>New Audio Track</source>
         <translation type="unfinished">增加音频轨道</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="809"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="811"/>
         <source>Delete Track</source>
         <translation type="unfinished">删除轨道</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="819"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="821"/>
         <source>Hide</source>
         <translation type="unfinished">轨道关闭视频</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="828"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="830"/>
         <source>Mute</source>
         <translation type="unfinished">轨道关闭音频</translation>
     </message>
