@@ -494,8 +494,14 @@ void AdvancedDock::on_cancelButton_clicked()
 
 void AdvancedDock::on_okButton_clicked()
 {
-    updateCurrentPreset(-3);
-    QString strFps = QString::number(ui->fpsSpinner->value(),10,4);
+    int threadCount = QThread::idealThreadCount();
+    if (threadCount > 2 )//&& ui->parallelCheckbox->isChecked()
+        threadCount = qMin(threadCount - 1, 4);
+    else
+        threadCount = 1;
+    updateCurrentPreset(threadCount);
+
+    QString strFps = QString::number(ui->fpsSpinner->value(),10,3);
     emit updateAdvancedSetting(strFps);
     this->hide();
 }
