@@ -603,7 +603,7 @@ ToolBar {
 
     Action {
         id: deleteAction
-        tooltip: qsTr('Remove current clip')
+        tooltip: qsTr('Remove current clip（Del）')
         //iconName: 'list-remove'
         //iconSource: 'qrc:///timeline/timeline-toolbar-remove-n.png'
         onTriggered: {

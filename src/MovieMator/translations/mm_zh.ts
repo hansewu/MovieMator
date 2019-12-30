@@ -3971,7 +3971,7 @@ Do you want to restart now?</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="4216"/>
         <source>Open a video, audio or image file</source>
-        <translation type="unfinished">打开一个视频，视频或图片</translation>
+        <translation type="unfinished">打开一个视频、音频或图片</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="4216"/>
@@ -6038,7 +6038,7 @@ shifting following clips to the right (V)</source>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="646"/>
         <source>Split At Playhead (S)</source>
-        <translation type="unfinished">在当前播放指针指向的时间点切割</translation>
+        <translation type="unfinished">在当前播放指针指向的时间点切割（S）</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="658"/>

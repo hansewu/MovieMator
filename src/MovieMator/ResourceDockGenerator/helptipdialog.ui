@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>500</width>
     <height>150</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>400</width>
+    <width>500</width>
     <height>150</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>400</width>
+    <width>500</width>
     <height>150</height>
    </size>
   </property>
@@ -30,7 +30,7 @@
     <rect>
      <x>10</x>
      <y>80</y>
-     <width>380</width>
+     <width>481</width>
      <height>60</height>
     </rect>
    </property>
@@ -59,7 +59,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Go (to the guide)</string>
+         <string>Go to the guide</string>
         </property>
        </widget>
       </item>
@@ -96,9 +96,9 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>9</x>
      <y>10</y>
-     <width>380</width>
+     <width>481</width>
      <height>61</height>
     </rect>
    </property>
