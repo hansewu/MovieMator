@@ -65,14 +65,15 @@ AdvancedDock::AdvancedDock(QWidget *parent) :
         ui->gopSpinner->setStyleSheet("QSpinBox{background-color: rgb(0, 0, 0); border:1px solid #aaaaaa;}");
         ui->bFramesSpinner->setStyleSheet("QSpinBox{background-color: rgb(0, 0, 0); border:1px solid #aaaaaa;}");
         ui->videoCodecThreadsSpinner->setStyleSheet("QSpinBox{background-color: rgb(0, 0, 0); border:1px solid #aaaaaa;}");
-        ui->disableVideoCheckbox->setStyleSheet("QCheckBox{background-color: rgb(0, 0, 0);}");
+        ui->disableVideoCheckbox->setStyleSheet("QCheckBox{color: rgb(255, 255, 255);}");
+        ui->videoBufferSizeSpinner->setStyleSheet("QDoubleSpinBox{background-color: rgb(0, 0, 0); border:1px solid #aaaaaa;}");
 
         //Audio Tab
         ui->sampleRateCombo->setBackgroundRole(QPalette::ColorRole::Dark);
         ui->audioCodecCombo->setBackgroundRole(QPalette::ColorRole::Dark);
         ui->audioRateControlCombo->setBackgroundRole(QPalette::ColorRole::Dark);
         ui->audioBitrateCombo->setBackgroundRole(QPalette::ColorRole::Dark);
-        ui->disableAudioCheckbox->setStyleSheet("QCheckBox{background-color: rgb(0, 0, 0);}");
+        ui->disableAudioCheckbox->setStyleSheet("QCheckBox{color: rgb(255, 255, 255);}");
         setAttribute(Qt::WA_ShowModal, true);
   }
 }
