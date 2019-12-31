@@ -215,6 +215,8 @@ private:
 
     QModelIndex m_currentFormatIndex;
 
+    bool m_bFistShown;
+
 };
 
 #endif // ENCODEDOCK_H

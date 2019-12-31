@@ -179,6 +179,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
    connect(this,SIGNAL(visibilityChanged(bool)),this,SLOT(on_visibilityChanged(bool)));
 
     m_currentPreset = NULL;
+    m_bFistShown = true;
 
 
 }
@@ -1822,30 +1823,39 @@ void EncodeDock::on_visibilityChanged(bool bVisible)
 
         ui->durationValue->setText(MAIN.multitrack()->get_length_time());
 
-        if(m_currentSelectedClass == 2)
-        {
-            ui->bitrateLabel->setVisible(true);
-            ui->sampleRateLabel->setVisible(true);
-            ui->bitrateValue->setVisible(true);
-            ui->sampleRateValue->setVisible(true);
+       if(m_bFistShown)
+       {
+           ui->videoFormat->click();
+           m_bFistShown = false;
+       }
+       else
+       {
 
-            ui->resolutionLabel->setVisible(false);
-            ui->resolutionValue->setVisible(false);
-            ui->fpsLabel->setVisible(false);
-            ui->fpsValue->setVisible(false);
-        }
-        else
-        {
-            ui->bitrateLabel->setVisible(false);
-            ui->sampleRateLabel->setVisible(false);
-            ui->bitrateValue->setVisible(false);
-            ui->sampleRateValue->setVisible(false);
+            if(m_currentSelectedClass == 2)
+            {
+                ui->bitrateLabel->setVisible(true);
+                ui->sampleRateLabel->setVisible(true);
+                ui->bitrateValue->setVisible(true);
+                ui->sampleRateValue->setVisible(true);
 
-            ui->resolutionLabel->setVisible(true);
-            ui->resolutionValue->setVisible(true);
-            ui->fpsLabel->setVisible(true);
-            ui->fpsValue->setVisible(true);
-        }
+                ui->resolutionLabel->setVisible(false);
+                ui->resolutionValue->setVisible(false);
+                ui->fpsLabel->setVisible(false);
+                ui->fpsValue->setVisible(false);
+            }
+            else
+            {
+                ui->bitrateLabel->setVisible(false);
+                ui->sampleRateLabel->setVisible(false);
+                ui->bitrateValue->setVisible(false);
+                ui->sampleRateValue->setVisible(false);
+
+                ui->resolutionLabel->setVisible(true);
+                ui->resolutionValue->setVisible(true);
+                ui->fpsLabel->setVisible(true);
+                ui->fpsValue->setVisible(true);
+            }
+       }
 
 
         ui->presetsList->setFocus();
