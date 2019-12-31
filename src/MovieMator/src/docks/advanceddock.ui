@@ -64,7 +64,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>10</x>
       <y>10</y>
       <width>451</width>
       <height>321</height>
@@ -827,17 +827,6 @@ in temporal compression</string>
         </spacer>
        </item>
       </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>159</x>
-        <y>150</y>
-        <width>221</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_15"/>
      </widget>
      <widget class="QLabel" name="label_21">
       <property name="geometry">

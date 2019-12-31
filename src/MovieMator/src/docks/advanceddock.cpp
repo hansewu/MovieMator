@@ -196,7 +196,10 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo, bool bDisabl
        int videoQuality = -1;
        QStringList other;
 
+       ui->deinterlacerCombo->setEnabled(true);
        ui->deinterlacerCombo->setCurrentIndex(3);
+
+       ui->interpolationCombo->setEnabled(true);
        ui->interpolationCombo->setCurrentIndex(1);
        ui->videoBitrateCombo->lineEdit()->setText("2M");
        ui->videoBufferSizeSpinner->setValue(224);
@@ -212,6 +215,7 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo, bool bDisabl
        ui->audioBitrateCombo->lineEdit()->setText("384k");
        ui->audioQualitySpinner->setValue(50);
 
+       ui->scanModeCombo->setEnabled(true);
 
        //xjp 2019.12.6 用profile的宽，高来设置widthSpinner， heightSpinner的初始值
        int width = MLT.profile().width();
@@ -220,7 +224,7 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo, bool bDisabl
        ui->widthSpinner->setValue(width);
        ui->heightSpinner->setValue(height);
 
-       ui->resetPresetButton->setEnabled(!bDisableReset);
+//       ui->resetPresetButton->setEnabled(!bDisableReset);
 
    //    ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
 
