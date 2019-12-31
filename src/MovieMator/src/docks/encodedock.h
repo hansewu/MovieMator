@@ -213,6 +213,8 @@ private:
     // 从左边的预置树表里读取配置
     void loadPresetFromProperties(Mlt::Properties&);
 
+    QModelIndex m_currentFormatIndex;
+
 };
 
 #endif // ENCODEDOCK_H

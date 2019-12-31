@@ -162,6 +162,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
 
     QModelIndex indexFromList = m_modelList[1].index(0,0);
     ui->presetsList->setCurrentIndex(indexFromList);
+    ui->presetsList->setFocus();
 
 
     LOG_DEBUG() << "end";
@@ -176,6 +177,8 @@ EncodeDock::EncodeDock(QWidget *parent) :
   //  completer_->popup()->setStyleSheet("QListView{background: rgb(35,35,35);color:white; font-size: 12pt; font-family: Calibri Light; font-weight:normal}"
 
    connect(this,SIGNAL(visibilityChanged(bool)),this,SLOT(on_visibilityChanged(bool)));
+
+    m_currentPreset = NULL;
 
 
 }
@@ -1456,14 +1459,32 @@ void EncodeDock::on_videoBufferDurationChanged()
 void EncodeDock::setCurrentPreset(Mlt::Properties *preset)
 {
     Q_ASSERT(preset);
-    if (preset != m_currentPreset)
+    Q_ASSERT(preset);
+    if (preset)
     {
-        if (m_currentPreset)
-        {
-            delete m_currentPreset;
-            m_currentPreset = nullptr;
-        }
-        m_currentPreset =  preset;
+         Mlt::Properties* p = new Mlt::Properties;
+         if (p && p->is_valid())
+         {
+             if (preset && preset->is_valid()) {
+                 for (int i = 0; i < preset->count(); i++)
+                 {
+                     if (preset->get_name(i) && strcmp(preset->get_name(i), ""))
+                     {
+                         p->set(preset->get_name(i), preset->get(i));
+                     }
+                 }
+             }
+
+             if (m_currentPreset)
+             {
+                 delete m_currentPreset;
+                 m_currentPreset = p;
+             }
+             else
+             {
+                  m_currentPreset = p;
+             }
+         }
     }
 }
 
@@ -1536,6 +1557,9 @@ void EncodeDock::resetOptions()
          m_currentPreset->set("frame_rate_den",1);
          QString fps = QString("%1").arg(MLT.profile().fps());
          m_currentPreset->set("r",fps.toLatin1().constData());
+
+         m_currentPreset->set("width",MLT.profile().width());
+         m_currentPreset->set("height",MLT.profile().height());
      }
 
 
@@ -1622,6 +1646,7 @@ void EncodeDock::on_presetsList_clicked(const QModelIndex &index)
         return;
 
 
+    m_currentFormatIndex = index;
     QString name = m_modelList[m_currentSelectedClass].data(index, Qt::UserRole + 1).toString();//m_presetsModel.data(index, Qt::UserRole + 1).toString();
     if (!name.isEmpty()) {
         Mlt::Properties* preset;
@@ -1694,6 +1719,7 @@ void EncodeDock::on_presetsList_clicked(const QModelIndex &index)
 
 //
          ui->fpsValue->setText(strFps);
+         ui->presetsList->setFocus();
 
      }
 
@@ -1794,9 +1820,35 @@ void EncodeDock::on_visibilityChanged(bool bVisible)
     if(bVisible)
     {
 
-            ui->durationValue->setText(MAIN.multitrack()->get_length_time());
-            ui->videoFormat->click();
+        ui->durationValue->setText(MAIN.multitrack()->get_length_time());
 
+        if(m_currentSelectedClass == 2)
+        {
+            ui->bitrateLabel->setVisible(true);
+            ui->sampleRateLabel->setVisible(true);
+            ui->bitrateValue->setVisible(true);
+            ui->sampleRateValue->setVisible(true);
+
+            ui->resolutionLabel->setVisible(false);
+            ui->resolutionValue->setVisible(false);
+            ui->fpsLabel->setVisible(false);
+            ui->fpsValue->setVisible(false);
+        }
+        else
+        {
+            ui->bitrateLabel->setVisible(false);
+            ui->sampleRateLabel->setVisible(false);
+            ui->bitrateValue->setVisible(false);
+            ui->sampleRateValue->setVisible(false);
+
+            ui->resolutionLabel->setVisible(true);
+            ui->resolutionValue->setVisible(true);
+            ui->fpsLabel->setVisible(true);
+            ui->fpsValue->setVisible(true);
+        }
+
+
+        ui->presetsList->setFocus();
 
     }
 }
@@ -1805,51 +1857,17 @@ void EncodeDock::on_visibilityChanged(bool bVisible)
 void EncodeDock::onResetCurrentPreset()
 {
 
-    QString presetName;
+    QModelIndex currentIndexModel = ui->presetsList->currentIndex();
+    ui->presetsList->clicked(currentIndexModel);
+    ui->presetsList->setCurrentIndex(currentIndexModel);
+//    ui->presetsList->setFocus();
 
-    for(int i = 0; i < m_presets->count(); i++)
-    {
-         QString name(m_presets->get_name(i));
-
-         Mlt::Properties temp(static_cast<mlt_properties>(m_presets->get_data(name.toLatin1().constData())));
-         int categoryIndex = temp.get_int("meta.preset.category");
-         int indexInCategory = temp.get_int("meta.preset.index");
-         if (categoryIndex == m_currentPreset->get_int("meta.preset.category") && indexInCategory == m_currentPreset->get_int("meta.preset.index"))
-         {
-             presetName = name;
-             break;
-         }
-    }
-
-    Q_ASSERT(presetName.length());
-
-    if(presetName.length())
-    {
-         Mlt::Properties* preset;
-
-         preset = new Mlt::Properties();
-         Q_ASSERT(preset);
-         QDir dir(qApp->applicationDirPath());
-         #if defined(Q_OS_MAC)
-             dir.cd("../Resources");
-             presetName = "/" + presetName;
-         #else
-             presetName = "\\" + presetName;
-         #endif
-
-         dir.cd("share");
-         dir.cd("mlt");
-         dir.cd("presets");
-         presetName = dir.absolutePath() + presetName;
-         preset->load(presetName.toLatin1().constData());
-
-         setCurrentPreset(preset);
-         resetOptions();
-         onProfileChanged();
+    resetOptions();
+    onProfileChanged();
 
 
-         bool bVideo = (m_currentSelectedClass!=2)?true:false;
-         bool bDisableReset = (m_currentSelectedClass==0)?true:false;
-         m_advanceddock->setPreset(m_currentPreset,bVideo,bDisableReset);
-    }
+     bool bVideo = (m_currentSelectedClass!=2)?true:false;
+     bool bDisableReset = (m_currentSelectedClass==0)?true:false;
+     m_advanceddock->setPreset(m_currentPreset,bVideo,bDisableReset);
+
 }
