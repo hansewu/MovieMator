@@ -1121,6 +1121,7 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
             QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
             if (dir.cd("presets") && dir.cd("encode"))
                 preset->load(dir.absoluteFilePath(name).toLatin1().constData());
+
         }
         else {
             ui->removePresetButton->setEnabled(false);
@@ -1462,7 +1463,7 @@ void EncodeDock::setCurrentPreset(Mlt::Properties *preset)
             delete m_currentPreset;
             m_currentPreset = nullptr;
         }
-        m_currentPreset = preset;
+        m_currentPreset =  preset;
     }
 }
 
@@ -1470,7 +1471,8 @@ void EncodeDock::on_advancedButton_clicked()
 {
 //    ui->presetsTree->setModel(NULL);
     bool bVideo = (m_currentSelectedClass!=2)?true:false;
-    m_advanceddock->setPreset(m_currentPreset,bVideo);
+    bool bDisableReset = (m_currentSelectedClass==0)?true:false;
+    m_advanceddock->setPreset(m_currentPreset,bVideo,bDisableReset);
     m_advanceddock->show();
 }
 
@@ -1632,10 +1634,12 @@ void EncodeDock::on_presetsList_clicked(const QModelIndex &index)
             QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
             if (dir.cd("presets") && dir.cd("encode"))
                 preset->load(dir.absoluteFilePath(name).toLatin1().constData());
+
         }
         else {
             ui->removePresetButton->setEnabled(false);
             preset = new Mlt::Properties(static_cast<mlt_properties>(m_presets->get_data(name.toLatin1().constData())));    //(mlt_properties) m_presets->get_data(name.toLatin1().constData())
+
             Q_ASSERT(preset);
         }
         if (preset->is_valid()) {
@@ -1776,7 +1780,8 @@ void EncodeDock::on_presetsList_clicked(const QModelIndex &index)
 
      //xjp 2019.12.20 每次切换格式，也设置高级设置窗口的控件的值，防止用户不修改advance窗口的设置，时，也能取到advanceddock的值
      bool bVideo = (m_currentSelectedClass!=2)?true:false;
-     m_advanceddock->setPreset(m_currentPreset,bVideo);
+     bool bDisableReset = (m_currentSelectedClass==0)?true:false;
+     m_advanceddock->setPreset(m_currentPreset,bVideo,bDisableReset);
 
 
  }
@@ -1799,8 +1804,52 @@ void EncodeDock::on_visibilityChanged(bool bVisible)
 
 void EncodeDock::onResetCurrentPreset()
 {
-    resetOptions();
-    onProfileChanged();
-    bool bVideo = (m_currentSelectedClass!=2)?true:false;
-    m_advanceddock->setPreset(m_currentPreset,bVideo);
+
+    QString presetName;
+
+    for(int i = 0; i < m_presets->count(); i++)
+    {
+         QString name(m_presets->get_name(i));
+
+         Mlt::Properties temp(static_cast<mlt_properties>(m_presets->get_data(name.toLatin1().constData())));
+         int categoryIndex = temp.get_int("meta.preset.category");
+         int indexInCategory = temp.get_int("meta.preset.index");
+         if (categoryIndex == m_currentPreset->get_int("meta.preset.category") && indexInCategory == m_currentPreset->get_int("meta.preset.index"))
+         {
+             presetName = name;
+             break;
+         }
+    }
+
+    Q_ASSERT(presetName.length());
+
+    if(presetName.length())
+    {
+         Mlt::Properties* preset;
+
+         preset = new Mlt::Properties();
+         Q_ASSERT(preset);
+         QDir dir(qApp->applicationDirPath());
+         #if defined(Q_OS_MAC)
+             dir.cd("../Resources");
+             presetName = "/" + presetName;
+         #else
+             presetName = "\\" + presetName;
+         #endif
+
+         dir.cd("share");
+         dir.cd("mlt");
+         dir.cd("presets");
+         presetName = dir.absolutePath() + presetName;
+         preset->load(presetName.toLatin1().constData());
+
+         setCurrentPreset(preset);
+         resetOptions();
+         onProfileChanged();
+
+
+         bool bVideo = (m_currentSelectedClass!=2)?true:false;
+         bool bDisableReset = (m_currentSelectedClass==0)?true:false;
+         m_advanceddock->setPreset(m_currentPreset,bVideo,bDisableReset);
+    }
 }

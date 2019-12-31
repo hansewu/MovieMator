@@ -189,7 +189,7 @@ void AdvancedDock::on_audioRateControlCombo_activated(int index)
     }
 }
 
-void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo)
+void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo, bool bDisableReset)
 {
        m_currentPreset = preset;
        int audioQuality = -1;
@@ -220,17 +220,20 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo)
        ui->widthSpinner->setValue(width);
        ui->heightSpinner->setValue(height);
 
+       ui->resetPresetButton->setEnabled(!bDisableReset);
+
    //    ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
 
        //****** end ******
 
       // ui->presetLabel->setText(preset.get("meta.preset.name"));
 
+
        ui->disableAudioCheckbox->setChecked(preset->get_int("an"));
        ui->disableVideoCheckbox->setChecked(preset->get_int("vn"));
        for (int i = 0; i < preset->count(); i++) {
            QString name(preset->get_name(i));
-          // qDebug()<<"****** xjp pare name:"<<name;
+
             if (name == "acodec") {
                for (int i = 0; i < ui->audioCodecCombo->count(); i++)
                    if (ui->audioCodecCombo->itemText(i) == preset->get("acodec"))
@@ -246,7 +249,7 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo)
            }
            else if (name == "ar")
             {
-                qDebug()<<preset->get("ar");
+
                ui->sampleRateCombo->lineEdit()->setText(preset->get("ar"));
             }
            else if (name == "ab")
@@ -472,7 +475,7 @@ void AdvancedDock::setPreset (Mlt::Properties *preset, bool bVideo)
 
 void AdvancedDock::on_resolutionBox_currentIndexChanged(const QString &arg1)
 {
-    //qDebug()<<arg1;
+
     if(arg1 == "Custom")
         return;
 
@@ -500,7 +503,7 @@ void AdvancedDock::on_okButton_clicked()
         threadCount = qMin(threadCount - 1, 4);
     else
         threadCount = 1;
-    updateCurrentPreset(threadCount);
+    updateCurrentPreset(-threadCount);
 
     QString strFps = QString::number(ui->fpsSpinner->value(),10,3);
     emit updateAdvancedSetting(strFps);
@@ -531,7 +534,7 @@ void AdvancedDock::updateCurrentPreset(int realtime)
             if (ui->audioCodecCombo->currentIndex() > 0)
                 m_currentPreset->set("acodec", ui->audioCodecCombo->currentText().toLatin1().constData());
             m_currentPreset->set("ar", ui->sampleRateCombo->currentText().toLatin1().constData());
-            qDebug()<<ui->sampleRateCombo->currentText().toLatin1().constData(); //xjp debug
+
 
             if (ui->audioRateControlCombo->currentIndex() == RateControlAverage
                     || ui->audioRateControlCombo->currentIndex() == RateControlConstant)
@@ -722,11 +725,17 @@ void AdvancedDock::updateCurrentPreset(int realtime)
 
 void AdvancedDock::on_addPresetButton_clicked()
 {
-    updateCurrentPreset(-3);
+    int threadCount = QThread::idealThreadCount();
+    if (threadCount > 2 )//&& ui->parallelCheckbox->isChecked()
+        threadCount = qMin(threadCount - 1, 4);
+    else
+        threadCount = 1;
+
+    updateCurrentPreset(-threadCount);
 
     Mlt::Properties* data = collectProperties(0);
     Q_ASSERT(data);
-    qDebug()<<data->get("ab")<<","<<data->get("vb");
+
     AddEncodePresetDialog dialog(this);
     QStringList ls;
 

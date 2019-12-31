@@ -196,6 +196,8 @@ private:
     // 设置 preset为当前的预置
     void setCurrentPreset(Mlt::Properties *preset);
 
+
+
     // 获取当前预置在左边预置树中的父项
     QStandardItem *getTreeParentItem(const QString& text);
 

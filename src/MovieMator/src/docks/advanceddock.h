@@ -32,7 +32,7 @@ public slots:
     // 配置 Profile发生变化
    // void onProfileChanged();
 
-    void setPreset (Mlt::Properties *preset, bool bVideo);
+    void setPreset (Mlt::Properties *preset, bool bVideo, bool bDisableReset);
 
 private slots:
 
