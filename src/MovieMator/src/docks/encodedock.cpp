@@ -863,8 +863,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
                 domElementProfile.setAttribute("frame_rate_den", framerateNew.nFrameRateDen);
             }
         }
-        qDebug()<<domElementProfile.attribute("frame_rate_num");
-        qDebug()<<domElementProfile.attribute("frame_rate_den");
+
     }
 
 
@@ -1086,13 +1085,10 @@ void EncodeDock::encode(const QString& target)
     MLT.consumer()->set("1", "avformat");
     MLT.consumer()->set("1.target", target.toUtf8().constData());
     Mlt::Properties* p = collectProperties(-1);
-    qDebug()<<"******* xjp encode is called:";
     if (p && p->is_valid()) {
         for (int i = 0; i < p->count(); i++)
         {
             MLT.consumer()->set(QString("1.%1").arg(p->get_name(i)).toLatin1().constData(), p->get(i));
-            qDebug()<<p->get(i);
-            qDebug()<<p->get_name(i);
         }
     }
     delete p;

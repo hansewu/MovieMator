@@ -712,7 +712,7 @@ void AdvancedDock::updateCurrentPreset(int realtime)
              m_currentPreset->set("r", qFloor(ui->fpsSpinner->value()));
              m_currentPreset->set("frame_rate_num", qFloor(ui->fpsSpinner->value()));
              m_currentPreset->set("frame_rate_den", 1);
-             qDebug()<<"******* xjp fps:24";
+
         }
 
 
