@@ -392,8 +392,8 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
      return p;
 //    if (p && p->is_valid())
 //    {
-////        foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n"))
-////            p->parse(line.toUtf8().constData());
+//        foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n"))
+//            p->parse(line.toUtf8().constData());
 //        if (realtime)
 //            p->set("real_time", realtime);
 //        p->set("meta.preset.name", ui->presetLabel->text().toLatin1().constData());
@@ -599,7 +599,7 @@ void EncodeDock::collectProperties(QDomElement& node, int realtime)
    // Mlt::Properties* p = collectProperties(realtime);
     if (m_currentPreset && m_currentPreset->is_valid()) {
         for (int i = 0; i < m_currentPreset->count(); i++)
-            if (m_currentPreset->get_name(i) && strcmp(m_currentPreset->get_name(i), ""))
+            if (m_currentPreset->get_name(i) && strcmp(m_currentPreset->get_name(i), "") && strcmp(m_currentPreset->get_name(i), "r"))
                 node.setAttribute(m_currentPreset->get_name(i), m_currentPreset->get(i));
     }
     //delete p;
@@ -863,7 +863,11 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
                 domElementProfile.setAttribute("frame_rate_den", framerateNew.nFrameRateDen);
             }
         }
+        qDebug()<<domElementProfile.attribute("frame_rate_num");
+        qDebug()<<domElementProfile.attribute("frame_rate_den");
     }
+
+
 
     return new EncodeJob(target, dom.toString(2));
 }
@@ -1082,9 +1086,14 @@ void EncodeDock::encode(const QString& target)
     MLT.consumer()->set("1", "avformat");
     MLT.consumer()->set("1.target", target.toUtf8().constData());
     Mlt::Properties* p = collectProperties(-1);
+    qDebug()<<"******* xjp encode is called:";
     if (p && p->is_valid()) {
         for (int i = 0; i < p->count(); i++)
+        {
             MLT.consumer()->set(QString("1.%1").arg(p->get_name(i)).toLatin1().constData(), p->get(i));
+            qDebug()<<p->get(i);
+            qDebug()<<p->get_name(i);
+        }
     }
     delete p;
     if (target.endsWith(".mp4") || target.endsWith(".mov"))//)//ui->formatCombo->currentIndex() == 0 &&

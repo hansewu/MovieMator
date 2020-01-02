@@ -682,6 +682,7 @@ void AdvancedDock::updateCurrentPreset(int realtime)
         {
              m_currentPreset->set("frame_rate_num", 24000);
              m_currentPreset->set("frame_rate_den", 1001);
+             m_currentPreset->clear("r");
 
 
         }
@@ -689,18 +690,21 @@ void AdvancedDock::updateCurrentPreset(int realtime)
         {
              m_currentPreset->set("frame_rate_num", 30000);
              m_currentPreset->set("frame_rate_den", 1001);
+             m_currentPreset->clear("r");
 
         }
         else if (qFloor(ui->fpsSpinner->value() * 10.0) == 479)
         {
              m_currentPreset->set("frame_rate_num", 48000);
              m_currentPreset->set("frame_rate_den", 1001);
+             m_currentPreset->clear("r");
 
         }
         else if (qFloor(ui->fpsSpinner->value() * 10.0) == 599)
         {
              m_currentPreset->set("frame_rate_num", 60000);
              m_currentPreset->set("frame_rate_den", 1001);
+             m_currentPreset->clear("r");
 
         }
         else
@@ -708,6 +712,7 @@ void AdvancedDock::updateCurrentPreset(int realtime)
              m_currentPreset->set("r", qFloor(ui->fpsSpinner->value()));
              m_currentPreset->set("frame_rate_num", qFloor(ui->fpsSpinner->value()));
              m_currentPreset->set("frame_rate_den", 1);
+             qDebug()<<"******* xjp fps:24";
         }
 
 
