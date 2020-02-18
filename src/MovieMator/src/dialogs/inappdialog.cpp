@@ -21,6 +21,7 @@
 #include "../widgets/twolinebutton.h"
 #include <settings.h>
 #include <QDesktopServices>
+#include <Logger.h>
 
 #define MONTHLY_SUBSCRIPTION "net.moviemator.moviemator.subscription_one_month"
 #define THRERE_MONTH_SUBSCRIPTION "net.moviemator.moviemator.subscription_three_months"
@@ -31,14 +32,24 @@ static void inAppCallback(void *caller, int result)
     InAppDialog *dialog = (InAppDialog *)caller;
 
     //验证收据
-    if (inapp_verify_receipt() == 0)
+    if (result == 0 && inapp_verify_receipt() == 0)
     {
         Settings.setIsSubscribed(true);
         dialog->done(0);
+        LOG_DEBUG() << "purchase complete, verifiy success!";
+    }
+    else if (result == 0 && inapp_verify_receipt() != 0)
+    {
+        inapp_refresh_receipt();
+        dialog->done(0);
+        LOG_DEBUG() << "purchase complete, verifiy failed!";
     }
     else
     {
-        Settings.setIsSubscribed(false);
+        inapp_refresh_receipt();
+        //Settings.setIsSubscribed(false);
+        dialog->done(0);
+        LOG_DEBUG() << "purchase failed!";
     }
 }
 
@@ -51,6 +62,7 @@ InAppDialog::InAppDialog(QWidget *parent) :
     ui->useFreeVersionButton->setSubTitle(tr("Output videos of 5 minutes at most and will be saved with a watermark"));
     ui->useFreeVersionButton->setAccessoryTitle(tr("Free"));
     ui->paymentTipsTextEdit->setHidden(true);
+    inapp_init(inAppCallback, (void*)this);
 }
 
 InAppDialog::~InAppDialog()
@@ -95,21 +107,25 @@ void InAppDialog::setInAppProductInfo(INAPP_PRODUCT_INFO *pProductInfos, int nPr
 
 void InAppDialog::on_monthlySubscriptionButton_clicked()
 {
+    LOG_DEBUG() << "make payment: " << ui->yearlySubscriptionButton->objectName().toUtf8().constData();
     inapp_add_payment(ui->monthlySubscriptionButton->objectName().toUtf8().constData(), inAppCallback, (void*)this);
 }
 
 void InAppDialog::on_triMonthSubscriptionButton_clicked()
 {
+    LOG_DEBUG() << "make payment: " << ui->yearlySubscriptionButton->objectName().toUtf8().constData();
     inapp_add_payment(ui->triMonthSubscriptionButton->objectName().toUtf8().constData(), inAppCallback, (void*)this);
 }
 
 void InAppDialog::on_yearlySubscriptionButton_clicked()
 {
+    LOG_DEBUG() << "make payment: " << ui->yearlySubscriptionButton->objectName().toUtf8().constData();
     inapp_add_payment(ui->yearlySubscriptionButton->objectName().toUtf8().constData(), inAppCallback, (void*)this);
 }
 
 void InAppDialog::on_restorePurchaseButton_clicked()
 {
+    LOG_DEBUG() << "restore purchase";
     inapp_restore_purchase(inAppCallback, (void*)this);
 }
 

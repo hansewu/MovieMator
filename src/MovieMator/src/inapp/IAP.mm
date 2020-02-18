@@ -8,6 +8,7 @@
 
 #import "IAP.h"
 #import "XYAppReceipt.h"
+#include <Logger.h>
 
 
 //#define SERVER_URL @"http://192.168.2.103/iap/iap.php"
@@ -204,9 +205,22 @@
     }
 }
 
+- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
+{
+    LOG_DEBUG() << "restore completed";
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FINISH_TRANSACTION" object:nil];
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
+{
+    LOG_DEBUG() << "restore failed";
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FAILED_TRANSACTION" object:nil];
+}
+
 - (void)completeTransaction:(SKPaymentTransaction *)transaction {
     // Your application should implement these two methods.
     
+    LOG_DEBUG() << "purchase completed:" << transaction.payment.productIdentifier;
     NSLog(@"buy: %@", transaction.payment.productIdentifier);
     NSLog(@"transactionIdentifier: %@", transaction.transactionIdentifier);
     
@@ -290,6 +304,7 @@
 
 - (void)failedTransaction:(SKPaymentTransaction *)transaction
 {
+    LOG_DEBUG() << "purchase failed:" << transaction.payment.productIdentifier;
     if(transaction.error.code != SKErrorPaymentCancelled)
     {
         NSLog(@"购买失败 %ld", (long)transaction.error.code);
@@ -305,6 +320,7 @@
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
 //    // 对于已购商品，处理恢复购买的逻辑
     
+    LOG_DEBUG() << "restored:" << transaction.payment.productIdentifier;
     NSLog(@"restore: %@", transaction.originalTransaction.payment.productIdentifier);
     NSLog(@"transactionIdentifier: %@", transaction.originalTransaction.transactionIdentifier);
     

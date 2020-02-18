@@ -149,3 +149,9 @@ void inapp_refresh_receipt()
 {
     [[IAP sharedInstance] refreshReceipt];
 }
+
+void inapp_init(InAppPurchaseCallback inapp_callback, void *callbackObj)
+{
+    [[IAPEventAdapter sharedInstance] setTransactionCallback:inapp_callback callbackObject:callbackObj];
+    [IAP sharedInstance];
+}

@@ -58,4 +58,6 @@ int inapp_verify_receipt();
 //刷新收据
 void inapp_refresh_receipt();
 
+void inapp_init(InAppPurchaseCallback inapp_callback, void *callbackObj);
+
 #endif //IAP_C_INTERFACE_H

@@ -43,6 +43,10 @@
 #include <iostream>
 #include "presettabstyle.h"
 
+#if defined(Q_OS_MAC)
+#include "inapp/iap_c_interface.h"
+#endif
+
 
 // formulas to map absolute value ranges to percentages as int
 #define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min) + 1) * float(rel) / 100.0f)
@@ -1222,6 +1226,15 @@ void EncodeDock::on_encodeButton_clicked()
     //弹出订阅窗口
 #ifndef SHARE_VERSION
 #if MOVIEMATOR_FREE
+    int nRet = inapp_verify_receipt();
+    if (nRet >= 0)
+    {
+        Settings.setIsSubscribed(true);
+    }
+    else
+    {
+        Settings.setIsSubscribed(false);
+    }
     if (!Settings.isSubscribed())
     {
         MAIN.showInAppDialog();
