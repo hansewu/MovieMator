@@ -34,11 +34,11 @@ Item {
     Component.onCompleted: {
         if (filter.isNew) {
             duration = Math.ceil(settings.videoInDuration * profile.fps)
-            filter.set('level', '0=0; %1=1'.arg(duration - 1))
+            filter.setInAndOut(0, timeline.getCurrentClipParentLength()-1)
+            filter.set('level', 'h0=0.0;h%1=1.0'.arg(duration - 1))
             filter.set('alpha', 1)
-            filter.setInAndOut(filter.producerIn, filter.producerIn + duration - 1)
         }
-        alphaCheckbox.checked = filter.get('alpha') !== 1
+        alphaCheckbox.checked = filter.get('alpha') !== '1'
     }
 
     SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
@@ -56,18 +56,16 @@ Item {
                 id: timeSpinner
                 minimumValue: 2
                 maximumValue: 5000
-                value: filter.getDouble('out') - filter.getDouble('in') + 1
+                value: filter.getKeyFrame(1, 'level') - filter.getKeyFrame(0, 'level') + 1
                 onValueChanged: {
                     if(blockUpdate){
                         blockUpdate = false
                         return
                     }
-                    var out = filter.getDouble('in') + value - 1
-                    filter.set('out', filter.getDouble('in') + value - 1)
                     if (filter.get('alpha') != 1)
-                        filter.set('alpha', '0=0; %1=1'.arg(duration - 1))
+                        filter.set('alpha', 'h0=0; h%1=1'.arg(duration - 1))
                     else
-                        filter.set('level', '0=0; %1=1'.arg(duration - 1))
+                        filter.set('level', 'h0=0; h%1=1'.arg(duration - 1))
                 }
                 onSetDefaultClicked: {
                     duration = Math.ceil(settings.videoInDuration * profile.fps)
@@ -83,9 +81,9 @@ Item {
             onClicked: {
                 if (checked) {
                     filter.set('level', 1)
-                    filter.set('alpha', '0=0; %1=1'.arg(duration - 1))
+                    filter.set('alpha', 'h0=0; h%1=1'.arg(duration - 1))
                 } else {
-                    filter.set('level', '0=0; %1=1'.arg(duration - 1))
+                    filter.set('level', 'h0=0; h%1=1'.arg(duration - 1))
                     filter.set('alpha', 1)
                 }
             }

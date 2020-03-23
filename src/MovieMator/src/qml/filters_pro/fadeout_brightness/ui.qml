@@ -36,11 +36,9 @@ Item {
         if (filter.isNew) 
         {
             duration = Math.ceil(settings.videoOutDuration * profile.fps)
-            var out = filter.producerOut
-            var inFrame = out - duration + 1
-            filter.set('level', '0=1; %1=0'.arg(duration - 1))
+            filter.setInAndOut(0, timeline.getCurrentClipParentLength()-1)
+            filter.set('level', 't%1=1;t0=0'.arg(duration - 1))
             filter.set('alpha', 1)
-            filter.setInAndOut(inFrame, out)
         }
     }
 
@@ -69,18 +67,16 @@ Item {
                 id: timeSpinner
                 minimumValue: 2
                 maximumValue: 5000
-                value: filter.getDouble('out') - filter.getDouble('in') + 1
+                value: filter.getKeyFrame(1, 'level') - filter.getKeyFrame(0, 'level') + 1
                 onValueChanged: {
                     if(filter.isNew && (!isInited()))
                     {}
                     else
                     {
-                        var inFrame = filter.getDouble('out') - duration + 1
-                        filter.set('in', inFrame)
                         if (filter.get('alpha') != 1)
-                            filter.set('alpha', '0=1; %1=0'.arg(duration - 1))
+                            filter.set('alpha', 't%1=1;t0=0'.arg(duration - 1))
                         else
-                            filter.set('level', '0=1; %1=0'.arg(duration - 1))
+                            filter.set('level', 't%1=1;t0=0'.arg(duration - 1))
                     }
                 }
                 onSetDefaultClicked: {
@@ -97,9 +93,9 @@ Item {
             onClicked: {
                 if (checked) {
                     filter.set('level', 1)
-                    filter.set('alpha', '0=1; %1=0'.arg(duration - 1))
+                    filter.set('alpha', 't%1=1;t0=0'.arg(duration - 1))
                 } else {
-                    filter.set('level', '0=1; %1=0'.arg(duration - 1))
+                    filter.set('level', 't%1=1;t0=0'.arg(duration - 1))
                     filter.set('alpha', 1)
                 }
             }
