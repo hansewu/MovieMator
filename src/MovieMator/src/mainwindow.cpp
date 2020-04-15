@@ -4304,19 +4304,19 @@ void MainWindow::customizeToolbar()
 #endif
 #endif
 
-//#if MOVIEMATOR_FREE
-//#if defined(Q_OS_MAC)
+#if MOVIEMATOR_FREE && !defined(SHARE_VERSINO)
+#if defined(Q_OS_MAC)
 //    m_upgradeButton = createToolButton(":/icons/light/32x32/toolbar-upgrade.png",
 //                                       ":/icons/light/32x32/toolbar-upgrade-pressed.png",
 //                                       "", tr("Upgrade"), tr("Upgrade to Pro version"));
 //    connect(m_upgradeButton, SIGNAL(clicked()), this, SLOT(upgradeToProVersion()));
 
-//    m_tvcProButton = createToolButton(":/icons/light/32x32/toolbar-tvcpro.png",
-//                                      ":/icons/light/32x32/toolbar-tvcpro-pressed.png",
-//                                      "", tr("Great Converter & DVD Burner"), tr("Get Total Video Converter Pro - a great video converter and dvd burner"));
-//    connect(m_tvcProButton, SIGNAL(clicked()), this, SLOT(on_actionGet_Total_Video_Converter_Pro_triggered()));
-//#endif
-//#endif
+    m_tvcProButton = createToolButton(":/icons/light/32x32/toolbar-tvcpro.png",
+                                      ":/icons/light/32x32/toolbar-tvcpro-pressed.png",
+                                      "", tr("Great Converter & DVD Burner"), tr("Get Total Video Converter Pro - a great video converter and dvd burner"));
+    connect(m_tvcProButton, SIGNAL(clicked()), this, SLOT(on_actionGet_Total_Video_Converter_Pro_triggered()));
+#endif
+#endif
 
     int buttonIndex = 0;
 
@@ -4356,17 +4356,16 @@ void MainWindow::customizeToolbar()
 
 
 
-//#if MOVIEMATOR_FREE
-//#if defined(Q_OS_MAC)
-//    gridLayout->addWidget(m_tvcProButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
+#if MOVIEMATOR_FREE && !defined(SHARE_VERSION)
+#if defined(Q_OS_MAC)
+    gridLayout->addWidget(m_tvcProButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
 //    QSpacerItem *spacer4 = new QSpacerItem(50,20);
 //    gridLayout->addItem(spacer4, 0, buttonIndex++, 1, 1);
-
 //    gridLayout->addWidget(m_upgradeButton, 0, buttonIndex, 1, 1, Qt::AlignHCenter);
 //    QSpacerItem *spacer5 = new QSpacerItem(50,20);
 //    gridLayout->addItem(spacer5, 0, buttonIndex++, 1, 1);
-//#endif
-//#endif
+#endif
+#endif
 
 //    gridLayout->addWidget(m_helpButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
 //    gridLayout->addWidget(m_emailButton, 0, buttonIndex++, 1, 1, Qt::AlignHCenter);
