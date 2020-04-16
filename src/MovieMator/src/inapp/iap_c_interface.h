@@ -60,4 +60,7 @@ void inapp_refresh_receipt();
 
 void inapp_init(InAppPurchaseCallback inapp_callback, void *callbackObj);
 
+//返回值：0成功；-1失败。
+int inapp_has_valid_subscription();
+
 #endif //IAP_C_INTERFACE_H

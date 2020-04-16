@@ -1226,7 +1226,7 @@ void EncodeDock::on_encodeButton_clicked()
     //弹出订阅窗口
 #ifndef SHARE_VERSION
 #if MOVIEMATOR_FREE
-    int nRet = inapp_verify_receipt();
+    int nRet = inapp_has_valid_subscription();
     if (nRet >= 0)
     {
         Settings.setIsSubscribed(true);

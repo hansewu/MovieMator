@@ -32,22 +32,21 @@ static void inAppCallback(void *caller, int result)
     InAppDialog *dialog = (InAppDialog *)caller;
 
     //验证收据
-    if (result == 0 && inapp_verify_receipt() == 0)
+    if (result == 0 && inapp_has_valid_subscription() >=0)
     {
         Settings.setIsSubscribed(true);
         dialog->done(0);
         LOG_DEBUG() << "purchase complete, verifiy success!";
     }
-    else if (result == 0 && inapp_verify_receipt() != 0)
+    else if (result == 0 && inapp_has_valid_subscription() < 0)
     {
-        inapp_refresh_receipt();
+        Settings.setIsSubscribed(true);
         dialog->done(0);
         LOG_DEBUG() << "purchase complete, verifiy failed!";
+        inapp_refresh_receipt();
     }
     else
     {
-        inapp_refresh_receipt();
-        //Settings.setIsSubscribed(false);
         dialog->done(0);
         LOG_DEBUG() << "purchase failed!";
     }

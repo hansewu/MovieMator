@@ -435,7 +435,7 @@ int main(int argc, char **argv)
 //    setenv("QT_SCALE_FACTOR", "2", 1);
 
 #if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
-    int nRet = inapp_verify_receipt();
+    int nRet = inapp_has_valid_subscription();
     if (nRet >= 0)
     {
         Settings.setIsSubscribed(true);
@@ -576,16 +576,6 @@ int main(int argc, char **argv)
 
 
 #if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
-    nRet = inapp_verify_receipt();
-    if (nRet >= 0)
-    {
-        Settings.setIsSubscribed(true);
-    }
-    else
-    {
-        Settings.setIsSubscribed(false);
-    }
-
     if (!Settings.isSubscribed())
     {
         //如果获取产品信息成功，显示订阅界面

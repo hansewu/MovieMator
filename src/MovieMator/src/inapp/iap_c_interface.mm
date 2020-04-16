@@ -155,3 +155,10 @@ void inapp_init(InAppPurchaseCallback inapp_callback, void *callbackObj)
     [[IAPEventAdapter sharedInstance] setTransactionCallback:inapp_callback callbackObject:callbackObj];
     [IAP sharedInstance];
 }
+
+
+//返回值：0成功；-1失败。
+int inapp_has_valid_subscription()
+{
+    return [[IAP sharedInstance] hasValidSubscription];
+}

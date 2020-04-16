@@ -13,6 +13,8 @@
 #define THRERE_MONTH_SUBSCRIPTION @"net.moviemator.moviemator.subscription_three_months"
 #define YEARLY_SUBSCRIPTION @"net.moviemator.moviemator.subscription_one_year"
 
+#define kSUBSCRIPTION_EXPIRATION @"subcription_expiration_date"
+
 
 @interface IAP : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver, SKRequestDelegate>
 {
@@ -45,4 +47,6 @@
 - (int)verifyInappReceiptLocally;
 
 - (void)refreshReceipt;
+
+- (int)hasValidSubscription;
 @end

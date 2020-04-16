@@ -226,74 +226,36 @@
     
     NSString * productIdentifier = transaction.payment.productIdentifier;
     
-//    NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
-//    NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
-    
     if ([productIdentifier length] > 0) {
-        
-//        NSLog(@"开启productIdentifier功能");
-//        int nCoins = 0;
-        
-//        NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
-        
-//        if ([productIdentifier isEqualToString:VIP_PRODUCT_1]) {
-//            NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-//            [storage setBool:YES forKey:VIP_PRODUCT_1];
-//            [storage synchronize];
-//        }else if ([productIdentifier isEqualToString:VIP_PRODUCT_2]) {
-//            NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-//            [storage setBool:YES forKey:VIP_PRODUCT_2];
-//            [storage setDouble:time forKey:[VIP_PRODUCT_2 stringByAppendingString:@"Timer"]];
-//            [storage synchronize];
-//        }else if ([productIdentifier isEqualToString:VIP_PRODUCT_3]) {
-//            NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-//            [storage setBool:YES forKey:VIP_PRODUCT_3];
-//            [storage setDouble:time forKey:[VIP_PRODUCT_3 stringByAppendingString:@"Timer"]];
-//            [storage synchronize];
-//        }else if ([productIdentifier isEqualToString:VIP_PRODUCT_4]) {
-//            NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-//            [storage setBool:YES forKey:VIP_PRODUCT_4];
-//            [storage setDouble:time forKey:[VIP_PRODUCT_4 stringByAppendingString:@"Timer"]];
-//            [storage synchronize];
-//        }else if ([productIdentifier isEqualToString:MOREWORLDS_PRODUCT]) {
-//            NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-//            [storage setBool:YES forKey:MOREWORLDS_PRODUCT];
-//            [storage synchronize];
-//        }else if ([productIdentifier isEqualToString:SAVEWORLD_PRODUCT]) {
-//            NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-//            [storage setBool:YES forKey:SAVEWORLD_PRODUCT];
-//            [storage synchronize];
-//        }else if ([productIdentifier isEqualToString:MUSEUM_ASIAWORLD_PRODUCT]) {
-//            NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-//            [storage setBool:YES forKey:MUSEUM_ASIAWORLD_PRODUCT];
-//            [storage synchronize];
-//        }else if ([productIdentifier isEqualToString:MUSEUM_AMERICAWORLD_PRODUCT]) {
-//            NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-//            [storage setBool:YES forKey:MUSEUM_AMERICAWORLD_PRODUCT];
-//            [storage synchronize];
-//        }else if ([productIdentifier isEqualToString:MUSEUM_EUROPEWORLD_PRODUCT]) {
-//            NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-//            [storage setBool:YES forKey:MUSEUM_EUROPEWORLD_PRODUCT];
-//            [storage synchronize];
-//        }else if ([productIdentifier isEqualToString:MUSEUM_MUSEUMSERVER_PRODUCT]) {
-//            NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-//            [storage setBool:YES forKey:MUSEUM_MUSEUMSERVER_PRODUCT];
-//            [storage synchronize];
-//        }else if ([productIdentifier isEqualToString:ENTRANCE_MUSEUM_PRODUCT]) {
-//            NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-//            [storage setBool:YES forKey:ENTRANCE_MUSEUM_PRODUCT];
-//            [storage synchronize];
-//        }else if ([productIdentifier isEqualToString:ENTRANCE_ONLINE_PRODUCT]) {
-//            NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-//            [storage setBool:YES forKey:ENTRANCE_ONLINE_PRODUCT];
-//            [storage synchronize];
-//        }else {
-//            [self grantProduct:productIdentifier :nCoins];
-//        }
 
-        //[self addPurchaseRecord:transaction.payment.productIdentifier :transaction.transactionIdentifier :transaction.transactionReceipt :nCoins];
-        // 向自己的服务器验证购买凭证
-        //[self verifyReceiptOnThread];
+        //记录订阅过期日期
+        if ([productIdentifier isEqualToString: MONTHLY_SUBSCRIPTION])
+        {
+            NSDate *purchaseDate = [NSDate date];
+            NSDate *expirationDate = nil;
+            expirationDate = [NSDate dateWithTimeInterval:31*24*60*60 sinceDate:purchaseDate];
+            [[NSUserDefaults standardUserDefaults] setObject:expirationDate forKey:kSUBSCRIPTION_EXPIRATION];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+
+
+        if ([productIdentifier isEqualToString: THRERE_MONTH_SUBSCRIPTION])
+        {
+            NSDate *purchaseDate = [NSDate date];
+            NSDate *expirationDate = nil;
+            expirationDate = [NSDate dateWithTimeInterval:3*31*24*60*60 sinceDate:purchaseDate];
+            [[NSUserDefaults standardUserDefaults] setObject:expirationDate forKey:kSUBSCRIPTION_EXPIRATION];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+
+        if ([productIdentifier isEqualToString: YEARLY_SUBSCRIPTION])
+        {
+            NSDate *purchaseDate = [NSDate date];
+            NSDate *expirationDate = nil;
+            expirationDate = [NSDate dateWithTimeInterval:366*24*60*60 sinceDate:purchaseDate];
+            [[NSUserDefaults standardUserDefaults] setObject:expirationDate forKey:kSUBSCRIPTION_EXPIRATION];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
     }
     
     // Remove the transaction from the payment queue.
@@ -368,6 +330,7 @@
 //    [self verifyRestoreOnThread];
     
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"FINISH_TRANSACTION" object:nil];
 }
@@ -769,8 +732,10 @@
     {
         NSLog(@"Subscription: %@, purchase date: %@", MONTHLY_SUBSCRIPTION, purchaseDate);
         expirationDate = [NSDate dateWithTimeInterval:31*24*60*60 sinceDate:purchaseDate];
-        if ([[NSDate date] compare:expirationDate] != NSOrderedDescending)
-            return 0;
+//        if ([[NSDate date] compare:expirationDate] != NSOrderedDescending)
+//            return 0;
+        [[NSUserDefaults standardUserDefaults] setObject:expirationDate forKey:kSUBSCRIPTION_EXPIRATION];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 
     purchaseDate = [appReceipt originalPurchaseDate:THRERE_MONTH_SUBSCRIPTION];
@@ -778,8 +743,10 @@
     {
         NSLog(@"Subscription: %@, purchase date: %@", THRERE_MONTH_SUBSCRIPTION, purchaseDate);
         expirationDate = [NSDate dateWithTimeInterval:3*31*24*60*60 sinceDate:purchaseDate];
-        if ([[NSDate date] compare:expirationDate] != NSOrderedDescending)
-            return 0;
+//        if ([[NSDate date] compare:expirationDate] != NSOrderedDescending)
+//            return 0;
+        [[NSUserDefaults standardUserDefaults] setObject:expirationDate forKey:kSUBSCRIPTION_EXPIRATION];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 
     purchaseDate = [appReceipt originalPurchaseDate:YEARLY_SUBSCRIPTION];
@@ -787,8 +754,10 @@
     {
         NSLog(@"Subscription: %@, purchase date: %@", YEARLY_SUBSCRIPTION, purchaseDate);
         expirationDate = [NSDate dateWithTimeInterval:366*24*60*60 sinceDate:purchaseDate];
-        if ([[NSDate date] compare:expirationDate] != NSOrderedDescending)
-            return 0;
+//        if ([[NSDate date] compare:expirationDate] != NSOrderedDescending)
+//            return 0;
+        [[NSUserDefaults standardUserDefaults] setObject:expirationDate forKey:kSUBSCRIPTION_EXPIRATION];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 
     return -1;
@@ -805,6 +774,26 @@
 - (void)requestDidFinish:(SKRequest *)request
 {
 
+}
+
+- (int)hasValidSubscription
+{
+    int result = -1;
+
+    NSDate *expirationDate = [[NSUserDefaults standardUserDefaults] objectForKey:kSUBSCRIPTION_EXPIRATION];
+    if (!expirationDate)
+    {
+        [self verifyInappReceiptLocally];
+    }
+
+    expirationDate = [[NSUserDefaults standardUserDefaults] objectForKey:kSUBSCRIPTION_EXPIRATION];
+    if (expirationDate)
+    {
+        if ([[NSDate date] compare:expirationDate] != NSOrderedDescending)
+            result = 0;
+    }
+
+    return result;
 }
 
 @end
