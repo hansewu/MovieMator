@@ -56,19 +56,19 @@ void RegistrationDialog::on_activateButton_clicked()
 
     if (checkEmailAddr(mail) == false || license.isEmpty())
     {
-        QMessageBox::warning(this, "Invalid License", "Registration failed!\nPlease make sure the Email and License Code are correct, any question please contact us at market@effectmatrix.com.", QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Registration Failed"), tr("Registration failed!\nPlease make sure the Email and License Code are correct, any question please contact us at market@effectmatrix.com."), QMessageBox::Ok);
         return;
     }
 
     RegistrationType type = Registration.registerWithLicense(mail, license);
     if (type == Registration_None)
     {
-        QMessageBox::warning(this, "Invalid License", "Registration failed!\nPlease make sure the Email and License Code are correct, any question please contact us at market@effectmatrix.com.", QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Registration Failed"), tr("Registration failed!\nPlease make sure the Email and License Code are correct, any question please contact us at market@effectmatrix.com."), QMessageBox::Ok);
 //        shakeWindow();
         return;
     }
 
-    QMessageBox::information(this, "Registration Success", "Congratulations! You have successfully registered MovieMator.", QMessageBox::Ok);
+    QMessageBox::information(this, tr("Registration Success"), tr("Congratulations! You have successfully registered MovieMator."), QMessageBox::Ok);
     MAIN.updateWindowTitle();
     close();
 }
