@@ -774,7 +774,7 @@ void MainWindow::configureUI()
 #endif
 
     ui->actionSubscription->setVisible(false);
-#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSIOn)
+#if defined(MOVIEMATOR_FREE) && !defined(SHARE_VERSION)
     ui->actionSubscription->setVisible(true);
 #endif
 
