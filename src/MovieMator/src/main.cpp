@@ -105,7 +105,8 @@ static void mlt_log_handler(void *service, int mlt_level, const char *format, va
 #if defined(Q_OS_WIN)
         msg.replace('/', "\\");
 #endif
-        g_splash->showMessage(msg, Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
+        if(g_splash != nullptr)
+            g_splash->showMessage(msg, Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
         qApp->processEvents();
         return;
     }

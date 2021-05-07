@@ -308,6 +308,7 @@ MainWindow::MainWindow()
 
     // Add the player widget.
     LOG_DEBUG() << "Add the player widget";
+    m_player = NULL;//Must not remove this line (wzq) for next new Player->mlt->mlt loading progress->callback prgress in main.cpp->processevents->resize->m_player->resize
     m_player = new Player();
 
     MLT.videoWidget()->installEventFilter(this);

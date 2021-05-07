@@ -201,7 +201,7 @@ private:
     // 获取当前预置在左边预置树中的父项
     QStandardItem *getTreeParentItem(const QString& text);
 
-    QStandardItemModel m_modelList[7];// m_customModel;
+    QStandardItemModel m_modelList[8];// m_customModel;
 
 
     int m_currentSelectedClass;//当前选中的格式分类， 0-Custom, 1-video, 2-audio, 3-devices,4-tv, 5-lossless, 6-web
