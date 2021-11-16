@@ -60,7 +60,8 @@ function snapTrimIn(clip, delta) {
     if(!clip || !scrollView) return;
     var x = clip.x + delta
     var cursorX = scrollView.flickableItem.contentX + cursor.x
-    if (false) {
+    if (false) //??
+    {
         // Snap to other clips.
         for (var i = 0; i < repeater.count; i++) {
             if (i === clip.DelegateModel.itemsIndex || repeater.itemAt(i).isBlank)
@@ -91,7 +92,8 @@ function snapTrimOut(clip, delta) {
     var rightEdge = clip.x + clip.width
     var x = rightEdge - delta
     var cursorX = scrollView.flickableItem.contentX + cursor.x
-    if (delta < 0) {
+    if(false)//if (delta < 0) 
+    {
         // Snap to other clips.
         for (var i = 0; i < repeater.count; i++) {
             if (i === clip.DelegateModel.itemsIndex || repeater.itemAt(i).isBlank || repeater.itemAt(i).isTransition)

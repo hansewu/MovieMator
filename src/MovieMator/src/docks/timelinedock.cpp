@@ -192,7 +192,10 @@ Mlt::ClipInfo *TimelineDock::getClipInfo(int trackIndex, int clipIndex)
             if (!playlist.is_valid()) {
                 return result;
             }
-            Q_ASSERT(clipIndex < playlist.count());
+            //Q_ASSERT(clipIndex < playlist.count());//移动clip时，此处出错崩溃
+            if(clipIndex >= playlist.count())  //wzq
+                return nullptr;
+
             result = playlist.clip_info(clipIndex);
         }
     }
@@ -992,6 +995,10 @@ void TimelineDock::emitSelectedFromSelection()
     }
 
     Mlt::ClipInfo* info = getClipInfo(trackIndex, clipIndex);
+    if(info == nullptr){ //wzq
+        emit selected(nullptr);
+        return;
+    }
     Q_ASSERT(info);
     Q_ASSERT(info->producer);
     Q_ASSERT(info->producer->is_valid());

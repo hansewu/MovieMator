@@ -2484,7 +2484,7 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
         }
     }
     else if (event->type() == QEvent::NonClientAreaMouseButtonDblClick
-               && (target == m_encodeDock || target == m_jobsDock || target == m_propertiesDock || target == m_tasksDock))
+               && (target == m_encodeDock || target == m_jobsDock || target == m_propertiesDock))//wzq 211030 m_tasksDock's messages are blocked || target == m_tasksDock))
     {
         return true;
     }

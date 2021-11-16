@@ -168,8 +168,8 @@ Rectangle {
             }
             onTrimmingIn: {
                 var originalDelta = delta
-                if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap && !toolbar.ripple)
-                    delta = Logic.snapTrimIn(clip, delta)
+                if (delta != 0 && !(mouse.modifiers & Qt.AltModifier) && toolbar.snap && !toolbar.ripple)
+                	delta = Logic.snapTrimIn(clip, delta)
                 if (delta != 0) {
                     console.assert(timeline);
                     if (timeline && timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex,
@@ -194,7 +194,7 @@ Rectangle {
             }
             onTrimmingOut: {
                 var originalDelta = delta
-                if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap && !toolbar.ripple)
+                if (delta != 0 && !(mouse.modifiers & Qt.AltModifier) && toolbar.snap && !toolbar.ripple)
                     delta = Logic.snapTrimOut(clip, delta)
                 if (delta != 0) {
                     console.assert(timeline);

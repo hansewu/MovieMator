@@ -41,7 +41,7 @@
 
 #include "../docks/timelinedock.h"
 
-
+#define MAIN_TRACK_INDEX 1
 static const quintptr NO_PARENT_ID = quintptr(-1);
 static const char* kShotcutDefaultTransition = "lumaMix";
 
@@ -663,6 +663,8 @@ void MultitrackModel::notifyClipIn(int trackIndex, int clipIndex)
         MLT.refreshConsumer();
     }
     m_isMakingTransition = false;
+
+    consolidateBlanksAllTracks(); //wzq
 }
 
 bool MultitrackModel::trimClipOutValid(int trackIndex, int clipIndex, int delta, bool ripple)
@@ -827,6 +829,7 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         Q_ASSERT(whereToRemoveRegion != -1);
         removeRegion(idx, whereToRemoveRegion, delta);
     }
+
     return result;
 }
 
@@ -844,6 +847,8 @@ void MultitrackModel::notifyClipOut(int trackIndex, int clipIndex)
         MLT.refreshConsumer();
     }
     m_isMakingTransition = false;
+
+    consolidateBlanksAllTracks(); //wzq
 }
 
 bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, int position)
@@ -985,11 +990,23 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int po
                     }
                 }
                 // Reposition the clip within its current blank spot.
-                moveClipInBlank(playlist, toTrack, clipIndex, position);
-                result = true;
+
+                if(toTrack == MAIN_TRACK_INDEX && playlist.count() == clipIndex +1) //wzq
+                {
+                    result = true;
+                    moveClipInBlank(playlist, toTrack, clipIndex, position);
+                    consolidateBlanks(playlist, toTrack);
+                }
+                else
+                {
+                    moveClipInBlank(playlist, toTrack, clipIndex, position);
+                    result = true;
+                }
             }
         }
     }
+
+    consolidateBlanksAllTracks();//wzq
     if (result) {
         setSelection(toTrack, getClipOfPosition(toTrack, position));
         emit modified();
@@ -1340,7 +1357,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
             int length = position - playlist.clip_start(n - 1) - playlist.clip_length(n - 1);
 
             // Add blank to end if needed.
-            if (length > 0) {
+            if (trackIndex != MAIN_TRACK_INDEX && length > 0) {
                 beginInsertRows(index(trackIndex), n, n);
                 playlist.blank(length - 1);
                 endInsertRows();
@@ -2039,7 +2056,8 @@ int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position)
                 duration = qAbs(endOfCurrentClip - startOfNextClip);
 
             // Adjust/insert blanks
-            moveClipInBlank(playlist, trackIndex, clipIndex, position);
+            if(trackIndex != MAIN_TRACK_INDEX) //wzq
+                moveClipInBlank(playlist, trackIndex, clipIndex, position);
 
 
 
@@ -2670,6 +2688,13 @@ bool MultitrackModel::moveClipToTrack(int fromTrack, int toTrack, int clipIndex,
     }
     consolidateBlanks(playlistFrom, fromTrack);
 
+    { //wzq
+        Mlt::Producer* trackTo = m_tractor->track(m_trackList.at(toTrack).mlt_index);
+        Q_ASSERT(trackTo);
+        Mlt::Playlist playlistTo(*trackTo);
+        consolidateBlanks(playlistTo, toTrack);
+    }
+
     return result;
 }
 
@@ -2708,17 +2733,23 @@ void MultitrackModel::moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int
         emit dataChanged(index, index, roles);
     } else {
         // Add new blank
+        if(trackIndex != MAIN_TRACK_INDEX) //wzq
+        {
         beginInsertRows(index(trackIndex), clipIndex, clipIndex);
         playlist.insert_blank(clipIndex, playlist.clip_length(clipIndex) - 1);
         endInsertRows();
         ++clipIndex;
         ++n;
+        }
     }
     // Add blank to end if needed.
     if (length > 0) {
+        if(trackIndex != MAIN_TRACK_INDEX) //wzq
+        {
         beginInsertRows(index(trackIndex), n, n);
         playlist.blank(length - 1);
         endInsertRows();
+        }
     }
     // Finally, move clip into place.
     QModelIndex parentIndex = index(trackIndex);
@@ -2836,10 +2867,13 @@ void MultitrackModel::moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, i
         // "add blank on left with duration
         // Add blank to left.
         int i = qMax(clipIndex, 0);
+    //    if(trackIndex != MAIN_TRACK_INDEX)
+        {
         beginInsertRows(index(trackIndex), i, i);
         playlist.insert_blank(i, delta - 1);
         endInsertRows();
         ++clipIndex;
+        }
     }
 
     if ((clipIndex + 1) < playlist.count() && playlist.is_blank(clipIndex + 1)) {
@@ -2875,6 +2909,19 @@ void MultitrackModel::consolidateBlanks(Mlt::Playlist &playlist, int trackIndex)
     Q_ASSERT(playlist.is_valid());
     Q_ASSERT(trackIndex >= 0);
     Q_ASSERT(trackIndex < m_trackList.size());
+
+    if(playlist.count() > 1 && trackIndex == MAIN_TRACK_INDEX)//wzq
+    {
+        for (int i = 0; i < playlist.count(); i++)
+        {
+            if (playlist.is_blank(i))
+            {
+                beginRemoveRows(index(trackIndex), i, i);
+                playlist.remove(i--);
+                endRemoveRows();
+            }
+        }
+    }
 
     for (int i = 1; i < playlist.count(); i++) {
         if (playlist.is_blank(i - 1) && playlist.is_blank(i)) {

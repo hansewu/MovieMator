@@ -127,7 +127,8 @@ Rectangle {
     Drag.active: mouseArea.drag.active
     Drag.proposedAction: Qt.MoveAction
     opacity: Drag.active? 0.5 : 1.0
-
+	radius: 10 
+	
     //声音波形颜色
     function getWaveColor()
     {
