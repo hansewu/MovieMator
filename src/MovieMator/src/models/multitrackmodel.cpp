@@ -4558,6 +4558,7 @@ int MultitrackModel::getClipOfPosition(int nIndexOfTrack, int nFramePostion)
         Q_ASSERT(mltPlaylist.is_valid());
         nResult = mltPlaylist.get_clip_index_at(nFramePostion);
     }
+
     return nResult;
 }
 
