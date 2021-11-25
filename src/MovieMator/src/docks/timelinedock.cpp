@@ -2189,7 +2189,7 @@ int TimelineDock::getPositionOnClip(int position)
             Mlt::Playlist playlist(*track);
             Q_ASSERT(playlist.is_valid());
             Mlt::ClipInfo *info = playlist.clip_info(clipIndex);
-            Q_ASSERT(info);
+            //Q_ASSERT(info);
             if (info && (info->frame_in > 0)) {
                 ret = position - info->frame_in;
             } else {

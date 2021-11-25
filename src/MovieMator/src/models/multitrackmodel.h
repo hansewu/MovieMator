@@ -193,6 +193,9 @@ public slots:
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);//移动clip
     int overwriteClip(int trackIndex, Mlt::Producer& clip, int position, bool seek = true);//覆盖clip
     QString overwrite(int trackIndex, Mlt::Producer& clip, int position, bool seek = true);
+    int overwriteInsertClip(int trackIndex, Mlt::Producer& clip, int position, bool seek = true);//覆盖插入新clip
+
+
     void updateTransition(int trackIndex, int clipIndex); //更新转场
     int insertClip(int trackIndex, Mlt::Producer& clip, int position);//插入clip
     int appendClip(int trackIndex, Mlt::Producer &clip);//拓展clip
