@@ -2051,8 +2051,10 @@ int TimelineDock::getCurrentClipLength()
         {
             Mlt::Playlist playlist(*track);
             Q_ASSERT(playlist.is_valid());
-            Q_ASSERT(clipIndex < playlist.count());
-            length = playlist.clip_length(clipIndex);
+            if(clipIndex >= playlist.count())
+                return -1;
+            //Q_ASSERT(clipIndex < playlist.count());
+            else length = playlist.clip_length(clipIndex);
         }
     }
 
@@ -2081,8 +2083,10 @@ int TimelineDock::getCurrentClipParentLength()
         {
             Mlt::Playlist playlist(*track);
             Q_ASSERT(playlist.is_valid());
-            Q_ASSERT(clipIndex >= 0);
-            Q_ASSERT(clipIndex < playlist.count());
+            //Q_ASSERT(clipIndex >= 0);
+            //Q_ASSERT(clipIndex < playlist.count());
+            if(clipIndex < 0 || clipIndex >= playlist.count())
+                return -1;
             QScopedPointer<Mlt::ClipInfo> clipInfo(playlist.clip_info(clipIndex));
             Q_ASSERT(clipInfo);
             if(!clipInfo)
@@ -2091,7 +2095,7 @@ int TimelineDock::getCurrentClipParentLength()
                 return -1;
             }
             Mlt::Producer *testproducer = clipInfo->producer;
-            Q_ASSERT(testproducer);
+           // Q_ASSERT(testproducer);
             if (!testproducer) {
                 return -1;
             }
@@ -2123,7 +2127,9 @@ void TimelineDock::seekToKeyFrame(int position)
         {
             Mlt::Playlist playlist(*track);
             Q_ASSERT(playlist.is_valid());
-            Q_ASSERT(clipIndex < playlist.count());
+            //Q_ASSERT(clipIndex < playlist.count());
+            if(clipIndex < 0 || clipIndex >= playlist.count())
+                return;
             int start = playlist.clip_start(clipIndex);
             setPosition(start + position);
         }

@@ -537,7 +537,7 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
     m_event.reset();
 
     //only load filter ui when selected the timeline item
-    if (producer && producer->is_valid() && producer->get_int(kMultitrackItemProperty))
+    if (!m_producer || (producer && producer->is_valid() && producer->get_int(kMultitrackItemProperty)))
         m_producer.reset(new Mlt::Producer(producer));
 //    else if (MLT.isClip())
 //        m_producer.reset(new Mlt::Producer(MLT.producer()));

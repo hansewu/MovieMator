@@ -86,6 +86,9 @@ public:
     //设置filter的类型
     void setFilter(AttachedMetadataFilter);
     //检测第row个滤镜是否是视频滤镜
+
+    void reset(Mlt::Producer *producer = nullptr);
+
     Q_INVOKABLE bool isVisible(int row) const;
 
 signals:
@@ -123,7 +126,7 @@ private:
     //此函数为空函数，暂未使用—
     static void producerChanged(mlt_properties owner, AttachedFiltersModel* model);
     //当前的producer发生改变时，重置attachedfiltersmodel
-    void reset(Mlt::Producer *producer = nullptr);
+    //void reset(Mlt::Producer *producer = nullptr);
 
     //给新添加的滤镜设置缺省参数
     void setDefaultValueForAllParemeters(Mlt::Filter* pFilter,QmlMetadata* pMetadata);

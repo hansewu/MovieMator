@@ -863,6 +863,9 @@ bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, i
     // XXX This is very redundant with moveClip().
     bool result = false;
 
+    if(toTrack != MAIN_TRACK_INDEX && m_trackList[toTrack].type == VideoTrackType)//wzq
+        return true;
+
     int i = m_trackList.at(toTrack).mlt_index;
 
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
@@ -936,6 +939,10 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int po
     Q_ASSERT(m_tractor);
 
     LOG_DEBUG() << __FUNCTION__ << clipIndex << "fromTrack" << fromTrack << "toTrack" << toTrack;
+
+    if(toTrack != MAIN_TRACK_INDEX && m_trackList[toTrack].type == VideoTrackType)//wzq
+        return moveClipForNonMainVideoTrack(fromTrack, toTrack, clipIndex, position);
+
     bool result = false;
 
     int i = m_trackList.at(toTrack).mlt_index;
@@ -1015,6 +1022,179 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int po
     consolidateBlanksAllTracks();//wzq
     return result;
 }
+
+//非主轨道视频轨道移动clip 逻辑:
+//1 移动到没有间隙
+//（1）若为近邻，和靠近的clip 交换位置
+//（2）自动将插入后面的clip 缩小1/2， 让出位置将clip 按2 移动到有间隙插入
+//2 移动到有间隙
+//（1）空白处从target position开始若空白空间足够，直接split裁剪替换
+//（2）空白处从target position开始若空白空间不足够，但空白处长度足够，替换整个空白
+//（3）将clip  out裁剪成空白处长度替换
+bool MultitrackModel::moveClipForNonMainVideoTrack(int fromTrack, int toTrack, int clipIndex, int position)
+{
+    Q_ASSERT(fromTrack >= 0);
+    Q_ASSERT(fromTrack < m_trackList.size());
+    Q_ASSERT(toTrack >= 0);
+    Q_ASSERT(toTrack < m_trackList.size());
+    Q_ASSERT(clipIndex >= 0);
+
+    Q_ASSERT(m_tractor);
+
+    LOG_DEBUG() << __FUNCTION__ << clipIndex << "fromTrack" << fromTrack << "toTrack" << toTrack;
+
+    Mlt::Producer* trackFrom = m_tractor->track(m_trackList.at(fromTrack).mlt_index);
+    Q_ASSERT(trackFrom);
+    Mlt::Playlist playlistFrom(*trackFrom);
+    delete trackFrom;
+    Q_ASSERT(playlistFrom.is_valid());
+    Q_ASSERT(clipIndex < playlistFrom.count());
+    QScopedPointer<Mlt::Producer> clip(playlistFrom.get_clip(clipIndex));
+    Q_ASSERT(clip);
+
+    QModelIndex parentIndex = index(fromTrack);
+    // Replace clip on fromTrack with blank.
+    beginRemoveRows(parentIndex, clipIndex, clipIndex);
+    endRemoveRows();
+    beginInsertRows(parentIndex, clipIndex, clipIndex);
+    playlistFrom.replace_with_blank(clipIndex);
+    endInsertRows();
+
+    consolidateBlanks(playlistFrom, fromTrack);
+
+    overwriteInsertClip(toTrack, *clip, position, false);
+
+    return true;
+    //liftClip(fromTrack, clipIndex);
+
+    bool result = false;
+
+    int i = m_trackList.at(toTrack).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        Q_ASSERT(playlist.is_valid());
+          //需要小于from的playlist
+        int targetIndex = playlist.get_clip_index_at(position);
+
+        if (fromTrack != toTrack)
+        {
+            Mlt::Producer* trackFrom = m_tractor->track(m_trackList.at(fromTrack).mlt_index);
+            Q_ASSERT(trackFrom);
+            Mlt::Playlist playlistFrom(*trackFrom);
+            delete trackFrom;
+            Q_ASSERT(playlistFrom.is_valid());
+            Q_ASSERT(clipIndex < playlistFrom.count());
+            QScopedPointer<Mlt::Producer> clip(playlistFrom.get_clip(clipIndex));
+            Q_ASSERT(clip);
+
+            QModelIndex parentIndex = index(fromTrack);
+            // Replace clip on fromTrack with blank.
+            beginRemoveRows(parentIndex, clipIndex, clipIndex);
+            endRemoveRows();
+            beginInsertRows(parentIndex, clipIndex, clipIndex);
+            playlistFrom.replace_with_blank(clipIndex);
+            endInsertRows();
+
+            consolidateBlanks(playlistFrom, fromTrack);
+
+            //playlistFrom.replace_with_blank(clipIndex);
+            overwriteInsertClip(toTrack, *clip, position, false);
+
+            result = true;
+            //result = moveClipToTrack(fromTrack, toTrack, clipIndex, position);
+        }
+        else if ((clipIndex + 1) < playlist.count() && position >= playlist.get_playtime()) {
+            // Clip relocated to end of playlist.
+            moveClipToEnd(playlist, toTrack, clipIndex, position);
+            result = true;
+        }
+        else if ((targetIndex < (clipIndex - 1) || targetIndex > (clipIndex + 1))
+            && playlist.is_blank_at(position) && playlist.clip_length(clipIndex) <= playlist.clip_length(targetIndex)) {
+            // Relocate clip.
+            relocateClip(playlist, toTrack, clipIndex, position);
+            result = true;
+        }
+        else if (targetIndex >= (clipIndex - 1) && targetIndex <= (clipIndex + 1))
+        {
+            int length = playlist.clip_length(clipIndex);
+            int targetIndexEnd = playlist.get_clip_index_at(position + length - 1);
+
+            if ((playlist.is_blank_at(position) || targetIndex == clipIndex)
+                && (playlist.is_blank_at(position + length - 1) || targetIndexEnd == clipIndex)) {
+
+                if (position < 0) {
+                    // Special case: dragged left of timeline origin.
+                    Mlt::ClipInfo* info = playlist.clip_info(clipIndex);
+
+                    Q_ASSERT(info);
+
+                    playlist.resize_clip(clipIndex, info->frame_in - position, info->frame_out);
+                    delete info;
+                    QModelIndex idx = createIndex(clipIndex, 0, quintptr(toTrack));
+                    QVector<int> roles;
+                    roles << DurationRole;
+                    roles << InPointRole;
+                    emit dataChanged(idx, idx, roles);
+                    if (clipIndex > 0) {
+                        QModelIndex parentIndex = index(toTrack);
+                        beginMoveRows(parentIndex, clipIndex, clipIndex, parentIndex, 0);
+                        playlist.move(clipIndex, 0);
+                        endMoveRows();
+                        consolidateBlanks(playlist, toTrack);
+                        clipIndex = 0;
+                    }
+                }
+                // Reposition the clip within its current blank spot.
+
+                if(toTrack == MAIN_TRACK_INDEX && playlist.count() == clipIndex +1) //wzq
+                {
+                    result = true;
+                    moveClipInBlank(playlist, toTrack, clipIndex, position);
+                    consolidateBlanks(playlist, toTrack);
+                }
+                else
+                {
+                    moveClipInBlank(playlist, toTrack, clipIndex, position);
+                    result = true;
+                }
+            }
+        }
+        else
+        {
+            Mlt::Producer* trackFrom = m_tractor->track(m_trackList.at(fromTrack).mlt_index);
+            Q_ASSERT(trackFrom);
+            Mlt::Playlist playlistFrom(*trackFrom);
+            delete trackFrom;
+            Q_ASSERT(playlistFrom.is_valid());
+            Q_ASSERT(clipIndex < playlistFrom.count());
+            QScopedPointer<Mlt::Producer> clip(playlistFrom.get_clip(clipIndex));
+            Q_ASSERT(clip);
+
+            QModelIndex parentIndex = index(fromTrack);
+            // Replace clip on fromTrack with blank.
+            beginRemoveRows(parentIndex, clipIndex, clipIndex);
+            endRemoveRows();
+            beginInsertRows(parentIndex, clipIndex, clipIndex);
+            playlistFrom.replace_with_blank(clipIndex);
+            endInsertRows();
+
+            overwriteInsertClip(toTrack, *clip, position, false);
+
+            result = true;
+        }
+    }
+
+    if (result) {
+        setSelection(toTrack, getClipOfPosition(toTrack, position));
+        emit modified();
+        MLT.refreshConsumer();
+    }
+
+    consolidateBlanksAllTracks();//wzq
+    return result;
+}
+
 
 int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int position, bool seek)
 {
@@ -1596,8 +1776,30 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
             result = playlist.count() - 1;
         } else {
             int targetIndex = playlist.get_clip_index_at(position);
+            QString strProducerType = QString::fromUtf8(clip.get(kProducerTypeProperty));
 
-            if (position > playlist.clip_start(targetIndex) && playlist.is_blank_at(position)) //wzq
+            if(trackIndex == MAIN_TRACK_INDEX && !playlist.is_blank_at(position) && strProducerType.compare("text-template", Qt::CaseInsensitive) == 0)
+            {
+                Mlt::ClipInfo clipInfo;
+                Mlt::ClipInfo *temp = playlist.clip_info(targetIndex, &clipInfo);
+                if(temp == NULL) return -1;
+
+                Mlt::Producer *clipTo = clipInfo.producer;// playlist.get_clip(targetIndex);
+                Q_ASSERT(clipTo);
+
+                setSelection(trackIndex, targetIndex);
+                MAIN.timelineDock()->emitSelectedFromSelection();
+                attachTextToProducer(*clipTo, clip);
+
+                MAIN.filterController()->attachedModel()->reset(clipTo);//reset(clipTo);
+
+                AttachedfilterChanged(trackIndex, targetIndex);
+
+                emit modified();
+
+                return 0;
+            }
+            else if (position > playlist.clip_start(targetIndex) && playlist.is_blank_at(position)) //wzq
             {
                 splitClip(trackIndex, targetIndex, position);
 
@@ -4468,10 +4670,17 @@ int MultitrackModel::moveInsertClip(int fromTrack, int toTrack, int clipIndex, i
 
 
         QModelIndex parentIndex = index(fromTrack);
-        // Remove clip on fromTrack
+       /* // Remove clip on fromTrack
         beginRemoveRows(parentIndex, clipIndex, clipIndex);
         fromPlaylist.remove(clipIndex);
+        endRemoveRows();*/
+
+        // Replace clip with blank.  wzq
+        beginRemoveRows(parentIndex, clipIndex, clipIndex);
         endRemoveRows();
+        beginInsertRows(parentIndex, clipIndex, clipIndex);
+        fromPlaylist.replace_with_blank(clipIndex);
+        endInsertRows();
 
         setSelection(toTrack, getClipOfPosition(toTrack, position));
     }
@@ -4784,6 +4993,30 @@ int MultitrackModel::getClipOfPosition(int nIndexOfTrack, int nFramePostion)
     }
 
     return nResult;
+}
+
+int MultitrackModel::attachTextToProducer(Mlt::Producer &toProducer, Mlt::Producer &textClip)
+{
+    QString strProducerType = QString::fromUtf8(textClip.get(kProducerTypeProperty));
+    if (strProducerType.compare("text-template", Qt::CaseInsensitive) == 0)
+    {
+        int nFilterCount = textClip.filter_count();
+        for (int i = 0; i < nFilterCount; i++)
+        {
+            Mlt::Filter* pMltFilter = textClip.filter(i);
+            Q_ASSERT(pMltFilter);
+
+            if (pMltFilter && pMltFilter->is_valid() && (strcmp(pMltFilter->get("mlt_service"), "dynamictext") == 0))
+            {
+                toProducer.attach(*pMltFilter);
+            }
+         }
+
+
+    }
+    else return -1;
+
+    return 0;
 }
 
 QString MultitrackModel::getClipCaption(Mlt::Producer &producerClip) const

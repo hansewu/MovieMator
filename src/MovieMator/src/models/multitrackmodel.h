@@ -193,8 +193,6 @@ public slots:
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);//移动clip
     int overwriteClip(int trackIndex, Mlt::Producer& clip, int position, bool seek = true);//覆盖clip
     QString overwrite(int trackIndex, Mlt::Producer& clip, int position, bool seek = true);
-    int overwriteInsertClip(int trackIndex, Mlt::Producer& clip, int position, bool seek = true);//覆盖插入新clip
-
 
     void updateTransition(int trackIndex, int clipIndex); //更新转场
     int insertClip(int trackIndex, Mlt::Producer& clip, int position);//插入clip
@@ -248,6 +246,9 @@ private:
     // 只是给预览后添加滤镜用的，没有其他用途
     QScopedPointer<Mlt::Producer> m_selectedProducer;
 
+    int attachTextToProducer(Mlt::Producer &toProducer, Mlt::Producer &textClip);
+    int overwriteInsertClip(int trackIndex, Mlt::Producer& clip, int position, bool seek = true);//覆盖插入新clip
+    bool moveClipForNonMainVideoTrack(int fromTrack, int toTrack, int clipIndex, int position);
 
     bool moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position);
     void moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position);//将clip移动到轨道末尾
