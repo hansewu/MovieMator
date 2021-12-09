@@ -238,7 +238,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
-        anchors.rightMargin: parent.border.width + 1
+        anchors.rightMargin: parent.border.width + 1 +5
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
         width: height * 16.0/9.0
@@ -265,6 +265,7 @@ Rectangle {
         id: inThumbnail
         visible: settings.timelineShowThumbnails
         anchors.left: parent.left
+        anchors.leftMargin: parent.border.width + 1 +5
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
         anchors.bottom: parent.bottom
@@ -334,6 +335,7 @@ Rectangle {
         color: 'transparent'
         border.width: 1     // 2
         border.color: '#DE9690'  // 'white'
+        radius: 10
     }
 
     // clip的矩形边框
