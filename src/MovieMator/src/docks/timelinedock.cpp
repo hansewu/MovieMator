@@ -542,6 +542,54 @@ bool TimelineDock::isTrackLocked(int trackIndex) const
     return track->get_int(kTrackLockProperty);
 }
 
+void TimelineDock::trimInSelectedClip(int pos, bool ripple)
+{
+    TIMELINE_SELECTION selectedClip = m_model.selection();
+
+    if(selectedClip.nIndexOfSelectedTrack < 0 || selectedClip.nIndexOfSelectedTrack >= m_model.trackList().count())
+        return;
+
+    int mltIndex = m_model.trackList().at(selectedClip.nIndexOfSelectedTrack).mlt_index;
+
+    QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mltIndex));
+    if (!track || track->is_valid() ==false)  return;
+
+    Mlt::ClipInfo *clip_info = getClipInfo(selectedClip.nIndexOfSelectedTrack, selectedClip.nIndexOfSelectedClip);
+    if(!clip_info)  return;
+
+    MAIN.pushCommand(
+        new Timeline::TrimClipInCommand(m_model, selectedClip.nIndexOfSelectedTrack, selectedClip.nIndexOfSelectedClip, pos - clip_info->frame_in, ripple));
+    if (ripple)
+        setPosition(clip_info->start);
+
+    m_model.notifyClipIn(selectedClip.nIndexOfSelectedTrack, selectedClip.nIndexOfSelectedClip);
+    setSelection(QList<int>() << selectedClip.nIndexOfSelectedClip, selectedClip.nIndexOfSelectedTrack);
+}
+
+void TimelineDock::trimOutSelectedClip(int pos, bool ripple)
+{
+    TIMELINE_SELECTION selectedClip = m_model.selection();
+
+    if(selectedClip.nIndexOfSelectedTrack < 0 || selectedClip.nIndexOfSelectedTrack >= m_model.trackList().count())
+        return;
+
+    int mltIndex = m_model.trackList().at(selectedClip.nIndexOfSelectedTrack).mlt_index;
+
+    QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mltIndex));
+    if (!track || track->is_valid() ==false)  return;
+
+    Mlt::ClipInfo *clip_info = getClipInfo(selectedClip.nIndexOfSelectedTrack, selectedClip.nIndexOfSelectedClip);
+    if(!clip_info)  return;
+
+    MAIN.pushCommand(
+        new Timeline::TrimClipOutCommand(m_model, selectedClip.nIndexOfSelectedTrack, selectedClip.nIndexOfSelectedClip, clip_info->frame_out - pos, ripple));
+
+    m_model.notifyClipOut(selectedClip.nIndexOfSelectedTrack, selectedClip.nIndexOfSelectedClip);
+
+    setSelection(QList<int>() << selectedClip.nIndexOfSelectedClip, selectedClip.nIndexOfSelectedTrack);
+
+}
+
 void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
 {
     int trackIndex = currentTrack(), clipIndex = -1;
@@ -1032,6 +1080,11 @@ void TimelineDock::emitSelectedFromSelection()
 
         delete info;
     }
+}
+
+Mlt::Producer* TimelineDock::selectedProducer()
+{
+    return m_model.selectedProducer();
 }
 
 void TimelineDock::remakeAudioLevels(int trackIndex, int clipIndex)

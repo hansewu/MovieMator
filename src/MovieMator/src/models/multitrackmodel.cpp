@@ -4818,7 +4818,7 @@ void MultitrackModel::setCopiedProducer(Mlt::Producer* pProducer)
 
 Mlt::Producer* MultitrackModel::selectedProducer()
 {
-    return (m_selectedProducer != nullptr) ? m_selectedProducer.data() : nullptr;
+    return (m_selectedProducer != nullptr && m_selectedProducer->is_valid()) ? m_selectedProducer.data() : nullptr;
 }
 
 void MultitrackModel::setSelectedProducer(Mlt::Producer* pProducer)

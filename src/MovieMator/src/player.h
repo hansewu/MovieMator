@@ -93,6 +93,9 @@ signals:
     void scrolledVertically(int y);
     void tabIndexChanged(int index);
 
+    void oneActionTrimIn(int);
+    void oneActionTrimOut(int);
+
 public slots:
     void play(double speed = 1.0);
     void pause();
@@ -116,6 +119,9 @@ public slots:
     void onTabBarClicked(int index);
     void setStatusLabel(const QString& text, int timeoutSeconds, QAction* action);
     void toggleFullScreen();
+
+    void onOneActionTrimIn(int in);
+    void onOneActionTrimOut(int out);
 
     void seekPreFrame();
     void seekNextFrame();

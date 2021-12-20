@@ -118,6 +118,9 @@ void ScrubBar::mousePressEvent(QMouseEvent * event)
     int head = int(m_head * m_scale);
     int pos = int(CLAMP(x / m_scale, 0, m_max));
 
+    m_preReleaseIn = m_in;
+    m_preReleaseOut = m_out;
+
     if (m_in > -1 && m_out > -1) {
         if (x >= in - 12 && x <= in + 6) {
             m_activeControl = CONTROL_IN;
@@ -149,7 +152,13 @@ void ScrubBar::mousePressEvent(QMouseEvent * event)
 
 void ScrubBar::mouseReleaseEvent(QMouseEvent * event)
 {
-    Q_UNUSED(event)
+    //Q_UNUSED(event)
+    if(m_preReleaseIn != m_in)
+        emit oneActionTrimIn(m_in);
+
+    if(m_preReleaseOut != m_out)
+        emit oneActionTrimOut(m_out);
+
     m_activeControl = CONTROL_NONE;
 }
 

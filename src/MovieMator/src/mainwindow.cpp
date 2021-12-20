@@ -430,6 +430,9 @@ MainWindow::MainWindow()
     connect(m_player, SIGNAL(previousSought()), m_timelineDock, SLOT(seekPreviousEdit()));
     connect(m_player, SIGNAL(nextSought()), m_timelineDock, SLOT(seekNextEdit()));
 
+    connect(m_player, SIGNAL(oneActionTrimIn(int)), this, SLOT(setSelectedClipInToPos(int)));
+    connect(m_player, SIGNAL(oneActionTrimOut(int)), this, SLOT(setSelectedClipOutToPos(int)));
+
     //connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), SLOT(loadTemplateInfo(Mlt::Producer*)));
 
 
@@ -1157,6 +1160,43 @@ QAction* MainWindow::addProfile(QActionGroup* actionGroup, const QString& desc, 
     actionGroup->addAction(action);
     return action;
 }
+void MainWindow::openSelectedProducer()
+{
+    Mlt::Producer *producer = m_timelineDock->selectedProducer();
+
+    if(producer && producer->is_valid())
+    {
+        QString strXML = MLT.XML(producer);
+
+        LOG_DEBUG() << "Xml is " << strXML;
+        do{
+        int start = strXML.indexOf("<filter");
+        int end = strXML.indexOf("/filter>");
+        if(start == -1 || end == -1) break;
+        strXML.remove(start, end-start +strlen("/filter>"));
+        }while(1);
+        LOG_DEBUG() << "Xml is " << strXML;
+
+        char *chin = producer->get("sharein");
+        char *chout = producer->get("shareout");
+
+        Mlt::Producer *producer1 = new Mlt::Producer(MLT.profile(), "xml-string", strXML.toUtf8().constData());
+
+        if(producer1->is_valid())
+        {
+            producer1->set(kFilterInProperty, chin);
+            producer1->set(kFilterOutProperty, chout);
+            if (MLT.isImageProducer(producer1))
+                producer1->set("out", chout);
+
+            //producer1->set(kMultitrackItemProperty, 1);
+            producer1->set("_moviemator:clone-multitrack-item", 1);
+            producer1->set_in_and_out(atoi(chin), atoi(chout));
+
+            open(producer1);
+        }
+    }
+}
 
 void MainWindow::open(Mlt::Producer* producer)
 {
@@ -1772,6 +1812,7 @@ void MainWindow::setMultitrackAsCurrentProducer()
         m_filterController->setProducer();
         updateMarkers();
         m_player->setFocus();
+        m_player->enableTab(Player::ProjectTabIndex, true);
         m_player->switchToTab(Player::ProjectTabIndex);
         m_timelineDock->emitSelectedFromSelection();
     }
@@ -3362,6 +3403,18 @@ void MainWindow::setOutToCurrent(bool ripple)
     } else if (MLT.isSeekable() && MLT.isClip()) {
         m_player->setOut(m_player->position());
     }
+}
+
+void MainWindow::setSelectedClipInToPos(int pos)
+{
+    if(MLT.producer()->get_int("_moviemator:clone-multitrack-item"))
+        m_timelineDock->trimInSelectedClip(pos);
+}
+
+void MainWindow::setSelectedClipOutToPos(int pos)
+{
+    if(MLT.producer()->get_int("_moviemator:clone-multitrack-item"))
+        m_timelineDock->trimOutSelectedClip(pos);
 }
 
 void MainWindow::onShuttle(float x)

@@ -524,8 +524,13 @@ Player::Player(QWidget *parent)
     connect(actionFastForward, SIGNAL(triggered()), this, SLOT(fastForward()));
     connect(actionRewind, SIGNAL(triggered()), this, SLOT(rewind()));
     connect(m_scrubber, SIGNAL(seeked(int)), this, SLOT(seek(int)));
+
     connect(m_scrubber, SIGNAL(inChanged(int)), this, SLOT(onInChanged(int)));
     connect(m_scrubber, SIGNAL(outChanged(int)), this, SLOT(onOutChanged(int)));
+
+    connect(m_scrubber, SIGNAL(oneActionTrimIn(int)), this, SLOT(onOneActionTrimIn(int)));
+    connect(m_scrubber, SIGNAL(oneActionTrimOut(int)), this, SLOT(onOneActionTrimOut(int)));
+
     connect(m_positionSpinner, SIGNAL(valueChanged(int)), this, SLOT(seek(int)));
     connect(m_positionSpinner, SIGNAL(editingFinished()), this, SLOT(setFocus()));
     connect(this, SIGNAL(endOfStream()), this, SLOT(pause()));
@@ -968,6 +973,17 @@ void Player::onOutChanged(int out)
     updateSelection();
 }
 
+void Player::onOneActionTrimIn(int in)
+{
+    emit oneActionTrimIn(in);
+}
+
+void Player::onOneActionTrimOut(int out)
+{
+    emit oneActionTrimOut(out);
+}
+
+
 void Player::on_actionSkipNext_triggered() //跳到下一曲
 {
 
@@ -1183,7 +1199,7 @@ int Player::getPlayDuration()
         }
         else
         {
-            nFrameDuration = MLT.producer()->get_playtime();
+            nFrameDuration = MLT.producer()->get_length(); //->get_playtime();
         }
     }
 

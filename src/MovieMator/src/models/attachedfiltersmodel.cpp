@@ -86,13 +86,13 @@ QmlMetadata* AttachedFiltersModel::getMetadata(int row) const
 
 void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
 {
-    Q_ASSERT(producer);
+  //  Q_ASSERT(producer);
 
     if (!producer) return;
 
     // 当前时间线轨道上的 clip跟切换前的是同一个
     Mlt::Producer *pSelectedProducer = MAIN.timelineDock()->model()->selectedProducer();
-    if(pSelectedProducer && (pSelectedProducer->get_producer() == producer->get_producer()))
+    if(!pSelectedProducer || pSelectedProducer->is_valid() == false || (pSelectedProducer->get_producer() == producer->get_producer()))
     {
         return;
     }

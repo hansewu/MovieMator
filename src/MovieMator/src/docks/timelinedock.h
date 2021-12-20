@@ -71,6 +71,9 @@ public:
     Mlt::ClipInfo* getClipInfo(int trackIndex, int clipIndex);
     // 从轨道 trackIndex的剪辑 clipIndex获取到的信息 ClipInfo中获取 Producer
     Mlt::Producer* producerForClip(int trackIndex, int clipIndex);
+
+    Mlt::Producer* selectedProducer();
+
     // 获取轨道 trackIndex上播放游标所在位置的剪辑序号
     int clipIndexAtPlayhead(int trackIndex = -1);
     // 获取轨道 trackIndex在位置 position处的剪辑序号 index
@@ -85,6 +88,9 @@ public:
     int currentTrack() const;
     // 获取轨道 trackIndex上的剪辑数量
     int clipCount(int trackIndex) const;
+
+
+
     // 缩放时间线轨道之放大（调用 qml函数）
     void zoomIn();
     // 缩放时间线轨道之缩小（调用 qml函数）
@@ -114,6 +120,9 @@ public:
     // 修剪播放游标处的剪辑？？？
     void trimClipAtPlayhead(TrimLocation location, bool ripple);
     // 是否波纹（ripple）（视频/音频剪辑、空白剪辑）
+    void trimInSelectedClip(int pos, bool ripple = false);
+    void trimOutSelectedClip(int pos, bool ripple = false);
+
     bool isRipple() const;
     // 当前选中的是否含有多个轨道
     Q_INVOKABLE bool isMultitrackSelected() const { return m_model.selection().bIsMultitrackSelected; }

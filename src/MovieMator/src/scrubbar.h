@@ -55,6 +55,8 @@ signals:
     void seeked(int);
     void inChanged(int);
     void outChanged(int);
+    void oneActionTrimIn(int);
+    void oneActionTrimOut(int);
 
 public slots:
     bool onSeek(int value);
@@ -72,7 +74,10 @@ private:
     int m_interval;
     int m_max;
     int m_in;
+    int m_preReleaseIn;
     int m_out;
+    int m_preReleaseOut;
+
     enum controls m_activeControl;
     QPixmap m_pixmap;
     int m_timecodeWidth;

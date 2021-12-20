@@ -317,6 +317,7 @@ private:
 
 public slots:
     void open(Mlt::Producer* producer);//打开producer
+    void openSelectedProducer();
 
     //检测当前的gpu模式
     bool isCompatibleWithGpuMode(MltXmlChecker& checker);
@@ -340,8 +341,13 @@ public slots:
     void stepRightOneFrame();//跳到当前预览视频的当前位置的后一帧
     void stepLeftOneSecond();//跳到当前预览视频的当前时间点的前一秒
     void stepRightOneSecond();//跳到当前预览视频的当前时间点的后一秒
+
     void setInToCurrent(bool ripple);
     void setOutToCurrent(bool ripple);
+
+    void setSelectedClipInToPos(int pos);
+    void setSelectedClipOutToPos(int pos);
+
     void onShuttle(float x);
     void createMultitrackModelIfNeeded();//如果时间线对应的tractor不存在则创建
 
