@@ -23,6 +23,7 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 1.0
+import QtQuick.Layouts 1.1
 import MovieMator.Controls 1.0
 import QtGraphicalEffects 1.0
 import QtQml.Models 2.2
@@ -199,6 +200,7 @@ Rectangle {
     // 生成 clip的波形
     function generateWaveform()
     {
+    	return; //wzq test
         // This is needed to make the model have the correct count.
         // Model as a property expression is not working in all cases.
         console.assert(waveform.maxWidth > 0);
@@ -215,6 +217,14 @@ Rectangle {
         }
     }
 
+	function bExistThumbNail()
+	{
+		if (isAudio || isBlank || isTransition || (hash=='' && mltService=='' && clipResource=='')) 
+            return false
+        
+        return true;
+        
+	}
     // clip的缩略图
     // 传递 time调用C++函数生成缩略图缓存
     function imagePath(time) {
@@ -222,6 +232,7 @@ Rectangle {
         if (isAudio || isBlank || isTransition || (hash=='' && mltService=='' && clipResource=='')) {
             return ''
         } else {
+	        time = parseInt(time)
             return 'image://thumbnail/' + hash + '/' + mltService + '/' + clipResource + '#' + time
         }
     }
@@ -303,6 +314,81 @@ Rectangle {
         width: height * 16.0/9.0
         fillMode: Image.PreserveAspectFit
         source: isText ? textThumbnail : imagePath((outPoint+inPoint)/2)
+    }
+    
+    function getThumbNailCount()
+    {
+    	var fromX = clipRoot.x;
+    	var toX = clipRoot.x + clipRoot.width;
+    	
+    	if(toX < scrollView.flickableItem.contentX || fromX > scrollView.flickableItem.contentX + scrollView.width)
+    		return 0;
+    		
+    	if(clipRoot.x < scrollView.flickableItem.contentX)
+    		fromX = scrollView.flickableItem.contentX;
+    	if(to.x > scrollView.flickableItem.contentX + scrollView.width)
+    		toX = scrollView.flickableItem.contentX + scrollView.width;
+    		
+    	return (toX - fromX)/64;
+    }
+    
+    function getThumbNailXFrom()
+    {
+    	var fromX = clipRoot.x;
+    	if(clipRoot.x < scrollView.flickableItem.contentX)
+    		fromX = scrollView.flickableItem.contentX;
+    		
+    	return fromX - clipRoot.x;
+    }
+    
+    function getThumbNailXTo()
+    {
+    	var toX = clipRoot.x + clipRoot.width;
+    	if(clipRoot.x + clipRoot.width > scrollView.flickableItem.contentX + scrollView.width)
+    		toX = scrollView.flickableItem.contentX + scrollView.width;
+    		
+    	return toX - clipRoot.x ;
+    }
+    
+    RowLayout 
+    {
+	    id: allThumbnail
+	    visible: bExistThumbNail()
+		anchors.leftMargin: parseInt(getThumbNailXFrom()/64)*64
+		anchors.rightMargin: parent.width -parseInt(getThumbNailXFrom()/64)*64 - parseInt((getThumbNailXTo() - getThumbNailXFrom())/64 )*64
+        anchors.fill: parent
+        spacing: 2
+        Repeater 
+        {
+            model: (getThumbNailXTo() - getThumbNailXFrom())/64 //parent.width/64
+            Rectangle 
+            {
+                width: 62
+                height: 40
+                color: "steelblue"
+                x: 64*index
+                
+                //visible: x+width+clipRoot.x < scrollView.flickableItem.contentX|| x+clipRoot.x> scrollView.flickableItem.contentX + scrollView.width? false:true
+		    	Image
+    			{
+        		visible: settings.timelineShowThumbnails
+        		
+        		anchors.fill: parent        		
+        		//anchors.top: parent.top
+        		//anchors.topMargin: parent.border.width
+        		//anchors.bottom: parent.bottom
+        		//anchors.bottomMargin: parent.height / 2
+        		
+        		//anchors.left: parent.left + parent.width
+        		//anchors.leftMargin: parent.width / 2 - width / 2
+				//        anchors.right: parent.right
+        		width: height * 16.0/9.0
+        		fillMode: Image.PreserveAspectFit
+        		source: isText ? textThumbnail : imagePath(inPoint + parseInt((getThumbNailXFrom())/64)*64 / multitrack.scaleFactor + index * 64/multitrack.scaleFactor)
+    			}
+    		}
+            
+        }
     }
 //    Image
 //    {
@@ -530,7 +616,10 @@ Rectangle {
         onDoubleClicked: {
             console.assert(timeline);
             if(timeline)
-                timeline.position = clipRoot.x / multitrack.scaleFactor
+                timeline.position = clipRoot.x / multitrack.scaleFactor;
+            
+            if(mainwindow)
+            	mainwindow.openSelectedProducer();
         }
         onClicked: {
             console.assert(mainwindow);

@@ -461,6 +461,7 @@ Rectangle {
                     width: root.width - headerWidth - 2
                     height: root.height - ruler.height - toolbar.height - 1 - 1//下留白 与ruler的space
                     //flickableItem.interactive: false  //wzq
+                    clip: true //wzq
 
                     style: ScrollViewStyle {
                         handle:

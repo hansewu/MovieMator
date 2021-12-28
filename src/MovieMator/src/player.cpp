@@ -779,6 +779,16 @@ void Player::onProducerOpened(bool play)
         m_scrubber->setMarkers(QList<int>());
 //    m_inPointLabel->setText("--:--:--:-- / ");
 //    m_selectedLabel->setText("--:--:--:--");
+
+    {
+        m_btnSeekPrevious->setText("");
+        m_btnSeekPrevious->setToolTip(tr("Skip Previous"));
+        m_btnSeekNext->setText("");
+        m_btnSeekNext->setToolTip(tr("Skip Next"));
+        m_btnSeekPrevious->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-seek-backward.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-seek-backward-pressed.png)}");
+        m_btnSeekNext->setStyleSheet("QPushButton{ border-image: url(:/icons/light/32x32/media-seek-forward.png)}" "QPushButton:pressed{ border-image: url(:/icons/light/32x32/media-seek-forward-pressed.png)}");
+    }
+
     if (m_isSeekable) {
         m_durationLabel->setText(QString("<h4><font color=#7e7e7e>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
         m_previousIn = MLT.isClip()? MLT.producer()->get_in() : -1;
@@ -788,6 +798,20 @@ void Player::onProducerOpened(bool play)
         m_scrubber->setOutPoint(m_previousOut);
 
         checkCroppedOfCurrentProducer();
+
+        if(MLT.isClip())
+        {
+            m_btnSeekPrevious->setText("[");
+            m_btnSeekPrevious->setToolTip(tr("Set In"));
+            m_btnSeekNext->setText("]");
+            m_btnSeekNext->setToolTip(tr("Set Out"));
+            m_btnSeekPrevious->setStyleSheet("QPushButton{font:18px;}");
+            m_btnSeekNext->setStyleSheet("QPushButton{font:18px;}");
+
+        }
+
+
+
     }
     else {
         m_durationLabel->setText(QString("<h4><font color=#7e7e7e>%1</font></h4>").arg(covertFramesToTimeFormat(MLT.producer(), m_duration)));
@@ -984,33 +1008,43 @@ void Player::onOneActionTrimOut(int out)
 }
 
 
-void Player::on_actionSkipNext_triggered() //跳到下一曲
+void Player::on_actionSkipNext_triggered() //跳到下一曲 set out
 {
 
-    emit showStatusMessage(actionSkipNext->toolTip());
 
-    if (m_scrubber->markers().size() > 0) {
+
+    /* if (m_scrubber->markers().size() > 0) { //set out
         foreach (int x, m_scrubber->markers()) {
             if (x > m_position) {
                 emit seeked(x);
                 return;
             }
         }
-        emit seeked(m_duration - 1);
+        emit seeked(m_duration - 1);*/
+    if(MLT.producer() && MLT.isClip())
+    {
+        setOut(m_position);
+        onOneActionTrimOut(m_position);
     }
     else
     {
+        emit showStatusMessage(actionSkipNext->toolTip());
         emit nextSought(m_position);
         emit nextSought();
     }
 }
 
-void Player::on_actionSkipPrevious_triggered() //跳到上一曲
+void Player::on_actionSkipPrevious_triggered() //跳到上一曲 setin
 {
 
-    emit showStatusMessage(actionSkipPrevious->toolTip());
 
-    if (m_scrubber->markers().size() > 0) {
+
+
+    if(MLT.producer() && MLT.isClip())
+    {
+        setIn(m_position);
+        onOneActionTrimIn(m_position);
+     /*if (m_scrubber->markers().size() > 0) { //set in
         QList<int> markers = m_scrubber->markers();
         int n = markers.count();
         while (n--) {
@@ -1019,10 +1053,11 @@ void Player::on_actionSkipPrevious_triggered() //跳到上一曲
                 return;
             }
         }
-        emit seeked(0);
+        emit seeked(0);*/
     }
     else
     {
+        emit showStatusMessage(actionSkipPrevious->toolTip());
         emit previousSought(m_position);
         emit previousSought();
     }
