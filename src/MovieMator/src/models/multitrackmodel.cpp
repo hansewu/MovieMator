@@ -208,7 +208,16 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             case IsFilterRole:
                 return m_trackList[int(index.internalId())].type == FilterTrackType;
             case IsTextRole:
-                return m_trackList[int(index.internalId())].type == TextTrackType;
+            {
+                if (info->producer && info->producer->is_valid())
+                {
+                    QString strProducerType = QString::fromUtf8(info->producer->get(kProducerTypeProperty));
+                    if (strProducerType.compare("text-template", Qt::CaseInsensitive) == 0)
+                        return true;
+                }
+                return false;
+                //return m_trackList[int(index.internalId())].type == TextTrackType;
+            }
             case TrackTypeRole:
                 return m_trackList[int(index.internalId())].type;
             case IsDefaultTrackRole:

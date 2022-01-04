@@ -219,7 +219,7 @@ Rectangle {
 
 	function bExistThumbNail()
 	{
-		if (isAudio || isBlank || isTransition || (hash=='' && mltService=='' && clipResource=='')) 
+		if (isText || isAudio || isBlank || isTransition || (hash=='' && mltService=='' && clipResource=='')) 
             return false
         
         return true;
@@ -245,7 +245,7 @@ Rectangle {
     Image
     {
         id: outThumbnail
-        visible: settings.timelineShowThumbnails
+        visible: false //settings.timelineShowThumbnails
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
@@ -274,7 +274,7 @@ Rectangle {
     Image
     {
         id: inThumbnail
-        visible: settings.timelineShowThumbnails
+        visible: false //settings.timelineShowThumbnails
         anchors.left: parent.left
         anchors.leftMargin: parent.border.width + 1 +5
         anchors.top: parent.top
@@ -303,7 +303,7 @@ Rectangle {
     Image
     {
         id: centerThumbnail
-        visible: settings.timelineShowThumbnails
+        visible: false //settings.timelineShowThumbnails
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
         anchors.bottom: parent.bottom
@@ -353,35 +353,28 @@ Rectangle {
     RowLayout 
     {
 	    id: allThumbnail
-	    visible: bExistThumbNail()
+	    visible: bExistThumbNail() && !isText
+	    anchors.topMargin: -10
 		anchors.leftMargin: parseInt(getThumbNailXFrom()/64)*64
-		anchors.rightMargin: parent.width -parseInt(getThumbNailXFrom()/64)*64 - parseInt((getThumbNailXTo() - getThumbNailXFrom())/64 )*64
+		anchors.rightMargin: parent.width -parseInt(getThumbNailXFrom()/64)*64 - parseInt((getThumbNailXTo() - getThumbNailXFrom())/64 +1)*64
         anchors.fill: parent
         spacing: 2
         Repeater 
         {
-            model: (getThumbNailXTo() - getThumbNailXFrom())/64 //parent.width/64
+            model: (getThumbNailXTo() - getThumbNailXFrom())/64 +1
             Rectangle 
             {
                 width: 62
-                height: 40
-                color: "steelblue"
+                height: 35
+                color: "steelblue" //"transparent" //
                 x: 64*index
+                visible: bExistThumbNail() && !isText
                 
-                //visible: x+width+clipRoot.x < scrollView.flickableItem.contentX|| x+clipRoot.x> scrollView.flickableItem.contentX + scrollView.width? false:true
-		    	Image
+                Image
     			{
         		visible: settings.timelineShowThumbnails
         		
         		anchors.fill: parent        		
-        		//anchors.top: parent.top
-        		//anchors.topMargin: parent.border.width
-        		//anchors.bottom: parent.bottom
-        		//anchors.bottomMargin: parent.height / 2
-        		
-        		//anchors.left: parent.left + parent.width
-        		//anchors.leftMargin: parent.width / 2 - width / 2
-				//        anchors.right: parent.right
         		width: height * 16.0/9.0
         		fillMode: Image.PreserveAspectFit
         		source: isText ? textThumbnail : imagePath(inPoint + parseInt((getThumbNailXFrom())/64)*64 / multitrack.scaleFactor + index * 64/multitrack.scaleFactor)
@@ -390,19 +383,40 @@ Rectangle {
             
         }
     }
-//    Image
-//    {
-//        id: centerThumbnail
-//        visible: settings.timelineShowThumbnails
-//        anchors.left: parent.left
-//        anchors.leftMargin: parent.width / 2 - width / 2
-//        anchors.top: parent.top
-//        anchors.bottom: parent.bottom
-//        anchors.margins: 6
-//        width: height * 16.0/9.0
-//        fillMode: Image.PreserveAspectFit
-//        source: isText ? textThumbnail : imagePath((outPoint+inPoint)/2)
-//    }
+ /*   
+    RowLayout 
+    {
+	    id: allThumbnail2
+	    visible: bExistThumbNail() & !isText
+	    anchors.topMargin: -10
+		anchors.leftMargin: parseInt(getThumbNailXFrom()/64)*64
+		anchors.rightMargin: parent.width -parseInt(getThumbNailXFrom()/64)*64 - parseInt((getThumbNailXTo() - getThumbNailXFrom())/64 +1)*64
+        anchors.fill: parent
+        spacing: 2
+        Repeater 
+        {
+            model: (getThumbNailXTo() - getThumbNailXFrom())/64 +1
+            Rectangle 
+            {
+                width: 62
+                height: 35
+                color: "transparent"//"steelblue" //"transparent" //
+                x: 64*index
+                
+                Image
+    			{
+        		visible: settings.timelineShowThumbnails
+        		
+        		anchors.fill: parent        		
+        		width: height * 16.0/9.0
+        		fillMode: Image.PreserveAspectFit
+        		source: (isText||(index%5==0)) ? textThumbnail : imagePath(inPoint + parseInt((getThumbNailXFrom())/64)*64 / multitrack.scaleFactor + index * 64/multitrack.scaleFactor)
+    			}
+    		}
+            
+        }
+    }
+ */
 
     // 转场
     TimelineTransition {
@@ -469,7 +483,7 @@ Rectangle {
     {
         // audio peak line
         width: parent.width - parent.border.width * 2
-        visible: !isBlank && !isTransition
+        visible: false //!isBlank && !isTransition
         height: 1
         anchors.left: parent.left
         anchors.bottom: parent.bottom
