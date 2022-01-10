@@ -45,6 +45,7 @@ public:
 signals:
     void producerChanged(Mlt::Producer*);
     void producerReopened();
+    void advancedExited(bool bOK, Mlt::Producer*);
 
 protected:
     void keyPressEvent(QKeyEvent *event);

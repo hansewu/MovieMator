@@ -31,6 +31,7 @@
 #include "mainwindow.h"
 #include "../models/multitrackmodel.h"
 
+
 //bool ProducerIsTimewarp( Mlt::Producer* producer )
 //{
 //    return QString::fromUtf8(producer->get("mlt_service")) == "timewarp";
@@ -520,11 +521,12 @@ void AvformatProducerWidget::on_okButton_clicked()
     if (m_producer->get_int(kMultitrackItemProperty)) {
         recreateTempProducer();
         Mlt::Controller::copyFilters(*m_producer, *m_tempProducer);
-        emit producerChanged(m_tempProducer);
+        //emit producerChanged(m_tempProducer);
     } else {
         reopen( new Mlt::Producer(m_tempProducer));
     }
-    MAIN.onPropertiesDockTriggered(false);
+    //MAIN.onPropertiesDockTriggered(false);
+    emit advancedExited(true, m_tempProducer);
 }
 
 
@@ -538,6 +540,9 @@ void AvformatProducerWidget::setProducer(Mlt::Producer *aProducer)
         loadPreset(*aProducer);
         m_producer = new Mlt::Producer(aProducer);
         m_tempProducer = createTempProducer(MLT.profile());
+
+        SharedFrame frame;
+        onFrameDisplayed(frame);
     }
 }
 
@@ -587,5 +592,6 @@ Mlt::Producer *AvformatProducerWidget::recreateTempProducer()
 
 void AvformatProducerWidget::on_cancelButton_clicked()
 {
-    MAIN.onPropertiesDockTriggered(false);
+    //MAIN.onPropertiesDockTriggered(false);
+    emit advancedExited(false, nullptr);
 }

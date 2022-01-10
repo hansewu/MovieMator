@@ -30,14 +30,144 @@
 #include <QtWidgets>
 #include "mainwindow.h"
 #include "../models/multitrackmodel.h"
+#include "avformatproducerwidget.h"
+/*
+// Try fast create m_tempProducer with thread
+#include <QObject>
+#include <QDebug>
+#include <QThread>
+#include <pthread.h>
 
+typedef struct
+{
+    Mlt::Producer *aProducer;
+    double speed;
+}THREAD_PARA;
+
+class CCreateProducerThread;
+static void* thread_func( void *arg );
+
+class CCreateProducerThread
+{
+public:
+        CCreateProducerThread()
+        {
+            m_created_producer = nullptr;
+            //pthread_t m_th_createProducer;
+            m_threadPara.aProducer = nullptr;
+            m_threadPara.speed = 1.0;
+            m_iThreadState = 0; //0  1 runnning 2 Exited
+        };
+        virtual ~CCreateProducerThread()
+        {
+
+        }
+
+        void start_createProducer(Mlt::Producer *aProducer, double speed)
+        {
+            if(m_iThreadState == 1)
+                return;
+
+            //get_created_producer();// pthread_join exit
+            //pthread_t th;
+            //THREAD_PARA *arg = new THREAD_PARA;
+            m_threadPara.aProducer = aProducer;
+            m_threadPara.speed = speed;
+            m_iThreadState = 1;
+
+            int ret = pthread_create( &m_th_createProducer, NULL, thread_func, this );
+            if( ret != 0 )
+            {
+                printf( "Create thread error!\n");
+                return ;
+            }
+        }
+
+        void createProducerInThread()
+        {
+            m_iThreadState = 1;
+            createProducer(MLT.profile(), m_threadPara.aProducer, m_threadPara.speed);
+            m_iThreadState = 2;
+        }
+
+        void createProducer(Mlt::Profile& profile, Mlt::Producer *producer, double speed)
+        {
+            m_created_producer = nullptr;
+            qDebug()<<"receive the execute signal---------------------------------";
+            qDebug()<<"     current thread ID:"<<QThread::currentThreadId();
+
+            Mlt::Producer* p = nullptr;
+            if ( speed == 1.0 )
+            {
+                p = new Mlt::Producer(profile, GetFilenameFromProducer(producer));
+            }
+            else
+            {
+                char* filename = GetFilenameFromProducer(producer);
+                QString s = QString("%1:%L2:%3").arg("timewarp").arg(speed).arg(filename);
+                p = new Mlt::Producer(profile, s.toUtf8().constData());
+                p->set(kShotcutProducerProperty, "avformat");
+            }
+
+            p->pass_list(*producer, "audio_index, video_index, force_aspect_ratio,"
+                         "video_delay, force_progressive, force_tff,"
+                         kAspectRatioNumerator ","
+                         kAspectRatioDenominator ","
+                         kShotcutHashProperty);
+            p->set_in_and_out(producer->get_in(), producer->get_out());
+            p->set(kMultitrackItemProperty, producer->get(kMultitrackItemProperty));
+
+            m_created_producer = p;
+            qDebug()<<"      finish the work and sent the resultReady signal\n";
+            //emit resultReady(created_producer);           //emit啥事也不干，是给程序员看的，表示发出信号发出信号
+            //return p;
+        }
+
+        Mlt::Producer *get_created_producer()
+        {
+          //  if(s_iThreadState == 0) return nullptr;
+            int *thread_ret = NULL;
+            while(m_iThreadState != 2)
+            {
+                //qApp->processEvents();
+                QThread::msleep(10);
+            }
+            //pthread_join(m_th_createProducer, (void**)&thread_ret);
+
+            return m_created_producer;
+        }
+private:
+        Mlt::Producer * m_created_producer;
+        pthread_t m_th_createProducer;
+        THREAD_PARA m_threadPara;
+        volatile int m_iThreadState; //0  1 runnning 2 Exited
+
+};
+
+static void* thread_func( void *arg )
+{
+    CCreateProducerThread *pThread = (CCreateProducerThread *)arg;
+
+    //s_iThreadState = 1; //running
+    pThread->createProducerInThread();
+
+    int rv = 44;
+    pthread_exit((void*)rv);
+    return arg;
+}
+
+std::map<AvformatProducerSimpleWidget *, CCreateProducerThread *> s_mapCreateProducerThread;
+//static CCreateProducerThread *s_pCreateProducerThread;
+*/
 AvformatProducerSimpleWidget::AvformatProducerSimpleWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::AvformatProducerSimpleWidget)
     , m_defaultDuration(-1)
     , m_recalcDuration(true)
     , m_tempProducer(nullptr)
+    , m_propertiesDock(nullptr)
 {
+    //s_mapCreateProducerThread[this] = new CCreateProducerThread();
     ui->setupUi(this);
     setStyleSheet("background-color:rgb(26, 30, 34);");
 //    Util::setColorsToHighlight(ui->filenameLabel);
@@ -104,6 +234,8 @@ AvformatProducerSimpleWidget::AvformatProducerSimpleWidget(QWidget *parent)
 
 AvformatProducerSimpleWidget::~AvformatProducerSimpleWidget()
 {
+
+    //m_tempProducer = s_mapCreateProducerThread[this]->get_created_producer();//wait for thread exit
     if (m_tempProducer)
         delete m_tempProducer;
     m_tempProducer = nullptr;
@@ -122,6 +254,8 @@ AvformatProducerSimpleWidget::~AvformatProducerSimpleWidget()
         delete m_opacityEffect;
 
     delete ui;
+
+    //delete s_mapCreateProducerThread[this];
 }
 
 
@@ -145,6 +279,7 @@ void AvformatProducerSimpleWidget::reopen(Mlt::Producer* p)
 
     if( m_recalcDuration )
     {
+        //if(!m_tempProducer)  m_tempProducer = s_mapCreateProducerThread[this]->get_created_producer();
         double oldSpeed = GetSpeedFromProducer(m_tempProducer);
         double newSpeed = ui->speedSpinBox->value();
         double speedRatio = oldSpeed / newSpeed;
@@ -176,6 +311,7 @@ void AvformatProducerSimpleWidget::onFrameDisplayed(const SharedFrame&)
 {
     // This forces avformat-novalidate or unloaded avformat to load and get
     // media information.
+    //if(!m_tempProducer)  m_tempProducer = s_mapCreateProducerThread[this]->get_created_producer();
     delete m_tempProducer->get_frame();
 
     if (m_defaultDuration == -1)
@@ -208,9 +344,11 @@ void AvformatProducerSimpleWidget::on_speedSpinBox_editingFinished()
     m_timer->start();
 }
 
+
 void AvformatProducerSimpleWidget::setProducer(Mlt::Producer *aProducer)
 {
-    delete m_tempProducer;
+    if(m_tempProducer)  //m_tempProducer = get_created_producer();
+        delete m_tempProducer;
     delete m_producer;
     m_producer = nullptr;//保存原producer数据
     m_tempProducer = nullptr;//接收改变的临时producer
@@ -218,7 +356,10 @@ void AvformatProducerSimpleWidget::setProducer(Mlt::Producer *aProducer)
         loadPreset(*aProducer);
         double speed = GetSpeedFromProducer(aProducer);
         m_producer = new Mlt::Producer(aProducer);//createProducer(MLT.profile(), aProducer, speed);
+
         m_tempProducer = createProducer(MLT.profile(), aProducer, speed);
+        //s_mapCreateProducerThread[this]->start_createProducer(m_producer, speed);
+
     }
 }
 
@@ -251,6 +392,7 @@ Mlt::Producer * AvformatProducerSimpleWidget::createProducer(Mlt::Profile& profi
 void AvformatProducerSimpleWidget::adjustProducer(Mlt::Producer* newProducer) {
     Q_ASSERT(newProducer);
     Q_ASSERT(newProducer->is_valid());
+    //if(!m_tempProducer)  m_tempProducer = s_mapCreateProducerThread[this]->get_created_producer();
     Q_ASSERT(m_tempProducer);
     Q_ASSERT(m_tempProducer->is_valid());
     if (!newProducer || !newProducer->is_valid() || !m_tempProducer || !m_tempProducer->is_valid()) {
@@ -295,6 +437,7 @@ void AvformatProducerSimpleWidget::adjustInAndOutOfFilter(Mlt::Producer* newProd
         Q_ASSERT(filter);
         Q_ASSERT(filter->is_valid());
         if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+            //if(!m_tempProducer)  m_tempProducer = s_mapCreateProducerThread[this]->get_created_producer();
             int in = qMin(qRound(m_tempProducer->get_in() * speedRatio), newLength - 1);
             int out = qMin(qRound(m_tempProducer->get_out() * speedRatio), newLength - 1);
             filter->set_in_and_out(in, out);
@@ -304,12 +447,75 @@ void AvformatProducerSimpleWidget::adjustInAndOutOfFilter(Mlt::Producer* newProd
 
 void AvformatProducerSimpleWidget::on_advanced_clicked()
 {
-    MAIN.onPropertiesDockTriggered(true);
+    QScrollArea* advancedScrollArea = nullptr;
+    if(m_propertiesDock)
+    {
+        advancedScrollArea = qobject_cast<QScrollArea*>(m_propertiesDock->widget()); //视频高级属性
+        if(advancedScrollArea)
+        {
+            if (advancedScrollArea->widget())
+                advancedScrollArea->widget()->deleteLater();
+        }
+        delete m_propertiesDock;
+    }
+
+    AvformatProducerWidget *advancedW = new AvformatProducerWidget(this);
+
+    m_propertiesDock = new QDockWidget(tr("Properties"));
+    m_propertiesDock->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
+    m_propertiesDock->setWindowModality(Qt::WindowModal);
+    m_propertiesDock->setObjectName("propertiesDock");
+    m_propertiesDock->setMinimumWidth(410);
+    m_propertiesDock->setStyleSheet(".QWidget {background-color: rgb(53,53,53)}");
+    QScrollArea* scroll = new QScrollArea;
+    scroll->setWidgetResizable(true);
+    m_propertiesDock->setWidget(scroll);
+    //QWidget* advancedW = nullptr; //视频高级属性
+    advancedScrollArea = qobject_cast<QScrollArea*>(m_propertiesDock->widget()); //视频高级属性
+    connect(advancedW, SIGNAL(advancedExited(bool, Mlt::Producer *)), this, SLOT(on_advanced_exited(bool, Mlt::Producer *)));
+
+
+    if (advancedW)
+    {
+        dynamic_cast<AbstractProducerWidget*>(advancedW)->setProducer(m_producer);
+        /*if (-1 != advancedW->metaObject()->indexOfSignal("producerChanged(Mlt::Producer*)"))
+        {
+            connect(advancedW, SIGNAL(producerChanged(Mlt::Producer*)), SLOT(onProducerChanged()));
+            connect(advancedW, SIGNAL(producerChanged(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
+            if (producer->get_int(kMultitrackItemProperty))
+                connect(advancedW, SIGNAL(producerChanged(Mlt::Producer*)), m_timelineDock, SLOT(onProducerChanged(Mlt::Producer*)));
+        }*/
+        advancedScrollArea->setWidget(advancedW);
+        //onProducerChanged();
+    }
+
+    m_propertiesDock->show();
+    m_propertiesDock->raise();
+    //MAIN.onPropertiesDockTriggered(true);
+}
+
+void AvformatProducerSimpleWidget::on_advanced_exited(bool bCheck, Mlt::Producer* changed)
+{
+    if(bCheck)
+    {
+        m_tempProducer->pass_list(*changed, "audio_index, video_index, force_aspect_ratio,"
+                     "video_delay, force_progressive, force_tff,"
+                     kAspectRatioNumerator ","
+                     kAspectRatioDenominator ","
+                     kShotcutHashProperty);
+        m_tempProducer->set_in_and_out(changed->get_in(), changed->get_out());
+        m_tempProducer->set(kMultitrackItemProperty, changed->get(kMultitrackItemProperty));
+
+        on_okButton_clicked();
+    }
+
+    m_propertiesDock->hide();
 }
 
 void AvformatProducerSimpleWidget::on_okButton_clicked()
 {
     double speed = ui->speedSpinBox->value();
+    //if(!m_tempProducer)  m_tempProducer = s_mapCreateProducerThread[this]->get_created_producer();
     Mlt::Producer *producer = createProducer(MLT.profile(), m_tempProducer, speed);
 //    adjustProducer(producer);//调节Producer属性（包括Producer入点出点，滤镜入点出点，转场，关键帧）
 

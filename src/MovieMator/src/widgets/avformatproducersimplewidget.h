@@ -25,7 +25,7 @@
 #include <QWidget>
 #include "abstractproducerwidget.h"
 #include "sharedframe.h"
-
+#include <QDockWidget>
 #include <QGraphicsOpacityEffect>
 
 namespace Ui {
@@ -44,6 +44,7 @@ public:
     Mlt::Producer* producer(Mlt::Profile&);
 
     void setProducer(Mlt::Producer *);
+
 signals:
     void producerChanged(Mlt::Producer*);
     void producerReopened();
@@ -64,6 +65,8 @@ private slots:
 
     void okButtonFlash();
 
+    void on_advanced_exited(bool bCheck,Mlt::Producer* changed);
+
 private:
     Ui::AvformatProducerSimpleWidget *ui;
     int m_defaultDuration;
@@ -76,7 +79,7 @@ private:
     double  m_dOpacityValue;
     // okButton的闪烁动画：通过改变透明度来闪烁
     QGraphicsOpacityEffect *m_opacityEffect;
-
+    QDockWidget *m_propertiesDock;
 
     void stopTimer();
 

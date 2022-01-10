@@ -2692,6 +2692,7 @@ void MainWindow::onProducerOpened()
 void MainWindow::onProducerChanged()
 {
     MLT.refreshConsumer();
+    m_player->onProducerOpened(false);
 }
 
 bool MainWindow::on_actionSave_triggered()
@@ -3193,7 +3194,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         if (scrollArea->widget())
             scrollArea->widget()->deleteLater();
         if (advancedScrollArea->widget())
-            scrollArea->widget()->deleteLater();
+            advancedScrollArea->widget()->deleteLater();
         return  w;
     }
 
@@ -3219,7 +3220,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new GDIgrabWidget(this);
     else if (service.startsWith("avformat") || shotcutProducer == "avformat") {
         w = new AvformatProducerSimpleWidget(this);
-        advancedW = new AvformatProducerWidget(this);
+        //advancedW = new AvformatProducerWidget(this);
     }
     else if (MLT.isImageProducer(producer)) {
         ImageProducerWidget* ipw = new ImageProducerWidget(this);
