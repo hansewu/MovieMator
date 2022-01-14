@@ -805,8 +805,8 @@ void Player::onProducerOpened(bool play)
             m_btnSeekPrevious->setToolTip(tr("Set In"));
             m_btnSeekNext->setText("]");
             m_btnSeekNext->setToolTip(tr("Set Out"));
-            m_btnSeekPrevious->setStyleSheet("QPushButton{font:18px;}");
-            m_btnSeekNext->setStyleSheet("QPushButton{font:18px;}");
+            m_btnSeekPrevious->setStyleSheet("QPushButton{font:14px;}");
+            m_btnSeekNext->setStyleSheet("QPushButton{font:14px;}");
 
         }
 

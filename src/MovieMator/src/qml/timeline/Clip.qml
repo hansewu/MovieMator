@@ -383,40 +383,31 @@ Rectangle {
             
         }
     }
- /*   
-    RowLayout 
-    {
-	    id: allThumbnail2
-	    visible: bExistThumbNail() & !isText
-	    anchors.topMargin: -10
-		anchors.leftMargin: parseInt(getThumbNailXFrom()/64)*64
-		anchors.rightMargin: parent.width -parseInt(getThumbNailXFrom()/64)*64 - parseInt((getThumbNailXTo() - getThumbNailXFrom())/64 +1)*64
-        anchors.fill: parent
-        spacing: 2
-        Repeater 
+    // let thumbnail show from left to right (For thumbnail provider is a stack)
+    Repeater 
         {
             model: (getThumbNailXTo() - getThumbNailXFrom())/64 +1
             Rectangle 
             {
                 width: 62
                 height: 35
+                visible: false
                 color: "transparent"//"steelblue" //"transparent" //
                 x: 64*index
                 
                 Image
     			{
-        		visible: settings.timelineShowThumbnails
+        		visible: false
         		
         		anchors.fill: parent        		
         		width: height * 16.0/9.0
         		fillMode: Image.PreserveAspectFit
-        		source: (isText||(index%5==0)) ? textThumbnail : imagePath(inPoint + parseInt((getThumbNailXFrom())/64)*64 / multitrack.scaleFactor + index * 64/multitrack.scaleFactor)
+        		source:  !bExistThumbNail() ? textThumbnail : imagePath(inPoint + parseInt((getThumbNailXFrom())/64)*64 / multitrack.scaleFactor + (parseInt((getThumbNailXTo() - getThumbNailXFrom())/64 +1) - index -1) * 64/multitrack.scaleFactor)
     			}
     		}
             
         }
-    }
- */
+
 
     // 转场
     TimelineTransition {

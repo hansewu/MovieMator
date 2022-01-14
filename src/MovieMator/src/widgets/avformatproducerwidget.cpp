@@ -567,6 +567,12 @@ Mlt::Producer * AvformatProducerWidget::createTempProducer(Mlt::Profile& profile
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty);
+    p->set_in_and_out(m_producer->get_in(), m_producer->get_out());
+    p->set(kMultitrackItemProperty, m_producer->get(kMultitrackItemProperty));
+
+    if (m_producer->get_int(kMultitrackItemProperty)) {
+        Mlt::Controller::copyFilters(*m_producer, *p);
+    }
     return p;
 }
 

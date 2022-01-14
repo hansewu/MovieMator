@@ -57,8 +57,8 @@ Rectangle {
         if(!tracksRepeater) return;
         for (var i = 0; i < tracksRepeater.count; i++){
             console.assert(tracksRepeater.itemAt(i));
-            if(tracksRepeater.itemAt(i))
-                tracksRepeater.itemAt(i).redrawWaveforms()
+           // if(tracksRepeater.itemAt(i))
+            //    tracksRepeater.itemAt(i).redrawWaveforms()
         }
     }
 
@@ -80,8 +80,8 @@ Rectangle {
         if(!tracksRepeater) return;
         for (var i = 0; i < tracksRepeater.count; i++){
             console.assert(tracksRepeater.itemAt(i));
-            if(tracksRepeater.itemAt(i))
-                tracksRepeater.itemAt(i).redrawWaveforms()
+           // if(tracksRepeater.itemAt(i))
+             //   tracksRepeater.itemAt(i).redrawWaveforms()
         }
     }
 
