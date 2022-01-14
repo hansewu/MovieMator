@@ -506,6 +506,9 @@ void AvformatProducerSimpleWidget::on_advanced_exited(bool bCheck, Mlt::Producer
         m_tempProducer->set_in_and_out(changed->get_in(), changed->get_out());
         m_tempProducer->set(kMultitrackItemProperty, changed->get(kMultitrackItemProperty));
 
+        if (changed->get_int(kMultitrackItemProperty)) {
+            Mlt::Controller::copyFilters(*changed, *m_tempProducer);
+        }
         on_okButton_clicked();
     }
 

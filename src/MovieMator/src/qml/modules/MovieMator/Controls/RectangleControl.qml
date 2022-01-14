@@ -31,7 +31,7 @@ Item {
     property int handleSize: 10
     property int borderSize: 2
     property alias rectangle: rectangle
-    property color handleColor: Qt.rgba(1, 1, 1, 0.9)
+    property color handleColor: Qt.rgba(1, 1, 1, 0.6)
 
     signal rectChanged(Rectangle rect)
 
@@ -65,14 +65,14 @@ Item {
         anchors.right: bottomRightHandle.right
         anchors.bottom: bottomRightHandle.bottom
     }
-    Rectangle {
-        // Provides contrasting thick line to above rectangle.
-        color: 'transparent'
-        border.width: handleSize - borderSize
-        border.color: Qt.rgba(0, 0, 0, 0.4)
-        anchors.fill: rectangle
-        anchors.margins: borderSize
-    }
+   // Rectangle {
+   //	    // Provides contrasting thick line to above rectangle.
+   //     color: 'transparent'
+   //     border.width: handleSize - borderSize
+   //     border.color: Qt.rgba(0, 0, 0, 0.4)
+   //     anchors.fill: rectangle
+   //     anchors.margins: borderSize
+   // }
 
     Rectangle {
         id: positionHandle

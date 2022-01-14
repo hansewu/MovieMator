@@ -427,8 +427,12 @@ Rectangle {
                             horizontalCenter: parent.horizontalCenter;
                             verticalCenter: parent.verticalCenter
                         }
-                        color: 'transparent'
-                        // radius: 3
+                        radius: 5
+                        color: attachedFiltersView.currentIndex == index ? Qt.rgba(200/255, 79/255, 58/255, 0.9) : Qt.rgba(100/255, 40/255, 30/255, 0.9)
+                        border.color: Qt.rgba(210/255, 89/255, 68/255, 1.0)
+                        border.width: attachedFiltersView.currentIndex == index ? 2: 0
+                        clip: true
+                        
                         CheckBox {
                             id: filterDelegateCheck
                             z:4
