@@ -1065,7 +1065,7 @@ void TimelineDock::emitSelectedFromSelection()
 
         info->producer->set_in_and_out(info->frame_in, info->frame_out);
 
-        emit selected(info->producer);
+
 
         if(selection().isEmpty()
            || (model()->selectedProducer() == nullptr)
@@ -1075,6 +1075,8 @@ void TimelineDock::emitSelectedFromSelection()
             // 同一个 producer就不刷新滤镜列表
             model()->setSelectedProducer(info->producer);
         }
+
+        emit selected(info->producer);
 
         info->producer->set_in_and_out(0, -1);
 

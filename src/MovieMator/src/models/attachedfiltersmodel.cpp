@@ -92,14 +92,20 @@ void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
 
     // 当前时间线轨道上的 clip跟切换前的是同一个
     Mlt::Producer *pSelectedProducer = MAIN.timelineDock()->model()->selectedProducer();
-    if(!pSelectedProducer || pSelectedProducer->is_valid() == false || (pSelectedProducer->get_producer() == producer->get_producer()))
+    if(!pSelectedProducer || pSelectedProducer->is_valid() == false )
     {
         return;
     }
 
+    if(pSelectedProducer->get_producer() == producer->get_producer())
+    {
+        if(!m_producer || (m_producer->get_producer() != producer->get_producer()))
+            reset(producer);
+    }
+
 //    Q_ASSERT(!producer || !m_producer || (producer->get_parent() != m_producer->get_parent()));
 //    if (!producer || !m_producer || (producer->get_parent() != m_producer->get_parent())) {
-        reset(producer);
+       // reset(producer);
 //    }
 }
 

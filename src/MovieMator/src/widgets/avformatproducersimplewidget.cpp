@@ -509,10 +509,11 @@ void AvformatProducerSimpleWidget::on_advanced_exited(bool bCheck, Mlt::Producer
         if (changed->get_int(kMultitrackItemProperty)) {
             Mlt::Controller::copyFilters(*changed, *m_tempProducer);
         }
+        m_propertiesDock->hide();
         on_okButton_clicked();
     }
-
-    m_propertiesDock->hide();
+    else
+        m_propertiesDock->hide();
 }
 
 void AvformatProducerSimpleWidget::on_okButton_clicked()
